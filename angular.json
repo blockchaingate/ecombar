@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ecombar"
+    }
+  },
+  "defaultProject": "ecombar",
+  "cli": {
+    "analytics": "4b30beb6-a585-48b8-b5e2-f313a276282c"
+  }
 }
