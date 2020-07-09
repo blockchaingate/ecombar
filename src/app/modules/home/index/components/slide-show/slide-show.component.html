@@ -1,0 +1,30 @@
+<!-- Slideshow container -->
+<div class="slideshow-container">
+
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides" [ngClass]="(slideIndex==1)?'show':'fade'">
+      <img src="/assets/images/banners/img_nature_wide.jpg" style="width:100%">
+      <div class="text">Caption Text</div>
+    </div>
+  
+    <div class="mySlides" [ngClass]="(slideIndex==2)?'show':'fade'">
+      <img src="/assets/images/banners/img_snow_wide.jpg" style="width:100%">
+      <div class="text">Caption Two</div>
+    </div>
+  
+    <div class="mySlides" [ngClass]="(slideIndex==3)?'show':'fade'">
+      <img src="/assets/images/banners/img_lights_wide.jpg" style="width:100%">
+      <div class="text">Caption Three</div>
+    </div>
+  
+    <!-- Next and previous buttons -->
+    <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+    <a class="next" (click)="plusSlides(1)">&#10095;</a>
+</div>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+    <span class="dot" [ngClass]="(slideIndex==1)?'active':''" (click)="currentSlide(1)"></span>
+    <span class="dot" [ngClass]="(slideIndex==2)?'active':''" (click)="currentSlide(2)"></span>
+    <span class="dot" [ngClass]="(slideIndex==3)?'active':''" (click)="currentSlide(3)"></span>
+</div>

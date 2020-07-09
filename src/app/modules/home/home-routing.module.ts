@@ -5,7 +5,14 @@ import { HomeComponent } from './home.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+        import('./index/index.module').then(m => m.IndexModule)
+      }      
+    ]
   }
 ];
 
@@ -14,3 +21,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class HomeRoutingModule { }
+
+
