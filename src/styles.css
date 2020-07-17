@@ -2,3 +2,21 @@
 body {
     margin: 0;
 }
+
+.d-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
