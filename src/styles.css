@@ -17,6 +17,37 @@ body {
     justify-content: center;
 }
 
+.align-items-center {
+    align-items: center;
+}
+
 .border-bottom {
     border-bottom: 1px solid #e5e5e5;
+}
+
+.rounded-img {
+    border-radius: 50%;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.px-1 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;    
+}
+
+.px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;    
 }
