@@ -1,1 +1,1 @@
-https://www.w3schools.com/howto/howto_js_slideshow.asp
+https://medium.com/better-programming/build-a-responsive-modern-dashboard-layout-with-css-grid-and-flexbox-bd343776a97e

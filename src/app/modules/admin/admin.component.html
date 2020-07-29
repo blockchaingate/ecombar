@@ -1,5 +1,7 @@
+
+<!--
 <header></header>
-<div class="d-flex">
+<div class="d-flex admin-main">
     <div class="nav">
         <nav></nav>
     </div>
@@ -9,3 +11,46 @@
 </div>
 
 <footer></footer>
+-->
+
+<div class="grid-container">
+    <header class="header">
+        <div class="header__search">
+            <input class="header__input" placeholder="Search..." />
+        </div>
+        <div class="header__avatar">
+            <div class="dropdown">
+                <ul class="dropdown__list">
+                  <li class="dropdown__list-item">
+                    <span class="dropdown__icon"><i class="far fa-user"></i></span>
+                    <span class="dropdown__title">my profile</span>
+                  </li>
+                  <li class="dropdown__list-item">
+                    <span class="dropdown__icon"><i class="fas fa-clipboard-list"></i></span>
+                    <span class="dropdown__title">my account</span>
+                  </li>
+                  <li class="dropdown__list-item">
+                    <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
+                    <span class="dropdown__title">log out</span>
+                  </li>
+                </ul>
+              </div>
+        </div>
+    </header>
+    <aside class="sidenav">
+        <ul class="sidenav__list">
+            <li class="sidenav__list-item">Item One</li>
+            <li class="sidenav__list-item">Item Two</li>
+            <li class="sidenav__list-item">Item Three</li>
+            <li class="sidenav__list-item">Item Four</li>
+            <li class="sidenav__list-item">Item Five</li>
+          </ul>        
+    </aside>
+    <main class="main">
+        <router-outlet></router-outlet> 
+    </main>
+    <footer class="footer">
+        <div class="footer__copyright">&copy; 2018 MTH</div>
+        <div class="footer__signature">Made with love by pure genius</div>
+    </footer>
+  </div>

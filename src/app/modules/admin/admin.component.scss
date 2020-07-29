@@ -1,0 +1,218 @@
+// Sass tils
+$color-fiord: #394263; // sidenav bg & dark text
+$color-white: #FFF; // card bg
+$color-athens-gray: #EAEDF1; // content bg
+$color-catskill-white: #F9FAFC; // top nav bg
+$color-abbey: #777; // gray text
+$color-mischka: #DADAE3; // light gray for menu icon
+$color-java: #1BBAE1; // blue text
+$color-mine-shaft: #333; // main section header bg
+$color-zest: #e67e22; // document icon bg
+$color-jungle-green: #27ae60; // calendar icon bg
+$color-cinnabar: #e74c3c; // main icon bg, red
+$color-amethyst: #af64cc; // main photo icon bg
+$color-transparent: rgba(255, 255, 255, .5);
+$color-alto: #D3D3D3;
+
+$height-header: 50px;
+$height-footer: 50px;
+$width-sidenav: 240px;
+
+
+@mixin profile-avatar {
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1609106/headshot.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .2);
+}
+
+@mixin box-shadow {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+/* Simple dashboard grid CSS */
+
+/* Assign grid instructions to our parent grid container */
+.grid-container {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-areas:
+      "sidenav header"
+      "sidenav main"
+      "sidenav footer";
+    height: 100vh;
+  }
+  
+  /* Give every child element its grid name */
+  .header {
+    grid-area: header;
+    background-color: #648ca6;
+  }
+  
+  .sidenav {
+    grid-area: sidenav;
+    background-color: #394263;
+  }
+  
+  .main {
+    grid-area: main;
+    background-color: #8fd4d9;
+  }
+  
+  .footer {
+    grid-area: footer;
+    background-color: #648ca6;
+  }
+
+  .header, .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background-color: #648ca6;
+  }
+
+  .sidenav {
+    display: flex; /* Will be hidden on mobile */
+    flex-direction: column;
+    grid-area: sidenav;
+    background-color: #394263;
+  }
+
+  .sidenav__list {
+    padding: 0;
+    margin-top: 85px;
+    list-style-type: none;
+  }
+
+  .sidenav__list-item {
+    padding: 20px 20px 20px 40px;
+    color: #ddd;
+  }
+
+  .sidenav__list-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+
+  .header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $color-catskill-white;
+  
+    &__menu {
+      position: fixed; // Needs to stay visible for all mobile scrolling
+      padding: 13px;
+      left: 12px;
+      background-color: $color-mischka;
+      border-radius: 50%;
+      z-index: 1;
+  
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  
+    &__search {
+      margin-left: 55px;
+      font-size: 20px;
+      color: $color-abbey;
+    }
+  
+    &__input {
+      border: none;
+      background: transparent;
+      padding: 12px;
+      font-size: 20px;
+      color: $color-abbey;
+  
+      &:focus {
+        outline: none;
+        border: none;
+      }
+    }
+
+    &__avatar {
+      @include profile-avatar;
+      position: relative;
+      margin: 0 26px;
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+  
+      &:after {
+        position: absolute;
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: none;
+        border-left: 2px solid $color-abbey;
+        border-bottom: 2px solid $color-abbey;
+        transform: rotate(-45deg) translateY(-50%);
+        top: 50%;
+        right: -18px;
+      }
+    }    
+}
+
+.dropdown {
+  position: absolute;
+  top: 54px;
+  right: -16px;
+  width: 220px;
+  height: auto;
+  z-index: 1;
+  background-color: #fff;
+  border-radius: 4px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all .3s;
+  @include box-shadow;
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  &__list-item {
+    padding: 12px 24px;
+    color: $color-abbey;
+    text-transform: capitalize;
+
+    &:hover {
+      background-color: rgba(0,0,0, .1);
+    }
+  }
+
+  &__icon {
+    color: $color-java;
+  }
+
+  &__title {
+    margin-left: 10px;
+  }
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: -6px;
+    right: 30px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 6px solid #FFF;
+  }
+
+  &--active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
