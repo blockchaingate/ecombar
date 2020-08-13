@@ -11,7 +11,12 @@ const routes: Routes = [
         path: '',
         loadChildren: () =>
         import('./index/index.module').then(m => m.IndexModule)
-      }      
+      },
+      {
+        path: 'cart',
+        loadChildren: () =>
+        import('./cart/cart.module').then(m => m.CartModule)
+      }              
     ]
   }
 ];

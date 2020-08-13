@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row" *ngFor="let item of cartItems">
+
+        Product:{{item.name}} {{item.price}} {{item.currency}}   
+        Quantity: {{item.quantity}}
+    </div>
+
+    <div class="row">
+        <button class="btn" (click)="pay()">
+            pay
+        </button>
+        
+    </div>
+</div>

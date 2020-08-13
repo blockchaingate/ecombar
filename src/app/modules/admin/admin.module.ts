@@ -7,6 +7,8 @@ import { NavComponent } from './layout/nav/nav.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
 import { MerchantsComponent } from './pages/merchants/merchants.component';
+import { CommonModule } from '@angular/common';
+
 @NgModule({
   declarations: [
     AdminComponent,
@@ -18,7 +20,8 @@ import { MerchantsComponent } from './pages/merchants/merchants.component';
     MerchantsComponent
   ],
   imports: [
-    AdminRoutingModule
+    AdminRoutingModule,
+    CommonModule
   ],
   providers: []
 })

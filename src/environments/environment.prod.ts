@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  EX_GATEWAY: 'https://blockchaingate.com/v2/payment/gateway'
 };

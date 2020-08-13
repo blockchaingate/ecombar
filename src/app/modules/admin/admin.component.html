@@ -13,13 +13,14 @@
 <footer></footer>
 -->
 
-<div class="grid-container">
+<div class="grid" [ngClass]="showNavMenu ? 'grid--noscroll' : ''">
     <header class="header">
+        <img class="header__menu" (click)="toggleShowNavMenu()" src="/assets/svg/bars-solid.svg">
         <div class="header__search">
             <input class="header__input" placeholder="Search..." />
         </div>
-        <div class="header__avatar">
-            <div class="dropdown">
+        <div class="header__avatar" (click)="toggleDropDownActive()">
+            <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
                 <ul class="dropdown__list">
                   <li class="dropdown__list-item">
                     <span class="dropdown__icon"><i class="far fa-user"></i></span>
@@ -33,24 +34,34 @@
                     <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
                     <span class="dropdown__title">log out</span>
                   </li>
-                </ul>
+                </ul> 
               </div>
         </div>
     </header>
-    <aside class="sidenav">
+    <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''">
+
+      <div class="sidenav__brand">
+        <a class="sidenav__brand-link" href="#">Ecombar</a>
+        <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
+      </div>
+      <div class="sidenav__profile">
+        <div class="sidenav__profile-avatar"></div>
+        <div class="sidenav__profile-title text-light">Matthew H</div>
+      </div>
+
         <ul class="sidenav__list">
-            <li class="sidenav__list-item">Item One</li>
-            <li class="sidenav__list-item">Item Two</li>
-            <li class="sidenav__list-item">Item Three</li>
-            <li class="sidenav__list-item">Item Four</li>
-            <li class="sidenav__list-item">Item Five</li>
+            <li class="sidenav__list-item" routerLink="/admin" routerLinkActive="active">
+              Dashboard
+            </li>
+            <li class="sidenav__list-item" routerLink="/admin/users" routerLinkActive="active">Users</li>
+            <li class="sidenav__list-item" routerLink="/admin/merchants" routerLinkActive="active">Merchants</li>
           </ul>        
     </aside>
     <main class="main">
         <router-outlet></router-outlet> 
     </main>
     <footer class="footer">
-        <div class="footer__copyright">&copy; 2018 MTH</div>
-        <div class="footer__signature">Made with love by pure genius</div>
+        <div class="footer__copyright">&copy; 2020 MTH</div>
+        <div class="footer__signature">Made by Ecombar</div>
     </footer>
   </div>

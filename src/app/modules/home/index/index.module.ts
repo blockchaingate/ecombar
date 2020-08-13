@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { IndexComponent } from './index.component';
 import { SlideShowComponent } from './components/slide-show/slide-show.component';
 import { CollectionsComponent } from './components/collections/collections.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { CollectionsComponent } from './components/collections/collections.compo
   ],
   imports: [
     IndexRoutingModule,
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   providers: []
 })

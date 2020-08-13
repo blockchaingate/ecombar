@@ -16,7 +16,12 @@
             <div>
                 {{item.name}}
             </div>
-            
+            <div>
+                {{item.price}}  {{item.currency}}
+            </div>  
+            <div>
+                <button class="btn" (click)="addToCart(item)">Add to cart</button>
+            </div>          
         </div>
     </div>
 

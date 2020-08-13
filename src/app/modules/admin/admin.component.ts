@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent {
-
+  showNavMenu = false;
+  dropDownActive = false;
+  toggleShowNavMenu() {
+    this.showNavMenu = !this.showNavMenu;
+  }
+  toggleDropDownActive() {
+    this.dropDownActive = !this.dropDownActive;
+  }  
 }
