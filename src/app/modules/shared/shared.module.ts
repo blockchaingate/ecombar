@@ -1,6 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CartStoreService } from './services/cart.store.service';
 import { ApiService } from './services/api.service';
+import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -8,7 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   exports: [
-    HttpClientModule
   ]
 })
 export class SharedModule {
@@ -17,7 +18,9 @@ export class SharedModule {
       ngModule: SharedModule,
       providers: [
         CartStoreService,
-        ApiService
+        ApiService,
+        UserService,
+        ProductService
       ]  
     };
   }

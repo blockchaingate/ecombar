@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CartStoreService } from '../../shared/services/cart.store.service';
 import { ApiService } from '../../shared/services/api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cart',
-    providers: [ApiService],
+  providers: [ApiService],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
@@ -16,6 +17,7 @@ export class CartComponent implements OnInit{
 
     }
     cartItems : any;
+    payLink: string;
     ngOnInit() {
       this.cartStoreServ.items$.subscribe(
         value => {
@@ -48,6 +50,7 @@ export class CartComponent implements OnInit{
       this.apiServ.qrcodepay(data).subscribe(
           (res: any) => {
             console.log('res==', res);
+            this.payLink = environment.endpoints.website + 'ex/' + res._body.trans_code;
           }
       );
     }

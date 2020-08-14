@@ -1,0 +1,15 @@
+<div class="text-right">
+    <button class="btn" routerLink="/admin/product/add" routerLinkActive="active">New</button>
+</div>
+<table>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Currency</th>
+    </tr>
+    <tr *ngFor="let product of products">
+      <td>{{product.title}}</td>
+      <td>{{product.price}}</td>
+      <td>{{product.currency}}</td>
+    </tr>
+  </table>

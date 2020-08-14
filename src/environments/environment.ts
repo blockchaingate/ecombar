@@ -4,7 +4,14 @@
 
 export const environment = {
   production: false,
-  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway'
+  appid: '5b6a8688905612106e976a69',
+//  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
+//  EX_WEBSITE: 'http://localhost:4200/',
+  endpoints: {
+    blockchaingate: 'https://test.blockchaingate.com/v2/', 
+    website: 'http://localhost:4200/',
+  }
+   
 };
 
 /*

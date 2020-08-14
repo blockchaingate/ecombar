@@ -1,4 +1,7 @@
 export const environment = {
   production: true,
-  EX_GATEWAY: 'https://blockchaingate.com/v2/payment/gateway'
+  endpoints: {
+    blockchaingate: 'https://blockchaingate.com/v2/', 
+    website: 'http://exchangily.com/',
+  }  
 };

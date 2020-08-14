@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CartStoreService } from '../../../../shared/services/cart.store.service';
 import { CartItem } from '../../../../shared/models/cart-item';
+import { ProductService } from '../../../../shared/services/product.service';
 
 @Component({
   selector: 'app-collections',
+  providers: [ProductService],
   templateUrl: './collections.component.html',
   styleUrls: ['./collections.component.scss']
 })
-export class CollectionsComponent {
+export class CollectionsComponent implements OnInit {
 
+  /*
   collections = [
     {
       name: 'Hot sales',
@@ -64,16 +67,32 @@ export class CollectionsComponent {
       ]
     }
   ];
+  */
+  collections: any;
 
-
-  constructor(private cartStoreServ:CartStoreService) {
+  constructor(private productServ: ProductService, private cartStoreServ:CartStoreService) {
 
   }
 
+  ngOnInit() {
+    this.productServ.getMerchantAllProducts().subscribe(
+      (res: any) => {
+        if(res && res.ok) {
+          const products = res._body;
+          this.collections = [
+            {
+              name: 'Hot sales',
+              items: products
+            }
+          ];
+        }
+      }
+    );
+  }
   addToCart(item) {
     const cartItem: CartItem = {
       _id: item._id,
-      name: item.name,
+      title: item.title,
       price: item.price,
       currency: item.currency,
       quantity: 1

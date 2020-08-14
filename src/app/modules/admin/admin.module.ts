@@ -7,7 +7,11 @@ import { NavComponent } from './layout/nav/nav.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
 import { MerchantsComponent } from './pages/merchants/merchants.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,11 +21,15 @@ import { CommonModule } from '@angular/common';
     NavComponent,
     DashboardComponent,
     UsersComponent,
-    MerchantsComponent
+    MerchantsComponent,
+    ProductsComponent,
+    ProductAddComponent
   ],
   imports: [
     AdminRoutingModule,
-    CommonModule
+    CommonModule,
+    SharedModule,
+    FormsModule
   ],
   providers: []
 })

@@ -1,13 +1,13 @@
-<form action="action_page.php" style="border:1px solid #ccc">
+<form style="border:1px solid #ccc">
     <div class="container">
       <h1>Sign In</h1>
       <hr>
   
       <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
+      <input type="text" placeholder="Enter Email" [(ngModel)]="email" name="email" required>
   
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" [(ngModel)]="password" name="psw" required>
   
 
       <label>
@@ -16,7 +16,7 @@
 
       <div class="clearfix">
         <button type="button" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signinbtn">Sign In</button>
+        <button type="submit" class="signinbtn" (click)="signin()">Sign In</button>
       </div>
     </div>
   </form>

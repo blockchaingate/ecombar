@@ -10,11 +10,11 @@
     </div>
     <div class="d-flex justify-content-center">
         <div *ngFor="let item of collection.items" class="px-2">
-            <div>
+            <div *ngIf="item.medias">
                 <img class="media" src="{{item.medias[0]}}">
             </div>
             <div>
-                {{item.name}}
+                {{item.title}}
             </div>
             <div>
                 {{item.price}}  {{item.currency}}

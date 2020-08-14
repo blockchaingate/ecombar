@@ -1,0 +1,22 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>New product</h1>
+      <hr>
+  
+      <label for="email"><b>Title</b></label>
+      <input type="text" placeholder="Enter product title" [(ngModel)]="title" name="title" required>
+  
+      <label for="psw"><b>Price</b></label>
+      <input type="text" placeholder="Enter price" [(ngModel)]="price" name="price" required>
+  
+      <label for="psw"><b>Currency</b></label>
+      <input type="text" placeholder="Enter currency" [(ngModel)]="currency" name="currency" required>
+  
+
+
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn cancelbtn">Cancel</button>
+        <button type="submit" class="btn signinbtn" (click)="addProduct()">Add</button>
+      </div>
+    </div>
+  </form>

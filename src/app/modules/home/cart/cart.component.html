@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row" *ngFor="let item of cartItems">
 
-        Product:{{item.name}} {{item.price}} {{item.currency}}   
+        Product:{{item.title}} {{item.price}} {{item.currency}}   
         Quantity: {{item.quantity}}
     </div>
 
@@ -10,5 +10,9 @@
             pay
         </button>
         
+    </div>
+
+    <div class="row" *ngIf="payLink">
+        click the <a href="{{payLink}}">link</a> to finish payment.
     </div>
 </div>

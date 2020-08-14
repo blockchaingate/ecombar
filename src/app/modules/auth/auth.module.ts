@@ -3,6 +3,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { SigninComponent } from './pages/signin/signin.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,7 +13,9 @@ import { SignupComponent } from './pages/signup/signup.component';
     SignupComponent
   ],
   imports: [
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule,
+    FormsModule
   ],
   providers: []
 })
