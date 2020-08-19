@@ -90,10 +90,12 @@ export class CollectionsComponent implements OnInit {
     );
   }
   addToCart(item) {
+    console.log('item to be added=', item);
     const cartItem: CartItem = {
       _id: item._id,
       title: item.title,
       price: item.price,
+      merchantId: item.merchantId,
       currency: item.currency,
       quantity: 1
     };
