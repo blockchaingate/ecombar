@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartStoreService } from '../../shared/services/cart.store.service';
 import { OrderService } from '../../shared/services/order.service';
 import { UserService } from '../../shared/services/user.service';
@@ -11,7 +11,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit{
+export class CartComponent implements OnInit, OnDestroy {
+    interval;
+    cartItems : any;
+    payLink: string;
+    paidConfirmed: boolean;
+    txid: string;
+    txid_link: string;
+    trans_code: string;
     constructor(
       private userServ: UserService,
       private cartStoreServ: CartStoreService,
@@ -20,14 +27,33 @@ export class CartComponent implements OnInit{
       ) {
 
     }
-    cartItems : any;
-    payLink: string;
+
+
+
     ngOnInit() {
       this.cartStoreServ.items$.subscribe(
         value => {
           this.cartItems = value;
         }
       );
+    }
+
+    startTimer() {
+      this.interval = setInterval(() => {
+        this.apiServ.checkPaymentStatus(this.trans_code).subscribe(
+          (res: any) => {
+            if(res && res.ok) {
+              const data = res._body;
+              if(data.trans_status == 'paid') {
+                this.paidConfirmed = true;
+                this.txid = data.txid;
+                this.txid_link = environment.endpoints.website + 'explorer/tx-detail/' + this.txid;
+              }
+              
+            }
+          }
+        );
+      },1000)
     }
 
     pay() {
@@ -81,12 +107,24 @@ export class CartComponent implements OnInit{
             }
             this.apiServ.qrcodepay(data).subscribe(
                 (res: any) => {
-                  this.payLink = environment.endpoints.website + 'ex/' + res._body.trans_code;
+                  if(res.ok) {
+                    this.trans_code = res._body.trans_code;
+                    this.payLink = environment.endpoints.website + 'ex/' + this.trans_code;
+                    this.startTimer();
+                  }
+
                 }
             );            
           }
         }
       );
 
+    }
+
+    pauseTimer() {
+      clearInterval(this.interval);
+    }
+    ngOnDestroy() {
+      this.pauseTimer();
     }
 }

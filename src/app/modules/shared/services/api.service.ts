@@ -10,7 +10,12 @@ export class ApiService {
   }
 
   qrcodepay(data) {
-      const url = environment.endpoints.blockchaingate + 'payment/gateway';
-      return this.httpClient.post(url, data);
+    const url = environment.endpoints.blockchaingate + 'payment/gateway';
+    return this.httpClient.post(url, data);
+  }
+
+  checkPaymentStatus(code: string) {
+    const url = environment.endpoints.blockchaingate + 'payment/gateway/' + code;
+    return this.httpClient.get(url);
   }
 }

@@ -13,6 +13,14 @@
     </div>
 
     <div class="row" *ngIf="payLink">
-        click the <a href="{{payLink}}">link</a> to finish payment.
+        click the <a target="_blank" href="{{payLink}}">link</a> to finish payment.
+    </div>
+
+    <div *ngIf="paidConfirmed">
+        Your payment is confirmed. txid is 
+        <a href="{{txid_link}}">
+            {{txid}}
+        </a>
+        
     </div>
 </div>
