@@ -1,4 +1,4 @@
-<form style="border:1px solid #ccc">
+<div class="auth-container d-flex justify-content-center">
     <div class="container">
       <h1>Sign In</h1>
       <hr>
@@ -14,9 +14,14 @@
         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
       </label>
 
-      <div class="clearfix">
-        <button type="button" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signinbtn" (click)="signin()">Sign In</button>
+      <div class="clearfix d-flex justify-content-around">
+        <div class="mx-2">
+          <button type="button" class="cancelbtn">Cancel</button>
+        </div>
+        <div class="mx-2">
+          <button type="submit" class="signinbtn" (click)="signin()">Sign In</button>
+        </div>
+        
       </div>
     </div>
-  </form>
+</div>

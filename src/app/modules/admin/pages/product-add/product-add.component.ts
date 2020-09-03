@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-admin-product-add',
   providers: [ProductService, UserService],
   templateUrl: './product-add.component.html',
-  styleUrls: ['./product-add.component.scss']
+  styleUrls: ['./product-add.component.scss', '../../../../../select.scss']
 })
 export class ProductAddComponent {
     title: string;
@@ -23,8 +23,7 @@ export class ProductAddComponent {
         const data = {
           title: this.title,
           price: this.price,
-          currency: this.currency,
-          token: this.userServ.getToken()
+          currency: this.currency
         };
         this.productServ.create(data).subscribe(
           (res: any) => {

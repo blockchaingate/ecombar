@@ -1,0 +1,11 @@
+<div class="text-right">
+    <button class="btn" routerLink="/admin/category/add" routerLinkActive="active">New</button>
+</div>
+<table>
+    <tr>
+      <th>Title</th>
+    </tr>
+    <tr *ngFor="let category of categories">
+      <td>{{category.cat}}</td>
+    </tr>
+  </table>

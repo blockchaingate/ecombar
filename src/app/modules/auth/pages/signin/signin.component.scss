@@ -4,14 +4,14 @@
     background-color: #f44336;
   }
   
-  /* Float cancel and signup buttons and add an equal width */
-  .cancelbtn, .signinbtn {
-    float: left;
-    width: 50%;
-  }
+
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {
   .cancelbtn, .signinbtn {
     width: 100%;
   }
+}
+
+.auth-container .container{
+  max-width: 400px;
 }

@@ -26,6 +26,7 @@ export class SigninComponent implements OnInit{
         if(res && res.token) {
           this.token = res.token;
           this.userServ.saveToken(this.token);
+          console.log('this.token=', this.token);
           this.router.navigate(['/admin']);
         }
       }

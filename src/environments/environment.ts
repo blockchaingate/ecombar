@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   appid: '5b6a8688905612106e976a69',
+  cat_typ: 'ecom',
 //  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
 //  EX_WEBSITE: 'http://localhost:4200/',
   endpoints: {

@@ -15,7 +15,11 @@
     <div class="row" *ngIf="payLink">
         click the <a target="_blank" href="{{payLink}}">link</a> to finish payment.
     </div>
-
+    <!--
+    <div class="row" *ngIf="payQrcode">
+        <qrcode [qrdata]="payQrcode" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+    </div>
+    -->
     <div *ngIf="paidConfirmed">
         Your payment is confirmed. txid is 
         <a href="{{txid_link}}">

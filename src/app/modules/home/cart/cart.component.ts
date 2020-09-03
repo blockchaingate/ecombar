@@ -17,6 +17,7 @@ export class CartComponent implements OnInit, OnDestroy {
     payLink: string;
     paidConfirmed: boolean;
     txid: string;
+    payQrcode: string;
     txid_link: string;
     trans_code: string;
     constructor(
@@ -48,6 +49,7 @@ export class CartComponent implements OnInit, OnDestroy {
                 this.paidConfirmed = true;
                 this.txid = data.txid;
                 this.txid_link = environment.endpoints.website + 'explorer/tx-detail/' + this.txid;
+                this.pauseTimer();  
               }
               
             }
@@ -122,7 +124,10 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     pauseTimer() {
-      clearInterval(this.interval);
+      if(this.interval) {
+        clearInterval(this.interval);
+      }
+      
     }
     ngOnDestroy() {
       this.pauseTimer();

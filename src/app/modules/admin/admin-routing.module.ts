@@ -6,6 +6,8 @@ import { UsersComponent } from './pages/users/users.component';
 import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { CategoryAddComponent } from './pages/category-add/category-add.component';
 
 const routes: Routes = [
   {
@@ -27,7 +29,15 @@ const routes: Routes = [
       { 
         path: 'product/add',
         component: ProductAddComponent
-      },               
+      }, 
+      { 
+        path: 'categories',
+        component: CategoriesComponent
+      },  
+      { 
+        path: 'category/add',
+        component: CategoryAddComponent
+      },                     
       { 
         path: 'merchants',
         component: MerchantsComponent

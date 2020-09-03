@@ -9,6 +9,8 @@ import { UsersComponent } from './pages/users/users.component';
 import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +25,9 @@ import { FormsModule } from '@angular/forms';
     UsersComponent,
     MerchantsComponent,
     ProductsComponent,
-    ProductAddComponent
+    CategoriesComponent,
+    ProductAddComponent,
+    CategoryAddComponent
   ],
   imports: [
     AdminRoutingModule,

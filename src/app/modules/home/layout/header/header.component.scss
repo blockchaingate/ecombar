@@ -50,6 +50,7 @@ img, svg {
 
 /* class applies to select element itself, not a wrapper element */
 .select-css {
+    cursor: pointer;
     display: block;
     font-size: 16px;
     font-family: sans-serif;
@@ -61,7 +62,7 @@ img, svg {
     max-width: 100%; /* useful when width is set to anything other than 100% */
     box-sizing: border-box;
     margin: 0;
-    border: 1px solid #aaa;
+    border: none;
     box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
     border-radius: .5em;
     -moz-appearance: none;

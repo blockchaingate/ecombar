@@ -3,14 +3,15 @@ import { CartStoreService } from './services/cart.store.service';
 import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { ProductService } from './services/product.service';
+import { CategoryService } from './services/category.service';
 import { OrderService } from './services/order.service';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
-    HttpClientModule
   ],
   exports: [
+  ],
+  providers: [
   ]
 })
 export class SharedModule {
@@ -22,6 +23,7 @@ export class SharedModule {
         ApiService,
         UserService,
         ProductService,
+        CategoryService,
         OrderService
       ]  
     };

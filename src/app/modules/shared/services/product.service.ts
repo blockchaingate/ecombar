@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from './api.service';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -9,23 +9,20 @@ export class ProductService {
   token: string;
   path = environment.endpoints.blockchaingate + 'products/';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private apiServ: ApiService) {
   }
   
   create(data) {
-    return this.httpClient.post(this.path + 'Create', data);
+    return this.apiServ.postPrivate('products/Create', data);
   }
 
   getMerchantProducts(token: string) {
-    const url = this.path + 'merchant/products?token=' + token;
-    console.log('url=', url);
-    return this.httpClient.get(url);
+
+    return this.apiServ.getPrivate('merchant/products');
   }
 
 
   getMerchantAllProducts() {
-    const url = this.path + 'merchant/all/products';
-    console.log('url=', url);
-    return this.httpClient.get(url);
+    return this.apiServ.getPublic('merchant/all/products');
   }  
 }

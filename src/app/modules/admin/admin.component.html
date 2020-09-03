@@ -1,18 +1,4 @@
 
-<!--
-<header></header>
-<div class="d-flex admin-main">
-    <div class="nav">
-        <nav></nav>
-    </div>
-    <div class="flex-grow-1">
-        <router-outlet></router-outlet> 
-    </div>
-</div>
-
-<footer></footer>
--->
-
 <div class="grid" [ngClass]="showNavMenu ? 'grid--noscroll' : ''">
     <header class="header">
         <img class="header__menu" (click)="toggleShowNavMenu()" src="/assets/svg/bars-solid.svg">
@@ -30,7 +16,7 @@
                     <span class="dropdown__icon"><i class="fas fa-clipboard-list"></i></span>
                     <span class="dropdown__title">my account</span>
                   </li>
-                  <li class="dropdown__list-item">
+                  <li class="dropdown__list-item" (click)="logout()">
                     <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
                     <span class="dropdown__title">log out</span>
                   </li>
@@ -50,14 +36,9 @@
       </div>
 
         <ul class="sidenav__list">
-            <li class="sidenav__list-item" routerLink="/admin" routerLinkActive="active">
-              Dashboard
+            <li *ngFor="let item of menuItems" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
+              {{item.title}}
             </li>
-            <!--
-            <li class="sidenav__list-item" routerLink="/admin/users" routerLinkActive="active">Users</li>
-            <li class="sidenav__list-item" routerLink="/admin/merchants" routerLinkActive="active">Merchants</li>
-            -->
-            <li class="sidenav__list-item" routerLink="/admin/products" routerLinkActive="active">Products</li>
           </ul>        
     </aside>
     <main class="main">
