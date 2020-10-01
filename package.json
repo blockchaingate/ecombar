@@ -11,6 +11,7 @@
     },
     "private": true,
     "dependencies": {
+        "@ngx-pwa/local-storage": "^10.0.1",
         "@angular/animations": "~10.0.2",
         "@angular/common": "~10.0.2",
         "@angular/compiler": "~10.0.2",

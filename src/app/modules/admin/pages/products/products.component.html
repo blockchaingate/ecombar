@@ -1,15 +1,25 @@
 <div class="text-right">
     <button class="btn" routerLink="/admin/product/add" routerLinkActive="active">New</button>
 </div>
-<table>
-    <tr>
-      <th>Title</th>
-      <th>Price</th>
-      <th>Currency</th>
-    </tr>
-    <tr *ngFor="let product of products">
-      <td>{{product.title}}</td>
-      <td>{{product.price}}</td>
-      <td>{{product.currency}}</td>
-    </tr>
-  </table>
+
+<ul class="responsive-table">
+  <li class="table-header">
+    <div class="col col-3">Title</div>
+    <div class="col col-3">Price</div>
+    <div class="col col-3">Currency</div>
+    <div class="col col-3"></div>
+
+  </li>
+  <li class="table-row" *ngFor="let product of products">
+    <div class="col col-3" data-label="Job Id">{{product.title}}</div>
+    <div class="col col-3" data-label="Customer Name">{{product.price}}</div>
+    <div class="col col-3" data-label="Customer Name">{{product.curency}}</div>
+    <div class="col col-3 text-right" data-label="Payment Status">
+      <a (click)="edit(category)">
+        <img src="/assets/svg/edit.svg">
+      </a>
+      
+    </div>
+  </li>
+</ul>
+

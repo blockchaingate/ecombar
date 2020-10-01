@@ -1,0 +1,37 @@
+
+.Polaris-DropZone-FileUpload__Button_r99lw {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.6rem;
+    min-width: 3.6rem;
+    margin: 0;
+    padding: .7rem 1.6rem;
+    background: linear-gradient(180deg,#fff,#f9fafb);
+    border: .1rem solid var(--p-border,#c4cdd5);
+    box-shadow: 0 1px 0 0 rgba(22,29,37,.05);
+    border-radius: 3px;
+    line-height: 1;
+    color: #212b36;
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    transition-property: background,border,box-shadow;
+    transition-duration: var(--p-override-none,.2s);
+    transition-timing-function: var(--p-override-none,cubic-bezier(.64,0,.35,1));
+    -webkit-tap-highlight-color: transparent;
+}
+
+.Polaris-Stack__Item_yiyol {
+    flex: 0 0 auto;
+    min-width: 0;
+    text-align: center;
+}
+
+.Polaris-DropZone-FileUpload_1fbjx {
+    padding: 1.5rem;
+    text-align: center;
+}

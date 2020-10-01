@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit{
   showNavMenu = false;
   dropDownActive = false;
+  email: string;
 
   menuItems: any;
   constructor(private router: Router, private userServ: UserService) {
@@ -18,38 +19,57 @@ export class AdminComponent implements OnInit{
   }
   
   ngOnInit() {
-    const aud = this.userServ.getAud();
-    const merchantId = this.userServ.getMerchantId();
-    console.log('aud=', aud);
-    if (aud == 'isSystemAdmin') {
-      this.menuItems = [
-        {
-          title: 'Dashboard',
-          link: './'
-        },
-        {
-          title: 'Category',
-          link: 'categories'
-        }        
-      ]
-    } else 
-    if (merchantId) {
-      this.menuItems = [
-        {
-          title: 'Dashboard',
-          link: './'
-        },
-        {
-          title: 'Product',
-          link: 'products'
-        }        
-      ]      
-    }
+    this.userServ.getToken().subscribe(
+      (token: any) => {
+        const decoded = this.userServ.decodeToken(token);
+        console.log('decoded=', decoded);
+        const aud = decoded.aud;
+        this.email = decoded.email;
+        const merchantId = decoded.merchantId;
+        
+        if (aud == 'isSystemAdmin') {
+          this.menuItems = [
+            {
+              title: 'Dashboard',
+              link: './'
+            },
+            {
+              title: 'Category',
+              link: 'categories'
+            },
+            {
+              title: 'Users',
+              link: 'users'
+            }         
+          ]
+        } else 
+        if (merchantId) {
+          this.menuItems = [
+            {
+              title: 'Dashboard',
+              link: './'
+            },
+            {
+              title: 'Category',
+              link: 'categories'
+            },            
+            {
+              title: 'Product',
+              link: 'products'
+            }        
+          ]      
+        }
+
+      }
+    );
+
   }
 
   logout() {
-    this.userServ.saveToken('');
-    this.router.navigate(['/auth/signin']);
+    this.userServ.saveToken('').subscribe((res: any) => {
+      this.router.navigate(['/auth/signin']);
+    });
+    
   }
 
   toggleShowNavMenu() {

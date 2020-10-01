@@ -14,11 +14,17 @@
  $color-amethyst: #af64cc; // main photo icon bg
  $color-transparent: rgba(255, 255, 255, .5);
  $color-alto: #D3D3D3;
- 
+ $color-text: #212b36;
  $height-header: 50px;
  $height-footer: 50px;
  $width-sidenav: 240px;
- 
+ $--p-surface-hovered: rgba(92,106,196,.12);
+ $--p-action-primary:#202e78;
+ $--p-text:#212b36;
+
+
+
+
  @mixin profile-avatar {
    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1609106/headshot.png");
    background-size: cover;
@@ -57,17 +63,17 @@
   /* Give every child element its grid name */
   .header {
     grid-area: header;
-    background-color: #648ca6;
+    background-color: #f4f6f8;;
   }
   
   .sidenav {
     grid-area: sidenav;
-    background-color: #394263;
+    background-color: #f4f6f8;;
   }
   
   .main {
     grid-area: main;
-    background-color: #8fd4d9;
+    background-color: #f4f6f8;;
   }
   
   .footer {
@@ -100,7 +106,7 @@
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     z-index: 2; // Needs to sit above the hamburger menu icon
 
-    background-color: #394263;
+    background-color: #f4f6f8;
 
     &__brand {
       position: relative;
@@ -109,7 +115,7 @@
       justify-content: space-between;
       padding: 0 16px;
       height: $height-header;
-      background-color: rgba(0, 0, 0, .15);
+      background-color: #f4f6f8;
   
       &-icon {
         margin-top: 2px;
@@ -129,7 +135,7 @@
       &-link {
         font-size: 18px;
         font-weight: bold;
-        color: $color-white;
+        color: $color-text;
         margin: 0 15px;
         letter-spacing: 1.5px;
       }
@@ -185,14 +191,18 @@
 
   .sidenav__list-item {
     padding: 20px 20px 20px 40px;
-    color: #ddd;
+    color: $--p-text;
   }
 
   .sidenav__list-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: grey;
     cursor: pointer;
   }
 
+  .sidenav__list-item.active {
+   background: $--p-surface-hovered;
+    color: $--p-action-primary;
+  }
   .header {
     grid-area: header;
     display: flex;

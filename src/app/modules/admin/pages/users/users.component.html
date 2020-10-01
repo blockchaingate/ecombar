@@ -1,1 +1,20 @@
-users
+<div>
+  <input [(ngModel)]="email">
+  <button (click)="find()">Find</button>
+</div>
+<table>
+    <tr>
+      <th>Email</th>
+      <th>RefCode</th>
+      <th>Parent RefCode</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{user.email}}</td>
+      <td>{{user.refCode}}</td>
+      <td>{{user.parentRefCode}}</td>
+      <td>
+        <button class="btn" (click)="edit(user)">Edit</button>
+      </td>
+    </tr>
+  </table>

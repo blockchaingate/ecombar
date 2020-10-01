@@ -5,6 +5,8 @@ import { UserService } from './services/user.service';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
 import { OrderService } from './services/order.service';
+import { StorageService } from './services/storage.service';
+import { UploadService } from './services/upload.service';
 
 @NgModule({
   imports: [
@@ -22,7 +24,9 @@ export class SharedModule {
         CartStoreService,
         ApiService,
         UserService,
+        StorageService,
         ProductService,
+        UploadService,
         CategoryService,
         OrderService
       ]  

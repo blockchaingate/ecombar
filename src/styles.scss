@@ -82,8 +82,8 @@ hr {
 
 /* Set a style for all buttons */
 button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: transparent;
+  color: black;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -168,4 +168,9 @@ table th {
 
 .d-inline-block {
   display: inline-block;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }

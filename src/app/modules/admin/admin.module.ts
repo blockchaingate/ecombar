@@ -11,6 +11,8 @@ import { ProductsComponent } from './pages/products/products.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
+import { UploadMediaComponent } from './components/upload-media/upload-media.component';
+import { UserAddComponent } from './pages/user-add/user-add.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -21,8 +23,10 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     HeaderComponent,
     NavComponent,
+    UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    UserAddComponent,
     MerchantsComponent,
     ProductsComponent,
     CategoriesComponent,

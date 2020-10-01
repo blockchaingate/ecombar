@@ -8,7 +8,7 @@ select {
     background-color: #c0392b;
     border: none;
     border-bottom: 2px solid #962d22;
-    color: white;
+    color: #eeeeee;
     padding: 10px;
     appearance: none;
     -webkit-appearance: none;
@@ -27,10 +27,11 @@ select {
     font-weight: bold;
     cursor: pointer;
     border-radius: 0;
-    background-color: #c0392b;
+    background-color: white;
+
     border: none;
-    border-bottom: 2px solid #962d22;
-    color: white;
+    border-bottom: 2px solid grey;
+    color: black;
     padding: 10px;
     padding-right: 38px;
     appearance: none;
@@ -45,7 +46,7 @@ select {
   }
   select:hover,
   select:focus {
-    color: #c0392b;
+    color: black;
     background-color: white;
     border-bottom-color: #DCDCDC;
   }

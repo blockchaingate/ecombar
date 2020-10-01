@@ -27,12 +27,16 @@
     <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''">
 
       <div class="sidenav__brand">
-        <a class="sidenav__brand-link" href="#">Ecombar</a>
+        <a class="sidenav__brand-link" href="#">
+          <small>
+            {{email}}
+          </small>
+        </a>
         <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
       </div>
       <div class="sidenav__profile">
         <div class="sidenav__profile-avatar"></div>
-        <div class="sidenav__profile-title text-light">Matthew H</div>
+
       </div>
 
         <ul class="sidenav__list">

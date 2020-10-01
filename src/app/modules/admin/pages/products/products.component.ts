@@ -6,20 +6,23 @@ import { UserService } from '../../../shared/services/user.service';
   selector: 'app-admin-products',
   providers: [ProductService, UserService],
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss', '../../../../../table.scss',  '../../../../../button.scss']
 })
 export class ProductsComponent implements OnInit{
   products: any;
+  
   constructor(
     private userServ: UserService,
     private productServ: ProductService) {
+
   }
 
   ngOnInit() {
+    
     this.getProducts();
   }
   getProducts() {
-    this.productServ.getMerchantProducts(this.userServ.getToken()).subscribe(
+    this.productServ.getMerchantProducts().subscribe(
       (res: any) => {
         console.log('res=', res);
         if(res && res.ok) {

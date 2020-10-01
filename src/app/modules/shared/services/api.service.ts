@@ -1,28 +1,48 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { UserService } from './user.service';
+import { StorageService } from './storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of } from "rxjs";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   token: string;
-  constructor(private httpClient: HttpClient, private userServ: UserService) {
+  constructor(private httpClient: HttpClient, private storageServ: StorageService) {
   }
 
-  formHttpOption() {
-    if(!this.token) {
-      this.token = this.userServ.getToken();
-    }
-		const httpOptions = {
-		  headers: new HttpHeaders({
-		    'Content-Type':  'application/json',
-		    'x-access-token': this.token
-		  })
-    };	
-    return httpOptions;
+
+  formHttpOption()  {
+
+
+    const observable = new Observable(subscriber => {
+      if(!this.token) {
+        this.storageServ.getToken().subscribe(
+          (token: any) => {
+            this.token = token;
+            const httpOptions = {
+              headers: new HttpHeaders({
+                'Content-Type':  'application/json',
+                'x-access-token': this.token
+              })
+            };	
+            subscriber.next(httpOptions);    
+          }
+        );
+      } else {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'x-access-token': this.token
+          })
+        };	
+        subscriber.next(httpOptions);  
+      }
+    });    
+
+    return observable;
   }
 
   qrcodepay(data) {
@@ -36,31 +56,80 @@ export class ApiService {
   }
 
   postPrivate(endpoint, data) {
+    const observable = new Observable(subscriber => {
+      this.formHttpOption().subscribe(
+        (httpOptions: any) => {
+          this.httpClient
+            .post(environment.endpoints.blockchaingate + endpoint, data, httpOptions).subscribe(
+              (res: any) => {
+                subscriber.next(res);  
+              }
+            );
+        }
+      );
+    });
 
-    const httpOptions = this.formHttpOption();
-    if (!httpOptions) {
-      const ret = {
-        success: false,
-        message: 'token is null'
-      }
-      return of(ret);
-    }
-    return this.httpClient
-    .post(environment.endpoints.blockchaingate + endpoint, data, httpOptions);
+    return observable;
+
   }
+
+
+	public uploadFile(endpoint, formData: any ) {
+    console.log('formData===', formData);
+    
+    const observable = new Observable(subscriber => {
+      this.storageServ.getToken().subscribe(
+        (token: any) => {
+
+
+          this.httpClient
+          .post(
+            environment.endpoints.blockchaingate + endpoint,
+            formData, // Send the File Blob as the POST body.
+            {
+              // NOTE: Because we are posting a Blob (File is a specialized Blob
+              // object) as the POST body, we have to include the Content-Type
+              // header. If we don't, the server will try to parse the body as
+              // plain text.
+              headers: {
+                'x-access-token': token
+              },
+              reportProgress: true,
+              observe: 'events'
+            }
+          ).subscribe(
+            (res: any) => {
+              subscriber.next(res);  
+            }
+          );
+
+
+        }
+      );
+    });
+
+    return observable;
+	}
+
+
 
   getPrivate(endpoint) {
 
-    const httpOptions = this.formHttpOption();
-    if (!httpOptions) {
-      const ret = {
-        success: false,
-        message: 'token is null'
-      }
-      return of(ret);
-    }
-    return this.httpClient
-    .get(environment.endpoints.blockchaingate + endpoint, httpOptions);
+    const observable = new Observable(subscriber => {
+      this.formHttpOption().subscribe(
+        (httpOptions: any) => {
+          this.httpClient
+            .get(environment.endpoints.blockchaingate + endpoint, httpOptions).subscribe(
+              (res: any) => {
+                subscriber.next(res);  
+              }
+            );
+        }
+      );
+    });
+
+    return observable;
+
   }
 
   getPublic(endpoint) {

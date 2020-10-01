@@ -4,11 +4,20 @@
       <hr>
   
       <label for="email"><b>Name</b></label>
-      <input type="text" placeholder="Enter category name" [(ngModel)]="name" name="name" required>
+      <input type="text" placeholder="Enter category name" [(ngModel)]="category" name="category" required>
 
-      <div class="d-flex justify-content-between">
+      <label for="email"><b>Sequence</b></label>
+      <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence" required>
+
+      <div class="custom-select" style="width:200px;" *ngIf="categories">
+        <select [(ngModel)]="parentId" name="parentId">
+          <option value="0">Select Category:</option>
+          <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category}}</option>
+        </select>
+      </div>      
+      <div class="d-flex justify-content-between py-2">
         <button type="button" class="btn cancelbtn">Cancel</button>
         <button type="submit" class="btn signinbtn" (click)="addProduct()">Add</button>
       </div>
     </div>
-  </form>
+</form>

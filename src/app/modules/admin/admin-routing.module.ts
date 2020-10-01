@@ -8,6 +8,7 @@ import { ProductsComponent } from './pages/products/products.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
+import { UserAddComponent } from './pages/user-add/user-add.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,15 @@ const routes: Routes = [
       { 
         path: 'category/add',
         component: CategoryAddComponent
-      },                     
+      },  
+      { 
+        path: 'category/:id/edit',
+        component: CategoryAddComponent
+      },        
+      { 
+        path: 'user/:id/edit',
+        component: UserAddComponent
+      },                           
       { 
         path: 'merchants',
         component: MerchantsComponent

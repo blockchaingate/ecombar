@@ -1,0 +1,23 @@
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  .card .container {
+      padding: 30px;
+  }
+
+  .card .container input {
+    min-width: 0;
+    min-height: 3.6rem;
+    margin: 0;
+    padding: .5rem 1.2rem;
+    background: none;
+    border: .1rem solid lightgray;
+  }

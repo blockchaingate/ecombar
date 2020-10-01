@@ -14,10 +14,12 @@ export class SigninComponent implements OnInit{
   token: string;
 
   constructor(private router: Router, private userServ: UserService) {
-
+    
+    
   }
   ngOnInit() {
-
+    const token = this.userServ.getToken();
+    console.log('token=', token);
   }
 
   signin() {
@@ -25,9 +27,10 @@ export class SigninComponent implements OnInit{
       (res: any) => {
         if(res && res.token) {
           this.token = res.token;
-          this.userServ.saveToken(this.token);
-          console.log('this.token=', this.token);
-          this.router.navigate(['/admin']);
+          this.userServ.saveToken(this.token).subscribe((res: any) => {
+            this.router.navigate(['/admin']);
+          });
+          
         }
       }
     );

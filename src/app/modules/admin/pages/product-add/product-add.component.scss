@@ -1,0 +1,36 @@
+label {
+    font-size: 1.4rem;
+}
+
+.layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -2rem;
+    margin-left: -2rem;   
+    
+       
+}
+
+.card-section {
+  margin: 2rem;   
+  min-width: 40%; 
+}
+
+.form-field {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-field label {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.media-container {
+    border: 2px dashed #ccc;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}

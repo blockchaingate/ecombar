@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +11,26 @@ export class CategoryService {
   }
   
   create(data) {    
-    return this.apiServ.postPrivate('cats/create', data);
-  }
-  
-  getCategories() {
-    return this.apiServ.postPublic('cats', {typ: environment.cat_typ});
+    return this.apiServ.postPrivate('product-categories/Create', data);
   }
 
+  update(id:string, data) {
+    return this.apiServ.postPrivate('product-categories/Update/' + id, data);
+  }
+
+  getCategories() {
+    return this.apiServ.getPublic('product-categories');
+  }
+
+  getAdminCategories() {
+    return this.apiServ.getPublic('product-categories/admin');
+  }
+
+  getMerchantCategories(merchantId: string) {
+    return this.apiServ.getPublic('product-categories/merchant/' + merchantId);
+  }
+
+  getCategory(id: string) {
+    return this.apiServ.getPublic('product-categories/' + id);
+  }
 }

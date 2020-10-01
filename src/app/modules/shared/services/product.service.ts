@@ -16,7 +16,7 @@ export class ProductService {
     return this.apiServ.postPrivate('products/Create', data);
   }
 
-  getMerchantProducts(token: string) {
+  getMerchantProducts() {
 
     return this.apiServ.getPrivate('merchant/products');
   }
