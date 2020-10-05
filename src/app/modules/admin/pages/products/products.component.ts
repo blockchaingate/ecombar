@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { UserService } from '../../../shared/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-products',
@@ -13,6 +14,7 @@ export class ProductsComponent implements OnInit{
   
   constructor(
     private userServ: UserService,
+    private router: Router,
     private productServ: ProductService) {
 
   }
@@ -22,13 +24,40 @@ export class ProductsComponent implements OnInit{
     this.getProducts();
   }
   getProducts() {
-    this.productServ.getMerchantProducts().subscribe(
-      (res: any) => {
-        console.log('res=', res);
-        if(res && res.ok) {
-          this.products = res._body;
+
+    this.userServ.getToken().subscribe(
+      (token: any) => {
+        const decoded = this.userServ.decodeToken(token);
+        const aud = decoded.aud;
+        const merchantId = decoded.merchantId;
+
+        console.log('aud===', aud);
+        console.log('merchantId==', merchantId);
+        if (aud == 'isSystemAdmin') {
+          this.productServ.getProducts().subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                this.products = res._body;
+              }
+            }
+          );
+        }  else 
+        if (merchantId) {
+          this.productServ.getMerchantProducts(merchantId).subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                this.products = res._body;
+              }
+            }
+          );
         }
-      }
+      } 
     );
+
+
+  }
+
+  editProduct(product) {
+    this.router.navigate(['/admin/product/' + product._id + '/edit']);
   }
 }

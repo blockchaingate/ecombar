@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import {HttpEventType, HttpErrorResponse} from '@angular/common/http';
 import {UploadService} from '../../../shared/services/upload.service';
 import {of} from 'rxjs';
@@ -17,6 +17,7 @@ export class UploadMediaComponent implements OnInit{
   
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
   files = [];
+  @Input() images: any;
 
   constructor(private uploadService: UploadService) { }
   ngOnInit() {

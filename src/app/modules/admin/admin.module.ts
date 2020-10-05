@@ -8,7 +8,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
 import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { CollectionsComponent } from './pages/collections/collections.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
+import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
@@ -26,9 +28,11 @@ import { FormsModule } from '@angular/forms';
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    CollectionAddComponent,
     UserAddComponent,
     MerchantsComponent,
     ProductsComponent,
+    CollectionsComponent,
     CategoriesComponent,
     ProductAddComponent,
     CategoryAddComponent

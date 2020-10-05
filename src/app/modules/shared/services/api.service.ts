@@ -73,6 +73,23 @@ export class ApiService {
 
   }
 
+  putPrivate(endpoint, data) {
+    const observable = new Observable(subscriber => {
+      this.formHttpOption().subscribe(
+        (httpOptions: any) => {
+          this.httpClient
+            .put(environment.endpoints.blockchaingate + endpoint, data, httpOptions).subscribe(
+              (res: any) => {
+                subscriber.next(res);  
+              }
+            );
+        }
+      );
+    });
+
+    return observable;
+
+  }
 
 	public uploadFile(endpoint, formData: any ) {
     console.log('formData===', formData);
@@ -134,6 +151,7 @@ export class ApiService {
 
   getPublic(endpoint) {
     const url = environment.endpoints.blockchaingate + endpoint;
+    console.log('url==', url);
     return this.httpClient.get(url);
   }
 

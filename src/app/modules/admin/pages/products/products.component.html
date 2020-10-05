@@ -11,11 +11,11 @@
 
   </li>
   <li class="table-row" *ngFor="let product of products">
-    <div class="col col-3" data-label="Job Id">{{product.title}}</div>
+    <div class="col col-3" data-label="Job Id">{{product.title.en}}</div>
     <div class="col col-3" data-label="Customer Name">{{product.price}}</div>
-    <div class="col col-3" data-label="Customer Name">{{product.curency}}</div>
+    <div class="col col-3" data-label="Customer Name">{{product.currency}}</div>
     <div class="col col-3 text-right" data-label="Payment Status">
-      <a (click)="edit(category)">
+      <a (click)="editProduct(product)">
         <img src="/assets/svg/edit.svg">
       </a>
       

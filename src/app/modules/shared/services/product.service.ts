@@ -16,13 +16,25 @@ export class ProductService {
     return this.apiServ.postPrivate('products/Create', data);
   }
 
-  getMerchantProducts() {
+  update(id, data) {
+    return this.apiServ.putPrivate('products/Update/' + id, data);
+  }  
+  
+  getProduct(id: string) {
+    return this.apiServ.getPublic('products/' + id);
+  }
 
-    return this.apiServ.getPrivate('merchant/products');
+  getProducts() {
+    return this.apiServ.getPublic('products');
+  }
+
+  getMerchantProducts(merchantId: string) {
+    console.log('merchantId in here', merchantId);
+    return this.apiServ.getPublic('products/merchant/' + merchantId);
   }
 
 
   getMerchantAllProducts() {
-    return this.apiServ.getPublic('merchant/all/products');
+    return this.apiServ.getPublic('products/merchant/all/products');
   }  
 }

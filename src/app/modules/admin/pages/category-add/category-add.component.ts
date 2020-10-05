@@ -13,7 +13,9 @@ export class CategoryAddComponent implements OnInit{
     sequence: number;
     categories: any;
     category: string;
+    categoryChinese: string;
     parentId: string;
+    currentTab: string;
     id: string;
 
     constructor(
@@ -26,7 +28,7 @@ export class CategoryAddComponent implements OnInit{
 
     ngOnInit() {
 
-
+      this.currentTab = 'default';
       this.userServ.getToken().subscribe(
         (token: any) => {
           const decoded = this.userServ.decodeToken(token);
@@ -43,7 +45,7 @@ export class CategoryAddComponent implements OnInit{
             );
           }  else 
           if (merchantId) {
-            this.categoryServ.getCategories().subscribe(
+            this.categoryServ.getMerchantCategories(merchantId).subscribe(
               (res:any) => {
                 if(res && res.ok) {
                   this.categories = res._body;
@@ -62,7 +64,8 @@ export class CategoryAddComponent implements OnInit{
             if(res && res.ok) {
               const category = res._body;
               console.log('cateogryyy=', category);
-              this.category = category.category;
+              this.category = category.category.en;
+              this.categoryChinese = category.category.zh;
               this.sequence = category.sequence;
               this.parentId = category.parentId;
             }
@@ -72,9 +75,16 @@ export class CategoryAddComponent implements OnInit{
       }      
     }
 
+    changeTab(tabName: string) {
+      this.currentTab = tabName;
+    }
+
     addProduct() {
       const data = {
-        category: this.category,
+        category: {
+          en: this.category,
+          zh: this.categoryChinese
+        },
         sequence: this.sequence,
         parentId: this.parentId
       };      

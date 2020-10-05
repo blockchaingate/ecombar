@@ -8,6 +8,8 @@ import { ProductsComponent } from './pages/products/products.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
+import { CollectionsComponent } from './pages/collections/collections.component';
+import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 
 const routes: Routes = [
@@ -32,6 +34,10 @@ const routes: Routes = [
         component: ProductAddComponent
       }, 
       { 
+        path: 'product/:id/edit',
+        component: ProductAddComponent
+      },        
+      { 
         path: 'categories',
         component: CategoriesComponent
       },  
@@ -42,6 +48,18 @@ const routes: Routes = [
       { 
         path: 'category/:id/edit',
         component: CategoryAddComponent
+      },       
+      { 
+        path: 'collections',
+        component: CollectionsComponent
+      },  
+      { 
+        path: 'collection/add',
+        component: CollectionAddComponent
+      },       
+      { 
+        path: 'collection/:id/edit',
+        component: CollectionAddComponent
       },        
       { 
         path: 'user/:id/edit',

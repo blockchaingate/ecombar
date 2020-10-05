@@ -38,6 +38,10 @@ export class AdminComponent implements OnInit{
               link: 'categories'
             },
             {
+              title: 'Collectionß',
+              link: 'collections'
+            },            
+            {
               title: 'Users',
               link: 'users'
             }         
@@ -52,7 +56,11 @@ export class AdminComponent implements OnInit{
             {
               title: 'Category',
               link: 'categories'
-            },            
+            },  
+            {
+              title: 'Collection',
+              link: 'collections'
+            },                       
             {
               title: 'Product',
               link: 'products'
