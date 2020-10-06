@@ -13,6 +13,8 @@ import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
+import { BannersComponent } from './pages/banners/banners.component';
+import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { CommonModule } from '@angular/common';
@@ -28,6 +30,8 @@ import { FormsModule } from '@angular/forms';
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    BannersComponent,
+    BannerAddComponent,
     CollectionAddComponent,
     UserAddComponent,
     MerchantsComponent,

@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit{
           this.menuItems = [
             {
               title: 'Dashboard',
-              link: './'
+              link: 'dashboard'
             },
             {
               title: 'Category',
@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit{
           this.menuItems = [
             {
               title: 'Dashboard',
-              link: './'
+              link: 'dashboard'
             },
             {
               title: 'Category',

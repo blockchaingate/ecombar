@@ -55,7 +55,17 @@ export class CategoriesComponent implements OnInit{
     );
   }
 
-  edit(category) {
+  editCategory(category) {
     this.router.navigate(['/admin/category/' + category._id + '/edit']);
   }
+
+  deleteCategory(category) {
+    this.categoryServ.deleteCategory(category._id).subscribe(
+      (res: any) => {
+        if(res && res.ok) {
+          this.categories = this.categories.filter((item) => item._id != category._id);
+        }
+      }
+    );
+  }  
 }

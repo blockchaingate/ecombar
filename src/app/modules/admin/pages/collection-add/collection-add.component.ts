@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CollectionService } from '../../../shared/services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
+import { ProductService } from '../../../shared/services/product.service';
 
 @Component({
   selector: 'app-admin-collection-add',
@@ -10,6 +11,9 @@ import { UserService } from '../../../shared/services/user.service';
   styleUrls: ['./collection-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
 export class CollectionAddComponent implements OnInit{
+   products: any;
+   productId: string;
+   collectionProducts: any;
     sequence: number;
     name: string;
     nameChinese: string;
@@ -17,6 +21,7 @@ export class CollectionAddComponent implements OnInit{
     id: string;
 
     constructor(
+      private productServ: ProductService,
       private userServ: UserService,
       private route: ActivatedRoute,
       private router: Router,
@@ -27,7 +32,7 @@ export class CollectionAddComponent implements OnInit{
     ngOnInit() {
 
       this.currentTab = 'default';
-
+      this.getProducts();
 
       this.id = this.route.snapshot.paramMap.get('id');
       console.log('this.id====', this.id);
@@ -40,6 +45,7 @@ export class CollectionAddComponent implements OnInit{
               console.log('collection=', collection);
               this.name = collection.name.en;
               this.nameChinese = collection.name.zh;
+              this.collectionProducts = collection.products;
               this.sequence = collection.sequence;
             }
             
@@ -48,17 +54,64 @@ export class CollectionAddComponent implements OnInit{
       }      
     }
 
+    addProduct() {
+      console.log('this.productId==', this.productId);
+      for(let i=0;i<this.products.length;i++) {
+        const product = this.products[i];
+        if(product._id == this.productId) {
+          this.collectionProducts.push(product);
+          break;
+        }
+      }
+    }
+    getProducts() {
+
+      this.userServ.getToken().subscribe(
+        (token: any) => {
+          const decoded = this.userServ.decodeToken(token);
+          const aud = decoded.aud;
+          const merchantId = decoded.merchantId;
+
+          if (aud == 'isSystemAdmin') {
+            this.productServ.getProducts().subscribe(
+              (res: any) => {
+                if(res && res.ok) {
+                  this.products = res._body;
+                }
+              }
+            );
+          }  else 
+          if (merchantId) {
+            this.productServ.getMerchantProducts(merchantId).subscribe(
+              (res: any) => {
+                if(res && res.ok) {
+                  this.products = res._body;
+                }
+              }
+            );
+          }
+        } 
+      );
+    }
+
     changeTab(tabName: string) {
       this.currentTab = tabName;
     }
 
     addCollection() {
+      const products =[];
+      if(this.collectionProducts) {
+        for(let i=0;i<this.collectionProducts.length;i++) {
+          products.push(this.collectionProducts[i]._id);
+        }
+      }
       const data = {
          name: {
           en: this.name,
           zh: this.nameChinese
         },
-        sequence: this.sequence
+        sequence: this.sequence,
+        products: products
       };      
       if(!this.id) {
 

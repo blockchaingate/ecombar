@@ -31,4 +31,8 @@ export class CollectionService {
   getCollection(id: string) {
     return this.apiServ.getPublic('product-collections/' + id);
   }
+
+  deleteCollection(id) {
+    return this.apiServ.getPrivate('product-collections/Delete/' + id);
+  }    
 }

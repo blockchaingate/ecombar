@@ -60,4 +60,14 @@ export class ProductsComponent implements OnInit{
   editProduct(product) {
     this.router.navigate(['/admin/product/' + product._id + '/edit']);
   }
+
+  deleteProduct(product) {
+    this.productServ.deleteProduct(product._id).subscribe(
+      (res: any) => {
+        if(res && res.ok) {
+          this.products = this.products.filter((item) => item._id != product._id);
+        }
+      }
+    );
+  }
 }

@@ -19,6 +19,7 @@ export class ProductAddComponent implements OnInit{
     title: string;
     price: string;
     product: any;
+    active: boolean;
     id: string;
     currentTab: string;
     category: string;
@@ -38,6 +39,7 @@ export class ProductAddComponent implements OnInit{
     }
 
     ngOnInit() {
+      this.active = false;
       this.images = [
         'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a0?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
         'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a3?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
@@ -77,6 +79,7 @@ export class ProductAddComponent implements OnInit{
               
               this.currency = product.currency;
               this.price = product.price;
+              this.active = product.active;
               if(product.images) {
                 this.images = product.images;
               }
@@ -95,6 +98,10 @@ export class ProductAddComponent implements OnInit{
       this.currentTab = tabName;
     }
 
+    setActive(a: boolean) {
+      this.active = a;
+    }
+    
     saveProduct() {
       const data = {
         title: {
@@ -108,7 +115,7 @@ export class ProductAddComponent implements OnInit{
         price: this.price,
         currency: this.currency,
         primaryCategoryId: this.category,
-        active: true,
+        active: this.active,
         images: this.images
       };
       if(this.id) {

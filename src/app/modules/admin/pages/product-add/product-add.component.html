@@ -53,11 +53,11 @@
                 <label for="email">Availability</label>
                 <div>
                   <label class="container">Online
-                    <input type="radio" checked="checked" name="radio">
+                    <input type="radio" [checked]="active" (click)="setActive(true)" name="radio">
                     <span class="checkmark"></span>
                   </label>
                   <label class="container">Offline
-                    <input type="radio" name="radio">
+                    <input type="radio" [checked]="!active" (click)="setActive(false)" name="radio">
                     <span class="checkmark"></span>
                   </label>
                 </div>

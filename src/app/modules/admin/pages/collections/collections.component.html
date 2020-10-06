@@ -14,9 +14,18 @@
         <div class="col col-3" data-label="Job Id">{{collection.name.en}}</div>
         <div class="col col-3" data-label="Customer Name">{{collection.sequence}}</div>
         <div class="col col-3 text-right">
-          <a (click)="edit(collection)">
-            <img src="/assets/svg/edit.svg">
-          </a>
+
+          <div class="d-inline-block px-2">
+            <a (click)="editCollection(collection)">
+              <img src="/assets/svg/edit.svg">
+            </a>
+          </div>
+    
+          <div class="d-inline-block px-2">
+            <a (click)="deleteCollection(collection)">
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div> 
           
         </div>
       </li>

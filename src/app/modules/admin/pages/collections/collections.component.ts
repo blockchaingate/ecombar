@@ -54,8 +54,17 @@ export class CollectionsComponent implements OnInit{
       );
     }
   
-    edit(collection) {
+    editCollection(collection) {
       this.router.navigate(['/admin/collection/' + collection._id + '/edit']);
     }
 
+    deleteCollection(collection) {
+      this.collectionServ.deleteCollection(collection._id).subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            this.collections = this.collections.filter((item) => item._id != collection._id);
+          }
+        }
+      );
+    }      
 }

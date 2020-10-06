@@ -11,6 +11,8 @@ import { CategoryAddComponent } from './pages/category-add/category-add.componen
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
+import { BannersComponent } from './pages/banners/banners.component';
+import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: 'dashboard'
+      },        
+      {
+        path: 'dashboard',
         component: DashboardComponent
       },  
       { 
@@ -48,7 +54,19 @@ const routes: Routes = [
       { 
         path: 'category/:id/edit',
         component: CategoryAddComponent
-      },       
+      }, 
+      { 
+        path: 'banners',
+        component: BannersComponent
+      },  
+      { 
+        path: 'banner/add',
+        component: BannerAddComponent
+      },  
+      { 
+        path: 'banner/:id/edit',
+        component: BannerAddComponent
+      },              
       { 
         path: 'collections',
         component: CollectionsComponent

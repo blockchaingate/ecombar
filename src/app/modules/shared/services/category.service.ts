@@ -33,4 +33,8 @@ export class CategoryService {
   getCategory(id: string) {
     return this.apiServ.getPublic('product-categories/' + id);
   }
+
+  deleteCategory(id) {
+    return this.apiServ.getPrivate('product-categories/Delete/' + id);
+  }  
 }

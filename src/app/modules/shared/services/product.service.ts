@@ -33,7 +33,9 @@ export class ProductService {
     return this.apiServ.getPublic('products/merchant/' + merchantId);
   }
 
-
+  deleteProduct(id) {
+    return this.apiServ.getPrivate('products/Delete/' + id);
+  }
   getMerchantAllProducts() {
     return this.apiServ.getPublic('products/merchant/all/products');
   }  
