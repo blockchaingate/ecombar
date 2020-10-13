@@ -6,8 +6,10 @@
     padding-top: .3125rem;
     padding-bottom: .3125rem;   
     padding-left:  .5125rem;
-    padding-right: .5125rem;
+    padding-right: .5125rem; 
+ 
 }
+
 
 .img-responsive {
     height: 24px;
@@ -20,7 +22,7 @@
     
 }
 .header-container {
-    color: white;
+    color: white;  
 }
 img, svg {
     vertical-align: middle;
@@ -157,4 +159,24 @@ img, svg {
     text-decoration: none;
     border: 1px solid;
     border-radius: 2px;    
+}
+
+
+[badge]:after {
+    background: red;
+  border-radius: 30px;
+  color: #fff;
+  content: attr(badge);
+  font-size: 11px;
+  margin-top: -10px;
+  min-width: 20px;
+  padding: 2px;
+  position: absolute;
+  text-align: center;
+}
+
+[badge^="-"]:after,
+[badge="0"]:after,
+[badge=""]:after {
+ display: none;
 }

@@ -1,3 +1,32 @@
+<div class="auth-container d-flex justify-content-center">
+  <div class="container">
+    <h1>Sign Up</h1>
+    <hr>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" [(ngModel)]="email" name="email" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" [(ngModel)]="password" name="psw" required>
+
+    <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input type="password" placeholder="Repeat Password" [(ngModel)]="repassword" name="psw-repeat" required>
+
+    <div class="clearfix d-flex justify-content-around align-items-center">
+      <div class="mx-2">
+        <button type="submit" class="signinbtn btn" (click)="signup()">Sign Up</button>
+      </div>
+    </div>
+    <div>
+      <h5>Already with ecombar?</h5>
+      <div class="mx-2">
+        <button type="submit" class="signinbtn btn" (click)="signin()">Sign In</button>
+      </div>        
+    </div>
+  </div>
+</div>
+
+<!--
 <form action="action_page.php" style="border:1px solid #ccc">
     <div class="container">
       <h1>Sign Up</h1>
@@ -21,3 +50,4 @@
       </div>
     </div>
   </form>
+-->

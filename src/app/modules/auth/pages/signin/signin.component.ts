@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-signin',
   providers: [UserService],
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  styleUrls: ['./signin.component.scss', '../../../../../button.scss']
 })
 export class SigninComponent implements OnInit{
   email: string;
@@ -34,5 +34,9 @@ export class SigninComponent implements OnInit{
         }
       }
     );
+  }
+
+  signup() {
+    this.router.navigate(['/auth/signup']);
   }
 }

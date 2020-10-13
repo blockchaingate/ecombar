@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { StorageService } from './storage.service';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class UserService {
   aud: string;
   merchantId: string;
 
-  constructor(private apiServ: ApiService, private storageServ: StorageService) {
+  constructor(
+    private apiServ: ApiService, 
+    private authServ: AuthService,
+    private storageServ: StorageService) {
   }
 
   signin(email: string, password: string) {
@@ -20,11 +24,24 @@ export class UserService {
     return this.apiServ.postPublic('members/login', theBody);
   }  
 
+  signup(email: string, password: string) {
+    const theBody = { email: email, password: password, appId: environment.appid };
+    
+    return this.apiServ.postPublic('members/create', theBody);
+  }  
+  getMe() {
+    return this.apiServ.getPrivate('members/me');
+  }
+  activateUser(userId: string, activationCode: string, appId: string) {
+    return this.apiServ.getPublic('members/' + 'activation/' + userId + '/' + activationCode + '/' + appId);
+  }
+
+  // userId + "/" + activationCode + "/" + app._id
   saveToken(token: string) {
     console.log('token for save=', token);
     this.token = token;
     if(token) {
-      const decoded = this.decodeToken(token);
+      const decoded = this.authServ.decodeToken(token);
       this.aud = decoded.aud;
       console.log('this.aud in saveToken=', this.aud);
       this.merchantId = decoded.merchantId;
@@ -83,79 +100,16 @@ export class UserService {
   update(body: any) {
     return this.apiServ.postPrivate('members/FindOneAndUpdate', body);
   }
+
+  updateSelf(body: any) {
+    return this.apiServ.postPrivate('members/updateSelf', body);
+  }
+
   
   getToken() {
       return this.storageServ.getToken();
 
   }
 
-  b64DecodeUnicode(str: string) {
-    return decodeURIComponent(Array.prototype.map
-        .call(this.b64decode(str), function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    })
-        .join(''));
-  }
 
-  b64decode (str: string) {
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    var output = '';
-    str = String(str).replace(/=+$/, '');
-    if (str.length % 4 === 1) {
-        throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
-    }
-    for (
-    // initialize result and counters
-    var bc = 0, bs = void 0, buffer = void 0, idx = 0; 
-    // get next character
-    (buffer = str.charAt(idx++)); 
-    // character found in table? initialize bit storage and add its ascii value;
-    ~buffer &&
-        ((bs = bc % 4 ? bs * 64 + buffer : buffer),
-            // and if not first of each 4 characters,
-            // convert the first 8 bits to one ascii character
-            bc++ % 4)
-        ? (output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6))))
-        : 0) {
-        // try to find character in table (0-63, not found => -1)
-        buffer = chars.indexOf(buffer);
-    }
-    return output;
-}
-
-  urlBase64Decode (str: string) {
-    var output = str.replace(/-/g, '+').replace(/_/g, '/');
-    switch (output.length % 4) {
-        case 0: {
-            break;
-        }
-        case 2: {
-            output += '==';
-            break;
-        }
-        case 3: {
-            output += '=';
-            break;
-        }
-        default: {
-            throw 'Illegal base64url string!';
-        }
-    }
-    return this.b64DecodeUnicode(output);
-  }
-    
-  decodeToken(token: string) {
-    if (token == null || token === '') {
-        return null;
-    }
-    var parts = token.split('.');
-    if (parts.length !== 3) {
-        throw new Error('The inspected token doesn\'t appear to be a JWT. Check to make sure it has three parts and see https://jwt.io for more.');
-    }
-    var decoded = this.urlBase64Decode(parts[1]);
-    if (!decoded) {
-        throw new Error('Cannot decode the token.');
-    }
-    return JSON.parse(decoded);
-  };  
 }

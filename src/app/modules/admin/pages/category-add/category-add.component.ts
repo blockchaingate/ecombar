@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-admin-category-add',
@@ -20,6 +21,7 @@ export class CategoryAddComponent implements OnInit{
 
     constructor(
       private userServ: UserService,
+      private authServ: AuthService,
       private route: ActivatedRoute,
       private router: Router,
       private categoryServ: CategoryService) {
@@ -31,7 +33,7 @@ export class CategoryAddComponent implements OnInit{
       this.currentTab = 'default';
       this.userServ.getToken().subscribe(
         (token: any) => {
-          const decoded = this.userServ.decodeToken(token);
+          const decoded = this.authServ.decodeToken(token);
           const aud = decoded.aud;
           const merchantId = decoded.merchantId;
   

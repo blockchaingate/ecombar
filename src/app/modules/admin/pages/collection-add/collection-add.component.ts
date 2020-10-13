@@ -3,6 +3,7 @@ import { CollectionService } from '../../../shared/services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { ProductService } from '../../../shared/services/product.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-admin-collection-add',
@@ -23,6 +24,7 @@ export class CollectionAddComponent implements OnInit{
     constructor(
       private productServ: ProductService,
       private userServ: UserService,
+      private authServ: AuthService,
       private route: ActivatedRoute,
       private router: Router,
       private collectionServ: CollectionService) {
@@ -68,7 +70,7 @@ export class CollectionAddComponent implements OnInit{
 
       this.userServ.getToken().subscribe(
         (token: any) => {
-          const decoded = this.userServ.decodeToken(token);
+          const decoded = this.authServ.decodeToken(token);
           const aud = decoded.aud;
           const merchantId = decoded.merchantId;
 

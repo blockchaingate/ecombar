@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center">
+    <div *ngFor="let item of products" class="px-2">
+        <div *ngIf="item.images">
+            <img class="media" src="{{item.images[0]}}">
+        </div>
+        <div>
+            {{item.title.en}}
+        </div>
+        <div>
+            {{item.price}}  {{item.currency}}
+        </div>  
+        <div>
+            <button class="btn" (click)="addToCart(item)">{{'Add to cart' | translate}}</button>
+        </div>          
+    </div>
+</div>

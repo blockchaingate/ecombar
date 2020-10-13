@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   providers: [UserService],
@@ -14,14 +15,18 @@ export class AdminComponent implements OnInit{
   email: string;
 
   menuItems: any;
-  constructor(private router: Router, private userServ: UserService) {
+  constructor(
+    private router: Router, 
+    private authServ: AuthService, 
+    private userServ: UserService
+    ) {
 
   }
   
   ngOnInit() {
     this.userServ.getToken().subscribe(
       (token: any) => {
-        const decoded = this.userServ.decodeToken(token);
+        const decoded = this.authServ.decodeToken(token);
         console.log('decoded=', decoded);
         const aud = decoded.aud;
         this.email = decoded.email;
@@ -34,11 +39,15 @@ export class AdminComponent implements OnInit{
               link: 'dashboard'
             },
             {
+              title: 'Banner',
+              link: 'banners'
+            },            
+            {
               title: 'Category',
               link: 'categories'
             },
             {
-              title: 'Collectionß',
+              title: 'Collection',
               link: 'collections'
             },            
             {
@@ -54,6 +63,10 @@ export class AdminComponent implements OnInit{
               link: 'dashboard'
             },
             {
+              title: 'Banner',
+              link: 'banners'
+            },             
+            {
               title: 'Category',
               link: 'categories'
             },  
@@ -66,6 +79,17 @@ export class AdminComponent implements OnInit{
               link: 'products'
             }        
           ]      
+        } else {
+          this.menuItems = [
+            {
+              title: 'Dashboard',
+              link: 'dashboard'
+            },
+            {
+              title: 'Address',
+              link: 'address'
+            }            
+          ];          
         }
 
       }

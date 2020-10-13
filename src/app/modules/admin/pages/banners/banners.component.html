@@ -1,0 +1,32 @@
+
+<div class="container">
+    <div class="text-right">
+      <button class="btn" routerLink="/admin/banner/add" routerLinkActive="active">New</button>
+  </div>
+  
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">Title</div>
+        <div class="col col-3">Sequence</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let banner of banners">
+        <div class="col col-3" data-label="Title">{{banner.title.en}}</div>
+        <div class="col col-3" data-label="Sequance">{{banner.sequence}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+  
+          <div class="d-inline-block px-2">
+            <a (click)="editBanner(banner)">
+              <img src="/assets/svg/edit.svg">
+            </a>
+          </div>
+    
+          <div class="d-inline-block px-2">
+            <a (click)="deleteBanner(banner)">
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div>        
+        </div>
+      </li>
+    </ul>
+  </div>

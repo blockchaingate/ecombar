@@ -11,6 +11,7 @@ export class UserAddComponent implements OnInit{
     name: string;
     id: string;
     user: any;
+    defaultMerchant: string;
     parentReferMemberId: string;
     refCode: string;
     campaignReferral: any;
@@ -27,7 +28,7 @@ export class UserAddComponent implements OnInit{
           (res: any) => {
             
             this.user = res;
-            
+            this.defaultMerchant = res.defaultMerchant ? res.defaultMerchant._id : '';
           }
         );
         this.userServ.getCampaignReferral(this.id).subscribe(

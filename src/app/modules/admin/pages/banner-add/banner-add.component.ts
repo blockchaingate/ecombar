@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-admin-banner-add',
@@ -15,12 +16,13 @@ export class BannerAddComponent implements OnInit{
     title: string;
     titleChinese: string;
     subtitle: string;
-    subtitleChinese: string;    
+    subtitleChinese: string;   
     currentTab: string;
     id: string;
 
     constructor(
       private userServ: UserService,
+      private authServ: AuthService,
       private route: ActivatedRoute,
       private router: Router,
       private bannerServ: BannerService) {
@@ -32,7 +34,7 @@ export class BannerAddComponent implements OnInit{
       this.currentTab = 'default';
       this.userServ.getToken().subscribe(
         (token: any) => {
-          const decoded = this.userServ.decodeToken(token);
+          const decoded = this.authServ.decodeToken(token);
           const aud = decoded.aud;
           const merchantId = decoded.merchantId;
   
@@ -81,7 +83,7 @@ export class BannerAddComponent implements OnInit{
       this.currentTab = tabName;
     }
 
-    addProduct() {
+    addBanner() {
       const data = {
         title: {
           en: this.title,
@@ -91,7 +93,7 @@ export class BannerAddComponent implements OnInit{
             en: this.subtitle,
             zh: this.subtitleChinese
         },        
-        sequence: this.sequence
+        sequence: this.sequence ? this.sequence : 0
       };      
       if(!this.id) {
 

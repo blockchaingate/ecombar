@@ -39,4 +39,8 @@ export class ProductService {
   getMerchantAllProducts() {
     return this.apiServ.getPublic('products/merchant/all/products');
   }  
+
+  getCategoryProducts(category_id: string) {
+    return this.apiServ.getPublic('products/category/' + category_id);
+  }
 }

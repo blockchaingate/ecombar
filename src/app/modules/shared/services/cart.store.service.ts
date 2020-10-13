@@ -1,3 +1,4 @@
+import { IfStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart-item';
@@ -23,7 +24,8 @@ export class CartStoreService {
   
     // the getter will return the last value emitted in _todos subject
     get items(): CartItem[] {
-      return this._items.getValue();
+
+      return JSON.parse(localStorage.getItem('cartItems')) ;
     }
   
   
@@ -34,17 +36,41 @@ export class CartStoreService {
     }
   
     addCartItem(item: CartItem) {
-      console.log('items to be added=', item);
+      console.log('item to be added=', item);
+      console.log('items before added', this.items);
       // we assaign a new copy of todos by adding a new todo to it 
       // with automatically assigned ID ( don't do this at home, use uuid() )
-      this.items = [
-        ...this.items, 
-        item
-      ];
+      let existed = false;
+
+      let items = this.items;
+      if(this.items) {
+        for(let i=0;i< items.length;i++) {
+          if(items[i].product_id == item.product_id) {
+            console.log('this.items[i].quantity', this.items[i].quantity);
+            console.log('item.quantity', item.quantity);
+            items[i].quantity = item.quantity + this.items[i].quantity;
+            console.log('this.items[i].quantity2', this.items[i].quantity);
+            console.log('this.items in middle', this.items);
+            existed = true;
+            console.log('existed=true');
+          }
+        }
+        
+        if(!existed) {
+          console.log('not existed');
+          items.push(item);
+          console.log('after push', this.items);
+        }
+      } else {
+        items = [item];
+      }
+
+      localStorage.setItem('cartItems', JSON.stringify(items));
+      this._items.next(this.items);
     }
   
     removeTodo(_id: string) {
-      this.items = this.items.filter(item => item._id !== _id);
+      this.items = this.items.filter(item => item.product_id !== _id);
     }
   
   

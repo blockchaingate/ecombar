@@ -17,6 +17,7 @@ import { BannersComponent } from './pages/banners/banners.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
+import { AddressComponent } from './pages/address/address.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -34,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     BannerAddComponent,
     CollectionAddComponent,
     UserAddComponent,
+    AddressComponent,
     MerchantsComponent,
     ProductsComponent,
     CollectionsComponent,

@@ -4,17 +4,19 @@ import { OrderService } from '../../shared/services/order.service';
 import { UserService } from '../../shared/services/user.service';
 import { ApiService } from '../../shared/services/api.service';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   providers: [ApiService, OrderService, UserService],
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss', '../../../../button.scss']
 })
 export class CartComponent implements OnInit, OnDestroy {
     interval;
     cartItems : any;
     payLink: string;
+    total: any;
     paidConfirmed: boolean;
     txid: string;
     payQrcode: string;
@@ -24,6 +26,7 @@ export class CartComponent implements OnInit, OnDestroy {
       private userServ: UserService,
       private cartStoreServ: CartStoreService,
       private orderServ: OrderService,
+      private router: Router,
       private apiServ: ApiService
       ) {
 
@@ -32,11 +35,27 @@ export class CartComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-      this.cartStoreServ.items$.subscribe(
-        value => {
-          this.cartItems = value;
+      this.cartItems = this.cartStoreServ.items;
+
+      this.total = [];
+
+      for(let i=0;i<this.cartItems.length; i++) {
+        const cartItem = this.cartItems[i];
+        let inTotal = false;
+        for(let j=0;j<this.total.length;j++) {
+          const totalItem = this.total[j];
+          if(totalItem.currency == cartItem.currency) {
+            totalItem.total += cartItem.price * cartItem.quantity;
+            inTotal = true;
+          }
         }
-      );
+        if(!inTotal) {
+          this.total.push({
+            currency : cartItem.currency,
+            total : cartItem.price * cartItem.quantity
+          });
+        }
+      }      
     }
 
     startTimer() {
@@ -56,6 +75,10 @@ export class CartComponent implements OnInit, OnDestroy {
           }
         );
       },1000)
+    }
+
+    checkout() {
+      this.router.navigate(['/address']);
     }
 
     pay() {
@@ -122,6 +145,7 @@ export class CartComponent implements OnInit, OnDestroy {
       );
 
     }
+
 
     pauseTimer() {
       if(this.interval) {

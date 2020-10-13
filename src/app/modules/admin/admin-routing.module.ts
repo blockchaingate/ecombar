@@ -9,6 +9,7 @@ import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
+import { AddressComponent } from './pages/address/address.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
@@ -31,6 +32,10 @@ const routes: Routes = [
         path: 'users',
         component: UsersComponent
       },  
+      { 
+        path: 'address',
+        component: AddressComponent
+      },        
       { 
         path: 'products',
         component: ProductsComponent

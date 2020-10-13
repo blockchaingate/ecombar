@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-admin-categories',
@@ -13,6 +14,7 @@ export class CategoriesComponent implements OnInit{
   categories: any;
   constructor(
     private userServ: UserService,
+    private authServ: AuthService,
     private router: Router,
     private categoryServ: CategoryService) {
   }
@@ -21,7 +23,7 @@ export class CategoriesComponent implements OnInit{
 
     this.userServ.getToken().subscribe(
       (token: any) => {
-        const decoded = this.userServ.decodeToken(token);
+        const decoded = this.authServ.decodeToken(token);
         const aud = decoded.aud;
         const merchantId = decoded.merchantId;
 

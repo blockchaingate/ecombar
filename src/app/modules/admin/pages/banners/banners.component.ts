@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-admin-banners',
@@ -13,6 +14,7 @@ export class BannersComponent implements OnInit{
   banners: any;
   constructor(
     private userServ: UserService,
+    private authServ: AuthService,
     private router: Router,
     private bannerServ: BannerService) {
   }
@@ -21,7 +23,7 @@ export class BannersComponent implements OnInit{
 
     this.userServ.getToken().subscribe(
       (token: any) => {
-        const decoded = this.userServ.decodeToken(token);
+        const decoded = this.authServ.decodeToken(token);
         const aud = decoded.aud;
         const merchantId = decoded.merchantId;
 

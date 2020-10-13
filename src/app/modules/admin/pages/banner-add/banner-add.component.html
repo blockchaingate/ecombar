@@ -13,28 +13,26 @@
       </div>
 
       <div *ngIf="currentTab=='default'">
-        <label for="email"><b>Name</b></label>
-        <input type="text" placeholder="Enter category name" [(ngModel)]="category" name="category" required>
-  
+        <label for="email"><b>Title</b></label>
+        <input type="text" placeholder="Enter title" [(ngModel)]="title" name="title" required>
+        <label for="email"><b>Subtitle</b></label>
+        <input type="text" placeholder="Enter subtitle" [(ngModel)]="subtitle" name="subtitle">  
         <label for="email"><b>Sequence</b></label>
-        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence" required>
-  
-        <div class="custom-select" style="width:200px;" *ngIf="categories">
-          <select [(ngModel)]="parentId" name="parentId">
-            <option value="0">Select Category:</option>
-            <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category}}</option>
-          </select>
-        </div> 
+        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence">
+
       </div>
       
       <div *ngIf="currentTab=='Chinese'">
-        <label for="email"><b>名称</b></label>
-        <input type="text" placeholder="输入名称" [(ngModel)]="categoryChinese" name="categoryChinese">        
+        <label for="email"><b>标题</b></label>
+        <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">        
+
+        <label for="email"><b>副标题</b></label>
+        <input type="text" placeholder="输入副标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">           
       </div>
 
       <div class="d-flex justify-content-between py-2">
         <button type="button" class="btn cancelbtn">Cancel</button>
-        <button type="submit" class="btn signinbtn" (click)="addProduct()">Add</button>
+        <button type="submit" class="btn signinbtn" (click)="addBanner()">Add</button>
       </div>
     </div>
 </form>

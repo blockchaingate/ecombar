@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { UserService } from '../../../shared/services/user.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +15,7 @@ export class ProductsComponent implements OnInit{
   
   constructor(
     private userServ: UserService,
+    private authServ: AuthService,
     private router: Router,
     private productServ: ProductService) {
 
@@ -27,7 +29,7 @@ export class ProductsComponent implements OnInit{
 
     this.userServ.getToken().subscribe(
       (token: any) => {
-        const decoded = this.userServ.decodeToken(token);
+        const decoded = this.authServ.decodeToken(token);
         const aud = decoded.aud;
         const merchantId = decoded.merchantId;
 
