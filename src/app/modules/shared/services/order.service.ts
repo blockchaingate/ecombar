@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  token: string;
-  path = environment.endpoints.blockchaingate + 'orders/';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private apiServ: ApiService) {
   }
   
   create(data) {
-    return this.httpClient.post(this.path + 'Create', data);
+    return this.apiServ.postPrivate('orders/create', data);
+  }
+
+  update(orderID, data) {
+    return this.apiServ.postPrivate('orders/update/' + orderID, data);
+  }
+
+  get(orderID) {
+    return this.apiServ.getPrivate('orders/' + orderID);
   }
 }

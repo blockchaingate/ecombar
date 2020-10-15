@@ -1,14 +1,69 @@
 // src/app/auth/auth.service.ts
 import { Injectable } from '@angular/core';
+import { StorageService } from './storage.service';
+import { Observable } from 'rxjs';
+
 @Injectable()
 export class AuthService {
-  constructor() {}
+  constructor(private storageServ: StorageService) {}
 
-  public isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+  public isAuthenticated(): Observable<boolean> {
+
+    let isAuth = new Observable<boolean>(observer => {
+
+        this.storageServ.getToken().subscribe(
+            (token: string) => {
+                if(!token) {
+                    observer.next(false);
+                    observer.complete();
+                }
+                const decoded = this.decodeToken(token);
+                const exp = decoded.exp;
+                const current = Math.floor(Date.now() / 1000);
+                
+                console.log('exp==', exp);
+                console.log('current==', current);
+                if(exp < current) {
+                    observer.next(false);
+                    observer.complete();
+                }
+                observer.next(true);
+                observer.complete(); 
+            }
+        );       
+    });
+
+    return isAuth;
+    /*
+    return this.storageServ.getToken().subscribe(token => {
+        if(!token) {
+            return false;
+        }
+        const decoded = this.decodeToken(token);
+        const exp = decoded.exp;
+        const current = Math.floor(Date.now() / 1000);
+    
+        if(exp < current) {
+            return false;
+        }
+        return true;
+      });    
+    */
+    /*
     // Check whether the token is expired and return
     // true or false
+    if(!token) {
+        return false;
+    }
+    const decoded = this.decodeToken(token);
+    const exp = decoded.exp;
+    const current = Math.floor(Date.now() / 1000);
+
+    if(exp < current) {
+        return false;
+    }
     return true;
+    */
   }
 
   b64DecodeUnicode(str: string) {

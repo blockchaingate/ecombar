@@ -68,7 +68,12 @@ export class CartStoreService {
       localStorage.setItem('cartItems', JSON.stringify(items));
       this._items.next(this.items);
     }
-  
+    
+    saveCartItems(items) {
+      localStorage.setItem('cartItems', JSON.stringify(items));
+      this._items.next(this.items);
+    }
+
     removeTodo(_id: string) {
       this.items = this.items.filter(item => item.product_id !== _id);
     }

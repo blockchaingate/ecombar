@@ -11,6 +11,7 @@ import { CollectionService } from './services/collection.service';
 import { OrderService } from './services/order.service';
 import { AddressService } from './services/address.service';
 import { StorageService } from './services/storage.service';
+import { TranslateService } from './services/translate.service';
 import { UploadService } from './services/upload.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
@@ -51,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     AuthService,
-    AuthGuardService    
+    AuthGuardService,
+    TranslateService    
   ]
 })
 export class SharedModule {
@@ -66,6 +68,7 @@ export class SharedModule {
         StorageService,
         ProductService,
         UploadService,
+        TranslateService,
         CategoryService,
         CollectionService,
         OrderService,

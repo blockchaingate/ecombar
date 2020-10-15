@@ -3,8 +3,9 @@ import { CartStoreService } from '../../shared/services/cart.store.service';
 import { OrderService } from '../../shared/services/order.service';
 import { UserService } from '../../shared/services/user.service';
 import { ApiService } from '../../shared/services/api.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
+import {TranslateService} from '../../shared/services/translate.service';
 
 @Component({
   selector: 'app-cart',
@@ -27,16 +28,14 @@ export class CartComponent implements OnInit, OnDestroy {
       private cartStoreServ: CartStoreService,
       private orderServ: OrderService,
       private router: Router,
+      private translateServ: TranslateService,
       private apiServ: ApiService
       ) {
 
     }
 
 
-
-    ngOnInit() {
-      this.cartItems = this.cartStoreServ.items;
-
+    calculateTotal() {
       this.total = [];
 
       for(let i=0;i<this.cartItems.length; i++) {
@@ -45,17 +44,23 @@ export class CartComponent implements OnInit, OnDestroy {
         for(let j=0;j<this.total.length;j++) {
           const totalItem = this.total[j];
           if(totalItem.currency == cartItem.currency) {
-            totalItem.total += cartItem.price * cartItem.quantity;
+            totalItem.total += (cartItem.price * cartItem.quantity);
+            totalItem.total = Number(totalItem.total.toFixed(2));
             inTotal = true;
           }
         }
         if(!inTotal) {
           this.total.push({
             currency : cartItem.currency,
-            total : cartItem.price * cartItem.quantity
+            total : Number((cartItem.price * cartItem.quantity).toFixed(2))
           });
         }
-      }      
+      } 
+    }
+
+    ngOnInit() {
+      this.cartItems = this.cartStoreServ.items;
+      this.calculateTotal(); 
     }
 
     startTimer() {
@@ -78,73 +83,54 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     checkout() {
-      this.router.navigate(['/address']);
-    }
+      
 
-    pay() {
       const items = [];
       let merchantId = '';
       let currency = '';
       let trans_amount = 0;
       for(let i=0;i<this.cartItems.length; i++) {
         const item = this.cartItems[i];
+        console.log('item=', item);
         merchantId = item.merchantId;
         currency = item.currency;
         trans_amount += item.quantity * item.price;
         items.push({
           productId: item._id,
-          title: item.title,
+          title: this.translateServ.transField(item.title),
           currency: item.currency,
           quantity: item.quantity,
+          thumbnailUrl: item.image,
           price: item.price
         });
       }
 
       const orderData = {
-        token: this.userServ.getToken(),
         merchantId: merchantId,
         items:items,
       };
       
       this.orderServ.create(orderData).subscribe(
         (res: any) => {
-          if(res && res._id) {
-            const out_order_no = res._id;
-
-            const data = {
-              app_id: "6bf9403d0c97bd24",
-              format: "JSON",
-              charset: "UTF-8",
-              sign_type: "MD5",
-              sign: "7e2083699dd510575faa1c72f9e35d43",
-              version: "1.0",
-              timestamp: "2018-08-02 15:16:51",
-              method: "pay.qrcodepay",
-              merchant_no: merchantId,
-              payment_method: "WEB",
-              out_order_no: out_order_no,
-              trans_currency: currency,
-              trans_amount: trans_amount,
-              description: "this is a transaction for " + out_order_no,
-              notify_url: "https://notify-url",
-              attach: JSON.stringify(items),
-              effective_minutes: 15
-            }
-            this.apiServ.qrcodepay(data).subscribe(
-                (res: any) => {
-                  if(res.ok) {
-                    this.trans_code = res._body.trans_code;
-                    this.payLink = environment.endpoints.website + 'ex/' + this.trans_code;
-                    this.startTimer();
-                  }
-
-                }
-            );            
+          console.log('ress from create order', res);
+          if(res && res.ok) {
+            const body = res._body;
+            const orderID = body._id;
+            this.router.navigate(['/address/' + orderID]);
           }
-        }
-      );
-
+        }        
+      );      
     }
+
+    remove(item) {
+      console.log('item==', item);
+      const product_id = item.product_id;
+      this.cartItems = this.cartItems.filter((item) => item.product_id != product_id);
+      this.cartStoreServ.saveCartItems(this.cartItems);
+      this.calculateTotal();
+    }
+
+
 
 
     pauseTimer() {

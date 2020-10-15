@@ -71,16 +71,23 @@
                 <div class="container">  
                   <div class="py-2">
                     <label for="psw"><b>Price</b></label>
-                    <input type="text" placeholder="Enter price" [(ngModel)]="price" name="price" required>
-      
+                    <div>
+                      <div class="d-inline-block px-2">
+                        <input type="text" placeholder="Enter price" [(ngModel)]="price" name="price" required>
+                      </div>
+                      USD
+                    </div>
+
                   </div>
+
+                  <!--
                   <div class="custom-select py-2" *ngIf="currencies">
                     <select [(ngModel)]="currency">
                       <option value="0">Select Currency:</option>
                       <option *ngFor="let cur of currencies" value="{{cur}}">{{cur}}</option>
                     </select>
                   </div>
-    
+                  -->
                 </div>
               </div>
             </div>    

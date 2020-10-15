@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../shared/services/user.service';
 import { AddressService } from '../../shared/services/address.service';
+import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-address',
@@ -20,12 +22,19 @@ export class AddressComponent implements OnInit{
     postcode: string;
     country: string;
     id: string;
+    orderID: string;
 
-    constructor(private userServ: UserService, private addressServ: AddressService) {
+    constructor(
+      private router: Router,
+      private route: ActivatedRoute,
+      private userServ: UserService, 
+      private orderServ: OrderService,
+      private addressServ: AddressService) {
 
     }
 
     ngOnInit() {
+      this.orderID = this.route.snapshot.paramMap.get('orderID');
       this.userServ.getMe().subscribe(
         (res: any) => {
           console.log('resme==',res);
@@ -57,8 +66,44 @@ export class AddressComponent implements OnInit{
         }
       );
     } 
+    updateOrderAddress() {
+      const updatedOrder = {
+        name: this.name,
+        unit: this.suite,
+        streetNumber: this.streetNumber,
+        streetName: this.street,
+        city: this.city,
+        province: this.province,
+        zip: this.postcode,
+        country: this.country
+      };
 
+      this.orderServ.update(this.orderID, updatedOrder).subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            this.addAddress();
+          }
+        }
+      );
+    }
+
+    /*
+    name: String,
+    company: String,
+    unit: String,
+    streetNumber: String,
+    streetName: String,
+    streetName2: String,
+    city: String,
+    province: String,
+    zip: String,
+    country: String,  
+    */
+   confirm() {
+    this.updateOrderAddress();
+   }
     addAddress() {
+      
       const address = {
         name: this.name,
         suite: this.suite,
@@ -74,19 +119,26 @@ export class AddressComponent implements OnInit{
         this.addressServ.updateAddress(this.id, address).subscribe(
           (res:any) => {
             console.log('res for updateAddress', address);
+            if(res && res.ok) {
+              this.router.navigate(['/payment/' + this.orderID]);
+            }
           }
         );
       } else {
         this.addressServ.addAddress(address).subscribe(
           (res:any) => {
-            if(res && res._id) {
-              const addressId = res._id;
+            if(res && res.ok) {
+              const _body = res._body;
+              const addressId = _body._id;
               const body = {
                 homeAddressId: addressId
               }
               this.userServ.updateSelf(body).subscribe(
                 (res:any) => {
-                  console.log('res for update address', res);
+                  console.log('res for updateSelf=', res);
+                  if(res && res.ok) {
+                    this.router.navigate(['/payment/' + this.orderID]);
+                  }
                 }
               );
             }

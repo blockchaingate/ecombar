@@ -27,6 +27,18 @@ body {
     border-bottom: 1px solid #e5e5e5;
 }
 
+.align-items-start {
+  align-items: flex-start;
+}
+
+.border {
+  border: 1px solid #e5e5e5;
+}
+
+.border:hover {
+  border: 2px solid #8682e0;
+}
+
 .rounded-img {
     border-radius: 50%;
 }
@@ -191,6 +203,11 @@ table th {
   padding-bottom: 0.5rem;
 }
 
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;  
@@ -221,13 +238,61 @@ table th {
 }
 
 .w-100 {
-  width: 100%;
+  width: 100%!important;
 }
 
 .w-25 {
-  width: 25%;
+  width: 25%!important;
 }
 
+.w-50 {
+  width: 50%!important;
+}
 .w-75 {
-  width: 75%;
+  width: 75%!important;
+}
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color:#6c757d!important;
+}
+
+.border.selected {
+  background-color: #8682e0;
+  color: white;
+  font-weight: 700;  
+}
+
+.border.selected .text-muted {
+  color: white!important;
+}
+
+.row {
+  display: flex;
+}
+
+.col-6 {
+  flex: 50%;
+}
+
+.col-4 {
+  flex: 33.3%;
+}
+
+.col-8 {
+  flex: 66.6%;
+}
+
+.col-3 {
+  flex: 25%;
+}
+
+.col-9 {
+  flex: 75%;
+}
+
+.font-weight-bold {
+  font-weight: 700;
 }

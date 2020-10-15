@@ -16,7 +16,17 @@ const routes: Routes = [
         path: 'category',
         loadChildren: () =>
         import('./category/category.module').then(m => m.CategoryModule)
-      },      
+      },  
+      {
+        path: 'payment',
+        loadChildren: () =>
+        import('./payment/payment.module').then(m => m.PaymentModule)
+      },   
+      {
+        path: 'place-order',
+        loadChildren: () =>
+        import('./place-order/place-order.module').then(m => m.PlaceOrderModule)
+      },                
       {
         path: 'cart',
         loadChildren: () =>

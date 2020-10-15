@@ -113,7 +113,7 @@ export class ProductAddComponent implements OnInit{
           zh: this.descriptionChinese
         },
         price: this.price,
-        currency: this.currency,
+        currency: 'USD',
         primaryCategoryId: this.category,
         active: this.active,
         images: this.images
