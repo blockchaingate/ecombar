@@ -7,6 +7,7 @@ import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { AddressComponent } from './pages/address/address.component';
@@ -14,6 +15,7 @@ import { CollectionAddComponent } from './pages/collection-add/collection-add.co
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
+import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 
 const routes: Routes = [
   {
@@ -44,6 +46,14 @@ const routes: Routes = [
         path: 'product/add',
         component: ProductAddComponent
       }, 
+      { 
+        path: 'merchant-info',
+        component: MerchantInfoComponent
+      },  
+      { 
+        path: 'profile',
+        component: ProfileComponent
+      },             
       { 
         path: 'product/:id/edit',
         component: ProductAddComponent

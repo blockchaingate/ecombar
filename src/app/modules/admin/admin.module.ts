@@ -10,10 +10,12 @@ import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
+import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
@@ -32,12 +34,14 @@ import { FormsModule } from '@angular/forms';
     DashboardComponent,
     UsersComponent,
     BannersComponent,
+    ProfileComponent,
     BannerAddComponent,
     CollectionAddComponent,
     UserAddComponent,
     AddressComponent,
     MerchantsComponent,
     ProductsComponent,
+    MerchantInfoComponent,
     CollectionsComponent,
     CategoriesComponent,
     ProductAddComponent,

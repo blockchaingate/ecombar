@@ -105,7 +105,10 @@ export class UserService {
     return this.apiServ.postPrivate('members/updateSelf', body);
   }
 
-  
+  updateSelfMerchant(body: any) {
+    return this.apiServ.postPrivate('members/updateSelfMerchant', body);
+  }
+
   getToken() {
       return this.storageServ.getToken();
 

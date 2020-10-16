@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
+  providers: [UserService],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss', '../../../../../button.scss']
 })

@@ -77,7 +77,11 @@ export class AdminComponent implements OnInit{
             {
               title: 'Product',
               link: 'products'
-            }        
+            },                   
+            {
+              title: 'Merchant information',
+              link: 'merchant-info'
+            }                      
           ]      
         } else {
           this.menuItems = [
@@ -104,6 +108,10 @@ export class AdminComponent implements OnInit{
     
   }
 
+  profile() {
+    this.router.navigate(['/admin/profile']);
+  }
+  
   toggleShowNavMenu() {
     this.showNavMenu = !this.showNavMenu;
   }

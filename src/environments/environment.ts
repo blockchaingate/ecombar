@@ -10,7 +10,7 @@ export const environment = {
 //  EX_WEBSITE: 'http://localhost:4200/',
   endpoints: {
     blockchaingate: 'https://test.blockchaingate.com/v2/', 
-    website: 'http://localhost:4200/',
+    website: 'https://test.exchangily.com/',
   }
    
 };

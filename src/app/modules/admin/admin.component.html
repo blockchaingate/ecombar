@@ -8,13 +8,9 @@
         <div class="header__avatar" (click)="toggleDropDownActive()">
             <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
                 <ul class="dropdown__list">
-                  <li class="dropdown__list-item">
+                  <li class="dropdown__list-item" (click)="profile()">
                     <span class="dropdown__icon"><i class="far fa-user"></i></span>
                     <span class="dropdown__title">my profile</span>
-                  </li>
-                  <li class="dropdown__list-item">
-                    <span class="dropdown__icon"><i class="fas fa-clipboard-list"></i></span>
-                    <span class="dropdown__title">my account</span>
                   </li>
                   <li class="dropdown__list-item" (click)="logout()">
                     <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>

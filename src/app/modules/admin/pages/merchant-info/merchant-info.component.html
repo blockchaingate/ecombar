@@ -1,0 +1,19 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Merchant information</h1>
+      <hr>
+      
+
+        <label for="email"><b>Name</b></label>
+        <input type="text" placeholder="Enter  name" [(ngModel)]="name" name="name" required>
+  
+        <label for="email"><b>Wallet address</b></label>
+        <input type="text" placeholder="Enter wallet address" [(ngModel)]="walletExgAddress" name="walletExgAddress" required>
+
+
+      <div class="d-flex justify-content-between py-2">
+        <button type="button" class="btn cancelbtn">Cancel</button>
+        <button type="submit" class="btn signinbtn" (click)="update()">Update</button>
+      </div>
+    </div>
+</form>
