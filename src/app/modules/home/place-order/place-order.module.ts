@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PlaceOrderComponent } from './place-order.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
     PlaceOrderRoutingModule,
     CommonModule,
     FormsModule,
+    QRCodeModule,
     SharedModule
   ],
   providers: []

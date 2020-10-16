@@ -31,10 +31,33 @@
                             {{order.paymentMethod}}
                         </div>
                     </div>
-                    
+
                     <div class="text-center">
+                        Scan the QR Code with Ex App 
+                    </div>
+                    <div class="text-center py-5">
+                        <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+                        <div class="py-2">
+                            <a href="{{link}}" download (click)="dlDataUrlBin()">
+                                <div class="d-inline-block px-1">
+                                    <img src="/assets/download.png">
+                                </div>
+                                <div class="d-inline-block px-1">
+                                    {{'Download QR Code' | translate}}
+                                </div>
+                            </a>
+            
+                        </div>
+                    </div>                    
+
+                    <div class="text-center py-3">
+                        Or
+                    </div>
+
+                    <div class="text-center">
+
                         <button class="btn" (click)="payWithWeb()">
-                            Click to Pay with Web
+                            Pay with Ex Web
                         </button>
                         
                     </div>

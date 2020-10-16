@@ -24,6 +24,8 @@ export class PlaceOrderComponent implements OnInit{
     shippingFee: number;
     trans_code: string;
     payLink: string;
+    code: string;
+    link: string;
 
     constructor(
       private apiServ: ApiService,
@@ -42,6 +44,8 @@ export class PlaceOrderComponent implements OnInit{
             this.order = res._body;
 
             console.log('this.order=', this.order);
+            this.code = 'n.' + this.order.num;
+            this.payLink = environment.endpoints.website + 'ex/' + this.code;
             this.subtotal = this.order.totalSale;
             this.shippingFee = this.order.totalShipping;
             this.total = this.order.totalToPay;
@@ -50,10 +54,20 @@ export class PlaceOrderComponent implements OnInit{
       );        
     }
 
+    dlDataUrlBin() {
+      const y = document.getElementById('address_qr_code').getElementsByTagName('canvas')[0];
+      //console.log('y.src=' + y.src);
+      if(y) {
+          var link = y.toDataURL("image/png");
+          this.link = link;   
+      }
+   
+  }
+
     payWithWeb() {
       console.log('begin payWithWeb');
 
-      this.payLink = environment.endpoints.website + 'ex/' + 'n.' + this.order.num;
+      
       console.log('this.payLink==', this.payLink);
       window.open(this.payLink, "_blank");      
       /*
