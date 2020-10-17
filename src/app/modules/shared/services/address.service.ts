@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { HttpService } from './http.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AddressService {
 
-  constructor(private apiServ: ApiService) {
+  constructor(private http: HttpService) {
   }
 
   getAddress(id: string) {
-    return this.apiServ.getPrivate('addresses/' + id);
+    return this.http.get('addresses/' + id);
   }
 
   addAddress(address: any) {
-    return this.apiServ.postPrivate('addresses/Create', address);
+    return this.http.post('addresses/Create', address);
   }
 
   updateAddress(id: string, address: any) {
-    return this.apiServ.postPrivate('addresses/Update/' + id, address);
+    return this.http.post('addresses/Update/' + id, address);
   }
 }

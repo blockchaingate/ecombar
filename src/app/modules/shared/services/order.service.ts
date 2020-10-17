@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { HttpService } from './http.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class OrderService {
 
-  constructor(private apiServ: ApiService) {
-  }
-  
+  constructor(private http: HttpService) { }
+
   create(data) {
-    return this.apiServ.postPrivate('orders/create', data);
+    return this.http.post('orders/create', data, true);
   }
 
-  update(orderID, data) {
-    return this.apiServ.postPrivate('orders/update/' + orderID, data);
+  update(orderID: string, data) {
+    return this.http.post('orders/update/' + orderID, data, true);
   }
 
-  get(orderID) {
-    return this.apiServ.getPrivate('orders/' + orderID);
+  get(orderID: string) {
+    return this.http.get('orders/' + orderID, true);
   }
 }

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
-  providers: [UserService],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss', '../../../../../button.scss']
 })
@@ -14,16 +13,12 @@ export class SignupComponent {
   repassword: string;
   token: string;
 
-  constructor(private router: Router, private userServ: UserService) {
-    
-  }
+  constructor(private router: Router, private userServ: UserService) { }
 
   signup() {
     this.userServ.signup(this.email, this.password).subscribe(
       (res: any) => {
-        if(res && res.token) {
-          
-          
+        if (res && res.token) {
         }
       }
     );

@@ -28,17 +28,7 @@ export class UploadMediaComponent implements OnInit{
 
         const formData = new FormData();  
         formData.append('file', file.data);
-        this.uploadService.upload(formData)
-        .subscribe((event: any) => {
-          console.log('event=', event);
-            if (typeof (event) === 'object') {
-
-              console.log(event.body);
-
-            }  
-
-          });  
-
+        this.uploadService.upload(formData);
   }
 
   onClick() {

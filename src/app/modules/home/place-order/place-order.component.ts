@@ -3,7 +3,6 @@ import { UserService } from '../../shared/services/user.service';
 import { AddressService } from '../../shared/services/address.service';
 import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../shared/services/api.service';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -28,7 +27,6 @@ export class PlaceOrderComponent implements OnInit{
     link: string;
 
     constructor(
-      private apiServ: ApiService,
       private route: ActivatedRoute, 
       private userServ: UserService, 
       private orderServ: OrderService, 

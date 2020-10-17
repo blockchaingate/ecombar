@@ -1,39 +1,35 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { HttpService } from './http.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class BannerService {
+  constructor(private http: HttpService) { }
 
-  constructor(private apiServ: ApiService) {
-  }
-  
-  create(data) {    
-    return this.apiServ.postPrivate('banners/Create', data);
+  create(data) {
+    return this.http.post('banners/Create', data);
   }
 
-  update(id:string, data) {
-    return this.apiServ.postPrivate('banners/Update/' + id, data);
+  update(id: string, data) {
+    return this.http.post('banners/Update/' + id, data);
   }
 
   getBanners() {
-    return this.apiServ.getPublic('banners');
+    return this.http.get('banners', false);
   }
 
   getAdminBanners() {
-    return this.apiServ.getPublic('banners/admin');
+    return this.http.get('banners/admin', false);
   }
 
   getMerchantBanners(merchantId: string) {
-    return this.apiServ.getPublic('banners/merchant/' + merchantId);
+    return this.http.get('banners/merchant/' + merchantId, false);
   }
 
   getBanner(id: string) {
-    return this.apiServ.getPublic('banners/' + id);
+    return this.http.get('banners/' + id, false);
   }
 
-  deleteBanner(id) {
-    return this.apiServ.getPrivate('banners/Delete/' + id);
-  }  
+  deleteBanner(id: string) {
+    return this.http.get('banners/Delete/' + id);
+  }
 }

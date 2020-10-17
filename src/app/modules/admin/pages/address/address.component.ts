@@ -5,7 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-address',
-  providers: [UserService],
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
@@ -21,9 +20,7 @@ export class AddressComponent implements OnInit{
     country: string;
     id: string;
 
-    constructor(private userServ: UserService, private addressServ: AddressService) {
-
-    }
+    constructor(private userServ: UserService, private addressServ: AddressService) {}
 
     ngOnInit() {
       this.userServ.getMe().subscribe(

@@ -1,118 +1,151 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { StorageService } from './storage.service';
-import { environment } from '../../../../environments/environment';
+import { StorageMap } from '@ngx-pwa/local-storage';
+import { HttpService } from './http.service';
 import { AuthService } from './auth.service';
+import { User } from '../models/user';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UserService {
-  token: string;
-  aud: string;
-  merchantId: string;
+  private _id: string;
+  private _displayName: string;
+  private _email: string;
+  private _tokenExp: Date;
+  private _isSystemAdmin = false;
+  private _user: User;
 
-  constructor(
-    private apiServ: ApiService, 
-    private authServ: AuthService,
-    private storageServ: StorageService) {
+  constructor(private http: HttpService, private authServ: AuthService, private storage: StorageMap) {
+    if (!this._id) {
+      this.storage.get('_userId').subscribe((ret: string) => {
+        this._id = ret;
+        if (this._id && !this._user) {
+          this.getUser(this._id).subscribe((ret: User) => { this._user = ret; })
+        }
+      });
+    }
+  }
+
+  set id(newId: string) {
+    this._id = newId;
+    this.storage.set('_userId', newId).subscribe(ret => { });
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  set displayName(dispName: string) {
+    this.displayName = dispName;
+  }
+
+  get displayName() {
+    return this._displayName;
+  }
+
+  set email(emal: string) {
+    this._email = emal;
+  }
+
+  get email() {
+    return this._email;
+  }
+
+  set token(newToken: any) {
+    this.authServ.token = newToken;
+  }
+
+  get token() {
+    return this.authServ.token;
+  }
+
+  set tokenExp(exp: Date) {
+    this._tokenExp = exp;
+  }
+
+  get tokenExp() {
+    return this._tokenExp;
+  }
+
+  set isSystemAdmin(sysAdmin: boolean) {
+    this._isSystemAdmin = sysAdmin;
+  }
+
+  get isSystemAdmin() {
+    return this._isSystemAdmin;
+  }
+
+  set user(user: User) {
+    this._user = user;
+    this.storage.set('_user', user).subscribe(ret => {
+      if (!this._id) {
+        this._id = user._id;
+      }
+    });
+  }
+
+  get user() {
+    return this._user;
   }
 
   signin(email: string, password: string) {
-    const theBody = { email: email, password: password, appId: environment.appid };
-    
-    return this.apiServ.postPublic('members/login', theBody);
-  }  
+    const theBody = { email: email, password: password };
+    return this.http.post('members/login', theBody, false);
+  }
 
   signup(email: string, password: string) {
-    const theBody = { email: email, password: password, appId: environment.appid };
-    
-    return this.apiServ.postPublic('members/create', theBody);
-  }  
+    const theBody = { email: email, password: password };
+    return this.http.post('members/create', theBody, false);
+  }
+
+  logout() {
+    this._id = '';
+    this._displayName = '';
+    this._email = '';
+    this.authServ.token = null;
+    this._tokenExp = null;
+    this._isSystemAdmin = false;
+    this._user = null;
+    this.storage.delete('_userId').subscribe(ret => { });
+    this.storage.delete('_token').subscribe(ret => { });
+  }
+
+  // Use memberId in token to get member information.
   getMe() {
-    return this.apiServ.getPrivate('members/me');
-  }
-  activateUser(userId: string, activationCode: string, appId: string) {
-    return this.apiServ.getPublic('members/' + 'activation/' + userId + '/' + activationCode + '/' + appId);
+    return this.http.get('members/me');
   }
 
-  // userId + "/" + activationCode + "/" + app._id
-  saveToken(token: string) {
-    console.log('token for save=', token);
-    this.token = token;
-    if(token) {
-      const decoded = this.authServ.decodeToken(token);
-      this.aud = decoded.aud;
-      console.log('this.aud in saveToken=', this.aud);
-      this.merchantId = decoded.merchantId;
-      return this.storageServ.saveToken(token);
-    }
-    return this.storageServ.removeToken();
-    
+  activateUser(userId: string, activationCode: string) {
+    return this.http.get('members/' + 'activation/' + userId + '/' + activationCode, false);
   }
 
-  /*
-  getAud() {
-    if(!this.aud) {
-      const token = this.getToken();
-      console.log('token in getAud=', token);
-      const decoded = this.decodeToken(token);
-      console.log('decoded==', decoded);
-      this.aud = decoded.aud;
-      this.merchantId = decoded.merchantId;
-    }
-    return this.aud;
-  }
-
-  getMerchantId() {
-    if(!this.merchantId) {
-      const token = this.getToken();
-      const decoded = this.decodeToken(token);
-      this.aud = decoded.aud;
-      this.merchantId = decoded.merchantId;
-    }
-    return this.merchantId;
-  }
-  */
   getAllUsers() {
-    const data = {
-      appId: environment.appid
-    };
-    return this.apiServ.postPrivate('members/getAll',data);
+    return this.http.post('members/getAll', null);
   }
 
-  find(data) {
-    return this.apiServ.postPrivate('members/find',data);
+  find(data: any) {
+    return this.http.post('members/find', data);
   }
 
   getUser(id: string) {
-    return this.apiServ.getPrivate('members/' + id);
+    return this.http.get('members/' + id);
   }
-  
+
   getCampaignReferral(id: string) {
-    return this.apiServ.getPrivate('campaign-referral/' + id);
-  }
-  
-  addParentReferral(body: any) {
-    return this.apiServ.postPrivate('campaign-referral/create', body);
+    return this.http.get('campaign-referral/' + id);
   }
 
-  update(body: any) {
-    return this.apiServ.postPrivate('members/FindOneAndUpdate', body);
+  addParentReferral(data: any) {
+    return this.http.post('campaign-referral/create', data);
   }
 
-  updateSelf(body: any) {
-    return this.apiServ.postPrivate('members/updateSelf', body);
+  update(data: any) {
+    return this.http.post('members/FindOneAndUpdate', data);
   }
 
-  updateSelfMerchant(body: any) {
-    return this.apiServ.postPrivate('members/updateSelfMerchant', body);
+  updateSelf(data: any) {
+    return this.http.post('members/updateSelf', data);
   }
 
-  getToken() {
-      return this.storageServ.getToken();
-
+  updateSelfMerchant(data: any) {
+    return this.http.post('members/updateSelfMerchant', data);
   }
-
-
 }

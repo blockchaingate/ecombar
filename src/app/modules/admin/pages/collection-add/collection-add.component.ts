@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { ProductService } from '../../../shared/services/product.service';
 import { AuthService } from '../../../shared/services/auth.service';
+import { MerchantService } from '../../../shared/services/merchant.service';
 
 @Component({
   selector: 'app-admin-collection-add',
@@ -11,128 +12,122 @@ import { AuthService } from '../../../shared/services/auth.service';
   templateUrl: './collection-add.component.html',
   styleUrls: ['./collection-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
-export class CollectionAddComponent implements OnInit{
-   products: any;
-   productId: string;
-   collectionProducts: any;
-    sequence: number;
-    name: string;
-    nameChinese: string;
-    currentTab: string;
-    id: string;
+export class CollectionAddComponent implements OnInit {
+  products: any;
+  productId: string;
+  collectionProducts: any;
+  sequence: number;
+  name: string;
+  nameChinese: string;
+  currentTab: string;
+  id: string;
 
-    constructor(
-      private productServ: ProductService,
-      private userServ: UserService,
-      private authServ: AuthService,
-      private route: ActivatedRoute,
-      private router: Router,
-      private collectionServ: CollectionService) {
+  constructor(
+    private productServ: ProductService,
+    private userServ: UserService,
+    private authServ: AuthService,
+    private merchantServ: MerchantService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private collectionServ: CollectionService) {
 
-    }
+  }
 
-    ngOnInit() {
+  ngOnInit() {
 
-      this.currentTab = 'default';
-      this.getProducts();
+    this.currentTab = 'default';
+    this.getProducts();
 
-      this.id = this.route.snapshot.paramMap.get('id');
-      console.log('this.id====', this.id);
-      if(this.id) {
-        this.collectionServ.getCollection(this.id).subscribe(
-          (res: any) => {
-            console.log('ressssss=', res);
-            if(res && res.ok) {
-              const collection = res._body;
-              console.log('collection=', collection);
-              this.name = collection.name.en;
-              this.nameChinese = collection.name.zh;
-              this.collectionProducts = collection.products;
-              this.sequence = collection.sequence;
-            }
-            
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log('this.id====', this.id);
+    if (this.id) {
+      this.collectionServ.getCollection(this.id).subscribe(
+        (res: any) => {
+          console.log('ressssss=', res);
+          if (res && res.ok) {
+            const collection = res._body;
+            console.log('collection=', collection);
+            this.name = collection.name.en;
+            this.nameChinese = collection.name.zh;
+            this.collectionProducts = collection.products;
+            this.sequence = collection.sequence;
           }
-        );
-      }      
-    }
 
-    addProduct() {
-      console.log('this.productId==', this.productId);
-      for(let i=0;i<this.products.length;i++) {
-        const product = this.products[i];
-        if(product._id == this.productId) {
-          this.collectionProducts.push(product);
-          break;
         }
+      );
+    }
+  }
+
+  addProduct() {
+    console.log('this.productId==', this.productId);
+    for (let i = 0; i < this.products.length; i++) {
+      const product = this.products[i];
+      if (product._id == this.productId) {
+        this.collectionProducts.push(product);
+        break;
       }
     }
-    getProducts() {
+  }
+  getProducts() {
+    const merchantId = this.merchantServ.id;
 
-      this.userServ.getToken().subscribe(
-        (token: any) => {
-          const decoded = this.authServ.decodeToken(token);
-          const aud = decoded.aud;
-          const merchantId = decoded.merchantId;
-
-          if (aud == 'isSystemAdmin') {
-            this.productServ.getProducts().subscribe(
-              (res: any) => {
-                if(res && res.ok) {
-                  this.products = res._body;
-                }
-              }
-            );
-          }  else 
-          if (merchantId) {
-            this.productServ.getMerchantProducts(merchantId).subscribe(
-              (res: any) => {
-                if(res && res.ok) {
-                  this.products = res._body;
-                }
-              }
-            );
+    if (this.userServ.isSystemAdmin) {
+      this.productServ.getProducts().subscribe(
+        (res: any) => {
+          if (res && res.ok) {
+            this.products = res._body;
           }
-        } 
+        }
+      );
+    } else
+      if (merchantId) {
+        this.productServ.getMerchantProducts(merchantId).subscribe(
+          (res: any) => {
+            if (res && res.ok) {
+              this.products = res._body;
+            }
+          }
+        );
+      }
+  }
+
+  changeTab(tabName: string) {
+    this.currentTab = tabName;
+  }
+
+  addCollection() {
+    const products = [];
+    if (this.collectionProducts) {
+      for (let i = 0; i < this.collectionProducts.length; i++) {
+        products.push(this.collectionProducts[i]._id);
+      }
+    }
+    const data = {
+      name: {
+        en: this.name,
+        zh: this.nameChinese
+      },
+      sequence: this.sequence,
+      products: products
+    };
+    if (!this.id) {
+
+      this.collectionServ.create(data).subscribe(
+        (res: any) => {
+          if (res && res.ok) {
+            this.router.navigate(['/admin/collections']);
+          }
+        }
+      );
+    } else {
+      this.collectionServ.update(this.id, data).subscribe(
+        (res: any) => {
+          if (res && res.ok) {
+            this.router.navigate(['/admin/collections']);
+          }
+        }
       );
     }
 
-    changeTab(tabName: string) {
-      this.currentTab = tabName;
-    }
-
-    addCollection() {
-      const products =[];
-      if(this.collectionProducts) {
-        for(let i=0;i<this.collectionProducts.length;i++) {
-          products.push(this.collectionProducts[i]._id);
-        }
-      }
-      const data = {
-         name: {
-          en: this.name,
-          zh: this.nameChinese
-        },
-        sequence: this.sequence,
-        products: products
-      };      
-      if(!this.id) {
-
-        this.collectionServ.create(data).subscribe(
-          (res: any) => {
-            if(res && res.ok) {
-              this.router.navigate(['/admin/collections']);
-            }
-          }
-        );
-      } else {
-        this.collectionServ.update(this.id, data).subscribe(
-          (res: any) => {
-            if(res && res.ok) {
-              this.router.navigate(['/admin/collections']);
-            }
-          }
-        );
-      }
-
-    }
+  }
 }

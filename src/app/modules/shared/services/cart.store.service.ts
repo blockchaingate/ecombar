@@ -1,4 +1,3 @@
-import { IfStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart-item';
@@ -8,8 +7,7 @@ import { CartItem } from '../models/cart-item';
 })
 export class CartStoreService {
 
-  constructor() {
-  }
+  constructor() {}
     // - We set the initial state in BehaviorSubject's constructor
     // - Nobody outside the Store should have access to the BehaviorSubject 
     //   because it has the write rights
@@ -24,10 +22,8 @@ export class CartStoreService {
   
     // the getter will return the last value emitted in _todos subject
     get items(): CartItem[] {
-
       return JSON.parse(localStorage.getItem('cartItems')) ;
     }
-  
   
     // assigning a value to this.todos will push it onto the observable 
     // and down to all of its subsribers (ex: this.todos = [])
