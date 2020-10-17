@@ -1,8 +1,10 @@
+import { TextLan } from './textlan';
+
 export interface Merchant {
     _id?: string;
 
     name?: string;
-    nameLan?: [string];
+    nameLan?: TextLan;
     parentId?: string;
     //businessType: { type: String, enum: ['', 'Corperation', 'Trade company', 'Manufacturer', 'Retail', 'Store', 'Other'] },
     businessType?: string;

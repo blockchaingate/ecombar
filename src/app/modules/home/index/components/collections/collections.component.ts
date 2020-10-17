@@ -22,9 +22,11 @@ export class CollectionsComponent implements OnInit {
       (res: any) => {
         if(res && res.ok) {
           this.collections = res._body;
+          alert(JSON.stringify(res._body))
           console.log('this.collections==', this.collections);
         }
-      }
+      },
+      error =>{alert(JSON.stringify(error))}
     );
 
   }
