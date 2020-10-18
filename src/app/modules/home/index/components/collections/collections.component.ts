@@ -9,8 +9,8 @@ import { CollectionService } from '../../../../shared/services/collection.servic
   styleUrls: ['./collections.component.scss']
 })
 export class CollectionsComponent implements OnInit {
-
   collections: any;
+  errMsg = '';
 
   constructor(
     private collectionServ: CollectionService) {
@@ -20,13 +20,12 @@ export class CollectionsComponent implements OnInit {
   ngOnInit() {
     this.collectionServ.getCollections().subscribe(
       (res: any) => {
-        if(res && res.ok) {
+        if (res && res.ok) {
           this.collections = res._body;
-          alert(JSON.stringify(res._body))
           console.log('this.collections==', this.collections);
         }
       },
-      error =>{alert(JSON.stringify(error))}
+      error => { this.errMsg = error.message; }
     );
 
   }

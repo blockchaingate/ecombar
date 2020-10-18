@@ -9,4 +9,7 @@
     </div>
 
     <app-products-grid [products]="collection.products"></app-products-grid>
+    <div class="redcolor" *ngIf="errMsg">
+        {{errMsg}}
+    </div>
 </div>
