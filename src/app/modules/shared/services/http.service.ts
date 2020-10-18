@@ -1,7 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from './auth.service';
+
+interface OPTIONS {
+    headers?: HttpHeaders | {
+        [header: string]: string | string[];
+    };
+    observe?: "body";
+    params?: HttpParams | {
+        [param: string]: string | string[];
+    };
+    reportProgress?: boolean;
+    // responseType: "arraybuffer";
+    withCredentials?: boolean;
+}
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
@@ -19,7 +32,7 @@ export class HttpService {
                 'x-app-id': this.authServ.appId
             });
         }
-        const options = {
+        const options: OPTIONS = {
             headers: httpHeaders
         };
         const url = environment.endpoints.blockchaingate + path;
@@ -38,7 +51,7 @@ export class HttpService {
                 'x-app-id': this.authServ.appId
             });
         }
-        const options = {
+        const options: OPTIONS = {
             headers: httpHeaders
         };
         data.appId = this.authServ.appId;
@@ -58,7 +71,7 @@ export class HttpService {
                 'x-app-id': this.authServ.appId
             });
         }
-        const options = {
+        const options: OPTIONS = {
             headers: httpHeaders
         };
         data.appId = this.authServ.appId;
@@ -78,7 +91,7 @@ export class HttpService {
                 'x-app-id': this.authServ.appId
             });
         }
-        const options = {
+        const options: OPTIONS = {
             headers: httpHeaders
         };
         const url = environment.endpoints.blockchaingate + path;
@@ -95,7 +108,7 @@ export class HttpService {
             'x-access-token': token,
             'x-app-id': this.authServ.appId
         });
-        const options = {
+        const options: OPTIONS = {
             headers: httpHeaders
         };
         const url = environment.endpoints.blockchaingate + path;
@@ -112,7 +125,7 @@ export class HttpService {
             'x-access-token': token,
             'x-app-id': this.authServ.appId
         });
-        const options = {
+        const options: OPTIONS = {
             headers: httpHeaders
         };
         data.appId = this.authServ.appId;
@@ -120,8 +133,13 @@ export class HttpService {
         return this.http.post(url, data, options);
     }
 
-    getRaw(path: string) {
-        const url = environment.endpoints.blockchaingate + path;
-        return this.http.get(url);
+    // fullUrl: http://...  or https://...
+    getRaw(fullUrl: string) {
+        return this.http.get(fullUrl);
+    }
+
+    // fullUrl: http://...  or https://...
+    postRaw(fullUrl: string, data: any, options: OPTIONS) {
+        return this.http.post(fullUrl, data, options);
     }
 }

@@ -1,19 +1,38 @@
-import {HttpClient, HttpEvent, HttpErrorResponse, HttpEventType} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpService } from './http.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+interface UploadData { docType: string, fileType: string, memberId?: string, productId?: string, serviceId?: string, objectId?: string };
 
-export class UploadService { 
+export enum DocType { KYC = 'KYC', PRODUCT = 'PRODUCT', SERVICE = 'SERVICE', OTHER = 'OTHER' };
 
-    SERVER_URL: string;
+@Injectable({ providedIn: 'root' })
+export class UploadService {
+  constructor(private http: HttpService) { }
 
-    constructor() { 
+  uploadFile(fileToUpload: File, docType: DocType, objectId: string) {
+    return this.applyPresignedUrl(fileToUpload, docType, objectId).subscribe(
+      (url: string) => { return this.uploadFileToSignedUrl(url, fileToUpload); });
+  }
+
+  // docType: MUST be one of: KYC, PRODUCT or SERVICE
+  // objectId: if docType=KYC, objectId=memberId; if docType=PRODUCT, 
+  applyPresignedUrl(fileToUpload: File, docType: DocType, objectId: string) {
+    let data: UploadData = { docType: docType, fileType: fileToUpload.type };
+    if (docType === DocType.KYC) {
+      data.memberId = objectId;
+    } else if (docType === DocType.PRODUCT) {
+      data.productId = objectId;
+    } else if (docType === DocType.SERVICE) {
+      data.serviceId = objectId;
+    } else {
+      data.objectId = objectId;
     }
+    return this.http.post('s3/apply-upload-permit', data);
+  }
 
-    public upload(formData) {
-
-    }
-
+  uploadFileToSignedUrl(presignedUrl: string, fileToUpload: File) {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.http.post(presignedUrl, formData, true);
+  }
 }
