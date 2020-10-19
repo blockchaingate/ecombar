@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CartStoreService } from '../../services/cart.store.service';
 import { CartItem } from '../../models/cart-item';
 
@@ -10,15 +10,13 @@ import { CartItem } from '../../models/cart-item';
 export class ProductsGridComponent {
   @Input() products: any;
 
-  constructor(
-    private cartStoreServ:CartStoreService    
-  ) {
-
+  constructor(private cartStoreServ: CartStoreService) {
   }
-  addToCart(item) {
+
+  addToCart(item: any) {
     console.log('item to be added=', item);
     const cartItem: CartItem = {
-      product_id: item._id,
+      productId: item._id,
       title: item.title,
       price: item.price,
       merchantId: item.merchantId,
@@ -27,5 +25,5 @@ export class ProductsGridComponent {
       quantity: 1
     };
     this.cartStoreServ.addCartItem(cartItem);
-  }  
+  }
 }

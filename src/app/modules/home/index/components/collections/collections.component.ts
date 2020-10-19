@@ -9,7 +9,7 @@ import { CollectionService } from '../../../../shared/services/collection.servic
   styleUrls: ['./collections.component.scss']
 })
 export class CollectionsComponent implements OnInit {
-  collections: any;
+  collections: [];
   errMsg = '';
 
   constructor(

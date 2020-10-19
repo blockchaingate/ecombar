@@ -5,6 +5,8 @@ import { PaymentService } from '../../shared/services/payment.service';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { TranslateService } from '../../shared/services/translate.service';
+import { CartItem } from '../../shared/models/cart-item';
+import { groupBy } from '../../shared/utils/array-tool';
 
 @Component({
   selector: 'app-cart',
@@ -13,14 +15,15 @@ import { TranslateService } from '../../shared/services/translate.service';
 })
 export class CartComponent implements OnInit, OnDestroy {
   interval;
-  cartItems: any;
+  cartItems: CartItem[];
   payLink: string;
-  total: any;
+  Total: { currency: string, total: string }[];
   paidConfirmed: boolean;
   txid: string;
   payQrcode: string;
   txid_link: string;
   trans_code: string;
+
   constructor(
     private paymentServ: PaymentService,
     private cartStoreServ: CartStoreService,
@@ -28,44 +31,32 @@ export class CartComponent implements OnInit, OnDestroy {
     private router: Router,
     private translateServ: TranslateService
   ) {
-
   }
 
-  calculateTotal() {
-    this.total = [];
+  calculateTotal(): void {
+    this.Total = [];
 
-    for (let i = 0; i < this.cartItems.length; i++) {
-      const cartItem = this.cartItems[i];
-      let inTotal = false;
-      for (let j = 0; j < this.total.length; j++) {
-        const totalItem = this.total[j];
-        if (totalItem.currency == cartItem.currency) {
-          totalItem.total += (cartItem.price * cartItem.quantity);
-          totalItem.total = Number(totalItem.total.toFixed(2));
-          inTotal = true;
-        }
-      }
-      if (!inTotal) {
-        this.total.push({
-          currency: cartItem.currency,
-          total: Number((cartItem.price * cartItem.quantity).toFixed(2))
-        });
-      }
-    }
+    const grouped = groupBy(this.cartItems, (cI: CartItem) => cI.currency);
+
+    grouped.forEach((currencyGroup: CartItem[]) => {
+      let value = 0;
+      const final = currencyGroup.map((v: CartItem) => value += v.price * v.quantity);
+      this.Total.push({ currency: currencyGroup[0].currency, total: value.toFixed(2) });
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.cartItems = this.cartStoreServ.items;
     this.calculateTotal();
   }
 
-  startTimer() {
+  startTimer(): void {
     this.interval = setInterval(() => {
       this.paymentServ.checkPaymentStatus(this.trans_code).subscribe(
         (res: any) => {
           if (res && res.ok) {
             const data = res._body;
-            if (data.trans_status == 'paid') {
+            if (data.trans_status === 'paid') {
               this.paidConfirmed = true;
               this.txid = data.txid;
               this.txid_link = environment.endpoints.website + 'explorer/tx-detail/' + this.txid;
@@ -75,34 +66,25 @@ export class CartComponent implements OnInit, OnDestroy {
           }
         }
       );
-    }, 1000)
+    }, 1000);
   }
 
-  checkout() {
-    const items = [];
+  checkout(): void {
+    const items: CartItem[] = [];
     let merchantId = '';
     let currency = '';
-    let trans_amount = 0;
-    for (let i = 0; i < this.cartItems.length; i++) {
-      const item = this.cartItems[i];
+    let transAmount = 0;
+
+    this.cartItems.forEach(item => {
       console.log('item=', item);
       merchantId = item.merchantId;
       currency = item.currency;
-      trans_amount += item.quantity * item.price;
-      items.push({
-        productId: item._id,
-        title: this.translateServ.transField(item.title),
-        currency: item.currency,
-        quantity: item.quantity,
-        thumbnailUrl: item.image,
-        price: item.price
-      });
-    }
+      transAmount += item.quantity * item.price;
+      item.title = this.translateServ.transField(item.title);
+      items.push(item);
+    });
 
-    const orderData = {
-      merchantId: merchantId,
-      items: items,
-    };
+    const orderData = { merchantId, items, currency, transAmount };
 
     this.orderServ.create(orderData).subscribe(
       (res: any) => {
@@ -116,22 +98,22 @@ export class CartComponent implements OnInit, OnDestroy {
     );
   }
 
-  remove(item) {
+  remove(item: CartItem): void {
     console.log('item==', item);
-    const product_id = item.product_id;
-    this.cartItems = this.cartItems.filter((item) => item.product_id != product_id);
+    const productId = item.productId;
+    this.cartItems = this.cartItems.filter((itm) => itm.productId !== productId);
     this.cartStoreServ.saveCartItems(this.cartItems);
     this.calculateTotal();
   }
 
-  pauseTimer() {
+  pauseTimer(): void {
     if (this.interval) {
       clearInterval(this.interval);
     }
 
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.pauseTimer();
   }
 }

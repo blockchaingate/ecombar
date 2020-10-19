@@ -23,7 +23,6 @@ export class SigninComponent implements OnInit {
     this.userServ.signin(this.email, this.password).subscribe(
       (res: any) => {
         if (res && res.token) {
-          alert('token: ' + JSON.stringify(res));
           this.userServ.id = res.id;
           this.userServ.displayName = res.displayName;
           this.userServ.email = res.email;

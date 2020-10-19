@@ -43,13 +43,11 @@
         <div class="px-3 mx-3 cursor-pointer" [routerLink]="['/auth/signin']">
             {{'Login' | translate}}
         </div>
-        
 
     </div>
     <div id="nav-main">
         <ul>
             <li><a href="/">{{'Home' | translate}}</a></li>
-
             <li *ngFor="let category of categories"><a href="/category/{{category._id}}">{{category.category | translateField}}</a></li>
           </ul>
     </div>
