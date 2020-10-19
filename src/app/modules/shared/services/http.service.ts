@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 interface OPTIONS {
     headers?: HttpHeaders | {
         [header: string]: string | string[];
     };
-    observe?: "body";
+    observe?: 'body';
     params?: HttpParams | {
         [param: string]: string | string[];
     };
@@ -22,14 +23,12 @@ export class HttpService {
 
     get(path: string, jwtAuth = true) {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'x-app-id': this.authServ.appId
+            'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token,
-                'x-app-id': this.authServ.appId
+                'x-access-token': this.authServ.token
             });
         }
         const options: OPTIONS = {
@@ -41,14 +40,12 @@ export class HttpService {
 
     post(path: string, data: any, jwtAuth = true) {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'x-app-id': this.authServ.appId
+            'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token,
-                'x-app-id': this.authServ.appId
+                'x-access-token': this.authServ.token
             });
         }
         const options: OPTIONS = {
@@ -61,14 +58,12 @@ export class HttpService {
 
     put(path: string, data: any, jwtAuth = true) {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'x-app-id': this.authServ.appId
+            'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token,
-                'x-app-id': this.authServ.appId
+                'x-access-token': this.authServ.token
             });
         }
         const options: OPTIONS = {
@@ -81,14 +76,12 @@ export class HttpService {
 
     delete(path: string, jwtAuth = true) {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'x-app-id': this.authServ.appId
+            'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token,
-                'x-app-id': this.authServ.appId
+                'x-access-token': this.authServ.token
             });
         }
         const options: OPTIONS = {
@@ -105,8 +98,7 @@ export class HttpService {
 
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
-            'x-access-token': token,
-            'x-app-id': this.authServ.appId
+            'x-access-token': token
         });
         const options: OPTIONS = {
             headers: httpHeaders
@@ -122,8 +114,7 @@ export class HttpService {
 
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
-            'x-access-token': token,
-            'x-app-id': this.authServ.appId
+            'x-access-token': token
         });
         const options: OPTIONS = {
             headers: httpHeaders

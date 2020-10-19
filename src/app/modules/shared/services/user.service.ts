@@ -34,7 +34,7 @@ export class UserService {
   }
 
   set displayName(dispName: string) {
-    this.displayName = dispName;
+    this._displayName = dispName;
   }
 
   get displayName() {

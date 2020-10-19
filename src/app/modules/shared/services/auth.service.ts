@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 export class AuthService {
     private _appId: string;
     private _token: any;
-    private _tokenExp: Date;
 
     constructor(private storage: StorageMap) {
         if (!this._appId) {
@@ -39,7 +38,7 @@ export class AuthService {
     }
 
     public isAuthenticated(): Observable<boolean> {
-        let isAuth = new Observable<boolean>(observer => {
+        const isAuth = new Observable<boolean>(observer => {
             const decoded = this.decodeToken(this._token);
             const exp = decoded.exp;
             const current = Math.floor(Date.now() / 1000);

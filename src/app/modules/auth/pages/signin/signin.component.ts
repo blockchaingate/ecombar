@@ -23,18 +23,19 @@ export class SigninComponent implements OnInit {
     this.userServ.signin(this.email, this.password).subscribe(
       (res: any) => {
         if (res && res.token) {
+          alert('token: ' + JSON.stringify(res));
           this.userServ.id = res.id;
           this.userServ.displayName = res.displayName;
           this.userServ.email = res.email;
           this.userServ.token = res.token;
           this.merchantServ.name = res.defaultMerchant.name;
           const decoded = this.authServ.decodeToken(res.token);
-          this.userServ.tokenExp =  decoded.exp;
+          this.userServ.tokenExp = decoded.exp;
           this.merchantServ.id = decoded.merchantId || res.defaultMerchant._id;
           this.appServ.id = res.appId || decoded.appId;
           this.appServ.name = res.appName || decoded.appName;
-          let isSysAdmin =false;
-          if(decoded.aud === 'isSystemAdmin') {
+          let isSysAdmin = false;
+          if (decoded.aud === 'isSystemAdmin') {
             isSysAdmin = true;
           }
           this.userServ.isSystemAdmin = isSysAdmin;
