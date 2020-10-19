@@ -1,45 +1,16 @@
 // src/app/auth/auth.service.ts
 import { Injectable } from '@angular/core';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    private _appId: string;
-    private _token: any;
+    constructor() {}
 
-    constructor(private storage: StorageMap) {
-        if (!this._appId) {
-            this.storage.get('_appId').subscribe(ret => { this._token = ret });
-        }
-        if (!this._token) {
-            this.storage.get('_token').subscribe(ret => { this._token = ret });
-        }
-    }
-
-    set appId(appID: string) {
-        this._appId = appID;
-        this.storage.set('_appId', appID).subscribe(ret => { });
-    }
-
-    get appId() {
-        return this._appId;
-    }
-
-    set token(newToken: string) {
-        this._token = newToken;
-        this.storage.set('_token', newToken).subscribe(ret => { });
-    }
-
-    get token() {
-        return this._token;
-    }
-
-    public isAuthenticated(): Observable<boolean> {
+    public isAuthenticated(token: string): Observable<boolean> {
         const isAuth = new Observable<boolean>(observer => {
-            const decoded = this.decodeToken(this._token);
+            const decoded = this.decodeToken(token);
             const exp = decoded.exp;
             const current = Math.floor(Date.now() / 1000);
 
@@ -122,7 +93,7 @@ export class AuthService {
     }
 
     urlBase64Decode(str: string) {
-        var output = str.replace(/-/g, '+').replace(/_/g, '/');
+        let output = str.replace(/-/g, '+').replace(/_/g, '/');
         switch (output.length % 4) {
             case 0: {
                 break;
@@ -136,7 +107,7 @@ export class AuthService {
                 break;
             }
             default: {
-                throw 'Illegal base64url string!';
+                throw new Error('Illegal base64url string!');
             }
         }
         return this.b64DecodeUnicode(output);
@@ -146,14 +117,14 @@ export class AuthService {
         if (token == null || token === '') {
             return null;
         }
-        var parts = token.split('.');
+        const parts = token.split('.');
         if (parts.length !== 3) {
             throw new Error('The inspected token doesn\'t appear to be a JWT. Check to make sure it has three parts and see https://jwt.io for more.');
         }
-        var decoded = this.urlBase64Decode(parts[1]);
+        const decoded = this.urlBase64Decode(parts[1]);
         if (!decoded) {
             throw new Error('Cannot decode the token.');
         }
         return JSON.parse(decoded);
-    };
+    }
 }

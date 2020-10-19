@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
     this.translateServ.setDefaultLang(value);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.lang = this.translateServ.getDefaultLang();
     this.categoryServ.getAdminCategories().subscribe(
       (res: any) => {

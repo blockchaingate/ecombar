@@ -18,6 +18,13 @@
         <div class="mx-2">
           <button type="submit" class="signinbtn" (click)="signin()">Sign In</button>
         </div>
+        <div class="red mx-2 left" *ngIf="errMsg">
+          {{errMsg | translate}} <br>
+          <span class="x-small handcursor"> <u (click)="togoleDetail()">more ...</u></span>
+        </div>
+        <div class="warning" *ngIf="showDetail">
+          {{rawErrMsg}}
+        </div>
       </div>
 
       <div>

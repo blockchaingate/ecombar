@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StorageMap } from '@ngx-pwa/local-storage';
+import { StorageService } from './storage.service';
 import { AuthService } from './auth.service';
 import { App } from '../models/app';
 
@@ -10,14 +10,14 @@ export class AppService {
   private _name: string;
   private _app: App;
 
-  constructor(private authServ: AuthService, private storage: StorageMap) {}
+  constructor(private storage: StorageService) {}
 
   get id(): string {
-    return this.authServ.appId;
+    return this.storage.appId;
   }
 
   set id(appId: string) {
-    this.authServ.appId = appId;
+    this.storage.appId = appId;
   }
 
   get name() {

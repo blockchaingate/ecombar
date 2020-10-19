@@ -3,5 +3,6 @@
     "Home": "Home",
     "Login": "Login",
     "Cart": "Cart",
-    "Add to cart": "Add to cart"
+    "Add to cart": "Add to cart",
+    "Invalid email or password": "Invalid email or password"
 }

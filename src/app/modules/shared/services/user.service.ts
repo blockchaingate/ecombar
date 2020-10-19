@@ -1,111 +1,71 @@
 import { Injectable } from '@angular/core';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { HttpService } from './http.service';
 import { AuthService } from './auth.service';
+import { StorageService } from './storage.service';
 import { User } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private _id: string;
-  private _displayName: string;
-  private _email: string;
-  private _tokenExp: Date;
-  private _isSystemAdmin = false;
-  private _user: User;
-
-  constructor(private http: HttpService, private authServ: AuthService, private storage: StorageMap) {
-    if (!this._id) {
-      this.storage.get('_userId').subscribe((ret: string) => {
-        this._id = ret;
-        if (this._id && !this._user) {
-          this.getUser(this._id).subscribe((ret: User) => { this._user = ret; })
-        }
-      });
-    }
-  }
-
-  set id(newId: string) {
-    this._id = newId;
-    this.storage.set('_userId', newId).subscribe(ret => { });
-  }
+  constructor(private http: HttpService, private authServ: AuthService, private storage: StorageService) {}
 
   get id() {
-    return this._id;
-  }
-
-  set displayName(dispName: string) {
-    this._displayName = dispName;
+    return this.storage.user._id;
   }
 
   get displayName() {
-    return this._displayName;
-  }
-
-  set email(emal: string) {
-    this._email = emal;
+    return this.storage.user.displayName;
   }
 
   get email() {
-    return this._email;
+    return this.storage.user.email;
   }
 
-  set token(newToken: any) {
-    this.authServ.token = newToken;
+  set token(token: string) {
+    this.storage.token = token;
   }
 
   get token() {
-    return this.authServ.token;
+    return this.storage.token;
   }
 
   set tokenExp(exp: Date) {
-    this._tokenExp = exp;
+    this.storage.tokenExp = exp;
   }
 
-  get tokenExp() {
-    return this._tokenExp;
+  get tokenExp(): Date {
+    return this.storage.tokenExp;
   }
 
   set isSystemAdmin(sysAdmin: boolean) {
-    this._isSystemAdmin = sysAdmin;
+    this.storage.isSystemAdmin = sysAdmin;
   }
 
-  get isSystemAdmin() {
-    return this._isSystemAdmin;
+  get isSystemAdmin(): boolean {
+    return this.storage.isSystemAdmin;
   }
 
   set user(user: User) {
-    this._user = user;
-    this.storage.set('_user', user).subscribe(ret => {
-      if (!this._id) {
-        this._id = user._id;
-      }
-    });
+    this.storage.user = user;
   }
 
-  get user() {
-    return this._user;
+  get user(): User {
+    return this.storage.user;
   }
 
   signin(email: string, password: string) {
-    const theBody = { email: email, password: password };
+    const theBody = { email, password };
     return this.http.post('members/login', theBody, false);
   }
 
   signup(email: string, password: string) {
-    const theBody = { email: email, password: password };
+    const theBody = { email, password };
     return this.http.post('members/create', theBody, false);
   }
 
   logout() {
-    this._id = '';
-    this._displayName = '';
-    this._email = '';
-    this.authServ.token = null;
-    this._tokenExp = null;
-    this._isSystemAdmin = false;
-    this._user = null;
-    this.storage.delete('_userId').subscribe(ret => { });
-    this.storage.delete('_token').subscribe(ret => { });
+    this.storage.deleteAppId();
+    this.storage.deleteUser();
+    this.storage.deleteToken();
   }
 
   // Use memberId in token to get member information.

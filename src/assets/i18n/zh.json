@@ -3,5 +3,6 @@
     "Home": "首页",
     "Login": "登录",
     "Cart": "购物车",
-    "Add to cart": "添加到购物车"
+    "Add to cart": "添加到购物车",
+    "Invalid email or password": "无效的邮箱或密码"
 }

@@ -16,92 +16,75 @@ import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
+import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: AdminComponent,
+    path: '', component: AdminComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'dashboard'
-      },        
+        path: 'dashboard', component: DashboardComponent
+      },
       {
-        path: 'dashboard',
-        component: DashboardComponent
-      },  
-      { 
-        path: 'users',
-        component: UsersComponent
-      },  
-      { 
-        path: 'address',
-        component: AddressComponent
-      },        
-      { 
-        path: 'products',
-        component: ProductsComponent
-      },  
-      { 
-        path: 'product/add',
-        component: ProductAddComponent
-      }, 
-      { 
-        path: 'merchant-info',
-        component: MerchantInfoComponent
-      },  
-      { 
-        path: 'profile',
-        component: ProfileComponent
-      },             
-      { 
-        path: 'product/:id/edit',
-        component: ProductAddComponent
-      },        
-      { 
-        path: 'categories',
-        component: CategoriesComponent
-      },  
-      { 
-        path: 'category/add',
-        component: CategoryAddComponent
-      },  
-      { 
-        path: 'category/:id/edit',
-        component: CategoryAddComponent
-      }, 
-      { 
-        path: 'banners',
-        component: BannersComponent
-      },  
-      { 
-        path: 'banner/add',
-        component: BannerAddComponent
-      },  
-      { 
-        path: 'banner/:id/edit',
-        component: BannerAddComponent
-      },              
-      { 
-        path: 'collections',
-        component: CollectionsComponent
-      },  
-      { 
-        path: 'collection/add',
-        component: CollectionAddComponent
-      },       
-      { 
-        path: 'collection/:id/edit',
-        component: CollectionAddComponent
-      },        
-      { 
-        path: 'user/:id/edit',
-        component: UserAddComponent
-      },                           
-      { 
-        path: 'merchants',
-        component: MerchantsComponent
-      }              
+        path: 'users', component: UsersComponent
+      },
+      {
+        path: 'address', component: AddressComponent
+      },
+      {
+        path: 'products', component: ProductsComponent
+      },
+      {
+        path: 'product/add', component: ProductAddComponent
+      },
+      {
+        path: 'merchant-info', component: MerchantInfoComponent
+      },
+      {
+        path: 'profile', component: ProfileComponent
+      },
+      {
+        path: 'product/:id/edit', component: ProductAddComponent
+      },
+      {
+        path: 'categories', component: CategoriesComponent
+      },
+      {
+        path: 'category/add', component: CategoryAddComponent
+      },
+      {
+        path: 'category/:id/edit', component: CategoryAddComponent
+      },
+      {
+        path: 'banners', component: BannersComponent
+      },
+      {
+        path: 'banner/add', component: BannerAddComponent
+      },
+      {
+        path: 'banner/:id/edit', component: BannerAddComponent
+      },
+      {
+        path: 'collections', component: CollectionsComponent
+      },
+      {
+        path: 'collection/add', component: CollectionAddComponent
+      },
+      {
+        path: 'collection/:id/edit', component: CollectionAddComponent
+      },
+      {
+        path: 'user/:id/edit', component: UserAddComponent
+      },
+      {
+        path: 'merchants', component: MerchantsComponent
+      },
+      {
+        path: 'upload', component: UploadMediaComponent
+      },
+      {
+        path: '', redirectTo: 'dashboard'
+      }
     ]
   }
 ];

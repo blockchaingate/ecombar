@@ -1,30 +1,28 @@
-
-
 /* You can add global styles to this file, and also import other style files */
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .d-flex {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .px-2 {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .justify-content-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .align-items-center {
-    align-items: center;
+  align-items: center;
 }
 
 .border-bottom {
-    border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .align-items-start {
@@ -40,40 +38,43 @@ body {
 }
 
 .rounded-img {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .flex-grow-1 {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .w-100 {
-    width: 100%;
+  width: 100%;
 }
 
 .px-2 {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .px-1 {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;    
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .px-3 {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;    
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .backend-main {
-    height: 90vh;
+  height: 90vh;
 }
 
-* {box-sizing: border-box}
+* {
+  box-sizing: border-box
+}
 
 /* Full-width input fields */
-  input[type=text], input[type=password] {
+input[type=text],
+input[type=password] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -82,7 +83,8 @@ body {
   background: #f1f1f1;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus,
+input[type=password]:focus {
   background-color: #ddd;
   outline: none;
 }
@@ -105,7 +107,7 @@ button {
 }
 
 button:hover {
-  opacity:1;
+  opacity: 1;
 }
 
 /* Extra styles for the cancel button */
@@ -131,14 +133,19 @@ table {
   width: 100%;
 }
 
-table td, table th {
+table td,
+table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-table tr:hover {background-color: #ddd;}
+table tr:hover {
+  background-color: #ddd;
+}
 
 table th {
   padding-top: 12px;
@@ -190,7 +197,7 @@ table th {
   margin: 0.75rem;
 }
 
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -210,63 +217,69 @@ table th {
 
 .py-3 {
   padding-top: 0.75rem;
-  padding-bottom: 0.75rem;  
+  padding-bottom: 0.75rem;
 }
 
 .my-3 {
   margin-top: 0.75rem;
-  margin-bottom: 0.75rem;  
+  margin-bottom: 0.75rem;
+}
+
+.handcursor {
+  cursor: pointer;
 }
 
 .cursor-pointer {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .card {
   /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .border-bottom {
-  border-bottom: 1px solid #dee2e6!important;
+  border-bottom: 1px solid #dee2e6 !important;
 }
 
 .w-100 {
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .w-25 {
-  width: 25%!important;
+  width: 25% !important;
 }
 
 .w-50 {
-  width: 50%!important;
+  width: 50% !important;
 }
+
 .w-75 {
-  width: 75%!important;
+  width: 75% !important;
 }
+
 .text-center {
   text-align: center;
 }
 
 .text-muted {
-  color:#6c757d!important;
+  color: #6c757d !important;
 }
 
 .border.selected {
   background-color: #8682e0;
   color: white;
-  font-weight: 700;  
+  font-weight: 700;
 }
 
 .border.selected .text-muted {
-  color: white!important;
+  color: white !important;
 }
 
 .row {
@@ -297,6 +310,10 @@ table th {
   font-weight: 700;
 }
 
-.redcolor {
+.red {
   color: red;
+}
+
+.green{
+  color: green;
 }

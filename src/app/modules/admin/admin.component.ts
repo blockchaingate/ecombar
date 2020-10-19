@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../shared/services/auth.service';
 import { UserService } from '../shared/services/user.service';
 import { MerchantService } from '../shared/services/merchant.service';
 
@@ -13,20 +12,20 @@ import { MerchantService } from '../shared/services/merchant.service';
 export class AdminComponent implements OnInit {
   showNavMenu = false;
   dropDownActive = false;
+  displayName: string;
   email: string;
 
   menuItems: any;
   constructor(
     private router: Router,
-    private authServ: AuthService,
-    private merthantServ: MerchantService,
+    private merchantServ: MerchantService,
     private userServ: UserService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.email = this.userServ.email;
-    const merchantId = this.merthantServ.id;
-
+    this.displayName = this.userServ.displayName;
+    const merchantId = this.merchantServ.id;
     if (this.userServ.isSystemAdmin) {
       this.menuItems = [
         {
@@ -48,8 +47,12 @@ export class AdminComponent implements OnInit {
         {
           title: 'Users',
           link: 'users'
+        },
+        {
+          title: 'Upload',
+          link: 'upload'
         }
-      ]
+      ];
     } else
       if (merchantId) {
         this.menuItems = [
@@ -77,7 +80,7 @@ export class AdminComponent implements OnInit {
             title: 'Merchant information',
             link: 'merchant-info'
           }
-        ]
+        ];
       } else {
         this.menuItems = [
           {
@@ -92,20 +95,20 @@ export class AdminComponent implements OnInit {
       }
   }
 
-  logout() {
+  logout(): void {
     this.userServ.logout();
     this.router.navigate(['/auth/signin']);
   }
 
-  profile() {
+  profile(): void {
     this.router.navigate(['/admin/profile']);
   }
 
-  toggleShowNavMenu() {
+  toggleShowNavMenu(): void {
     this.showNavMenu = !this.showNavMenu;
   }
 
-  toggleDropDownActive() {
+  toggleDropDownActive(): void {
     this.dropDownActive = !this.dropDownActive;
   }
 }

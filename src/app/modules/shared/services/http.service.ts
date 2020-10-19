@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { AuthService } from './auth.service';
+import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
 
 interface OPTIONS {
@@ -19,16 +19,16 @@ interface OPTIONS {
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
-    constructor(private http: HttpClient, private authServ: AuthService) { }
+    constructor(private http: HttpClient, private storage: StorageService) { }
 
-    get(path: string, jwtAuth = true) {
+    get(path: string, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token
+                'x-access-token': this.storage.token
             });
         }
         const options: OPTIONS = {
@@ -38,50 +38,50 @@ export class HttpService {
         return this.http.get(url, options);
     }
 
-    post(path: string, data: any, jwtAuth = true) {
+    post(path: string, data: any, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token
+                'x-access-token': this.storage.token
             });
         }
         const options: OPTIONS = {
             headers: httpHeaders
         };
-        data.appId = this.authServ.appId;
+        data.appId = this.storage.appId;
         const url = environment.endpoints.blockchaingate + path;
         return this.http.post(url, data, options);
     }
 
-    put(path: string, data: any, jwtAuth = true) {
+    put(path: string, data: any, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token
+                'x-access-token': this.storage.token
             });
         }
         const options: OPTIONS = {
             headers: httpHeaders
         };
-        data.appId = this.authServ.appId;
+        data.appId = this.storage.appId;
         const url = environment.endpoints.blockchaingate + path;
         return this.http.put(url, data, options);
     }
 
-    delete(path: string, jwtAuth = true) {
+    delete(path: string, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.authServ.token
+                'x-access-token': this.storage.token
             });
         }
         const options: OPTIONS = {
@@ -91,9 +91,9 @@ export class HttpService {
         return this.http.delete(url, options);
     }
 
-    getPrivate(path: string, token: string) {
+    getPrivate(path: string, token: string): Observable<any> {
         if (!token) {
-            token = this.authServ.token;
+            token = this.storage.token;
         }
 
         const httpHeaders = new HttpHeaders({
@@ -107,9 +107,9 @@ export class HttpService {
         return this.http.get(url, options);
     }
 
-    postPrivate(path: string, data: any, token: string) {
+    postPrivate(path: string, data: any, token: string): Observable<any> {
         if (!token) {
-            token = this.authServ.token;
+            token = this.storage.token;
         }
 
         const httpHeaders = new HttpHeaders({
@@ -119,18 +119,29 @@ export class HttpService {
         const options: OPTIONS = {
             headers: httpHeaders
         };
-        data.appId = this.authServ.appId;
+        data.appId = this.storage.appId;
         const url = environment.endpoints.blockchaingate + path;
         return this.http.post(url, data, options);
     }
 
     // fullUrl: http://...  or https://...
-    getRaw(fullUrl: string) {
+    getRaw(fullUrl: string): Observable<any> {
         return this.http.get(fullUrl);
     }
 
     // fullUrl: http://...  or https://...
-    postRaw(fullUrl: string, data: any, options: OPTIONS) {
+    postRaw(fullUrl: string, data: any, options: OPTIONS): Observable<any> {
         return this.http.post(fullUrl, data, options);
+    }
+
+    uploadFile(url: string, contenType: string, file: File) {
+        contenType = contenType.replace('+', '/');
+        contenType = 'application/octet-stream';
+        const httpHeaders = new HttpHeaders({ 'Content-Type': contenType, 'x-amz-acl': 'public-read' });
+        const options: OPTIONS = {
+            headers: httpHeaders,
+            reportProgress: true
+        };
+        return this.http.put(url, file, options);
     }
 }
