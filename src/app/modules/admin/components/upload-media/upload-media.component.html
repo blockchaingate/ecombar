@@ -1,7 +1,32 @@
-<div *ngIf="images" class="d-flex">
-  <div *ngFor="let image of images" class="px-2">
-    <img class="thumbnail-img" src="{{image}}">
+<input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" (change)="fileChangeEvent($event.target.files)" style="display:none;" />
+<div *ngIf="images" class="container">
+  <div class="row">
+    <div *ngFor="let image of images" class="col col-4 px-2">
+     <img class="thumbnail-img" src="{{image}}">
+    </div>
+
+    <div class="media-container">
+      <div class="Polaris-Stack__Item_yiyol">
+      </div>
+      <div class="Polaris-Stack__Item_yiyol py-2">
+        <button class="btn" (click)="fileUpload.click()">Click</button>
+      </div>
+      <div class="Polaris-Stack__Item_yiyol">
+        <span class="Polaris-TextStyle--variationSubdued_1segu">or drop files to upload</span>
+      </div>
+      <div class="green" *ngIf="uploadSuccess">
+        Uploaded successful !
+        <br>
+        {{url}}
+        <br>
+        <img src={{url}} width="200">
+      </div>
+      <div class="red" *ngIf="errMsg">
+        {{errMsg}}
+      </div>
+    </div>    
   </div>
+
 </div>
 <div *ngIf="!images">
   <label for="email">
@@ -18,12 +43,12 @@
     </ul>
   </div>
 
-  <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" style="display:none;" />
+  
   <div class="media-container">
     <div class="Polaris-Stack__Item_yiyol">
     </div>
     <div class="Polaris-Stack__Item_yiyol py-2">
-      <input type="file" accept="image/png, image/jpeg" (change)="fileChangeEvent($event.target.files)">
+      <button class="btn" (click)="fileUpload.click()">Click</button>
     </div>
     <div class="Polaris-Stack__Item_yiyol">
       <span class="Polaris-TextStyle--variationSubdued_1segu">or drop files to upload</span>
