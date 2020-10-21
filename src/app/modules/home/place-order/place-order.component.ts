@@ -27,6 +27,7 @@ export class PlaceOrderComponent implements OnInit{
     link: string;
 
     constructor(
+      private router: Router,
       private route: ActivatedRoute, 
       private userServ: UserService, 
       private orderServ: OrderService, 
@@ -62,6 +63,9 @@ export class PlaceOrderComponent implements OnInit{
    
   }
 
+  change() {
+    this.router.navigate(['/payment/' + this.orderID]);
+  }
     payWithWeb() {
       console.log('begin payWithWeb');
 

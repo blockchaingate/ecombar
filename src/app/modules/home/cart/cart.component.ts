@@ -92,6 +92,7 @@ export class CartComponent implements OnInit, OnDestroy {
         if (res && res.ok) {
           const body = res._body;
           const orderID = body._id;
+          this.cartStoreServ.empty();
           this.router.navigate(['/address/' + orderID]);
         }
       }

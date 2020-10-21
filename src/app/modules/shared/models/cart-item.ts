@@ -6,5 +6,4 @@ export class CartItem {
     currency?: string;
     quantity: number;
     thumbnailUrl?: string;
-    image?: string;
 }

@@ -21,7 +21,7 @@ export class ProductsGridComponent {
       price: item.price,
       merchantId: item.merchantId,
       currency: item.currency,
-      image: item.images ? item.images[0] : null,
+      thumbnailUrl: item.images ? item.images[0] : null,
       quantity: 1
     };
     this.cartStoreServ.addCartItem(cartItem);

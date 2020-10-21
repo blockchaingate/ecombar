@@ -18,8 +18,12 @@
                         <div class="py-2 text-muted">
                             Shipping services
                         </div>
-                        <div class="font-weight-bold">
-                            {{order.shippingServiceSelected}}
+                        <div class="font-weight-bold d-flex align-items-center justify-content-between">
+                            <div>
+                                {{order.shippingServiceSelected}}
+                            </div>
+                            
+                            <button class="btn" (click)="change()">Change</button>
                         </div>
                     </div>
 
@@ -27,8 +31,12 @@
                         <div class="py-2 text-muted">
                             Payment options
                         </div>
-                        <div class="font-weight-bold">
-                            {{order.paymentMethod}}
+                        <div class="font-weight-bold d-flex align-items-center justify-content-between">
+                            <div>
+                                {{order.paymentMethod}}
+                            </div>
+                                
+                                <button class="btn" (click)="change()">Change</button>
                         </div>
                     </div>
 

@@ -90,6 +90,10 @@ export class AdminComponent implements OnInit {
           {
             title: 'Address',
             link: 'address'
+          },
+          {
+            title: 'Order',
+            link: 'orders'
           }
         ];
       }

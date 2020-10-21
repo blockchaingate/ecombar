@@ -1,0 +1,33 @@
+
+<div class="container">
+  
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">Date Created</div>
+        <div class="col col-3">Items</div>
+        <div class="col col-3">Total</div>
+        <div class="col col-3">Status</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let order of orders">
+        <div class="col col-3" data-label="Date created">{{order.dateCreated | date}}</div>
+        <div class="col col-3" data-label="Items count">{{getItemsCount(order)}}</div>
+        <div class="col col-3" data-label="Total">{{order.totalToPay}}</div>
+        <div class="col col-3" data-label="Total">{{getStatus(order)}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+  
+          <div class="d-inline-block px-2" *ngIf="order.paymentStatus == 0">
+            <a href="/place-order/{{order._id}}">
+              <img src="/assets/svg/pay.svg">
+            </a>
+          </div>
+    
+          <div class="d-inline-block px-2" *ngIf="order.paymentStatus == 0">
+            <a>
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div>        
+        </div>
+      </li>
+    </ul>
+  </div>

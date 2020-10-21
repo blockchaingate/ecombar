@@ -11,6 +11,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { AddressComponent } from './pages/address/address.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
@@ -34,6 +35,9 @@ const routes: Routes = [
       {
         path: 'products', component: ProductsComponent
       },
+      {
+        path: 'orders', component: OrdersComponent
+      },      
       {
         path: 'product/add', component: ProductAddComponent
       },

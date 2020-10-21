@@ -8,6 +8,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { CollectionService } from './services/collection.service';
 import { OrderService } from './services/order.service';
+import { PaymentService } from './services/payment.service';
 import { AddressService } from './services/address.service';
 import { TranslateService } from './services/translate.service';
 import { UploadService } from './services/upload.service';
@@ -50,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     AuthGuardService,
-    TranslateService
+    TranslateService,
+    PaymentService
   ]
 })
 export class SharedModule {
@@ -59,7 +61,8 @@ export class SharedModule {
       ngModule: SharedModule,
       providers: [
         TranslateService,
-        AuthGuardService
+        AuthGuardService,
+        PaymentService
       ]
     };
   }

@@ -17,4 +17,8 @@ export class OrderService {
   get(orderID: string) {
     return this.http.get('orders/' + orderID, true);
   }
+
+  getMyOrders() {
+    return this.http.get('orders', true);
+  }
 }

@@ -70,7 +70,8 @@ export class CartStoreService {
     this._items.next(this.items);
   }
 
-  removeTodo(_id: string) {
-    this.items = this.items.filter(item => item.productId !== _id);
+  
+  empty() {
+    return this.saveCartItems([]);
   }
 }

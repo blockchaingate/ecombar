@@ -59,6 +59,8 @@ export class PaymentComponent implements OnInit{
           if(res && res.ok) {
             this.order = res._body;
             console.log('this.order=', this.order);
+            this.selectPayment(this.order.paymentMethod);
+            this.selectShippingService(this.order.shippingServiceSelected);
             this.calculateTotal();
           }
         }
@@ -66,7 +68,14 @@ export class PaymentComponent implements OnInit{
 
     }
 
+    change() {
+      this.router.navigate(['/address/' + this.orderID]);
+    }
+    
     selectShippingService(service: string) {
+      if(!service) {
+        return;
+      }
       this.selectedShippingService = service;
       if(service == 'express') {
         this.shippingFee = 10;
@@ -77,6 +86,9 @@ export class PaymentComponent implements OnInit{
     }
 
     selectPayment(payment: string) {
+      if(!payment) {
+        return;
+      }
       this.selectedPayment = payment;
     }   
     
