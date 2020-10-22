@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss', '../../../../../table.scss', '../../../../../button.scss']
 })
 export class UsersComponent implements OnInit{
   users: any;

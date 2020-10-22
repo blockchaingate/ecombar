@@ -21,4 +21,19 @@ export class OrderService {
   getMyOrders() {
     return this.http.get('orders', true);
   }
+
+  getAllOrders() {
+    return this.http.get('orders/all', true);
+  }
+
+  gerMerchantOrders() {
+    return this.http.get('orders/merchant-orders/all', true);
+  }
+
+  delete(orderID: string) {
+    const data = {
+      active: false
+    }
+    return this.http.post('orders/update/' + orderID, data, true);
+  }
 }

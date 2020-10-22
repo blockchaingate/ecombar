@@ -40,8 +40,8 @@
             </span>
         </div>
 
-        <div class="px-3 mx-3 cursor-pointer" [routerLink]="['/auth/signin']">
-            {{'Login' | translate}}
+        <div class="px-3 mx-3 cursor-pointer" [routerLink]="[user ? '/admin' : '/auth/signin']">
+            {{(user ? 'Me' : 'Login') | translate}}
         </div>
 
     </div>

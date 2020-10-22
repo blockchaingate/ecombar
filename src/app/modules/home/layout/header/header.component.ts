@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { CartStoreService } from '../../../shared/services/cart.store.service';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -11,8 +12,13 @@ import { CartStoreService } from '../../../shared/services/cart.store.service';
 export class HeaderComponent implements OnInit {
   categories: [];
   cartCount: number;
+  user: any;
 
-  constructor(private translateServ: TranslateService, private categoryServ: CategoryService, private cartStoreServ: CartStoreService) {
+  constructor(
+    private translateServ: TranslateService, 
+    private categoryServ: CategoryService, 
+    private storageServ: StorageService,
+    private cartStoreServ: CartStoreService) {
   }
 
   _lang: string;
@@ -27,7 +33,15 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.storageServ.getUser().subscribe(
+      (user: any) => {
+        console.log('user=', user);
+        this.user = user;
+      }
+    );
+    console.log('uer=',this.storageServ.user);
     this.lang = this.translateServ.getDefaultLang();
+
     this.categoryServ.getAdminCategories().subscribe(
       (res: any) => {
         console.log('res=====', res);

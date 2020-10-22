@@ -16,14 +16,14 @@
         <div class="col col-3" data-label="Total">{{getStatus(order)}}</div>
         <div class="col col-3 text-right" data-label="Operations">
   
-          <div class="d-inline-block px-2" *ngIf="order.paymentStatus == 0">
+          <div class="d-inline-block px-2" *ngIf="customerFlag && (order.paymentStatus == 0)">
             <a href="/place-order/{{order._id}}">
               <img src="/assets/svg/pay.svg">
             </a>
           </div>
     
-          <div class="d-inline-block px-2" *ngIf="order.paymentStatus == 0">
-            <a>
+          <div class="d-inline-block px-2" *ngIf="customerFlag && (!order.paymentStatus || order.paymentStatus == 0)">
+            <a (click)="deleteOrder(order)">
               <img src="/assets/svg/delete.svg">
             </a>
           </div>        

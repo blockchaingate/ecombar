@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { User } from '../models/user';
+import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -63,6 +64,9 @@ export class StorageService {
         return this._user;
     }
 
+    getUser() {
+        return this.storage.get('_user');
+    }
     deleteUser(): void {
         this._user = null;
         this.storage.delete('_user').subscribe(ret => { });
@@ -82,8 +86,17 @@ export class StorageService {
         this.storage.set('_isSystemAdmin', sysAdmin).subscribe(ret => { });
     }
 
-    get isSystemAdmin(): boolean {
+    get isSystemAdmin() {
         return this._isSystemAdmin;
+    }
+    checkSystemAdmin() {
+        if(this._isSystemAdmin) {
+            const obs = new Observable((observer) => {
+                observer.next(this._isSystemAdmin);
+            });
+            return obs;
+        }
+        return this.storage.get('_isSystemAdmin');
     }
 
 }

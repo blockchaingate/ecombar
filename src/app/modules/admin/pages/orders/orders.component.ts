@@ -13,6 +13,7 @@ import { MerchantService } from '../../../shared/services/merchant.service';
 })
 export class OrdersComponent implements OnInit {
   orders: any;
+  customerFlag: boolean;
   constructor(
     private userServ: UserService,
     private authServ: AuthService,
@@ -22,13 +23,35 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.orderServ.getMyOrders().subscribe(
-          (res: any) => {
-              if(res && res.ok) {
-                this.orders = res._body;
-              }
-          }
+    const merchantId = this.merchantServ.id;
+    if(this.userServ.isSystemAdmin) {
+      this.orderServ.getAllOrders().subscribe(
+        (res: any) => {
+            if(res && res.ok) {
+              this.orders = res._body;
+            }
+        }
       );
+    } else 
+    if(merchantId) {
+      this.orderServ.gerMerchantOrders().subscribe(
+        (res: any) => {
+            if(res && res.ok) {
+              this.orders = res._body;
+            }
+        }
+      );
+    } else {
+      this.customerFlag = true;
+      this.orderServ.getMyOrders().subscribe(
+        (res: any) => {
+            if(res && res.ok) {
+              this.orders = res._body;
+            }
+        }
+      );
+    }
+
   }
 
   getItemsCount(order) {
@@ -53,14 +76,22 @@ export class OrdersComponent implements OnInit {
       status = 'paid already';
     } else 
     if(paymentStatus == 2) {
-      status = 'finished';
+      status = 'payment confirmed';
     } else 
     if(paymentStatus == 3) {
-      status = 'cancelled';
+      status = 'payment cancelled';
     } else 
     if(paymentStatus == 4) {
-      status = 'frozened';
+      status = 'payment frozened';
     }
     return status;
+  }
+
+  deleteOrder(order) {
+    this.orderServ.delete(order._id).subscribe(
+      (res: any) => {
+        
+      }
+    );
   }
 }

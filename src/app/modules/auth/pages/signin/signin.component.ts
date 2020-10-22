@@ -35,10 +35,15 @@ export class SigninComponent implements OnInit {
           user.email = res.email;
           user.token = res.token;
           this.userServ.token = res.token;
-          this.merchantServ.name = res.defaultMerchant.name;
           const decoded = this.authServ.decodeToken(res.token);
+          if(res.defaultMerchant) {
+            this.merchantServ.name = res.defaultMerchant.name;
+            this.merchantServ.id = decoded.merchantId || res.defaultMerchant._id;
+          }
+          
+          
           this.userServ.tokenExp = decoded.exp;
-          this.merchantServ.id = decoded.merchantId || res.defaultMerchant._id;
+          
           this.appServ.id = res.appId || decoded.appId;
           this.appServ.name = res.appName || decoded.appName;
           let isSysAdmin = false;

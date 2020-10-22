@@ -55,7 +55,9 @@ export class UserService {
 
   signin(email: string, password: string) {
     const appId = environment.appid;
+    console.log('appId=', appId);
     const theBody = { appId, email, password };
+    console.log('theBody=', theBody);
     return this.http.post('members/login', theBody, false);
   }
 
@@ -81,7 +83,10 @@ export class UserService {
   }
 
   getAllUsers() {
-    return this.http.post('members/getAll', null);
+    const data = {
+      appId: environment.appid
+    }
+    return this.http.post('members/getAll', data);
   }
 
   find(data: any) {

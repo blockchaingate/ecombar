@@ -49,6 +49,10 @@ export class AdminComponent implements OnInit {
           link: 'users'
         },
         {
+          title: 'Orders',
+          link: 'orders'
+        },        
+        {
           title: 'Upload',
           link: 'upload'
         }
@@ -76,6 +80,10 @@ export class AdminComponent implements OnInit {
             title: 'Product',
             link: 'products'
           },
+          {
+            title: 'Orders',
+            link: 'orders'
+          },           
           {
             title: 'Merchant information',
             link: 'merchant-info'
