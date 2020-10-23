@@ -18,6 +18,7 @@ import { BannersComponent } from './pages/banners/banners.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
+import { ShippingComponent } from './pages/shipping/shipping.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,10 @@ const routes: Routes = [
       },
       {
         path: 'orders', component: OrdersComponent
-      },      
+      }, 
+      {
+        path: 'shipping/:orderID', component: ShippingComponent
+      },             
       {
         path: 'product/add', component: ProductAddComponent
       },

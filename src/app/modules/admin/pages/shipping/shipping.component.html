@@ -1,0 +1,23 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Shipping</h1>
+      <hr>
+      
+        <label for="email"><b>Service Name</b></label>
+        <input type="text" placeholder="Enter Service Name" [(ngModel)]="serviceName" name="serviceName" required>
+  
+        <label for="email"><b>Tracking Number</b></label>
+        <input type="text" placeholder="Enter Tracking Number" [(ngModel)]="trackingNumber" name="trackingNumber">
+  
+        <div class="custom-select" style="width:200px;" *ngIf="statuses">
+          <select [(ngModel)]="status" name="status">
+            <option value="0">Select Status:</option>
+            <option *ngFor="let st of statuses" value="{{st.value}}">{{st.name}}</option>
+          </select>
+        </div> 
+      <div class="d-flex justify-content-between py-2">
+        <button type="button" class="btn cancelbtn">Cancel</button>
+        <button type="submit" class="btn signinbtn" (click)="update()">Update</button>
+      </div>
+    </div>
+</form>

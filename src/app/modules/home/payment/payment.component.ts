@@ -14,6 +14,7 @@ export class PaymentComponent implements OnInit{
 
     id: string;
     order: any;
+    discount: number;
     orderID: string;
     total: number;
     subtotal: number;
@@ -50,6 +51,7 @@ export class PaymentComponent implements OnInit{
     }
 
     ngOnInit() {
+      this.discount = 0;
       this.shippingFee = 0;
       this.total = 0;
       this.subtotal = 0;
@@ -89,6 +91,11 @@ export class PaymentComponent implements OnInit{
       if(!payment) {
         return;
       }
+      if(payment == 'usdt') {
+        this.discount = 3;
+      } else {
+        this.discount = 0;
+      }
       this.selectedPayment = payment;
     }   
     
@@ -108,7 +115,7 @@ export class PaymentComponent implements OnInit{
       const item = {
         totalSale: this.subtotal,
         totalShipping: this.shippingFee,
-        totalToPay: this.total,
+        totalToPay: this.total * (1 - this.discount / 100),
         paymentMethod: this.selectedPayment,
         paymentStatus: 0,
         shippingServiceSelected: this.selectedShippingService

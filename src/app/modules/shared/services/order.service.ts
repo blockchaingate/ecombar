@@ -14,6 +14,10 @@ export class OrderService {
     return this.http.post('orders/update/' + orderID, data, true);
   }
 
+  updateShipping(orderID: string, data) {
+    return this.http.post('orders/updateShipping/' + orderID, data, true);
+  }
+
   get(orderID: string) {
     return this.http.get('orders/' + orderID, true);
   }

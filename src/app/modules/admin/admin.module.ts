@@ -16,6 +16,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { ShippingComponent } from './pages/shipping/shipping.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
@@ -41,6 +42,7 @@ import { FormsModule } from '@angular/forms';
     CollectionAddComponent,
     UserAddComponent,
     AddressComponent,
+    ShippingComponent,
     MerchantsComponent,
     ProductsComponent,
     MerchantInfoComponent,

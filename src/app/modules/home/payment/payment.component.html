@@ -210,6 +210,15 @@
                         </div>                        
                     </div>  
 
+                    <div class="row py-2" *ngIf="discount">
+                        <div class="col col-6">
+                            Discount
+                        </div>
+                        <div class="col col-6 text-right">
+                           {{discount}}%
+                        </div>                        
+                    </div>  
+
                     <div class="row py-2">
                         <div class="col col-6 font-weight-bold">
                             Total

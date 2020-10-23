@@ -21,7 +21,13 @@
               <img src="/assets/svg/pay.svg">
             </a>
           </div>
-    
+
+          <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">
+            <a href="/admin/shipping/{{order._id}}">
+              <img src="/assets/svg/shipping.svg">
+            </a>
+          </div>
+
           <div class="d-inline-block px-2" *ngIf="customerFlag && (!order.paymentStatus || order.paymentStatus == 0)">
             <a (click)="deleteOrder(order)">
               <img src="/assets/svg/delete.svg">
