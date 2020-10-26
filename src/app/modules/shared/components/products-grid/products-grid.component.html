@@ -1,7 +1,10 @@
 <div class="d-flex justify-content-center">
     <div *ngFor="let item of products" class="px-2">
         <div *ngIf="item.images">
-            <img class="media" src="{{item.images[0]}}">
+            <a href="/product/{{item._id}}">
+                <img class="media" src="{{item.images[0]}}">
+            </a>
+            
         </div>
         <div>
             {{item.title.en}}

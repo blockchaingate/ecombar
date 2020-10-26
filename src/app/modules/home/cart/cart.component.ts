@@ -99,10 +99,24 @@ export class CartComponent implements OnInit, OnDestroy {
     );
   }
 
-  remove(item: CartItem): void {
-    console.log('item==', item);
-    const productId = item.productId;
-    this.cartItems = this.cartItems.filter((itm) => itm.productId !== productId);
+  clear() {
+    this.cartItems = [];
+    this.cartStoreServ.empty();
+  }
+
+  updateProduct(item) {
+    const product = item.product;
+    const quantity = item.quantity;
+    const productId = product.productId;
+    if(quantity == 0) {
+      this.cartItems = this.cartItems.filter((itm) => itm.productId !== productId);
+    } else {
+      for(let i=0;i<this.cartItems.length;i++) {
+        if(this.cartItems[i].productId == productId) {
+          this.cartItems[i].quantity = quantity;
+        }
+      }
+    }
     this.cartStoreServ.saveCartItems(this.cartItems);
     this.calculateTotal();
   }
@@ -112,6 +126,12 @@ export class CartComponent implements OnInit, OnDestroy {
       clearInterval(this.interval);
     }
 
+  }
+
+  calcTotal() {
+    return this.cartItems.reduce(
+      (acc, prod) => acc+= prod.quantity ,0
+    );
   }
 
   ngOnDestroy(): void {

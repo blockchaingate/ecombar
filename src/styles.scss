@@ -294,6 +294,10 @@ table th {
   flex: 33.3%;
 }
 
+.col-7 {
+  flex: 58.4%;
+}
+
 .col-8 {
   flex: 66.6%;
 }
@@ -302,8 +306,16 @@ table th {
   flex: 25%;
 }
 
+.col-5 {
+ flex: 41.6%
+}
+
 .col-9 {
   flex: 75%;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
 }
 
 .font-weight-bold {
@@ -316,4 +328,12 @@ table th {
 
 .green{
   color: green;
+}
+
+.a-text-bold {
+  font-weight: 700!important;
+}
+
+.color-success {
+  color: #007600!important;
 }
