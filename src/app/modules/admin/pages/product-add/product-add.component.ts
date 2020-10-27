@@ -105,7 +105,11 @@ export class ProductAddComponent implements OnInit {
     this.active = a;
   }
 
+  onUploaded(event) {
+    this.images.push(event);
+  }
   saveProduct() {
+    console.log('this.images=', this.images);
     const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
     const descLan: TextLan = { name: 'title', en: this.description, sc: this.descriptionChinese };
     const data: Product = {

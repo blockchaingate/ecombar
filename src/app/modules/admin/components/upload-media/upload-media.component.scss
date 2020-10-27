@@ -25,10 +25,52 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+
+
 .Polaris-Stack__Item_yiyol {
     flex: 0 0 auto;
     min-width: 0;
     text-align: center;
+}
+
+.img-container {
+    position: relative;
+}
+
+.img-container .checkbox {
+    display: none;
+}
+
+.img-container:hover {
+    border: 2px solid #8682e0;
+}
+
+.img-container:hover .checkbox {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    display: inline-block;
+}
+
+
+.img-container.checkbox-visble {
+    border: 2px solid #8682e0;
+}
+
+.delete-media {
+    color:rgb(216 44 13);
+    cursor: pointer;
+
+}
+.delete-media:hover {
+    text-decoration: underline;
+}
+
+.img-container.checkbox-visble .checkbox{
+    position: absolute;
+    left: 3px;
+    top: 3px;    
+    display: inline-block;
 }
 
 .Polaris-DropZone-FileUpload_1fbjx {
@@ -37,6 +79,6 @@
 }
 
 .thumbnail-img {
-    width: 80px;
+    width: 100%;
     height: auto;
 }
