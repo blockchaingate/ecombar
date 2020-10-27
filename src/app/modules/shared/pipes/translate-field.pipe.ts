@@ -7,6 +7,9 @@ export class TranslateFieldPipe extends TranslatePipe implements PipeTransform {
         super(translateServ,null);
     }
     transform( fieldName: any): any {
+        if(!fieldName) {
+            return '';
+        }
         const lang = this.translateServ.getDefaultLang();
         return fieldName[lang];
     }

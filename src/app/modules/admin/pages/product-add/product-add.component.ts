@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../shared/services/product.service';
 import { TextLanService } from '../../../shared/services/textlan.service';
 import { CategoryService } from '../../../shared/services/category.service';
+import { BrandService } from '../../../shared/services/brand.service';
 import { currencies } from '../../../../../environments/currencies';
 import { Product } from '../../../shared/models/product';
 import { TextLan } from '../../../shared/models/textlan';
@@ -27,6 +28,8 @@ export class ProductAddComponent implements OnInit {
   currentTab: string;
   category: string;
   categories: any;
+  brand: string;
+  brands: any;
   currencies: any;
   images: any;
   currency: string;
@@ -38,6 +41,7 @@ export class ProductAddComponent implements OnInit {
     private router: Router,
     private textlanServ: TextLanService,
     private categoryServ: CategoryService,
+    private brandServ: BrandService,
     private productServ: ProductService) {
   }
 
@@ -58,6 +62,14 @@ export class ProductAddComponent implements OnInit {
           this.categories = res._body;
         }
       }
+    );
+
+    this.brandServ.getBrands().subscribe(
+      (res: any) => {
+        if (res && res.ok) {
+          this.brands = res._body;
+        }
+      }      
     );
 
     this.id = this.route.snapshot.paramMap.get('id');
@@ -82,6 +94,7 @@ export class ProductAddComponent implements OnInit {
 
             this.currency = product.currency;
             this.price = product.price;
+            this.brand = product.brand;
             this.active = product.active;
             if (product.images) {
               this.images = product.images;
@@ -119,7 +132,8 @@ export class ProductAddComponent implements OnInit {
       currency: 'USD',
       primaryCategoryId: this.category,
       active: this.active,
-      images: this.images
+      images: this.images,
+      brand: this.brand
     };
     if (this.id) {
       this.productServ.update(this.id, data).subscribe(

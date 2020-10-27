@@ -92,13 +92,31 @@
                   <div class="custom-select py-2" *ngIf="categories">
                     <select [(ngModel)]="category">
                       <option value="0">Select Category:</option>
-                      <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category}}</option>
+                      <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category | translateField}}</option>
                     </select>
                   </div>
     
                 </div>
               </div>
             </div> 
+
+
+            <div class="card-section">
+              <div class="card">
+                <div class="container">  
+                  <div class="py-2">
+                    <label for="psw"><b>Brand</b></label>
+                  </div>
+                  <div class="custom-select py-2" *ngIf="brands">
+                    <select [(ngModel)]="brand">
+                      <option value="0">Select Brand:</option>
+                      <option *ngFor="let br of brands" value="{{br._id}}">{{br.name | translateField}}</option>
+                    </select>
+                  </div>
+    
+                </div>
+              </div>
+            </div>             
           </div>
         </div>
       </div>

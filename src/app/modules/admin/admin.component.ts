@@ -33,6 +33,10 @@ export class AdminComponent implements OnInit {
           link: 'dashboard'
         },
         {
+          title: 'Brands',
+          link: 'brands'
+        },        
+        {
           title: 'Banner',
           link: 'banners'
         },
@@ -68,6 +72,10 @@ export class AdminComponent implements OnInit {
             title: 'Banner',
             link: 'banners'
           },
+          {
+            title: 'Brands',
+            link: 'brands'
+          },            
           {
             title: 'Category',
             link: 'categories'

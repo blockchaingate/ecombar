@@ -10,6 +10,8 @@ import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
+import { BrandsComponent } from './pages/brands/brands.component';
+import { BrandAddComponent } from './pages/brand-add/brand-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
@@ -49,7 +51,9 @@ import { FormsModule } from '@angular/forms';
     CollectionsComponent,
     CategoriesComponent,
     ProductAddComponent,
-    CategoryAddComponent
+    CategoryAddComponent,
+    BrandsComponent,
+    BrandAddComponent
   ],
   imports: [
     AdminRoutingModule,

@@ -15,6 +15,8 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
+import { BrandsComponent } from './pages/brands/brands.component';
+import { BrandAddComponent } from './pages/brand-add/brand-add.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
@@ -63,6 +65,15 @@ const routes: Routes = [
       {
         path: 'category/:id/edit', component: CategoryAddComponent
       },
+      {
+        path: 'brands', component: BrandsComponent
+      },
+      {
+        path: 'brand/add', component: BrandAddComponent
+      },
+      {
+        path: 'brand/:id/edit', component: BrandAddComponent
+      },      
       {
         path: 'banners', component: BannersComponent
       },

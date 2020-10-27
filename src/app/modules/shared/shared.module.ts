@@ -4,6 +4,7 @@ import { UserService } from './services/user.service';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
 import { BannerService } from './services/banner.service';
+import { BrandService } from './services/brand.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { CollectionService } from './services/collection.service';
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     AuthGuardService,
+    BrandService,
     TranslateService,
     PaymentService
   ]
@@ -62,7 +64,8 @@ export class SharedModule {
       providers: [
         TranslateService,
         AuthGuardService,
-        PaymentService
+        PaymentService,
+        BrandService
       ]
     };
   }
