@@ -27,6 +27,7 @@ import { AddressComponent } from './pages/address/address.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { FormsModule } from '@angular/forms';
     AdminRoutingModule,
     CommonModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    RichTextEditorModule
   ],
   providers: []
 })

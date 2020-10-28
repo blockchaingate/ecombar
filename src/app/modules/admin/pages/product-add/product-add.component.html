@@ -29,8 +29,12 @@
     
                   <div class="form-field">
                     <label for="email">Description</label>
-                    <input type="text" placeholder="Enter product description" [(ngModel)]="description" name="description" required>              
-      
+
+
+                    <ejs-richtexteditor [(ngModel)]='description'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+
+
+
                   </div>
                 </div>
               </div>
@@ -126,7 +130,7 @@
         <input type="text" placeholder="输入名称" [(ngModel)]="titleChinese" name="titleChinese">     
         
         <label for="name"><b>描述</b></label>
-        <input type="text" placeholder="输入描述" [(ngModel)]="descriptionChinese" name="descriptionChinese">             
+        <ejs-richtexteditor [(ngModel)]='descriptionChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
       </div>
 
 

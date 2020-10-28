@@ -7,10 +7,11 @@ import { BrandService } from '../../../shared/services/brand.service';
 import { currencies } from '../../../../../environments/currencies';
 import { Product } from '../../../shared/models/product';
 import { TextLan } from '../../../shared/models/textlan';
+import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 
 @Component({
   selector: 'app-admin-product-add',
-  providers: [ProductService, CategoryService],
+  providers: [ProductService, CategoryService, ToolbarService, LinkService, ImageService, HtmlEditorService],
   templateUrl: './product-add.component.html',
   styleUrls: [
     './product-add.component.scss',
@@ -20,6 +21,9 @@ import { TextLan } from '../../../shared/models/textlan';
   ]
 })
 export class ProductAddComponent implements OnInit {
+
+  public insertImageSettings :ImageSettingsModel = { allowedTypes: ['.jpeg', '.jpg', '.png'], display: 'inline', width: 'auto', height: 'auto', saveFormat: 'Blob', saveUrl: null, path: null,}
+
   title: string;
   price: string;
   product: any;
@@ -47,6 +51,7 @@ export class ProductAddComponent implements OnInit {
 
   ngOnInit() {
     this.active = false;
+    this.descriptionChinese = '';
     this.images = [
       'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a0?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
       'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a3?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
@@ -84,12 +89,15 @@ export class ProductAddComponent implements OnInit {
             this.product = product;
             if (product.title) {
               this.title = product.title.en;
-              this.titleChinese = product.title.zh;
+              this.titleChinese = product.title.sc;
             }
 
             if (product.description) {
               this.description = product.description.en;
-              this.descriptionChinese = product.description.zh;
+              if(product.description.sc) {
+                this.descriptionChinese = product.description.sc;
+              }
+              
             }
 
             this.currency = product.currency;
