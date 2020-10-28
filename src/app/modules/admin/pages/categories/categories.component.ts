@@ -15,7 +15,6 @@ export class CategoriesComponent implements OnInit {
   categories: any;
   constructor(
     private userServ: UserService,
-    private authServ: AuthService,
     private merchantServ: MerchantService,
     private router: Router,
     private categoryServ: CategoryService) {
@@ -27,9 +26,9 @@ export class CategoriesComponent implements OnInit {
     if (this.userServ.isSystemAdmin) {
       this.getAdminCategories();
     } else
-      if (merchantId) {
+    if (merchantId) {
         this.getMerchantCategories(merchantId);
-      }
+    }
   }
 
   getMerchantCategories(merchantId: string) {

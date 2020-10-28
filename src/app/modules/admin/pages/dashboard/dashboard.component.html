@@ -1,44 +1,46 @@
 <div class="main-overview">
   <div class="overviewCard">
     <div class="overviewCard-icon overviewCard-icon--document">
-       <i class="far fa-file-alt"></i>
+       <img src="/assets/svg/brand-white.svg">
     </div>
     <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-light">New <strong>Document</strong></h3>
-      <p class="overviewCard-subtitle">Europe Trip</p>
+      <h3 class="overviewCard-title text-light"> <strong>Brands</strong></h3>
+      <p class="overviewCard-subtitle">{{brands_count}}</p>
     </div>
   </div>
   <div class="overviewCard">
     <div class="overviewCard-icon overviewCard-icon--calendar">
-       <i class="far fa-calendar-check"></i>
+      <img src="/assets/svg/category-white.svg">
     </div>
     <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-light">Upcoming <strong>Event</strong></h3>
-      <p class="overviewCard-subtitle">Chili Cookoff</p>
+      <h3 class="overviewCard-title text-light"> <strong>Categories</strong></h3>
+      <p class="overviewCard-subtitle">{{categories_count}}</p>
     </div>
   </div>
   <div class="overviewCard">
     <div class="overviewCard-icon overviewCard-icon--mail">
-       <i class="far fa-envelope"></i>
+      <img src="/assets/svg/product-white.svg">
     </div>
     <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-light">Recent <strong>Emails</strong></h3>
-      <p class="overviewCard-subtitle">+10</p>
+      <h3 class="overviewCard-title text-light"> <strong>Products</strong></h3>
+      <p class="overviewCard-subtitle">{{products_count}}</p>
     </div>
   </div>
   <div class="overviewCard">
     <div class="overviewCard-icon overviewCard-icon--photo">
-       <i class="far fa-file-image"></i>
+      <img src="/assets/svg/customer-white.svg">
     </div>
     <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-light">New <strong>Album</strong></h3>
-      <p class="overviewCard-subtitle">House Concert</p>
+      <h3 class="overviewCard-title text-light"> <strong>Collections</strong></h3>
+      <p class="overviewCard-subtitle">{{collections_count}}</p>
     </div>
   </div>
 </div> 
 
 
 <div class="card">
-    <div class="card__header">John Doe</div>
-    <div class="card__main">Architect & Engineer</div>
+    <div class="card__header">Orders</div>
+    <div class="card__main">
+      <app-admin-orders></app-admin-orders>
+    </div>
 </div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -16,15 +17,13 @@ export class OrdersComponent implements OnInit {
   customerFlag: boolean;
   constructor(
     private userServ: UserService,
-    private authServ: AuthService,
+    private storageServ: StorageService,
     private merchantServ: MerchantService,
-    private router: Router,
     private orderServ: OrderService) {
   }
 
-  ngOnInit() {
-    const merchantId = this.merchantServ.id;
-    if(this.userServ.isSystemAdmin) {
+  getOrders(merchantId: string, isSystemAdmin: boolean) {
+    if(isSystemAdmin) {
       this.orderServ.getAllOrders().subscribe(
         (res: any) => {
             if(res && res.ok) {
@@ -51,6 +50,33 @@ export class OrdersComponent implements OnInit {
         }
       );
     }
+  }
+  getMerchantOrders(merchantId: string) {
+
+
+    if(this.userServ.isSystemAdmin) {
+      this.getOrders(merchantId, this.userServ.isSystemAdmin);
+    } else {
+      this.storageServ.get('_isSystemAdmin').subscribe(
+        (ret:boolean) => {
+          this.getOrders(merchantId, ret);
+        }
+      );      
+    }
+
+  }
+  ngOnInit() {
+    const merchantId = this.merchantServ.id;
+    if(merchantId) {
+      this.getMerchantOrders(merchantId);
+    } else {
+      this.storageServ.get('_merchantId').subscribe(
+        (ret: any) => {
+          this.getMerchantOrders(ret);
+        }
+      );        
+    }
+
 
   }
 

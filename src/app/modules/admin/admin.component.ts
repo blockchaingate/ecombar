@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 import { MerchantService } from '../shared/services/merchant.service';
+import { StorageService } from '../shared/services/storage.service';
 
 @Component({
   providers: [UserService],
@@ -19,14 +20,39 @@ export class AdminComponent implements OnInit {
   constructor(
     private router: Router,
     private merchantServ: MerchantService,
-    private userServ: UserService
+    private userServ: UserService,
+    private storageServ: StorageService
   ) { }
 
   ngOnInit(): void {
     this.email = this.userServ.email;
     this.displayName = this.userServ.displayName;
-    const merchantId = this.merchantServ.id;
-    if (this.userServ.isSystemAdmin) {
+    if(!this.email) {
+      this.storageServ.get('_user').subscribe(
+        (user: any) => {
+          this.email = user.email;
+          this.displayName = user.displayName;
+        }
+      );
+    }
+    
+    
+    let merchantId = this.merchantServ.id;
+    if(!merchantId) {
+      this.storageServ.get('_merchantId').subscribe(
+        (ret: any) => {
+          merchantId = ret;
+          this.initMenu(merchantId);
+        }
+      );
+    } else {
+      this.initMenu(merchantId);
+    }
+
+  }
+
+  initMenuWithSystemAdmin(merchantId:string, isSystemAdmin:boolean) {
+    if (isSystemAdmin) {
       this.menuItems = [
         {
           title: 'Dashboard',
@@ -115,6 +141,18 @@ export class AdminComponent implements OnInit {
       }
   }
 
+  initMenu(merchantId: string) {
+
+    if(this.userServ.isSystemAdmin) {
+      this.initMenuWithSystemAdmin(merchantId, this.userServ.isSystemAdmin);
+    } else {
+      this.storageServ.get('_isSystemAdmin').subscribe(
+        (ret:boolean) => {
+          this.initMenuWithSystemAdmin(merchantId, ret);
+        }
+      );
+    }
+  }
   logout(): void {
     this.userServ.logout();
     this.router.navigate(['/auth/signin']);
