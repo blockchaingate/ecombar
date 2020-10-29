@@ -16,6 +16,7 @@ export class UploadMediaComponent implements OnInit {
   productId = '45fdssirfssss';
   checkedImages: any;
   @Input() images: any;
+  @Input() singleFile: boolean;
   //@Output() uploaded: EventEmitter<string> = new EventEmitter();
   errMsg = '';
   successMsg = '';

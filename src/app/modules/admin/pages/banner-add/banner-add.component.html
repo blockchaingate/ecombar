@@ -17,6 +17,8 @@
         <input type="text" placeholder="Enter title" [(ngModel)]="title" name="title" required>
         <label for="email"><b>Subtitle</b></label>
         <input type="text" placeholder="Enter subtitle" [(ngModel)]="subtitle" name="subtitle">  
+        <label for="image"><b>Image</b></label>
+        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
         <label for="email"><b>Sequence</b></label>
         <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence">
 
@@ -32,7 +34,7 @@
 
       <div class="d-flex justify-content-between py-2">
         <button type="button" class="btn cancelbtn">Cancel</button>
-        <button type="submit" class="btn signinbtn" (click)="addBanner()">Add</button>
+        <button type="submit" class="btn signinbtn" (click)="addBanner()">{{id?'Update':'Add'}}</button>
       </div>
     </div>
 </form>

@@ -36,7 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     CommonModule,
     TranslateModule.forChild({
-      defaultLanguage: 'zh',
+      defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 
 @Component({

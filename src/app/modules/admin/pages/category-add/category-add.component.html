@@ -22,7 +22,7 @@
         <div class="custom-select" style="width:200px;" *ngIf="categories">
           <select [(ngModel)]="parentId" name="parentId">
             <option value="0">Select Category:</option>
-            <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category}}</option>
+            <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category | translateField}}</option>
           </select>
         </div> 
       </div>

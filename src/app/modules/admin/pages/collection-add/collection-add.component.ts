@@ -48,7 +48,7 @@ export class CollectionAddComponent implements OnInit {
             const collection = res._body;
             console.log('collection=', collection);
             this.name = collection.name.en;
-            this.nameChinese = collection.name.zh;
+            this.nameChinese = collection.name.sc;
             this.collectionProducts = collection.products;
             this.sequence = collection.sequence;
           }
@@ -68,6 +68,13 @@ export class CollectionAddComponent implements OnInit {
       }
     }
   }
+
+  deleteProduct(product) {
+    this.collectionProducts = this.collectionProducts.filter(
+      item => item._id != product._id
+    );
+  }
+  
   getProducts() {
     const merchantId = this.merchantServ.id;
 
@@ -105,7 +112,7 @@ export class CollectionAddComponent implements OnInit {
     const data = {
       name: {
         en: this.name,
-        zh: this.nameChinese
+        sc: this.nameChinese
       },
       sequence: this.sequence,
       products: products

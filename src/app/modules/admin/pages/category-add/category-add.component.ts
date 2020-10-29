@@ -60,7 +60,7 @@ export class CategoryAddComponent implements OnInit {
             const category = res._body;
             console.log('cateogryyy=', category);
             this.category = category.category.en;
-            this.categoryChinese = category.category.zh;
+            this.categoryChinese = category.category.sc;
             this.sequence = category.sequence;
             this.parentId = category.parentId;
           }
@@ -78,7 +78,7 @@ export class CategoryAddComponent implements OnInit {
     const data = {
       category: {
         en: this.category,
-        zh: this.categoryChinese
+        sc: this.categoryChinese
       },
       sequence: this.sequence,
       parentId: this.parentId

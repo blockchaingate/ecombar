@@ -22,13 +22,18 @@
         <div>
           <label for="email"><b>Products</b></label>
           <div>
-            <div *ngFor="let prod of collectionProducts" class="p-2">
-              {{prod.title.en}}
+            <div *ngFor="let prod of collectionProducts" class="product-item d-flex justify-content-between p-2">
+              <div>
+                {{prod.title | translateField}}
+              </div>
+              <div (click)="deleteProduct(prod)">
+                <img src="/assets/svg/delete.svg">
+              </div>
             </div>
           </div>
           <select [(ngModel)]="productId" name="productId" *ngIf="products">
             <option value="0">Select Product:</option>
-            <option *ngFor="let prod of products | excludeProducts : collectionProducts" value="{{prod._id}}">{{prod.title.en}}</option>
+            <option *ngFor="let prod of products | excludeProducts : collectionProducts" value="{{prod._id}}">{{prod.title | translateField}}</option>
           </select>
           <button type="button" class="btn cancelbtn" (click)="addProduct()">Add Product</button>
         </div>

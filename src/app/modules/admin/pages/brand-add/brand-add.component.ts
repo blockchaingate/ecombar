@@ -40,7 +40,7 @@ export class BrandAddComponent implements OnInit {
             const brand = res._body;
 
             this.name = brand.name.en;
-            this.nameChinese = brand.name.zh;
+            this.nameChinese = brand.name.sc;
             this.sequence = brand.sequence;
             
           }
@@ -58,7 +58,7 @@ export class BrandAddComponent implements OnInit {
     const data = {
       name: {
         en: this.name,
-        zh: this.nameChinese
+        sc: this.nameChinese
       },
       sequence: this.sequence ? this.sequence : 0
     };
