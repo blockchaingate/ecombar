@@ -37,7 +37,10 @@
 
         <ul class="sidenav__list">
             <li *ngFor="let item of menuItems" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
-              {{item.title}}
+              {{item.title | translate}}
+            </li>
+            <li class="sidenav__list-item" (click)="changeLang()">
+              English / 中文
             </li>
           </ul>        
     </aside>

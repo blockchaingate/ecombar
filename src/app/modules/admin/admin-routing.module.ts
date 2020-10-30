@@ -21,10 +21,14 @@ import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { ShippingComponent } from './pages/shipping/shipping.component';
+import { 
+  AuthGuardService as AuthGuard 
+} from '../shared/services/auth-guard.service';
 
 const routes: Routes = [
   {
     path: '', component: AdminComponent,
+    canActivate: [AuthGuard], 
     children: [
       {
         path: 'dashboard', component: DashboardComponent

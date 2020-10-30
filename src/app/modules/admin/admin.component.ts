@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 import { MerchantService } from '../shared/services/merchant.service';
 import { StorageService } from '../shared/services/storage.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   providers: [UserService],
@@ -19,6 +20,7 @@ export class AdminComponent implements OnInit {
   menuItems: any;
   constructor(
     private router: Router,
+    private translateServ: TranslateService,
     private merchantServ: MerchantService,
     private userServ: UserService,
     private storageServ: StorageService
@@ -51,6 +53,12 @@ export class AdminComponent implements OnInit {
 
   }
 
+  changeLang() {
+    let lang = this.translateServ.getDefaultLang();
+    lang = (lang == 'en') ? 'sc' : 'en';
+    this.translateServ.setDefaultLang(lang);
+  }
+
   initMenuWithSystemAdmin(merchantId:string, isSystemAdmin:boolean) {
     if (isSystemAdmin) {
       this.menuItems = [
@@ -63,15 +71,15 @@ export class AdminComponent implements OnInit {
           link: 'brands'
         },        
         {
-          title: 'Banner',
+          title: 'Banners',
           link: 'banners'
         },
         {
-          title: 'Category',
+          title: 'categories',
           link: 'categories'
         },
         {
-          title: 'Collection',
+          title: 'Collections',
           link: 'collections'
         },
         {
@@ -95,7 +103,7 @@ export class AdminComponent implements OnInit {
             link: 'dashboard'
           },
           {
-            title: 'Banner',
+            title: 'Banners',
             link: 'banners'
           },
           {
@@ -103,15 +111,15 @@ export class AdminComponent implements OnInit {
             link: 'brands'
           },            
           {
-            title: 'Category',
+            title: 'Categories',
             link: 'categories'
           },
           {
-            title: 'Collection',
+            title: 'Collections',
             link: 'collections'
           },
           {
-            title: 'Product',
+            title: 'Products',
             link: 'products'
           },
           {
@@ -134,7 +142,7 @@ export class AdminComponent implements OnInit {
             link: 'address'
           },
           {
-            title: 'Order',
+            title: 'Orders',
             link: 'orders'
           }
         ];
