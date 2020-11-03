@@ -27,6 +27,7 @@ import { AddressComponent } from './pages/address/address.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CommentComponent } from './pages/comment/comment.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
+import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -44,6 +45,7 @@ import { CartModule } from '../home/cart/cart.module';
     UsersComponent,
     CommentComponent,
     CartComponent,
+    MyProductsComponent,
     BannersComponent,
     OrdersComponent,
     ProfileComponent,

@@ -24,6 +24,7 @@ import { ShippingComponent } from './pages/shipping/shipping.component';
 import { CommentComponent } from './pages/comment/comment.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
+import { MyProductsComponent } from './pages/my-products/my-products.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -49,6 +50,9 @@ const routes: Routes = [
       {
         path: 'products', component: ProductsComponent
       },
+      {
+        path: 'my-products', component: MyProductsComponent
+      },      
       {
         path: 'orders', component: OrdersComponent
       }, 

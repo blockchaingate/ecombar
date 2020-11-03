@@ -11,6 +11,11 @@
                     <img class="selected-img" [src]="selectedImage">
                 </div>
             </div>
+
+            <div class="text-center">
+                <button class="btn" *ngIf="!favorite" (click)="addToFavorite()">Add to my favorite</button>
+                <button class="btn" *ngIf="favorite" (click)="removeFromFavorite()">Remove from my favorite</button>
+            </div>
         </div>
 
         <div class="col col-5 px-1">

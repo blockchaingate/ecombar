@@ -11,7 +11,7 @@
 
   </li>
   <li class="table-row" *ngFor="let product of products">
-    <div class="col col-3" data-label="Title">{{product.title.en}}</div>
+    <div class="col col-3" data-label="Title">{{product.title | translateField}}</div>
     <div class="col col-3" data-label="Price">{{product.price}}</div>
     <div class="col col-3" data-label="Currency">{{product.currency}}</div>
     <div class="col col-3 text-right" data-label="Operations">

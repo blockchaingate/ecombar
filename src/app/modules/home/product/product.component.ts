@@ -6,6 +6,7 @@ import { CartItem } from '../../shared/models/cart-item';
 import { Router } from '@angular/router';
 import { TranslateService } from '../../shared/services/translate.service';
 import { OrderService } from '../../shared/services/order.service';
+import { FavoriteService } from '../../shared/services/favorite.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StorageService } from '../../shared/services/storage.service';
 
@@ -18,11 +19,14 @@ export class ProductComponent implements OnInit {
   product: any;
   id: string;
   quantity: string;
+  favorite: any;
+  token: any;
   selectedImage: string;
   constructor(
     private cartStoreServ: CartStoreService,
     private route: ActivatedRoute,
     private productServ: ProductService,
+    private favoriteServ: FavoriteService,
     private orderServ: OrderService,
     private router: Router,
     private storage: StorageService,
@@ -31,7 +35,9 @@ export class ProductComponent implements OnInit {
     ) {
 
   }
+
   ngOnInit() {
+
     this.id = this.route.snapshot.paramMap.get('id');
     this.quantity = '1';
     this.productServ.getProduct(this.id).subscribe(
@@ -43,10 +49,84 @@ export class ProductComponent implements OnInit {
         }
       }
     );
+
+    this.token = this.storage.token;
+    if(this.token) {
+      this.authServ.isAuthenticated(this.token).subscribe(
+        (ret) => {
+          if(!ret) {
+            this.token = null;
+          } else {
+            this.initForUser();
+          }
+        }
+      );
+    } else {
+      this.storage.get('_token').subscribe(
+        (token: string) => {
+          if(token) {
+            this.authServ.isAuthenticated(token).subscribe(
+              (ret) => {
+                if(!ret) {
+                  this.token = null;
+                }  else {
+                  this.token = token;
+                  this.initForUser();
+                }               
+              }
+            );
+          }
+        });      
+    }  
+
+
+  }
+
+  initForUser() {
+    console.log('initForUser start');
+    this.favoriteServ.isMyFavorite(this.id).subscribe(
+      (res: any) => {
+        console.log('res==', res);
+        if(res && res.ok) {
+          const favorites = res._body;
+          if(favorites && favorites.length) {
+            this.favorite = favorites[0];
+          }
+        }
+      }
+    );
   }
 
   mouseEnter(image) {
       this.selectedImage = image;
+  }
+
+  addToFavorite() {
+    const data = {
+      parentId: this.id   
+    };
+    this.favoriteServ.create(data).subscribe(
+      (res) => {
+        if(res && res.ok) {
+          console.log('addToFavorite successfully');
+          this.favorite = res._body;
+        }
+      }
+    );
+  }
+
+  removeFromFavorite() {
+    if(!this.favorite) {
+      return;
+    }
+    this.favoriteServ.deleteFavorite(this.favorite._id).subscribe(
+      (res) => {
+        if(res && res.ok) {
+          console.log('removeFromFavorite successfully');
+          this.favorite = null;
+        }
+      }      
+    );
   }
 
   addToCart() {
@@ -101,6 +181,12 @@ export class ProductComponent implements OnInit {
   }
 
   buyNow() {
+    if(this.token) {
+      this.buyDo();
+    } else {
+      this.router.navigate(['auth/signin']);
+    }
+    /*
     const token = this.storage.token;
     if(token) {
       this.authServ.isAuthenticated(token).subscribe(
@@ -132,6 +218,6 @@ export class ProductComponent implements OnInit {
         }
       );
     }
-
+    */
   }
 }

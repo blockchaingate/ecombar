@@ -1,1 +1,23 @@
-favorite
+<ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-3">Title</div>
+      <div class="col col-3">Price</div>
+      <div class="col col-3">Currency</div>
+      <div class="col col-3"></div>
+  
+    </li>
+    <li class="table-row" *ngFor="let favorite of favorites">
+      <div class="col col-3" data-label="Title">{{favorite.parentId.title | translateField}}</div>
+      <div class="col col-3" data-label="Price">{{favorite.parentId.price}}</div>
+      <div class="col col-3" data-label="Currency">{{favorite.parentId.currency}}</div>
+      <div class="col col-3 text-right" data-label="Operations">
+        <div class="d-inline-block px-2">
+          <a (click)="removeFavorite(favorite)">
+            <img src="/assets/svg/delete.svg">
+          </a>
+        </div>
+
+      </div>
+    </li>
+  </ul>
+  

@@ -11,6 +11,7 @@ import { CollectionService } from './services/collection.service';
 import { OrderService } from './services/order.service';
 import { PaymentService } from './services/payment.service';
 import { AddressService } from './services/address.service';
+import { FavoriteService } from './services/favorite.service';
 import { TranslateService } from './services/translate.service';
 import { UploadService } from './services/upload.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
@@ -19,6 +20,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProductsGridComponent } from './components/products-grid/products-grid.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -30,7 +32,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     ExcludeProductsPipe,
     TranslateFieldPipe,
-    ProductsGridComponent
+    ProductsGridComponent,
+    StarRatingComponent
   ],
   imports: [
     FormsModule,
@@ -48,12 +51,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     ExcludeProductsPipe,
     TranslateFieldPipe,
     ProductsGridComponent,
+    StarRatingComponent,
     TranslateModule
   ],
   providers: [
     AuthGuardService,
     BrandService,
     TranslateService,
+    FavoriteService,
     PaymentService
   ]
 })
@@ -65,6 +70,7 @@ export class SharedModule {
         TranslateService,
         AuthGuardService,
         PaymentService,
+        FavoriteService,
         BrandService
       ]
     };

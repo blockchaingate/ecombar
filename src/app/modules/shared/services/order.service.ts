@@ -26,6 +26,10 @@ export class OrderService {
     return this.http.get('orders', true);
   }
 
+  getMyProducts() {
+    return this.http.get('orders/my-products', true);
+  }
+
   getAllOrders() {
     return this.http.get('orders/all', true);
   }
