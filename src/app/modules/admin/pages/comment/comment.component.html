@@ -1,27 +1,39 @@
 <form style="border:1px solid #ccc">
     <div class="container">
-      <h1>My profile</h1>
+      <h1>My comment</h1>
       <hr>
 
 
-      <div>
-        <app-star-rating></app-star-rating>
+      <div class="text-left">
+        <div class="py-2">
+          <label for="tag">Rating</label>
+        </div>
+        
+        <app-star-rating [(rating)]="rating"></app-star-rating>
       </div>
-      <div>
+      <div class="py-3">
+        <div class="py-2">
+          <label for="comment" >Comment</label>
+        </div>
+        
 
-        <!--
-        <label for="email"><b>Name</b></label>
-        <input type="text" placeholder="Enter category name" [(ngModel)]="category" name="category" required>
-  
-        <label for="email"><b>Sequence</b></label>
-        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence" required>
--->
+
+        <ejs-richtexteditor [(ngModel)]='comment' name="comment" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+
+
       </div>
 
 
-      <div class="d-flex justify-content-between py-2">
-        <button type="button" class="btn cancelbtn">Cancel</button>
+      <div class="text-right py-2">
         <button type="submit" class="btn signinbtn" (click)="update()">Update</button>
       </div>
     </div>
 </form>
+
+<!--
+parentId: ObjectId,
+comment: String,
+authorId: ObjectId,
+authorName: String,
+tag: String,
+-->

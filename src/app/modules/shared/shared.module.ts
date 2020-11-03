@@ -12,6 +12,7 @@ import { OrderService } from './services/order.service';
 import { PaymentService } from './services/payment.service';
 import { AddressService } from './services/address.service';
 import { FavoriteService } from './services/favorite.service';
+import { CommentService } from './services/comment.service';
 import { TranslateService } from './services/translate.service';
 import { UploadService } from './services/upload.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
@@ -59,7 +60,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrandService,
     TranslateService,
     FavoriteService,
-    PaymentService
+    PaymentService,
+    CommentService
   ]
 })
 export class SharedModule {
@@ -71,7 +73,8 @@ export class SharedModule {
         AuthGuardService,
         PaymentService,
         FavoriteService,
-        BrandService
+        BrandService,
+        CommentService
       ]
     };
   }
