@@ -1,15 +1,17 @@
-<div *ngFor="let collection of collections" class="featured-products-container">
-    <div class="title-line">
-
-    </div>
-    <div>
-        <span>
-            {{ collection.name | translateField }}
-        </span>
-        <div class="redcolor" *ngIf="errMsg">
-            {{errMsg}}
+<div *ngIf="collections">
+    <div *ngFor="let collection of collections" class="featured-products-container">
+        <div class="title-line">
+    
         </div>
+        <div>
+            <span>
+                {{ collection.name | translateField }}
+            </span>
+            <div class="redcolor" *ngIf="errMsg">
+                {{errMsg}}
+            </div>
+        </div>
+    
+        <app-products-grid [products]="collection.products"></app-products-grid>
     </div>
-
-    <app-products-grid [products]="collection.products"></app-products-grid>
 </div>

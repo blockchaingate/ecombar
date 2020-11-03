@@ -21,6 +21,10 @@ import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { ShippingComponent } from './pages/shipping/shipping.component';
+import { CommentComponent } from './pages/comment/comment.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { FavoriteComponent } from './pages/favorite/favorite.component';
+
 import { 
   AuthGuardService as AuthGuard 
 } from '../shared/services/auth-guard.service';
@@ -40,6 +44,9 @@ const routes: Routes = [
         path: 'address', component: AddressComponent
       },
       {
+        path: 'favorite', component: FavoriteComponent
+      },      
+      {
         path: 'products', component: ProductsComponent
       },
       {
@@ -57,6 +64,12 @@ const routes: Routes = [
       {
         path: 'profile', component: ProfileComponent
       },
+      {
+        path: 'cart', component: CartComponent
+      },      
+      {
+        path: 'comment/:productId', component: CommentComponent
+      },      
       {
         path: 'product/:id/edit', component: ProductAddComponent
       },

@@ -24,20 +24,26 @@ import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { CommentComponent } from './pages/comment/comment.component';
+import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
-
+import { CartModule } from '../home/cart/cart.module';
 @NgModule({
   declarations: [
     AdminComponent,
     FooterComponent,
     HeaderComponent,
     NavComponent,
+    FavoriteComponent,
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    CommentComponent,
+    CartComponent,
     BannersComponent,
     OrdersComponent,
     ProfileComponent,
@@ -61,6 +67,7 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
     CommonModule,
     SharedModule,
     FormsModule,
+    CartModule,
     RichTextEditorModule
   ],
   providers: []

@@ -1,5 +1,5 @@
 
-<div class="container">
+<div [ngClass]="!noPadding?'container': ''">
 
     <div class="card">
         <div *ngIf="cartItems && (cartItems.length > 0)">

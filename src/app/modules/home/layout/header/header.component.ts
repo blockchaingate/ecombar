@@ -55,7 +55,9 @@ export class HeaderComponent implements OnInit {
 
     this.cartStoreServ.items$.subscribe((res) => {
       this.cartCount = 0;
-      if (!res || res.length === 0) {
+      console.log('this.images4');
+      if (!res || (res.length == 0)) {
+        console.log('yes');
         res = this.cartStoreServ.items;
       }
 

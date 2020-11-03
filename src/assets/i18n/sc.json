@@ -15,5 +15,9 @@
     "Orders": "订单",
     "Merchant information": "商户信息",
     "New": "新增",
-    "Sequence": "排序"
+    "Sequence": "排序",
+    "Address": "地址",
+    "My cart": "我的购物车",
+    "My favorite": "我的收藏",
+    "My products": "买到的商品"
 }

@@ -18,8 +18,10 @@ export class CollectionsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('nggggg');
     this.collectionServ.getCollections().subscribe(
       (res: any) => {
+        console.log('res for getCollections', res);
         if (res && res.ok) {
           this.collections = res._body;
           console.log('this.collections==', this.collections);

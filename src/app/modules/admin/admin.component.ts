@@ -144,7 +144,19 @@ export class AdminComponent implements OnInit {
           {
             title: 'Orders',
             link: 'orders'
-          }
+          },
+          {
+            title: 'My cart',
+            link: 'cart'
+          },
+          {
+            title: 'My favorite',
+            link: 'favorite'
+          }, 
+          {
+            title: 'My products',
+            link: 'my-products'
+          }                   
         ];
       }
   }

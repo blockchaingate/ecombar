@@ -17,6 +17,9 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     FormsModule
   ],
+  exports: [
+    CartComponent
+  ],
   providers: []
 })
 export class CartModule { }

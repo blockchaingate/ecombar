@@ -104,6 +104,7 @@ export class CollectionAddComponent implements OnInit {
 
   addCollection() {
     const products = [];
+    console.log('this.images2');
     if (this.collectionProducts) {
       for (let i = 0; i < this.collectionProducts.length; i++) {
         products.push(this.collectionProducts[i]._id);

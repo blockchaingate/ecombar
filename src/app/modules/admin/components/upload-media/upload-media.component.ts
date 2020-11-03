@@ -45,6 +45,7 @@ export class UploadMediaComponent implements OnInit {
   }
 
   deleteMedia() {
+    console.log('this.images1');
     for(let i=0;i<this.images.length;i++) {
       const image = this.images[i];
       if(this.checkedImages.indexOf(image) >= 0) {

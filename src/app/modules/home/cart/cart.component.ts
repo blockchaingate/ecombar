@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CartStoreService } from '../../shared/services/cart.store.service';
 import { OrderService } from '../../shared/services/order.service';
 import { PaymentService } from '../../shared/services/payment.service';
@@ -17,6 +17,7 @@ export class CartComponent implements OnInit, OnDestroy {
   interval;
   cartItems: CartItem[];
   payLink: string;
+  @Input() noPadding: boolean;
   Total: { currency: string, total: string }[];
   paidConfirmed: boolean;
   txid: string;
@@ -105,6 +106,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   updateProduct(item) {
+    console.log('this.images3');
     const product = item.product;
     const quantity = item.quantity;
     const productId = product.productId;

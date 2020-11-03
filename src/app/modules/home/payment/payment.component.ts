@@ -37,6 +37,7 @@ export class PaymentComponent implements OnInit{
       if(!this.order || !this.order.items || (this.order.items.length == 0)) {
         return;
       }
+      console.log('this.images5');
       for(let i=0;i<this.order.items.length;i++) {
         const item = this.order.items[i];
         this.subtotal += item.price * item.quantity;

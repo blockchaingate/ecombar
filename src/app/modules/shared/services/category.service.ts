@@ -20,7 +20,7 @@ export class CategoryService {
   }
 
   getAdminCategories() {
-    return this.http.get('product-categories/admin');
+    return this.http.get('product-categories/admin', false);
   }
 
   getMerchantCategories(merchantId: string) {
