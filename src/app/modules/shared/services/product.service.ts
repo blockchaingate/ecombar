@@ -1,28 +1,41 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { environment } from '../../../../environments/environment';
+import { HttpService } from './http.service';
+import { Product } from '../models/product';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ProductService {
-  token: string;
-  path = environment.endpoints.blockchaingate + 'products/';
+  constructor(private http: HttpService) { }
 
-  constructor(private apiServ: ApiService) {
-  }
-  
-  create(data) {
-    return this.apiServ.postPrivate('products/Create', data);
+  create(data: Product) {
+    return this.http.post('products/Create', data, true);
   }
 
-  getMerchantProducts() {
-
-    return this.apiServ.getPrivate('merchant/products');
+  update(id: string, data: Product) {
+    return this.http.put('products/Update/' + id, data, true);
   }
 
+  getProduct(id: string) {
+    return this.http.get('products/' + id, false);
+  }
+
+  getProducts() {
+    return this.http.get('products', false);
+  }
+
+  getMerchantProducts(merchantId: string) {
+    console.log('merchantId in here', merchantId);
+    return this.http.get('products/merchant/' + merchantId, true);
+  }
+
+  deleteProduct(id: string) {
+    return this.http.delete('products/delete/' + id, true);
+  }
 
   getMerchantAllProducts() {
-    return this.apiServ.getPublic('merchant/all/products');
-  }  
+    return this.http.get('products/merchant/all/products', true);
+  }
+
+  getCategoryProducts(category_id: string) {
+    return this.http.get('products/category/' + category_id, false);
+  }
 }

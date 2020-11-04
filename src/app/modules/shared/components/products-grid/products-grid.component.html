@@ -1,0 +1,27 @@
+<div *ngIf="products" class="d-flex">
+    <div *ngFor="let item of products" class="m-2 item-container">
+        <div *ngIf="item.images">
+            <a href="/product/{{item._id}}">
+                <img class="media" src="{{item.images[0]}}">
+            </a>
+            
+        </div>
+        <div class="title text-left">
+            {{item.title | translateField}}
+        </div>
+        <div class="d-flex justify-content-between p-2">
+            <div class="price">
+                ${{item.price}}
+            </div>
+            <div>
+                Sales: 0
+            </div>
+        </div>  
+
+        <!--
+        <div>
+            <button class="btn" (click)="addToCart(item)">{{'Add to cart' | translate}}</button>
+        </div> 
+        -->         
+    </div>
+</div>

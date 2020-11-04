@@ -1,18 +1,47 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { HttpService } from './http.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class OrderService {
-  token: string;
-  path = environment.endpoints.blockchaingate + 'orders/';
 
-  constructor(private httpClient: HttpClient) {
-  }
-  
+  constructor(private http: HttpService) { }
+
   create(data) {
-    return this.httpClient.post(this.path + 'Create', data);
+    return this.http.post('orders/create', data, true);
+  }
+
+  update(orderID: string, data) {
+    return this.http.post('orders/update/' + orderID, data, true);
+  }
+
+  updateShipping(orderID: string, data) {
+    return this.http.post('orders/updateShipping/' + orderID, data, true);
+  }
+
+  get(orderID: string) {
+    return this.http.get('orders/' + orderID, true);
+  }
+
+  getMyOrders() {
+    return this.http.get('orders', true);
+  }
+
+  getMyProducts() {
+    return this.http.get('orders/my-products', true);
+  }
+
+  getAllOrders() {
+    return this.http.get('orders/all', true);
+  }
+
+  gerMerchantOrders() {
+    return this.http.get('orders/merchant-orders/all', true);
+  }
+
+  delete(orderID: string) {
+    const data = {
+      active: false
+    }
+    return this.http.post('orders/update/' + orderID, data, true);
   }
 }

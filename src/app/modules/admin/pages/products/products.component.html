@@ -11,14 +11,21 @@
 
   </li>
   <li class="table-row" *ngFor="let product of products">
-    <div class="col col-3" data-label="Job Id">{{product.title}}</div>
-    <div class="col col-3" data-label="Customer Name">{{product.price}}</div>
-    <div class="col col-3" data-label="Customer Name">{{product.curency}}</div>
-    <div class="col col-3 text-right" data-label="Payment Status">
-      <a (click)="edit(category)">
-        <img src="/assets/svg/edit.svg">
-      </a>
-      
+    <div class="col col-3" data-label="Title">{{product.title | translateField}}</div>
+    <div class="col col-3" data-label="Price">{{product.price}}</div>
+    <div class="col col-3" data-label="Currency">{{product.currency}}</div>
+    <div class="col col-3 text-right" data-label="Operations">
+      <div class="d-inline-block px-2">
+        <a (click)="editProduct(product)">
+          <img src="/assets/svg/edit.svg">
+        </a>
+      </div>
+
+      <div class="d-inline-block px-2">
+        <a (click)="deleteProduct(product)">
+          <img src="/assets/svg/delete.svg">
+        </a>
+      </div>
     </div>
   </li>
 </ul>

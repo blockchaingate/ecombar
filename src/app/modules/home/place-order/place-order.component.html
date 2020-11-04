@@ -1,0 +1,141 @@
+<div class="container" *ngIf="order">
+
+    <div class="row">
+        <div class="col col-8 px-2">
+            <div class="card w-100">
+                <div class="p-3">
+                    <div class="py-3">
+                        <div class="py-2 text-muted">
+                            Shipping information
+                        </div>
+                        <div class="font-weight-bold">
+                            {{order.name}} {{order.streetNumber}} {{order.streetName}} {{order.city}} {{order.province}}, {{order.zip}} {{order.country}}
+                        </div>
+                    </div>
+
+
+                    <div class="py-3">
+                        <div class="py-2 text-muted">
+                            Shipping services
+                        </div>
+                        <div class="font-weight-bold d-flex align-items-center justify-content-between">
+                            <div>
+                                {{order.shippingServiceSelected}}
+                            </div>
+                            
+                            <button class="btn" (click)="change()">Change</button>
+                        </div>
+                    </div>
+
+                    <div class="py-3">
+                        <div class="py-2 text-muted">
+                            Payment options
+                        </div>
+                        <div class="font-weight-bold d-flex align-items-center justify-content-between">
+                            <div>
+                                {{order.paymentMethod}}
+                            </div>
+                                
+                                <button class="btn" (click)="change()">Change</button>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        Scan the QR Code with Ex App 
+                    </div>
+                    <div class="text-center py-5">
+                        <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+                        <div class="py-2">
+                            <a href="{{link}}" download (click)="dlDataUrlBin()">
+                                <div class="d-inline-block px-1">
+                                    <img src="/assets/download.png">
+                                </div>
+                                <div class="d-inline-block px-1">
+                                    {{'Download QR Code' | translate}}
+                                </div>
+                            </a>
+            
+                        </div>
+                    </div>                    
+
+                    <div class="text-center py-3">
+                        Or
+                    </div>
+
+                    <div class="text-center">
+
+                        <button class="btn" (click)="payWithWeb()">
+                            Pay with Ex Web
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-4 px-2">
+            <div class="card w-100 p-3">
+                <div class="p-3 border-bottom">
+                    <div class="text-muted py-3">
+                        Your order
+                    </div>
+                    <div *ngFor="let item of order.items" class="py-2">
+                        <div class="row">
+                            <div class="col col-4">
+                                <img class="img-thumbnail" [src]="item.thumbnailUrl">
+                            </div>
+                            
+                            <div class="col col-8">
+                                <div class="font-weight-bold">
+                                    {{item.title}}
+                                </div>
+                                <div class="row">
+                                    <div class="col col-4">
+                                        ${{item.price}}
+                                    </div>
+                                    <div class="col col-4">
+                                        x{{item.quantity}}
+                                    </div>
+                                    <div class="col col-4 font-weight-bold">
+                                        ${{item.price * item.quantity}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="row py-2">
+                        <div class="col col-6">
+                            Subtotal
+                        </div>
+                        <div class="col col-6 text-right">
+                            ${{subtotal}}
+                        </div>                        
+                    </div>
+
+                    <div class="row py-2">
+                        <div class="col col-6">
+                            Shipping
+                        </div>
+                        <div class="col col-6 text-right">
+                            {{shippingFee == '0' ? 'Free' : ('$' + shippingFee)}}
+                        </div>                        
+                    </div>  
+
+                    <div class="row py-2">
+                        <div class="col col-6 font-weight-bold">
+                            Total
+                        </div>
+                        <div class="col col-6 text-right font-weight-bold">
+                            ${{total}}
+                        </div>                        
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+    </div>
+    
+   
+</div>

@@ -1,0 +1,39 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>My comment</h1>
+      <hr>
+
+
+      <div class="text-left">
+        <div class="py-2">
+          <label for="tag">Rating</label>
+        </div>
+        
+        <app-star-rating [(rating)]="rating"></app-star-rating>
+      </div>
+      <div class="py-3">
+        <div class="py-2">
+          <label for="comment" >Comment</label>
+        </div>
+        
+
+
+        <ejs-richtexteditor [(ngModel)]='comment' name="comment" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+
+
+      </div>
+
+
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="update()">Update</button>
+      </div>
+    </div>
+</form>
+
+<!--
+parentId: ObjectId,
+comment: String,
+authorId: ObjectId,
+authorName: String,
+tag: String,
+-->

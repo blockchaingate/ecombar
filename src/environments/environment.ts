@@ -3,16 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  env: 'dev',
   production: false,
-  appid: '5b6a8688905612106e976a69',
-  cat_typ: 'ecom',
+  appid: '5f80c3b09577e8dc2f8db596',
+  cat_typ: 'ecombar',
 //  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
 //  EX_WEBSITE: 'http://localhost:4200/',
   endpoints: {
-    blockchaingate: 'https://test.blockchaingate.com/v2/', 
-    website: 'http://localhost:4200/',
-  }
-   
+    local: 'https://test.blockchaingate.com/v2/',
+    test: 'https://test.blockchaingate.com/v2/',
+    prod: 'https://blockchaingate.com/v2/',
+    blockchaingate: 'https://test.blockchaingate.com/v2/',
+    website: 'https://test.exchangily.com/',
+  },
+  paypal_client_id: 'AdmdQayzrKMsDPxU89G_UWcLVfFlHhG-zfFm4I75F6xusJ64AIBOre6J6NxfzsM6JStHQmtviHoCp59x'
 };
 
 /*

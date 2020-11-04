@@ -1,0 +1,7 @@
+<div class="rating">
+    <span [ngClass]="(rating==5) ? 'rated':''" (click)="changeRating(5)">☆</span>
+    <span [ngClass]="(rating==4) ? 'rated':''" (click)="changeRating(4)">☆</span>
+    <span [ngClass]="(rating==3) ? 'rated':''" (click)="changeRating(3)">☆</span>
+    <span [ngClass]="(rating==2) ? 'rated':''" (click)="changeRating(2)">☆</span>
+    <span [ngClass]="(rating==1) ? 'rated':''" (click)="changeRating(1)">☆</span>
+</div>

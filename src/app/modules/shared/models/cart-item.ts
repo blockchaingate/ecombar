@@ -1,8 +1,9 @@
 export class CartItem {
-    _id: string;
+    productId: string;
     title: string;
     price: number;
     merchantId: string;
-    currency: string;
+    currency?: string;
     quantity: number;
+    thumbnailUrl?: string;
 }

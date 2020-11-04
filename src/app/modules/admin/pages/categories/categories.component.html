@@ -11,13 +11,21 @@
       <div class="col col-3"></div>
     </li>
     <li class="table-row" *ngFor="let category of categories">
-      <div class="col col-3" data-label="Job Id">{{category.category}}</div>
-      <div class="col col-3" data-label="Customer Name">{{category.sequence}}</div>
-      <div class="col col-3 text-right" data-label="Payment Status">
-        <a (click)="edit(category)">
-          <img src="/assets/svg/edit.svg">
-        </a>
-        
+      <div class="col col-3" data-label="Name">{{category.category.en}}</div>
+      <div class="col col-3" data-label="Sequence">{{category.sequence}}</div>
+      <div class="col col-3 text-right" data-label="Operations">
+
+        <div class="d-inline-block px-2">
+          <a (click)="editCategory(category)">
+            <img src="/assets/svg/edit.svg">
+          </a>
+        </div>
+  
+        <div class="d-inline-block px-2">
+          <a (click)="deleteCategory(category)">
+            <img src="/assets/svg/delete.svg">
+          </a>
+        </div>        
       </div>
     </li>
   </ul>

@@ -1,0 +1,35 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>New Banner</h1>
+      <hr>
+      
+      <div class="d-flex align-items-center navigate-bar my-3">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+          English
+        </div>
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Chinese')">
+          中文
+        </div>
+      </div>
+
+      <div *ngIf="currentTab=='default'">
+        <label for="email"><b>Name</b></label>
+        <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
+
+        <label for="email"><b>Sequence</b></label>
+        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence" required>
+          
+      </div>
+      
+      <div *ngIf="currentTab=='Chinese'">
+        <label for="email"><b>名称</b></label>
+        <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
+    
+      </div>
+
+      <div class="d-flex justify-content-between py-2">
+        <button type="button" class="btn cancelbtn">Cancel</button>
+        <button type="submit" class="btn signinbtn" (click)="addBrand()">Add</button>
+      </div>
+    </div>
+</form>

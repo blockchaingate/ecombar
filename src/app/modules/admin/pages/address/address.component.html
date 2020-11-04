@@ -1,0 +1,64 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Address</h1>
+      <hr>
+
+        <label for="email"><b>Name</b></label>
+        <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
+        <label for="email"><b>Suite</b></label>
+        <input type="text" placeholder="Enter suite" [(ngModel)]="suite" name="suite">  
+        <label for="email"><b>Street Number</b></label>
+        <input type="text" placeholder="Enter street Number" [(ngModel)]="streetNumber" name="streetNumber">
+        <label for="email"><b>Street</b></label>
+        <input type="text" placeholder="Enter street" [(ngModel)]="street" name="street">
+        <label for="email"><b>District</b></label>
+        <input type="text" placeholder="Enter district" [(ngModel)]="district" name="district">
+
+        <label for="email"><b>City</b></label>
+        <input type="text" placeholder="Enter city" [(ngModel)]="city" name="city">
+
+
+        
+        <label for="email"><b>Province</b></label>
+        <input type="text" placeholder="Enter province" [(ngModel)]="province" name="province">         
+        
+        <label for="email"><b>postcode</b></label>
+        <input type="text" placeholder="Enter postcode" [(ngModel)]="postcode" name="postcode">   
+
+        <label for="email"><b>country</b></label>
+        <input type="text" placeholder="Enter country" [(ngModel)]="country" name="country">   
+
+      <div class="d-flex justify-content-between py-2">
+        <button type="button" class="btn cancelbtn">Cancel</button>
+        <button type="submit" class="btn signinbtn" (click)="addAddress()">Add</button>
+      </div>
+    </div>
+</form>
+
+
+<!--
+var addressSchema = new Schema({
+    name: String,
+    suite: String,
+    streetNumber: String,
+    streetId: { type: ObjectId, index: true },
+    street: String,
+    districtId: ObjectId,
+    district: String,
+    cityId: ObjectId,
+    city: String,
+    provinceId: ObjectId,
+    provinceCode: String,
+    province: String,
+    postcode: String,
+    countryCode: String,
+    country: String,
+    continentCode: String,
+    continent: String,
+    longitude: Number,
+    latitude: Number,
+    hightitude: Number,
+    description: String
+});
+
+-->

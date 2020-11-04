@@ -16,7 +16,13 @@
         <input type="text" placeholder="Enter parent refCode" [(ngModel)]="refCode" name="refCode">
     
       </div>      
-      
+
+      <div>
+        <label for="refCode"><b>Merchant ID</b></label>
+        <input type="text" placeholder="Enter merchant ID" [(ngModel)]="defaultMerchant" name="defaultMerchant">
+    
+      </div>        
+      defaultMerchant
       <div class="d-flex justify-content-between">
         <button type="button" class="btn cancelbtn">Cancel</button>
         <button type="submit" class="btn signinbtn" (click)="addParentReferral()">Add parent Referral</button>

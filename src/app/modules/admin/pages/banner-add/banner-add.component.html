@@ -1,0 +1,40 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>New Banner</h1>
+      <hr>
+      
+      <div class="d-flex align-items-center navigate-bar my-3">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+          English
+        </div>
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Chinese')">
+          中文
+        </div>
+      </div>
+
+      <div *ngIf="currentTab=='default'">
+        <label for="email"><b>Title</b></label>
+        <input type="text" placeholder="Enter title" [(ngModel)]="title" name="title" required>
+        <label for="email"><b>Subtitle</b></label>
+        <input type="text" placeholder="Enter subtitle" [(ngModel)]="subtitle" name="subtitle">  
+        <label for="image"><b>Image</b></label>
+        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        <label for="email"><b>Sequence</b></label>
+        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence">
+
+      </div>
+      
+      <div *ngIf="currentTab=='Chinese'">
+        <label for="email"><b>标题</b></label>
+        <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">        
+
+        <label for="email"><b>副标题</b></label>
+        <input type="text" placeholder="输入副标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">           
+      </div>
+
+      <div class="d-flex justify-content-between py-2">
+        <button type="button" class="btn cancelbtn">Cancel</button>
+        <button type="submit" class="btn signinbtn" (click)="addBanner()">{{id?'Update':'Add'}}</button>
+      </div>
+    </div>
+</form>

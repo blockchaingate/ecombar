@@ -1,28 +1,17 @@
-<div *ngFor="let collection of collections" class="featured-products-container">
-    <div class="title-line">
-
-    </div>
-    <div>
-        <span>
-            {{collection.name}}
-        </span>
-        
-    </div>
-    <div class="d-flex justify-content-center">
-        <div *ngFor="let item of collection.items" class="px-2">
-            <div *ngIf="item.medias">
-                <img class="media" src="{{item.medias[0]}}">
-            </div>
-            <div>
-                {{item.title}}
-            </div>
-            <div>
-                {{item.price}}  {{item.currency}}
-            </div>  
-            <div>
-                <button class="btn" (click)="addToCart(item)">Add to cart</button>
-            </div>          
+<div *ngIf="collections">
+    <div *ngFor="let collection of collections" class="featured-products-container">
+        <div class="title-line">
+    
         </div>
+        <div>
+            <span>
+                {{ collection.name | translateField }}
+            </span>
+            <div class="redcolor" *ngIf="errMsg">
+                {{errMsg}}
+            </div>
+        </div>
+    
+        <app-products-grid [products]="collection.products"></app-products-grid>
     </div>
-
 </div>

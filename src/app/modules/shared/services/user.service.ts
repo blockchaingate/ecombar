@@ -1,161 +1,119 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { HttpService } from './http.service';
+import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
-import { environment } from '../../../../environments/environment';
+import { User } from '../models/user';
+import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UserService {
-  token: string;
-  aud: string;
-  merchantId: string;
+  constructor(private http: HttpService, private authServ: AuthService, private storage: StorageService) {}
 
-  constructor(private apiServ: ApiService, private storageServ: StorageService) {
+  get id() {
+    return this.storage.user._id;
+  }
+
+  get displayName() {
+    return this.storage.user.displayName;
+  }
+
+  get email() {
+    return this.storage.user.email;
+  }
+
+  set token(token: string) {
+    this.storage.token = token;
+  }
+
+  get token() {
+    return this.storage.token;
+  }
+
+  set tokenExp(exp: Date) {
+    this.storage.tokenExp = exp;
+  }
+
+  get tokenExp(): Date {
+    return this.storage.tokenExp;
+  }
+
+  set isSystemAdmin(sysAdmin: boolean) {
+    this.storage.isSystemAdmin = sysAdmin;
+  }
+
+  get isSystemAdmin(): boolean {
+    return this.storage.isSystemAdmin;
+  }
+
+  set user(user: User) {
+    this.storage.user = user;
+  }
+
+  get user(): User {
+    return this.storage.user;
   }
 
   signin(email: string, password: string) {
-    const theBody = { email: email, password: password, appId: environment.appid };
-    
-    return this.apiServ.postPublic('members/login', theBody);
-  }  
-
-  saveToken(token: string) {
-    console.log('token for save=', token);
-    this.token = token;
-    if(token) {
-      const decoded = this.decodeToken(token);
-      this.aud = decoded.aud;
-      console.log('this.aud in saveToken=', this.aud);
-      this.merchantId = decoded.merchantId;
-      return this.storageServ.saveToken(token);
-    }
-    return this.storageServ.removeToken();
-    
+    const appId = environment.appid;
+    console.log('appId=', appId);
+    const theBody = { appId, email, password };
+    console.log('theBody=', theBody);
+    return this.http.post('members/login', theBody, false);
   }
 
-  /*
-  getAud() {
-    if(!this.aud) {
-      const token = this.getToken();
-      console.log('token in getAud=', token);
-      const decoded = this.decodeToken(token);
-      console.log('decoded==', decoded);
-      this.aud = decoded.aud;
-      this.merchantId = decoded.merchantId;
-    }
-    return this.aud;
+  signup(email: string, password: string) {
+    const appId = environment.appid;
+    const theBody = { appId, email, password };
+    return this.http.post('members/create', theBody, false);
   }
 
-  getMerchantId() {
-    if(!this.merchantId) {
-      const token = this.getToken();
-      const decoded = this.decodeToken(token);
-      this.aud = decoded.aud;
-      this.merchantId = decoded.merchantId;
-    }
-    return this.merchantId;
+  logout() {
+    this.storage.deleteAppId();
+    this.storage.deleteUser();
+    this.storage.deleteToken();
   }
-  */
+
+  // Use memberId in token to get member information.
+  getMe() {
+    return this.http.get('members/me');
+  }
+
+  activateUser(userId: string, activationCode: string) {
+    return this.http.get('members/' + 'activation/' + userId + '/' + activationCode, false);
+  }
+
   getAllUsers() {
     const data = {
       appId: environment.appid
-    };
-    return this.apiServ.postPrivate('members/getAll',data);
+    }
+    return this.http.post('members/getAll', data);
   }
 
-  find(data) {
-    return this.apiServ.postPrivate('members/find',data);
+  find(data: any) {
+    return this.http.post('members/find', data);
   }
 
   getUser(id: string) {
-    return this.apiServ.getPrivate('members/' + id);
+    return this.http.get('members/' + id);
   }
-  
+
   getCampaignReferral(id: string) {
-    return this.apiServ.getPrivate('campaign-referral/' + id);
-  }
-  
-  addParentReferral(body: any) {
-    return this.apiServ.postPrivate('campaign-referral/create', body);
+    return this.http.get('campaign-referral/' + id);
   }
 
-  update(body: any) {
-    return this.apiServ.postPrivate('members/FindOneAndUpdate', body);
-  }
-  
-  getToken() {
-      return this.storageServ.getToken();
-
+  addParentReferral(data: any) {
+    return this.http.post('campaign-referral/create', data);
   }
 
-  b64DecodeUnicode(str: string) {
-    return decodeURIComponent(Array.prototype.map
-        .call(this.b64decode(str), function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    })
-        .join(''));
+  update(data: any) {
+    return this.http.post('members/FindOneAndUpdate', data);
   }
 
-  b64decode (str: string) {
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    var output = '';
-    str = String(str).replace(/=+$/, '');
-    if (str.length % 4 === 1) {
-        throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
-    }
-    for (
-    // initialize result and counters
-    var bc = 0, bs = void 0, buffer = void 0, idx = 0; 
-    // get next character
-    (buffer = str.charAt(idx++)); 
-    // character found in table? initialize bit storage and add its ascii value;
-    ~buffer &&
-        ((bs = bc % 4 ? bs * 64 + buffer : buffer),
-            // and if not first of each 4 characters,
-            // convert the first 8 bits to one ascii character
-            bc++ % 4)
-        ? (output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6))))
-        : 0) {
-        // try to find character in table (0-63, not found => -1)
-        buffer = chars.indexOf(buffer);
-    }
-    return output;
-}
-
-  urlBase64Decode (str: string) {
-    var output = str.replace(/-/g, '+').replace(/_/g, '/');
-    switch (output.length % 4) {
-        case 0: {
-            break;
-        }
-        case 2: {
-            output += '==';
-            break;
-        }
-        case 3: {
-            output += '=';
-            break;
-        }
-        default: {
-            throw 'Illegal base64url string!';
-        }
-    }
-    return this.b64DecodeUnicode(output);
+  updateSelf(data: any) {
+    return this.http.post('members/updateSelf', data);
   }
-    
-  decodeToken(token: string) {
-    if (token == null || token === '') {
-        return null;
-    }
-    var parts = token.split('.');
-    if (parts.length !== 3) {
-        throw new Error('The inspected token doesn\'t appear to be a JWT. Check to make sure it has three parts and see https://jwt.io for more.');
-    }
-    var decoded = this.urlBase64Decode(parts[1]);
-    if (!decoded) {
-        throw new Error('Cannot decode the token.');
-    }
-    return JSON.parse(decoded);
-  };  
+
+  updateSelfMerchant(data: any) {
+    return this.http.post('members/updateSelfMerchant', data);
+  }
 }

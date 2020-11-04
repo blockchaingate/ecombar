@@ -1,71 +1,84 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import {HttpEventType, HttpErrorResponse} from '@angular/common/http';
-import {UploadService} from '../../../shared/services/upload.service';
-import {of} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+
+import { Component, OnInit, ViewChild,EventEmitter,  Input, ElementRef, Output } from '@angular/core';
+import { UploadService, DocType } from '../../../shared/services/upload.service';
 
 @Component({
   selector: 'app-admin-upload-media',
   providers: [],
   templateUrl: './upload-media.component.html',
   styleUrls: [
-      './upload-media.component.scss', 
-      '../../../../../button.scss'
-    ]
+    './upload-media.component.scss',
+    '../../../../../button.scss'
+  ]
 })
-export class UploadMediaComponent implements OnInit{
-  
-  @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
-  files = [];
+export class UploadMediaComponent implements OnInit {
+  @ViewChild('fileUpload', { static: false }) fileUpload: ElementRef;
+  productId = '45fdssirfssss';
+  checkedImages: any;
+  @Input() images: any;
+  @Input() singleFile: boolean;
+  //@Output() uploaded: EventEmitter<string> = new EventEmitter();
+  errMsg = '';
+  successMsg = '';
+  url = '';
+  uploadSuccess = false;
 
   constructor(private uploadService: UploadService) { }
-  ngOnInit() {
 
+  ngOnInit(): void { 
+    this.checkedImages = [];
+    if(!this.images) {
+      this.images = [];
+    }
   }
 
-  uploadFile(file) {
-
-        const formData = new FormData();  
-        formData.append('file', file.data);
-        this.uploadService.upload(formData)
-        .subscribe((event: any) => {
-          console.log('event=', event);
-            if (typeof (event) === 'object') {
-
-              console.log(event.body);
-
-            }  
-
-          });  
-
+  isChecked(image) {
+    return (this.checkedImages.indexOf(image) >= 0);
+  }
+  FieldsChange(image, values:any) {
+    const checked = values.currentTarget.checked;
+    if(checked) {
+      this.checkedImages.push(image);
+    } else {
+      this.checkedImages = this.checkedImages.filter((item) => (item != image));
+    }
   }
 
-  onClick() {
-
-        const fileUpload = this.fileUpload.nativeElement;fileUpload.onchange = () => {
-        for (let index = 0; index < fileUpload.files.length; index++)
-
-        {
-
-         const file = fileUpload.files[index];
-
-         this.files.push({ data: file, inProgress: false, progress: 0});
-
-        }
-
-          this.uploadFiles();
-
-        };
-
-        fileUpload.click();
-
-    }  
-
-    private uploadFiles() {  
-      this.fileUpload.nativeElement.value = '';  
-      this.files.forEach(file => {  
-        this.uploadFile(file);  
-      });  
+  deleteMedia() {
+    console.log('this.images1');
+    for(let i=0;i<this.images.length;i++) {
+      const image = this.images[i];
+      if(this.checkedImages.indexOf(image) >= 0) {
+        this.images.splice(i,1);
+        i--;
+      }
+    }
+    this.checkedImages = [];
   }
+
+  fileChangeEvent(e: File[]) {
+    if (!e) { return; }
+    this.uploadSuccess = false;
+    this.url = '';
+    const file = e[0];
+    const fileName = file.name;
+    const fileType = file.type;
+    this.uploadService.applyPresignedUrl(fileName, fileType, DocType.PRODUCT, this.productId).subscribe(
+      ret => {
+        const signedUrl = ret.signed_request;
+        this.url = ret.url;
+        this.uploadService.uploadFileToSignedUrl(signedUrl, file.type, file).subscribe(
+          retn => { 
+            this.images.push(this.url);
+            //this.uploaded.emit(this.url);
+            
+            this.successMsg = 'Uploaded'; this.uploadSuccess = true; 
+        },
+          err => { this.errMsg = 'Error in uploading.'; });
+      },
+      error => this.errMsg = 'Error happened during apply presigned url.'
+    );
+  }
+
 
 }

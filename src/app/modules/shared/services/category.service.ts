@@ -1,36 +1,37 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { HttpService } from './http.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CategoryService {
   token: string;
 
-  constructor(private apiServ: ApiService) {
-  }
-  
-  create(data) {    
-    return this.apiServ.postPrivate('product-categories/Create', data);
+  constructor(private http: HttpService) { }
+
+  create(data) {
+    return this.http.post('product-categories/Create', data);
   }
 
-  update(id:string, data) {
-    return this.apiServ.postPrivate('product-categories/Update/' + id, data);
+  update(id: string, data) {
+    return this.http.post('product-categories/Update/' + id, data);
   }
 
   getCategories() {
-    return this.apiServ.getPublic('product-categories');
+    return this.http.get('product-categories', false);
   }
 
   getAdminCategories() {
-    return this.apiServ.getPublic('product-categories/admin');
+    return this.http.get('product-categories/admin', false);
   }
 
   getMerchantCategories(merchantId: string) {
-    return this.apiServ.getPublic('product-categories/merchant/' + merchantId);
+    return this.http.get('product-categories/merchant/' + merchantId, false);
   }
 
   getCategory(id: string) {
-    return this.apiServ.getPublic('product-categories/' + id);
+    return this.http.get('product-categories/' + id, false);
+  }
+
+  deleteCategory(id: string) {
+    return this.http.delete('product-categories/delete/' + id);
   }
 }

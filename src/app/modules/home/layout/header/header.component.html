@@ -1,5 +1,5 @@
 <div class="header-container">
-    <div id="nav-belt">
+    <div id="nav-belt" class="p-2">
         <div>
             <!--
             <a>
@@ -27,26 +27,28 @@
         </div>
 
         <div class="select-btn">
-            <select class="select-css">
-                <option>English</option>
-                <option>中文</option>
+            <select class="select-css" [(ngModel)]="lang">
+                <option value="en">English</option>
+                <option value="sc">中文</option>
             </select>            
         </div>
-        <div class="px-2 cursor-pointer" [routerLink]="['/auth/signin']">
-            login
+
+        <div class="px-3 mx-3 cursor-pointer" [routerLink]="['/cart']">
+            <span [attr.badge]="cartCount">
+                
+                {{'Cart' | translate}}
+            </span>
         </div>
-        
-        <div class="px-2 cursor-pointer" [routerLink]="['/cart']">
-            Cart
+
+        <div class="px-3 mx-3 cursor-pointer" [routerLink]="[user ? '/admin' : '/auth/signin']">
+            {{(user ? 'Me' : 'Login') | translate}}
         </div>
+
     </div>
     <div id="nav-main">
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="news.asp">Fashion</a></li>
-            <li><a href="contact.asp">Electronic</a></li>
-            <li><a href="about.asp">Sporting Goods</a></li>
-            <li><a href="about.asp">Home & Garden</a></li>
+            <li><a href="/">{{'Home' | translate}}</a></li>
+            <li *ngFor="let category of categories"><a href="/category/{{category._id}}">{{category.category | translateField}}</a></li>
           </ul>
     </div>
 </div>
