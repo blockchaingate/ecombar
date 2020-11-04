@@ -7,5 +7,6 @@ export const environment = {
     prod: 'https://blockchaingate.com/v2/',
     blockchaingate: 'https://blockchaingate.com/v2/',
     website: 'http://exchangily.com/',
-  }
+  },
+  paypal_client_id: 'AdmdQayzrKMsDPxU89G_UWcLVfFlHhG-zfFm4I75F6xusJ64AIBOre6J6NxfzsM6JStHQmtviHoCp59x'
 };
