@@ -6,6 +6,7 @@ import { CartItem } from '../../shared/models/cart-item';
 import { Router } from '@angular/router';
 import { TranslateService } from '../../shared/services/translate.service';
 import { OrderService } from '../../shared/services/order.service';
+import { CommentService } from '../../shared/services/comment.service';
 import { FavoriteService } from '../../shared/services/favorite.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StorageService } from '../../shared/services/storage.service';
@@ -17,7 +18,9 @@ import { StorageService } from '../../shared/services/storage.service';
 })
 export class ProductComponent implements OnInit {
   product: any;
+  comments: any;
   id: string;
+  rating: number;
   quantity: string;
   favorite: any;
   token: any;
@@ -28,6 +31,7 @@ export class ProductComponent implements OnInit {
     private productServ: ProductService,
     private favoriteServ: FavoriteService,
     private orderServ: OrderService,
+    private commentServ: CommentService,
     private router: Router,
     private storage: StorageService,
     private authServ: AuthService,
@@ -40,6 +44,15 @@ export class ProductComponent implements OnInit {
 
     this.id = this.route.snapshot.paramMap.get('id');
     this.quantity = '1';
+
+    this.commentServ.getComments(this.id).subscribe(
+      (res: any) => {
+        if(res && res.ok) {
+          this.comments = res._body;
+          console.log('this.comments=', this.comments);
+        }
+      }
+    );
     this.productServ.getProduct(this.id).subscribe(
       (res: any) => {
         if(res && res.ok) {

@@ -25,6 +25,7 @@ import { CommentComponent } from './pages/comment/comment.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
+import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -52,7 +53,10 @@ const routes: Routes = [
       },
       {
         path: 'my-products', component: MyProductsComponent
-      },      
+      },   
+      {
+        path: 'my-comments', component: MyCommentsComponent
+      },           
       {
         path: 'orders', component: OrdersComponent
       }, 

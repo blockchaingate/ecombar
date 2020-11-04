@@ -3,37 +3,18 @@
       <h1>My profile</h1>
       <hr>
       
-      <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
-          English
-        </div>
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Chinese')">
-          中文
-        </div>
+
+
+      <div>
+        <label for="email"><b>Display Name</b></label>
+        <input type="text" placeholder="Enter display name" [(ngModel)]="displayName" name="displayName" required>
+  
+        <label for="email"><b>Avatar</b></label>
+        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+
       </div>
 
-      <div *ngIf="currentTab=='default'">
-        <label for="email"><b>Name</b></label>
-        <input type="text" placeholder="Enter category name" [(ngModel)]="category" name="category" required>
-  
-        <label for="email"><b>Sequence</b></label>
-        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence" required>
-  
-        <div class="custom-select" style="width:200px;" *ngIf="categories">
-          <select [(ngModel)]="parentId" name="parentId">
-            <option value="0">Select Category:</option>
-            <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category}}</option>
-          </select>
-        </div> 
-      </div>
-      
-      <div *ngIf="currentTab=='Chinese'">
-        <label for="email"><b>名称</b></label>
-        <input type="text" placeholder="输入名称" [(ngModel)]="categoryChinese" name="categoryChinese">        
-      </div>
-
-      <div class="d-flex justify-content-between py-2">
-        <button type="button" class="btn cancelbtn">Cancel</button>
+      <div class="text-right py-2">
         <button type="submit" class="btn signinbtn" (click)="update()">Update</button>
       </div>
     </div>

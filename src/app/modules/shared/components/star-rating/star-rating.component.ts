@@ -5,9 +5,11 @@ import { Component, Input,Output,EventEmitter } from '@angular/core';
   styleUrls: ['./star-rating.component.scss', '../../../../../button.scss']
 })
 export class StarRatingComponent {
-    @Input() rating: number;
+  @Input() readonly: boolean;
+  @Input() rating: number;
 
-    @Output() ratingChange = new EventEmitter<number>();
+  @Output() ratingChange = new EventEmitter<number>();
+  
   constructor() {
   }
   changeRating(rating: number) {

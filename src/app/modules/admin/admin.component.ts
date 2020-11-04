@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
   showNavMenu = false;
   dropDownActive = false;
   displayName: string;
+  myPhotoUrl: string;
   email: string;
 
   menuItems: any;
@@ -27,6 +28,8 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
     this.email = this.userServ.email;
     this.displayName = this.userServ.displayName;
     if(!this.email) {
@@ -38,7 +41,14 @@ export class AdminComponent implements OnInit {
       );
     }
     
-    
+    this.userServ.getMe().subscribe(
+      (res: any) => {
+        if(res && res.ok) {
+          const user = res._body;
+          this.myPhotoUrl = user.myPhotoUrl;
+        }
+      }
+    );
     let merchantId = this.merchantServ.id;
     if(!merchantId) {
       this.storageServ.get('_merchantId').subscribe(
@@ -156,7 +166,11 @@ export class AdminComponent implements OnInit {
           {
             title: 'My products',
             link: 'my-products'
-          }                   
+          }, 
+          {
+            title: 'My comments',
+            link: 'my-comments'
+          }                    
         ];
       }
   }

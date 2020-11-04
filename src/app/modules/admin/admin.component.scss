@@ -24,20 +24,21 @@
 
 
 
-
- @mixin profile-avatar {
-   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1609106/headshot.png");
-   background-size: cover;
-   background-repeat: no-repeat;
-   border-radius: 50%;
-   border: 2px solid rgba(255, 255, 255, .2);
+ .img-avatar {
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .2);
+  width: 40px;
+  height: 40px;
  }
- 
+
  @mixin box-shadow {
    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
  }
 
  
+ small {
+   font-size: 12px;
+ }
 /* Simple dashboard grid CSS */
 
   
@@ -148,7 +149,6 @@
       background-color: rgba(255, 255, 255, .1);
   
       &-avatar {
-        @include profile-avatar;
         height: 64px;
         width: 64px;
         margin: 0 15px;
@@ -257,13 +257,13 @@
     }
 
     &__avatar {
-      @include profile-avatar;
       position: relative;
       margin: 0 26px;
-      width: 35px;
-      height: 35px;
+      width: 55px;
+      height: 55px;
       cursor: pointer;
-  
+      
+      /*
       &:after {
         position: absolute;
         content: "";
@@ -276,6 +276,7 @@
         top: 50%;
         right: -18px;
       }
+      */
     }    
 }
 

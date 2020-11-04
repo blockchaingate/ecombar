@@ -6,6 +6,12 @@
             <input class="header__input" placeholder="Search..." />
         </div>
         <div class="header__avatar" (click)="toggleDropDownActive()">
+          <div class="d-inline-block">
+            <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+            <img class="img-avatar" *ngIf="!myPhotoUrl" src="/assets/images/default_avatar.jpeg">
+          </div>
+
+          <div class="d-inline-block">
             <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
                 <ul class="dropdown__list">
                   <li class="dropdown__list-item" (click)="profile()">
@@ -17,7 +23,8 @@
                     <span class="dropdown__title">log out</span>
                   </li>
                 </ul> 
-              </div>
+            </div>
+          </div>  
         </div>
     </header>
     <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''">
@@ -30,8 +37,10 @@
         </a>
         <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
       </div>
-      <div class="sidenav__profile">
-        <div class="sidenav__profile-avatar"></div>
+      <div class="text-center">
+
+        <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+        <img class="img-avatar" *ngIf="!myPhotoUrl" src="/assets/images/default_avatar.jpeg">
 
       </div>
 
