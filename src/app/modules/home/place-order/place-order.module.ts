@@ -5,6 +5,7 @@ import { PlaceOrderComponent } from './place-order.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     CommonModule,
     FormsModule,
     QRCodeModule,
-    SharedModule
+    SharedModule,
+    NgxPayPalModule
   ],
   providers: []
 })

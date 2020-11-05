@@ -74,7 +74,8 @@ export class AdminComponent implements OnInit {
       this.menuItems = [
         {
           title: 'Dashboard',
-          link: 'dashboard'
+          link: 'dashboard',
+          icon: 'dashboard'
         },
         {
           title: 'Brands',
@@ -110,7 +111,8 @@ export class AdminComponent implements OnInit {
         this.menuItems = [
           {
             title: 'Dashboard',
-            link: 'dashboard'
+            link: 'dashboard',
+            icon: 'dashboard'
           },
           {
             title: 'Banners',
@@ -145,31 +147,38 @@ export class AdminComponent implements OnInit {
         this.menuItems = [
           {
             title: 'Dashboard',
-            link: 'dashboard'
+            link: 'dashboard',
+            icon: 'dashboard'
           },
           {
             title: 'Address',
-            link: 'address'
+            link: 'address',
+            icon: 'address'
           },
           {
             title: 'Orders',
-            link: 'orders'
+            link: 'orders',
+            icon: 'order'
           },
           {
             title: 'My cart',
-            link: 'cart'
+            link: 'cart',
+            icon: 'cart'
           },
           {
             title: 'My favorite',
-            link: 'favorite'
+            link: 'favorite',
+            icon: 'favorite'
           }, 
           {
             title: 'My products',
-            link: 'my-products'
+            link: 'my-products',
+            icon: 'product'
           }, 
           {
             title: 'My comments',
-            link: 'my-comments'
+            link: 'my-comments',
+            icon: 'comment'
           }                    
         ];
       }

@@ -22,6 +22,11 @@ export class OrderService {
     return this.http.get('orders/' + orderID, true);
   }
 
+  updatePayment(order_id: string, paymentData: any) {
+    const url = 'orders/' + order_id + '/payment';
+    return this.http.post(url, paymentData);  
+  }
+
   getMyOrders() {
     return this.http.get('orders', true);
   }

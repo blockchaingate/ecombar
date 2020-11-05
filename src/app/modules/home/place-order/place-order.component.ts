@@ -4,6 +4,7 @@ import { AddressService } from '../../shared/services/address.service';
 import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 
 @Component({
   selector: 'app-place-order',
@@ -25,6 +26,7 @@ export class PlaceOrderComponent implements OnInit{
     payLink: string;
     code: string;
     link: string;
+    public payPalConfig?: IPayPalConfig;
 
     constructor(
       private router: Router,
@@ -48,6 +50,86 @@ export class PlaceOrderComponent implements OnInit{
             this.subtotal = this.order.totalSale;
             this.shippingFee = this.order.totalShipping;
             this.total = this.order.totalToPay;
+            const currency = 'USD';
+            const items = this.order.items;
+
+            const value = '0.1';
+            this.payPalConfig = {
+              currency: currency,
+              clientId: environment.paypal_client_id,
+              createOrderOnClient: (data) => <ICreateOrderRequest>{
+                intent: 'CAPTURE',
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: currency,
+                      value: value,
+                      breakdown: {
+                        item_total: {
+                          currency_code: currency,
+                          value: value
+                        }
+                      }
+                    },
+                    items: [{
+                      name: 'Enterprise Subscription',
+                      quantity: '1',
+                      category: 'DIGITAL_GOODS',
+                      unit_amount: {
+                          currency_code: currency,
+                          value: value,
+                      },
+                  }]
+      
+                  }
+                ]
+              },
+              advanced: {
+                commit: 'true'
+              },
+              style: {
+                label: 'paypal',
+                layout: 'vertical'
+              },
+              onApprove: (data, actions) => {
+                console.log('onApprove - transaction was approved, but not authorized', data, actions);
+                const orderID = data.orderID;
+                const payerID = data.payerID;
+          
+                actions.order.get().then(details => {
+                  console.log('onApprove - you can get full order details inside onApprove: ', details);
+                });
+              },
+              onClientAuthorization: (data) => {
+                console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+                const orderID = data.id;
+                if (orderID) {
+
+                  console.log('orderID=', orderID);
+                  this.orderServ.updatePayment(this.orderID, data).subscribe(
+                    (res: any) => {
+                      if(res && res.success) {
+                        console.log('Your payment was confirmed.');
+                      }
+                    }
+                  );      
+                }
+              },
+              onCancel: (data, actions) => {
+                console.log('OnCancel', data, actions);
+              },
+              onError: err => {
+                console.log('OnError', err);
+              },
+              onClick: (data, actions) => {
+                console.log('onClick', data, actions);
+              },
+            };
+
+
+
+
+
           }
         }
       );        
@@ -66,7 +148,12 @@ export class PlaceOrderComponent implements OnInit{
   change() {
     this.router.navigate(['/payment/' + this.orderID]);
   }
-    payWithWeb() {
+
+  payWithPaypal() {
+
+  }
+  
+  payWithWeb() {
       console.log('begin payWithWeb');
 
       

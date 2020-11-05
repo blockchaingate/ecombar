@@ -46,9 +46,11 @@
 
         <ul class="sidenav__list">
             <li *ngFor="let item of menuItems" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
+              <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp;
               {{item.title | translate}}
             </li>
             <li class="sidenav__list-item" (click)="changeLang()">
+              <img src="/assets/svg/language.svg">&nbsp;&nbsp;
               English / 中文
             </li>
           </ul>        
