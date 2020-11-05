@@ -8,6 +8,7 @@ export class StorageService {
     private _appId: string;
     private _token: string;
     private _tokenExp: Date;
+    private _lang: string;
     private _isSystemAdmin: boolean;
     private _user: User = {};
 
@@ -30,6 +31,7 @@ export class StorageService {
     get(fieldName) {
         return this.storage.get(fieldName);
     }
+
     set appId(appID: string) {
         this._appId = appID;
         this.storage.set('_appId', appID).subscribe(ret => { });
@@ -37,6 +39,15 @@ export class StorageService {
 
     get appId(): string {
         return this._appId;
+    }
+
+    set lang(newLang: string) {
+        this._lang = newLang;
+        this.storage.set('_lang', newLang).subscribe(ret => { });
+    }
+
+    get lang(): string {
+        return this._lang;
     }
 
     deleteAppId(): void {

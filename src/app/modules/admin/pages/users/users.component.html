@@ -2,13 +2,13 @@
   
   <ul class="responsive-table">
     <li class="table-header">
-      <div class="col col-4">Email</div>
-      <div class="col col-4">Role</div>
+      <div class="col col-4">{{'Email' | translate}}</div>
+      <div class="col col-4">{{'Role' | translate}}</div>
       <div class="col col-3"></div>
     </li>
     <li class="table-row" *ngFor="let user of users">
       <div class="col col-4" data-label="Email">{{user.email}}</div>
-      <div class="col col-4" data-label="Ref Code">{{user.defaultMerchant ? 'Merchant' : 'Customer'}}</div>
+      <div class="col col-4" data-label="Ref Code">{{(user.defaultMerchant ? 'Merchant' : 'Customer') | translate}}</div>
       <div class="col col-3 text-right" data-label="Operations">
         <!--
         <div class="d-inline-block px-2">

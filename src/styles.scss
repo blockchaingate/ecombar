@@ -193,6 +193,9 @@ table th {
   padding-left: 0.5rem;
 }
 
+.pt-2 {
+  padding-top: 0.5rem;
+}
 .p-3 {
   padding: 0.75rem;
 }
@@ -207,6 +210,14 @@ table th {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.text-dark {
+  color: #343a40!important
+}
+
+.text-success {
+  color: #28a745!important;
 }
 
 .d-inline-block {

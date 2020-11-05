@@ -1,6 +1,6 @@
 <form style="border:1px solid #ccc">
     <div class="container">
-      <h1>New Banner</h1>
+      <h1>{{'New Banner' | translate}}</h1>
       <hr>
       
       <div class="d-flex align-items-center navigate-bar my-3">
@@ -14,13 +14,13 @@
 
       <div *ngIf="currentTab=='default'">
         <label for="email"><b>Title</b></label>
-        <input type="text" placeholder="Enter title" [(ngModel)]="title" name="title" required>
+        <input type="text" placeholder="{{'Enter title' | translate}}" [(ngModel)]="title" name="title" required>
         <label for="email"><b>Subtitle</b></label>
-        <input type="text" placeholder="Enter subtitle" [(ngModel)]="subtitle" name="subtitle">  
-        <label for="image"><b>Image</b></label>
+        <input type="text" placeholder="{{'Enter subtitle' | translate}}" [(ngModel)]="subtitle" name="subtitle">  
+        <label for="image"><b>{{'Image' | translate}}</b></label>
         <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
-        <label for="email"><b>Sequence</b></label>
-        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence">
+        <label for="email"><b>{{'Sequence' | translate}}</b></label>
+        <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence">
 
       </div>
       
@@ -32,9 +32,8 @@
         <input type="text" placeholder="输入副标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">           
       </div>
 
-      <div class="d-flex justify-content-between py-2">
-        <button type="button" class="btn cancelbtn">Cancel</button>
-        <button type="submit" class="btn signinbtn" (click)="addBanner()">{{id?'Update':'Add'}}</button>
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="addBanner()">{{(id?'Update':'Add') | translate}}</button>
       </div>
     </div>
 </form>

@@ -4,6 +4,7 @@ import { UserService } from '../shared/services/user.service';
 import { MerchantService } from '../shared/services/merchant.service';
 import { StorageService } from '../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
+import { IGNORE_BLOCK_TAGS } from '@syncfusion/ej2-angular-richtexteditor';
 
 @Component({
   providers: [UserService],
@@ -17,6 +18,7 @@ export class AdminComponent implements OnInit {
   displayName: string;
   myPhotoUrl: string;
   email: string;
+  role: string;
 
   menuItems: any;
   constructor(
@@ -29,7 +31,19 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    const lang = this.storageServ.lang;
+    if(!lang) {
+      this.storageServ.get('_lang').subscribe(
+        (lang:string) => {
+          if(lang) {
+            this.translateServ.setDefaultLang(lang);
+          }
+          
+        }
+      );
+    } else {
+      this.translateServ.setDefaultLang(lang);
+    }
     this.email = this.userServ.email;
     this.displayName = this.userServ.displayName;
     if(!this.email) {
@@ -67,10 +81,12 @@ export class AdminComponent implements OnInit {
     let lang = this.translateServ.getDefaultLang();
     lang = (lang == 'en') ? 'sc' : 'en';
     this.translateServ.setDefaultLang(lang);
+    this.storageServ.lang = lang;
   }
 
   initMenuWithSystemAdmin(merchantId:string, isSystemAdmin:boolean) {
     if (isSystemAdmin) {
+      this.role = "Admin";
       this.menuItems = [
         {
           title: 'Dashboard',
@@ -78,36 +94,39 @@ export class AdminComponent implements OnInit {
           icon: 'dashboard'
         },
         {
-          title: 'Brands',
-          link: 'brands'
+          title: 'Banners',
+          link: 'banners',
+          icon: 'banner'
         },        
         {
-          title: 'Banners',
-          link: 'banners'
-        },
+          title: 'Brands',
+          link: 'brands',
+          icon: 'brand'
+        },  
         {
-          title: 'categories',
-          link: 'categories'
+          title: 'Categories',
+          link: 'categories',
+          icon: 'category'
         },
         {
           title: 'Collections',
-          link: 'collections'
+          link: 'collections',
+          icon: 'collection'
         },
         {
           title: 'Users',
-          link: 'users'
+          link: 'users',
+          icon: 'user'
         },
         {
           title: 'Orders',
-          link: 'orders'
-        },        
-        {
-          title: 'Upload',
-          link: 'upload'
+          link: 'orders',
+          icon: 'order'
         }
       ];
     } else
       if (merchantId) {
+        this.role = "Merchant";
         this.menuItems = [
           {
             title: 'Dashboard',
@@ -116,34 +135,42 @@ export class AdminComponent implements OnInit {
           },
           {
             title: 'Banners',
-            link: 'banners'
+            link: 'banners',
+            icon: 'banner'
           },
           {
             title: 'Brands',
-            link: 'brands'
+            link: 'brands',
+            icon: 'brand'
           },            
           {
             title: 'Categories',
-            link: 'categories'
+            link: 'categories',
+            icon: 'category'
           },
           {
             title: 'Collections',
-            link: 'collections'
+            link: 'collections',
+            icon: 'collection'
           },
           {
             title: 'Products',
-            link: 'products'
+            link: 'products',
+            icon: 'product'
           },
           {
             title: 'Orders',
-            link: 'orders'
+            link: 'orders',
+            icon: 'order'
           },           
           {
             title: 'Merchant information',
-            link: 'merchant-info'
+            link: 'merchant-info',
+            icon: 'information'
           }
         ];
       } else {
+        this.role = "Customer";
         this.menuItems = [
           {
             title: 'Dashboard',
@@ -188,6 +215,7 @@ export class AdminComponent implements OnInit {
 
     if(this.userServ.isSystemAdmin) {
       this.initMenuWithSystemAdmin(merchantId, this.userServ.isSystemAdmin);
+      
     } else {
       this.storageServ.get('_isSystemAdmin').subscribe(
         (ret:boolean) => {
