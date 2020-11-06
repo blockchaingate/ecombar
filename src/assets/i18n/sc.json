@@ -44,5 +44,10 @@
     "Role": "角色",
     "Merchant" : "商户",
     "Customer": "顾客",
-    "Admin": "管理员"
+    "Admin": "管理员",
+    "Price": "价格",
+    "Currency": "货币单位",
+    "Enter name": "输入名称",
+    "Wallet address": "钱包地址",
+    "Enter wallet address": "输入钱包地址"
 }

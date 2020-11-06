@@ -44,5 +44,10 @@
     "Role": "Role",
     "Merchant" : "Merchant",
     "Customer": "Customer",
-    "Admin": "Admin"
+    "Admin": "Admin",
+    "Price": "Price",
+    "Currency": "Currency",
+    "Enter name": "Enter name",
+    "Wallet address": "Wallet address",
+    "Enter wallet address": "Enter wallet address"
 }
