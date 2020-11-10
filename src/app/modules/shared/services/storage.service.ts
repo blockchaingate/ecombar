@@ -30,6 +30,7 @@ export class StorageService {
     get(fieldName) {
         return this.storage.get(fieldName);
     }
+
     set appId(appID: string) {
         this._appId = appID;
         this.storage.set('_appId', appID).subscribe(ret => { });
