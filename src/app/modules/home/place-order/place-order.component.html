@@ -75,11 +75,34 @@
 
                         <ngx-paypal [config]="payPalConfig"></ngx-paypal>
 
+                    </div>
+
+                    <div class="text-center" *ngIf="order.paymentMethod == 'creditcard'">
+
+                        <button class="btn" (click)="payWithCreditCard()">
+                            Pay with Credit card
+                        </button>   
+                        
                         <!--
-                        <button class="btn" (click)="payWithPaypal()">
-                            Pay with Paypal
-                        </button> 
+                        <form method="post" action="https://esqa.moneris.com/HPPDP/index.php">
+                            <input type="hidden" name="ps_store_id" value="{{ps_store_id}}">
+                            <input type="hidden" name="hpp_key" value="{{hpp_key}}">
+                            <input type="hidden" name="charge_total" value="{{total}}">
+                            <input type="submit" name="submit" value="Pay with Credit card">
+                        </form>
                         -->
+                        <!--
+                        <FORM METHOD="POST" ACTION= https://esqa.moneris.com/HPPDP/index.php>
+
+                            <INPUT TYPE="HIDDEN" NAME="ps_store_id" VALUE="{{ps_store_id}}">
+                       
+                            <INPUT TYPE="HIDDEN" NAME="hpp_key" VALUE="{{hpp_key}}">
+                       
+                            <INPUT TYPE="HIDDEN" NAME="charge_total" VALUE="{{total}}">
+                           <INPUT TYPE="SUBMIT" NAME="SUBMIT" VALUE="Pay with Credit card">
+                       
+                       </FORM>    
+                       -->                    
                     </div>
                 </div>
             </div>

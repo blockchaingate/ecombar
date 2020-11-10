@@ -10,6 +10,7 @@ import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
+import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { BrandsComponent } from './pages/brands/brands.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
@@ -26,6 +27,10 @@ import { UploadMediaComponent } from './components/upload-media/upload-media.com
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
+import { NoWalletComponent } from './pages/my-assets/components/no-wallet/no-wallet.component';
+import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
+import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
 import { CommentComponent } from './pages/comment/comment.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
@@ -40,6 +45,10 @@ import { CartModule } from '../home/cart/cart.module';
     FooterComponent,
     HeaderComponent,
     NavComponent,
+    WalletDashboardComponent,
+    NoWalletComponent,
+    CreateWalletComponent,
+    ImportWalletComponent,
     MyCommentsComponent,
     FavoriteComponent,
     UploadMediaComponent,
@@ -47,6 +56,7 @@ import { CartModule } from '../home/cart/cart.module';
     UsersComponent,
     CommentComponent,
     CartComponent,
+    MyAssetsComponent,
     MyProductsComponent,
     BannersComponent,
     OrdersComponent,

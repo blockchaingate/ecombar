@@ -16,6 +16,10 @@ export const environment = {
     blockchaingate: 'https://test.blockchaingate.com/v2/',
     website: 'https://test.exchangily.com/',
   },
+  moneris: {
+    ps_store_id: '9VGAUtore3',
+    hpp_key: 'hpRS5R56OATG'
+  },
   paypal_client_id: 'AdmdQayzrKMsDPxU89G_UWcLVfFlHhG-zfFm4I75F6xusJ64AIBOre6J6NxfzsM6JStHQmtviHoCp59x'
 };
 

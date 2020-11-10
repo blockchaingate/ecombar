@@ -26,6 +26,9 @@ import { CartComponent } from './pages/cart/cart.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
+import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
+import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
+import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -56,7 +59,16 @@ const routes: Routes = [
       },   
       {
         path: 'my-comments', component: MyCommentsComponent
-      },           
+      },  
+      {
+        path: 'my-assets', component: MyAssetsComponent
+      }, 
+      {
+        path: 'create-wallet', component: CreateWalletComponent
+      },  
+      {
+        path: 'import-wallet', component: ImportWalletComponent
+      },  
       {
         path: 'orders', component: OrdersComponent
       }, 

@@ -1,19 +1,19 @@
 <form style="border:1px solid #ccc">
     <div class="container">
-      <h1>My comment</h1>
+      <h1>{{'My comment' | translate}}</h1>
       <hr>
 
 
       <div class="text-left">
         <div class="py-2">
-          <label for="tag">Rating</label>
+          <label for="tag">{{'Rating' | translate}}</label>
         </div>
         
         <app-star-rating [(rating)]="rating"></app-star-rating>
       </div>
       <div class="py-3">
         <div class="py-2">
-          <label for="comment" >Comment</label>
+          <label for="comment" >{{'Comment' | translate}}</label>
         </div>
         
 
@@ -25,7 +25,7 @@
 
 
       <div class="text-right py-2">
-        <button type="submit" class="btn signinbtn" (click)="update()">Update</button>
+        <button type="submit" class="btn signinbtn" (click)="update()">{{(commentId?'Update':'Add') | translate}}</button>
       </div>
     </div>
 </form>

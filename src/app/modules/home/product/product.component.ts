@@ -10,6 +10,7 @@ import { CommentService } from '../../shared/services/comment.service';
 import { FavoriteService } from '../../shared/services/favorite.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StorageService } from '../../shared/services/storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -28,6 +29,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private cartStoreServ: CartStoreService,
     private route: ActivatedRoute,
+    private toastr: ToastrService,
     private productServ: ProductService,
     private favoriteServ: FavoriteService,
     private orderServ: OrderService,
@@ -115,13 +117,14 @@ export class ProductComponent implements OnInit {
   }
 
   addToFavorite() {
+    
     const data = {
       parentId: this.id   
     };
     this.favoriteServ.create(data).subscribe(
       (res) => {
         if(res && res.ok) {
-          console.log('addToFavorite successfully');
+          this.toastr.success('add to favorite successfully', '');
           this.favorite = res._body;
         }
       }
@@ -135,7 +138,7 @@ export class ProductComponent implements OnInit {
     this.favoriteServ.deleteFavorite(this.favorite._id).subscribe(
       (res) => {
         if(res && res.ok) {
-          console.log('removeFromFavorite successfully');
+          this.toastr.success('remove from favorite successfully', '');
           this.favorite = null;
         }
       }      

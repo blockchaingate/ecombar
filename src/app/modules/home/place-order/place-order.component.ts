@@ -5,6 +5,7 @@ import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-place-order',
@@ -26,18 +27,30 @@ export class PlaceOrderComponent implements OnInit{
     payLink: string;
     code: string;
     link: string;
+    ps_store_id: string;
+    hpp_key: string;
     public payPalConfig?: IPayPalConfig;
 
     constructor(
       private router: Router,
       private route: ActivatedRoute, 
-      private userServ: UserService, 
+      private toastr: ToastrService,
       private orderServ: OrderService, 
       private addressServ: AddressService) {
 
     }
 
+    payWithCreditCard() {
+      window.open("https://esqa.moneris.com/HPPDP/index.php?ps_store_id=" 
+      + this.ps_store_id + "&hpp_key=" + this.hpp_key 
+      + "&order_id=" + this.orderID
+      + "&charge_total=" + this.total.toFixed(2), "_blank");
+    }
+
     ngOnInit() {
+      this.ps_store_id = environment.moneris.ps_store_id;
+      this.hpp_key = environment.moneris.hpp_key;
+
       this.orderID = this.route.snapshot.paramMap.get('orderID');
       this.orderServ.get(this.orderID).subscribe(
         (res: any) => {
@@ -53,7 +66,7 @@ export class PlaceOrderComponent implements OnInit{
             const currency = 'USD';
             const items = this.order.items;
 
-            const value = '0.1';
+            const value = this.total.toString();
             this.payPalConfig = {
               currency: currency,
               clientId: environment.paypal_client_id,
@@ -108,8 +121,9 @@ export class PlaceOrderComponent implements OnInit{
                   console.log('orderID=', orderID);
                   this.orderServ.updatePayment(this.orderID, data).subscribe(
                     (res: any) => {
-                      if(res && res.success) {
-                        console.log('Your payment was confirmed.');
+                      if(res && res.ok) {
+                        this.toastr.success('Your payment was confirmed.', '');
+
                       }
                     }
                   );      

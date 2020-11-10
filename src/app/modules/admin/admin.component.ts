@@ -132,7 +132,7 @@ export class AdminComponent implements OnInit {
             title: 'Dashboard',
             link: 'dashboard',
             icon: 'dashboard'
-          },
+          },         
           {
             title: 'Banners',
             link: 'banners',
@@ -153,6 +153,11 @@ export class AdminComponent implements OnInit {
             link: 'collections',
             icon: 'collection'
           },
+          {
+            title: 'My assets',
+            link: 'my-assets',
+            icon: 'asset'
+          },            
           {
             title: 'Products',
             link: 'products',
@@ -187,6 +192,11 @@ export class AdminComponent implements OnInit {
             link: 'orders',
             icon: 'order'
           },
+          {
+            title: 'My assets',
+            link: 'my-assets',
+            icon: 'asset'
+          },          
           {
             title: 'My cart',
             link: 'cart',
