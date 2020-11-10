@@ -15,3 +15,19 @@
      position: absolute;
      color: #ffc600;
   }
+
+  .rating-ro {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+  }
+  .rating-ro > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+  }  
+  .rating-ro > span.rated:before,
+  .rating-ro > span.rated ~ span:before {
+     content: "\2605";
+     position: absolute;
+     color: #ffc600;
+  }

@@ -3,17 +3,19 @@
   
     <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-3">Date Created</div>
-        <div class="col col-3">Items</div>
-        <div class="col col-3">Total</div>
-        <div class="col col-3">Status</div>
+        <div class="col col-3">{{'Date Created' | translate}}</div>
+        <div class="col col-3">{{'Items' | translate}}</div>
+        <div class="col col-3">{{'Total' | translate}}</div>
+        <div class="col col-3">{{'Payment Method' | translate}}</div>
+        <div class="col col-3">{{'Status' | translate}}</div>
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let order of orders">
-        <div class="col col-3" data-label="Date created">{{order.dateCreated | date}}</div>
-        <div class="col col-3" data-label="Items count">{{getItemsCount(order)}}</div>
-        <div class="col col-3" data-label="Total">{{order.totalToPay}}</div>
-        <div class="col col-3" data-label="Total">{{getStatus(order)}}</div>
+        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
+        <div class="col col-3" data-label="{{'Items' | translate}}">{{getItemsCount(order)}}</div>
+        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
+        <div class="col col-3" data-label="{{'Payment Method' | translate}}">{{order.paymentMethod}}</div>
+        <div class="col col-3" data-label="{{'Status' | translate}}">{{getStatus(order)}}</div>
         <div class="col col-3 text-right" data-label="Operations">
   
           <div class="d-inline-block px-2" *ngIf="customerFlag && (order.paymentStatus == 0)">

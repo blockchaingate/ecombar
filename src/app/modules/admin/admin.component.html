@@ -6,40 +6,55 @@
             <input class="header__input" placeholder="Search..." />
         </div>
         <div class="header__avatar" (click)="toggleDropDownActive()">
+          <div class="d-inline-block">
+            <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+            <img class="img-avatar" *ngIf="!myPhotoUrl" src="/assets/images/default_avatar.jpeg">
+          </div>
+
+          <div class="d-inline-block">
             <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
                 <ul class="dropdown__list">
                   <li class="dropdown__list-item" (click)="profile()">
                     <span class="dropdown__icon"><i class="far fa-user"></i></span>
-                    <span class="dropdown__title">my profile</span>
+                    <span class="dropdown__title">{{'my profile' | translate}}</span>
                   </li>
                   <li class="dropdown__list-item" (click)="logout()">
                     <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
-                    <span class="dropdown__title">log out</span>
+                    <span class="dropdown__title">{{'log out' | translate}}</span>
                   </li>
                 </ul> 
-              </div>
+            </div>
+          </div>  
         </div>
     </header>
     <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''">
 
-      <div class="sidenav__brand">
-        <a class="sidenav__brand-link" href="#">
-          <small>
+      <div class="pt-2">
+        <div class="text-center text-dark">
             {{displayName}}
-          </small>
-        </a>
-        <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
+        </div>
+        <div class="pt-2 text-center text-success">
+          {{role | translate}}
+        </div>        
+        <div class="pt-2">
+          <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
+        </div>
+
       </div>
-      <div class="sidenav__profile">
-        <div class="sidenav__profile-avatar"></div>
+      <div class="text-center">
+
+        <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+        <img class="img-avatar" *ngIf="!myPhotoUrl" src="/assets/images/default_avatar.jpeg">
 
       </div>
 
         <ul class="sidenav__list">
             <li *ngFor="let item of menuItems" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
+              <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp;
               {{item.title | translate}}
             </li>
             <li class="sidenav__list-item" (click)="changeLang()">
+              <img src="/assets/svg/language.svg">&nbsp;&nbsp;
               English / 中文
             </li>
           </ul>        

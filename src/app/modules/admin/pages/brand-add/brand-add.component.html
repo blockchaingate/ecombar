@@ -1,6 +1,6 @@
 <form style="border:1px solid #ccc">
     <div class="container">
-      <h1>New Banner</h1>
+      <h1>{{'New Brand' | translate}}</h1>
       <hr>
       
       <div class="d-flex align-items-center navigate-bar my-3">
@@ -16,8 +16,8 @@
         <label for="email"><b>Name</b></label>
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
-        <label for="email"><b>Sequence</b></label>
-        <input type="text" placeholder="Enter sequence" [(ngModel)]="sequence" name="sequence" required>
+        <label for="email"><b>{{'Sequence' | translate}}</b></label>
+        <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
           
       </div>
       
@@ -27,9 +27,8 @@
     
       </div>
 
-      <div class="d-flex justify-content-between py-2">
-        <button type="button" class="btn cancelbtn">Cancel</button>
-        <button type="submit" class="btn signinbtn" (click)="addBrand()">Add</button>
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="addBrand()">{{(id?'Update':'Add') | translate}}</button>
       </div>
     </div>
 </form>

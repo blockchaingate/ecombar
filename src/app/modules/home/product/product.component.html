@@ -29,9 +29,9 @@
                 <div class="about a-text-bold">
                     About this item
                 </div>
-                <div>
-                    {{product.description | translateField}}
-                </div>
+
+                <div [innerHTML]="product.description | translateField">
+                </div>  
             </div>
         </div> 
         
@@ -72,6 +72,35 @@
                 </div>                
             </div>
 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12">
+            <div class="py-2">
+                <b>
+                    Comments on this product
+                </b>
+                
+            </div>
+            <div>
+                <div *ngFor="let comment of comments" class="py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="pr-2">
+                            <img class="img-avatar" *ngIf="comment.authorId&&comment.authorId.myPhotoUrl" [src]="comment.authorId.myPhotoUrl">
+                            <img class="img-avatar" *ngIf="!(comment.authorId&&comment.authorId.myPhotoUrl)" src="/assets/images/default_avatar.jpeg">
+                        </div>
+                        <div class="pl-2">
+                            {{comment.authorId.displayName}}
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <app-star-rating [(rating)]="comment.rating" [readonly]="true"></app-star-rating>
+                    </div>
+                    <div [innerHTML]="comment.comment">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -83,9 +83,10 @@ export class OrdersComponent implements OnInit {
   getItemsCount(order) {
     let count = 0;
     let items = order.items;
-    for(let i=0;i<items;i++) {
-      if(items[i].quantity) {
-        count += items[i].quantity;
+    for(let i=0;i<items.length;i++) {
+      const item = items[i];
+      if(item.quantity) {
+        count += item.quantity;
       }
       
     }

@@ -1,5 +1,5 @@
-<div class="main-overview">
-  <div class="overviewCard">
+<div class="main-overview" *ngIf="!isUserSummary">
+  <div class="overviewCard" [routerLink]="['/admin/brands']">
     <div class="overviewCard-icon overviewCard-icon--document">
        <img src="/assets/svg/brand-white.svg">
     </div>
@@ -8,7 +8,7 @@
       <p class="overviewCard-subtitle">{{brands_count}}</p>
     </div>
   </div>
-  <div class="overviewCard">
+  <div class="overviewCard" [routerLink]="['/admin/categories']">
     <div class="overviewCard-icon overviewCard-icon--calendar">
       <img src="/assets/svg/category-white.svg">
     </div>
@@ -17,7 +17,7 @@
       <p class="overviewCard-subtitle">{{categories_count}}</p>
     </div>
   </div>
-  <div class="overviewCard">
+  <div class="overviewCard" [routerLink]="['/admin/products']">
     <div class="overviewCard-icon overviewCard-icon--mail">
       <img src="/assets/svg/product-white.svg">
     </div>
@@ -26,9 +26,9 @@
       <p class="overviewCard-subtitle">{{products_count}}</p>
     </div>
   </div>
-  <div class="overviewCard">
+  <div class="overviewCard" [routerLink]="['/admin/collections']">
     <div class="overviewCard-icon overviewCard-icon--photo">
-      <img src="/assets/svg/customer-white.svg">
+      <img src="/assets/svg/collection-white.svg">
     </div>
     <div class="overviewCard-description">
       <h3 class="overviewCard-title text-light"> <strong>{{'Collections' | translate}}</strong></h3>
@@ -37,9 +37,47 @@
   </div>
 </div> 
 
+<div class="main-overview" *ngIf="isUserSummary">
+  <div class="overviewCard" [routerLink]="['/admin/cart']">
+    <div class="overviewCard-icon overviewCard-icon--document">
+       <img src="/assets/svg/cart-white.svg">
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"> <strong>{{'My cart' | translate}}</strong></h3>
+      <p class="overviewCard-subtitle">{{my_cart_count}}</p>
+    </div>
+  </div>
+  <div class="overviewCard" [routerLink]="['/admin/favorite']">
+    <div class="overviewCard-icon overviewCard-icon--calendar">
+      <img src="/assets/svg/favorite-white.svg">
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"> <strong>{{'My favorite' | translate}}</strong></h3>
+      <p class="overviewCard-subtitle">{{my_favorite_count}}</p>
+    </div>
+  </div>
+  <div class="overviewCard" [routerLink]="['/admin/my-products']">
+    <div class="overviewCard-icon overviewCard-icon--mail">
+      <img src="/assets/svg/product-white.svg">
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"> <strong>{{'My products' | translate}}</strong></h3>
+      <p class="overviewCard-subtitle">{{my_products_count}}</p>
+    </div>
+  </div>
+  <div class="overviewCard" [routerLink]="['/admin/my-comments']">
+    <div class="overviewCard-icon overviewCard-icon--photo">
+      <img src="/assets/svg/comment-white.svg">
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"> <strong>{{'My comments' | translate}}</strong></h3>
+      <p class="overviewCard-subtitle">{{my_comments_count}}</p>
+    </div>
+  </div>
+</div> 
 
 <div class="card">
-    <div class="card__header">Orders</div>
+    <div class="card__header">{{'Orders' | translate}}</div>
     <div class="card__main">
       <app-admin-orders></app-admin-orders>
     </div>

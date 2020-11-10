@@ -14,13 +14,6 @@ export class CartProductComponent implements OnInit {
 
   remove(): void {
     this.productUpdated.emit({product:this.product, quantity:0});
-    /*
-    console.log('item==', item);
-    const productId = item.productId;
-    this.cartItems = this.cartItems.filter((itm) => itm.productId !== productId);
-    this.cartStoreServ.saveCartItems(this.cartItems);
-    this.calculateTotal();
-    */
   }  
 
   modelChanged(event) {

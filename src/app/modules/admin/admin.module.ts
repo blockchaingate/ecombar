@@ -9,6 +9,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
+import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { BrandsComponent } from './pages/brands/brands.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
@@ -39,6 +40,7 @@ import { CartModule } from '../home/cart/cart.module';
     FooterComponent,
     HeaderComponent,
     NavComponent,
+    MyCommentsComponent,
     FavoriteComponent,
     UploadMediaComponent,
     DashboardComponent,

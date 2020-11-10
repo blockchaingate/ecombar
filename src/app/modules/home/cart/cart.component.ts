@@ -51,25 +51,6 @@ export class CartComponent implements OnInit, OnDestroy {
     this.calculateTotal();
   }
 
-  startTimer(): void {
-    this.interval = setInterval(() => {
-      this.paymentServ.checkPaymentStatus(this.trans_code).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            const data = res._body;
-            if (data.trans_status === 'paid') {
-              this.paidConfirmed = true;
-              this.txid = data.txid;
-              this.txid_link = environment.endpoints.website + 'explorer/tx-detail/' + this.txid;
-              this.pauseTimer();
-            }
-
-          }
-        }
-      );
-    }, 1000);
-  }
-
   checkout(): void {
     const items: CartItem[] = [];
     let merchantId = '';
