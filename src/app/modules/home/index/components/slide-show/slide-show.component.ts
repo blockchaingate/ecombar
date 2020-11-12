@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
-  selector: 'app-slide-show',
-  templateUrl: './slide-show.component.html',
-  styleUrls: ['./slide-show.component.scss']
+    selector: 'app-slide-show',
+    templateUrl: './slide-show.component.html',
+    styleUrls: ['./slide-show.component.scss']
 })
 export class SlideShowComponent implements OnInit, OnDestroy {
     slideIndex = 1;
@@ -11,7 +11,7 @@ export class SlideShowComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.interval = setInterval(() => {
             this.plusSlides(1);
-        },2000)        
+        }, 2000);
     }
 
     ngOnDestroy() {

@@ -25,6 +25,9 @@ export class StorageService {
                 this._user = ret;
             });
         }
+        if (!this._lang) {
+            this.storage.get('_lang').subscribe((ret: string) => { this._lang = ret; });
+        }
 
     }
 

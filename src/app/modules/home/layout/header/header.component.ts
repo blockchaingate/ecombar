@@ -15,8 +15,8 @@ export class HeaderComponent implements OnInit {
   user: any;
 
   constructor(
-    private translateServ: TranslateService, 
-    private categoryServ: CategoryService, 
+    private translateServ: TranslateService,
+    private categoryServ: CategoryService,
     private storageServ: StorageService,
     private cartStoreServ: CartStoreService) {
   }
@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit {
 
   set lang(value: string) {
     this._lang = value;
-    console.log('go set lang', value);
+    // console.log('go set lang', value);
+    this.storageServ.lang = value;
     this.translateServ.setDefaultLang(value);
   }
 
@@ -39,8 +40,9 @@ export class HeaderComponent implements OnInit {
         this.user = user;
       }
     );
-    console.log('uer=',this.storageServ.user);
-    this.lang = this.translateServ.getDefaultLang();
+    console.log('uer=', this.storageServ.user);
+    this.lang = this.storageServ.lang || this.translateServ.getDefaultLang();
+    this.translateServ.setDefaultLang(this._lang);
 
     this.categoryServ.getAdminCategories().subscribe(
       (res: any) => {
@@ -56,7 +58,7 @@ export class HeaderComponent implements OnInit {
     this.cartStoreServ.items$.subscribe((res) => {
       this.cartCount = 0;
       console.log('this.images4');
-      if (!res || (res.length == 0)) {
+      if (!res || (res.length === 0)) {
         console.log('yes');
         res = this.cartStoreServ.items;
       }
