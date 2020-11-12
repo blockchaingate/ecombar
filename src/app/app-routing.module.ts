@@ -21,7 +21,7 @@ const routes: Routes = [
     path: 'merchant',
     loadChildren: () =>
       import('./modules/merchant/merchant.module').then(m => m.MerchantModule)
-  },  
+  },
   {
     path: 'admin',
     loadChildren: () =>
