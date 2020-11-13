@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { User } from '../models/user';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -19,14 +19,11 @@ export class StorageService {
         if (!this._token) {
             this.storage.get('_token').subscribe((ret: string) => { this._token = ret; });
         }
-
         if (!this._user) {
-            this.storage.get('_user').subscribe((ret: User) => {
-                this._user = ret;
-            });
+            this.storage.get('_user').subscribe((ret: User) => { this._user = ret; });
         }
         if (!this._lang) {
-            this.storage.get('_lang').subscribe((ret: string) => { this._lang = ret; });
+            this._lang = localStorage.getItem('_lang');
         }
 
     }
@@ -46,7 +43,7 @@ export class StorageService {
 
     set lang(newLang: string) {
         this._lang = newLang;
-        this.storage.set('_lang', newLang).subscribe(ret => { });
+        localStorage.setItem('_lang', newLang);
     }
 
     get lang(): string {
@@ -107,7 +104,7 @@ export class StorageService {
         return this._isSystemAdmin;
     }
     checkSystemAdmin() {
-        if(this._isSystemAdmin) {
+        if (this._isSystemAdmin) {
             const obs = new Observable((observer) => {
                 observer.next(this._isSystemAdmin);
             });
