@@ -7,14 +7,14 @@
                 
             </a>
             -->
-            <img class="img-responsive" src="/assets/images/exg-logo.svg">
+            <img class="img-responsive" src="/assets/images/logo/ecombar-logo128.png">
 
         </div>
         <div>
-            eXchangily
+            eComBar
         </div>
 
-        
+
         <div class="search-bar">
             <!--
             <div class="flex-box">
@@ -28,14 +28,13 @@
 
         <div class="select-btn">
             <select class="select-css" [(ngModel)]="lang">
-                <option value="en">English</option>
-                <option value="sc">中文</option>
-            </select>            
+                <option class="selectitem" value="en">English</option>
+                <option class="selectitem" value="sc">中文</option>
+            </select>
         </div>
 
         <div class="px-3 mx-3 cursor-pointer" [routerLink]="['/cart']">
             <span [attr.badge]="cartCount">
-                
                 {{'Cart' | translate}}
             </span>
         </div>
@@ -49,6 +48,6 @@
         <ul>
             <li><a href="/">{{'Home' | translate}}</a></li>
             <li *ngFor="let category of categories"><a href="/category/{{category._id}}">{{category.category | translateField}}</a></li>
-          </ul>
+        </ul>
     </div>
 </div>

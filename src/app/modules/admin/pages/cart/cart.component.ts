@@ -11,7 +11,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class CartComponent implements OnInit{
     currentTab: string;
-    
+
     constructor(
       private userServ: UserService,
       private authServ: AuthService,
@@ -24,9 +24,8 @@ export class CartComponent implements OnInit{
 
     changeTab(tabName: string) {
         this.currentTab = tabName;
-    }    
+    }
 
     update() {
-      
     }
 }

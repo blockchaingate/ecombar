@@ -3,17 +3,11 @@
     border: 1px solid rgb(146, 148, 248);
     position: relative;
     overflow: hidden;
-  }
-  
-  .btn:hover {
-    background-color: rgb(146, 148, 248);
-  }
-  
-
-
-  .btn {
     background-color: #8682e0;
     color: white;
     font-weight: 700;
-  }
-  
+}
+
+.btn:hover {
+    background-color: rgb(146, 148, 248);
+}
