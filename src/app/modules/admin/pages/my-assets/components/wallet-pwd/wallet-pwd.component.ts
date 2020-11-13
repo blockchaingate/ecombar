@@ -66,7 +66,7 @@ export class WalletPwdComponent implements OnInit {
                 }
                 //this.walletServ.saveCurrentWalletIndex(wallets.length - 1);
                 this.localSt.setItem('wallets', wallets).subscribe(() => {
-                    this.route.navigate(['/wallet/dashboard']);
+                    this.route.navigate(['/admin/wallet-dashboard']);
                 });
             });
         }

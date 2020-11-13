@@ -14,6 +14,10 @@ import { AddressService } from './services/address.service';
 import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
 import { WalletService } from './services/wallet.service';
+import { CoinService } from './services/coin.service';
+import { ApiService } from './services/api.service';
+import { Web3Service } from './services/web3.service';
+import { UtilService } from './services/util.service';
 import { TranslateService } from './services/translate.service';
 import { UploadService } from './services/upload.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
@@ -63,7 +67,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     FavoriteService,
     PaymentService,
     CommentService,
-    WalletService
+    WalletService,
+    CoinService,
+    ApiService,
+    Web3Service,
+    UtilService
   ]
 })
 export class SharedModule {
@@ -77,7 +85,11 @@ export class SharedModule {
         FavoriteService,
         BrandService,
         CommentService,
-        WalletService
+        WalletService,
+        CoinService,
+        ApiService,
+        Web3Service,
+        UtilService
       ]
     };
   }

@@ -5,24 +5,28 @@
         <div menuright>
         </div>
     </div>
-    <div class="outpanel">
+    <div class="">
         <div class="row">
-            <div class="col-2 fxHide-sm">
+            <div class="col-2">
                 <div class="leftcol text-center">
                     <div class="numberCircle">1</div>
+                    <!--
                     <div class="vl"></div>
+                    -->
                     <div class="numberCircle ball">2</div>
+                    <!--
                     <div class="vl"></div>
+                    -->
                     <div class="numberCircle ball">3</div>
                 </div>
             </div>
-            <div class="col-md-10 col-sm-12 panel text-white">
+            <div class="col-10 text-white">
                 <div class="header">
                     <h4>{{"Set Password" | translate }}</h4>
                 </div>
                 <div class="row textarea text-light">
                     <div class="col-2 item">
-                        <img src="/images/icons/verify.png" width="100%">
+                        <img src="/assets/images/verify.png" width="100%">
                     </div>
                     <div class="col-10 item">
                         {{"PwdNote" | translate }}
@@ -35,7 +39,7 @@
                         <label for="name">{{"Wallet Name" | translate}}</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <div class="input-group-text py-1"> <img src="/images/icons/wallet.png" width="24px">
+                                <div class="input-group-text py-1"> <img src="/assets/images/wallet.png" width="24px">
                                 </div>
                             </div>
                             <input type="text" class="form-control py-0" id="name" formControlName="name" placeholder="Wallet name">
@@ -51,7 +55,7 @@
                         <label class="sr-only" for="password">Walletpwd</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <div class="input-group-text py-1"> <img src="/images/icons/lock.png" width="24px">
+                                <div class="input-group-text py-1"> <img src="/assets/images/lock.png" width="24px">
                                 </div>
                             </div>
                             <input type="password" autocomplete="off" class="form-control py-0" id="password" formControlName="password" placeholder="Type in password">
@@ -67,7 +71,7 @@
                         <label class="sr-only" for="pwdconfirm">Walletpwdrepeat</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <div class="input-group-text py-1"> <img src="/images/icons/lock.png" width="24px">
+                                <div class="input-group-text py-1"> <img src="/assets/images/lock.png" width="24px">
                                 </div>
                             </div>
                             <input type="password" autocomplete="off" class="form-control py-0" id="pwdconfirm" formControlName="pwdconfirm" placeholder="Repeat password">
@@ -79,7 +83,7 @@
 
                     <!-- Grid column -->
                     <div class="col-auto submitarea" *ngIf="userForm.get('password').valid && userForm.get('password').valid && !userForm.hasError('notSame')">
-                        <button type="submit" class="btn btn-md btn-gradient mt-0">{{"Form.Submit" | translate }}</button>
+                        <button type="submit" class="btn btn-md btn-gradient mt-0">{{"Submit" | translate }}</button>
                     </div>
                     <!-- Grid column -->
                 </form>

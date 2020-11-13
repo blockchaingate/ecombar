@@ -30,6 +30,8 @@ import { ConfirmMnemonicsComponent } from './pages/my-assets/components/confirm-
 import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
 import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
+import { WalletPwdComponent } from './pages/my-assets/components/wallet-pwd/wallet-pwd.component';
+import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -65,11 +67,17 @@ const routes: Routes = [
         path: 'my-assets', component: MyAssetsComponent
       }, 
       {
+        path: 'wallet-pwd', component: WalletPwdComponent
+      },
+      {
         path: 'confirm-mnemonics', component: ConfirmMnemonicsComponent
       }, 
       {
         path: 'create-wallet', component: CreateWalletComponent
       },  
+      {
+        path: 'wallet-dashboard', component: WalletDashboardComponent
+      },        
       {
         path: 'import-wallet', component: ImportWalletComponent
       },  

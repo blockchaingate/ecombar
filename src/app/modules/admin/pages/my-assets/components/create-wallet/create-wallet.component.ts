@@ -9,7 +9,7 @@ import { WalletService } from '../../../../../shared/services/wallet.service';
   styleUrls: ['./create-wallet.component.scss']
 })
 export class CreateWalletComponent implements OnInit{
-  mnemonics: any;
+  mnemonics: string[] = [];
    constructor(
       private route: ActivatedRoute,
       private walletServ: WalletService,
@@ -18,7 +18,9 @@ export class CreateWalletComponent implements OnInit{
 
     ngOnInit() {
       const mnemonics = this.walletServ.generateMnemonic();
-      this.mnemonics = mnemonics.split(' ');
+      sessionStorage.mnemonic = mnemonics;
+      // }
+      this.mnemonics.push(...(sessionStorage.mnemonic.split(' ', 12)));
     }
 
 }

@@ -49,8 +49,10 @@ export class MnemeditComponent {
             + this.sanitize(this.word7) + ' ' + this.sanitize(this.word8) + ' ' + this.sanitize(this.word9) + ' '
             + this.sanitize(this.word10) + ' ' + this.sanitize(this.word11) + ' ' + this.sanitize(this.word12);
 
+        console.log('mnem==', mnem);
+        console.log('sessionStorage.mnemonic==', sessionStorage.mnemonic);
         if (mnem === sessionStorage.mnemonic) {
-            this.route.navigate(['/wallet/set-password']);           
+            this.route.navigate(['/admin/wallet-pwd']);           
         } else {
             this.clicked = true;
         }
