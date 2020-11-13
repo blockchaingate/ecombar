@@ -26,6 +26,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
+import { ConfirmMnemonicsComponent } from './pages/my-assets/components/confirm-mnemonics/confirm-mnemonics.component';
 import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
 import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
@@ -62,6 +63,9 @@ const routes: Routes = [
       },  
       {
         path: 'my-assets', component: MyAssetsComponent
+      }, 
+      {
+        path: 'confirm-mnemonics', component: ConfirmMnemonicsComponent
       }, 
       {
         path: 'create-wallet', component: CreateWalletComponent

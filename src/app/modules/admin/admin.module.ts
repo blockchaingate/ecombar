@@ -33,6 +33,9 @@ import { CreateWalletComponent } from './pages/my-assets/components/create-walle
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
 import { CommentComponent } from './pages/comment/comment.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
+import { ConfirmMnemonicsComponent } from './pages/my-assets/components/confirm-mnemonics/confirm-mnemonics.component';
+import { MnemonicComponent } from './pages/my-assets/components/mnemonic/mnemonic.component';
+import { MnemeditComponent } from './pages/my-assets/components/mnemonic/mnemedit.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
@@ -47,6 +50,8 @@ import { CartModule } from '../home/cart/cart.module';
     NavComponent,
     WalletDashboardComponent,
     NoWalletComponent,
+    MnemonicComponent,
+    MnemeditComponent,
     CreateWalletComponent,
     ImportWalletComponent,
     MyCommentsComponent,
@@ -74,6 +79,7 @@ import { CartModule } from '../home/cart/cart.module';
     ProductAddComponent,
     CategoryAddComponent,
     BrandsComponent,
+    ConfirmMnemonicsComponent,
     BrandAddComponent
   ],
   imports: [

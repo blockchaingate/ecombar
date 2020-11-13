@@ -1,22 +1,25 @@
+.outpanel {
+    max-width: 500px;
+    min-height: 640px;
+    margin: auto;
+    margin-bottom: 4em;
+}
+
+.menu {
+    height: 3em;
+    padding-top: 0.5em;
+}
+
 .leftcol {
     margin-top: 1em;
     text-align: center;
 }
 
 .panel {
-    min-height: 640px;
-    background-color: #343554;
+    height: 480px;
+    background-color: #1f2233;
     margin-bottom: 4em;
-    padding-top: 1em;
-}
-
-.menu {
-    padding-top: 1em;
-    margin-bottom: 1em;
-}
-
-.textarea {
-    margin: 3em;
+    padding: 1em 2em;
 }
 
 .btn {
@@ -28,7 +31,7 @@
     position: absolute;
     left: 50%;
     margin-left: -1px;
-    height: 160px;
+    height: 140px;
 }
 
 .vlgray {
@@ -54,13 +57,33 @@
 }
 
 .ball {
-    margin-top: 160px;
+    margin-top: 140px;
 }
 
-input {
-    width: 95%;
+.item {
+    margin-top: 1em;
+    color: white;
 }
 
-.letterbox {
-    width: 20%;
+.submitarea {
+    margin-top: 4em;
+}
+
+.py-0 {
+    background-color: #3a3b5a;
+    border: 1px solid #4a4b6a;
+    border-left-style: hidden;
+}
+
+.py-1 {
+    background-color: #343554;
+    border: 1px solid #4a4b6a;
+}
+
+.fontcolor {
+    color: #6a6b8a;
+}
+
+.textarea {
+    width: 100%;
 }

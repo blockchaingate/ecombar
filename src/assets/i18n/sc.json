@@ -51,8 +51,12 @@
     "Customer": "顾客",
     "Admin": "管理员",
     "Price": "价格",
+    "VerifyMnemNote": "为了确保您准确无误地记下了助记词，请按顺序输入一遍进行验证。",
     "Currency": "货币单位",
     "Enter name": "输入名称",
     "Wallet address": "钱包地址",
-    "Enter wallet address": "输入钱包地址"
+    "Enter wallet address": "输入钱包地址",
+    "Backup Wallet Seed Phrases": "妥善记录并保存好下列助记词",
+    "Verify Mnemonics": "验证助记词",
+    "MnemNote": "请务必牢记下列十二个助记词，它们非常重要，一定要准确记录并保存在安全可靠的地方，并不可以让任何其他人知道。建议不要仅保存在电脑或手机里，以防设备损坏而丢失，也请不要通过电子邮件或其它社交工具发送这些助记词。"
 }
