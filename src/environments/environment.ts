@@ -10,8 +10,10 @@ export const environment = {
 //  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
 //  EX_WEBSITE: 'http://localhost:4200/',
   endpoints: {
-    local: 'https://test.blockchaingate.com/v2/',
-    test: 'https://test.blockchaingate.com/v2/',
+    // local: 'https://test.blockchaingate.com/v2/',
+    local: 'https://localhost:4200/v2/',
+    // test: 'https://test.blockchaingate.com/v2/',
+    test: 'https://localhost:4200/v2/',
     prod: 'https://blockchaingate.com/v2/',
     blockchaingate: 'https://test.blockchaingate.com/v2/',
     website: 'https://test.exchangily.com/',

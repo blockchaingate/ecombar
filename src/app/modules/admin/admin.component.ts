@@ -21,32 +21,28 @@ export class AdminComponent implements OnInit {
   role: string;
 
   menuItems: any;
-  constructor(
-    private router: Router,
-    private translateServ: TranslateService,
-    private merchantServ: MerchantService,
-    private userServ: UserService,
-    private storageServ: StorageService
+  constructor(private router: Router, private translateServ: TranslateService, private merchantServ: MerchantService,
+              private userServ: UserService, private storageServ: StorageService
   ) { }
 
   ngOnInit(): void {
-
     const lang = this.storageServ.lang;
-    if(!lang) {
+    if (!lang) {
       this.storageServ.get('_lang').subscribe(
-        (lang:string) => {
-          if(lang) {
-            this.translateServ.setDefaultLang(lang);
+        (lang2: string) => {
+          if (lang2) {
+            this.translateServ.setDefaultLang(lang2);
           }
-          
+
         }
       );
     } else {
       this.translateServ.setDefaultLang(lang);
     }
+
     this.email = this.userServ.email;
     this.displayName = this.userServ.displayName;
-    if(!this.email) {
+    if (!this.email) {
       this.storageServ.get('_user').subscribe(
         (user: any) => {
           this.email = user.email;
@@ -54,17 +50,18 @@ export class AdminComponent implements OnInit {
         }
       );
     }
-    
+
     this.userServ.getMe().subscribe(
       (res: any) => {
-        if(res && res.ok) {
+        if (res && res.ok) {
           const user = res._body;
           this.myPhotoUrl = user.myPhotoUrl;
         }
       }
     );
+
     let merchantId = this.merchantServ.id;
-    if(!merchantId) {
+    if (!merchantId) {
       this.storageServ.get('_merchantId').subscribe(
         (ret: any) => {
           merchantId = ret;
@@ -79,14 +76,14 @@ export class AdminComponent implements OnInit {
 
   changeLang() {
     let lang = this.translateServ.getDefaultLang();
-    lang = (lang == 'en') ? 'sc' : 'en';
+    lang = (lang === 'en') ? 'sc' : 'en';
     this.translateServ.setDefaultLang(lang);
     this.storageServ.lang = lang;
   }
 
-  initMenuWithSystemAdmin(merchantId:string, isSystemAdmin:boolean) {
+  initMenuWithSystemAdmin(merchantId: string, isSystemAdmin: boolean) {
     if (isSystemAdmin) {
-      this.role = "Admin";
+      this.role = 'Admin';
       this.menuItems = [
         {
           title: 'Dashboard',
@@ -97,12 +94,12 @@ export class AdminComponent implements OnInit {
           title: 'Banners',
           link: 'banners',
           icon: 'banner'
-        },        
+        },
         {
           title: 'Brands',
           link: 'brands',
           icon: 'brand'
-        },  
+        },
         {
           title: 'Categories',
           link: 'categories',
@@ -124,15 +121,14 @@ export class AdminComponent implements OnInit {
           icon: 'order'
         }
       ];
-    } else
-      if (merchantId) {
-        this.role = "Merchant";
+    } else if (merchantId) {
+        this.role = 'Merchant';
         this.menuItems = [
           {
             title: 'Dashboard',
             link: 'dashboard',
             icon: 'dashboard'
-          },         
+          },
           {
             title: 'Banners',
             link: 'banners',
@@ -142,7 +138,7 @@ export class AdminComponent implements OnInit {
             title: 'Brands',
             link: 'brands',
             icon: 'brand'
-          },            
+          },
           {
             title: 'Categories',
             link: 'categories',
@@ -157,7 +153,7 @@ export class AdminComponent implements OnInit {
             title: 'My assets',
             link: 'my-assets',
             icon: 'asset'
-          },            
+          },
           {
             title: 'Products',
             link: 'products',
@@ -167,7 +163,7 @@ export class AdminComponent implements OnInit {
             title: 'Orders',
             link: 'orders',
             icon: 'order'
-          },           
+          },
           {
             title: 'Merchant information',
             link: 'merchant-info',
@@ -175,7 +171,7 @@ export class AdminComponent implements OnInit {
           }
         ];
       } else {
-        this.role = "Customer";
+        this.role = 'Customer';
         this.menuItems = [
           {
             title: 'Dashboard',
@@ -196,7 +192,7 @@ export class AdminComponent implements OnInit {
             title: 'My assets',
             link: 'my-assets',
             icon: 'asset'
-          },          
+          },
           {
             title: 'My cart',
             link: 'cart',
@@ -206,29 +202,29 @@ export class AdminComponent implements OnInit {
             title: 'My favorite',
             link: 'favorite',
             icon: 'favorite'
-          }, 
+          },
           {
             title: 'My products',
             link: 'my-products',
             icon: 'product'
-          }, 
+          },
           {
             title: 'My comments',
             link: 'my-comments',
             icon: 'comment'
-          }                    
+          }
         ];
       }
   }
 
   initMenu(merchantId: string) {
 
-    if(this.userServ.isSystemAdmin) {
+    if (this.userServ.isSystemAdmin) {
       this.initMenuWithSystemAdmin(merchantId, this.userServ.isSystemAdmin);
-      
+
     } else {
       this.storageServ.get('_isSystemAdmin').subscribe(
-        (ret:boolean) => {
+        (ret: boolean) => {
           this.initMenuWithSystemAdmin(merchantId, ret);
         }
       );

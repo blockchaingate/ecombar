@@ -11,6 +11,6 @@ export const environment = {
   moneris: {
     ps_store_id: '9VGAUtore3',
     hpp_key: 'hpRS5R56OATG'
-  },  
+  },
   paypal_client_id: 'AdmdQayzrKMsDPxU89G_UWcLVfFlHhG-zfFm4I75F6xusJ64AIBOre6J6NxfzsM6JStHQmtviHoCp59x'
 };

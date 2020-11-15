@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CollectionService } from '../../../../shared/services/collection.service';
 
 @Component({
@@ -12,10 +11,7 @@ export class CollectionsComponent implements OnInit {
   collections: [];
   errMsg = '';
 
-  constructor(
-    private collectionServ: CollectionService) {
-
-  }
+  constructor(private collectionServ: CollectionService) { }
 
   ngOnInit() {
     console.log('nggggg');

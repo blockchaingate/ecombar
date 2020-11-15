@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   _lang: string;
 
   constructor(private translateServ: TranslateService, private categoryServ: CategoryService,
-              private storageServ: StorageService,  private cartStoreServ: CartStoreService) {
+              private storageServ: StorageService, private cartStoreServ: CartStoreService) {
   }
 
   get lang(): string {
@@ -32,6 +32,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setLan();
+
     this.storageServ.getUser().subscribe(
       (user: any) => {
         console.log('user=', user);
@@ -83,6 +85,7 @@ export class HeaderComponent implements OnInit {
       localStorage.setItem('_lang', lang);
     }
 
+    this._lang = lang;
     this.translateServ.use(lang);
     this.translateServ.setDefaultLang(lang);
   }
