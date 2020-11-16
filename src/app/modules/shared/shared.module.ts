@@ -15,6 +15,7 @@ import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
 import { TranslateService } from './services/translate.service';
 import { UploadService } from './services/upload.service';
+import { WalletService } from './services/wallet.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
 import { HttpClient } from '@angular/common/http';
@@ -61,6 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateService,
     FavoriteService,
     PaymentService,
+    WalletService,
     CommentService
   ]
 })
@@ -74,6 +76,7 @@ export class SharedModule {
         PaymentService,
         FavoriteService,
         BrandService,
+        WalletService,
         CommentService
       ]
     };
