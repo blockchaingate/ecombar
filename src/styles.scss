@@ -307,30 +307,51 @@ table th {
 
 .col-6 {
   flex: 50%;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  max-width: 50%;
 }
 
 .col-4 {
   flex: 33.3%;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 33.3%;
+  max-width: 33.3%;  
 }
 
 .col-7 {
   flex: 58.4%;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 58.4%;
+  max-width: 58.4%;  
 }
 
 .col-8 {
   flex: 66.6%;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 66.6%;
+  max-width: 66.6%;  
 }
 
 .col-3 {
   flex: 25%;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 25%;
+  max-width: 25%;  
 }
 
 .col-5 {
- flex: 41.6%
+ flex: 41.6%;
+ -webkit-box-flex: 0;
+ -ms-flex: 0 0 41.6%;
+ max-width: 41.6%; 
 }
 
 .col-9 {
   flex: 75%;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 75%;
+  max-width: 75%;  
 }
 
 .flex-nowrap {
@@ -341,8 +362,25 @@ table th {
   flex-wrap: wrap;
 }
 
+.text-white {
+  color: #fff!important;
+}
+
+.btn-gradient {
+  background-image: linear-gradient(to right, #f2ac0e, #d56a70, #bb2ad1);
+  color: white;
+}
+
 .font-weight-bold {
   font-weight: 700;
+}
+
+.text-primary {
+  color: #007bff!important;
+}
+
+.text-light {
+  color: #f8f9fa!important;
 }
 
 .red {
@@ -397,6 +435,79 @@ body {
 button, select {
   text-transform: none;
 }
+
+@media (min-width: 768px) {
+  .col-md-2 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+  }
+  .col-md-3 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .col-md-4 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }  
+  .col-md-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }  
+  .col-md-10 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%;
+  }  
+}
+
+@media (min-width: 576px) {
+  .col-sm-2 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+  }
+  .col-sm-3 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .col-sm-4 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }    
+  .col-sm-10 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%;
+  }
+
+}
+
+@media (min-width: 992px) {
+  .col-lg-3 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+}
+
+
+
 
 @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-icons/styles/material.css';

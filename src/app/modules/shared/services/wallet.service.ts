@@ -102,7 +102,7 @@ export class WalletService {
        return '';
     }
 
-    generateWallet(mnemonic: string) {
+    generateWallet(pwd: string, name: string, mnemonic: string) {
         const seed = bip39.mnemonicToSeedSync(mnemonic);
         const myCoins = this.initMyCoins(seed);
         return myCoins;
