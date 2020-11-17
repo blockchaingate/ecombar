@@ -15,7 +15,7 @@ import { groupBy } from '../../shared/utils/array-tool';
 })
 export class CartComponent implements OnInit, OnDestroy {
   interval;
-  cartItems: CartItem[];
+  cartItems: CartItem[] = [];
   payLink: string;
   @Input() noPadding: boolean;
   Total: { currency: string, total: string }[];
@@ -24,6 +24,7 @@ export class CartComponent implements OnInit, OnDestroy {
   payQrcode: string;
   txid_link: string;
   trans_code: string;
+  errMsg = '';
 
   constructor(
     private paymentServ: PaymentService,
@@ -47,7 +48,8 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cartItems = this.cartStoreServ.items;
+    const storedCart = this.cartStoreServ.items;
+    this.cartItems = storedCart ? storedCart : [];
     this.calculateTotal();
   }
 
@@ -62,10 +64,10 @@ export class CartComponent implements OnInit, OnDestroy {
       merchantId = item.merchantId;
       currency = item.currency;
       transAmount += item.quantity * item.price;
-      item.title = this.translateServ.transField(item.title);
+      const titleTran = this.translateServ.transField(item.title);
+      item.title = titleTran ? titleTran : item.title;
       items.push(item);
     });
-
     const orderData = { merchantId, items, currency, transAmount };
 
     this.orderServ.create(orderData).subscribe(
@@ -77,7 +79,8 @@ export class CartComponent implements OnInit, OnDestroy {
           this.cartStoreServ.empty();
           this.router.navigate(['/address/' + orderID]);
         }
-      }
+      },
+      err => { this.errMsg = err.message; }
     );
   }
 
@@ -91,11 +94,11 @@ export class CartComponent implements OnInit, OnDestroy {
     const product = item.product;
     const quantity = item.quantity;
     const productId = product.productId;
-    if(quantity == 0) {
+    if (quantity === 0) {
       this.cartItems = this.cartItems.filter((itm) => itm.productId !== productId);
     } else {
-      for(let i=0;i<this.cartItems.length;i++) {
-        if(this.cartItems[i].productId == productId) {
+      for (let i = 0; i < this.cartItems.length; i++) {
+        if (this.cartItems[i].productId === productId) {
           this.cartItems[i].quantity = quantity;
         }
       }
@@ -113,7 +116,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   calcTotal() {
     return this.cartItems.reduce(
-      (acc, prod) => acc+= prod.quantity ,0
+      (acc, prod) => acc += prod.quantity, 0
     );
   }
 

@@ -52,6 +52,8 @@ import { CartModule } from '../home/cart/cart.module';
     NavComponent,
     WalletDashboardComponent,
     NoWalletComponent,
+    MnemonicComponent,
+    MnemeditComponent,
     CreateWalletComponent,
     ImportWalletComponent,
     MyCommentsComponent,
@@ -62,6 +64,7 @@ import { CartModule } from '../home/cart/cart.module';
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    WalletPwdComponent,
     CommentComponent,
     CartComponent,
     MyAssetsComponent,
@@ -83,6 +86,7 @@ import { CartModule } from '../home/cart/cart.module';
     ProductAddComponent,
     CategoryAddComponent,
     BrandsComponent,
+    ConfirmMnemonicsComponent,
     BrandAddComponent
   ],
   imports: [

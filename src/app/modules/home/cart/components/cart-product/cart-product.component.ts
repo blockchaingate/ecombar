@@ -7,16 +7,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class CartProductComponent implements OnInit {
   @Input() product: any;
-  @Output() productUpdated = new EventEmitter();  
+  @Output() productUpdated = new EventEmitter();
   ngOnInit() {
-    console.log('product=', this.product);    
+    console.log('product=', this.product);
   }
 
   remove(): void {
-    this.productUpdated.emit({product:this.product, quantity:0});
-  }  
+    this.productUpdated.emit({ product: this.product, quantity: 0 });
+  }
 
   modelChanged(event) {
-    this.productUpdated.emit({product:this.product, quantity:event})
-  }  
+    this.productUpdated.emit({ product: this.product, quantity: event });
+  }
 }

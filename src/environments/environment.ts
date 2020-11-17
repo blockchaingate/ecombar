@@ -2,7 +2,6 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import * as Btc from 'bitcoinjs-lib';
-
 export const environment = {
   env: 'dev',
   production: false,
@@ -10,6 +9,8 @@ export const environment = {
   cat_typ: 'ecombar',
 //  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
 //  EX_WEBSITE: 'http://localhost:4200/',
+
+
   endpoints: {
     local: 'https://test.blockchaingate.com/v2/',
     test: 'https://test.blockchaingate.com/v2/',

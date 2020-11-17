@@ -340,6 +340,14 @@ table th {
   max-width: 25%;  
 }
 
+.col-2 {
+  flex: 16.666667%;
+}
+
+.col-10 {
+  flex: 83.333333%
+}
+
 .col-5 {
  flex: 41.6%;
  -webkit-box-flex: 0;
