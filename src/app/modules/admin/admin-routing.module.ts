@@ -67,6 +67,9 @@ const routes: Routes = [
         path: 'my-assets', component: MyAssetsComponent
       }, 
       {
+        path: 'wallet-dashboard', component: WalletDashboardComponent
+      },
+      {
         path: 'wallet-pwd', component: WalletPwdComponent
       },
       {

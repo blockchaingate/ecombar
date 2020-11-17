@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import {TranslateService} from '@ngx-translate/core';
 import { WalletService } from '../../../../../shared/services/wallet.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
@@ -14,7 +14,12 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 export class WalletPwdComponent implements OnInit {
     userForm: FormGroup;
 
-    constructor(private route: Router, private walletServ: WalletService, private fb: FormBuilder, private localSt: LocalStorage) {
+    constructor(
+        private route: Router, 
+        private walletServ: WalletService, 
+        private fb: FormBuilder, 
+        private translate: TranslateService,
+        private localSt: LocalStorage) {
     }
 
     ngOnInit() {
@@ -52,27 +57,25 @@ export class WalletPwdComponent implements OnInit {
         sessionStorage.removeItem('mnemonic');
 
         if (!wallet) {
-            if (localStorage.getItem('Lan') === 'zh') {
-                alert('发生错误，请再试一次。');
-            } else {
-                alert('Error occured, please try again.');
-            }
+            alert(this.translate.instant('Error occured, please try again.'));
         } else {
-            console.log('wallet created=', wallet);
-            /*
-            this.localSt.getItem('wallets').subscribe((wallets: Wallet[]) => {
+
+            this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
                 if (!wallets) {
-                    wallets = [];
+                    wallets = {
+                        currentIndex: -1,
+                        items: []
+                    };
                 }
-                if (wallets.indexOf(wallet) < 0) {
-                    wallets.push(wallet);
+                if (wallets.items.indexOf(wallet) < 0) {
+                    wallets.items.push(wallet);
+                    wallets.currentIndex ++;
                 }
-                this.walletServ.saveCurrentWalletIndex(wallets.length - 1);
-                this.localSt.setItem('wallets', wallets).subscribe(() => {
-                    this.route.navigate(['/wallet/dashboard']);
+                this.localSt.setItem('ecomwallets', wallets).subscribe(() => {
+                    this.route.navigate(['/admin/wallet-dashboard']);
                 });
             });
-            */
+            
         }
 
     }

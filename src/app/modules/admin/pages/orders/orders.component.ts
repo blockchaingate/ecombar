@@ -10,7 +10,7 @@ import { StorageService } from '../../../shared/services/storage.service';
   selector: 'app-admin-orders',
   providers: [OrderService],
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
   orders: any;

@@ -1,4 +1,5 @@
 import { MyCoin} from './mycoin';
+import { CoinAddress} from './coin-address';
 
 export class Wallet {
     id: string; // first 8 chars of hash value of seed.
@@ -9,8 +10,8 @@ export class Wallet {
     pinHash?: string; // pin - encrypt other data and confirm payment, resetable.
     encryptedSeed: string; // Encrypted with pwd.
     encryptedMnemonic: string; // Encrypted with pwd
+    addresses: CoinAddress[];
     mycoins: MyCoin[]; // My tokens
-    excoin: MyCoin; // My token for exchangily
     dateCreated: Date;
     lastUpdated: Date;
 
@@ -22,36 +23,15 @@ export class Wallet {
         this.encryptedSeed = encryptedSeed;
         this.encryptedMnemonic = encryptedMnemonic;
         this.mycoins = new Array();
+        this.addresses = new Array();
         this.dateCreated = new Date();
-        this.lastUpdated = new Date();
-        /*
-        const root = BIP32.fromSeed(seed);
-        const child1 = root.deriveHardened(44)
-        .deriveHardened(1)
-        .deriveHardened(0)
-        .derive(0)
-        .derive(0);
-        const TestNet = Btc.networks.testnet;
-        const { address } = Btc.payments.p2pkh({
-            pubkey: child1.publicKey,
-            network: TestNet
-          }); 
-          const privateKey1 = child1.privateKey.toString('hex');  
-          const privateKey2 = child1.privateKey.toString('base64'); 
-          console.log('address=' + address);
-          console.log('privateKey1=' + privateKey1);
-          console.log('privateKey2=' + privateKey2);
-        
-       const coin = new MyCoin('EXG');
-       this.addCoin(coin);   
-       */     
+        this.lastUpdated = new Date();   
     }
 
     // Add a coin to coins, duplication prevented.
     addCoin(coin: MyCoin) {
         if (this.mycoins.indexOf(coin) < 0) {
             this.mycoins.push(coin);
-            this.lastUpdated = new Date();
         }
     }
 
@@ -62,7 +42,19 @@ export class Wallet {
             this.lastUpdated = new Date();
         });
     }
-    addExCoin(coin: MyCoin) {
-        this.excoin = coin;
+
+    // Add a coin to coins, duplication prevented.
+    addAddress(address: CoinAddress) {
+        if (this.addresses.indexOf(address) < 0) {
+            this.addresses.push(address);
+        }
     }
+
+    // Add an array of coins into coins, duplication prevented.
+    addAddresses(addresses: CoinAddress[]) {
+        addresses.forEach(address => {
+            this.addAddress(address);
+            this.lastUpdated = new Date();
+        });
+    }    
 }

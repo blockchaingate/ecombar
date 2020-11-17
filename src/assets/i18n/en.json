@@ -79,6 +79,7 @@
     "Seed Phrase is invalid": "Seed Phrase is invalid",
     "Already have mnemonics? Restore": "Already have mnemonics? Restore",
     "Next": "Next",
+    "Error occured, please try again.": "Error occured, please try again.",
     "Restore Wallet": "Restore Wallet",
     "Backup Wallet Seed Phrases": "Backup Wallet Seed Phrases",
     "MnemNote": "Please accurately record and securely store the following twelve word mnemonic SEED, do not disclose the mnemonic SEED to anybody else. Disclosure of your mnemonic SEED will result in your account being compromised and you will lose all of your funds. Safely store your mnemonic SEED such that the loss or damage of a device does not impact your ability to access your mnemonic SEED. It is recommended to never send your mnemonic SEED via email or other social communication application. Be sure to only use your mnemonic SEED with the official eXchangily wallet."

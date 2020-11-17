@@ -15,6 +15,7 @@ import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
 import { WalletService } from './services/wallet.service';
 import { TranslateService } from './services/translate.service';
+import { UtilService } from './services/util.service';
 import { UploadService } from './services/upload.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';

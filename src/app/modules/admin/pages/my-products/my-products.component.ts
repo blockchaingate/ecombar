@@ -10,7 +10,7 @@ import { OrderService } from '../../../shared/services/order.service';
   selector: 'app-admin-my-products',
   providers: [ProductService, UserService],
   templateUrl: './my-products.component.html',
-  styleUrls: ['./my-products.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./my-products.component.scss']
 })
 export class MyProductsComponent implements OnInit {
   products: any;

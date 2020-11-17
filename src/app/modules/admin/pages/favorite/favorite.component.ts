@@ -8,7 +8,7 @@ import { FavoriteService } from '../../../shared/services/favorite.service';
   selector: 'app-admin-favorite',
   providers: [],
   templateUrl: './favorite.component.html',
-  styleUrls: ['./favorite.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./favorite.component.scss']
 })
 export class FavoriteComponent implements OnInit{
     favorites: any;

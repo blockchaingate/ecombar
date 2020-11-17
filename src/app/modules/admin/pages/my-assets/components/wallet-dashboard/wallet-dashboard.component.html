@@ -1,0 +1,31 @@
+
+<div class="container" *ngIf="noWallet">
+  <app-no-wallet></app-no-wallet>
+</div>
+
+<div class="container" *ngIf="!noWallet">
+    <div class="text-right">
+      <button class="btn" routerLink="/admin/banner/add" routerLinkActive="active">{{'My Wallet' | translate}}</button>
+  </div>
+  
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">{{'Title' | translate}}</div>
+        <div class="col col-3">{{'Sequence' | translate}}</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let coin of coins">
+        <div class="col col-3" data-label="Title">{{coin.name | translate}}</div>
+        <div class="col col-3" data-label="Sequance">{{coin.sequence}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+  
+          <div class="d-inline-block px-2">
+            <a (click)="deposit(coin)">
+              <img src="/assets/svg/edit.svg">
+            </a>
+          </div>
+      
+        </div>
+      </li>
+    </ul>
+</div>

@@ -10,7 +10,7 @@ import { CommentService } from '../../../shared/services/comment.service';
   selector: 'app-admin-my-assets',
   providers: [ToolbarService, LinkService, ImageService, HtmlEditorService],
   templateUrl: './my-assets.component.html',
-  styleUrls: ['./my-assets.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./my-assets.component.scss']
 })
 export class MyAssetsComponent implements OnInit{
    constructor(

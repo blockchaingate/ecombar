@@ -558,6 +558,20 @@ label {
   margin-bottom: 0;
 }
 
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 .input-group-prepend {
   margin-right: -1px;
 }
@@ -571,6 +585,18 @@ label {
 .input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle), .input-group>.input-group-append:last-child>.input-group-text:not(:last-child), .input-group>.input-group-append:not(:last-child)>.btn, .input-group>.input-group-append:not(:last-child)>.input-group-text, .input-group>.input-group-prepend>.btn, .input-group>.input-group-prepend>.input-group-text {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+input.transparent-input, input.transparent-input:focus, textarea.transparent-input, textarea.transparent-input:focus {
+  background-color: transparent!important;
+  border: #fff!important;
+  box-shadow: 0 0 0 0.1rem rgba(90,104,119,.25);
+  color: #fff;
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
 }
 
 .input-group-text {
@@ -644,3 +670,6 @@ label {
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
+@import './table.scss';
+@import './select.scss';
+@import './button.scss';

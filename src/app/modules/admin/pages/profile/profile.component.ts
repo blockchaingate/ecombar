@@ -7,7 +7,7 @@ import { AuthService } from '../../../shared/services/auth.service';
   selector: 'app-admin-profile',
   providers: [],
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit{
   displayName: string;

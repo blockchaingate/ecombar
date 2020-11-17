@@ -10,7 +10,7 @@ import { CommentService } from '../../../shared/services/comment.service';
   selector: 'app-admin-comment',
   providers: [ToolbarService, LinkService, ImageService, HtmlEditorService],
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./comment.component.scss']
 })
 export class CommentComponent implements OnInit{
     rating: number;

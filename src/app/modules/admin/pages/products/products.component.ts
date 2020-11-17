@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-admin-products',
   providers: [ProductService, UserService],
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
   products: any;
