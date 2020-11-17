@@ -605,6 +605,27 @@ label {
   padding-bottom: .25rem!important;
 }
 
+.pb-0, .py-0 {
+  padding-bottom: 0!important;
+}
+
+.col-auto {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
+}
+
+.pt-0, .py-0 {
+  padding-top: 0!important;
+}
+.py-0 {
+  background-color: #3a3b5a; 
+  border: 1px solid #4a4b6a;
+  border-left-style: hidden;
+}
+
 .pt-1, .py-1 {
   padding-top: .25rem!important;
 }

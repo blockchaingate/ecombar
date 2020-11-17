@@ -59,6 +59,7 @@
     "Create Wallet": "创建新钱包",
     "Restore Wallet": "恢复旧钱包",
  
+    "Submit": "提交",
     "Mnemonics mismatch": "助记词不匹配",
     "Verify Mnemonics": "验证助记词",
     "Confirm": "确认",
@@ -72,7 +73,6 @@
     "Wallet Password": "钱包密码",
     "Confirm Password": "确认密码",
     "Back": "上一步",    
-
     "Type wallet name": "输入钱包名称",
     "Type wallet password": "输入钱包密码",
     "Confirm Wallet Password": "确认钱包密码",

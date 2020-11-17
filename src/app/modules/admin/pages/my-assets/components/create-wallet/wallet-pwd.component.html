@@ -50,7 +50,6 @@
                     <!-- Grid column -->
                     <div class="form-group col-auto item">
                         <div>{{"Wallet Password" | translate}}</div>
-                        <label class="sr-only" for="password">Walletpwd</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text py-1"> <img src="/assets/images/lock.png" width="24px">
@@ -66,7 +65,6 @@
                     <!-- Grid column -->
                     <div class="col-auto item">
                         <div>{{"Confirm Password" | translate}}</div>
-                        <label class="sr-only" for="pwdconfirm">Walletpwdrepeat</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text py-1"> <img src="/assets/images/lock.png" width="24px">
@@ -81,7 +79,7 @@
 
                     <!-- Grid column -->
                     <div class="col-auto submitarea" *ngIf="userForm.get('password').valid && userForm.get('password').valid && !userForm.hasError('notSame')">
-                        <button type="submit" class="btn btn-md btn-gradient mt-0">{{"Form.Submit" | translate }}</button>
+                        <button type="submit" class="btn btn-md btn-gradient mt-0">{{"Submit" | translate }}</button>
                     </div>
                     <!-- Grid column -->
                 </form>
