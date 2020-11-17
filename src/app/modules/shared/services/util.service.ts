@@ -27,6 +27,10 @@ export class UtilService {
         return '';
     }
 
+    toPrecision(num: number) {
+        return Math.round(num * 10000) / 10000;
+    }
+
     aesEncryptSeed(seed: Buffer, pwd: string) {
         const seedString = seed.toString('base64');
         return this.aesEncrypt(seedString, pwd);

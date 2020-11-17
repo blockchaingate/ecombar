@@ -1,31 +1,111 @@
 
-<div class="container" *ngIf="noWallet">
+<div class="container" *ngIf="!wallets">
   <app-no-wallet></app-no-wallet>
 </div>
 
-<div class="container" *ngIf="!noWallet">
-    <div class="text-right">
-      <button class="btn" routerLink="/admin/banner/add" routerLinkActive="active">{{'My Wallet' | translate}}</button>
-  </div>
-  
-    <ul class="responsive-table">
-      <li class="table-header">
-        <div class="col col-3">{{'Title' | translate}}</div>
-        <div class="col col-3">{{'Sequence' | translate}}</div>
-        <div class="col col-3"></div>
-      </li>
-      <li class="table-row" *ngFor="let coin of coins">
-        <div class="col col-3" data-label="Title">{{coin.name | translate}}</div>
-        <div class="col col-3" data-label="Sequance">{{coin.sequence}}</div>
-        <div class="col col-3 text-right" data-label="Operations">
-  
-          <div class="d-inline-block px-2">
-            <a (click)="deposit(coin)">
-              <img src="/assets/svg/edit.svg">
-            </a>
-          </div>
-      
+<div class="container" *ngIf="wallets">
+    <div class="text-left text-black py-3">
+      {{'My Wallet' | translate}}
+    </div>
+
+    <div class="card-section">
+        <div class="card">
+            <div class="container">
+                <div class="row py-3">
+                    <div class="col col-8">
+                        <select>
+                            <option>111</option>
+                            <option>222</option>
+                        </select>
+                    </div>
+            
+                    <div class="col col-4 text-black">
+                        <div>
+                            EXG 4584.2725
+                        </div>
+                        <div>
+                            779.3263 USD
+                        </div>
+                    </div>        
+                </div>
+                <div class="row py-3 text-black">
+                    Wallet address: 1NyBkqKe3zqcSCpdZJZXk4eTF4oytQKaLJ
+                </div>
+            
+                <div class="row py-3 text-black">
+                    Gas: 1.9993305647232
+                </div>
+
+                <div class="row text-black">
+                    <button class="btn mx-3">
+                        Receive
+                    </button>
+            
+                    <button class="btn mx-3">
+                        Send
+                    </button>     
+                    
+                    <button class="btn mx-3">
+                        Add Gas
+                    </button>           
+                </div>                
+            </div>
         </div>
-      </li>
-    </ul>
+    </div>
+
+
+    <div class="card-section my-3">
+        <div class="card">
+            <div class="container">
+
+                <ul class="responsive-table">
+                    <li class="table-header">
+                      <div class="col col-2">{{'Asset' | translate}}</div>
+                      <div class="col col-2">{{'Balance' | translate}}</div>
+                      <div class="col col-2">{{'Value(USD)' | translate}}</div>
+                      <div class="col col-2">{{'Dividend' | translate}}</div>
+                      <div class="col col-2"></div>
+                    </li>
+                    <ng-container  *ngFor="let coin of coins">
+                        <li class="table-row" *ngIf="coin.coin != 'CAD' && coin.coin != 'RMB'">
+                            
+                                <div class="col col-2 text-black" data-label="Coin">{{coin.coin | translate}}</div>
+                                <div class="col col-2" data-label="Balance">
+                                    <div class="text-black">
+                                        <p *ngIf="coin.balance && (coin.balance >= 0)">
+                                            {{coin.balance}}
+                                        </p>
+                                        
+                                    </div>
+                                    <div class="text-black" *ngIf="coin.lockBalance && (coin.lockBalance > 0)">
+                                        {{coin.lockBalance}}
+                                    </div>
+                                </div>
+                                <div class="col col-2 text-black" data-label="Value(USD)">
+                                    <p *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
+                                        {{(coin.balance + coin.lockBalance) * coin.usdValue.USD}}
+                                    </p>
+                                    
+                                </div>
+                                <div class="col col-2" data-label="Dividend"></div>
+                                <div class="col col-2 text-right" data-label="Operations">
+                        
+                                <div class="d-inline-block px-2">
+                                    <a (click)="deposit(coin)">
+                                    <img src="/assets/svg/edit.svg">
+                                    </a>
+                                </div>
+                            
+                                </div>
+                            
+
+                        </li>
+                    </ng-container>
+                  </ul>                
+            </div>
+        </div>
+    </div>
+
+
+
 </div>

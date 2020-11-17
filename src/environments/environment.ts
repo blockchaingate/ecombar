@@ -15,6 +15,7 @@ export const environment = {
     local: 'https://test.blockchaingate.com/v2/',
     test: 'https://test.blockchaingate.com/v2/',
     prod: 'https://blockchaingate.com/v2/',
+    kanban: 'https://kanbantest.fabcoinapi.com/',
     blockchaingate: 'https://test.blockchaingate.com/v2/',
     website: 'https://test.exchangily.com/',
   },
