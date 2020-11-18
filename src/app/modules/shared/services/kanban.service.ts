@@ -18,6 +18,12 @@ export class KanbanService {
     constructor(private http: HttpService) {
     }
 
+    getKanbanBalance(address: string) {
+        const path = this.baseUrl + 'kanban/getBalance/' + address;
+        // console.log('path1=' + path);
+        return this.http.getRaw(path);
+    }    
+
     getWalletBalances(addresses: any) {
         let btcAddress = '';
         let ethAddress = '';

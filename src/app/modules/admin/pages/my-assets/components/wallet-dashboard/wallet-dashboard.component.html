@@ -13,27 +13,28 @@
             <div class="container">
                 <div class="row py-3">
                     <div class="col col-8">
-                        <select>
-                            <option>111</option>
-                            <option>222</option>
+                        <select (change)="onChange($event.target.value)">
+                            <option *ngFor="let item of wallets.items" [value]="item.id" [selected]="item.id == wallet.id">
+                                {{item.name}}
+                            </option>
                         </select>
                     </div>
             
                     <div class="col col-4 text-black">
                         <div>
-                            EXG 4584.2725
+                            EXG {{walletBalance}}
                         </div>
                         <div>
-                            779.3263 USD
+                            {{walletValue}} USD
                         </div>
                     </div>        
                 </div>
                 <div class="row py-3 text-black">
-                    Wallet address: 1NyBkqKe3zqcSCpdZJZXk4eTF4oytQKaLJ
+                    Wallet address: {{walletAddress}}
                 </div>
             
                 <div class="row py-3 text-black">
-                    Gas: 1.9993305647232
+                    Gas: {{gas}}
                 </div>
 
                 <div class="row text-black">
@@ -66,8 +67,7 @@
                       <div class="col col-2">{{'Dividend' | translate}}</div>
                       <div class="col col-2"></div>
                     </li>
-                    <ng-container  *ngFor="let coin of coins">
-                        <li class="table-row" *ngIf="coin.coin != 'CAD' && coin.coin != 'RMB'">
+                        <li class="table-row" *ngFor="let coin of coins">
                             
                                 <div class="col col-2 text-black" data-label="Coin">{{coin.coin | translate}}</div>
                                 <div class="col col-2" data-label="Balance">
@@ -100,7 +100,6 @@
                             
 
                         </li>
-                    </ng-container>
                   </ul>                
             </div>
         </div>
