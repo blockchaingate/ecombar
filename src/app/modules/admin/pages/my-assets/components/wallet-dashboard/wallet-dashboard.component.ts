@@ -15,9 +15,12 @@ export class WalletDashboardComponent implements OnInit{
   wallets: any;
   wallet: any;
   walletAddress: string;
+  kanbanAddress: string;
   walletBalance: number;
+  assets: any;
   walletValue: number;
   gas: any;
+  currentTab: string;
   
    constructor(
       private localSt: LocalStorage,
@@ -29,6 +32,7 @@ export class WalletDashboardComponent implements OnInit{
 
     ngOnInit() {
       this.gas = 0;
+      this.currentTab = 'wallet';
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || (wallets.length == 0)) {
@@ -43,6 +47,10 @@ export class WalletDashboardComponent implements OnInit{
       });
     }
     
+    changeTab(tabName: string) {
+      this.currentTab = tabName;
+    }
+
     onChange(value) {
       console.log('value==', value);
       this.wallet = this.wallets.items.filter(item => (item.id == value))[0];
@@ -54,6 +62,9 @@ export class WalletDashboardComponent implements OnInit{
       const addresses = this.wallet.addresses;
       const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
       this.walletAddress = walletAddressItem.address;
+      this.kanbanAddress = this.utilServ.fabToExgAddress(this.walletAddress);
+      this.refreshGas();
+      this.refreshAssets();
       this.kanbanServ.getWalletBalances(addresses).subscribe(
         (res: any) => {
           console.log('res for getWalletBalances=', res);
@@ -68,8 +79,21 @@ export class WalletDashboardComponent implements OnInit{
       );
     }
 
+    refreshAssets() {
+      this.kanbanServ.getExchangeBalance(this.kanbanAddress).subscribe(
+        (resp: any) => {
+            this.assets = resp;
+            console.log('this.assets=', this.assets);
+        },
+        error => {
+            // console.log('errorrrr=', error);
+        }
+    );
+    }
+
     refreshGas() {
-      this.kanbanServ.getKanbanBalance(this.wallet.excoin.receiveAdds[0].address).subscribe(
+
+      this.kanbanServ.getKanbanBalance(this.kanbanAddress).subscribe(
           (resp: any) => {
               // console.log('resp=', resp);
               const fab = this.utilServ.stripHexPrefix(resp.balance.FAB);

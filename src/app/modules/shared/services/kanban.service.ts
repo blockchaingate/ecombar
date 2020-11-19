@@ -24,6 +24,11 @@ export class KanbanService {
         return this.http.getRaw(path);
     }    
 
+    getExchangeBalance(address) {
+        const path = this.baseUrl + 'exchangily/getBalances/' + address;
+        return this.http.getRaw(path);        
+    }
+    
     getWalletBalances(addresses: any) {
         let btcAddress = '';
         let ethAddress = '';

@@ -3,10 +3,18 @@
   <app-no-wallet></app-no-wallet>
 </div>
 
-<div class="container" *ngIf="wallets">
-    <div class="text-left text-black py-3">
-      {{'My Wallet' | translate}}
+<div class="d-flex align-items-center navigate-bar my-3">
+    <div class="px-3 py-3 cursor-pointer" (click)="changeTab('wallet')">
+        {{'My Wallet' | translate}}
     </div>
+    <div class="px-3 py-3 cursor-pointer" (click)="changeTab('assets')">
+        {{'My Assets' | translate}}
+    </div>
+</div>
+
+
+<div class="container" *ngIf="wallets">
+  <div *ngIf="currentTab == 'wallet'">
 
     <div class="card-section">
         <div class="card">
@@ -63,6 +71,7 @@
                     <li class="table-header">
                       <div class="col col-2">{{'Asset' | translate}}</div>
                       <div class="col col-2">{{'Balance' | translate}}</div>
+                      <div class="col col-2">{{'Locked Balance' | translate}}</div>
                       <div class="col col-2">{{'Value(USD)' | translate}}</div>
                       <div class="col col-2">{{'Dividend' | translate}}</div>
                       <div class="col col-2"></div>
@@ -71,16 +80,17 @@
                             
                                 <div class="col col-2 text-black" data-label="Coin">{{coin.coin | translate}}</div>
                                 <div class="col col-2" data-label="Balance">
-                                    <div class="text-black">
-                                        <p *ngIf="coin.balance && (coin.balance >= 0)">
-                                            {{coin.balance}}
-                                        </p>
-                                        
+                                    <div *ngIf="coin.balance && (coin.balance >= 0)" class="text-black">
+                                        {{coin.balance}}
                                     </div>
+                                </div>
+
+                                <div class="col col-2" data-label="Locked Balance">
                                     <div class="text-black" *ngIf="coin.lockBalance && (coin.lockBalance > 0)">
                                         {{coin.lockBalance}}
                                     </div>
                                 </div>
+
                                 <div class="col col-2 text-black" data-label="Value(USD)">
                                     <p *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
                                         {{(coin.balance + coin.lockBalance) * coin.usdValue.USD}}
@@ -105,6 +115,52 @@
         </div>
     </div>
 
+  </div>
+
+  <div *ngIf="currentTab == 'assets'">
+    <div class="card-section my-3">
+        <div class="card">
+            <div class="container">
+
+                <ul class="responsive-table">
+                    <li class="table-header">
+                      <div class="col col-2">{{'Asset' | translate}}</div>
+                      <div class="col col-2">{{'Balance' | translate}}</div>
+                      <div class="col col-2">{{'Locked Balance' | translate}}</div>
+                      <div class="col col-2"></div>
+                    </li>
+                        <li class="table-row" *ngFor="let coin of assets">
+                            
+                                <div class="col col-2 text-black" data-label="Coin">{{utilServ.getCoinNameByTypeId(coin.coinType)}}</div>
+                                <div class="col col-2" data-label="Balance">
+                                    <div *ngIf="coin.unlockedAmount && (coin.unlockedAmount >= 0)" class="text-black">
+                                        {{utilServ.toNumber(utilServ.showAmount(coin.unlockedAmount, 18))}}
+                                    </div>
+                                </div>
+
+                                <div class="col col-2" data-label="Locked Balance">
+                                    <div class="text-black" *ngIf="coin.lockedAmount && (coin.lockedAmount > 0)">
+                                        {{utilServ.toNumber(utilServ.showAmount(coin.lockedAmount, 18))}}
+                                    </div>
+                                </div>
 
 
+
+                                <div class="col col-2 text-right" data-label="Operations">
+                        
+                                <div class="d-inline-block px-2">
+                                    <a (click)="deposit(coin)">
+                                    <img src="/assets/svg/edit.svg">
+                                    </a>
+                                </div>
+                            
+                                </div>
+                            
+
+                        </li>
+                  </ul>                
+            </div>
+        </div>
+    </div>       
+  </div>
 </div>

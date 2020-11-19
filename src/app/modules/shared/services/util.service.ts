@@ -3,6 +3,8 @@ import * as CryptoJS from 'crypto-js';
 import * as bs58 from 'bs58';
 import { environment } from '../../../../environments/environment';
 import * as createHash from 'create-hash';
+import BigNumber from 'bignumber.js/bignumber';
+import { coin_list } from '../../../../environments/coins';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
@@ -39,6 +41,24 @@ export class UtilService {
         return this.aesEncrypt(seedString, pwd);
     }
 
+    showAmount(amount, decimal: number) {
+
+        if (!amount || amount.toString() === '0') {
+            return '0';
+        }
+
+        const bigN = new BigNumber(amount).dividedBy(new BigNumber(1e18));
+
+        const fixedString = bigN.toFixed(decimal);
+
+        const fixN = fixedString.slice(0, (fixedString.indexOf('.')) + decimal + 1);
+        return fixN;
+    }
+
+    toNumber(num) {
+        return Number(num);
+    }
+        
     aesDecryptSeed(encryted: any, pwd: string) {
         const decrytedString = this.aesDecrypt(encryted, pwd);
         if (decrytedString) {
@@ -47,6 +67,10 @@ export class UtilService {
         return null;
     }  
     
+    getCoinNameByTypeId(id: number) {
+        return coin_list[id].name;
+    }
+
     fabToExgAddress(address: string) {
         const bytes = bs58.decode(address);
         const addressInWallet = bytes.toString('hex');
