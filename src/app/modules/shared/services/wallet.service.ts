@@ -8,7 +8,8 @@ import * as bip39 from 'bip39';
 import * as BIP32 from 'node_modules/bip32';
 import * as Btc from 'bitcoinjs-lib';
 import * as bitcoinMessage from 'bitcoinjs-message';
-import { hdkey } from 'ethereumjs-wallet'
+//import { hdkey } from 'ethereumjs-wallet'
+import * as hdkey from 'ethereumjs-wallet/hdkey';
 import * as bchaddr from 'bchaddrjs';
 import * as wif from 'wif';
 import { Wallet } from '../../../models/wallet';
