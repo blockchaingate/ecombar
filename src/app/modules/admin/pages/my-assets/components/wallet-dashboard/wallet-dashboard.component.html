@@ -3,17 +3,20 @@
   <app-no-wallet></app-no-wallet>
 </div>
 
-<div class="d-flex align-items-center navigate-bar my-3">
-    <div class="px-3 py-3 cursor-pointer" (click)="changeTab('wallet')">
-        {{'My Wallet' | translate}}
-    </div>
-    <div class="px-3 py-3 cursor-pointer" (click)="changeTab('assets')">
-        {{'My Assets' | translate}}
-    </div>
-</div>
+
 
 
 <div class="container" *ngIf="wallets">
+
+  <div class="d-flex align-items-center navigate-bar my-3">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('wallet')">
+            {{'My Wallet' | translate}}
+        </div>
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('assets')">
+            {{'My Assets' | translate}}
+        </div>
+  </div>
+    
   <div *ngIf="currentTab == 'wallet'">
 
     <div class="card-section">
