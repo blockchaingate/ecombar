@@ -4,7 +4,12 @@
 </div>
 
 
-
+<ngx-smart-modal #myModal identifier="myModal">
+    <h1>Receive</h1>
+    <p>Some stuff...</p>
+  
+    <button (click)="myModal.close()">Close</button>
+</ngx-smart-modal>
 
 <div class="container" *ngIf="wallets">
 
@@ -49,7 +54,7 @@
                 </div>
 
                 <div class="row text-black">
-                    <button class="btn mx-3">
+                    <button class="btn mx-3" (click)="ngxSmartModalService.getModal('myModal').open()">
                         Receive
                     </button>
             

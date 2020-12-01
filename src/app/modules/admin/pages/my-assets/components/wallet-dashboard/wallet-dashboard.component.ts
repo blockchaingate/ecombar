@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from '../../../../../shared/services/util.service';
 import { KanbanService } from '../../../../../shared/services/kanban.service';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -25,6 +26,7 @@ export class WalletDashboardComponent implements OnInit{
    constructor(
       private localSt: LocalStorage,
       public utilServ: UtilService,
+      public ngxSmartModalService: NgxSmartModalService,
       private kanbanServ: KanbanService,
       private route: ActivatedRoute,
       private router: Router) {

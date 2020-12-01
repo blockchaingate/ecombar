@@ -43,6 +43,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { CartModule } from '../home/cart/cart.module';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { CartModule } from '../home/cart/cart.module';
     SharedModule,
     FormsModule,
     CartModule,
+    NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
     RichTextEditorModule
   ],

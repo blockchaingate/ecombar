@@ -682,3 +682,8 @@ textarea {
 @import './table.scss';
 @import './select.scss';
 @import './button.scss';
+
+.nsm-dialog-btn-close {
+  width: 60px;
+}
+@import "~ngx-smart-modal/ngx-smart-modal";
