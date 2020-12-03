@@ -4,6 +4,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from '../../../../../shared/services/util.service';
 import { KanbanService } from '../../../../../shared/services/kanban.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -15,6 +16,8 @@ export class WalletDashboardComponent implements OnInit{
   coins: any;
   wallets: any;
   wallet: any;
+  currentCoin: string;
+  currentCoinAddress: string;
   walletAddress: string;
   kanbanAddress: string;
   walletBalance: number;
@@ -60,6 +63,30 @@ export class WalletDashboardComponent implements OnInit{
       this.loadWallet();
     }
 
+    getCurrentCoinAddress() {
+      const addresses = this.wallet.addresses;
+      console.log('addresses==', addresses);
+      let fabAddress = '';
+      let ethAddress = '';
+      for(let i = 0; i < addresses.length; i ++) {
+        const addr = addresses[i];
+        if(addr.name == this.currentCoin) {
+          return addr.address;
+        }
+        if(addr.name == 'FAB') {
+          fabAddress = addr.address;
+        }
+        if(addr.name == 'ETH') {
+          ethAddress = addr.address;
+        }
+      }
+
+      if(this.currentCoin == 'EXG' || this.currentCoin == 'DUSD') {
+        return fabAddress;
+      } 
+      return ethAddress;
+    }
+
     loadWallet() {
       const addresses = this.wallet.addresses;
       const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
@@ -73,9 +100,11 @@ export class WalletDashboardComponent implements OnInit{
           if(res && res.success) {
             this.coins = res.data.filter(item => ((item.coin != 'CAD') && (item.coin != 'RMB')));
             const exgCoin = this.coins.filter(item => item.coin == 'EXG')[0];
+            console.log('exgCoin==', exgCoin);
+            this.currentCoin = exgCoin.coin;
+            this.currentCoinAddress = this.getCurrentCoinAddress();
             this.walletBalance = Number(exgCoin.balance) + Number(exgCoin.lockBalance);
             this.walletValue = this.walletBalance * exgCoin.usdValue.USD;
-            console.log('exgCoin=', exgCoin);
           }
         }
       );

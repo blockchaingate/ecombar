@@ -5,10 +5,41 @@
 
 
 <ngx-smart-modal #myModal identifier="myModal">
-    <h1>Receive</h1>
-    <p>Some stuff...</p>
+    <h1 class="text-center">{{'Receive' | translate}}</h1>
+    <div>
+        <div>{{'Currency' | translate}}</div>
+        <div class="py-2">
+            <select [(ngModel)]="currentCoin" name="currentCoin">
+                <option value="0">{{'Select Currency' | translate}}:</option>
+                
+                <option *ngFor="let coin of coins" value="{{coin.coin}}">
+                    {{coin.coin}}
+                </option>
+                
+              </select>            
+        </div>
+
+        <div class="py-2">
+            Wallet address
+        </div>
+
+        <div class="d-flex">
+            <div class="px-2">
+                {{currentCoinAddress}}
+            </div>
+           
+            <div class="px-2">
+                <img src="assets/svg/copy.svg">
+            </div>
+
+        </div>
+
+        <div>
+
+        </div>
+    </div>
+    
   
-    <button (click)="myModal.close()">Close</button>
 </ngx-smart-modal>
 
 <div class="container" *ngIf="wallets">
