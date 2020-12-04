@@ -141,7 +141,7 @@
 <ngx-smart-modal #addGasModal identifier="addGasModal">
     <h1 class="text-center">{{'Add gas' | translate}}</h1>
     <div>
-        <input type="text" placeholder="{{'Amount' | translate}}" [(ngModel)]="gasAmount" name="gasAmount" required>
+        <input type="number" placeholder="{{'Amount' | translate}}" [(ngModel)]="gasAmount" name="gasAmount" required>
     </div>
     <div class="text-center">
         <button class="btn" (click)="addGasConfirm()">
@@ -153,7 +153,7 @@
 <ngx-smart-modal #depositModal identifier="depositModal">
     <h1 class="text-center">{{'Deposit' | translate}} {{currentCoin}}</h1>
     <div>
-        <input type="text" placeholder="{{'Amount' | translate}}" [(ngModel)]="depositAmount" name="depositAmount" required>
+        <input type="number" placeholder="{{'Amount' | translate}}" [(ngModel)]="depositAmount" name="depositAmount" required>
     </div>
     <div class="text-center">
         <button class="btn" (click)="depositConfirm()">
@@ -161,6 +161,20 @@
         </button>
     </div>
 </ngx-smart-modal>
+
+
+<ngx-smart-modal #withdrawModal identifier="withdrawModal">
+    <h1 class="text-center">{{'Withdraw' | translate}} {{currentCoin}}</h1>
+    <div>
+        <input type="number" placeholder="{{'Withdraw Amount' | translate}}" [(ngModel)]="withdrawAmount" name="withdrawAmount" required>
+    </div>
+    <div class="text-center">
+        <button class="btn" (click)="withdrawConfirm()">
+            {{'Confirm' | translate}}
+        </button>
+    </div>
+</ngx-smart-modal>
+
 
 <ngx-smart-modal #passwordModal identifier="passwordModal">
     <h1 class="text-center">{{'Password' | translate}}</h1>
@@ -320,8 +334,8 @@
                                 <div class="col col-2 text-right" data-label="Operations">
                         
                                 <div class="d-inline-block px-2">
-                                    <a (click)="deposit(coin)">
-                                    <img src="/assets/svg/edit.svg">
+                                    <a (click)="withdraw(coin.coinType, utilServ.getCoinNameByTypeId(coin.coinType))">
+                                    <img src="/assets/svg/withdraw.svg">
                                     </a>
                                 </div>
                             

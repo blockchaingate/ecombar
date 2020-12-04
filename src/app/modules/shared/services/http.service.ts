@@ -130,7 +130,7 @@ export class HttpService {
     }
 
     // fullUrl: http://...  or https://...
-    postRaw(fullUrl: string, data: any, options: OPTIONS): Observable<any> {
+    postRaw(fullUrl: string, data: any, options?: OPTIONS): Observable<any> {
         return this.http.post(fullUrl, data, options);
     }
 

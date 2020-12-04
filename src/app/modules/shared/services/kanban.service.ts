@@ -44,6 +44,13 @@ export class KanbanService {
         return this.http.postRaw(path, data, options);
     }
 
+    sendRawSignedTransaction(txhex: string) {
+        const data = {
+            signedTransactionData: txhex
+        };
+        return this.http.postRaw(this.baseUrl + 'kanban/sendRawTransaction', data);
+    }
+
     async getCoinPoolAddress() {
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         let path = 'exchangily/getCoinPoolAddress';

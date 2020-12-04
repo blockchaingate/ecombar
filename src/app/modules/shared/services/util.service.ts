@@ -150,7 +150,13 @@ export class UtilService {
     }  
     
     getCoinNameByTypeId(id: number) {
-        return coin_list[id].name;
+        for (let i = 0; i < coin_list.length; i++) {
+            const coin = coin_list[i];
+            if (coin.id === id) {
+                return coin.name;
+            }
+        }
+        return '';   
     }
 
     fabToExgAddress(address: string) {

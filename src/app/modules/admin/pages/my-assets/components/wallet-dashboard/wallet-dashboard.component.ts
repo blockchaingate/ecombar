@@ -11,6 +11,8 @@ import BigNumber from 'bignumber.js/bignumber';
 import { Signature } from '../../../../../../interfaces/kanban.interface';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { environment } from '../../../../../../../environments/environment';
+import * as bs58 from 'bs58';
+import * as createHash from 'create-hash';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -22,7 +24,8 @@ export class WalletDashboardComponent implements OnInit{
   coins: any;
   wallets: any;
   wallet: any;
-
+  withdrawAmount: number;
+  currentCoinId: number;
   gasAmount: number;
   depositAmount: number;
   comment: string;
@@ -106,6 +109,18 @@ export class WalletDashboardComponent implements OnInit{
       this.ngxSmartModalService.getModal('passwordModal').open(); 
     }
 
+    withdraw(coinId, coin) {
+      this.currentCoinId = coinId;
+      this.currentCoin = coin;
+      this.ngxSmartModalService.getModal('withdrawModal').open();  
+    }
+
+    withdrawConfirm() {
+      this.opType = 'deposit';
+      this.ngxSmartModalService.getModal('withdrawModal').close();
+      this.ngxSmartModalService.getModal('passwordModal').open(); 
+    }
+
     addGasConfirm() {
       this.opType = 'addGas';
       this.ngxSmartModalService.getModal('addGasModal').close();
@@ -127,10 +142,120 @@ export class WalletDashboardComponent implements OnInit{
       } else
       if(this.opType == 'deposit') {
         this.depositDo();
-      }
+      } else
+      if(this.opType == 'withdraw') {
+        this.withdrawDo();
+      }      
     }
 
-    
+    async withdrawDo() {
+      const amount = this.withdrawAmount;
+      const pin = this.password;
+      const currentCoin = this.coinServ.formMyCoin(this.wallet.addresses, this.currentCoin);
+      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
+      if (!seed) {
+        this.warnPwdErr();
+        return;
+      }
+      const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const amountInLink = new BigNumber(amount).multipliedBy(new BigNumber(1e18)); // it's for all coins.
+      let addressInWallet = currentCoin.receiveAdds[0].address;
+
+      if (currentCoin.name === 'BTC' || currentCoin.name === 'FAB' || currentCoin.name === 'DOGE' || currentCoin.name === 'LTC') {
+          const bytes = bs58.decode(addressInWallet);
+          console.log('bytes=', bytes);
+          addressInWallet = bytes.toString('hex');
+
+          console.log('addressInWallet=', addressInWallet);
+      } else if (currentCoin.name === 'BCH') {
+          const keyPairsCurrentCoin = this.coinServ.getKeyPairs('BCH', seed, 0, 0, 'b');
+          let prefix = '6f';
+          if (environment.production) {
+              prefix = '00';
+          }
+          // address = prefix + this.stripHexPrefix(address);
+          const addr = prefix + keyPairsCurrentCoin.addressHash;
+          const buf = Buffer.from(addr, 'hex');
+
+          const hash1 = createHash('sha256').update(buf).digest().toString('hex');
+          const hash2 = createHash('sha256').update(Buffer.from(hash1, 'hex')).digest().toString('hex');
+
+          addressInWallet = addr + hash2.substring(0, 8);
+      } else if (currentCoin.tokenType === 'FAB') {
+          let fabAddress = '';
+          for (let i = 0; i < this.wallet.mycoins.length; i++) {
+              const coin = this.wallet.mycoins[i];
+              if (coin.name === 'FAB') {
+                  fabAddress = coin.receiveAdds[0].address;
+              }
+          }
+          if (fabAddress === '') {
+            this.toastr.error(this.translateServ.instant('FAB address not found.'));
+            /*
+              if (this.lan === 'zh') {
+                  this.alertServ.openSnackBar('没有FAB地址。', 'Ok');
+              } else {
+                  this.alertServ.openSnackBar('FAB address not found.', 'Ok');
+              }
+              */
+              return;
+          }
+          const bytes = bs58.decode(fabAddress);
+          addressInWallet = bytes.toString('hex');
+          console.log('addressInWallet for exg', addressInWallet);
+      }
+
+      const abiHex = this.web3Serv.getWithdrawFuncABI(this.currentCoinId, amountInLink, addressInWallet);
+
+      const coinPoolAddress = await this.kanbanServ.getCoinPoolAddress();
+      const nonce = await this.kanbanServ.getTransactionCount(keyPairsKanban.address);
+
+      this.gasPrice = Number(this.gasPrice);
+      this.gasLimit = Number(this.gasLimit);
+      if (this.gasPrice <= 0 || this.gasLimit <= 0) {
+        /*
+          if (this.lan === 'zh') {
+              this.alertServ.openSnackBar('燃料价格或限量错误。', 'Ok');
+          } else {
+              this.alertServ.openSnackBar('Invalid gas price or gas limit.', 'Ok');
+          }
+          */
+         this.toastr.error(this.translateServ.instant('Invalid gas price or gas limit.'));
+          return;
+      }
+      const options = {
+          gasPrice: this.gasPrice,
+          gasLimit: this.gasLimit
+      };
+
+      const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, coinPoolAddress, nonce, 0, options);
+
+      this.kanbanServ.sendRawSignedTransaction(txKanbanHex).subscribe((resp: any) => {
+          // console.log('resp=', resp);
+          if (resp && resp.transactionHash) {
+            this.toastr.error(this.translateServ.instant('Your withdraw request is pending.'));
+              /*
+              this.modalWithdrawRef.hide();
+              this.kanbanServ.incNonce();
+              if (this.lan === 'zh') {
+                  this.alertServ.openSnackBarSuccess('提币请求提交成功，等待处理。', 'Ok');
+              } else {
+                  this.alertServ.openSnackBarSuccess('Your withdraw request is pending.', 'Ok');
+              }
+              */
+          } else {
+            this.toastr.error(this.translateServ.instant('Errors happened, please try again.'));
+            /*
+              if (this.lan === 'zh') {
+                  this.alertServ.openSnackBar('发生错误，请再试一次。', 'Ok');
+              } else {
+                  this.alertServ.openSnackBar('Errors happened, please try again.', 'Ok');
+              }
+            */
+          }
+      });
+  }
+
     async addGasDo() {
       const amount = this.gasAmount;
       const pin = this.password;
@@ -193,8 +318,11 @@ export class WalletDashboardComponent implements OnInit{
           this.warnPwdErr();
           return;
       }
-      const keyPairs = this.coinServ.getKeyPairs(currentCoin, seed, 0, 0, 'b');
 
+      console.log('currentCoin==', currentCoin);
+      const myCoin = this.coinServ.formMyCoin(this.wallet.addresses, currentCoin);
+      let keyPairs = this.coinServ.getKeyPairs(myCoin.tokenType ? myCoin.tokenType : myCoin.name, seed, 0, 0, 'b');
+      keyPairs.tokenType = myCoin.tokenType;
       const officalAddress = this.coinServ.getOfficialAddress(currentCoin);
       if (!officalAddress) {
         /*

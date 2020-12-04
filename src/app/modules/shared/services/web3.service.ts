@@ -10,6 +10,7 @@ import Common from 'ethereumjs-common';
 import KanbanTxService from './kanban.tx.service';
 import { Signature, EthTransactionObj } from '../../../interfaces/kanban.interface';
 
+
 @Injectable({ providedIn: 'root' })
 export class Web3Service {
   constructor(private utilServ: UtilService) {
@@ -27,6 +28,7 @@ export class Web3Service {
   async signAbiHexWithPrivateKey(abiHex: string, keyPair: any, address: string, nonce: number,
     value = 0, options = { gasPrice: 0, gasLimit: 0 }) {
     // console.log('abiHex before', abiHex);
+    console.log('keyPair===', keyPair);
     if (abiHex.startsWith('0x')) {
       abiHex = abiHex.slice(2);
     }
@@ -57,7 +59,7 @@ export class Web3Service {
       // gasPrice: 40  // in wei
     };
 
-    const privKey = Buffer.from(keyPair.privateKeyHex, 'hex');
+    const privKey = keyPair.privateKeyBuffer.privateKey;
 
     let txhex = '';
 
@@ -85,6 +87,58 @@ export class Web3Service {
     console.log(signMess);
     return signMess.rawTransaction;   
     */
+  }
+
+  getWithdrawFuncABI(coinType: number, amount: BigNumber, destAddress: string) {
+
+    // let abiHex = '3a5b6c70';
+
+    /*
+    const web3 = this.getWeb3Provider();
+    const func: any = {
+      'constant': false,
+      'inputs': [
+        {
+          'name': '_coinType',
+          'type': 'uint32'
+        },
+        {
+          'name': '_value',
+          'type': 'uint256'
+        },
+        {
+          'name': '',
+          'type': 'bytes32'
+        }
+      ],
+      'name': 'withdraw',
+      'outputs': [
+        {
+          'name': 'success',
+          'type': 'bool'
+        }
+      ],
+      'payable': false,
+      'stateMutability': 'nonpayable',
+      'type': 'function'
+    };
+    let abiHex = web3.eth.abi.encodeFunctionSignature(func).substring(2);
+
+    */
+
+    let abiHex = '3295d51e';
+    // console.log('abiHex there we go:' + abiHex);  
+    abiHex += this.utilServ.fixedLengh(coinType.toString(16), 64);
+    // console.log('abiHex1=' + abiHex);
+
+    const amountHex = amount.toString(16);
+    // console.log('amount=' + amount);
+    // console.log('amountHex=' + amountHex);
+    abiHex += this.utilServ.fixedLengh(amountHex, 64);
+    // console.log('abiHex2=' + abiHex);
+    abiHex += this.utilServ.fixedLengh(this.utilServ.stripHexPrefix(destAddress), 64);
+    // console.log('abiHex final:' + abiHex);    
+    return abiHex;
   }
 
   getDepositFuncABI(coinType: number, txHash: string, amount: BigNumber, addressInKanban: string, signedMessage: Signature) {
@@ -150,7 +204,11 @@ export class Web3Service {
   }
 
   signMessageWithPrivateKey(message: string, keyPair: any) {
+    console.log('message==', message);
+    console.log('keyPair==', keyPair);
     const privateKey = `0x${keyPair.privateKey.toString('hex')}`;
+    console.log('privateKey==', privateKey);
+    //const privateKey = keyPair.privateKey;
     const web3 = this.getWeb3Provider();
 
     const signMess = web3.eth.accounts.sign(message, privateKey);
@@ -172,6 +230,8 @@ export class Web3Service {
         return signMess.rawTransaction;
         */
         const privKey = keyPair.privateKeyBuffer;
+        console.log('privKey=====', privKey);
+        console.log('txParams=====', txParams);
         const EthereumTx = Eth.Transaction;
         const tx = new EthereumTx(txParams, { chain: environment.chains.ETH.chain, hardfork: environment.chains.ETH.hardfork });
         tx.sign(privKey);
