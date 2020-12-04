@@ -31,6 +31,11 @@ export class CoinService {
         const mycoin = new MyCoin(name);
         mycoin.receiveAdds = [];
         if(['BTC','LTC','DOGE', 'BCH', 'ETH', 'FAB'].indexOf(name) >= 0) {
+            if(name == 'ETH') {
+                mycoin.decimals = 18;
+            } else {
+                mycoin.decimals = 8;
+            }
             const address = this.getAddress(addresses, name);
             const addr = new Address(0, address, 0);
             mycoin.receiveAdds.push(addr);
@@ -72,9 +77,72 @@ export class CoinService {
         return mycoin;
     }
 
+    async depositFab(scarContractAddress: string, seed: any, mycoin: MyCoin, amount: number) {
+        // sendTokens in https://github.com/ankitfa/Fab_sc_test1/blob/master/app/walletManager.js
+        const gasLimit = 800000;
+        const gasPrice = 40;
+
+        // console.log('scarContractAddress=', scarContractAddress);
+        const totalAmount = gasLimit * gasPrice / 1e8;
+        // let cFee = 3000 / 1e8 // fee for the transaction
+
+        let totalFee = totalAmount;
+
+        // -----------------------------------------------------------------------
+        const addDepositFunc: any = {
+            'constant': false,
+            'inputs': [],
+            'name': 'addDeposit',
+            'outputs': [
+                {
+                    'name': '',
+                    'type': 'address'
+                }
+            ],
+            'payable': true,
+            'stateMutability': 'payable',
+            'type': 'function'
+        };
+
+        let fxnCallHex = this.web3Serv.getGeneralFunctionABI(addDepositFunc, []);
+        fxnCallHex = this.utilServ.stripHexPrefix(fxnCallHex);
+
+        // console.log('fxnCallHexfxnCallHexfxnCallHexfxnCallHexfxnCallHex=', fxnCallHex);
+        const contract = Btc.script.compile([
+            84,
+            this.utilServ.number2Buffer(gasLimit),
+            this.utilServ.number2Buffer(gasPrice),
+            this.utilServ.hex2Buffer(fxnCallHex),
+            this.utilServ.hex2Buffer(scarContractAddress),
+            194
+        ]);
+
+        // console.log('contract=', contract);
+        const contractSize = contract.toJSON.toString().length;
+
+        // console.log('contractSize=' + contractSize);
+        totalFee += this.utilServ.convertLiuToFabcoin(contractSize * 10);
+
+        console.log('totalFee=' + totalFee);
+        const res = await this.getFabTransactionHex(seed, mycoin, contract, amount, totalFee,
+            environment.chains.FAB.satoshisPerBytes, environment.chains.FAB.bytesPerInput, false);
+
+        const txHex = res.txHex;
+        let errMsg = res.errMsg;
+        let txHash = '';
+        if (!errMsg) {
+            const res2 = await this.apiServ.postFabTx(txHex);
+            txHash = res2.txHash;
+            errMsg = res2.errMsg;
+        }
+        return { txHash: txHash, errMsg: errMsg };
+    }
+
 
     async getFabTransactionHex(seed: any, mycoin: MyCoin, to: any, amount: number, extraTransactionFee: number,
         satoshisPerBytes: number, bytesPerInput: number, getTransFeeOnly: boolean) {
+            extraTransactionFee = Number(extraTransactionFee);
+            amount = Number(amount);
         let index = 0;
         let finished = false;
         let address = '';
@@ -86,7 +154,7 @@ export class CoinService {
         const receiveAddsIndexArr = [];
         const changeAddsIndexArr = [];
         // console.log('amount111111111111=', amount);
-        // console.log('extraTransactionFee=', extraTransactionFee);
+        console.log('extraTransactionFee=', extraTransactionFee);
         const totalAmount = Number(amount) + Number(extraTransactionFee);
         // console.log('totalAmount=', totalAmount);
         let amountNum = new BigNumber(this.utilServ.toBigNumber(totalAmount, 8)).toNumber();
@@ -240,6 +308,10 @@ export class CoinService {
             - new BigNumber(this.utilServ.toBigNumber(amount + extraTransactionFee, 8)).toNumber()
             - transFee);
 
+        console.log('amount=', amount);
+        console.log('extraTransactionFee=', extraTransactionFee);
+        console.log('amount + extraTransactionFee=', amount + extraTransactionFee);
+        console.log('new BigNumber(this.utilServ.toBigNumber(amount + extraTransactionFee, 8)).toNumber()=', new BigNumber(this.utilServ.toBigNumber(amount + extraTransactionFee, 8)).toNumber());
         /*
         if((output1 < 2730)  && !(mycoin.tokenType == 'FAB')) {
             transFee += output1;
@@ -252,11 +324,17 @@ export class CoinService {
         // const output2 = Math.round(amount * 1e8);    
         const output2 = new BigNumber(this.utilServ.toBigNumber(amount, 8));
         amountInTx = output2;
+
+
         if (output1 < 0) {
             // console.log('output1 or output2 should be greater than 0.');
+            console.log('totalInput=', totalInput);
+            console.log('amount=', amount);
+            console.log('transFee=', transFee);
+            console.log('output1=', output1);
             return {
                 txHex: '',
-                errMsg: 'output1 should be greater than 0.' + totalInput + ',' + amount + ',' + transFee + ',' + output1,
+                errMsg: 'Not enough FAB or utxos for this transaction',
                 transFee: 0, amountInTx: amountInTx, txids: txids
             };
         }

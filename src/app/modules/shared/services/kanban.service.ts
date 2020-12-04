@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpService } from './http.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class KanbanService {
@@ -28,7 +29,15 @@ export class KanbanService {
         const path = this.baseUrl + 'exchangily/getBalances/' + address;
         return this.http.getRaw(path);        
     }
-    
+
+    async getScarAddress() {
+        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+        let path = 'kanban/getScarAddress';
+        path = this.baseUrl + path;
+        const addr = await this.http.getRaw(path, { headers, responseType: 'text' }).toPromise() as string;
+        return addr;
+    }    
+
     getWalletBalances(addresses: any) {
         let btcAddress = '';
         let ethAddress = '';

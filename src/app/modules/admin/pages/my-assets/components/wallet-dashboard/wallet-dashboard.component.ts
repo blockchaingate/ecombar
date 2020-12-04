@@ -20,6 +20,7 @@ export class WalletDashboardComponent implements OnInit{
   wallet: any;
 
   gasAmount: number;
+  depositAmount: number;
   comment: string;
   link: string;
   fabBalance: number;
@@ -87,6 +88,17 @@ export class WalletDashboardComponent implements OnInit{
       this.ngxSmartModalService.getModal('addGasModal').open();  
     }
 
+    deposit(coin) {
+      this.currentCoin = coin;
+      this.ngxSmartModalService.getModal('depositModal').open();  
+    }
+
+    depositConfirm() {
+      this.opType = 'deposit';
+      this.ngxSmartModalService.getModal('depositModal').close();
+      this.ngxSmartModalService.getModal('passwordModal').open(); 
+    }
+
     addGasConfirm() {
       this.opType = 'addGas';
       this.ngxSmartModalService.getModal('addGasModal').close();
@@ -105,11 +117,62 @@ export class WalletDashboardComponent implements OnInit{
       } else 
       if(this.opType == 'sendCoin') {
         this.sendCoinDo();
+      } else
+      if(this.opType == 'deposit') {
+        this.depositDo();
       }
     }
 
-    addGasDo() {
+    depositDo() {
 
+    }
+    
+    async addGasDo() {
+      const amount = this.gasAmount;
+      const pin = this.password;
+
+      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
+      if (!seed) {
+          this.warnPwdErr();
+          return;
+      }
+      const scarAddress = await this.kanbanServ.getScarAddress();
+      console.log('scarAddress=', scarAddress);
+      const currentCoin = this.coinServ.formMyCoin(this.wallet.addresses, 'FAB');
+      const { txHash, errMsg } = await this.coinServ.depositFab(scarAddress, seed, currentCoin, amount);
+      if (errMsg) {
+          this.toastr.error(errMsg);
+      } else {
+
+        /*
+          const addr = environment.addresses.exchangilyOfficial.FAB;
+
+          const item: TransactionItem = {
+              walletId: this.wallet.id,
+              type: 'Add Gas',
+              coin: currentCoin.name,
+              tokenType: currentCoin.tokenType,
+              amount: amount,
+              txid: txHash,
+              to: addr,
+              time: new Date(),
+              confirmations: '0',
+              blockhash: '',
+              comment: '',
+              status: 'pending'
+          };
+          this.storageService.storeToTransactionHistoryList(item);
+          
+
+          if (this.lan === 'zh') {
+              this.alertServ.openSnackBarSuccess('加燃料交易提交成功，请等40分钟后查看结果', 'Ok');
+          } else {
+              this.alertServ.openSnackBarSuccess('Add gas transaction was submitted successfully, please check gas balance 40 minutes later.', 'Ok');
+          }
+          */
+         this.ngxSmartModalService.getModal('passwordModal').close(); 
+         this.toastr.info(this.translateServ.instant('Add gas transaction was submitted successfully, please check gas balance 40 minutes later.'));
+      }
     }
 
     async sendCoinDo() {
@@ -267,7 +330,5 @@ export class WalletDashboardComponent implements OnInit{
       );
   }
 
-    deposit(coin) {
 
-    }
 }

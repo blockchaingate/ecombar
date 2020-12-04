@@ -125,8 +125,8 @@ export class HttpService {
     }
 
     // fullUrl: http://...  or https://...
-    getRaw(fullUrl: string): Observable<any> {
-        return this.http.get(fullUrl);
+    getRaw(fullUrl: string, options?:any): Observable<any> {
+        return this.http.get(fullUrl, options);
     }
 
     // fullUrl: http://...  or https://...

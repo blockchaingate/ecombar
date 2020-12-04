@@ -150,6 +150,18 @@
     </div>
 </ngx-smart-modal>
 
+<ngx-smart-modal #depositModal identifier="depositModal">
+    <h1 class="text-center">{{'Deposit' | translate}} {{currentCoin}}</h1>
+    <div>
+        <input type="text" placeholder="{{'Amount' | translate}}" [(ngModel)]="depositAmount" name="depositAmount" required>
+    </div>
+    <div class="text-center">
+        <button class="btn" (click)="depositConfirm()">
+            {{'Confirm' | translate}}
+        </button>
+    </div>
+</ngx-smart-modal>
+
 <ngx-smart-modal #passwordModal identifier="passwordModal">
     <h1 class="text-center">{{'Password' | translate}}</h1>
     <div>
@@ -251,17 +263,17 @@
                                 </div>
 
                                 <div class="col col-2 text-black" data-label="Value(USD)">
-                                    <p *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
+                                    <div *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
                                         {{(coin.balance + coin.lockBalance) * coin.usdValue.USD}}
-                                    </p>
+                                    </div>
                                     
                                 </div>
                                 <div class="col col-2" data-label="Dividend"></div>
                                 <div class="col col-2 text-right" data-label="Operations">
                         
                                 <div class="d-inline-block px-2">
-                                    <a (click)="deposit(coin)">
-                                    <img src="/assets/svg/edit.svg">
+                                    <a (click)="deposit(coin.coin)">
+                                    <img src="/assets/svg/deposit.svg">
                                     </a>
                                 </div>
                             
