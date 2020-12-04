@@ -9,7 +9,25 @@ export const environment = {
     prod: 'https://blockchaingate.com/v2/',
     blockchaingate: 'https://blockchaingate.com/v2/',
     website: 'http://exchangily.com/',
-    kanban: 'https://kanbanprod.fabcoinapi.com/'
+    kanban: 'https://kanbanprod.fabcoinapi.com/',
+    BTC: {
+      exchangily: 'https://btcprod.fabcoinapi.com/'
+    },
+    FAB: {
+        exchangily: 'https://fabprod.fabcoinapi.com/'
+    },
+    ETH: {
+        exchangily: 'https://ethprod.fabcoinapi.com/',
+    },
+    BCH: {
+        exchangily: 'https://bchprod.fabcoinapi.com/',
+    },
+    DOGE: {
+        exchangily: 'https://dogeprod.fabcoinapi.com/',
+    },
+    LTC: {
+        exchangily: 'https://ltcprod.fabcoinapi.com/',
+    }    
   },
   chains: {
     BTC: {

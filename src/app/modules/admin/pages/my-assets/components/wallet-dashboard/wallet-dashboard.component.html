@@ -4,12 +4,12 @@
 </div>
 
 
-<ngx-smart-modal #myModal identifier="myModal">
+<ngx-smart-modal #receiveModal identifier="receiveModal">
     <h1 class="text-center">{{'Receive' | translate}}</h1>
     <div>
         <div>{{'Currency' | translate}}</div>
         <div class="py-2">
-            <select [(ngModel)]="currentCoin" name="currentCoin">
+            <select [(ngModel)]="currentCoin" name="currentCoin" (change)="onCoinChange($event.target.value)">
                 <option value="0">{{'Select Currency' | translate}}:</option>
                 
                 <option *ngFor="let coin of coins" value="{{coin.coin}}">
@@ -34,21 +34,141 @@
 
         </div>
 
-        <div>
+        <div class="text-center py-5" *ngIf="currentCoinAddress">
+            <qrcode [qrdata]="currentCoinAddress" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+            <div class="py-2">
+                <a href="{{link}}" download (click)="dlDataUrlBin()">
+                    <div class="d-inline-block px-1">
+                        <img src="/assets/download.png">
+                    </div>
+                    <div class="d-inline-block px-1">
+                        {{'Download QR Code' | translate}}
+                    </div>
+                </a>
 
-        </div>
+            </div>
+        </div>  
     </div>
     
   
 </ngx-smart-modal>
 
+
+
+
+<ngx-smart-modal #sendModal identifier="sendModal">
+    <h1 class="text-center">{{'Send' | translate}}</h1>
+    <div>
+        {{'Send to' | translate}}
+    </div>
+    <div>
+        <input type="text" placeholder="{{'To address' | translate}}" [(ngModel)]="to" name="to" required>
+    </div>
+
+    <div>{{'Currency' | translate}}</div>
+    <div class="py-2">
+        <select [(ngModel)]="currentCoin" name="currentCoin" (change)="onCoinChange($event.target.value)">
+            <option value="0">{{'Select Currency' | translate}}:</option>
+            
+            <option *ngFor="let coin of coins" value="{{coin.coin}}">
+                {{coin.coin}}
+            </option>
+            
+          </select>            
+    </div>
+    
+    <div>
+        {{'Balance' | translate}}:
+    </div>
+
+    <div>
+        {{'Send amount' | translate}}
+    </div>   
+    <div>
+        <input type="number" placeholder="{{'Send amount' | translate}}" [(ngModel)]="sendAmount" name="sendAmount" required>
+    </div>
+
+    <div>
+        {{'Comment' | translate}}
+    </div>
+    <div>
+        <input type="text" placeholder="{{'Comment' | translate}}" [(ngModel)]="comment" name="comment" required>
+    </div>    
+
+    <div>
+        Transaction fee: 
+    </div>
+
+    <div>
+        depends on the gas used on the chain
+    </div>
+
+    <div>
+        <div>
+            {{'Advanced' | translate}}
+        </div>
+    </div>
+
+    <div *ngIf="isAdvance">
+        <div>
+            {{'Gas price' | translate}}
+        </div>
+        <div>
+            <input type="number" placeholder="{{'Gas price' | translate}}" [(ngModel)]="gasPrice" name="gasPrice" required>
+        </div>   
+        
+        <div>
+            {{'Gas limit' | translate}}
+        </div>
+        <div>
+            <input type="number" placeholder="{{'Gas limit' | translate}}" [(ngModel)]="gasLimit" name="gasLimit" required>
+        </div>   
+        
+        <div>
+            {{'Satoshis/byte' | translate}}
+        </div>
+        <div>
+            <input type="number" placeholder="{{'Satoshis/byte' | translate}}" [(ngModel)]="satoshisPerByte" name="satoshisPerByte" required>
+        </div>  
+    </div>
+    <div class="text-center">
+        <button class="btn" (click)="sendCoin()">
+            {{'Send' | translate}}
+        </button>
+    </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal #addGasModal identifier="addGasModal">
+    <h1 class="text-center">{{'Add gas' | translate}}</h1>
+    <div>
+        <input type="text" placeholder="{{'Amount' | translate}}" [(ngModel)]="gasAmount" name="gasAmount" required>
+    </div>
+    <div class="text-center">
+        <button class="btn" (click)="addGasConfirm()">
+            {{'Confirm' | translate}}
+        </button>
+    </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal #passwordModal identifier="passwordModal">
+    <h1 class="text-center">{{'Password' | translate}}</h1>
+    <div>
+        <input type="password" placeholder="{{'Password' | translate}}" [(ngModel)]="password" name="password" required>
+    </div>
+    <div class="text-center">
+        <button class="btn" (click)="confirmPassword()">
+            {{'Confirm' | translate}}
+        </button>
+    </div>
+</ngx-smart-modal>
+
 <div class="container" *ngIf="wallets">
 
-  <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('wallet')">
+  <div class="d-flex align-items-center  navigate-bar my-3">
+        <div class="px-3 py-3 cursor-pointer text-black" [ngClass]="currentTab == 'wallet' ? 'current-tab' : ''" (click)="changeTab('wallet')">
             {{'My Wallet' | translate}}
         </div>
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('assets')">
+        <div class="px-3 py-3 cursor-pointer text-black" [ngClass]="currentTab == 'assets' ? 'current-tab' : ''" (click)="changeTab('assets')">
             {{'My Assets' | translate}}
         </div>
   </div>
@@ -85,15 +205,15 @@
                 </div>
 
                 <div class="row text-black">
-                    <button class="btn mx-3" (click)="ngxSmartModalService.getModal('myModal').open()">
+                    <button class="btn mx-3" (click)="ngxSmartModalService.getModal('receiveModal').open()">
                         Receive
                     </button>
             
-                    <button class="btn mx-3">
+                    <button class="btn mx-3" (click)="ngxSmartModalService.getModal('sendModal').open()">
                         Send
                     </button>     
                     
-                    <button class="btn mx-3">
+                    <button class="btn mx-3" (click)="addGas()">
                         Add Gas
                     </button>           
                 </div>                

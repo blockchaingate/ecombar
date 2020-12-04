@@ -17,6 +17,9 @@ import { WalletService } from './services/wallet.service';
 import { TranslateService } from './services/translate.service';
 import { UtilService } from './services/util.service';
 import { UploadService } from './services/upload.service';
+import { ApiService } from './services/api.service';
+import { Web3Service } from './services/web3.service';
+import { CoinService } from './services/coin.service';
 import { KanbanService } from './services/kanban.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
@@ -65,6 +68,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     FavoriteService,
     PaymentService,
     WalletService,
+    CoinService,
+    ApiService,
+    Web3Service,
     CommentService,
     KanbanService
   ]
@@ -81,6 +87,9 @@ export class SharedModule {
         BrandService,
         WalletService,
         CommentService,
+        CoinService,
+        ApiService,
+        Web3Service,        
         KanbanService
       ]
     };
