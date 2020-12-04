@@ -204,6 +204,36 @@ export const environment = {
     ps_store_id: '9VGAUtore3',
     hpp_key: 'hpRS5R56OATG'
   },
+  depositMinimumConfirmations: {
+    EXG: 12,
+    BTC: 2,
+    FAB: 12,
+    ETH: 20,
+    USDT: 20,
+    DUSD: 12,
+    BCH: 2,
+    LTC: 8,
+    DOGE: 20,
+    BNB: 20,
+    INB: 20,
+    REP: 20,
+    HOT: 20,
+    CEL: 20,
+    MATIC: 20,
+    IOST: 20,
+    MANA: 20,
+    FUN: 20,
+    WAX: 20,
+    ELF: 20,
+    GNO: 20,
+    POWR: 20,
+    WINGS: 20,
+    MTL: 20,
+    KNC: 20,
+    GVT: 20,
+    DRGN: 20,
+    NVZN: 20
+  },  
   paypal_client_id: 'AdmdQayzrKMsDPxU89G_UWcLVfFlHhG-zfFm4I75F6xusJ64AIBOre6J6NxfzsM6JStHQmtviHoCp59x'
 };
 

@@ -7,6 +7,10 @@ import { CoinService } from '../../../../../shared/services/coin.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import BigNumber from 'bignumber.js/bignumber';
+import { Signature } from '../../../../../../interfaces/kanban.interface';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -30,6 +34,8 @@ export class WalletDashboardComponent implements OnInit{
   gasLimit: number;
   to: string;
   opType: string;
+  kanbanGasPrice: number;
+  kanbanGasLimit: number;
   isAdvance: boolean;
   sendAmount: number;
   currentCoin: string;
@@ -47,6 +53,7 @@ export class WalletDashboardComponent implements OnInit{
       private translateServ: TranslateService,
       private localSt: LocalStorage,
       public utilServ: UtilService,
+      private web3Serv: Web3Service,
       private coinServ: CoinService,
       public ngxSmartModalService: NgxSmartModalService,
       private kanbanServ: KanbanService,
@@ -123,9 +130,6 @@ export class WalletDashboardComponent implements OnInit{
       }
     }
 
-    depositDo() {
-
-    }
     
     async addGasDo() {
       const amount = this.gasAmount;
@@ -175,6 +179,174 @@ export class WalletDashboardComponent implements OnInit{
       }
     }
 
+    async depositDo() {
+      const currentCoin = this.currentCoin;
+
+      const amount = this.depositAmount;
+      const pin = this.password;
+
+      const coinType = this.coinServ.getCoinTypeIdByName(currentCoin);
+
+      console.log('coinType is', coinType);
+      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
+      if (!seed) {
+          this.warnPwdErr();
+          return;
+      }
+      const keyPairs = this.coinServ.getKeyPairs(currentCoin, seed, 0, 0, 'b');
+
+      const officalAddress = this.coinServ.getOfficialAddress(currentCoin);
+      if (!officalAddress) {
+        /*
+          if (this.lan === 'zh') {
+              this.alertServ.openSnackBar(currentCoin.name + '官方地址无效', 'Ok');
+          } else {
+              this.alertServ.openSnackBar('offical address for ' + currentCoin.name + ' is unavailable', 'Ok');
+          }
+          */
+         this.toastr.error(this.translateServ.instant('offical address is unavailable'));
+          return;
+      }
+
+      
+      const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+
+      const addressInKanban = this.utilServ.fabToExgAddress(keyPairsKanban.address) ;
+
+      const doSubmit = false;
+      const options = {
+          gasPrice: this.gasPrice,
+          gasLimit: this.gasLimit,
+          satoshisPerBytes: this.satoshisPerByte
+      };
+      const { txHex, txHash, errMsg, amountInTx, txids } = await this.coinServ.sendTransaction(
+          this.coinServ.formMyCoin(this.wallet.addresses, currentCoin), seed, officalAddress, 
+          amount, options, doSubmit
+      );
+
+      if (errMsg) {
+          this.toastr.error(errMsg);
+          return;
+      }
+
+      if (!txHex || !txHash) {
+        /*
+          if (this.lan === 'zh') {
+              this.alertServ.openSnackBar('txHash内部错误', 'Ok');
+          } else {
+              this.alertServ.openSnackBar('Internal error for txHex or txHash', 'Ok');
+          }
+          */
+         this.toastr.error(this.translateServ.instant('Internal error for txHex or txHash'));
+          return;
+      }
+
+      const amountInLink = new BigNumber(amount).multipliedBy(new BigNumber(1e18)); // it's for all coins.
+
+      const amountInLinkString = amountInLink.toFixed();
+      const amountInTxString = amountInTx.toFixed();
+
+      if (amountInLinkString.indexOf(amountInTxString) === -1) {
+        /*
+          if (this.lan === 'zh') {
+              this.alertServ.openSnackBar('转账数量不相等', 'Ok');
+          } else {
+              this.alertServ.openSnackBar('Inequal amount for deposit', 'Ok');
+          }
+          */
+         this.toastr.error(this.translateServ.instant('Inequal amount for deposit'));
+          return;
+      }
+
+      const subString = amountInLinkString.substr(amountInTxString.length);
+      if (subString && Number(subString) !== 0) {
+          console.log('not equal 2');
+          /*
+          if (this.lan === 'zh') {
+              this.alertServ.openSnackBar('转账数量不符合', 'Ok');
+          } else {
+              this.alertServ.openSnackBar('deposit amount not the same', 'Ok');
+          }
+          */
+         this.toastr.error(this.translateServ.instant('deposit amount not the same'));
+          return;
+      }
+
+      const originalMessage = this.coinServ.getOriginalMessage(coinType, this.utilServ.stripHexPrefix(txHash)
+          , amountInLink, this.utilServ.stripHexPrefix(addressInKanban));
+
+      console.log('originalMessage in deposit=', originalMessage);
+      const signedMessage: Signature = this.coinServ.signedMessage(originalMessage, keyPairs);
+
+
+      const coinPoolAddress = await this.kanbanServ.getCoinPoolAddress();
+      const abiHex = this.web3Serv.getDepositFuncABI(coinType, txHash, amountInLink, addressInKanban, signedMessage);
+
+      console.log('abiHex=', abiHex);
+      const nonce = await this.kanbanServ.getTransactionCount(addressInKanban);
+      // const nonce = await this.kanbanServ.getNonce(addressInKanban);
+      // console.log('nonce there we go =', nonce);
+      const optionsKanban = {
+          gasPrice: this.kanbanGasPrice,
+          gasLimit: this.kanbanGasLimit,
+      };
+      const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, coinPoolAddress, nonce, 0, optionsKanban);
+
+      console.log('txKanbanHex=', txKanbanHex);
+      // return 0;
+      this.kanbanServ.submitDeposit(txHex, txKanbanHex).subscribe((resp: any) => {
+          // console.log('resp=', resp);
+          if (resp && resp.data && resp.data.transactionID) {
+              /*
+              const item = {
+                  walletId: this.wallet.id,
+                  type: 'Deposit',
+                  coin: currentCoin.name,
+                  tokenType: currentCoin.tokenType,
+                  amount: amount,
+                  txid: resp.data.transactionID,
+                  to: officalAddress,
+                  time: new Date(),
+                  confirmations: '0',
+                  blockhash: '',
+                  comment: '',
+                  status: 'pending'
+              };
+              this.storageService.storeToTransactionHistoryList(item);
+              this.timerServ.transactionStatus.next(item);
+              this.timerServ.checkTransactionStatus(item);
+              */
+              //this.kanbanServ.incNonce();
+              //this.coinServ.addTxids(txids);
+              /*
+              if (this.lan === 'zh') {
+                  this.alertServ.openSnackBarSuccess('转币去交易所请求已提交，请等待' + environment.depositMinimumConfirmations[currentCoin.name] + '个确认', 'Ok');
+              } else {
+                  this.alertServ.openSnackBarSuccess('Moving fund to DEX was submitted, please wait for ' + environment.depositMinimumConfirmations[currentCoin.name] + ' confirmations.', 'Ok');
+              }
+              */
+             this.ngxSmartModalService.getModal('passwordModal').close(); 
+             this.toastr.info(this.translateServ.instant('Moving fund to DEX was submitted, please wait for ') 
+             + environment.depositMinimumConfirmations[currentCoin] + this.translateServ.instant('confirmations.'));
+          } else if (resp.error) {
+            this.toastr.error(resp.error);
+              //this.alertServ.openSnackBar(resp.error, 'Ok');
+          }
+      },
+          error => {
+              console.log('error====');
+              console.log(error);
+              if (error.error && error.error.error) {
+                this.toastr.error(error.error.error);
+                  //this.alertServ.openSnackBar(error.error.error, 'Ok');
+              } else if (error.message) {
+                this.toastr.error(error.message);
+                  //this.alertServ.openSnackBar(error.message, 'Ok');
+              }
+          }
+      );
+
+  }
     async sendCoinDo() {
       const pin = this.password;
       const currentCoin = this.currentCoin;

@@ -11,6 +11,9 @@ import { environment } from '../../../../environments/environment';
 import * as hdkey from 'ethereumjs-wallet/hdkey';
 import * as wif from 'wif';
 import { Address } from 'src/app/models/address';
+import { coin_list } from '../../../../environments/coins';
+import { Signature } from '../../../interfaces/kanban.interface';
+import * as bitcoinMessage from 'bitcoinjs-message';
 
 @Injectable({ providedIn: 'root' })
 export class CoinService {
@@ -25,6 +28,125 @@ export class CoinService {
 
     getAddress(addresses: any, name: string) {
         return addresses.filter(item => item.name == name)[0].address;
+    }
+    
+    getOriginalMessage(coinType: number, txHash: string, amount: BigNumber, address: string) {
+
+        let buf = '';
+        const coinTypeHex = coinType.toString(16);
+        buf += this.utilServ.fixedLengh(coinTypeHex, 8);
+        buf += this.utilServ.fixedLengh(txHash, 64);
+        const hexString = amount.toString(16);
+        buf += this.utilServ.fixedLengh(hexString, 64);
+        buf += this.utilServ.fixedLengh(address, 64);
+
+        return buf;
+    }
+
+    signedMessage(originalMessage: string, keyPair: any) {
+        // originalMessage = '000254cbd93f69af7373dcf5fc01372230d309684f95053c7c9cbe95cf4e4e2da731000000000000000000000000000000000000000000000000000009184e72a000000000000000000000000000a2a3720c00c2872397e6d98f41305066cbf0f8b3';
+        // console.log('originalMessage=', originalMessage);
+        let signature: Signature;
+        const name = keyPair.name;
+        const tokenType = keyPair.tokenType;
+
+        if (name === 'ETH' || tokenType === 'ETH') {
+            signature = this.web3Serv.signMessageWithPrivateKey(originalMessage, keyPair) as Signature;
+            // console.log('signature in signed is ');
+            // console.log(signature);
+        } else
+            if (name === 'FAB' || name === 'BTC' || tokenType === 'FAB' || name === 'BCH' || name === 'DOGE' || name === 'LTC') {
+                // signature = this.web3Serv.signMessageWithPrivateKey(originalMessage, keyPair) as Signature;
+                let signBuffer: Buffer;
+                console.log('keyPair.privateKeyBuffer.compressed===', keyPair.privateKeyBuffer.compressed);
+                // if(name === 'FAB' || name === 'BTC' || tokenType === 'FAB' || name === 'LTC' || name === 'DOGE') {
+                const chainName = (tokenType === 'FAB') ? 'FAB' : name;
+
+                const messagePrefix = environment.chains[chainName].network.messagePrefix;
+
+                console.log('messagePrefix=', messagePrefix);
+
+                signBuffer = bitcoinMessage.sign(originalMessage, keyPair.privateKeyBuffer.privateKey,
+                    keyPair.privateKeyBuffer.compressed, messagePrefix);
+                /*
+                } else 
+                if(name === 'BCH') {
+    
+                   
+                   var message = new BchMessage(originalMessage);
+    
+                   //var signature = message.sign(privateKey);
+                   
+                   var hash = message.magicHash();
+                   var ecdsa = new bitcore.crypto.ECDSA();
+                   ecdsa.hashbuf = hash;
+                   ecdsa.privkey = keyPair.privateKey;
+                   ecdsa.pubkey = keyPair.privateKey.toPublicKey();
+                   ecdsa.signRandomK();
+                   ecdsa.calci();
+                   signBuffer = ecdsa.sig.toCompact();
+                   // console.log('signature=', signature);
+    
+                }
+                */
+                /*
+                if (name === 'LTC') {
+                    var message = new LiteMessage(originalMessage);
+                    var base64 = message.sign(keyPair.privateKey);
+    
+                    signBuffer = Buffer.from(base64, 'base64');
+    
+                } else 
+                if (name === 'DOGE') {
+    
+                   //var message = new DogeMessage(originalMessage);
+    
+    
+                   //var MAGIC_BYTES = new Buffer('Actinium Signed Message:\n');
+                   var MAGIC_BYTES = new Buffer('Dogecoin Signed Message:\n');
+    
+                   var prefix1 = dogecore.encoding.BufferWriter.varintBufNum(MAGIC_BYTES.length);
+                   var messageBuffer = new Buffer(originalMessage);
+                   var prefix2 = dogecore.encoding.BufferWriter.varintBufNum(messageBuffer.length);
+                   var buf = Buffer.concat([prefix1, MAGIC_BYTES, prefix2, messageBuffer]);
+                    console.log('buf there eeeee=', buf);
+                   var hash = dogecore.crypto.Hash.sha256sha256(buf);
+                   //  return hash;
+                  
+                   console.log('hash there we go=');
+                   console.log(hash);
+    
+    
+                   //var hash = message.magicHash();
+                   var ecdsa = new dogecore.crypto.ECDSA();
+                   ecdsa.hashbuf = hash;
+                   ecdsa.privkey = keyPair.privateKey;
+                   ecdsa.pubkey = keyPair.privateKey.toPublicKey();
+                   ecdsa.signRandomK();
+                   ecdsa.calci();
+                   signBuffer = ecdsa.sig.toCompact();            
+                }
+                */
+                // const signHex = `${signBuffer.toString('hex')}`;
+                const v = `0x${signBuffer.slice(0, 1).toString('hex')}`;
+                const r = `0x${signBuffer.slice(1, 33).toString('hex')}`;
+                const s = `0x${signBuffer.slice(33, 65).toString('hex')}`;
+
+                // console.log('v=' + v);
+                // console.log('r=' + r);
+                // console.log('s=' + s);
+                signature = { r: r, s: s, v: v };
+
+                console.log('signature====', signature);
+            }
+        return signature;
+    }
+
+    getOfficialAddress(coinName: string) {
+        if (environment.addresses.exchangilyOfficial[coinName]) {
+            return environment.addresses.exchangilyOfficial[coinName];
+        }
+        return '';
     }
 
     formMyCoin(addresses: any, name: string) {
@@ -138,6 +260,27 @@ export class CoinService {
         return { txHash: txHash, errMsg: errMsg };
     }
 
+    getCoinTypeIdByName(name: string) {
+        name = name.toUpperCase();
+        for (let i = 0; i < coin_list.length; i++) {
+            const coin = coin_list[i];
+            if (coin.name === name) {
+                return coin.id;
+            }
+        }
+        return -1;
+    }
+    
+    getCoinNameByTypeId(id: number) {
+
+        for (let i = 0; i < coin_list.length; i++) {
+            const coin = coin_list[i];
+            if (coin.id === id) {
+                return coin.name;
+            }
+        }
+        return '';
+    }
 
     async getFabTransactionHex(seed: any, mycoin: MyCoin, to: any, amount: number, extraTransactionFee: number,
         satoshisPerBytes: number, bytesPerInput: number, getTransFeeOnly: boolean) {
