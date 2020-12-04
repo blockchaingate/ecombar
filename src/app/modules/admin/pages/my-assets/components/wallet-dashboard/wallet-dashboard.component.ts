@@ -116,7 +116,7 @@ export class WalletDashboardComponent implements OnInit{
     }
 
     withdrawConfirm() {
-      this.opType = 'deposit';
+      this.opType = 'withdraw';
       this.ngxSmartModalService.getModal('withdrawModal').close();
       this.ngxSmartModalService.getModal('passwordModal').open(); 
     }
@@ -141,9 +141,11 @@ export class WalletDashboardComponent implements OnInit{
         this.sendCoinDo();
       } else
       if(this.opType == 'deposit') {
+        console.log('deposit do start');
         this.depositDo();
       } else
       if(this.opType == 'withdraw') {
+        console.log('withdrawDo do start');
         this.withdrawDo();
       }      
     }
@@ -157,6 +159,7 @@ export class WalletDashboardComponent implements OnInit{
         this.warnPwdErr();
         return;
       }
+      console.log('amount withdraw=', amount);
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const amountInLink = new BigNumber(amount).multipliedBy(new BigNumber(1e18)); // it's for all coins.
       let addressInWallet = currentCoin.receiveAdds[0].address;
@@ -207,8 +210,9 @@ export class WalletDashboardComponent implements OnInit{
 
       const abiHex = this.web3Serv.getWithdrawFuncABI(this.currentCoinId, amountInLink, addressInWallet);
 
+      console.log('abiHex===', abiHex);
       const coinPoolAddress = await this.kanbanServ.getCoinPoolAddress();
-      const nonce = await this.kanbanServ.getTransactionCount(keyPairsKanban.address);
+      const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
 
       this.gasPrice = Number(this.gasPrice);
       this.gasLimit = Number(this.gasLimit);
