@@ -10,7 +10,7 @@ import { CommentService } from '../../../shared/services/comment.service';
   selector: 'app-admin-my-comments',
   providers: [ToolbarService, LinkService, ImageService, HtmlEditorService],
   templateUrl: './my-comments.component.html',
-  styleUrls: ['./my-comments.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./my-comments.component.scss']
 })
 export class MyCommentsComponent implements OnInit{
     comments: any;

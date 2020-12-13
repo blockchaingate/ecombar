@@ -8,7 +8,7 @@ import { MerchantService } from '../../../shared/services/merchant.service';
   selector: 'app-admin-categories',
   providers: [CategoryService],
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
   categories: any;

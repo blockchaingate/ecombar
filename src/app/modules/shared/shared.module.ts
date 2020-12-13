@@ -13,8 +13,14 @@ import { PaymentService } from './services/payment.service';
 import { AddressService } from './services/address.service';
 import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
+import { WalletService } from './services/wallet.service';
 import { TranslateService } from './services/translate.service';
+import { UtilService } from './services/util.service';
 import { UploadService } from './services/upload.service';
+import { ApiService } from './services/api.service';
+import { Web3Service } from './services/web3.service';
+import { CoinService } from './services/coin.service';
+import { KanbanService } from './services/kanban.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
 import { HttpClient } from '@angular/common/http';
@@ -61,7 +67,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateService,
     FavoriteService,
     PaymentService,
-    CommentService
+    WalletService,
+    CoinService,
+    ApiService,
+    Web3Service,
+    CommentService,
+    KanbanService
   ]
 })
 export class SharedModule {
@@ -74,7 +85,12 @@ export class SharedModule {
         PaymentService,
         FavoriteService,
         BrandService,
-        CommentService
+        WalletService,
+        CommentService,
+        CoinService,
+        ApiService,
+        Web3Service,        
+        KanbanService
       ]
     };
   }

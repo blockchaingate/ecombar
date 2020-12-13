@@ -12,10 +12,12 @@ import { CategoryAddComponent } from './pages/category-add/category-add.componen
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { WalletPwdComponent } from './pages/my-assets/components/create-wallet/wallet-pwd.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { BrandsComponent } from './pages/brands/brands.component';
+import { ConfirmMnemonicsComponent } from './pages/my-assets/components/create-wallet/confirmmnem.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
@@ -29,6 +31,7 @@ import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
 import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
+import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -64,8 +67,23 @@ const routes: Routes = [
         path: 'my-assets', component: MyAssetsComponent
       }, 
       {
+        path: 'wallet-dashboard', component: WalletDashboardComponent
+      },
+      {
+        path: 'wallet-pwd', component: WalletPwdComponent
+      },
+      {
+        path: 'confirm-mnemonics', component: ConfirmMnemonicsComponent
+      }, 
+      {
         path: 'create-wallet', component: CreateWalletComponent
       },  
+      {
+        path: 'wallet-pwd', component: WalletPwdComponent
+      },       
+      {
+        path: 'confirm-words', component: ConfirmMnemonicsComponent
+      },        
       {
         path: 'import-wallet', component: ImportWalletComponent
       },  

@@ -3,7 +3,7 @@ import { HttpService } from './http.service';
 import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
 import { User } from '../models/user';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

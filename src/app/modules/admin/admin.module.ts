@@ -28,17 +28,24 @@ import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
-import { NoWalletComponent } from './pages/my-assets/components/no-wallet/no-wallet.component';
+import { MnemonicComponent } from './pages/my-assets/components/mnemonic/mnemonic.component';
+import { MnemeditComponent } from './pages/my-assets/components/mnemonic/mnemedit.component';
+import { NoWalletComponent } from './pages/my-assets/components/create-wallet/no-wallet.component';
+import { WalletPwdComponent } from './pages/my-assets/components/create-wallet/wallet-pwd.component';
 import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
+import { ConfirmMnemonicsComponent } from './pages/my-assets/components/create-wallet/confirmmnem.component';
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
 import { CommentComponent } from './pages/comment/comment.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { CartModule } from '../home/cart/cart.module';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { QRCodeModule } from 'angularx-qrcode';
+
 @NgModule({
   declarations: [
     AdminComponent,
@@ -47,13 +54,19 @@ import { CartModule } from '../home/cart/cart.module';
     NavComponent,
     WalletDashboardComponent,
     NoWalletComponent,
+    MnemonicComponent,
+    MnemeditComponent,
     CreateWalletComponent,
     ImportWalletComponent,
     MyCommentsComponent,
     FavoriteComponent,
+    WalletPwdComponent,
+    MnemonicComponent,
+    MnemeditComponent,
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    WalletPwdComponent,
     CommentComponent,
     CartComponent,
     MyAssetsComponent,
@@ -65,6 +78,7 @@ import { CartModule } from '../home/cart/cart.module';
     CollectionAddComponent,
     UserAddComponent,
     AddressComponent,
+    ConfirmMnemonicsComponent,
     ShippingComponent,
     MerchantsComponent,
     ProductsComponent,
@@ -74,6 +88,7 @@ import { CartModule } from '../home/cart/cart.module';
     ProductAddComponent,
     CategoryAddComponent,
     BrandsComponent,
+    ConfirmMnemonicsComponent,
     BrandAddComponent
   ],
   imports: [
@@ -82,6 +97,9 @@ import { CartModule } from '../home/cart/cart.module';
     SharedModule,
     FormsModule,
     CartModule,
+    QRCodeModule,
+    NgxSmartModalModule.forRoot(),
+    ReactiveFormsModule,
     RichTextEditorModule
   ],
   providers: []

@@ -7,7 +7,7 @@ import { AuthService } from '../../../shared/services/auth.service';
   selector: 'app-admin-cart',
   providers: [],
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit{
     currentTab: string;
