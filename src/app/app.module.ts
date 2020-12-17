@@ -6,10 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { MenuMobileComponent } from './modules/home/layout/header/menu-mobile/menu-mobile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    // MenuMobileComponent,
   ],
   imports: [
     BrowserModule,

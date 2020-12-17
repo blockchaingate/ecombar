@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   categories: [];
   cartCount: number;
   user: any;
+  menu = false;
 
   constructor(
     private translateServ: TranslateService,
@@ -71,5 +72,15 @@ export class HeaderComponent implements OnInit {
 
     });
 
+  }
+
+  openMenu(){
+    console.log("Open Menu");
+    this.menu = !this.menu;
+  }
+
+  closeMenu(){
+    console.log("close Menu");
+    this.menu = false;
   }
 }

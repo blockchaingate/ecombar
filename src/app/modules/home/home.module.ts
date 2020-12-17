@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SharedModule } from '../shared/shared.module';
 // import { QRCodeModule } from 'angularx-qrcode';
@@ -12,7 +13,8 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     HomeComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    MenuMobileComponent,
   ],
   imports: [
     // QRCodeModule,
