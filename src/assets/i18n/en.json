@@ -79,6 +79,8 @@
     "Seed Phrase is invalid": "Seed Phrase is invalid",
     "Already have mnemonics? Restore": "Already have mnemonics? Restore",
     "Next": "Next",
+    "Your password is invalid.": "Your password is invalid.",
+    "Ok": "Ok",
     "Error occured, please try again.": "Error occured, please try again.",
     "Restore Wallet": "Restore Wallet",
     "Backup Wallet Seed Phrases": "Backup Wallet Seed Phrases",

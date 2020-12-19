@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import * as createHash from 'create-hash';
 import BigNumber from 'bignumber.js/bignumber';
 import { coin_list } from '../../../../environments/coins';
+import { MyCoin } from '../../../models/mycoin';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
@@ -14,6 +15,87 @@ export class UtilService {
         return CryptoJS.SHA256(data);
     }
 
+    getDecimal(coin: MyCoin) {
+        if (coin.decimals) {
+            return coin.decimals;
+        }
+        if (coin.name === 'ETH') {
+            return 18;
+        }
+        return 8;
+    }
+
+    fixedLengh(obj: any, length: number) {
+        let str = obj.toString();
+        const strLength = str.length;
+        if (strLength >= length) {
+            str = str.substring(strLength - length);
+            // console.log(str);
+            return str;
+        }
+        for (let i = 0; i < length - strLength; i++) {
+            str = '0' + str;
+        }
+        return str;
+    }
+
+    convertLiuToFabcoin(amount) {
+
+        return Number(Number(amount * 1e-8).toFixed(8));
+    }
+
+    hex2Buffer(hexString) {
+        const buffer = [];
+        for (let i = 0; i < hexString.length; i += 2) {
+            buffer[buffer.length] = (parseInt(hexString[i], 16) << 4) | parseInt(hexString[i + 1], 16);
+        }
+        return Buffer.from(buffer);
+    }
+    
+    number2Buffer(num) {
+        const buffer = [];
+        const neg = (num < 0);
+        num = Math.abs(num);
+        while (num) {
+            buffer[buffer.length] = num & 0xff;
+            num = num >> 8;
+        }
+
+        const top = buffer[buffer.length - 1];
+        if (top & 0x80) {
+            buffer[buffer.length] = neg ? 0x80 : 0x00;
+        } else if (neg) {
+            buffer[buffer.length - 1] = top | 0x80;
+        }
+        return Buffer.from(buffer);
+    }   
+
+    toBigNumber(amount, decimal: number) {
+        if (amount === 0 || amount === '0') {
+            return '0';
+        }
+        const amountStr = amount.toString();
+        const amountArr = amountStr.split('.');
+        const amountPart1 = amountArr[0];
+        const numPart1 = Number(amountPart1);
+        let amountPart2 = '';
+        if (amountArr[1]) {
+            amountPart2 = amountArr[1].substring(0, decimal);
+        }
+
+        const amountPart2Length = amountPart2.length;
+        if (decimal > amountPart2Length) {
+            for (let i = 0; i < decimal - amountPart2Length; i++) {
+                amountPart2 += '0';
+            }
+        }
+
+        let amountStrFull = (numPart1 ? amountPart1 : '') + amountPart2;
+        amountStrFull = amountStrFull.replace(/^0+/, '');
+        return amountStrFull;
+    }
+
+    
     aesEncrypt(messageToEnc: string, pwd: string) {
         const encrypted = CryptoJS.AES.encrypt(this.auth_code + messageToEnc, pwd).toString();
         return encrypted;
@@ -68,7 +150,13 @@ export class UtilService {
     }  
     
     getCoinNameByTypeId(id: number) {
-        return coin_list[id].name;
+        for (let i = 0; i < coin_list.length; i++) {
+            const coin = coin_list[i];
+            if (coin.id === id) {
+                return coin.name;
+            }
+        }
+        return '';   
     }
 
     fabToExgAddress(address: string) {

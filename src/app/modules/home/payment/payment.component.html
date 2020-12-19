@@ -18,12 +18,12 @@
                     </div>
 
 
-                    <div class="py-3">
+                    <div class="py-3 ">
                         <div class="py-2 text-muted">
                             Shipping services
                         </div>
-                        <div class="row">
-                            <div class="col col-4 border mx-2 p-3" [ngClass]="selectedShippingService=='express' ? 'selected' : ''" (click)="selectShippingService('express')">
+                        <div class="row Shipping-method">
+                            <div class="col col-4 border mx-2 p-3 " [ngClass]="selectedShippingService=='express' ? 'selected' : ''" (click)="selectShippingService('express')">
                                 <div class="d-flex align-items-start">
                                     <img src="/assets/svg/delivery2.svg">
                                     <div class="px-3">
@@ -85,7 +85,7 @@
                         <div class="py-2 text-muted">
                             Payment options
                         </div>
-                        <div>
+                        <div class="Payment-method">
                            <div class="border p-3 mb-2"  [ngClass]="selectedPayment=='creditcard' ? 'selected' : ''" (click)="selectPayment('creditcard')">
                                <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-start">
@@ -151,7 +151,7 @@
                     </div>
                     
                     <div class="text-center">
-                        <button class="btn" (click)="placeOrder()">
+                        <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="placeOrder()">
                             Place order
                         </button>
                         

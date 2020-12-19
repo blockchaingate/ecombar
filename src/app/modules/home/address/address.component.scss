@@ -1,3 +1,20 @@
 .container {
     padding-top: 50px;
 }
+form{
+    background-color: #f7f7f7;
+}
+
+.address-detail{
+    display: grid;
+
+    label{
+        padding-top: 10px;
+    }
+
+    input{
+        border: none;
+        background: #fff;
+        padding: 5px 5px;
+    }
+}

@@ -14,27 +14,27 @@ export class HeaderComponent implements OnInit {
   cartCount: number;
   user: any;
   menu = false;
+  _lang: string;
 
-  constructor(
-    private translateServ: TranslateService,
-    private categoryServ: CategoryService,
-    private storageServ: StorageService,
-    private cartStoreServ: CartStoreService) {
+  constructor(private translateServ: TranslateService, private categoryServ: CategoryService,
+              private storageServ: StorageService, private cartStoreServ: CartStoreService) {
   }
 
-  _lang: string;
   get lang(): string {
     return this._lang;
   }
 
   set lang(value: string) {
     this._lang = value;
-    // console.log('go set lang', value);
-    this.storageServ.lang = value;
+
+    localStorage.setItem('_lang', value);
+    this.translateServ.use(value);
     this.translateServ.setDefaultLang(value);
   }
 
   ngOnInit(): void {
+    this.setLan();
+
     this.storageServ.getUser().subscribe(
       (user: any) => {
         console.log('user=', user);
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
       }
     );
     console.log('uer=', this.storageServ.user);
-    this.lang = this.storageServ.lang || this.translateServ.getDefaultLang();
+    this.lang = this.storageServ.lang;
     this.translateServ.setDefaultLang(this._lang);
 
     this.categoryServ.getAdminCategories().subscribe(
@@ -82,5 +82,21 @@ export class HeaderComponent implements OnInit {
   closeMenu(){
     console.log("close Menu");
     this.menu = false;
+  }
+  setLan() {
+    let lang = window.localStorage.getItem('_lang');
+
+    if (!lang) {
+      lang = navigator.language;
+      lang = lang.substr(0, 2).toLowerCase();
+      if (lang === 'cn' || lang === 'zh') {
+        lang = 'sc';
+      }
+      localStorage.setItem('_lang', lang);
+    }
+
+    this._lang = lang;
+    this.translateServ.use(lang);
+    this.translateServ.setDefaultLang(lang);
   }
 }

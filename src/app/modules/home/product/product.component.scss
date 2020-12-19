@@ -1,5 +1,5 @@
 .container {
-    padding-top: 120px;
+    // padding-top: 120px;
 }
 
 .img-thumbnail {
@@ -47,4 +47,16 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+
+#sliderThumb{
+    display: flex;
+}
+
+.btn-primary-dark{
+    cursor: pointer;
+}
+
+.btn-primary-dark:hover{
+    color:#fff !important;
 }

@@ -1,3 +1,46 @@
+.header-container #nav-belt {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    padding-left: .5125rem;
+    padding-right: .5125rem;
+}
+
+.img-responsive {
+    height: 24px;
+    width: 40px;
+}
+
+.header-container #nav-belt a {
+    padding-left: 10px;
+    font-size: 1.25rem;
+}
+
+.header-container {
+    color: white;
+}
+
+img,
+svg {
+    vertical-align: middle;
+}
+
+.search-bar {
+    flex: 1;
+}
+
+.flex-box {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#search-text {
+    width: 100%;
+}
 
 .main-logo{
     max-width: 50px;

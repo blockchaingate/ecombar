@@ -3,7 +3,7 @@
         <div class="container">
             <h1>{{"Address"|translate}}</h1>
             <hr>
-
+            <div class="address-detail">
             <label for="email"><b>{{"Name" | translate}}</b></label>
             <input type="text" placeholder="{{'Enter name'|translate}}" [(ngModel)]="name" name="name" required>
             <label for="email"><b>{{"Suite" | translate}}</b></label>
@@ -26,10 +26,10 @@
 
             <label for="email"><b>{{"Country"|translate}}</b></label>
             <input type="text" placeholder="{{'Enter country'|translate}}" [(ngModel)]="country" name="country">
-
+        </div>
             <div class="d-flex justify-content-between py-2">
-                <button type="button" class="btn cancelbtn">{{"Cancel"|translate}}</button>
-                <button type="submit" class="btn signinbtn" (click)="confirm()">{{"Confirm"|translate}}</button>
+                <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">{{"Cancel"|translate}}</button>
+                <button type="submit" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="confirm()">{{"Confirm"|translate}}</button>
             </div>
         </div>
     </form>

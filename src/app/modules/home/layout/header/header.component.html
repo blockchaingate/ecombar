@@ -40,260 +40,358 @@
 
 
 <div class="header-container">
-    <header id="header" class="u-header u-header-left-aligned-nav">
-        <div class="u-header__section">
-            <!-- Topbar -->
-            <div class="u-header-topbar py-2 d-none d-xl-block bg-primary border-bottom-0">
-                <div class="container">
-                    <div class="d-flex align-items-center">
-                        <div class="topbar-left">
-                            <a href="#" class="text-gray-70 font-size-13 u-header-topbar__nav-link">Welcome to
-                                Ecombar</a>
-                        </div>
-                        <div class="topbar-right ml-auto">
-                            <ul class="list-inline mb-0">
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                    <a href="#" class="u-header-topbar__nav-link"><i class="ec ec-map-pointer mr-1"></i>
-                                        Store Locator</a>
-                                </li>
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
-                                    <a href="#" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
-                                        Track Your Order</a>
-                                </li>
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg u-header-topbar__nav-item-no-border u-header-topbar__nav-item-border-single">
-                                    <div class="d-flex align-items-center">
-                                        <!-- Language -->
-                                        <div class="position-relative">
-                                            <a id="languageDropdownInvoker"
-                                                class="dropdown-nav-link dropdown-toggle d-flex align-items-center u-header-topbar__nav-link font-weight-normal"
-                                                href="javascript:;" role="button" aria-controls="languageDropdown"
-                                                aria-haspopup="true" aria-expanded="false" data-unfold-event="hover"
-                                                data-unfold-target="#languageDropdown" data-unfold-type="css-animation"
-                                                data-unfold-duration="300" data-unfold-delay="300"
-                                                data-unfold-hide-on-scroll="true" data-unfold-animation-in="slideInUp"
-                                                data-unfold-animation-out="fadeOut">
-                                                <span class="d-inline-block d-sm-none">US</span>
-                                                <span class="d-none d-sm-inline-flex align-items-center"><i
-                                                        class="ec ec-dollar mr-1"></i> Dollar (US)</span>
-                                            </a>
-
-                                            <div id="languageDropdown" class="dropdown-menu dropdown-unfold"
-                                                aria-labelledby="languageDropdownInvoker">
-                                                <a class="dropdown-item active" href="#">English</a>
-                                                <a class="dropdown-item" href="#">Deutsch</a>
-                                                <a class="dropdown-item" href="#">Español‎</a>
-                                            </div>
-                                        </div>
-                                        <!-- End Language -->
-                                    </div>
-                                </li>
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
-                                    <!-- Account Sidebar Toggle Button -->
-                                    <a id="sidebarNavToggler" href="javascript:;" role="button"
-                                        class="u-header-topbar__nav-link" aria-controls="sidebarContent"
-                                        aria-haspopup="true" aria-expanded="false" data-unfold-event="click"
-                                        data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
-                                        data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight"
-                                        data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
-                                        <i class="ec ec-user mr-1"></i> <a routerLink="/auth/signin">Register</a> <span
-                                            class="text-primary-darken-5">or</span><a routerLink="/auth/signin">Sign in</a>
-                                    </a>
-                                    <!-- End Account Sidebar Toggle Button -->
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Topbar -->
-
-            <!-- Logo-Search-header-icons -->
-            <div class="py-2 py-xl-5 bg-primary">
-                <div class="container my-0dot5 my-xl-0">
-                    <div class="row align-items-center">
-                        <!-- Logo-offcanvas-menu -->
-                        <div class="col-auto">
-                            <!-- Nav -->
-                            <nav
-                                class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
-                                <!-- Logo -->
-                                <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center"
-                                routerLink="/" aria-label="Electro">
-                                    <img class="main-logo" src="/assets/images/logo/ecombar-logo.png" />
-                                    <div class="logo-text">ECOMBAR</div>
-
-
-
-                                </a>
-                                <!-- End Logo -->
-
-                                <!-- Fullscreen Toggle Button -->
-                                <button id="sidebarHeaderInvokerMenu" type="button"
-                                    class="navbar-toggler d-block btn u-hamburger mr-3 mr-xl-0" (click)="openMenu()">
-                                    <span id="hamburgerTriggerMenu" class="u-hamburger__box">
-                                        <span class="u-hamburger__inner"></span>
-                                    </span>
-                                </button>
-                                <!-- End Fullscreen Toggle Button -->
-                            </nav>
-                            <!-- End Nav -->
-
-                            <!-- ========== HEADER SIDEBAR ========== -->
-                            <aside id="sidebarHeader1" class="u-sidebar u-sidebar--left"
-                                aria-labelledby="sidebarHeaderInvokerMenu" *ngIf='menu'>
-
-                                <div class="u-sidebar__scroller">
-                                    <div class="u-sidebar__container">
-                                        <div class="u-header-sidebar__footer-offset pb-0">
-                                            <!-- Toggle Button -->
-                                            <div class="position-absolute top-0 right-0 z-index-2 pt-4 pr-7">
-                                                <button type="button" class="close ml-auto" (click)="closeMenu()">
-                                                    <span aria-hidden="true"><i
-                                                            class="ec ec-close-remove text-gray-90 font-size-20"></i></span>
-                                                </button>
-                                            </div>
-                                            <!-- End Toggle Button -->
-
-                                            <!-- Content -->
-                                            <div class="js-scrollbar u-sidebar__body">
-                                                <div id="headerSidebarContent"
-                                                    class="u-sidebar__content u-header-sidebar__content">
-                                                    <!-- Logo -->
-                                                    <a class="d-flex ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical"
-                                                    routerLink="/" aria-label="Electro">
-                                                        <img src="/assets/images/logo/ecombar-logo.png" />
-
-                                                    </a>
-                                                    <!-- End Logo -->
-
-                                                    <app-menu-mobile></app-menu-mobile>
+        <header id="header" class="u-header u-header-left-aligned-nav">
+                <div class="u-header__section">
+                        <!-- Topbar -->
+                        <div class="u-header-topbar py-2 d-none d-xl-block bg-primary border-bottom-0">
+                                <div class="container">
+                                        <div class="d-flex align-items-center">
+                                                <div class="topbar-left">
+                                                        <a href="#"
+                                                                class="text-gray-70 font-size-13 u-header-topbar__nav-link">Welcome
+                                                                to
+                                                                Ecombar</a>
                                                 </div>
-                                            </div>
-                                            <!-- End Content -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </aside>
-                            <!-- ========== END HEADER SIDEBAR ========== -->
-                        </div>
-                        <!-- End Logo-offcanvas-menu -->
-                        <!-- Search Bar -->
-                        <!-- Search Bar -->
-                        <div class="col d-none d-xl-block">
-                            <form class="js-focus-state">
-                                <label class="sr-only" for="searchproduct">Search</label>
-                                <div class="input-group">
-                                    <input type="email"
-                                        class="form-control py-2 pl-5 font-size-15 border-right-0 height-42 border-width-0 rounded-left-pill border-primary"
-                                        name="email" id="searchproduct-item" placeholder="Search for Products"
-                                        aria-label="Search for Products" aria-describedby="searchProduct1" required>
-                                    <div class="input-group-append">
-                                        <!-- Select -->
-                                        <select
-                                            class="js-select selectpicker dropdown-select custom-search-categories-select bg-white"
-                                            data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
-                                            <option value="one" selected>All Categories</option>
-                                            <option value="two">Categories 1</option>
-                                            <option value="three">Categories 2</option>
-                                            <option value="four">Categories 3</option>
-                                        </select>
-                                        <!-- End Select -->
-                                        <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill"
-                                            type="button" id="searchProduct1" [routerLink]="['/category']" routerLinkActive="router-link-active" >
-                                            <span class="ec ec-search font-size-20"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- End Search Bar -->
-                        <!-- Header Icons -->
-                        <div class="col col-xl-auto text-right text-xl-left pl-0 pl-xl-3 position-static">
-                            <div class="d-inline-flex">
-                                <ul class="d-flex list-unstyled mb-0 align-items-center">
-                                    <!-- Search -->
-                                    <li class="col d-xl-none px-2 px-sm-3 position-static">
-                                        <a id="searchClassicInvoker"
-                                            class="font-size-22 text-gray-90 text-lh-1 btn-text-secondary"
-                                            href="javascript:;" role="button" data-toggle="tooltip" data-placement="top"
-                                            title="Search" aria-controls="searchClassic" aria-haspopup="true"
-                                            aria-expanded="false" data-unfold-target="#searchClassic"
-                                            data-unfold-type="css-animation" data-unfold-duration="300"
-                                            data-unfold-delay="300" data-unfold-hide-on-scroll="true"
-                                            data-unfold-animation-in="slideInUp" data-unfold-animation-out="fadeOut">
-                                            <span class="ec ec-search"></span>
-                                        </a>
+                                                <div class="topbar-right ml-auto">
+                                                        <ul class="list-inline mb-0">
+                                                                <li
+                                                                        class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
+                                                                        <a href="#" class="u-header-topbar__nav-link"><i
+                                                                                        class="ec ec-map-pointer mr-1"></i>
+                                                                                Store Locator</a>
+                                                                </li>
+                                                                <li
+                                                                        class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
+                                                                        <a href="#" class="u-header-topbar__nav-link"><i
+                                                                                        class="ec ec-transport mr-1"></i>
+                                                                                Track Your Order</a>
+                                                                </li>
+                                                                <li
+                                                                        class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg u-header-topbar__nav-item-no-border u-header-topbar__nav-item-border-single">
+                                                                        <div class="d-flex align-items-center">
+                                                                                <!-- Language -->
+                                                                                <div class="position-relative">
+                                                                                        <a id="languageDropdownInvoker"
+                                                                                                class="dropdown-nav-link dropdown-toggle d-flex align-items-center u-header-topbar__nav-link font-weight-normal"
+                                                                                                href="javascript:;"
+                                                                                                role="button"
+                                                                                                aria-controls="languageDropdown"
+                                                                                                aria-haspopup="true"
+                                                                                                aria-expanded="false"
+                                                                                                data-unfold-event="hover"
+                                                                                                data-unfold-target="#languageDropdown"
+                                                                                                data-unfold-type="css-animation"
+                                                                                                data-unfold-duration="300"
+                                                                                                data-unfold-delay="300"
+                                                                                                data-unfold-hide-on-scroll="true"
+                                                                                                data-unfold-animation-in="slideInUp"
+                                                                                                data-unfold-animation-out="fadeOut">
+                                                                                                <span
+                                                                                                        class="d-inline-block d-sm-none">US</span>
+                                                                                                <span
+                                                                                                        class="d-none d-sm-inline-flex align-items-center"><i
+                                                                                                                class="ec ec-dollar mr-1"></i>
+                                                                                                        Dollar
+                                                                                                        (US)</span>
+                                                                                        </a>
 
-                                        <!-- Input -->
-                                        <div id="searchClassic"
-                                            class="dropdown-menu dropdown-unfold dropdown-menu-right left-0 mx-2"
-                                            aria-labelledby="searchClassicInvoker">
-                                            <form class="js-focus-state input-group px-3">
-                                                <input class="form-control" type="search" placeholder="Search Product">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-primary px-3" type="button"><i
-                                                            class="font-size-18 ec ec-search"></i></button>
+                                                                                        <div id="languageDropdown"
+                                                                                                class="dropdown-menu dropdown-unfold"
+                                                                                                aria-labelledby="languageDropdownInvoker">
+                                                                                                <a class="dropdown-item active"
+                                                                                                        href="#">English</a>
+                                                                                                <a class="dropdown-item"
+                                                                                                        href="#">Deutsch</a>
+                                                                                                <a class="dropdown-item"
+                                                                                                        href="#">Español‎</a>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <!-- End Language -->
+                                                                        </div>
+                                                                </li>
+                                                                <li
+                                                                        class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
+                                                                        <!-- Account Sidebar Toggle Button -->
+                                                                        <a id="sidebarNavToggler" href="javascript:;"
+                                                                                role="button"
+                                                                                class="u-header-topbar__nav-link"
+                                                                                aria-controls="sidebarContent"
+                                                                                aria-haspopup="true"
+                                                                                aria-expanded="false"
+                                                                                data-unfold-event="click"
+                                                                                data-unfold-hide-on-scroll="false"
+                                                                                data-unfold-target="#sidebarContent"
+                                                                                data-unfold-type="css-animation"
+                                                                                data-unfold-animation-in="fadeInRight"
+                                                                                data-unfold-animation-out="fadeOutRight"
+                                                                                data-unfold-duration="500">
+                                                                                <i class="ec ec-user mr-1"></i> <a
+                                                                                [routerLink]="[user ? '/admin' : '/auth/signin']">{{(user ? 'My account' : 'Login') | translate}}</a>
+                                                                                <!-- <span
+                                                                                        class="text-primary-darken-5">or</span><a
+                                                                                        routerLink="/auth/signin">Sign
+                                                                                        in</a> -->
+                                                                        </a>
+                                                                        <!-- End Account Sidebar Toggle Button -->
+                                                                </li>
+                                                        </ul>
                                                 </div>
-                                            </form>
                                         </div>
-                                        <!-- End Input -->
-                                    </li>
-                                    <!-- End Search -->
-                                    <li class="col d-none d-xl-block"><a href="../shop/compare.html"
-                                            class="text-gray-90" data-toggle="tooltip" data-placement="top"
-                                            title="Compare"><i class="font-size-22 ec ec-compare"></i></a></li>
-                                    <li class="col d-none d-xl-block">
-                                            <a routerLink="/wishlist"
-                                            class="text-gray-90" data-toggle="tooltip" data-placement="top"
-                                            title="Favorites"><i class="font-size-22 ec ec-favorites"></i></a></li>
-                                    <!-- <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html"
+                                </div>
+                        </div>
+                        <!-- End Topbar -->
+
+                        <!-- Logo-Search-header-icons -->
+                        <div class="py-2 py-xl-5 bg-primary">
+                                <div class="container my-0dot5 my-xl-0">
+                                        <div class="row align-items-center">
+                                                <!-- Logo-offcanvas-menu -->
+                                                <div class="col-auto">
+                                                        <!-- Nav -->
+                                                        <nav
+                                                                class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
+                                                                <!-- Logo -->
+                                                                <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center"
+                                                                        routerLink="/" aria-label="Electro">
+                                                                        <img class="main-logo"
+                                                                                src="/assets/images/logo/ecombar-logo.png" />
+                                                                        <div class="logo-text">ECOMBAR</div>
+
+
+
+                                                                </a>
+                                                                <!-- End Logo -->
+
+                                                                <!-- Fullscreen Toggle Button -->
+                                                                <button id="sidebarHeaderInvokerMenu" type="button"
+                                                                        class="navbar-toggler d-block btn u-hamburger mr-3 mr-xl-0"
+                                                                        (click)="openMenu()">
+                                                                        <span id="hamburgerTriggerMenu"
+                                                                                class="u-hamburger__box">
+                                                                                <span class="u-hamburger__inner"></span>
+                                                                        </span>
+                                                                </button>
+                                                                <!-- End Fullscreen Toggle Button -->
+                                                        </nav>
+                                                        <!-- End Nav -->
+
+                                                        <!-- ========== HEADER SIDEBAR ========== -->
+                                                        <aside id="sidebarHeader1" class="u-sidebar u-sidebar--left"
+                                                                aria-labelledby="sidebarHeaderInvokerMenu" *ngIf='menu'>
+
+                                                                <div class="u-sidebar__scroller">
+                                                                        <div class="u-sidebar__container">
+                                                                                <div
+                                                                                        class="u-header-sidebar__footer-offset pb-0">
+                                                                                        <!-- Toggle Button -->
+                                                                                        <div
+                                                                                                class="position-absolute top-0 right-0 z-index-2 pt-4 pr-7">
+                                                                                                <button type="button"
+                                                                                                        class="close ml-auto"
+                                                                                                        (click)="closeMenu()">
+                                                                                                        <span
+                                                                                                                aria-hidden="true"><i
+                                                                                                                        class="ec ec-close-remove text-gray-90 font-size-20"></i></span>
+                                                                                                </button>
+                                                                                        </div>
+                                                                                        <!-- End Toggle Button -->
+
+                                                                                        <!-- Content -->
+                                                                                        <div
+                                                                                                class="js-scrollbar u-sidebar__body">
+                                                                                                <div id="headerSidebarContent"
+                                                                                                        class="u-sidebar__content u-header-sidebar__content">
+                                                                                                        <!-- Logo -->
+                                                                                                        <a class="d-flex ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical"
+                                                                                                                routerLink="/"
+                                                                                                                aria-label="Electro">
+                                                                                                                <img
+                                                                                                                        src="/assets/images/logo/ecombar-logo.png" />
+
+                                                                                                        </a>
+                                                                                                        <!-- End Logo -->
+
+                                                                                                        <app-menu-mobile>
+                                                                                                        </app-menu-mobile>
+                                                                                                </div>
+                                                                                        </div>
+                                                                                        <!-- End Content -->
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </aside>
+                                                        <!-- ========== END HEADER SIDEBAR ========== -->
+                                                </div>
+                                                <!-- End Logo-offcanvas-menu -->
+                                                <!-- Search Bar -->
+                                                <!-- Search Bar -->
+                                                <div class="col d-none d-xl-block">
+                                                        <form class="js-focus-state">
+                                                                <label class="sr-only"
+                                                                        for="searchproduct">Search</label>
+                                                                <div class="input-group">
+                                                                        <input type="email"
+                                                                                class="form-control py-2 pl-5 font-size-15 border-right-0 height-42 border-width-0 rounded-left-pill border-primary"
+                                                                                name="email" id="searchproduct-item"
+                                                                                placeholder="Search for Products"
+                                                                                aria-label="Search for Products"
+                                                                                aria-describedby="searchProduct1"
+                                                                                required>
+                                                                        <div class="input-group-append">
+                                                                                <!-- Select -->
+                                                                                <select class="js-select selectpicker dropdown-select custom-search-categories-select bg-white"
+                                                                                        data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
+                                                                                        <option value="one" selected>All
+                                                                                                Categories</option>
+                                                                                        <option value="two">Categories 1
+                                                                                        </option>
+                                                                                        <option value="three">Categories
+                                                                                                2</option>
+                                                                                        <option value="four">Categories
+                                                                                                3</option>
+                                                                                </select>
+                                                                                <!-- End Select -->
+                                                                                <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill"
+                                                                                        type="button"
+                                                                                        id="searchProduct1"
+                                                                                        [routerLink]="['/category']"
+                                                                                        routerLinkActive="router-link-active">
+                                                                                        <span
+                                                                                                class="ec ec-search font-size-20"></span>
+                                                                                </button>
+                                                                        </div>
+                                                                </div>
+                                                        </form>
+                                                </div>
+                                                <!-- End Search Bar -->
+                                                <!-- Header Icons -->
+                                                <div
+                                                        class="col col-xl-auto text-right text-xl-left pl-0 pl-xl-3 position-static">
+                                                        <div class="d-inline-flex">
+                                                                <ul
+                                                                        class="d-flex list-unstyled mb-0 align-items-center">
+                                                                        <!-- Search -->
+                                                                        <li
+                                                                                class="col d-xl-none px-2 px-sm-3 position-static">
+                                                                                <a id="searchClassicInvoker"
+                                                                                        class="font-size-22 text-gray-90 text-lh-1 btn-text-secondary"
+                                                                                        href="javascript:;"
+                                                                                        role="button"
+                                                                                        data-toggle="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="Search"
+                                                                                        aria-controls="searchClassic"
+                                                                                        aria-haspopup="true"
+                                                                                        aria-expanded="false"
+                                                                                        data-unfold-target="#searchClassic"
+                                                                                        data-unfold-type="css-animation"
+                                                                                        data-unfold-duration="300"
+                                                                                        data-unfold-delay="300"
+                                                                                        data-unfold-hide-on-scroll="true"
+                                                                                        data-unfold-animation-in="slideInUp"
+                                                                                        data-unfold-animation-out="fadeOut">
+                                                                                        <span
+                                                                                                class="ec ec-search"></span>
+                                                                                </a>
+
+                                                                                <!-- Input -->
+                                                                                <div id="searchClassic"
+                                                                                        class="dropdown-menu dropdown-unfold dropdown-menu-right left-0 mx-2"
+                                                                                        aria-labelledby="searchClassicInvoker">
+                                                                                        <form
+                                                                                                class="js-focus-state input-group px-3">
+                                                                                                <input class="form-control"
+                                                                                                        type="search"
+                                                                                                        placeholder="Search Product">
+                                                                                                <div
+                                                                                                        class="input-group-append">
+                                                                                                        <button class="btn btn-primary px-3"
+                                                                                                                type="button"><i
+                                                                                                                        class="font-size-18 ec ec-search"></i></button>
+                                                                                                </div>
+                                                                                        </form>
+                                                                                </div>
+                                                                                <!-- End Input -->
+                                                                        </li>
+                                                                        <!-- End Search -->
+                                                                        <li class="col d-none d-xl-block"><a
+                                                                                        href="../shop/compare.html"
+                                                                                        class="text-gray-90"
+                                                                                        data-toggle="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="Compare"><i
+                                                                                                class="font-size-22 ec ec-compare"></i></a>
+                                                                        </li>
+                                                                        <li class="col d-none d-xl-block">
+                                                                                <a routerLink="/wishlist"
+                                                                                        class="text-gray-90"
+                                                                                        data-toggle="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="Favorites"><i
+                                                                                                class="font-size-22 ec ec-favorites"></i></a>
+                                                                        </li>
+                                                                        <!-- <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html"
                                             class="text-gray-90" data-toggle="tooltip" data-placement="top"
                                             title="My Account"><i class="font-size-22 ec ec-user"></i></a></li> -->
-                                    <li class="col pr-xl-0 px-2 px-sm-3">
-                                        <a routerLink="/cart" 
-                                        class="text-gray-90 position-relative d-flex "
-                                            data-toggle="tooltip" data-placement="top" title="Cart">
-                                            <i class="font-size-22 ec ec-shopping-bag"></i>
-                                            <span
-                                                class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white">2</span>
-                                            <span
-                                                class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">$1785.00</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                                                                        <li class="col pr-xl-0 px-2 px-sm-3">
+                                                                                <a [routerLink]="['/cart']"
+                                                                                        class="text-gray-90 position-relative d-flex "
+                                                                                        data-toggle="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="Cart">
+                                                                                        <i
+                                                                                                class="font-size-22 ec ec-shopping-bag"></i>
+                                                                                        <span
+                                                                                                class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white"> {{cartCount}}</span>
+                                                                                                <!-- <div class="px-3 mx-3 cursor-pointer" [routerLink]="['/cart']">
+                                                                                                        <span [attr.badge]="cartCount">
+                                                                                                            {{'Cart' | translate}}
+                                                                                                        </span>
+                                                                                                    </div> -->
+                                                                                        
+                                                                                                <!-- <span
+                                                                                                class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">$1785.00</span> -->
+                                                                                </a>
+                                                                        </li>
+                                                                </ul>
+                                                        </div>
+                                                </div>
+                                                <!-- End Header Icons -->
+                                        </div>
+                                </div>
                         </div>
-                        <!-- End Header Icons -->
-                    </div>
-                </div>
-            </div>
-            <!-- End Logo-Search-header-icons -->
+                        <!-- End Logo-Search-header-icons -->
 
-            <!-- Primary-menu-wide -->
-            <div class="d-none d-xl-block bg-primary border-color-2">
-                <div class="container">
-                    <div class="min-height-45">
-                        <!-- Nav -->
-                        <nav
-                            class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--wide u-header__navbar--no-space">
-                            <!-- Navigation -->
-                            <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
-                                <ul class="navbar-nav u-header__navbar-nav">
-
-
-                                    <!-- Smart Phones -->
-                                    <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"
+                        <!-- Primary-menu-wide -->
+                        <div class="d-none d-xl-block bg-primary border-color-2">
+                                <div class="container">
+                                        <div class="min-height-45">
+                                                <!-- Nav -->
+                                                <nav
+                                                        class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--wide u-header__navbar--no-space">
+                                                        <!-- Navigation -->
+                                                        <div id="navBar"
+                                                                class="collapse navbar-collapse u-header__navbar-collapse">
+                                                                <ul class="navbar-nav u-header__navbar-nav">
+                                                                        <li
+                                                                                class="nav-item hs-has-mega-menu u-header__nav-item">
+                                                                                <a class="nav-link u-header__nav-link "
+                                                                                        href="/">Home</a>
+                                                                        </li>
+                                                                        <li *ngFor="let category of categories"
+                                                                                class="nav-item hs-has-mega-menu u-header__nav-item">
+                                                                                <a class="nav-link u-header__nav-link "
+                                                                                        href="/category/{{category._id}}">{{category.category
+                                                                                        | translateField}}</a>
+                                                                        </li>
+                                                                        <!-- Smart Phones -->
+                                                                        <!-- <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"
                                         data-animation-in="slideInUp" data-animation-out="fadeOut">
                                         <a id="smartphonesMegaMenu"
                                             class="nav-link u-header__nav-link u-header__nav-link-toggle"
                                             href="javascript:;" aria-haspopup="true" aria-expanded="false">Smart
                                             Phones</a>
 
-                                        <!-- Smart Phones - Mega Menu -->
                                         <div class="hs-mega-menu w-100 u-header__sub-menu"
                                             aria-labelledby="smartphonesMegaMenu">
                                             <div class="row u-header__mega-menu-wrapper">
@@ -469,861 +567,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- End Smart Phones - Mega Menu -->
-                                    </li>
-                                    <!-- End Blog -->
+                                    </li> -->
+                                                                        <!-- End Blog -->
 
-                                    <!-- Laptops & Desktops -->
-                                    <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"
-                                        data-animation-in="slideInUp" data-animation-out="fadeOut">
-                                        <a id="laptopsdesktopsMegaMenu"
-                                            class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                            href="javascript:;" aria-haspopup="true" aria-expanded="false">Laptops &
-                                            Desktops</a>
 
-                                        <!-- Laptops & Desktops - Mega Menu -->
-                                        <div class="hs-mega-menu w-100 u-header__sub-menu"
-                                            aria-labelledby="laptopsdesktopsMegaMenu">
-                                            <div class="row u-header__mega-menu-wrapper">
-                                                <div class="col-md-8">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Laptops</span>
-                                                            <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Thin
-                                                                        and Light Laptops</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">2-in-1
-                                                                        Laptops</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Gaming
-                                                                        Laptops</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Budget
-                                                                        Laptops</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Business
-                                                                        Laptops</a></li>
-                                                            </ul>
-                                                            <span class="u-header__sub-menu-title">Shop By Brand</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Apple<br>
-                                                                    </a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">HP</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Dell</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Lenovo</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Acer</a>
-                                                                </li>
-                                                            </ul>
+                                                                </ul>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Tablets</span>
-                                                            <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Lenovo</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Apple</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Samsung</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Micromax</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">iBall</a>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="u-header__sub-menu-title">PC Accessories</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li class="nav-title">PC Accessories</li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Keyboards<br>
-                                                                    </a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Mice</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Laptop
-                                                                        Bags</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">PC
-                                                                        Speakers</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Batteries</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Processors</span>
-                                                            <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Intel</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">AMD</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Qualcomm</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">IBM</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Motorola</a>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="u-header__sub-menu-title">Shop By Price</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Below
-                                                                        Rs. 500$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">500$
-                                                                        - 699$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">700$
-                                                                        - 799$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">800$
-                                                                        - 899$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">900$
-                                                                        and Above</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Best
-                                                                Processors</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Intel
-                                                                        Core i9-7980XE<br> </a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">AMD
-                                                                        Ryzen Threadripper 1950X</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">AMD
-                                                                        Ryzen 5 1600X</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Intel
-                                                                        Core i7-8700K</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">AMD
-                                                                        Ryzen 7 1800X</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Intel
-                                                                        Core i5-7600K</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">AMD
-                                                                        Ryzen 3 1300X</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Intel
-                                                                        Core i7-7820X</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Intel
-                                                                        Core i5-7600K</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">AMD
-                                                                        Ryzen 4 1100X</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Intel
-                                                                        Core i3-7280K</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <a href="#" class="d-block">
-                                                        <img class="img-fluid" src="../../assets/img/1024X1024/img2.jpg"
-                                                            alt="Image Description">
-                                                    </a>
-                                                </div>
-                                            </div>
+                                                        <!-- End Navigation -->
+                                                </nav>
+                                                <!-- End Nav -->
                                         </div>
-                                        <!-- End Laptops & Desktops - Mega Menu -->
-                                    </li>
-                                    <!-- End Laptops & Desktops -->
-
-                                    <!-- Gadgets -->
-                                    <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"
-                                        data-animation-in="slideInUp" data-animation-out="fadeOut">
-                                        <a id="GadgetsMegaMenu"
-                                            class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                            href="javascript:;" aria-haspopup="true" aria-expanded="false">Gadgets</a>
-
-                                        <!-- Gadgets - Mega Menu -->
-                                        <div class="hs-mega-menu w-100 u-header__sub-menu"
-                                            aria-labelledby="GadgetsMegaMenu">
-                                            <div class="row u-header__mega-menu-wrapper">
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img3.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <span class="u-header__sub-menu-title">Computers &amp;
-                                                                Accessories</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Laptops,
-                                                                        Desktops &amp; Monitors</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Networking
-                                                                        &amp; Internet Devices</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Computer
-                                                                        Accessories</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img4.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <span class="u-header__sub-menu-title">Peripherals</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Hard
-                                                                        Drives</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Pen
-                                                                        Drives & Memory Cards</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Printers
-                                                                        & Ink</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Mouse</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img5.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <span class="u-header__sub-menu-title">Cameras</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">DSLR</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Lenses</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Security
-                                                                        &amp; Surveillance</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Binoculars
-                                                                        &amp; Telescopes</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Camcorders</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img6.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <span class="u-header__sub-menu-title">Watches</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Men's
-                                                                        Watches</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Women's
-                                                                        Watches</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Premium
-                                                                        Watches</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Kids
-                                                                        Watches</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Deals
-                                                                        on Watches</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img7.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <span class="u-header__sub-menu-title">Accessories</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Mouses</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Keyboards</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Hardrives</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Headphones</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Speakers</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img8.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <span class="u-header__sub-menu-title">Gadgets</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Fire
-                                                                        TV Stick</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Google
-                                                                        Chromecast</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Set
-                                                                        Top</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Accessories</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Deals
-                                                                        of the Day</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Gadgets - Mega Menu -->
-                                    </li>
-                                    <!-- End Gadgets -->
-
-                                    <!-- GPS & Car -->
-                                    <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"
-                                        data-animation-in="slideInUp" data-animation-out="fadeOut">
-                                        <a id="GPSCarMegaMenu"
-                                            class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                            href="javascript:;" aria-haspopup="true" aria-expanded="false">GPS & Car</a>
-
-                                        <!-- GPS & Car - Mega Menu -->
-                                        <div class="hs-mega-menu w-100 u-header__sub-menu"
-                                            aria-labelledby="GPSCarMegaMenu" style="min-width: 330px;">
-                                            <div class="row u-header__mega-menu-wrapper">
-                                                <div class="col-md-8">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Car Audios</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Music
-                                                                        Systems</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Video
-                                                                        Systems</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Speakers</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        Monitors</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        Parts</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Monitoring</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Network
-                                                                        Jammers</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        Accessories</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        Electronics</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">All
-                                                                        Audio Products</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Accessories</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">GPS &
-                                                                Accessories</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Gps
-                                                                        Tracking Devices</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Networking Devices</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Tracking Sensors</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Monitoring</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Jammers</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Tracking Sensors</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Monitoring</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Anti-Tracker</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Accessories</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Devices</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Trackers</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Accessories &amp;
-                                                                Parts</span>
-                                                            <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        Accessories</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        Electronics</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        Parts</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Car
-                                                                        &amp; Bike Care</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">All
-                                                                        Car Products</a></li>
-                                                            </ul>
-                                                            <span class="u-header__sub-menu-title">Shop By Price</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Below
-                                                                        Rs. 100$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">101$
-                                                                        - 199$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">200$
-                                                                        - 299$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">300$
-                                                                        - 399$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">400$
-                                                                        and Above</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">GPS &
-                                                                Accessories</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Gps
-                                                                        Tracking Devices</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Networking Devices</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Tracking Sensors</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Monitoring</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Jammers</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Tracking Sensors</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Monitoring</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Anti-Tracker</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Accessories</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Devices</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">GPS
-                                                                        Trackers</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <a href="#" class="d-block">
-                                                        <img class="img-fluid" src="../../assets/img/1024X1024/img3.jpg"
-                                                            alt="Image Description">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End GPS & Car - Mega Menu -->
-                                    </li>
-                                    <!-- End GPS & Car -->
-
-                                    <!-- Cameras & Accessories -->
-                                    <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"
-                                        data-animation-in="slideInUp" data-animation-out="fadeOut">
-                                        <a id="CamerasAccessoriesMegaMenu"
-                                            class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                            href="javascript:;" aria-haspopup="true" aria-expanded="false">Cameras &
-                                            Accessories</a>
-
-                                        <!-- Cameras & Accessories - Mega Menu -->
-                                        <div class="hs-mega-menu w-100 u-header__sub-menu"
-                                            aria-labelledby="CamerasAccessoriesMegaMenu">
-                                            <div class="row u-header__mega-menu-wrapper">
-                                                <div class="col-md-8">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Cameras</span>
-                                                            <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">DSLR
-                                                                        Cameras</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Digital
-                                                                        Cameras</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Security
-                                                                        &amp; Surveillance</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Camcorders</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Consoles</a>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="u-header__sub-menu-title">Shop By Price</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Below
-                                                                        Rs. 100$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">101$
-                                                                        - 199$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">200$
-                                                                        - 299$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">300$
-                                                                        - 399$</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">400$
-                                                                        and Above</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Shop By Focal
-                                                                Length</span>
-                                                            <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">8mm
-                                                                        - 24mm</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">24mm
-                                                                        - 35mm</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">35mm
-                                                                        - 85mm</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">85mm
-                                                                        - 135mm</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">135mm+</a>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="u-header__sub-menu-title">#Trending</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Sony</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Nikon</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Canon</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Sanyo</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Samsung</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Accessories</span>
-                                                            <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Headphones</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Mouses</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Hardrives</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Headphones</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Speakers</a>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="u-header__sub-menu-title">Add-ons</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Data
-                                                                        Cables</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Keypads</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Earphones</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Lenses</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Camera
-                                                                        Accessories</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span class="u-header__sub-menu-title">Shop By Brands</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Canon</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Nikon</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Pentax</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Sony</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Apple</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Leica</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Samsung</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Panasonic</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">LG</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Oppo</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Olympus</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Sanyo</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <a href="#" class="d-block">
-                                                        <img class="img-fluid" src="../../assets/img/1024X1024/img4.png"
-                                                            alt="Image Description">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Cameras & Accessories - Mega Menu -->
-                                    </li>
-                                    <!-- End Cameras & Accessories -->
-
-                                    <!-- Movies & Games -->
-                                    <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"
-                                        data-animation-in="slideInUp" data-animation-out="fadeOut">
-                                        <a id="MoviesGamesMegaMenu"
-                                            class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                            href="javascript:;" aria-haspopup="true" aria-expanded="false">Movies &
-                                            Games</a>
-
-                                        <!-- Movies & Games - Mega Menu -->
-                                        <div class="hs-mega-menu w-100 u-header__sub-menu"
-                                            aria-labelledby="MoviesGamesMegaMenu">
-                                            <div class="row u-header__mega-menu-wrapper">
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img9.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <span class="u-header__sub-menu-title">Movies &amp; TV
-                                                                Shows</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">All
-                                                                        Movies &amp; TV Shows</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Blu-ray</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Latest
-                                                                        Movies</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">All
-                                                                        English</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">All
-                                                                        Hindi</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img10.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <span class="u-header__sub-menu-title">Video Games</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Games
-                                                                        &amp; Accessories</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">PC
-                                                                        Games</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">New
-                                                                        Releases</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Consoles</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Accessories</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <a href="#" class="d-block">
-                                                                <img class="img-fluid"
-                                                                    src="../../assets/img/300X275/img11.jpg"
-                                                                    alt="Image Description">
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <span class="u-header__sub-menu-title">Music</span>
-                                                            <ul class="u-header__sub-menu-nav-group">
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">5.1
-                                                                        Speaker</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Home
-                                                                        Theatres</a></li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Soundbars</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Accessories</a>
-                                                                </li>
-                                                                <li><a href="#"
-                                                                        class="nav-link u-header__sub-menu-nav-link">Consoles</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Movies & Games - Mega Menu -->
-                                    </li>
-                                    <!-- End Movies & Games -->
-                                </ul>
-                            </div>
-                            <!-- End Navigation -->
-                        </nav>
-                        <!-- End Nav -->
-                    </div>
+                                </div>
+                        </div>
+                        <!-- End Primary-menu-wide -->
                 </div>
-            </div>
-            <!-- End Primary-menu-wide -->
-        </div>
-    </header>
+        </header>
 </div>

@@ -26,7 +26,7 @@ const routes: Routes = [
         loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
       },
       {
-        path: 'produc',
+        path: 'product',
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
       },
       {
@@ -34,7 +34,7 @@ const routes: Routes = [
         component: Category2Component
       },
       {
-        path: 'product',
+        path: 'product2',
         component: Product2Component
       },
       {

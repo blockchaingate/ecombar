@@ -75,7 +75,9 @@
                           <input type="email" class="form-control" name="email" id="signinSrEmailExample3" placeholder="Username or Email address" aria-label="Username or Email address" required
                           data-msg="Please enter a valid email address."
                           data-error-class="u-has-error"
-                          data-success-class="u-has-success">
+                          data-success-class="u-has-success"
+                          [(ngModel)]="email" name="email" required
+                          >
                       </div>
                       <!-- End Form Group -->
 
@@ -85,7 +87,9 @@
                           <input type="password" class="form-control" name="password" id="signinSrPasswordExample2" placeholder="Password" aria-label="Password" required
                           data-msg="Your password is invalid. Please try again."
                           data-error-class="u-has-error"
-                          data-success-class="u-has-success">
+                          data-success-class="u-has-success"
+                          [(ngModel)]="password" name="psw" required
+                          >
                       </div>
                       <!-- End Form Group -->
 
@@ -101,11 +105,17 @@
                           </div>
                       </div>
                       <!-- End Checkbox -->
-
+                      <div class="red mx-2 left" *ngIf="errMsg">
+                        {{errMsg | translate}} <br>
+                        <span class="x-small handcursor"> <u (click)="togoleDetail()">more ...</u></span>
+                      </div>
+                      <div class="warning" *ngIf="showDetail">
+                        {{rawErrMsg}}
+                      </div>
                       <!-- Button -->
                       <div class="mb-1">
                           <div class="mb-3">
-                              <button type="submit" class="btn btn-primary-dark-w px-5">Login</button>
+                              <button type="submit" class="btn btn-primary-dark-w px-5"  (click)="signin()">Login</button>
                           </div>
                           <div class="mb-2">
                               <a class="text-blue" href="#">Lost your password?</a>

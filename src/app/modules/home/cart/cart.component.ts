@@ -51,6 +51,16 @@ export class CartComponent implements OnInit, OnDestroy {
     const storedCart = this.cartStoreServ.items;
     this.cartItems = storedCart ? storedCart : [];
     this.calculateTotal();
+
+    console.log("storedCart init!");
+    
+    this.cartItems.map((item,i)=>{
+      console.log("item: ", i );
+      
+      console.log(item.title);
+      
+    })
+    console.log("storedCart init end!");
   }
 
   checkout(): void {

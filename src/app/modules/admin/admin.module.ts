@@ -44,6 +44,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { CartModule } from '../home/cart/cart.module';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     SharedModule,
     FormsModule,
     CartModule,
+    QRCodeModule,
     NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
     RichTextEditorModule

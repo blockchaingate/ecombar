@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpService } from './http.service';
+import { HttpHeaders } from '@angular/common/http';
+import { KanbanGetBanalceResponse, KanbanNonceResponse, DepositStatusResp, TransactionAccountResponse } from '../../../interfaces/kanban.interface';
+
 
 @Injectable({ providedIn: 'root' })
 export class KanbanService {
@@ -24,11 +27,67 @@ export class KanbanService {
         return this.http.getRaw(path);
     }    
 
+    submitDeposit(rawTransaction: string, rawKanbanTransaction: string) {
+        const data = {
+            'rawTransaction': rawTransaction,
+            'rawKanbanTransaction': rawKanbanTransaction
+        };
+        const httpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+        });
+        const options = {
+            headers: httpHeaders
+        };
+        // console.log('data for submitDeposit=', data);       
+        const path = this.baseUrl + 'submitDeposit';
+        return this.http.postRaw(path, data, options);
+    }
+
+    sendRawSignedTransaction(txhex: string) {
+        const data = {
+            signedTransactionData: txhex
+        };
+        return this.http.postRaw(this.baseUrl + 'kanban/sendRawTransaction', data);
+    }
+
+    async getCoinPoolAddress() {
+        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+        let path = 'exchangily/getCoinPoolAddress';
+        path = this.baseUrl + path;
+        let addr = '';
+        try {
+            addr = await this.http.getRaw(path, { headers, responseType: 'text' }).toPromise() as string;
+        } catch (e) {
+        }
+
+        return addr;
+    }
+
+    async getTransactionCount(address: string) {
+        //return this.getNonce(address);
+
+        let path = 'kanban/getTransactionCount/' + address; 
+        path = this.baseUrl + path;
+        // console.log('nouse in here:', path);
+        const res = await this.http.getRaw(path).toPromise() as TransactionAccountResponse;
+        return res.transactionCount;
+
+    }
+
     getExchangeBalance(address) {
         const path = this.baseUrl + 'exchangily/getBalances/' + address;
         return this.http.getRaw(path);        
     }
-    
+
+    async getScarAddress() {
+        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+        let path = 'kanban/getScarAddress';
+        path = this.baseUrl + path;
+        const addr = await this.http.getRaw(path, { headers, responseType: 'text' }).toPromise() as string;
+        return addr;
+    }    
+
     getWalletBalances(addresses: any) {
         let btcAddress = '';
         let ethAddress = '';

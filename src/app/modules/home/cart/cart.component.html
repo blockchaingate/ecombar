@@ -65,7 +65,7 @@
     </div>
     <!-- End breadcrumb -->
 
-    <div class="container">
+    <div class="container" *ngIf="cartItems && (cartItems.length > 0)">
         <div class="mb-4">
             <h1 class="text-center">Cart</h1>
         </div>
@@ -83,20 +83,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="">
+                        <tr class="" *ngFor="let item of cartItems;let i = index;">
                             <td class="text-center">
                                 <a href="#" class="text-gray-32 font-size-26">×</a>
                             </td>
                             <td class="d-none d-md-table-cell">
-                                <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" src="../../assets/img/300X300/img6.jpg" alt="Image Description"></a>
+                                <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" [src]="item.thumbnailUrl" alt="Image Description"></a>
                             </td>
 
                             <td data-title="Product">
-                                <a href="#" class="text-gray-90">Ultra Wireless S50 Headphones S50 with Bluetooth</a>
+                                <a href="#" class="text-gray-90">{{item.title}}</a>
                             </td>
 
                             <td data-title="Price">
-                                <span class="">$1,100.00</span>
+                                <span class="">{{item.price}} {{item.currency}}</span>
                             </td>
 
                             <td data-title="Quantity">
@@ -105,7 +105,7 @@
                                 <div class="border rounded-pill py-1 width-122 w-xl-80 px-3 border-color-1">
                                     <div class="js-quantity row align-items-center">
                                         <div class="col">
-                                            <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none" type="text" value="1">
+                                            <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none" type="text" [value]="item.quantity">
                                         </div>
                                         <div class="col-auto pr-1">
                                             <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" href="javascript:;">
@@ -121,10 +121,10 @@
                             </td>
 
                             <td data-title="Total">
-                                <span class="">$1,100.00</span>
+                                <span class="">{{item.price * item.quantity}} {{item.currency}}</span>
                             </td>
                         </tr>
-                        <tr class="">
+                        <!-- <tr class="">
                             <td class="text-center">
                                 <a href="#" class="text-gray-32 font-size-26">×</a>
                             </td>
@@ -142,7 +142,7 @@
 
                             <td data-title="Quantity">
                                 <span class="sr-only">Quantity</span>
-                                <!-- Quantity -->
+                              
                                 <div class="border rounded-pill py-1 width-122 w-xl-80 px-3 border-color-1">
                                     <div class="js-quantity row align-items-center">
                                         <div class="col">
@@ -158,13 +158,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Quantity -->
                             </td>
 
                             <td data-title="Total">
                                 <span class="">$685.00</span>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td colspan="6" class="border-top space-top-2 justify-content-center">
                                 <div class="pt-md-3">
@@ -184,7 +183,9 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button>
-                                            <a [routerLink]="['/checkout']" routerLinkActive="router-link-active"  class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">Proceed to checkout</a>
+                                            <a 
+                                            (click)="checkout()"
+                                              class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">Proceed to checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -204,12 +205,12 @@
                         <tbody>
                             <tr class="cart-subtotal">
                                 <th>Subtotal</th>
-                                <td data-title="Subtotal"><span class="amount">$1,785.00</span></td>
+                                <td data-title="Subtotal"><span class="amount">$???.00</span></td>
                             </tr>
                             <tr class="shipping">
                                 <th>Shipping</th>
                                 <td data-title="Shipping">
-                                    Flat Rate: <span class="amount">$300.00</span>
+                                    Flat Rate: <span class="amount">$???.00</span>
                                     <div class="mt-1">
                                         <a class="font-size-12 text-gray-90 text-decoration-on underline-on-hover font-weight-bold mb-3 d-inline-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                             Calculate Shipping
@@ -515,11 +516,13 @@
                             </tr>
                             <tr class="order-total">
                                 <th>Total</th>
-                                <td data-title="Total"><strong><span class="amount">$2,085.00</span></strong></td>
+                                <td data-title="Total"><strong><span class="amount"><span *ngFor="let item of Total">
+                                    {{item.total}} {{item.currency}}
+                                </span></span></strong></td>
                             </tr>
                         </tbody>
                     </table>
-                    <a ><button type="button" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-md-none">Proceed to checkout</button></a>
+                    <a ><button type="button" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-md-none" (click)="checkout()">Proceed to checkout</button></a>
                 </div>
             </div>
         </div>

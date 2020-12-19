@@ -23,7 +23,7 @@
                                 {{order.shippingServiceSelected}}
                             </div>
                             
-                            <button class="btn" (click)="change()">Change</button>
+                            <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="change()">Change</button>
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@
                                 {{order.paymentMethod}}
                             </div>
                                 
-                                <button class="btn" (click)="change()">Change</button>
+                                <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="change()">Change</button>
                         </div>
                     </div>
 
@@ -79,7 +79,7 @@
 
                     <div class="text-center" *ngIf="order.paymentMethod == 'creditcard'">
 
-                        <button class="btn" (click)="payWithCreditCard()">
+                        <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="payWithCreditCard()">
                             Pay with Credit card
                         </button>   
                         

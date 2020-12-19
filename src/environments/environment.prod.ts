@@ -9,7 +9,25 @@ export const environment = {
     prod: 'https://blockchaingate.com/v2/',
     blockchaingate: 'https://blockchaingate.com/v2/',
     website: 'http://exchangily.com/',
-    kanban: 'https://kanbanprod.fabcoinapi.com/'
+    kanban: 'https://kanbanprod.fabcoinapi.com/',
+    BTC: {
+      exchangily: 'https://btcprod.fabcoinapi.com/'
+    },
+    FAB: {
+        exchangily: 'https://fabprod.fabcoinapi.com/'
+    },
+    ETH: {
+        exchangily: 'https://ethprod.fabcoinapi.com/',
+    },
+    BCH: {
+        exchangily: 'https://bchprod.fabcoinapi.com/',
+    },
+    DOGE: {
+        exchangily: 'https://dogeprod.fabcoinapi.com/',
+    },
+    LTC: {
+        exchangily: 'https://ltcprod.fabcoinapi.com/',
+    }    
   },
   chains: {
     BTC: {
@@ -104,6 +122,9 @@ export const environment = {
   moneris: {
     ps_store_id: '9VGAUtore3',
     hpp_key: 'hpRS5R56OATG'
+<<<<<<< HEAD
+  },
+=======
   },  
 
 addresses: {
@@ -177,6 +198,36 @@ addresses: {
         ETH: '0x4e93c47b42d09f61a31f798877329890791077b2',
         FAB: '1KmKXs2vBMd367ifzY75JCUCbBW8sV1n4w'
     },
+    depositMinimumConfirmations: {
+        EXG: 12,
+        BTC: 2,
+        FAB: 12,
+        ETH: 20,
+        USDT: 20,
+        DUSD: 12,
+        BCH: 2,
+        LTC: 8,
+        DOGE: 20,
+        BNB: 20,
+        INB: 20,
+        REP: 20,
+        HOT: 20,
+        CEL: 20,
+        MATIC: 20,
+        IOST: 20,
+        MANA: 20,
+        FUN: 20,
+        WAX: 20,
+        ELF: 20,
+        GNO: 20,
+        POWR: 20,
+        WINGS: 20,
+        MTL: 20,
+        KNC: 20,
+        GVT: 20,
+        DRGN: 20,
+        NVZN: 20
+    },    
     otcOfficial: {
         USDT: '0x4e93c47b42d09f61a31f798877329890791077b2',
         DUSD: '0xcdd40948208b0098b6a51e69d945de4692766ef3',
@@ -185,5 +236,6 @@ addresses: {
         FAB: '1KmKXs2vBMd367ifzY75JCUCbBW8sV1n4w'
     }
 },  
+>>>>>>> master
   paypal_client_id: 'AdmdQayzrKMsDPxU89G_UWcLVfFlHhG-zfFm4I75F6xusJ64AIBOre6J6NxfzsM6JStHQmtviHoCp59x'
 };
