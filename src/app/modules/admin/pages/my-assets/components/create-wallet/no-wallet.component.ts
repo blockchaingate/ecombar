@@ -6,7 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'app-no-wallet',
     templateUrl: './no-wallet.component.html',
-    styleUrls: ['./no-wallet.component.css'],
+    styleUrls: ['./no-wallet.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class NoWalletComponent implements OnInit{
