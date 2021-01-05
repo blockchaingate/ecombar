@@ -58,7 +58,7 @@ export class UploadMediaComponent implements OnInit {
 
   fileChangeEvent(e: File[]) {
     if (!e) { return; }
-    this.uploadSuccess = false;
+    this.uploadSuccess = false;/* DXACF */
     this.url = '';
     const file = e[0];
     const fileName = file.name;

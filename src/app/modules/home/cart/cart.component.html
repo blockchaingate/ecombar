@@ -55,8 +55,8 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">Home</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Cart</li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">{{'Home'|translate}}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{'Cart'|translate}}</li>
                     </ol>
                 </nav>
             </div>
@@ -67,7 +67,7 @@
 
     <div class="container" *ngIf="cartItems && (cartItems.length > 0)">
         <div class="mb-4">
-            <h1 class="text-center">Cart</h1>
+            <h1 class="text-center">{{'Cart'|translate}}</h1>
         </div>
 
         <div class="mb-10 cart-table">
@@ -85,7 +85,7 @@
                     </thead>
                     <tbody>
                         <tr class="" *ngFor="let item of cartItems;let i = index;" app-cart-product (productUpdated)="updateProduct($event)" [product]="item">
-                          
+
                         </tr>
                         <tr>
                             <td colspan="6" class="border-top space-top-2 justify-content-center">
@@ -106,9 +106,7 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <!-- <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button> -->
-                                            <a 
-                                            (click)="checkout()"
-                                              class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">Proceed to checkout</a>
+                                            <a (click)="checkout()" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">Proceed to checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -140,8 +138,7 @@
                                         </a>
                                         <div class="collapse mb-3" id="collapseExample">
                                             <div class="form-group mb-4">
-                                                <select class="js-select selectpicker dropdown-select right-dropdown-0-all w-100"
-                                                    data-style="bg-white font-weight-normal border border-color-1 text-gray-20">
+                                                <select class="js-select selectpicker dropdown-select right-dropdown-0-all w-100" data-style="bg-white font-weight-normal border border-color-1 text-gray-20">
                                                     <option value="">Select a country…</option>
                                                     <option value="AX">Åland Islands</option>
                                                     <option value="AF">Afghanistan</option>
@@ -390,8 +387,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <select class="js-select selectpicker dropdown-select right-dropdown-0-all w-100"
-                                                    data-style="bg-white font-weight-normal border border-color-1 text-gray-20">
+                                                <select class="js-select selectpicker dropdown-select right-dropdown-0-all w-100" data-style="bg-white font-weight-normal border border-color-1 text-gray-20">
                                                     <option value="">Select an option…</option>
                                                     <option value="AP">Andhra Pradesh</option>
                                                     <option value="AR">Arunachal Pradesh</option>
@@ -445,7 +441,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <a ><button type="button" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-md-none" (click)="checkout()">Proceed to checkout</button></a>
+                    <a><button type="button" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-md-none" (click)="checkout()">Proceed to checkout</button></a>
                 </div>
             </div>
         </div>
