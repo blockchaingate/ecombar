@@ -123,7 +123,6 @@ export const environment = {
     ps_store_id: '9VGAUtore3',
     hpp_key: 'hpRS5R56OATG'
   },  
-
 addresses: {
     smartContract: {
         FABLOCK: '0x04baa04d9550c49831427c6abe16def2c579af4a',
