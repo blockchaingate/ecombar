@@ -122,9 +122,6 @@ export const environment = {
   moneris: {
     ps_store_id: '9VGAUtore3',
     hpp_key: 'hpRS5R56OATG'
-<<<<<<< HEAD
-  },
-=======
   },  
 
 addresses: {
@@ -236,6 +233,5 @@ addresses: {
         FAB: '1KmKXs2vBMd367ifzY75JCUCbBW8sV1n4w'
     }
 },  
->>>>>>> master
   paypal_client_id: 'AdmdQayzrKMsDPxU89G_UWcLVfFlHhG-zfFm4I75F6xusJ64AIBOre6J6NxfzsM6JStHQmtviHoCp59x'
 };

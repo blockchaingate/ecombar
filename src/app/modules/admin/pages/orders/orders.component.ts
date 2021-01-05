@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../shared/services/order.service';
-import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { StorageService } from '../../../shared/services/storage.service';
 
@@ -10,7 +8,7 @@ import { StorageService } from '../../../shared/services/storage.service';
   selector: 'app-admin-orders',
   providers: [OrderService],
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  styleUrls: ['./orders.component.scss', '../../../../../table.scss']
 })
 export class OrdersComponent implements OnInit {
   orders: any;

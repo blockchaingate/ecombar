@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../shared/services/user.service';
-import { AddressService } from '../../shared/services/address.service';
+import { KanbanService } from '../../shared/services/kanban.service';
 import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { UtilService } from '../../shared/services/util.service';
+import { CoinService } from '../../shared/services/coin.service';
+import { TranslateService } from '@ngx-translate/core';
+import BigNumber from 'bignumber.js/bignumber';
+import { Web3Service } from '../../shared/services/web3.service';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-place-order',
@@ -20,6 +28,7 @@ export class PlaceOrderComponent implements OnInit {
   orderID: string;
   total: number;
   subtotal: number;
+  password: string;
   selectedShippingService: string;
   selectedPayment: string;
   shippingFee: number;
@@ -27,16 +36,27 @@ export class PlaceOrderComponent implements OnInit {
   payLink: string;
   code: string;
   link: string;
+  walletName: string;
+  usdtBalance: number;
   ps_store_id: string;
   hpp_key: string;
+  wallets: any;
+  wallet: any;
   public payPalConfig?: IPayPalConfig;
 
   constructor(
     private router: Router,
+    private localSt: LocalStorage,
     private route: ActivatedRoute,
     private toastr: ToastrService,
+    private web3Serv: Web3Service,
+    private translateServ: TranslateService,
+    public utilServ: UtilService,
+    private coinServ: CoinService,
+    private kanbanServ: KanbanService,
     private orderServ: OrderService,
-    private addressServ: AddressService) {
+    private apiServ: ApiService,
+    public ngxSmartModalService: NgxSmartModalService) {
 
   }
 
@@ -48,6 +68,21 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+
+      if(!wallets || (wallets.length == 0)) {
+        return;
+      }
+      this.wallets = wallets;
+      console.log('this.wallets==', this.wallets);
+      this.wallet = this.wallets.items[this.wallets.currentIndex];
+      
+      this.loadWallet();
+
+    });
+
     this.ps_store_id = environment.moneris.ps_store_id;
     this.hpp_key = environment.moneris.hpp_key;
 
@@ -146,6 +181,39 @@ export class PlaceOrderComponent implements OnInit {
     );
   }
 
+  loadWallet() {
+    const addresses = this.wallet.addresses;
+    console.log('addresses=', addresses);
+    this.walletName = this.wallet.name;
+    /*
+    this.kanbanServ.getWalletBalances(addresses).subscribe(
+      (res: any) => {
+        console.log('res for getWalletBalances=', res);
+        if(res && res.success) {
+          this.usdtBalance = res.data.filter(item => ((item.coin == 'USDT')))[0].balance;
+        }
+      }
+    );
+    */
+    const fabCoin = addresses.filter(item => item.name === 'FAB')[0];
+    console.log('address=', fabCoin);
+    const exgAddress = this.utilServ.fabToExgAddress(fabCoin.address);
+    
+    console.log('exgAddress=', exgAddress);
+   this.kanbanServ.getExchangeBalance(exgAddress).subscribe(
+    (res: any) => {
+      console.log('resdddde==', res);
+      for (let i = 0; i < res.length; i++) {
+        const item = res[i];
+        if (item.coinType == this.coinServ.getCoinTypeIdByName('USDT')) {
+          this.usdtBalance = Number(this.utilServ.showAmount(item.unlockedAmount, 18));
+        }
+      }
+    }
+  );    
+  }
+
+
   dlDataUrlBin() {
     const y = document.getElementById('address_qr_code').getElementsByTagName('canvas')[0];
     // console.log('y.src=' + y.src);
@@ -163,6 +231,67 @@ export class PlaceOrderComponent implements OnInit {
   payWithPaypal() {
 
   }
+
+  pay() {
+    this.ngxSmartModalService.getModal('passwordModal').open();
+  }
+
+  
+  confirmPassword() {
+    const pinHash = this.utilServ.SHA256(this.password).toString();
+    if (pinHash !== this.wallet.pwdHash) {
+        this.warnPwdErr();
+        return;
+    }
+    this.payOrderDo();    
+  }
+
+  async payOrderDo() {
+
+    
+    const address = this.utilServ.fabToExgAddress(this.order.merchantId.walletExgAddress) ;
+    const amount = this.order.totalToPay;
+    const coin = this.coinServ.getCoinTypeIdByName('USDT');
+    console.log('address=', address);
+    
+    const txHex = await this.txHexforSendToken(
+      this.password, this.wallet, address, coin, new BigNumber(amount).multipliedBy(new BigNumber(1e18)).toFixed()
+    );
+
+    console.log('txHex=', txHex);
+
+    this.apiServ.chargeOrder(this.orderID, txHex).subscribe(
+      (res: any) => {
+        if (res && res.ok) {
+         this.toastr.info(this.translateServ.instant('Your order was placed successfully.'));
+        } else {
+          this.toastr.info(this.translateServ.instant('Your order failed.'));
+
+        }
+      }
+    );
+  }
+
+  async txHexforSendToken
+    (pin: string, wallet: any, to: string, coin: number, value: string) {
+    console.log('start txHexforSendToken');
+    const seed = this.utilServ.aesDecryptSeed(wallet.encryptedSeed, pin);
+    const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    console.log('keyPairsKanban', keyPairsKanban);
+    const address = await this.kanbanServ.getCoinPoolAddress();
+    console.log('2');
+    const abiHex = this.web3Serv.getTransferFunctionABI(to, coin, value, this.order._id);
+    const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
+
+
+    const txHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, address, nonce, 0, null);
+    return txHex;
+  }
+
+  
+  warnPwdErr() {
+    this.toastr.error(this.translateServ.instant('Your password is invalid.'));
+   } 
 
   payWithWeb() {
     console.log('begin payWithWeb');

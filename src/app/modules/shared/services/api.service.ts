@@ -19,6 +19,16 @@ export class ApiService {
         return response;
     }
 
+    chargeOrder(orderID, txhex: string) {
+        const url = environment.endpoints.blockchaingate + 'orders/' + orderID + '/charge' ;
+
+        const data = {
+            rawTransaction: txhex
+        };   
+        
+        return this.http.post(url, data);
+    }
+    
     async postTx(coin, txHex: string) {
         let txHash = '';
         let errMsg = '';
