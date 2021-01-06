@@ -11,7 +11,6 @@ import BigNumber from 'bignumber.js/bignumber';
 import { Signature } from '../../../../../../interfaces/kanban.interface';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { environment } from '../../../../../../../environments/environment';
-import { Map, GetJsonValue } from '../../../../../../util/jsonmap';
 import * as bs58 from 'bs58';
 import * as createHash from 'create-hash';
 
