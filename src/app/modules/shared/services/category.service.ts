@@ -23,6 +23,11 @@ export class CategoryService {
     return this.http.get('product-categories/admin', false);
   }
 
+  getAdminCategoriesWithCount() {
+    return this.http.get('product-categories/admin_with_counts', false);
+  }
+  
+
   getMerchantCategories(merchantId: string) {
     return this.http.get('product-categories/merchant/' + merchantId, false);
   }

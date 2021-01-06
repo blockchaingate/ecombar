@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { StorageService } from '../../../shared/services/storage.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 
 @Component({
@@ -22,10 +22,10 @@ export class CategoryAddComponent implements OnInit {
 
   constructor(
     private userServ: UserService,
-    private authServ: AuthService,
     private merchantServ: MerchantService,
     private route: ActivatedRoute,
     private router: Router,
+    private storageServ: StorageService,
     private categoryServ: CategoryService) {
   }
 
@@ -33,23 +33,29 @@ export class CategoryAddComponent implements OnInit {
     this.currentTab = 'default';
     const merchantId = this.merchantServ.id;
 
-    if (this.userServ.isSystemAdmin) {
-      this.categoryServ.getAdminCategories().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.categories = res._body;
-          }
-        }
-      );
-    } else if (merchantId) {
-      this.categoryServ.getMerchantCategories(merchantId).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.categories = res._body;
-          }
-        }
-      );
-    }
+    this.storageServ.checkSystemAdmin().subscribe(
+      (ret) => {
+        if (ret) {
+          this.categoryServ.getAdminCategories().subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                this.categories = res._body;
+              }
+            }
+          );
+        } else if (merchantId) {
+          this.categoryServ.getMerchantCategories(merchantId).subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                this.categories = res._body;
+              }
+            }
+          );
+        }       
+      }
+    );
+
+
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {

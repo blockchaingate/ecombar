@@ -82,6 +82,11 @@
     "Next": "Next",
     "Your password is invalid.": "Your password is invalid.",
     "Ok": "Ok",
+    "Social": {
+        "Title": "Stay In Touch",
+        "TitleSub": "Contact us to get more information about our free coin giveaway event.",
+        "Button": "JOIN"
+    },
     "Error occured, please try again.": "Error occured, please try again.",
     "Restore Wallet": "Restore Wallet",
     "Backup Wallet Seed Phrases": "Backup Wallet Seed Phrases",

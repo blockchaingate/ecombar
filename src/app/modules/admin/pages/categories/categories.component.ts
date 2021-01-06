@@ -3,6 +3,7 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-categories',
@@ -16,25 +17,35 @@ export class CategoriesComponent implements OnInit {
     private userServ: UserService,
     private merchantServ: MerchantService,
     private router: Router,
+    private storageServ: StorageService,
     private categoryServ: CategoryService) {
   }
 
   ngOnInit() {
+    this.categories = [];
     const merchantId = this.merchantServ.id;
 
-    if (this.userServ.isSystemAdmin) {
-      this.getAdminCategories();
-    } else
-    if (merchantId) {
-        this.getMerchantCategories(merchantId);
-    }
+    console.log('this.userServ=', this.userServ.isSystemAdmin);
+
+    this.storageServ.checkSystemAdmin().subscribe(
+      (ret) => {
+        if (ret) {
+          this.getAdminCategories();
+        } else
+        if (merchantId) {
+          //this.getAdminCategories();
+          this.getMerchantCategories(merchantId);
+        }
+      }
+    );
+
   }
 
   getMerchantCategories(merchantId: string) {
     this.categoryServ.getMerchantCategories(merchantId).subscribe(
       (res: any) => {
         if (res && res.ok) {
-          this.categories = res._body;
+          this.categories = this.categories.concat(res._body);
         }
       }
     );
@@ -44,7 +55,12 @@ export class CategoriesComponent implements OnInit {
     this.categoryServ.getAdminCategories().subscribe(
       (res: any) => {
         if (res && res.ok) {
-          this.categories = res._body;
+          const categories = res._body;
+          const adminCategories = categories.map(item => {
+            item.admin = true;
+            return item;
+          });
+          this.categories = this.categories.concat(adminCategories);
         }
       }
     );
