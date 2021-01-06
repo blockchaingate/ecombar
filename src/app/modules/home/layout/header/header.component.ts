@@ -16,25 +16,11 @@ export class HeaderComponent implements OnInit {
   menu = false;
   _lang: string;
 
-  constructor(private translateServ: TranslateService, private categoryServ: CategoryService,
-              private storageServ: StorageService, private cartStoreServ: CartStoreService) {
-  }
-
-  get lang(): string {
-    return this._lang;
-  }
-
-  set lang(value: string) {
-    this._lang = value;
-
-    localStorage.setItem('_lang', value);
-    this.translateServ.use(value);
-    this.translateServ.setDefaultLang(value);
+  constructor(private translate: TranslateService, private categoryServ: CategoryService, private storageServ: StorageService, private cartStoreServ: CartStoreService) {
+    this.setLan();
   }
 
   ngOnInit(): void {
-    this.setLan();
-
     this.storageServ.getUser().subscribe(
       (user: any) => {
         console.log('user=', user);
@@ -42,8 +28,6 @@ export class HeaderComponent implements OnInit {
       }
     );
     console.log('uer=', this.storageServ.user);
-    this.lang = this.storageServ.lang;
-    this.translateServ.setDefaultLang(this._lang);
 
     this.categoryServ.getAdminCategories().subscribe(
       (res: any) => {
@@ -83,20 +67,28 @@ export class HeaderComponent implements OnInit {
     console.log("close Menu");
     this.menu = false;
   }
-  setLan() {
-    let lang = window.localStorage.getItem('_lang');
 
-    if (!lang) {
-      lang = navigator.language;
-      lang = lang.substr(0, 2).toLowerCase();
+  setLan() {
+    this._lang = this.storageServ.lang;
+
+    if (!this._lang) {
+      let lang = navigator.language.substr(0, 2).toLowerCase();
       if (lang === 'cn' || lang === 'zh') {
         lang = 'sc';
       }
-      localStorage.setItem('_lang', lang);
+      this._lang = lang;
     }
 
-    this._lang = lang;
-    this.translateServ.use(lang);
-    this.translateServ.setDefaultLang(lang);
+    this.translate.setDefaultLang( this._lang);
+    this.translate.use( this._lang);
+    this.storageServ.lang =  this._lang;
   }
+
+  onChange(lan: string) {
+    this._lang = lan;
+    this.translate.setDefaultLang(lan);
+    this.translate.use(lan);
+    this.storageServ.lang = lan;
+  }
+
 }
