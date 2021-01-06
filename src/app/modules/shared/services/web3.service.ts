@@ -251,7 +251,46 @@ export class Web3Service {
         const abiHex = web3.eth.abi.encodeFunctionCall(func, paramsArray);
         return abiHex;
       }  
-             
+           
+      getTransferFunctionABI(to, coin, value, comment) {
+        const web3 = this.getWeb3Provider();
+        const func = {
+          'constant': false,
+          'inputs': [
+            {
+              'name': '_to',
+              'type': 'address'
+            },
+            {
+              'name': '_coinType',
+              'type': 'uint32'
+            },
+            {
+              'name': '_value',
+              'type': 'uint256'
+            },
+            {
+              "name": "_comment",
+              "type": "bytes32"
+            }
+          ],
+          'name': 'transfer',
+          'outputs': [
+            {
+              'name': 'success',
+              'type': 'bool'
+            }
+          ],
+          'payable': false,
+          'stateMutability': 'nonpayable',
+          'type': 'function'
+        };
+    
+        const params = [to, coin, value, web3.utils.asciiToHex(comment)];
+        const abiHex = this.getGeneralFunctionABI(func, params);
+        return abiHex;
+      }
+
       getTransactionHash(txhex: string) {
         const hash = ethUtil.keccak(txhex).toString('hex');
         return '0x' + hash;

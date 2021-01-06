@@ -64,11 +64,22 @@
                         </div>
 
                         <div class="text-center">
-
+                            <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="pay()">
+                                Pay
+                            </button>
+                            <!--
+                            <div>
+                                Wallet: {{walletName}}
+                            </div>
+                            -->
+                            <div>
+                                USDT balance: {{usdtBalance}}
+                            </div>
+                            <!--
                             <button class="btn" (click)="payWithWeb()">
                                 Pay with Ex Web
                             </button>
-                            
+                            -->
                         </div>
                     </div>
                     <div class="text-center" *ngIf="order.paymentMethod == 'paypal'">
@@ -174,3 +185,16 @@
     
    
 </div>
+
+
+<ngx-smart-modal #passwordModal identifier="passwordModal">
+    <h1 class="text-center">{{'Password' | translate}}</h1>
+    <div>
+        <input type="password" placeholder="{{'Password' | translate}}" [(ngModel)]="password" name="password" required>
+    </div>
+    <div class="text-center">
+        <button class="btn" (click)="confirmPassword()">
+            {{'Confirm' | translate}}
+        </button>
+    </div>
+</ngx-smart-modal>

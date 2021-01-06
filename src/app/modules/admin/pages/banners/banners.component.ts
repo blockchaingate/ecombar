@@ -9,7 +9,7 @@ import { MerchantService } from '../../../shared/services/merchant.service';
   selector: 'app-admin-banners',
   providers: [BannerService],
   templateUrl: './banners.component.html',
-  styleUrls: ['./banners.component.scss']
+  styleUrls: ['./banners.component.scss', '../../../../../table.scss']
 })
 export class BannersComponent implements OnInit {
   banners: any;

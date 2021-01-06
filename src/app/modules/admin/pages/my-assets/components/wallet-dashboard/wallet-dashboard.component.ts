@@ -19,7 +19,7 @@ import * as createHash from 'create-hash';
   selector: 'app-admin-wallet-dashboard',
   providers: [],
   templateUrl: './wallet-dashboard.component.html',
-  styleUrls: ['./wallet-dashboard.component.scss']
+  styleUrls: ['./wallet-dashboard.component.scss',  '../../../../../../../table.scss',  '../../../../../../../select.scss',  '../../../../../../../button.scss']
 })
 export class WalletDashboardComponent implements OnInit{
   coins: any;
