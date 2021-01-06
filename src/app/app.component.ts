@@ -12,14 +12,28 @@ import { environment } from '../environments/environment';
 export class AppComponent implements OnInit {
   title = 'ecombar';
 
-  constructor(private appServ: AppService, private storageServ: StorageService, private translateService: TranslateService) {
+  constructor(private appServ: AppService, private storageServ: StorageService, private translate: TranslateService) {
     appServ.id = environment.appid;
+    // this.setLan();
   }
 
   ngOnInit() {
-    const lan = this.storageServ.lang;
-    if (lan) {
-      this.translateService.setDefaultLang(lan);
-    }
   }
+
+  setLan() {
+    let lang = this.storageServ.lang;
+
+    if (!lang) {
+      lang = navigator.language;
+      lang = lang.substr(0, 2).toLowerCase();
+      if (lang === 'cn' || lang === 'zh') {
+        lang = 'sc';
+      }
+    }
+
+    this.translate.setDefaultLang(lang);
+    this.translate.use(lang);
+    this.storageServ.lang = lang;
+  }
+
 }

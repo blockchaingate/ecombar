@@ -47,6 +47,13 @@ export class StorageService {
     }
 
     get lang(): string {
+        if(!this._lang) {
+            this._lang = localStorage.getItem('_lang');
+            if(!this._lang) {
+                this._lang = 'en';
+                localStorage.setItem('_lang', 'en');
+            }
+        }
         return this._lang;
     }
 
