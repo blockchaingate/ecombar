@@ -79,6 +79,8 @@ export class Category2Component implements OnInit {
   }
 
   changePageNum(num: number) {
+    if(num < 1) {num = 1}
+    if(num > this.pageCount) {num = this.pageCount}
     this.pageNum = num;
   }
   navigateTo(category) {
