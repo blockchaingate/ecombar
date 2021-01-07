@@ -6,9 +6,9 @@ export const environment = {
   cat_typ: 'ecom',
   
   endpoints: {
-    prod: 'https://blockchaingate.com/v2/',
-    blockchaingate: 'https://blockchaingate.com/v2/',
-    website: 'http://exchangily.com/',
+    prod: 'https://api.blockchaingate.com/v2/',
+    blockchaingate: 'https://api.blockchaingate.com/v2/',
+    website: 'http://ecombar.com/',
     kanban: 'https://kanbanprod.fabcoinapi.com/',
     BTC: {
       exchangily: 'https://btcprod.fabcoinapi.com/'
