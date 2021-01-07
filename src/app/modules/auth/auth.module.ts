@@ -4,6 +4,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { SigninComponent } from './pages/signin/signin.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { PwdRecoverComponent} from './pages/recover/pwd-recover.component';
+import { ActivationComponent } from './pages/activation/activation.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
@@ -11,7 +13,9 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AuthComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    ActivationComponent,
+    PwdRecoverComponent
   ],
   imports: [
     CommonModule,

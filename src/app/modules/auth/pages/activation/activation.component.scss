@@ -1,0 +1,19 @@
+
+.signinbtn {
+    padding: 14px 20px;
+    background: #00c3f3;
+    color: white;
+  }
+  
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .signinbtn, .signinbtn {
+    width: 100%;
+  }
+}
+
+.auth-container .container{
+  max-width: 400px;
+}
+

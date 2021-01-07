@@ -1,31 +1,108 @@
-<div class="auth-container d-flex justify-content-center">
-  <div class="container">
-    <h1>Sign Up</h1>
-    <hr>
-
-    <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" [(ngModel)]="email" name="email" required>
-
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" [(ngModel)]="password" name="psw" required>
-
-    <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" [(ngModel)]="repassword" name="psw-repeat" required>
-
-    <div class="clearfix d-flex justify-content-around align-items-center">
-      <div class="mx-2">
-        <button type="submit" class="signinbtn btn" (click)="signup()">Sign Up</button>
-      </div>
+<main id="content" role="main">
+    <!-- breadcrumb -->
+    <div class="bg-gray-13 bg-md-transparent">
+        <div class="container">
+            <!-- breadcrumb -->
+            <div class="my-md-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">{{"Home"|translate}}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{"My Account"|translate}}</li>
+                    </ol>
+                </nav>
+            </div>
+            <!-- End breadcrumb -->
+        </div>
     </div>
-    <div>
-      <h5>Already with ecombar?</h5>
-      <div class="mx-2">
-        <button type="submit" class="signinbtn btn" (click)="signin()">Sign In</button>
-      </div>        
-    </div>
-  </div>
-</div>
+    <!-- End breadcrumb -->
 
+    <div class="auth-container d-flex justify-content-center">
+        <div class="container">
+
+            <div class="mb-4">
+                <h1 class="text-center">{{"My Account"|translate}}</h1>
+            </div>
+
+            <div class="my-4 my-xl-8">
+                <div class="row">
+                    <div class="col-md-5 ml-xl-auto mr-md-auto mr-xl-0 mb-8 mb-md-0">
+                        <!-- Title -->
+                        <div class="border-bottom border-color-1 mb-6">
+                            <h3 class="d-inline-block section-title mb-0 pb-2 font-size-26">{{"Sign Up"|translate}}</h3>
+                        </div>
+                        <!-- End Title -->
+
+                        <form class="js-validate" novalidate="novalidate">
+                            <!-- Form Group -->
+                            <div class="js-form-message form-group">
+                                <label class="form-label" for="signinSrEmailExample3">{{"Email"|translate}}
+                                <span class="text-danger">*</span>
+                            </label>
+                                <input type="email" class="form-control" name="email" id="signinSrEmailExample3" placeholder="{{'Username or Email address'|translate}}" aria-label="Username or Email address" required data-msg="Please enter a valid email address." data-error-class="u-has-error"
+                                    data-success-class="u-has-success" [(ngModel)]="email" name="email" required>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="js-form-message form-group">
+                                <label class="form-label" for="signinSrPasswordExample2">{{"Password"|translate}} <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" name="password" id="signinSrPasswordExample2" placeholder="{{'Password'|translate}}" aria-label="Password" required data-msg="Your password is invalid. Please try again." data-error-class="u-has-error" data-success-class="u-has-success"
+                                    [(ngModel)]="password" name="psw" required>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="js-form-message form-group">
+                                <label class="form-label" for="signinSrPasswordExample2">{{"Repeat Password"|translate}} <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" name="RepeatPassword" id="signinSrPasswordExample2" placeholder="{{'Repeat Password'|translate}}" aria-label="RepeatPassword" required data-error-class="u-has-error" data-success-class="u-has-success" [(ngModel)]="repassword"
+                                    name="reppsw" required>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <div class="warning mx-2 left" *ngIf="errMsg">
+                                {{errMsg | translate}} <br>
+                                <span class="x-small handcursor" *ngIf="rawErrMsg"> <u (click)="togoleDetail()">{{"more info"|translate}} ...</u></span>
+                            </div>
+                            <div class="warning" *ngIf="showDetail">
+                                {{rawErrMsg}}
+                            </div>
+                            <!-- Button -->
+                            <div class="my-3">
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary-dark-w px-5" (click)="signup()">{{"Sign Up"|translate}}</button>
+                                </div>
+                            </div>
+                            <!-- End Button -->
+                        </form>
+                    </div>
+                    <div class="col-md-1 d-none d-md-block">
+                        <div class="flex-content-center h-100">
+                            <div class="width-1 bg-1 h-100"></div>
+                            <div class="width-50 height-50 border border-color-1 rounded-circle flex-content-center font-italic bg-white position-absolute">{{"or"|translate}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 ml-md-auto ml-xl-0 mr-xl-auto">
+                        <!-- Title -->
+                        <div class="border-bottom border-color-1 mb-6">
+                            <h3 class="d-inline-block section-title mb-0 pb-2 font-size-26">{{"Login"|translate}}</h3>
+                        </div>
+                        <p class="text-gray-90 mb-4">{{"Registered already" | translate}} ? {{"please go to login page"|translate}}.</p>
+                        <!-- End Title -->
+                        <!-- Button -->
+                        <div class="my-3">
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary-dark-w px-5" (click)="signin()">{{"Login"|translate}}</button>
+                            </div>
+                        </div>
+                        <!-- End Button -->
+
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</main>
 <!--
 <form action="action_page.php" style="border:1px solid #ccc">
     <div class="container">

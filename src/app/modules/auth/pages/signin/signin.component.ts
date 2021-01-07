@@ -15,10 +15,14 @@ import { Router } from '@angular/router';
 })
 export class SigninComponent implements OnInit {
   email: string;
+  emailSignup: string;
   password: string;
   showDetail = false;
   rawErrMsg = '';
   errMsg = '';
+  errMsgSignup = '';
+  regexpEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  // const regexpPwd = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
 
   constructor(private router: Router, private appServ: AppService, private authServ: AuthService,
               private storage: StorageService,private userServ: UserService, private merchantServ: MerchantService) { }
@@ -26,6 +30,11 @@ export class SigninComponent implements OnInit {
   ngOnInit(): void { }
 
   signin(): void {
+    if(!this.regexpEmail.test(this.email) || !this.password || this.password.length < 6){
+      this.errMsg = 'Invalid email or password';
+      return;
+    }
+
     const user: User = {};
     this.userServ.signin(this.email, this.password).subscribe(
       (res: any) => {
@@ -40,7 +49,6 @@ export class SigninComponent implements OnInit {
             this.merchantServ.name = res.defaultMerchant.name;
             this.merchantServ.id = decoded.merchantId || res.defaultMerchant._id;
           }
-          
           
           this.userServ.tokenExp = decoded.exp;
           
@@ -61,7 +69,12 @@ export class SigninComponent implements OnInit {
   }
 
   signup(): void {
-    this.router.navigate(['/auth/signup']);
+    if(!this.regexpEmail.test(this.emailSignup)){
+      this.errMsgSignup = 'Invalid email';
+      return;
+    }
+
+    this.router.navigate(['/auth/signup', {email: this.emailSignup}]);
   }
 
   togoleDetail(): void {
