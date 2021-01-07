@@ -31,6 +31,7 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }

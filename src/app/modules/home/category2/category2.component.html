@@ -6,8 +6,13 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">Home</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Smart Phones & Tablets</li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1" *ngIf="currentCatorory._id != category._id" (click)="navigateTo(category)">
+                            {{category.category | translateField}}
+                        </li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page" (click)="navigateTo(currentCatorory)">
+                            {{currentCatorory.category | translateField}}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -24,34 +29,31 @@
                     <ul id="sidebarNav" class="list-unstyled mb-0 sidebar-navbar">
                         <li>
                             <a class="dropdown-toggle dropdown-toggle-collapse dropdown-title" href="javascript:;" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="sidebarNav1Collapse" data-target="#sidebarNav1Collapse">
-                              Show All Categories
+                              {{'Show All Categories' | translate }}
                           </a>
 
                             <div id="sidebarNav1Collapse" class="collapse" data-parent="#sidebarNav">
                                 <ul id="sidebarNav1" class="list-unstyled dropdown-list">
                                     <!-- Menu List -->
-                                    <li><a class="dropdown-item" href="#">Accessories<span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Cameras & Photography<span class="text-gray-25 font-size-12 font-weight-normal"> (11)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Computer Components<span class="text-gray-25 font-size-12 font-weight-normal"> (22)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Gadgets<span class="text-gray-25 font-size-12 font-weight-normal"> (5)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Home Entertainment<span class="text-gray-25 font-size-12 font-weight-normal"> (7)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Laptops & Computers<span class="text-gray-25 font-size-12 font-weight-normal"> (42)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Printers & Ink<span class="text-gray-25 font-size-12 font-weight-normal"> (63)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Smart Phones & Tablets<span class="text-gray-25 font-size-12 font-weight-normal"> (11)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">TV & Audio<span class="text-gray-25 font-size-12 font-weight-normal"> (66)</span></a></li>
-                                    <li><a class="dropdown-item" href="#">Video Games & Consoles<span class="text-gray-25 font-size-12 font-weight-normal"> (31)</span></a></li>
+                                    <li *ngFor="let category of categories">
+                                        <a class="dropdown-item" href="/category/{{category._id}}">{{category.category | translateField}}<span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span></a>
+                                    </li>
                                     <!-- End Menu List -->
                                 </ul>
                             </div>
                         </li>
                         <li>
-                            <a class="dropdown-current active" href="#">Smart Phones & Tablets <span class="text-gray-25 font-size-12 font-weight-normal"> (50)</span></a>
+                            <a class="dropdown-current" [ngClass]="id==category._id ? 'active' : ''" href="/category/{{category._id}}">{{category.category | translateField}} <span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span></a>
 
-                            <ul class="list-unstyled dropdown-list">
+                            <ul class="list-unstyled dropdown-list" *ngIf="categoryChildren">
                                 <!-- Menu List -->
-                                <li><a class="dropdown-item" href="#">Smartphones<span class="text-gray-25 font-size-12 font-weight-normal"> (30)</span></a></li>
-                                <li><a class="dropdown-item" href="#">Tablets<span class="text-gray-25 font-size-12 font-weight-normal"> (20)</span></a></li>
-                                <!-- End Menu List -->
+                                <li *ngFor="let category of categoryChildren">
+                                    <a class="dropdown-item" [ngClass]="id==category._id ? 'active' : ''" href="/category/{{category._id}}">
+                                        {{category.category | translateField}}
+                                        <span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span>
+                                    </a>
+                                </li>
+                               <!-- End Menu List -->
                             </ul>
                         </li>
                     </ul>
@@ -347,7 +349,7 @@
             <div class="col-xl-9 col-wd-9gdot5">
                 <!-- Shop-control-bar Title -->
                 <div class="d-block d-md-flex flex-center-between mb-3">
-                    <h3 class="font-size-25 mb-2 mb-md-0">Smart Phones & Tablets</h3>
+                    <h3 class="font-size-25 mb-2 mb-md-0" (click)="navigateTo(currentCatorory)">{{currentCatorory.category | translateField}}</h3>
                     <p class="font-size-14 text-gray-90 mb-0">Showing 1–25 of 56 results</p>
                 </div>
                 <!-- End shop-control-bar Title -->

@@ -33,7 +33,11 @@ export class HeaderComponent implements OnInit {
       (res: any) => {
         console.log('res=====', res);
         if (res && res.ok) {
-          this.categories = res._body;
+          const body = res._body;
+          this.categories = body.filter(item => {
+            return item.parentId == null || item.parentId == ''
+          });
+          //
         }
       }
     );
