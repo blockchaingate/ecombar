@@ -13,6 +13,10 @@ export class Category2Component implements OnInit {
   category: any;
   mode: any;
   products: any;
+  pageNum: number;
+  pageSize: number;
+  pageCount: number;
+  totalProductsCount: number;
   currentCatorory: any;
   categoryChildren: any;
   id: string;
@@ -23,8 +27,12 @@ export class Category2Component implements OnInit {
     private categoryServ: CategoryService) { }
 
   ngOnInit() {
+    this.pageCount = 1;
+    this.pageNum = 1;
+    this.totalProductsCount = 0;
+    this.pageSize = 20;
     this.mode = 'mode1';
-
+    this.products = [];
     this.route.paramMap.subscribe((params: ParamMap) =>  {
       this.id = params.get('id');    
       this.categoryServ.getAdminCategoriesWithCount().subscribe(
@@ -52,7 +60,13 @@ export class Category2Component implements OnInit {
       this.productServ.getCategoryProducts(this.id).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.products = res._body;
+            const product = res._body[0];
+            for(let i=0;i<68;i++) {
+              this.products.push(product);
+            }
+            //this.products = res._body;
+            this.pageCount = Math.ceil(this.products.length / this.pageSize);
+            this.totalProductsCount = this.products.length;
           }
       });
     });
@@ -62,6 +76,10 @@ export class Category2Component implements OnInit {
 
   changeMode(mode: string) {
     this.mode = mode;
+  }
+
+  changePageNum(num: number) {
+    this.pageNum = num;
   }
   navigateTo(category) {
     this.router.navigate(['/category/' + category._id]);
