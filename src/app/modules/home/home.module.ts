@@ -8,6 +8,11 @@ import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.com
 import { FooterComponent } from './layout/footer/footer.component';
 import { SharedModule } from '../shared/shared.module';
 import { Category2Component } from './category2/category2.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductItemOneComponent } from './components/product-item-one/product-item-one.component';
+import { ProductItemTwoComponent } from './components/product-item-two/product-item-two.component';
+import { ProductItemThreeComponent } from './components/product-item-three/product-item-three.component';
+import { ProductItemFourComponent } from './components/product-item-four/product-item-four.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -16,7 +21,12 @@ import { Category2Component } from './category2/category2.component';
     HeaderComponent,
     FooterComponent,
     Category2Component,
+    ProductListComponent,
     MenuMobileComponent,
+    ProductItemOneComponent,
+    ProductItemTwoComponent,
+    ProductItemThreeComponent,
+    ProductItemFourComponent
   ],
   imports: [
     // QRCodeModule,

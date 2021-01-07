@@ -1,0 +1,7 @@
+.nav-item .nav-link {
+    color: #d6dbe1;
+}
+
+.nav-item .nav-link.active {
+    color: inherit;
+}
