@@ -8,6 +8,9 @@ export class TranslateService {
     constructor(private tranServ: TranService) {
     }
     transField(fieldName: any) {
+        if(!fieldName) {
+            return '';
+        }
         const lang = this.tranServ.getDefaultLang();
         return fieldName[lang];
     }        

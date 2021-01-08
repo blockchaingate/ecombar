@@ -251,7 +251,12 @@ export class Web3Service {
         const abiHex = web3.eth.abi.encodeFunctionCall(func, paramsArray);
         return abiHex;
       }  
-           
+          
+      getHash(input: string) {
+        const web3 = this.getWeb3Provider();
+        return web3.utils.sha3(input);
+      }
+      
       getTransferFunctionABI(to, coin, value, comment) {
         const web3 = this.getWeb3Provider();
         const func = {

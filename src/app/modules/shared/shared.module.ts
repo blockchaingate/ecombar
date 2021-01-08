@@ -13,6 +13,7 @@ import { PaymentService } from './services/payment.service';
 import { AddressService } from './services/address.service';
 import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
+import { IddockService } from './services/iddock.service';
 import { WalletService } from './services/wallet.service';
 import { TranslateService } from './services/translate.service';
 import { UtilService } from './services/util.service';
@@ -28,9 +29,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProductsGridComponent } from './components/products-grid/products-grid.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { PasswordModalComponent } from './components/password-modal/password-modal.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -41,11 +43,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     ExcludeProductsPipe,
     TranslateFieldPipe,
     ProductsGridComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    PasswordModalComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
+    NgxSmartModalModule.forRoot(),
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {
@@ -60,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateFieldPipe,
     ProductsGridComponent,
     StarRatingComponent,
+    PasswordModalComponent,
     TranslateModule
   ],
   providers: [
@@ -73,7 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ApiService,
     Web3Service,
     CommentService,
-    KanbanService
+    KanbanService,
+    IddockService
   ]
 })
 export class SharedModule {
@@ -91,7 +97,8 @@ export class SharedModule {
         CoinService,
         ApiService,
         Web3Service,        
-        KanbanService
+        KanbanService,
+        IddockService
       ]
     };
   }
