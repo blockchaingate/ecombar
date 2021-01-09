@@ -25,6 +25,34 @@ export class Web3Service {
     }
   }
 
+
+  getAddRecordABI(sequence: string, hashData: string) {
+    const web3 = this.getWeb3Provider();
+    const func: any =   {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_sequence",
+          "type": "bytes32"
+        },
+        {
+          "name": "_hashData",
+          "type": "bytes32"
+        }
+      ],
+      "name": "addRecord",
+      "outputs": [
+        
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };  
+    const params = [web3.utils.asciiToHex(sequence), web3.utils.asciiToHex(hashData)];
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+  
   async signAbiHexWithPrivateKey(abiHex: string, keyPair: any, address: string, nonce: number,
     value = 0, options = { gasPrice: 0, gasLimit: 0 }) {
     // console.log('abiHex before', abiHex);

@@ -64,6 +64,9 @@ export class KanbanService {
         return addr;
     }
 
+    getRecordAddress() {
+        return '0xe9d98cc4e70bf0ec4b06090b4bc6d5b0a69eac6a';
+    }
     async getTransactionCount(address: string) {
         //return this.getNonce(address);
 

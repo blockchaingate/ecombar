@@ -63,7 +63,7 @@ export class MerchantInfoComponent implements OnInit{
 
     }
 
-    onConfirmPassword(event) {
+    async onConfirmPassword(event) {
         this.ngxSmartModalServ.getModal('passwordModal').close();
         this.password = event;
 
@@ -102,16 +102,20 @@ export class MerchantInfoComponent implements OnInit{
             _id: id,
             selfSign: selfSignString,
             nvs: nvs,
-            datahash: datahash
+            datahash: datahash,
+            txhex: ''
         }
 
-        
+        console.log('data=', data);
+        const txhex = await this.iddockServ.getTxhex(keyPairsKanban, data);
+        data.txhex = txhex;
+
         this.iddockServ.saveId(data).subscribe(
-            (res:any) => {
-                console.log('res from iddockServ.saveId=', res);
+            (res: any) => {
+                console.log('res===', res);
             }
         );
-
+        
         this.userServ.updateSelfMerchant(item).subscribe(
             (res: any) => {
                 if(res && res.ok) {
