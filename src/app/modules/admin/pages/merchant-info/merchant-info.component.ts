@@ -92,8 +92,8 @@ export class MerchantInfoComponent implements OnInit{
         const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
         
         const nonce = 0;
-        const id = keyPairsKanban.publicKey + '_' + nonce;
-        
+        //const id = keyPairsKanban.publicKey + '_' + nonce;
+        const id = keyPairsKanban.publicKey.substring(0, 20) + '_' + nonce;
         const selfSign = this.coinServ.signedMessage(nvsString, keyPairsKanban);
         const selfSignString = this.utilServ.stripHexPrefix(selfSign.r)  + this.utilServ.stripHexPrefix(selfSign.s) + this.utilServ.stripHexPrefix(selfSign.v);
         const datahash = this.web3Serv.getHash(nvsString);

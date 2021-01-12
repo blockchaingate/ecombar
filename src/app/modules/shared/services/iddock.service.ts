@@ -14,8 +14,12 @@ export class IddockService {
     ) { }
 
    async getTxhex(keyPairsKanban, data: any) {
-    //const abiHex = this.web3Serv.getAddRecordABI(data._id, data.datahash);
-    const abiHex = this.web3Serv.getAddRecordABI('111', '222');
+     const id = data._id;
+    console.log('id=', id);
+    const hash = data.datahash;
+    console.log('hash=', hash);
+    const abiHex = this.web3Serv.getAddRecordABI(id, hash);
+   // const abiHex = this.web3Serv.getAddRecordABI('111', '222');
     const recordAddress = this.kanbanServ.getRecordAddress();
     const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
     const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, recordAddress, nonce, 0, null);
