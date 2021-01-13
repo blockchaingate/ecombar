@@ -22,7 +22,6 @@ export interface Product {
     description?: TextLan;
 
     shortName?: string;
-
     variations?: [{ name: TextLan, values: [string] }];
 
     primaryCategoryId?: string;

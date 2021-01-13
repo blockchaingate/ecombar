@@ -1,113 +1,3 @@
-<!-- <div class="container" *ngIf="product">
-    <div class="row">
-        <div class="col col-4 px-1">
-            <div class="d-flex flex-nowrap">
-                <div>
-                    <div *ngFor="let image of product.images">
-                        <img [src]="image" (mouseenter) ="mouseEnter(image)" class="img-thumbnail" [ngClass]="image == selectedImage ? 'img-thumbnail-selected' : ''">
-                    </div>
-                </div>
-                <div class="px-1">
-                    <img class="selected-img" [src]="selectedImage">
-                </div>
-            </div>
-
-            <div class="text-center">
-                <button class="btn" *ngIf="!favorite" (click)="addToFavorite()">Add to my favorite</button>
-                <button class="btn" *ngIf="favorite" (click)="removeFromFavorite()">Remove from my favorite</button>
-            </div>
-        </div>
-
-        <div class="col col-5 px-1">
-            <div class="product-title">
-                {{product.title | translateField}}
-            </div>
-            <div class="product-price py-2 border-bottom">
-                ${{product.price}}
-            </div>
-            <div>
-                <div class="about a-text-bold">
-                    About this item
-                </div>
-
-                <div [innerHTML]="product.description | translateField">
-                </div>  
-            </div>
-        </div> 
-        
-        <div class="col col-3 px-1">
-            <div class="p-2  p-border">
-                <div class="product-price py-2">
-                    ${{product.price}}
-                </div>
-                <div>
-                    <div class="color-success">
-                        In stock
-                    </div>
-    
-                    <div class="quantity-container py-2">
-                        <div>
-                            <select [(ngModel)]="quantity">
-                                <option value="0">Quantity:</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                              </select>                        
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <button class="btn" (click)="addToCart()">
-                        Add to cart
-                    </button>
-                </div>
-
-                <div>
-                    <button class="btn" (click)="buyNow()">
-                        Buy now
-                    </button>
-                </div>                
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col col-12">
-            <div class="py-2">
-                <b>
-                    Comments on this product
-                </b>
-                
-            </div>
-            <div>
-                <div *ngFor="let comment of comments" class="py-3">
-                    <div class="d-flex align-items-center">
-                        <div class="pr-2">
-                            <img class="img-avatar" *ngIf="comment.authorId&&comment.authorId.myPhotoUrl" [src]="comment.authorId.myPhotoUrl">
-                            <img class="img-avatar" *ngIf="!(comment.authorId&&comment.authorId.myPhotoUrl)" src="/assets/images/default_avatar.jpeg">
-                        </div>
-                        <div class="pl-2">
-                            {{comment.authorId.displayName}}
-                        </div>
-                    </div>
-                    <div class="text-left">
-                        <app-star-rating [(rating)]="comment.rating" [readonly]="true"></app-star-rating>
-                    </div>
-                    <div [innerHTML]="comment.comment">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
- -->
-
 
 
 
@@ -119,10 +9,10 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home1</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Product</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Bag</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{product.title | translateField}}</li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{product && product.title | translateField}}</li>
                     </ol>
                 </nav>
             </div>
@@ -142,37 +32,12 @@
                         </div>
                     </div>
   
-                    <div id="sliderThumb" class="js-slick-carousel u-slick u-slick--slider-syncing u-slick--slider-syncing-size u-slick--gutters-1 u-slick--transform-off"
+                    <div *ngIf="product && product.images" id="sliderThumb" class="js-slick-carousel u-slick u-slick--slider-syncing u-slick--slider-syncing-size u-slick--gutters-1 u-slick--transform-off"
                         >
                         <div  style="cursor: pointer;" *ngFor="let image of product.images">
                             <img class="img-fluid" [src]="image" (mouseenter) ="mouseEnter(image)" class="img-thumbnail"  [ngClass]="image == selectedImage ? 'img-thumbnail-selected' : ''" alt="Image Description">
                         </div>
                     </div>
-
-<!-- 
-                    <div id="sliderSyncingNav" class="js-slick-carousel u-slick mb-2"
-                        data-infinite="true"
-                        data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-classic u-slick__arrow-centered--y rounded-circle"
-                        data-arrow-left-classes="fas fa-arrow-left u-slick__arrow-classic-inner u-slick__arrow-classic-inner--left ml-lg-2 ml-xl-4"
-                        data-arrow-right-classes="fas fa-arrow-right u-slick__arrow-classic-inner u-slick__arrow-classic-inner--right mr-lg-2 mr-xl-4"
-                        data-nav-for="#sliderSyncingThumb">
-                        <div class="" >
-                            <img class="img-fluid" class="selected-img" [src]="selectedImage" alt="Image Description">
-                        </div>
-                    </div>
-  
-                    <div id="sliderSyncingThumb" class="js-slick-carousel u-slick u-slick--slider-syncing u-slick--slider-syncing-size u-slick--gutters-1 u-slick--transform-off"
-                        data-infinite="true"
-                        data-slides-show="5"
-                        data-is-thumbs="true"
-                        data-nav-for="#sliderSyncingNav">
-                        <div class="" style="cursor: pointer;" *ngFor="let image of product.images">
-                            <img class="img-fluid"  [src]="image" (mouseenter) ="mouseEnter(image)" class="img-thumbnail" [ngClass]="image == selectedImage ? 'img-thumbnail-selected' : ''" alt="Image Description">
-                        </div>
-                    </div> -->
-
-
-
 
 
                     
@@ -181,7 +46,7 @@
                     <div class="mb-2">
                         <div class="border-bottom mb-3 pb-md-1 pb-3">
                             <a href="#" class="font-size-12 text-gray-5 mb-2 d-inline-block">Headphones</a>
-                            <h2 class="font-size-25 text-lh-1dot2">{{product.title | translateField}}</h2>
+                            <h2 class="font-size-25 text-lh-1dot2">{{product && product.title | translateField}}</h2>
                             <div class="mb-2">
                                 <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="#">
                                     <div class="text-warning mr-2">
@@ -195,7 +60,9 @@
                                 </a>
                             </div>
                             <div class="d-md-flex align-items-center">
+                                <!--
                                 <a href="#" class="max-width-150 ml-n2 mb-2 mb-md-0 d-block"><img class="img-fluid" src="../../assets/img/200X60/img1.png" alt="Image Description"></a>
+                                -->
                                 <div class="ml-md-3 text-gray-9 font-size-14">Availability: <span class="text-green font-weight-bold">26 in stock</span></div>
                             </div>
                         </div>
@@ -212,13 +79,14 @@
                                 <li>20 MP Electro and 28 megapixel CMOS rear camera</li>
                             </ul> -->
                         </div>
-                        <p  [innerHTML]="product.description | translateField">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-                        </p>
-                        <p><strong>SKU</strong>: FW511948218</p>
+                        <p  [innerHTML]="product && product.description | translateField">
+                       </p>
+                       <!--
+                        <p><strong>SKU</strong>: 2222FW511948218</p>
+                        -->
                         <div class="mb-4">
                             <div class="d-flex align-items-baseline">
-                                <ins class="font-size-36 text-decoration-none">${{product.price}}</ins>
+                                <ins class="font-size-36 text-decoration-none">${{product && product.price}}</ins>
                                 <!-- <del class="font-size-20 ml-2 text-gray-6">$2,299.00</del> -->
                             </div>
                         </div>
@@ -228,10 +96,8 @@
                                 <!-- Select -->
                                 <select class="js-select selectpicker dropdown-select ml-3"
                                     data-style="btn-sm bg-white font-weight-normal py-2 border">
-                                    <option value="one" selected>White with Gold</option>
-                                    <option value="two">Red</option>
-                                    <option value="three">Green</option>
-                                    <option value="four">Blue</option>
+                                    <option selected value="">Choose color</option>
+                                    <option *ngFor="let color of colors" value="{{color}}">{{color}}</option>
                                 </select>
                                 <!-- End Select -->
                             </div>
@@ -243,13 +109,13 @@
                                 <div class="border rounded-pill py-2 px-3 border-color-1">
                                     <div class="js-quantity row align-items-center">
                                         <div class="col">
-                                            <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none" type="text" value="1">
+                                            <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none" type="text" [(ngModel)]="quantity">
                                         </div>
                                         <div class="col-auto pr-1">
-                                            <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" href="javascript:;">
+                                            <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" (click)="decQuantity()">
                                                 <small class="fas fa-minus btn-icon__inner"></small>
                                             </a>
-                                            <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" href="javascript:;">
+                                            <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" (click)="incQuantity()">
                                                 <small class="fas fa-plus btn-icon__inner"></small>
                                             </a>
                                         </div>
@@ -270,11 +136,13 @@
         <div class="mb-8">
             <div class="position-relative position-md-static px-md-6">
                 <ul class="nav nav-classic nav-tab nav-tab-lg justify-content-xl-center flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble border-0 pb-1 pb-xl-0 mb-n1 mb-xl-0" id="pills-tab-8" role="tablist">
+             <!--
                     <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
                         <a class="nav-link active" id="Jpills-one-example1-tab" data-toggle="pill" href="#Jpills-one-example1" role="tab" aria-controls="Jpills-one-example1" aria-selected="true">Accessories</a>
                     </li>
+                -->
                     <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link" id="Jpills-two-example1-tab" data-toggle="pill" href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1" aria-selected="false">Description</a>
+                        <a class="nav-link active" id="Jpills-two-example1-tab" data-toggle="pill" href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1" aria-selected="true">Description</a>
                     </li>
                     <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
                         <a class="nav-link" id="Jpills-three-example1-tab" data-toggle="pill" href="#Jpills-three-example1" role="tab" aria-controls="Jpills-three-example1" aria-selected="false">Specification</a>
@@ -287,6 +155,7 @@
             <!-- Tab Content -->
             <div class="borders-radius-17 border p-4 mt-4 mt-md-0 px-lg-10 py-lg-9">
                 <div class="tab-content" id="Jpills-tabContent">
+                    <!--
                     <div class="tab-pane fade active show" id="Jpills-one-example1" role="tabpanel" aria-labelledby="Jpills-one-example1-tab">
                         <div class="row no-gutters">
                             <div class="col mb-6 mb-md-0">
@@ -377,7 +246,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="Jpills-two-example1" role="tabpanel" aria-labelledby="Jpills-two-example1-tab">
+                -->
+                    <div class="tab-pane fade  active show" id="Jpills-two-example1" role="tabpanel" aria-labelledby="Jpills-two-example1-tab">
                         <h3 class="font-size-24 mb-3">Perfectly Done</h3>
                         <p>Praesent ornare, ex a interdum consectetur, lectus diam sodales elit, vitae egestas est enim ornare nisl. Nullam in lectus nec sem semper viverra. In lobortis egestas massa. Nam nec massa nisi. Suspendisse potenti. Quisque suscipit vulputate dui quis volutpat. Ut id elit facilisis, feugiat est in, tempus lacus. Ut ultrices dictum metus, a ultricies ex vulputate ac. Ut id cursus tellus, non tempor quam. Morbi porta diam nisi, id finibus nunc tincidunt eu.</p>
                         <div class="row">
@@ -407,7 +277,7 @@
                             </div>
                         </div>
                         <ul class="nav flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>SKU:</strong> <span class="sku">FW511948218</span></li>
+                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>SKU:</strong> <span class="sku">222FW511948218</span></li>
                             <li class="nav-item text-gray-111 mx-3 flex-shrink-0 flex-xl-shrink-1">/</li>
                             <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>Category:</strong> <a href="#" class="text-blue">Headphones</a></li>
                             <li class="nav-item text-gray-111 mx-3 flex-shrink-0 flex-xl-shrink-1">/</li>

@@ -22,7 +22,8 @@ export class ProductComponent implements OnInit {
   comments: any;
   id: string;
   rating: number;
-  quantity: string;
+  quantity: number;
+  colors: any;
   favorite: any;
   token: any;
   selectedImage: string;
@@ -45,7 +46,7 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
 
     this.id = this.route.snapshot.paramMap.get('id');
-    this.quantity = '1';
+    this.quantity = 1;
 
     this.commentServ.getComments(this.id).subscribe(
       (res: any) => {
@@ -59,7 +60,10 @@ export class ProductComponent implements OnInit {
       (res: any) => {
         if(res && res.ok) {
           this.product = res._body;
+          this.colors = this.product.colors;
+
           console.log('this.product=', this.product);
+          console.log('this.colors=', this.colors);
           this.selectedImage = this.product.images[0];
         }
       }
@@ -95,6 +99,17 @@ export class ProductComponent implements OnInit {
     }  
 
 
+  }
+
+  decQuantity() {
+    if(this.quantity > 1) {
+      this.quantity --;
+    }
+    
+  }
+
+  incQuantity() {
+    this.quantity ++;
   }
 
   initForUser() {

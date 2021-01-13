@@ -29,6 +29,8 @@ export class ProductAddComponent implements OnInit {
   product: any;
   active: boolean;
   id: string;
+  color: string;
+  colors: any;
   currentTab: string;
   category: string;
   categories: any;
@@ -50,14 +52,11 @@ export class ProductAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.colors = [];
     this.active = false;
     this.descriptionChinese = '';
     this.images = [
-      'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a0?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
-      'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a3?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
-      'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a8?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
-      'https://img1.cohimg.net/is/image/Coach/73995_b4lj_a97?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75',
-      'https://img1.cohimg.net/is/image/Coach/73995_a91?fmt=jpg&wid=680&hei=885&bgc=f0f0f0&fit=vfit&qlt=75'
+
     ];
     this.currentTab = 'default';
     this.currencies = currencies;
@@ -103,6 +102,7 @@ export class ProductAddComponent implements OnInit {
             this.currency = product.currency;
             this.price = product.price;
             this.brand = product.brand;
+            this.colors = product.colors;
             this.active = product.active;
             if (product.images) {
               this.images = product.images;
@@ -129,6 +129,15 @@ export class ProductAddComponent implements OnInit {
   onUploaded(event) {
     this.images.push(event);
   }
+
+  addColor() {
+    this.colors.push(this.color);
+  }
+
+  removeColor(c) {
+    this.colors = this.colors.filter(item => item != c);
+  }
+  
   saveProduct() {
     console.log('this.images=', this.images);
     const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
@@ -141,6 +150,7 @@ export class ProductAddComponent implements OnInit {
       primaryCategoryId: this.category,
       active: this.active,
       images: this.images,
+      colors: this.colors,
       brand: this.brand
     };
     if (this.id) {
