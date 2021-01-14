@@ -23,19 +23,50 @@
               <div class="card">
                 <div class="container">
                   <div class="form-field">
-                    <label for="email">Title</label>
+                    <label for="title">Title</label>
                     <input type="text" placeholder="Enter product title" [(ngModel)]="title" name="title" required>
                   </div>
-    
+
                   <div class="form-field">
-                    <label for="email">Description</label>
+                    <label for="detail">Detail</label>
+                    <ejs-richtexteditor [(ngModel)]='detail'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+                  </div>                  
 
-
+                  <div class="form-field">
+                    <label for="description">Description</label>
                     <ejs-richtexteditor [(ngModel)]='description'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
-
-
-
                   </div>
+
+                  <div class="form-field">
+                    <label for="specification">Specification</label>
+
+                    <div>
+                      <div *ngFor="let spec of specs">
+                        <div class="d-flex align-items-center justify-content-between py-2">
+                          <div>
+                            {{spec.name}}: {{spec.value}}
+                          </div>
+                          <div>
+                            <button class="btn" (click)="removeSpec(spec)">{{'Remove' | translate}}</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div>
+                      <div class="d-inline-block px-2">
+                        <input type="text" placeholder="Enter Name" [(ngModel)]="specName" name="specName">
+                      </div>
+
+                      <div class="d-inline-block px-2">
+                        <input type="text" placeholder="Enter Value" [(ngModel)]="specValue" name="specValue">
+                      </div>                      
+                    </div>
+
+                    <div class="pt-2">
+                      <button class="btn" (click)="addSpec()">{{'Add' | translate}}</button>
+                    </div>
+                  </div>                  
                 </div>
               </div>
             </div>
@@ -161,9 +192,15 @@
       <div *ngIf="currentTab=='Chinese'">
         <label for="name"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="titleChinese" name="titleChinese">     
+
+        <label for="name"><b>内容</b></label>
+        <ejs-richtexteditor [(ngModel)]='detailChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
         
         <label for="name"><b>描述</b></label>
-        <ejs-richtexteditor [(ngModel)]='descriptionChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
+        <ejs-richtexteditor [(ngModel)]='descriptionChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
+        
+        <label for="name"><b>规格</b></label>
+        <ejs-richtexteditor [(ngModel)]='specificationChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>          
       </div>
 
 

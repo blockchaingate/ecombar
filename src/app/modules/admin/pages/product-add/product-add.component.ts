@@ -36,12 +36,19 @@ export class ProductAddComponent implements OnInit {
   categories: any;
   brand: string;
   brands: any;
+  specName: string;
+  specValue: string;
   currencies: any;
   images: any;
   currency: string;
   description: string;
   titleChinese: string;
   descriptionChinese: string;
+  detail: string;
+  specs: any;
+  specification: string;
+  detailChinese: string;
+  specificationChinese: string;  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -53,6 +60,7 @@ export class ProductAddComponent implements OnInit {
 
   ngOnInit() {
     this.colors = [];
+    this.specs = [];
     this.active = false;
     this.descriptionChinese = '';
     this.images = [
@@ -96,7 +104,20 @@ export class ProductAddComponent implements OnInit {
               if(product.description.sc) {
                 this.descriptionChinese = product.description.sc;
               }
-              
+            }
+
+            if (product.briefIntroduction) {
+              this.detail = product.briefIntroduction.en;
+              if(product.briefIntroduction.sc) {
+                this.detailChinese = product.briefIntroduction.sc;
+              }
+            }
+
+            if (product.specification) {
+              this.specification = product.specification.en;
+              if(product.specification.sc) {
+                this.specificationChinese = product.specification.sc;
+              }
             }
 
             this.currency = product.currency;
@@ -132,19 +153,34 @@ export class ProductAddComponent implements OnInit {
 
   addColor() {
     this.colors.push(this.color);
+    this.color = '';
   }
 
   removeColor(c) {
     this.colors = this.colors.filter(item => item != c);
   }
-  
+
+  addSpec() {
+    this.specs.push(
+      {name: this.specName,value:this.specValue}
+    );
+    this.specName = '';
+    this.specValue = '';
+  }
+  removeSpec(spec) {
+    this.specs = this.specs.filter(item => item.name != spec.name && item.value != spec.value);
+  }  
   saveProduct() {
     console.log('this.images=', this.images);
     const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
-    const descLan: TextLan = { name: 'title', en: this.description, sc: this.descriptionChinese };
+    const detailLan: TextLan = { name: 'detail', en: this.detail, sc: this.detailChinese };
+    const descLan: TextLan = { name: 'description', en: this.description, sc: this.descriptionChinese };
+    //const specLan: TextLan = { name: 'specification', en: this.specification, sc: this.specificationChinese };
     const data: Product = {
       title: titleLan,
+      briefIntroduction: detailLan,
       description: descLan,
+      //specification: specLan,
       price: parseInt(this.price), // in cents
       currency: 'USD',
       primaryCategoryId: this.category,
