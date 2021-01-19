@@ -1,5 +1,3 @@
-import { Coin } from './coin';
-
 export class Address {
     address: string;
     index: number;
