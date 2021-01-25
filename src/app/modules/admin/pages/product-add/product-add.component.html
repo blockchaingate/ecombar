@@ -160,7 +160,12 @@
                   <div class="custom-select py-2" *ngIf="categories">
                     <select [(ngModel)]="category">
                       <option value="0">Select Category:</option>
-                      <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category | translateField}}</option>
+                      <option *ngFor="let cat of categories" value="{{cat._id}}">
+                        {{cat.category | translateField}}
+                        <span *ngIf="cat.parentId">
+                          ({{cat.parentId.category | translateField}})
+                        </span>
+                      </option>
                     </select>
                   </div>
     

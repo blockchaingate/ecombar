@@ -5,6 +5,7 @@ import { Product2Component } from './product2/product2.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { Category2Component } from './category2/category2.component';
+import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
 
 const routes: Routes = [
   {
@@ -35,10 +36,14 @@ const routes: Routes = [
       {
         path: 'store',
         loadChildren: () => import('./store/store.module').then(m => m.StoreModule)
-      },      
+      },   
       {
         path: 'category/:id',
         component: Category2Component
+      },   
+      {
+        path: 'apply-for-merchant',
+        component: ApplyForMerchantComponent
       },
       {
         path: 'product2',

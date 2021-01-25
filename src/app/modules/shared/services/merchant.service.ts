@@ -39,6 +39,11 @@ export class MerchantService {
         return this.http.get('merchants');
     }
 
+    approve(id: string) {
+        const url = 'merchants/approve/' + id ;
+        return this.http.get(url);
+    }
+
     create(data: any) {
         return this.http.post('merchants/create', data);
     }

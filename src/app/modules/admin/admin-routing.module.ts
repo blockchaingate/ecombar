@@ -32,6 +32,7 @@ import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
 import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
 import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
+import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -69,6 +70,9 @@ const routes: Routes = [
       {
         path: 'wallet-dashboard', component: WalletDashboardComponent
       },
+      {
+        path: 'merchant-applications', component: MerchantApplicationsComponent
+      },      
       {
         path: 'wallet-pwd', component: WalletPwdComponent
       },

@@ -16,6 +16,7 @@ export class AdminComponent implements OnInit {
   showNavMenu = false;
   dropDownActive = false;
   displayName: string;
+  merchantId: string;
   myPhotoUrl: string;
   email: string;
   role: string;
@@ -61,6 +62,7 @@ export class AdminComponent implements OnInit {
     );
 
     let merchantId = this.merchantServ.id;
+    this.merchantId = merchantId;
     if (!merchantId) {
       this.storageServ.get('_merchantId').subscribe(
         (ret: any) => {
@@ -116,12 +118,18 @@ export class AdminComponent implements OnInit {
           icon: 'user'
         },
         {
+          title: 'Merchant Applications',
+          link: 'merchant-applications',
+          icon: 'user'
+        },       
+        {
           title: 'Orders',
           link: 'orders',
           icon: 'order'
         }
       ];
     } else if (merchantId) {
+      this.merchantId = merchantId;
         this.role = 'Merchant';
         this.menuItems = [
           {

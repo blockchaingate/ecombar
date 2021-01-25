@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../shared/services/product.service';
-import { TextLanService } from '../../../shared/services/textlan.service';
+import { UserService } from '../../../shared/services/user.service';
 import { CategoryService } from '../../../shared/services/category.service';
 import { BrandService } from '../../../shared/services/brand.service';
 import { currencies } from '../../../../../environments/currencies';
@@ -40,6 +40,7 @@ export class ProductAddComponent implements OnInit {
   specValue: string;
   currencies: any;
   images: any;
+  merchantId: string;
   currency: string;
   description: string;
   titleChinese: string;
@@ -52,7 +53,7 @@ export class ProductAddComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private textlanServ: TextLanService,
+    private userServ: UserService,
     private categoryServ: CategoryService,
     private brandServ: BrandService,
     private productServ: ProductService) {
@@ -61,28 +62,45 @@ export class ProductAddComponent implements OnInit {
   ngOnInit() {
     this.colors = [];
     this.specs = [];
-    this.active = false;
+    this.active = true;
     this.descriptionChinese = '';
     this.images = [
 
     ];
     this.currentTab = 'default';
     this.currencies = currencies;
-    this.categoryServ.getCategories().subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          this.categories = res._body;
+
+    this.userServ.getMe().subscribe(
+      ret => {
+        console.log('ret==', ret);
+        if(ret && ret.ok) {
+          const body = ret._body;
+          this.merchantId = body.defaultMerchant._id;
+          this.categoryServ.getCategories().subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                this.categories = res._body;
+                this.categories = this.categories.filter(item => !item.merchantId || item.merchantId == this.merchantId);
+              }
+            }
+          );
+
+
+          this.brandServ.getBrands().subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                this.brands = res._body;
+                this.brands = this.brands.filter(item => !item.merchantId || item.merchantId == this.merchantId);
+                console.log('this.brands=', this.brands);
+              }
+            }      
+          );          
         }
       }
     );
 
-    this.brandServ.getBrands().subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          this.brands = res._body;
-        }
-      }      
-    );
+
+
 
     this.id = this.route.snapshot.paramMap.get('id');
 
@@ -161,6 +179,9 @@ export class ProductAddComponent implements OnInit {
   }
 
   addSpec() {
+    if(!this.specName || !this.specValue) {
+      return;
+    }
     this.specs.push(
       {name: this.specName,value:this.specValue}
     );

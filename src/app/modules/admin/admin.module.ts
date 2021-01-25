@@ -30,6 +30,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
 import { MnemonicComponent } from './pages/my-assets/components/mnemonic/mnemonic.component';
 import { MnemeditComponent } from './pages/my-assets/components/mnemonic/mnemedit.component';
+import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { NoWalletComponent } from './pages/my-assets/components/create-wallet/no-wallet.component';
 import { WalletPwdComponent } from './pages/my-assets/components/create-wallet/wallet-pwd.component';
 import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
@@ -69,6 +70,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     WalletPwdComponent,
     CommentComponent,
     CartComponent,
+    MerchantApplicationsComponent,
     MyAssetsComponent,
     MyProductsComponent,
     BannersComponent,

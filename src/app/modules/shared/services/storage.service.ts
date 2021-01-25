@@ -71,6 +71,10 @@ export class StorageService {
         return this._token;
     }
 
+    getTokenStorage() {
+        return this.storage.get('_token');
+    }
+    
     deleteToken(): void {
         this._token = '';
         this.storage.delete('_token').subscribe(ret => { });
