@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 export class SigninComponent implements OnInit {
   email: string;
   emailSignup: string;
+  passwordSignup: string;
+  repasswordSignup: string;
   password: string;
   showDetail = false;
   rawErrMsg = '';
@@ -68,13 +70,27 @@ export class SigninComponent implements OnInit {
     );
   }
 
-  signup(): void {
-    if(!this.regexpEmail.test(this.emailSignup)){
-      this.errMsgSignup = 'Invalid email';
+  signup() {
+    console.log('go signuppp');
+    const regexpEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    const regexpPwd = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
+
+    /*
+  if(!regexpEmail.test(this.emailSignup) || !regexpPwd.test(this.passwordSignup) || this.passwordSignup !== this.repasswordSignup){
+      this.errMsg = 'Invalid email or password';
+      console.log('Invalid email or password');
       return;
     }
-
-    this.router.navigate(['/auth/signup', {email: this.emailSignup}]);
+    */
+    this.userServ.signup(this.emailSignup, this.passwordSignup).subscribe(
+      (res: any) => {
+        if (res && res.token) {
+        } else {
+          this.errMsg = 'Invalid email or password';
+        }
+      },
+      err => { this.rawErrMsg = err.message; this.errMsg = 'Invalid email or password';}
+    );
   }
 
   togoleDetail(): void {

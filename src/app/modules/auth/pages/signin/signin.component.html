@@ -136,6 +136,22 @@
                             <input type="email" class="form-control" name="email" id="RegisterSrEmailExample3" placeholder="{{'Email address'|translate}}" [(ngModel)]="emailSignup" aria-label="Email address" required data-msg="Please enter a valid email address." data-error-class="u-has-error"
                                 data-success-class="u-has-success">
                         </div>
+
+                        <div class="js-form-message form-group mb-5">
+                            <label class="form-label" for="password">{{"Password"|translate}}
+                              <span class="text-danger">*</span>
+                          </label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="{{'Password'|translate}}" [(ngModel)]="passwordSignup" aria-label="Password" required data-msg="Please enter a valid password." data-error-class="u-has-error"
+                                data-success-class="u-has-success">
+                        </div>
+                        
+                        <div class="js-form-message form-group mb-5">
+                            <label class="form-label" for="RegisterSrEmailExample3">{{"Repeat Password"|translate}}
+                              <span class="text-danger">*</span>
+                          </label>
+                            <input type="password" class="form-control" name="repassword" id="repassword" placeholder="{{'Repeat Password'|translate}}" [(ngModel)]="repasswordSignup" aria-label="Repeat password" required data-msg="Please repeat a valid password." data-error-class="u-has-error"
+                                data-success-class="u-has-success">
+                        </div>                        
                         <!-- End Form Group -->
                         <p class="text-gray-90 mb-4">{{"privacywarn"|translate}} <a href="#" class="text-blue">{{"privacy policy"|translate}}.</a></p>
 

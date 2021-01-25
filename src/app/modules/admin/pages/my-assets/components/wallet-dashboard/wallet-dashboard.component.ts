@@ -572,6 +572,10 @@ export class WalletDashboardComponent implements OnInit{
       return ethAddress;
     }
 
+    addWallet() {
+      this.router.navigate(['/admin/create-wallet']);
+    }
+
     loadWallet() {
       const addresses = this.wallet.addresses;
       const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
