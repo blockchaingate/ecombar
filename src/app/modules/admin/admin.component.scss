@@ -514,16 +514,20 @@ ul li {
 
   .btn {
     text-decoration: none;
-    border: 1px solid rgb(146, 148, 248);
+    border: 1px solid #fed700;
     position: relative;
     overflow: hidden;
-    background-color: #8682e0;
-    color: white;
+    background-color: #fed700;
+    color: #333e48;
     font-weight: 700;
+    border-radius: 0;
   }
 
   .btn:hover {
-    background-color: rgb(146, 148, 248);
+    background-color: #333e48;
+    border-color: #333e48;
+    color: white;
+    border-radius: 0;
   }
 
   select {

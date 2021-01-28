@@ -1,0 +1,32 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'New Main Layout item' | translate}}</h1>
+      <hr>
+
+      <div>
+        <label for="email"><b>Type</b></label>
+        <select [(ngModel)]="type" name="type">
+            <option value="">{{'Select Type' | translate}}:</option>
+            <option value="1">{{'Single Collection' | translate}}</option>
+            <option value="2">{{'Combo Collection' | translate}}</option>
+        </select>
+
+  
+        <label for="email"><b>{{'Sequence' | translate}}</b></label>
+        <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
+  
+        <div style="width:200px;" *ngIf="type==1 && collections">
+          <select [(ngModel)]="collection" name="collection">
+            <option value="">{{'Select Collection' | translate}}:</option>
+            <option *ngFor="let col of collections" value="{{col._id}}">{{col.name | translateField}}</option>
+          </select>
+        </div> 
+      </div>
+
+
+
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="addMainLayout()">{{(id?'Update':'Add') | translate}}</button>
+      </div>
+    </div>
+</form>

@@ -17,6 +17,7 @@ import { CollectionAddComponent } from './pages/collection-add/collection-add.co
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { BrandsComponent } from './pages/brands/brands.component';
+import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { ConfirmMnemonicsComponent } from './pages/my-assets/components/create-wallet/confirmmnem.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
@@ -33,6 +34,7 @@ import { CreateWalletComponent } from './pages/my-assets/components/create-walle
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
 import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
+import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -60,7 +62,16 @@ const routes: Routes = [
       },
       {
         path: 'my-products', component: MyProductsComponent
+      },  
+      {
+        path: 'main-layout', component: MainLayoutComponent
+      },    
+      {
+        path: 'main-layout/add', component: MainLayoutAddComponent
       },   
+      {
+        path: 'main-layout/:id/edit', component: MainLayoutAddComponent
+      },                 
       {
         path: 'my-comments', component: MyCommentsComponent
       },  

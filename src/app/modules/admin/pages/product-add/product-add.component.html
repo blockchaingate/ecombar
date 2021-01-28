@@ -2,7 +2,7 @@
     <div class="container">
       <h1>New product</h1>
       <hr>
-      <div class="text-right py-3">
+      <div class="text-right my-3">
         <button class="btn" (click)="saveProduct()">Save</button>
       </div>
 
@@ -29,12 +29,12 @@
 
                   <div class="form-field">
                     <label for="detail">Detail</label>
-                    <ejs-richtexteditor [(ngModel)]='detail'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+                    <ejs-richtexteditor [(ngModel)]='detail' placeholder="Enter product detail"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
                   </div>                  
 
                   <div class="form-field">
                     <label for="description">Description</label>
-                    <ejs-richtexteditor [(ngModel)]='description'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+                    <ejs-richtexteditor [(ngModel)]='description' placeholder="Enter product description"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
                   </div>
 
                   <div class="form-field">
@@ -82,21 +82,23 @@
           </div>
           <div class="col col-4">
             <div class="card-section">
-              <div class="card">
-                <div class="container">
-                <label for="email">Availability</label>
-                <div>
-                  <label class="container">Online
-                    <input type="radio" [checked]="active" (click)="setActive(true)" name="radio">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Offline
-                    <input type="radio" [checked]="!active" (click)="setActive(false)" name="radio">
-                    <span class="checkmark"></span>
+              <div class="card p-3">
+
+                <div class="form-check">
+                  <input type="radio" [checked]="active" (click)="setActive(true)" name="radio">
+                  &nbsp;&nbsp;
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Available
                   </label>
                 </div>
-    
+                <div class="form-check">
+                  <input type="radio" [checked]="!active" (click)="setActive(false)" name="radio">
+                  &nbsp;&nbsp;
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Out of stock
+                  </label>
                 </div>
+
               </div>
             </div>
 
@@ -157,9 +159,10 @@
                   <div class="py-2">
                     <label for="psw"><b>Category</b></label>
                   </div>
-                  <div class="custom-select py-2" *ngIf="categories">
-                    <select [(ngModel)]="category">
-                      <option value="0">Select Category:</option>
+    
+                  <div *ngIf="categories">
+                    <select [(ngModel)]="category" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                      <option value="">Select Category:</option>
                       <option *ngFor="let cat of categories" value="{{cat._id}}">
                         {{cat.category | translateField}}
                         <span *ngIf="cat.parentId">
@@ -168,7 +171,10 @@
                       </option>
                     </select>
                   </div>
-    
+
+
+
+
                 </div>
               </div>
             </div> 
@@ -180,9 +186,9 @@
                   <div class="py-2">
                     <label for="psw"><b>Brand</b></label>
                   </div>
-                  <div class="custom-select py-2" *ngIf="brands">
-                    <select [(ngModel)]="brand">
-                      <option value="0">Select Brand:</option>
+                  <div class="py-2" *ngIf="brands">
+                    <select [(ngModel)]="brand" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                      <option value="">Select Brand:</option>
                       <option *ngFor="let br of brands" value="{{br._id}}">{{br.name | translateField}}</option>
                     </select>
                   </div>
@@ -198,15 +204,19 @@
         <label for="name"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="titleChinese" name="titleChinese">     
 
-        <label for="name"><b>内容</b></label>
-        <ejs-richtexteditor [(ngModel)]='detailChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
-        
-        <label for="name"><b>描述</b></label>
-        <ejs-richtexteditor [(ngModel)]='descriptionChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
-        
-        <label for="name"><b>规格</b></label>
-        <ejs-richtexteditor [(ngModel)]='specificationChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>          
-      </div>
+        <div class="py-2">
+          <label for="name"><b>内容</b></label>
+          <ejs-richtexteditor [(ngModel)]='detailChinese' placeholder="请输入内容"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
+   
+        </div>
+       
+        <div class="py-2">
+          <label for="name"><b>描述</b></label>
+          <ejs-richtexteditor [(ngModel)]='descriptionChinese' placeholder="请输入描述" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
+   
+        </div>
+       
+     </div>
 
 
 

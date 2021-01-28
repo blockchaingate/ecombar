@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CollectionService } from '../../../shared/services/collection.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class CollectionsComponent implements OnInit {
   collections: any;
   constructor(
     private userServ: UserService,
-    private authServ: AuthService,
     private merchantServ: MerchantService,
     private router: Router,
     private collectionServ: CollectionService) {

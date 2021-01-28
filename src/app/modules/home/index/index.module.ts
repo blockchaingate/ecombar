@@ -21,6 +21,10 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     SharedModule
   ],
+  exports: [
+    CollectionsComponent,
+    Collections2Component
+  ],
   providers: []
 })
 export class IndexModule { }

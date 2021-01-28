@@ -18,6 +18,10 @@ export class CollectionService {
     return this.http.get('product-collections/', false);
   }
 
+  getCollectionsForStore(storeId: string) {
+    return this.http.get('product-collections/merchant/' + storeId, false);
+  }
+
   getAdminCollections() {
     return this.http.get('product-collections/admin');
   }

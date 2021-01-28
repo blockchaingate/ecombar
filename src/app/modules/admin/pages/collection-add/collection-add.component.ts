@@ -34,7 +34,9 @@ export class CollectionAddComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.products = [];
+    this.collectionProducts = [];
+    this.productId = '';
     this.currentTab = 'default';
     this.getProducts();
 

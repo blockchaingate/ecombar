@@ -3,6 +3,7 @@ import {StoreRoutingModule } from './store-routing.module';
 import { CommonModule } from '@angular/common';
 import { StoreComponent } from './store.component';
 import { SharedModule } from '../../shared/shared.module';
+import { IndexModule } from '../index/index.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
     StoreRoutingModule,
     CommonModule,
     FormsModule,
+    IndexModule,
     SharedModule
   ],
   providers: []

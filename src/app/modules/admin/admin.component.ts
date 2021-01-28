@@ -103,6 +103,11 @@ export class AdminComponent implements OnInit {
           icon: 'brand'
         },
         {
+          title: 'Main Layout',
+          link: 'main-layout',
+          icon: 'category'
+        },        
+        {
           title: 'Categories',
           link: 'categories',
           icon: 'category'
@@ -152,6 +157,11 @@ export class AdminComponent implements OnInit {
             link: 'categories',
             icon: 'category'
           },
+          {
+            title: 'Main Layout',
+            link: 'main-layout',
+            icon: 'category'
+          },           
           {
             title: 'Collections',
             link: 'collections',

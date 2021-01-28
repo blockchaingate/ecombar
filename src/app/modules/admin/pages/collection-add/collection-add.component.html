@@ -21,7 +21,7 @@
 
         <div>
           <label for="email"><b>{{'Products' | translate}}</b></label>
-          <div>
+          <div class="pb-1">
             <div *ngFor="let prod of collectionProducts" class="product-item d-flex justify-content-between p-2">
               <div>
                 {{prod.title | translateField}}
@@ -31,10 +31,13 @@
               </div>
             </div>
           </div>
-          <select [(ngModel)]="productId" name="productId" *ngIf="products">
-            <option value="0">{{'Select Product' | translate}}:</option>
-            <option *ngFor="let prod of products | excludeProducts : collectionProducts" value="{{prod._id}}">{{prod.title | translateField}}</option>
-          </select>
+          <div class="pb-1">
+            <select [(ngModel)]="productId" name="productId" *ngIf="products">
+              <option value="">{{'Select Product' | translate}}:</option>
+              <option *ngFor="let prod of products | excludeProducts : collectionProducts" value="{{prod._id}}">{{prod.title | translateField}}</option>
+            </select>
+          </div>
+
           <button type="button" class="btn cancelbtn" (click)="addProduct()">{{'Add Product' | translate}}</button>
         </div>
 

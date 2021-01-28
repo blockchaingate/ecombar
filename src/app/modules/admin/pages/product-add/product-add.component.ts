@@ -62,8 +62,13 @@ export class ProductAddComponent implements OnInit {
   ngOnInit() {
     this.colors = [];
     this.specs = [];
-    this.active = true;
+    this.detail = '';
+    this.category = '';
+    this.brand = '';
+    this.detailChinese = '';
+    this.description = '';
     this.descriptionChinese = '';
+    this.active = true;
     this.images = [
 
     ];

@@ -37,6 +37,8 @@ import { CreateWalletComponent } from './pages/my-assets/components/create-walle
 import { ConfirmMnemonicsComponent } from './pages/my-assets/components/create-wallet/confirmmnem.component';
 import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
 import { CommentComponent } from './pages/comment/comment.component';
+import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
+import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { CommonModule } from '@angular/common';
@@ -70,6 +72,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     WalletPwdComponent,
     CommentComponent,
     CartComponent,
+    MainLayoutAddComponent,
+    MainLayoutComponent,
     MerchantApplicationsComponent,
     MyAssetsComponent,
     MyProductsComponent,
