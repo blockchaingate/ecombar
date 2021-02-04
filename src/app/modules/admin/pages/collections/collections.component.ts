@@ -25,9 +25,9 @@ export class CollectionsComponent implements OnInit {
     if (this.userServ.isSystemAdmin) {
       this.getAdminCollections();
     } else
-      if (merchantId) {
-        this.getMerchantCollections(merchantId);
-      }
+    if (merchantId) {
+      this.getMerchantCollections(merchantId);
+    }
   }
 
   getMerchantCollections(merchantId: string) {

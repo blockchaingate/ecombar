@@ -21,6 +21,7 @@ import { UploadService } from './services/upload.service';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
+import { MainLayoutService } from './services/mainlayout.service';
 import { KanbanService } from './services/kanban.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
@@ -79,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     Web3Service,
     CommentService,
     KanbanService,
-    IddockService
+    IddockService,
+    MainLayoutService
   ]
 })
 export class SharedModule {
@@ -98,7 +100,8 @@ export class SharedModule {
         ApiService,
         Web3Service,        
         KanbanService,
-        IddockService
+        IddockService,
+        MainLayoutService
       ]
     };
   }

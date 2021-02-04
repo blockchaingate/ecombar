@@ -4,18 +4,21 @@
       <hr>
 
       <div>
-        <label for="email"><b>Type</b></label>
-        <select [(ngModel)]="type" name="type">
-            <option value="">{{'Select Type' | translate}}:</option>
-            <option value="1">{{'Single Collection' | translate}}</option>
-            <option value="2">{{'Combo Collection' | translate}}</option>
-        </select>
+        <div>
+          <label for="type"><b>Type</b></label>
+          <select [(ngModel)]="type" name="type">
+              <option value="">{{'Select Type' | translate}}:</option>
+              <option value="Single Collection">{{'Single Collection' | translate}}</option>
+              <option value="Combo Collection">{{'Combo Collection' | translate}}</option>
+          </select>  
+        </div>
 
-  
-        <label for="email"><b>{{'Sequence' | translate}}</b></label>
-        <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
-  
-        <div style="width:200px;" *ngIf="type==1 && collections">
+        <div class="mt-3">
+          <label for="sequence"><b>{{'Sequence' | translate}}</b></label>
+          <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>  
+        </div>
+
+        <div style="width:200px;" *ngIf="(type=='Single Collection')">
           <select [(ngModel)]="collection" name="collection">
             <option value="">{{'Select Collection' | translate}}:</option>
             <option *ngFor="let col of collections" value="{{col._id}}">{{col.name | translateField}}</option>
