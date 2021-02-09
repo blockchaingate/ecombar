@@ -181,6 +181,7 @@ export class PlaceOrderComponent implements OnInit {
     );
   }
 
+  
   loadWallet() {
     const addresses = this.wallet.addresses;
     console.log('addresses=', addresses);
