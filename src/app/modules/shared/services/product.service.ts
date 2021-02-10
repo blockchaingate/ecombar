@@ -38,4 +38,12 @@ export class ProductService {
   getCategoryProducts(category_id: string) {
     return this.http.get('products/category/' + category_id, false);
   }
+
+  getAdminHotCategories() {
+    return this.http.get('product-categories/admin/hot', false);
+  }
+
+  getMerchantHotCategories(merchant_id: string) {
+    return this.http.get('product-categories/merchant/' + merchant_id + '/hot', false);
+  }  
 }

@@ -14,6 +14,7 @@ import { MerchantService } from '../../../shared/services/merchant.service';
 export class CategoryAddComponent implements OnInit {
   sequence: number;
   categories: any;
+  images: any;
   category: string;
   categoryChinese: string;
   parentId: string;
@@ -30,6 +31,7 @@ export class CategoryAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.images = [];
     this.currentTab = 'default';
     const merchantId = this.merchantServ.id;
 
@@ -69,6 +71,9 @@ export class CategoryAddComponent implements OnInit {
             this.categoryChinese = category.category.sc;
             this.sequence = category.sequence;
             this.parentId = category.parentId;
+            if(category.thumbnailUrl) {
+              this.images.push(category.thumbnailUrl);
+            }
           }
 
         }
@@ -87,6 +92,7 @@ export class CategoryAddComponent implements OnInit {
         sc: this.categoryChinese
       },
       sequence: this.sequence,
+      thumbnailUrl: (this.images && (this.images.length > 0)) ? this.images[0] : null,
       parentId: this.parentId
     };
     if (!this.id) {
