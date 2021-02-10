@@ -1,10 +1,9 @@
-<div *ngIf="collections" class="container">
-    <div *ngFor="let collection of collections" class="featured-products-container">
+<div *ngIf="collection" class="container">
+    <div class="featured-products-container">
         <div class="mb-8 position-relative">
             <div
                 class="d-flex justify-content-between border-bottom border-color-1 flex-md-nowrap flex-wrap border-sm-bottom-0">
-                <h3 class="section-title section-title__full mb-0 pb-2 font-size-22">{{ collection.name | translateField
-                    }}</h3>
+                <h3 class="section-title section-title__full mb-0 pb-2 font-size-22">{{ collection.name | translateField}}</h3>
             </div>
             <div class="js-slick-carousel position-static u-slick u-slick--gutters-1 overflow-hidden u-slick-overflow-visble pt-3 pb-3"
                 data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10"
@@ -16,6 +15,4 @@
             </div>
         </div>
 
-
-
-    </div>
+</div>

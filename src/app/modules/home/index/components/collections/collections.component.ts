@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CollectionService } from '../../../../shared/services/collection.service';
 import {ActivatedRoute} from '@angular/router';
 
@@ -10,12 +10,13 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class CollectionsComponent implements OnInit {
   storeId: string;
-  collections: [];
+  @Input() collection: any;
   errMsg = '';
 
   constructor(private route: ActivatedRoute, private collectionServ: CollectionService) { }
 
   ngOnInit() {
+    /*
     this.storeId = this.route.snapshot.paramMap.get('id');
     console.log('this.storeId=', this.storeId);
     if(!this.storeId) {
@@ -41,7 +42,7 @@ export class CollectionsComponent implements OnInit {
         error => { this.errMsg = error.message; }
       );      
     }
-
+    */
 
   }
 
