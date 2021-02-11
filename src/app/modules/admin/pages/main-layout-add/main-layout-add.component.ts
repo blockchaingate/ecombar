@@ -154,8 +154,11 @@ export class MainLayoutAddComponent implements OnInit {
      });
     }      
       
-      
+    if(!data.col || data.col.length == 0) {
+      delete data.col;
+    }
       console.log('data=', data);
+      
       if (!this.id) {
   
         this.mainLayoutServ.create(data).subscribe(
