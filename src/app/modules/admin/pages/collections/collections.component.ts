@@ -3,6 +3,7 @@ import { CollectionService } from '../../../shared/services/collection.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-collections',
@@ -13,6 +14,7 @@ import { MerchantService } from '../../../shared/services/merchant.service';
 export class CollectionsComponent implements OnInit {
   collections: any;
   constructor(
+    private storageServ: StorageService,
     private userServ: UserService,
     private merchantServ: MerchantService,
     private router: Router,
@@ -22,12 +24,17 @@ export class CollectionsComponent implements OnInit {
   ngOnInit() {
     const merchantId = this.merchantServ.id;
 
-    if (this.userServ.isSystemAdmin) {
-      this.getAdminCollections();
-    } else
-    if (merchantId) {
-      this.getMerchantCollections(merchantId);
-    }
+    this.storageServ.checkSystemAdmin().subscribe(
+      (ret) => {
+        if (ret) {
+          this.getAdminCollections();
+        } else
+        if (merchantId) {
+          this.getMerchantCollections(merchantId);
+        }
+      }
+    );
+
   }
 
   getMerchantCollections(merchantId: string) {

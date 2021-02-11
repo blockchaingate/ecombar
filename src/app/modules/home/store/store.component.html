@@ -1,4 +1,3 @@
-
 <div *ngFor="let item of mainLayouts">
     <div *ngIf="item.type == 'Single Collection'">
         <app-collections [collection]="item.col"></app-collections>
@@ -6,5 +5,6 @@
     <div *ngIf="item.type == 'Combo Collection'">
         <app-collections2 [collections]="item.cols"></app-collections2>
     </div>    
-    
 </div>
+
+<app-top-categories [categories]="categories"></app-top-categories>

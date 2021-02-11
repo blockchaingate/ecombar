@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { MainLayoutService } from '../../../shared/services/mainlayout.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-main-layout-add',
@@ -16,6 +17,7 @@ export class MainLayoutAddComponent implements OnInit {
     id: string;
     collections: any;
     constructor(
+      private storageServ: StorageService,
       private userServ: UserService,
       private merchantServ: MerchantService,
       private router: Router,
@@ -34,13 +36,18 @@ export class MainLayoutAddComponent implements OnInit {
               this.mainLayout = res._body;
               const merchantId = this.merchantServ.id;
 
-              console.log('merchantId==', merchantId);
-              if (this.userServ.isSystemAdmin) {
-                this.getAdminCollections();
-              } else
-              if (merchantId) {
-                this.getMerchantCollections(merchantId);
-              }
+
+              this.storageServ.checkSystemAdmin().subscribe(
+                (ret) => {
+                  if (ret) {
+                    this.getAdminCollections();
+                  } else
+                  if (merchantId) {
+                    this.getMerchantCollections(merchantId);
+                  }
+                }
+              );
+
 
             }
   
@@ -54,14 +61,16 @@ export class MainLayoutAddComponent implements OnInit {
           cols: []
         }
         const merchantId = this.merchantServ.id;
-
-        console.log('merchantId==', merchantId);
-        if (this.userServ.isSystemAdmin) {
-          this.getAdminCollections();
-        } else
-        if (merchantId) {
-          this.getMerchantCollections(merchantId);
-        }        
+        this.storageServ.checkSystemAdmin().subscribe(
+          (ret) => {
+            if (ret) {
+              this.getAdminCollections();
+            } else
+            if (merchantId) {
+              this.getMerchantCollections(merchantId);
+            }
+          }
+        );      
       }
 
 
@@ -78,14 +87,17 @@ export class MainLayoutAddComponent implements OnInit {
       */
      for(let i = 0; i < this.collections.length; i++) {
        const collection = this.collections[i];
-       for(let j = 0; j < this.mainLayout.cols.length; j++) {
-         const col = this.mainLayout.cols[j];
-         console.log('collection=', collection);
-         console.log('col=', col);
-         if(col === collection._id) {
-           collection.isChecked = true;
-         }
+       if(this.mainLayout) {
+        for(let j = 0; j < this.mainLayout.cols.length; j++) {
+          const col = this.mainLayout.cols[j];
+          console.log('collection=', collection);
+          console.log('col=', col);
+          if(col === collection._id) {
+            collection.isChecked = true;
+          }
+        }
        }
+
      }
       console.log('this.collections after updated=', this.collections);
       

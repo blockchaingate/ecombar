@@ -4,6 +4,7 @@ import { MainLayoutService } from '../../../shared/services/mainlayout.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { UserService } from '../../../shared/services/user.service';
 import { Router } from '@angular/router';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-main-layout',
@@ -17,6 +18,7 @@ export class MainLayoutComponent implements OnInit {
     constructor(
       private userServ: UserService,
       private router: Router,
+      private storageServ: StorageService,
       private merchantServ: MerchantService,
       private mainLayoutServ: MainLayoutService,
       private collectionServ: CollectionService) {
@@ -24,12 +26,21 @@ export class MainLayoutComponent implements OnInit {
     ngOnInit() {
       const merchantId = this.merchantServ.id;
 
-      if (this.userServ.isSystemAdmin) {
-        this.getAdminMainLayouts();
-      } else
-      if (merchantId) {
-        this.getMerchantMainLayouts(merchantId);
-      }
+
+      this.storageServ.checkSystemAdmin().subscribe(
+        (ret) => {
+          if (ret) {
+            this.getAdminMainLayouts();
+          } else
+          if (merchantId) {
+            //this.getAdminCategories();
+            this.getMerchantMainLayouts(merchantId);
+          }
+        }
+      );
+
+
+
     }
 
     getMerchantMainLayouts(merchantId: string) {
