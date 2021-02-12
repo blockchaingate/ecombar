@@ -106,6 +106,7 @@ export class MerchantInfoComponent implements OnInit{
             txhex: ''
         }
 
+        /*
         console.log('data=', data);
         const txhex = await this.iddockServ.getTxhex(keyPairsKanban, data);
         data.txhex = txhex;
@@ -115,7 +116,7 @@ export class MerchantInfoComponent implements OnInit{
                 console.log('res===', res);
             }
         );
-        
+        */
         this.userServ.updateSelfMerchant(item).subscribe(
             (res: any) => {
                 if(res && res.ok) {

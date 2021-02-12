@@ -64,9 +64,15 @@ export class KanbanService {
         return addr;
     }
 
-    getRecordAddress() {
-        return '0xe9d98cc4e70bf0ec4b06090b4bc6d5b0a69eac6a';
+    async getRecordAddress() {
+        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+        let path = 'ecombar/getIddockAddress'; 
+        path = this.baseUrl + path;
+        // console.log('nouse in here:', path);
+        const res = await this.http.getRaw(path, { headers, responseType: 'text' }).toPromise() as string;
+        return res;
     }
+    
     async getTransactionCount(address: string) {
         //return this.getNonce(address);
 

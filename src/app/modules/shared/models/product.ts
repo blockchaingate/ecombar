@@ -5,6 +5,7 @@ export interface Product {
     merchantId?: string;
     memberId?: string;
     manufacturerMerchantId?: string;
+    objectId?: string;
 
     titleId?: string;
     title?: TextLan,

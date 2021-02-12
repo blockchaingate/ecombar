@@ -25,6 +25,90 @@ export class Web3Service {
     }
   }
 
+  getCreateIDABI(typeId: number, hashData: string) {
+    const func: any = {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_type",
+          "type": "bytes2"
+        },
+        {
+          "name": "_hashData",
+          "type": "bytes32"
+        }
+      ],
+      "name": "createID",
+      "outputs": [
+        
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };  
+    const params = ['0x' + typeId.toString(16), hashData];
+
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+ 
+  getUpdateIDABI(objectID: string, hashData: string) {
+    const sequenceID = this.utilServ.ObjectId2SequenceId(objectID);
+    const func: any =  {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_objectID",
+          "type": "bytes30"
+        },
+        {
+          "name": "_hashData",
+          "type": "bytes32"
+        }
+      ],
+      "name": "updateID",
+      "outputs": [
+        
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };  
+    const params = ['0x' + sequenceID, hashData];
+
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }  
+
+  getChangeOwnerABI(objectID: string, newOwner: string) {
+    newOwner = this.utilServ.fabToExgAddress(newOwner);
+    const sequenceID = this.utilServ.ObjectId2SequenceId(objectID);
+    const func: any = {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_objectID",
+          "type": "bytes30"
+        },
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "changeOwner",
+      "outputs": [
+        
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };  
+
+    const params = ['0x' + sequenceID, newOwner];
+    console.log('params for getChangeOwnerABI=', params);
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }  
 
   getAddRecordABI(sequence: string, hashData: string) {
     const web3 = this.getWeb3Provider();
@@ -286,7 +370,12 @@ export class Web3Service {
         const web3 = this.getWeb3Provider();
         return web3.utils.sha3(input);
       }
-      
+
+      sha3(s: string) {
+        const web3 = this.getWeb3Provider();
+        return web3.utils.sha3(s);
+      }      
+
       getTransferFunctionABI(to, coin, value, comment) {
         const web3 = this.getWeb3Provider();
         const func = {
