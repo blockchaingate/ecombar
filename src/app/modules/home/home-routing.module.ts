@@ -6,6 +6,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { Category2Component } from './category2/category2.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
+import { CompareComponent } from './compare/compare.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
         component: CheckoutComponent
       },
       {
+        path: 'compare',
+        component: CompareComponent
+      },
+      {
         path: 'payment',
         loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)
       },
@@ -77,7 +82,7 @@ const routes: Routes = [
       {
         path: 'activate',
         loadChildren: () => import('./activate/activate.module').then(m => m.ActivateModule)
-      }
+      },
     ]
   }
 ];
