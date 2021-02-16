@@ -8,6 +8,10 @@ import { currencies } from '../../../../../environments/currencies';
 import { Product } from '../../../shared/models/product';
 import { TextLan } from '../../../shared/models/textlan';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+import { UtilService } from '../../../shared/services/util.service';
+import { IddockService } from '../../../shared/services/iddock.service';
 
 @Component({
   selector: 'app-admin-product-add',
@@ -24,12 +28,16 @@ export class ProductAddComponent implements OnInit {
 
   public insertImageSettings :ImageSettingsModel = { allowedTypes: ['.jpeg', '.jpg', '.png'], display: 'inline', width: 'auto', height: 'auto', saveFormat: 'Blob', saveUrl: null, path: null,}
 
+  wallets: any;
+  wallet: any;
   title: string;
   price: string;
   product: any;
   active: boolean;
   id: string;
+  password: string;
   color: string;
+  objectId: string;
   colors: any;
   currentTab: string;
   category: string;
@@ -53,9 +61,13 @@ export class ProductAddComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private iddockServ: IddockService,
+    private ngxSmartModalServ: NgxSmartModalService,
+    private localSt: LocalStorage,
     private userServ: UserService,
     private categoryServ: CategoryService,
     private brandServ: BrandService,
+    private utilServ: UtilService,
     private productServ: ProductService) {
   }
 
@@ -74,6 +86,18 @@ export class ProductAddComponent implements OnInit {
     ];
     this.currentTab = 'default';
     this.currencies = currencies;
+
+    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+
+      if(!wallets || (wallets.length == 0)) {
+        return;
+      }
+      this.wallets = wallets;
+      console.log('this.wallets==', this.wallets);
+      this.wallet = this.wallets.items[this.wallets.currentIndex];
+
+
+  });
 
     this.userServ.getMe().subscribe(
       ret => {
@@ -196,8 +220,23 @@ export class ProductAddComponent implements OnInit {
   removeSpec(spec) {
     this.specs = this.specs.filter(item => item.name != spec.name && item.value != spec.value);
   }  
+
+
   saveProduct() {
+    this.ngxSmartModalServ.getModal('passwordModal').open();
+
+  }
+
+  onConfirmPassword(event) {
+      this.ngxSmartModalServ.getModal('passwordModal').close();
+      this.password = event;
+      this.saveProductDo();
+      
+  }  
+
+  async saveProductDo() {
     console.log('this.images=', this.images);
+    const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
     const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
     const detailLan: TextLan = { name: 'detail', en: this.detail, sc: this.detailChinese };
     const descLan: TextLan = { name: 'description', en: this.description, sc: this.descriptionChinese };
@@ -215,24 +254,70 @@ export class ProductAddComponent implements OnInit {
       colors: this.colors,
       brand: this.brand
     };
+    
+    const dataInIddock = {
+      title: titleLan,
+      briefIntroduction: detailLan,
+      description: descLan,
+      //specification: specLan,
+      price: parseInt(this.price), // in cents
+      currency: 'USD',
+      primaryCategory: (this.categories && this.category) ? this.categories.filter(item => item._id === this.category)[0] : null,
+      active: this.active,
+      images: this.images,
+      colors: this.colors,
+      brand: (this.brands && this.brand) ? this.brands.filter(item => item._id === this.brand)[0]  : null   
+    }
     if (this.id) {
-      this.productServ.update(this.id, data).subscribe(
-        (res: any) => {
-          console.log('res=', res);
-          if (res.ok) {
-            this.router.navigate(['/admin/products']);
+
+      (await this.iddockServ.updateIdDock(seed, this.product.objectId, 'things', null, dataInIddock, null)).subscribe(res => {
+        if(res) {
+          if(res.ok) {
+            this.productServ.update(this.id, data).subscribe(
+              (res: any) => {
+                console.log('res=', res);
+                if (res.ok) {
+                  this.router.navigate(['/admin/products']);
+                }
+              }
+            );
+          } else {
+
           }
+          
         }
-      );
+      });
+
+
     } else {
-      this.productServ.create(data).subscribe(
-        (res: any) => {
-          console.log('res=', res);
-          if (res.ok) {
-            this.router.navigate(['/admin/products']);
+         
+
+      //const nonce = 0;
+      //const id = (this.type == 'people' ? this.walletAddress : this.rfid);
+
+      (await this.iddockServ.addIdDock(seed, 'things', null, dataInIddock, null)).subscribe(res => {
+        console.log('ress=', res);
+        if(res) {
+          if(res.ok) {
+            console.log('res.body._id=', res._body._id);
+            this.objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
+            data.objectId = this.objectId;
+            console.log('this.objectId=', this.objectId);
+            this.productServ.create(data).subscribe(
+              (res: any) => {
+                console.log('res=', res);
+                if (res.ok) {
+                  this.router.navigate(['/admin/products']);
+                }
+              }
+            );
+          } else {
           }
+          
         }
-      );
+      });
+
+
     }
 
   }

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { MainLayoutService } from '../../../shared/services/mainlayout.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-main-layout-add',
@@ -12,12 +13,11 @@ import { MerchantService } from '../../../shared/services/merchant.service';
   styleUrls: ['./main-layout-add.component.scss', '../../../../../table.scss']
 })
 export class MainLayoutAddComponent implements OnInit {
-    collections: any;
-    collection: string;
-    type: string;
-    sequence: number;
+    mainLayout: any;
     id: string;
+    collections: any;
     constructor(
+      private storageServ: StorageService,
       private userServ: UserService,
       private merchantServ: MerchantService,
       private router: Router,
@@ -33,34 +33,82 @@ export class MainLayoutAddComponent implements OnInit {
           (res: any) => {
             console.log('ressssss=', res);
             if (res && res.ok) {
-              const mainLayout = res._body;
-              this.type = mainLayout.type;
-              this.sequence = mainLayout.sequence;
-              if(mainLayout.type == 'Single Collection') {
-                this.collection = mainLayout.content;
-              }
+              this.mainLayout = res._body;
+              const merchantId = this.merchantServ.id;
+
+
+              this.storageServ.checkSystemAdmin().subscribe(
+                (ret) => {
+                  if (ret) {
+                    this.getAdminCollections();
+                  } else
+                  if (merchantId) {
+                    this.getMerchantCollections(merchantId);
+                  }
+                }
+              );
+
+
             }
   
           }
         );
+      } else {
+        this.mainLayout = {
+          type: '',
+          sequence: 0,
+          col: '',
+          cols: []
+        }
+        const merchantId = this.merchantServ.id;
+        this.storageServ.checkSystemAdmin().subscribe(
+          (ret) => {
+            if (ret) {
+              this.getAdminCollections();
+            } else
+            if (merchantId) {
+              this.getMerchantCollections(merchantId);
+            }
+          }
+        );      
       }
 
-      const merchantId = this.merchantServ.id;
 
-      if (this.userServ.isSystemAdmin) {
-        this.getAdminCollections();
-      } else
-        if (merchantId) {
-          this.getMerchantCollections(merchantId);
-        }
     }
 
+    updateCollectionsChecked() {
+      
+      /*
+      for(let i=0;i<this.mainLayout.cols.length;i++) {
+        if(this.mainLayout.cols.indexOf(this.collections[i]._id) >= 0) {
+          this.collections[i].isChecked = true;
+        }
+      }
+      */
+     for(let i = 0; i < this.collections.length; i++) {
+       const collection = this.collections[i];
+       if(this.mainLayout) {
+        for(let j = 0; j < this.mainLayout.cols.length; j++) {
+          const col = this.mainLayout.cols[j];
+          console.log('collection=', collection);
+          console.log('col=', col);
+          if(col === collection._id) {
+            collection.isChecked = true;
+          }
+        }
+       }
+
+     }
+      console.log('this.collections after updated=', this.collections);
+      
+    }
     getMerchantCollections(merchantId: string) {
       this.collectionServ.getMerchantCollections(merchantId).subscribe(
         (res: any) => {
           if (res && res.ok) {
             this.collections = res._body;
             console.log('this.collections=', this.collections);
+            this.updateCollectionsChecked();
           }
         }
       );
@@ -71,21 +119,46 @@ export class MainLayoutAddComponent implements OnInit {
         (res: any) => {
           if (res && res.ok) {
             this.collections = res._body;
+            this.updateCollectionsChecked();            
           }
         }
       );
     }
 
     addMainLayout() {
-      const data = {
+      
+      /*
+      {
         type: this.type,
         sequence: this.sequence,
-        content: null
+        col: null,
+        cols: null
       };
 
       if(this.type == 'Single Collection') {
-        data.content = this.collection;
-      }
+        data.col = this.collection;
+      } else
+
+      */
+
+     const data = this.mainLayout;
+     if(data.type == 'Combo Collection') {
+      console.log('this.collections=', this.collections);
+      data.cols = this.collections.map(item => {
+        if(item.isChecked) {
+          return item._id;
+        }
+      });
+      data.cols = data.cols.filter(function( element ) {
+        return element !== undefined;
+     });
+    }      
+      
+    if(!data.col || data.col.length == 0) {
+      delete data.col;
+    }
+      console.log('data=', data);
+      
       if (!this.id) {
   
         this.mainLayoutServ.create(data).subscribe(
@@ -104,5 +177,6 @@ export class MainLayoutAddComponent implements OnInit {
           }
         );
       }
+      
     }
 }

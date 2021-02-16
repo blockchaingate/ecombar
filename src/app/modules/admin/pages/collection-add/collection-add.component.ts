@@ -85,6 +85,7 @@ export class CollectionAddComponent implements OnInit {
         (res: any) => {
           if (res && res.ok) {
             this.products = res._body;
+            console.log('this.products===', this.products);
           }
         }
       );

@@ -1,0 +1,71 @@
+<div class="detail-container" *ngIf="data">
+    <div>
+        sequence id: {{data._id}}
+    </div>
+    <div *ngIf="data.selfSign">
+        selfSign: {{data.selfSign}}
+    </div> 
+    <div *ngIf="data.transferSig">
+      transferSig: {{data.transferSig}}
+    </div>
+    <div *ngIf="data.owner">
+      Owner: {{data.owner}}
+    </div> 
+    
+    <div *ngIf="data.previousOwner">
+      Previous Owner: {{data.previousOwner}}
+    </div>      
+    
+    <div class="pt-3" *ngIf="data.nvs">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data.nvs">
+              <td>{{item.name}}</td>
+              <td>{{item.value | json}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>   
+
+    <div class="pt-3" *ngIf="data.parents">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data.parents">
+            <td>{{item._id}}</td>
+            <td>{{item.qty}}</td>
+            <td>{{item.typ}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>     
+    <div>
+        DataHash: {{data.datahash}}
+    </div>
+
+  
+    <div>
+        Created at: {{data.dateCreated}}
+    </div>
+    <div>
+      Txn Hash:
+    </div>
+    <div *ngFor="let item of data.txHash.split(',')">
+      <a target="_blank" href="{{baseUrl}}explorer/tx-detail/{{item}}">
+        {{item}}
+      </a>
+      
+    </div>
+</div>

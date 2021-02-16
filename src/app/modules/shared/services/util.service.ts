@@ -25,6 +25,16 @@ export class UtilService {
         return 8;
     }
 
+    sequenceId2ObjectId(sequenceId: string) {
+        const buf = Buffer.from(sequenceId, 'hex');
+        return bs58.encode(buf);
+    }
+    
+    ObjectId2SequenceId(objectId: string) {
+        const bytes = bs58.decode(objectId);
+        return bytes.toString('hex');
+    }
+    
     fixedLengh(obj: any, length: number) {
         let str = obj.toString();
         const strLength = str.length;

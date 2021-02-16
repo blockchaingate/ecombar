@@ -14,7 +14,6 @@ import { StorageService } from '../../../shared/services/storage.service';
 export class CategoriesComponent implements OnInit {
   categories: any;
   constructor(
-    private userServ: UserService,
     private merchantServ: MerchantService,
     private router: Router,
     private storageServ: StorageService,
@@ -25,7 +24,6 @@ export class CategoriesComponent implements OnInit {
     this.categories = [];
     const merchantId = this.merchantServ.id;
 
-    console.log('this.userServ=', this.userServ.isSystemAdmin);
 
     this.storageServ.checkSystemAdmin().subscribe(
       (ret) => {

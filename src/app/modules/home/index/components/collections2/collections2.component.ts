@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { log } from 'console';
+import { Component, Input, OnInit } from '@angular/core';
 import { CollectionService } from 'src/app/modules/shared/services/collection.service';
 
 @Component({
@@ -9,13 +8,14 @@ import { CollectionService } from 'src/app/modules/shared/services/collection.se
 })
 export class Collections2Component implements OnInit {
 
-  collections: [];
+  @Input() collections: [];
   errMsg = '';
   activeTab = 0;
 
   constructor(private collectionServ: CollectionService) { }
 
   ngOnInit() {
+    /*
     console.log('nggggg');
     this.collectionServ.getCollections().subscribe(
       (res: any) => {
@@ -27,6 +27,7 @@ export class Collections2Component implements OnInit {
       },
       error => { this.errMsg = error.message; }
     );
+    */
 
   }
 

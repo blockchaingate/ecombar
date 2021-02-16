@@ -1,16 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { CartStoreService } from '../../services/cart.store.service';
 import { CartItem } from '../../models/cart-item';
-
+import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-products-grid',
   templateUrl: './products-grid.component.html',
   styleUrls: ['./products-grid.component.scss', '../../../../../button.scss']
 })
 export class ProductsGridComponent {
+  iddockRoot: string;
   @Input() products: any;
 
   constructor(private cartStoreServ: CartStoreService) {
+    this.iddockRoot = environment.IDDOCK;
   }
 
   addToCart(item: any) {
