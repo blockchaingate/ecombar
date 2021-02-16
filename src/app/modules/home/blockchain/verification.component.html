@@ -1,0 +1,98 @@
+
+<div class="home-main">
+    <div class="logo">
+      <img src="/assets/img/iddock-final.png" />
+    </div>
+    <div class="desc">
+      World Blockchain Identify Network
+    </div>
+    <form>
+      <div class="inner-form">
+        <div class="input-field first-wrap">
+          <input id="search" type="text" name="id" placeholder="What are you looking for?" [(ngModel)]="id"/>
+        </div>
+        <div class="input-field second-wrap">
+          <div class="input-select">
+            <select data-trigger="" name="choices-single" name="type" [(ngModel)]="type" class="selectCategory">
+              <option placeholder="" value="all">ALL</option>
+              <option value="people">People</option>
+              <option value="organization">Organization</option>
+              <option value="things">Things</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-field third-wrap">
+          <button class="btn-search" type="button" (click)="search()">SEARCH</button>
+        </div>
+      </div>
+    </form>
+    <div class="pt-3" *ngIf="people || things || organization">
+      <table class="table">
+        <thead>
+          <tr>
+            
+            <th scope="col">ID</th>
+            <th scope="col">Type</th>
+            <th scope="col">Created At</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of people">
+            <th scope="row">
+              <a href="/detail/people/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+                {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
+              </a>
+              
+            </th>
+            <td>{{'People'}}</td>
+            <td>{{item.dateCreated}}</td>
+            <td>
+              <button class="btn" type="button" (click)="update('people', item)">Update</button>
+              <button class="btn" type="button" (click)="history('people', item)">History</button>
+            </td>
+          </tr>
+  
+          <tr *ngFor="let item of things">
+            <th scope="row">
+              <a href="/detail/things/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+                {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
+              </a>
+              
+            </th>
+            <td>{{'Things'}}</td>
+            <td>{{item.dateCreated}}</td>
+            <td>
+              <button class="btn" type="button" (click)="update('things', item)">Update</button>
+              <button class="btn" type="button" (click)="history('things', item)">History</button>
+              <button class="btn" type="button" (click)="owner('things', item)">Owner</button>
+            </td>
+          </tr>   
+          
+          <tr *ngFor="let item of organization">
+            <th scope="row">
+              <a href="/detail/organization/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+                {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
+              </a>
+              
+            </th>
+            <td>{{'Organization'}}</td>
+            <td>{{item.dateCreated}}</td>
+            <td>
+              <button class="btn" type="button" (click)="update('organization', item)">Update</button>
+              <button class="btn" type="button" (click)="history('organization', item)">History</button>
+              <button class="btn" type="button" (click)="owner('organization', item)">Owner</button>
+            </td>
+          </tr>          
+        </tbody>
+      </table>
+    </div>
+  
+    <br><br><br>
+    <div class="add-info"><a href='/add-info' >ID REGISTRATION</a></div>
+    <br>
+    <!--
+    <div class="add-info"><a href='/update-info' >UPDATE INFORMATION</a></div>
+    -->
+  </div>
+  <div class="bg"></div>
