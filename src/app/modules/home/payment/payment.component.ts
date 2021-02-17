@@ -3,6 +3,10 @@ import { UserService } from '../../shared/services/user.service';
 import { AddressService } from '../../shared/services/address.service';
 import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UtilService } from '../../shared/services/util.service';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { IddockService } from '../../shared/services/iddock.service';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-payment',
@@ -21,8 +25,16 @@ export class PaymentComponent implements OnInit{
     selectedShippingService: string;
     selectedPayment: string;
     shippingFee: number;
+    noWallet: boolean;
+    wallet: any;
+    wallets: any;
+    password: string;
 
     constructor(
+      private iddockServ: IddockService,
+      private utilServ: UtilService,
+      private ngxSmartModalServ: NgxSmartModalService,    
+      private localSt: LocalStorage,      
       private router: Router,
       private route: ActivatedRoute, 
       private userServ: UserService, 
@@ -52,6 +64,18 @@ export class PaymentComponent implements OnInit{
     }
 
     ngOnInit() {
+
+      this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+
+        if(!wallets || (wallets.length == 0)) {
+          this.noWallet = true;
+          return;
+        }
+        this.wallets = wallets;
+        console.log('this.wallets==', this.wallets);
+        this.wallet = this.wallets.items[this.wallets.currentIndex];
+      });  
+
       this.discount = 0;
       this.shippingFee = 0;
       this.total = 0;
@@ -99,12 +123,7 @@ export class PaymentComponent implements OnInit{
       }
       this.selectedPayment = payment;
     }   
-    
-/*
-    totalSale: Number,
-    totalShipping: Number,
-*/
-    
+
     placeOrder() {
       if (!this.selectedShippingService) {
         return;
@@ -112,7 +131,21 @@ export class PaymentComponent implements OnInit{
       if (!this.selectedPayment) {
         return;
       }  
-          
+
+      this.ngxSmartModalServ.getModal('passwordModal').open();
+  
+    }
+  
+    onConfirmPassword(event) {
+        this.ngxSmartModalServ.getModal('passwordModal').close();
+        this.password = event;
+        this.placeOrderDo();     
+    }  
+    
+    async placeOrderDo() {
+      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
+
+
       const item = {
         totalSale: this.subtotal,
         totalShipping: this.shippingFee,
@@ -121,12 +154,43 @@ export class PaymentComponent implements OnInit{
         paymentStatus: 0,
         shippingServiceSelected: this.selectedShippingService
       }
-      this.orderServ.update(this.orderID, item).subscribe(
-        (res: any) => {
-          if(res && res.ok) {
-            this.router.navigate(['/place-order/' + this.orderID]);
+
+      const updatedOrderForIdDock = {
+        merchantId: this.order.merchantId,
+        items: this.order.items,
+        currency: this.order.currency,
+        transAmount: this.order.transAmount,
+        name: this.order.name,
+        unit: this.order.suite,
+        streetNumber: this.order.streetNumber,
+        streetName: this.order.street,
+        city: this.order.city,
+        province: this.order.province,
+        zip: this.order.postcode,
+        country: this.order.country,
+        ...item
+      }; 
+
+
+      (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(res => {
+        if(res) {
+          if(res.ok) {
+            this.orderServ.update(this.orderID, item).subscribe(
+              (res: any) => {
+                if(res && res.ok) {
+                  this.router.navigate(['/place-order/' + this.orderID]);
+                }
+              }
+            );
+          } else {
+  
           }
+          
         }
-      );
+      });
+
+
+
+
     }
 }

@@ -1,6 +1,12 @@
 <div class="container">
     <form style="border:1px solid #ccc">
         <div class="container">
+            <div>
+                ObjectId: 
+                <a target="_blank" href="/blockchain/detail/things/{{order.objectId}}">
+                    {{order.ObjectId}}
+                </a>
+            </div>
             <h1>{{"Address"|translate}}</h1>
             <hr>
             <div class="address-detail">
@@ -34,3 +40,7 @@
         </div>
     </form>
 </div>
+
+<ngx-smart-modal #passwordModal identifier="passwordModal">
+    <app-password-modal *ngIf="wallet" [pwdHash]="wallet.pwdHash" (onConfirmPassword)="onConfirmPassword($event)"></app-password-modal>
+</ngx-smart-modal>

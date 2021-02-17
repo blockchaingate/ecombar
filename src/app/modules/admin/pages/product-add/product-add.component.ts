@@ -5,7 +5,6 @@ import { UserService } from '../../../shared/services/user.service';
 import { CategoryService } from '../../../shared/services/category.service';
 import { BrandService } from '../../../shared/services/brand.service';
 import { currencies } from '../../../../../environments/currencies';
-import { Product } from '../../../shared/models/product';
 import { TextLan } from '../../../shared/models/textlan';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 import { LocalStorage } from '@ngx-pwa/local-storage';

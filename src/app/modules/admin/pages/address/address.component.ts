@@ -15,6 +15,7 @@ export class AddressComponent implements OnInit{
     street: string;
     district: string;
     city: string;
+    orderId: string;
     province: string;
     postcode: string;
     country: string;
@@ -67,6 +68,8 @@ export class AddressComponent implements OnInit{
         postcode: this.postcode,
         country: this.country
       };
+
+
       if(this.id) {
         this.addressServ.updateAddress(this.id, address).subscribe(
           (res:any) => {

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AddressComponent } from './address.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     AddressRoutingModule,
     CommonModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxSmartModalModule.forRoot()
   ],
   providers: []
 })

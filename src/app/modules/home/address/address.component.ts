@@ -3,6 +3,10 @@ import { UserService } from '../../shared/services/user.service';
 import { AddressService } from '../../shared/services/address.service';
 import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UtilService } from '../../shared/services/util.service';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { IddockService } from '../../shared/services/iddock.service';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-address',
@@ -19,10 +23,19 @@ export class AddressComponent implements OnInit {
   province: string;
   postcode: string;
   country: string;
+  order: any;
   id: string;
   orderID: string;
+  noWallet: boolean;
+  password: string;
+  wallets: any;
+  wallet: any;
 
   constructor(
+    private iddockServ: IddockService,
+    private utilServ: UtilService,
+    private ngxSmartModalServ: NgxSmartModalService,    
+    private localSt: LocalStorage,
     private router: Router,
     private route: ActivatedRoute,
     private userServ: UserService,
@@ -32,7 +45,26 @@ export class AddressComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+
+      if(!wallets || (wallets.length == 0)) {
+        this.noWallet = true;
+        return;
+      }
+      this.wallets = wallets;
+      console.log('this.wallets==', this.wallets);
+      this.wallet = this.wallets.items[this.wallets.currentIndex];
+    });  
+
     this.orderID = this.route.snapshot.paramMap.get('orderID');
+    this.orderServ.get(this.orderID).subscribe(
+      (res: any) => {
+        if(res && res.ok) {
+          this.order = res._body;
+        }
+      }
+    );
     this.userServ.getMe().subscribe(
       (res: any) => {
         console.log('resme==', res);
@@ -66,6 +98,19 @@ export class AddressComponent implements OnInit {
   }
 
   updateOrderAddress() {
+    this.ngxSmartModalServ.getModal('passwordModal').open();
+
+  }
+
+  onConfirmPassword(event) {
+      this.ngxSmartModalServ.getModal('passwordModal').close();
+      this.password = event;
+      this.updateOrderAddressDo();     
+  }  
+
+
+  async updateOrderAddressDo() {
+    const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
     const updatedOrder = {
       name: this.name,
       unit: this.suite,
@@ -77,27 +122,35 @@ export class AddressComponent implements OnInit {
       country: this.country
     };
 
-    this.orderServ.update(this.orderID, updatedOrder).subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          this.addAddress();
+    const updatedOrderForIdDock = {
+      merchantId: this.order.merchantId,
+      items: this.order.items,
+      currency: this.order.currency,
+      transAmount: this.order.transAmount,
+      ...updatedOrder
+    };    
+
+    (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(res => {
+      if(res) {
+        if(res.ok) {
+          this.orderServ.update(this.orderID, updatedOrder).subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                this.addAddress();
+              }
+            }
+          );
+        } else {
+
         }
+        
       }
-    );
+    });
+
+
+
   }
 
-  /*
-  name: String,
-  company: String,
-  unit: String,
-  streetNumber: String,
-  streetName: String,
-  streetName2: String,
-  city: String,
-  province: String,
-  zip: String,
-  country: String,  
-  */
   confirm() {
     this.updateOrderAddress();
   }
@@ -114,6 +167,8 @@ export class AddressComponent implements OnInit {
       postcode: this.postcode,
       country: this.country
     };
+
+
     if (this.id) {
       this.addressServ.updateAddress(this.id, address).subscribe(
         (res: any) => {

@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CartStoreService } from '../../shared/services/cart.store.service';
 import { OrderService } from '../../shared/services/order.service';
-import { PaymentService } from '../../shared/services/payment.service';
-import { environment } from '../../../../environments/environment';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Router } from '@angular/router';
 import { TranslateService } from '../../shared/services/translate.service';
 import { CartItem } from '../../shared/models/cart-item';
 import { groupBy } from '../../shared/utils/array-tool';
+import { UtilService } from '../../shared/services/util.service';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { IddockService } from '../../shared/services/iddock.service';
 
 @Component({
   selector: 'app-cart',
@@ -21,16 +23,23 @@ export class CartComponent implements OnInit, OnDestroy {
   Total: { currency: string, total: string }[];
   paidConfirmed: boolean;
   txid: string;
+  noWallet: boolean;
+  password: string;
   payQrcode: string;
   txid_link: string;
+  wallets: any;
+  wallet: any;
   trans_code: string;
   errMsg = '';
 
   constructor(
-    private paymentServ: PaymentService,
+    private localSt: LocalStorage,
+    private utilServ: UtilService,
+    private ngxSmartModalServ: NgxSmartModalService,
     private cartStoreServ: CartStoreService,
     private orderServ: OrderService,
     private router: Router,
+    private iddockServ: IddockService,
     private translateServ: TranslateService
   ) {
   }
@@ -48,6 +57,18 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+
+      if(!wallets || (wallets.length == 0)) {
+        this.noWallet = true;
+        return;
+      }
+      this.wallets = wallets;
+      console.log('this.wallets==', this.wallets);
+      this.wallet = this.wallets.items[this.wallets.currentIndex];
+    });  
+
     const storedCart = this.cartStoreServ.items;
     this.cartItems = storedCart ? storedCart : [];
     this.calculateTotal();
@@ -63,7 +84,21 @@ export class CartComponent implements OnInit, OnDestroy {
     console.log("storedCart init end!");
   }
 
-  checkout(): void {
+  checkout() {
+    this.ngxSmartModalServ.getModal('passwordModal').open();
+
+  }
+
+  onConfirmPassword(event) {
+      this.ngxSmartModalServ.getModal('passwordModal').close();
+      this.password = event;
+      this.checkoutDo();     
+  }  
+
+
+  async checkoutDo() {
+    const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
+
     const items: CartItem[] = [];
     let merchantId = '';
     let currency = '';
@@ -80,18 +115,30 @@ export class CartComponent implements OnInit, OnDestroy {
     });
     const orderData = { merchantId, items, currency, transAmount };
 
-    this.orderServ.create(orderData).subscribe(
-      (res: any) => {
-        console.log('ress from create order', res);
-        if (res && res.ok) {
-          const body = res._body;
-          const orderID = body._id;
-          this.cartStoreServ.empty();
-          this.router.navigate(['/address/' + orderID]);
+
+    (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe(res => {
+      if(res) {
+        if(res.ok) {
+          console.log('res._body=', res._body);
+          const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
+          orderData['objectId'] = objectId;          
+          this.orderServ.create(orderData).subscribe(
+            (res: any) => {
+              console.log('ress from create order', res);
+              if (res && res.ok) {
+                const body = res._body;
+                const orderID = body._id;
+                this.cartStoreServ.empty();
+                this.router.navigate(['/address/' + orderID]);
+              }
+            },
+            err => { this.errMsg = err.message; }
+          );          
         }
-      },
-      err => { this.errMsg = err.message; }
-    );
+      }});
+
+
+
   }
 
   clear() {

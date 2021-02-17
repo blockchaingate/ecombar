@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PaymentComponent } from './payment.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     PaymentRoutingModule,
     CommonModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxSmartModalModule.forRoot()
   ],
   providers: []
 })
