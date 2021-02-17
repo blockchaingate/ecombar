@@ -83,7 +83,18 @@ export class UpdateInfoComponent implements OnInit {
         console.log('rettttt=', ret);
         if(ret && ret.ok) {
           this.data = ret._body;
-          console.log('this.data=', this.data);
+          /*
+          const nvs = [];
+
+          
+          this.data.nvs.forEach(element => {
+            const name = element.name;
+            const value = element.value;
+            nvs.push({name: name, value:JSON.stringify(value)});
+          });
+
+          this.data.nvs = nvs;
+          */
         }
       }
     );    
@@ -127,7 +138,7 @@ export class UpdateInfoComponent implements OnInit {
   }
   async update() {
 
-
+    console.log('this.data for update=', this.data);
 
 
 
@@ -142,6 +153,10 @@ export class UpdateInfoComponent implements OnInit {
     const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);
     */
 
+   const nvs = [];
+
+
+   console.log('this.data.nvs===', this.data.nvs);
     (await this.iddockServ.updateIdDock(seed, this.id, this.type, this.data.rfid, this.data.nvs, this.data.parents)).subscribe(res => {
       if(res) {
         if(res.ok) {
@@ -151,7 +166,7 @@ export class UpdateInfoComponent implements OnInit {
         } else {
           //this.myid = '';
           this.saveSuccess = false;
-          this.saveErr = 'Duplicated id';
+          this.saveErr = 'Error while updating id';
         }
         
       }

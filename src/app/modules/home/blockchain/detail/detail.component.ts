@@ -40,6 +40,6 @@ export class DetailComponent implements OnInit {
 
 
     update(type: string, item: any) {
-      this.router.navigate(['/update-info/' + type + '/' + this.id]);
+      this.router.navigate(['/blockchain/update-info/' + type + '/' + this.id]);
     }       
 }

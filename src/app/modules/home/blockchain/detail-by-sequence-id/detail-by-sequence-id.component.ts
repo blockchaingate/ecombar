@@ -37,6 +37,7 @@ export class DetailBySequenceIDComponent implements OnInit {
       (ret: any) => {
         if(ret && ret.ok) {
           this.data = ret._body;
+          console.log('this.data=', this.data);
         }
       }
     );      

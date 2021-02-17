@@ -43,8 +43,10 @@ export class IddockService {
 
     const hash = data.datahash;
 
+    
     const abiHex = this.web3Serv.getUpdateIDABI(id, hash);
 
+    console.log('abiHex===', abiHex);
     const recordAddress = await this.kanbanServ.getRecordAddress();
     const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
     const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, recordAddress, nonce, 0, null);
@@ -227,7 +229,7 @@ export class IddockService {
       for (const [key, value] of Object.entries(nvs)) {
         newNvs.push( {
           name: key,
-          value: value
+          value: JSON.stringify(value)
         }
         );
       }
@@ -268,11 +270,11 @@ export class IddockService {
     const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b'); 
 
     const newNvs = [];
-    if(typeof nvs === 'object') {
+    if(!Array.isArray(nvs)) {
       for (const [key, value] of Object.entries(nvs)) {
         newNvs.push( {
           name: key,
-          value: value
+          value: JSON.stringify(value)
         }
         );
       }

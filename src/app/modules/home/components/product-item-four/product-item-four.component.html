@@ -2,15 +2,20 @@
     <div class="product-item__inner remove-prodcut-hover py-4 row">
         <div class="product-item__header col-6 col-md-2">
             <div class="mb-2">
-                <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="../../assets/img/212X200/img9.jpg" alt="Image Description"></a>
+                <a href="/product/{{product._id}}" class="d-block text-center">
+                    <img class="img-fluid" [src]="product.images ? product.images[0] : '../../assets/img/212X200/img9.jpg'" alt="Image Description">
+                </a>
             </div>
         </div>
         <div class="product-item__body col-6 col-md-7">
             <div class="pr-lg-10">
-                <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                <h5 class="mb-2 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Wireless Audio System Multiroom 360 degree Full base audio</a></h5>
+                <div class="mb-2"><a href="/product/{{product._id}}" class="font-size-12 text-gray-5">{{product.title | translateField}}</a></div>
+                <h5 class="mb-2 product-item__title">
+                    <a href="/product/{{product._id}}" class="text-blue font-weight-bold">
+                        <p [innerHTML]="product.description | translateField"></p>
+                </a></h5>
                 <div class="prodcut-price d-md-none">
-                    <div class="text-gray-100">$685,00</div>
+                    <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <ul class="font-size-12 p-0 text-gray-110 mb-4 d-none d-md-block">
                     <li class="line-clamp-1 mb-1 list-bullet">Brand new and high quality</li>
@@ -34,10 +39,10 @@
         <div class="product-item__footer col-md-3 d-md-block">
             <div class="mb-2 flex-center-between">
                 <div class="prodcut-price">
-                    <div class="text-gray-100">$685,00</div>
+                    <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <div class="prodcut-add-cart">
-                    <a href="../shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                    <a href="/product/{{product._id}}" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                 </div>
             </div>
             <div class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">

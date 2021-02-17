@@ -1,5 +1,16 @@
+<div *ngIf="noWallet">
+  <div class="text-center py-2">
+    Wallet not existed, please create or import a wallet and continue.
 
-    <div class="container">
+  </div>
+  <div class="text-center py-2">
+    <button class="btn" (click)="createWallet()">Create Wallet</button>
+  </div>
+  <div class="text-center py-2">
+    <button class="btn" (click)="importWallet()">Import Wallet</button>
+  </div>
+</div>
+    <div class="container" *ngIf="!noWallet">
       <h1>New product</h1>
       <hr>
       <div class="text-right my-3">
@@ -28,6 +39,11 @@
                   </div>
 
                   <div class="form-field">
+                    <label for="title">Sub Title</label>
+                    <input type="text" placeholder="Enter product subtitle" [(ngModel)]="subtitle" name="subtitle">
+                  </div>
+
+                  <div class="form-field">
                     <label for="detail">Detail</label>
                     <ejs-richtexteditor [(ngModel)]='detail' placeholder="Enter product detail"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
                   </div>                  
@@ -37,6 +53,14 @@
                     <ejs-richtexteditor [(ngModel)]='description' placeholder="Enter product description"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
                   </div>
 
+                
+                </div>
+              </div>
+            </div>
+
+            <div class="card-section">
+              <div class="card">
+                <div class="container">
                   <div class="form-field">
                     <label for="specification">Specification</label>
 
@@ -65,6 +89,40 @@
 
                     <div class="pt-2">
                       <button class="btn" (click)="addSpec()">{{'Add' | translate}}</button>
+                    </div>
+                  </div>                  
+                </div>
+              </div>
+            </div>
+
+            <div class="card-section">
+              <div class="card">
+                <div class="container">
+                  <div class="form-field">
+                    <label for="specification">Features</label>
+
+                    <div>
+                      <div *ngFor="let feature of features">
+                        <div class="d-flex align-items-center justify-content-between py-2">
+                          <div>
+                            {{feature}}
+                          </div>
+                          <div>
+                            <button class="btn" (click)="removeFeature(feature)">{{'Remove' | translate}}</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div>
+                      <div class="d-inline-block px-2">
+                        <input type="text" placeholder="Enter Feature" [(ngModel)]="feature" name="feature">
+                      </div>
+                     
+                    </div>
+
+                    <div class="pt-2">
+                      <button class="btn" (click)="addFeature()">{{'Add' | translate}}</button>
                     </div>
                   </div>                  
                 </div>
@@ -201,8 +259,11 @@
       </div>
 
       <div *ngIf="currentTab=='Chinese'">
-        <label for="name"><b>名称</b></label>
-        <input type="text" placeholder="输入名称" [(ngModel)]="titleChinese" name="titleChinese">     
+        <label for="name"><b>标题</b></label>
+        <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">     
+
+        <label for="name"><b>子标题</b></label>
+        <input type="text" placeholder="输入子标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">     
 
         <div class="py-2">
           <label for="name"><b>内容</b></label>

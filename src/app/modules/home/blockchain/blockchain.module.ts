@@ -17,7 +17,9 @@ import { DetailBySequenceIDComponent } from './detail-by-sequence-id/detail-by-s
     VerificationComponent,
     UpdateInfoComponent,
     OwnerComponent,
-    HistoryComponent
+    HistoryComponent,
+    DetailComponent,
+    DetailBySequenceIDComponent
   ],
   imports: [
     BlockchainRoutingModule,

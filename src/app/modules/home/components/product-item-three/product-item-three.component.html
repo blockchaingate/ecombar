@@ -2,15 +2,17 @@
     <div class="product-item__inner remove-prodcut-hover py-4 row">
         <div class="product-item__header col-6 col-md-4">
             <div class="mb-2">
-                <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="../../assets/img/212X200/img9.jpg" alt="Image Description"></a>
+                <a href="/product/{{product._id}}" class="d-block text-center">
+                    <img class="img-fluid" [src]="product.images ? product.images[0] : '../../assets/img/212X200/img9.jpg'" alt="Image Description">
+                </a>
             </div>
         </div>
         <div class="product-item__body col-6 col-md-5">
             <div class="pr-lg-10">
-                <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                <h5 class="mb-2 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Wireless Audio System Multiroom 360 degree Full base audio</a></h5>
+                <div class="mb-2"><a href="/product/{{product._id}}" class="font-size-12 text-gray-5">{{product.title | translateField}}</a></div>
+                <h5 class="mb-2 product-item__title"><a href="/product/{{product._id}}" class="text-blue font-weight-bold"><p [innerHTML]="product.description | translateField"></p></a></h5>
                 <div class="prodcut-price mb-2 d-md-none">
-                    <div class="text-gray-100">$685,00</div>
+                    <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <div class="mb-3 d-none d-md-block">
                     <a class="d-inline-flex align-items-center small font-size-14" href="#">
@@ -34,10 +36,10 @@
         <div class="product-item__footer col-md-3 d-md-block">
             <div class="mb-3">
                 <div class="prodcut-price mb-2">
-                    <div class="text-gray-100">$685,00</div>
+                    <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <div class="prodcut-add-cart">
-                    <a href="../shop/single-product-fullwidth.html" class="btn btn-sm btn-block btn-primary-dark btn-wide transition-3d-hover">Add to cart</a>
+                    <a href="/product/{{product._id}}" class="btn btn-sm btn-block btn-primary-dark btn-wide transition-3d-hover">Add to cart</a>
                 </div>
             </div>
             <div class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">

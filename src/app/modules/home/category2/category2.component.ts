@@ -60,10 +60,13 @@ export class Category2Component implements OnInit {
       this.productServ.getCategoryProducts(this.id).subscribe(
         (res: any) => {
           if (res && res.ok) {
+            /*
             const product = res._body[0];
             for(let i=0;i<68;i++) {
               this.products.push(product);
             }
+            */
+           this.products = res._body;
             //this.products = res._body;
             this.pageCount = Math.ceil(this.products.length / this.pageSize);
             this.totalProductsCount = this.products.length;

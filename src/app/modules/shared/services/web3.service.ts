@@ -76,6 +76,7 @@ export class Web3Service {
     };  
     const params = ['0x' + sequenceID, hashData];
 
+    console.log('params=', params);
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }  
