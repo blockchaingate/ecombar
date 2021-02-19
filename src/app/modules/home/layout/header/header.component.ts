@@ -40,8 +40,6 @@ export class HeaderComponent implements OnInit {
         this.user = user;
       }
     );
-    console.log('uer=', this.storageServ.user);
-
 
     this.merchantId = this.route.snapshot.paramMap.get('id');
     
@@ -50,7 +48,6 @@ export class HeaderComponent implements OnInit {
         (res: any) => {
           if (res && res.ok) {
             this.categories = res._body;
-            console.log('this.categoriesddddd===', this.categories);
             this.cd.detectChanges();
             $('.selectpicker').selectpicker('refresh');
           }
@@ -103,7 +100,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearch() {
-    this.router.navigate(['/search', { text: this.searchText, categoryId: this.categoryId, merchantId: this.merchantId }]);
+    this.router.navigate(['/search', { text: this.searchText, categoryId: this.categoryId, merchantId: this.merchantId??'' }]);
   }
 
   setLan() {
