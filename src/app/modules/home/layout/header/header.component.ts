@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { CartStoreService } from '../../../shared/services/cart.store.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { Router, ActivatedRoute } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-header',
@@ -10,17 +12,28 @@ import { StorageService } from '../../../shared/services/storage.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  categories: [];
+  categories: any;
   cartCount: number;
   user: any;
+  merchantId: string;
+  categoryId: string;
+  searchText: string;
   menu = false;
   _lang: string;
 
-  constructor(private translate: TranslateService, private categoryServ: CategoryService, private storageServ: StorageService, private cartStoreServ: CartStoreService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private cd: ChangeDetectorRef,
+    private translate: TranslateService, 
+    private categoryServ: CategoryService, 
+    private storageServ: StorageService, 
+    private cartStoreServ: CartStoreService) {
     this.setLan();
   }
 
   ngOnInit(): void {
+    this.categoryId = '';
     this.storageServ.getUser().subscribe(
       (user: any) => {
         console.log('user=', user);
@@ -29,18 +42,35 @@ export class HeaderComponent implements OnInit {
     );
     console.log('uer=', this.storageServ.user);
 
-    this.categoryServ.getAdminCategories().subscribe(
-      (res: any) => {
-        console.log('res=====', res);
-        if (res && res.ok) {
-          const body = res._body;
-          this.categories = body.filter(item => {
-            return item.parentId == null || item.parentId == ''
-          });
-          //
+
+    this.merchantId = this.route.snapshot.paramMap.get('id');
+    
+    if(!this.merchantId) {
+      this.categoryServ.getAdminCategories().subscribe(
+        (res: any) => {
+          if (res && res.ok) {
+            this.categories = res._body;
+            console.log('this.categoriesddddd===', this.categories);
+            this.cd.detectChanges();
+            $('.selectpicker').selectpicker('refresh');
+          }
         }
-      }
-    );
+      );
+    } else {
+      this.categoryServ.getMerchantCategories(this.merchantId).subscribe(
+        (res: any) => {
+          if (res && res.ok) {
+            this.categories = res._body;
+            this.cd.detectChanges();
+          }
+        }
+      );     
+    }
+
+
+
+
+
 
     console.log('this.cartStoreServ.items===', this.cartStoreServ.items);
 
@@ -70,6 +100,10 @@ export class HeaderComponent implements OnInit {
   closeMenu(){
     console.log("close Menu");
     this.menu = false;
+  }
+
+  onSearch() {
+    this.router.navigate(['/search', { text: this.searchText, categoryId: this.categoryId, merchantId: this.merchantId }]);
   }
 
   setLan() {

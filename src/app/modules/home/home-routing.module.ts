@@ -63,6 +63,10 @@ const routes: Routes = [
         component: CompareComponent
       },
       {
+        path: 'search',
+        loadChildren: () => import('./search/search.module').then(m => m.SearchModule)
+      },     
+      {
         path: 'payment',
         loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)
       },

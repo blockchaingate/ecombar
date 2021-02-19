@@ -33,7 +33,7 @@
                         <div class="product-item__outer h-100 w-100">
                             <div class="product-item__inner px-xl-4 p-3">
                                 <div class="product-item__body pb-xl-2">
-                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
+                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">{{product.primaryCategoryId.category | translateField}}</a></div>
                                     <h5 class="mb-1 product-item__title"><a [routerLink]="['/product/' + product._id]" routerLinkActive="router-link-active"  class="text-blue font-weight-bold">{{product.title.en}}</a></h5>
                                     <div class="mb-2">
                                         <a [routerLink]="['/product/' + product._id]" routerLinkActive="router-link-active"  class="d-block text-center"><img class="img-fluid" [src]="product.images[0]" alt="Image Description"></a>
@@ -49,7 +49,9 @@
                                 </div>
                                 <div class="product-item__footer">
                                     <div class="border-top pt-2 flex-center-between flex-wrap">
-                                        <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                <!--
+                <a href="../shop/compare.html" class="text-gray-6 font-size-13 mx-wd-3"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                -->
                                         <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
                                     </div>
                                 </div>

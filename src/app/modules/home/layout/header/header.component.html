@@ -180,13 +180,11 @@
                                 <div class="input-group">
                                     <input type="email" class="form-control py-2 pl-5 font-size-15 border-right-0 height-42 border-width-0 rounded-left-pill border-primary" name="email" id="searchproduct-item" placeholder="{{'Search for Products'|translate}}" aria-label="Search for Products"
                                         aria-describedby="searchProduct1" required>
-                                    <div class="input-group-append">
+                                    <div class="input-group-append" *ngIf="categories">
                                         <!-- Select -->
                                         <select class="js-select selectpicker dropdown-select custom-search-categories-select bg-white" data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
                                             <option value="one" selected>{{"All Categories"|translate}}</option>
-                                            <option value="two">Categories 1</option>
-                                            <option value="three">Categories 2</option>
-                                            <option value="four">Categories 3</option>
+                                            <option *ngFor="let category of categories" value="{{category._id}}">{{category.category | translateField}}</option>
                                         </select>
                                         <!-- End Select -->
                                         <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill" type="button" id="searchProduct1" [routerLink]="['/category']" routerLinkActive="router-link-active">
