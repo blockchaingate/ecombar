@@ -1,5 +1,10 @@
 <div class="container" *ngIf="order">
-
+    <div class="pb-2">
+        ObjectId: 
+        <a target="_blank" href="/blockchain/detail/things/{{order.objectId}}">
+            {{order.objectId}}
+        </a>
+    </div>
     <div class="row">
         <div class="col col-8 px-2">
             <div class="card w-100">
@@ -187,6 +192,7 @@
 </div>
 
 
+<!--
 <ngx-smart-modal #passwordModal identifier="passwordModal">
     <h1 class="text-center">{{'Password' | translate}}</h1>
     <div>
@@ -198,3 +204,9 @@
         </button>
     </div>
 </ngx-smart-modal>
+-->
+
+<ngx-smart-modal #passwordModal identifier="passwordModal">
+    <app-password-modal *ngIf="wallet" [pwdHash]="wallet.pwdHash" (onConfirmPassword)="onConfirmPassword($event)"></app-password-modal>
+</ngx-smart-modal>
+

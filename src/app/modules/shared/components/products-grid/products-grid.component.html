@@ -54,7 +54,7 @@
                             <div class="text-gray-100">${{item.price}}</div>
                         </div>
                         <div class="d-none d-xl-block prodcut-add-cart">
-                            <a [routerLink]="['/product']" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                            <a (click)="addToCart(item)" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                         </div>
                     </div>
                     <div class="product-item__footer">

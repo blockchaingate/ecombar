@@ -121,7 +121,9 @@ export class CartComponent implements OnInit, OnDestroy {
         if(res.ok) {
           console.log('res._body=', res._body);
           const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
-          orderData['objectId'] = objectId;          
+          orderData['objectId'] = objectId; 
+          
+          console.log('orderData===', orderData);
           this.orderServ.create(orderData).subscribe(
             (res: any) => {
               console.log('ress from create order', res);

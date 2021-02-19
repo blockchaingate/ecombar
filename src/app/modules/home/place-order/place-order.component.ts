@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import BigNumber from 'bignumber.js/bignumber';
 import { Web3Service } from '../../shared/services/web3.service';
 import { ApiService } from '../../shared/services/api.service';
+import { IddockService } from '../../shared/services/iddock.service';
 
 @Component({
   selector: 'app-place-order',
@@ -35,6 +36,7 @@ export class PlaceOrderComponent implements OnInit {
   trans_code: string;
   payLink: string;
   code: string;
+  nonce: number;
   link: string;
   walletName: string;
   usdtBalance: number;
@@ -45,6 +47,7 @@ export class PlaceOrderComponent implements OnInit {
   public payPalConfig?: IPayPalConfig;
 
   constructor(
+    private iddockServ: IddockService,
     private router: Router,
     private localSt: LocalStorage,
     private route: ActivatedRoute,
@@ -238,7 +241,9 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   
-  confirmPassword() {
+  onConfirmPassword(event) {
+    this.ngxSmartModalService.getModal('passwordModal').close();
+    this.password = event;
     const pinHash = this.utilServ.SHA256(this.password).toString();
     if (pinHash !== this.wallet.pwdHash) {
         this.warnPwdErr();
@@ -262,9 +267,25 @@ export class PlaceOrderComponent implements OnInit {
     console.log('txHex=', txHex);
 
     this.apiServ.chargeOrder(this.orderID, txHex).subscribe(
-      (res: any) => {
+      async (res: any) => {
         if (res && res.ok) {
-         this.toastr.info(this.translateServ.instant('Your order was placed successfully.'));
+          const order = res._body;
+          
+          delete order.objectId;
+          const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password);
+          (await this.iddockServ.updateIdDockWithNonce(++this.nonce, seed, this.order.objectId, 'things', null, order, null)).subscribe(res => {
+            if(res) {
+              if(res.ok) {
+                this.toastr.info(this.translateServ.instant('Your order was placed successfully.'));
+              } else {
+      
+              }
+              
+            }
+          });
+
+
+          
         } else {
           this.toastr.info(this.translateServ.instant('Your order failed.'));
 
@@ -284,7 +305,7 @@ export class PlaceOrderComponent implements OnInit {
     const abiHex = this.web3Serv.getTransferFunctionABI(to, coin, value, this.order._id);
     const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
 
-
+    this.nonce = nonce;
     const txHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, address, nonce, 0, null);
     return txHex;
   }

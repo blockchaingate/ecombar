@@ -62,6 +62,7 @@ export class AddressComponent implements OnInit {
       (res: any) => {
         if(res && res.ok) {
           this.order = res._body;
+          console.log('this.order====', this.order);
         }
       }
     );

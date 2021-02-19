@@ -54,6 +54,20 @@ export class IddockService {
  
   }
 
+  async getUpdateTxhexWithNonce(nonce, keyPairsKanban, id: string, type: string, data: any) {
+
+    const hash = data.datahash;
+
+    
+    const abiHex = this.web3Serv.getUpdateIDABI(id, hash);
+
+    console.log('abiHex===', abiHex);
+    const recordAddress = await this.kanbanServ.getRecordAddress();
+    const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, recordAddress, nonce, 0, null);
+    return txKanbanHex;
+ 
+  }
+
   async getChangeOwnerTxhex(keyPairsKanban, id: string, newOwner: string) {
 
     const abiHex = this.web3Serv.getChangeOwnerABI(id, newOwner);
@@ -264,6 +278,47 @@ export class IddockService {
     data.txhex = txhex;
 
     return this.saveDock(type, data); 
+  }
+
+  async updateIdDockWithNonce(nonce, seed, id: string, type: string, rfid: string, nvs: any, parents: any) {
+    const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b'); 
+
+    const newNvs = [];
+    if(!Array.isArray(nvs)) {
+      for (const [key, value] of Object.entries(nvs)) {
+        newNvs.push( {
+          name: key,
+          value: JSON.stringify(value)
+        }
+        );
+      }
+    }
+
+    const data = {
+      _id: null,
+      sign: null,
+      rfid: null,
+      parents: null,
+      nvs: (newNvs && newNvs.length > 0) ? newNvs : nvs,
+      dateCreated: new Date().toISOString(),
+      lastUpdated: null,
+      datahash: null,
+      txhex: null,
+    };
+
+    if(type != 'people') {
+      data.rfid = rfid;
+      data.parents = parents;
+    }    
+
+    const [datahash, sign] = this.getHashSign(keyPairsKanban, data);
+    data.datahash = datahash;
+    data.sign = sign;
+
+    const txhex = await this.getUpdateTxhexWithNonce(nonce,keyPairsKanban,id, type, data);
+    data.txhex = txhex;
+
+    return this.updateDock(type, id, data);     
   }
 
   async updateIdDock(seed, id: string, type: string, rfid: string, nvs: any, parents: any) {
