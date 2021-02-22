@@ -19,6 +19,7 @@ export class SigninComponent implements OnInit {
   passwordSignup: string;
   repasswordSignup: string;
   password: string;
+  msgSignupSuccess: boolean;
   showDetail = false;
   rawErrMsg = '';
   errMsg = '';
@@ -84,12 +85,19 @@ export class SigninComponent implements OnInit {
     */
     this.userServ.signup(this.emailSignup, this.passwordSignup).subscribe(
       (res: any) => {
-        if (res && res.token) {
+        console.log('res==', res);
+        if (res && res.activationCode) {
+          this.msgSignupSuccess = true;
         } else {
-          this.errMsg = 'Invalid email or password';
+          this.errMsgSignup = 'Sign up error.';
         }
       },
-      err => { this.rawErrMsg = err.message; this.errMsg = 'Invalid email or password';}
+      err => { 
+        console.log('error==', err);
+        this.errMsgSignup = err.error.message;
+        console.log('this.errMsgSignup==', this.errMsgSignup);
+        //this.errMsg = 'Invalid email or password';
+      }
     );
   }
 

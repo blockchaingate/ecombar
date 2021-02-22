@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CartStoreService } from '../../services/cart.store.service';
+import { FavoriteService } from '../../../shared/services/favorite.service';
 import { CartItem } from '../../models/cart-item';
 import { environment } from '../../../../../environments/environment';
 @Component({
@@ -11,7 +12,9 @@ export class ProductsGridComponent {
   iddockRoot: string;
   @Input() products: any;
 
-  constructor(private cartStoreServ: CartStoreService) {
+  constructor(
+    private favoriteServ: FavoriteService,
+    private cartStoreServ: CartStoreService) {
     this.iddockRoot = environment.IDDOCK;
   }
 
@@ -27,6 +30,19 @@ export class ProductsGridComponent {
       quantity: 1
     };
     this.cartStoreServ.addCartItem(cartItem);
+  }
+
+  addFavorite(item: any) {
+    const data = {
+      parentId: item._id
+    };
+    this.favoriteServ.create(data).subscribe(
+      (res: any) => {
+        if(res && res.ok) {
+          console.log('gogogo');
+        }
+      }
+    );
   }
 }
 
