@@ -38,6 +38,7 @@ export class ProductAddComponent implements OnInit {
   price: string;
   product: any;
   active: boolean;
+  contents: any;
   noWallet: boolean;
   id: string;
   password: string;
@@ -49,10 +50,13 @@ export class ProductAddComponent implements OnInit {
   categories: any;
   brand: string;
   brands: any;
+  defaultColors: any;
   specName: string;
   specValue: string;
   currencies: any;
   images: any;
+  contentName: string;
+  contentQuantity: number;
   merchantId: string;
   currency: string;
   description: string;
@@ -61,6 +65,7 @@ export class ProductAddComponent implements OnInit {
   descriptionChinese: string;
   detail: string;
   specs: any;
+  specsChinese: any;
   specification: string;
   detailChinese: string;
   specificationChinese: string;  
@@ -78,6 +83,14 @@ export class ProductAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.defaultColors = [
+      'black',
+      'white',
+      'green',
+      'brown'
+    ];
+    this.contentQuantity = 0;
+    this.contents = [];
     this.colors = [];
     this.specs = [];
     this.features = [];
@@ -175,10 +188,11 @@ export class ProductAddComponent implements OnInit {
               }
             }
 
-            if (product.specification) {
-              this.specification = product.specification.en;
-              if(product.specification.sc) {
-                this.specificationChinese = product.specification.sc;
+            if (product.specs) {
+              this.specs = product.specs.en[0].details;
+              console.log('this.specs=', this.specs);
+              if(product.specs.sc) {
+                this.specsChinese = product.specs.sc[0].details;
               }
             }
  
@@ -187,6 +201,10 @@ export class ProductAddComponent implements OnInit {
               if(product.features.sc) {
                 this.featuresChinese = product.features.sc;
               }              
+            }
+
+            if(product.contents) {
+              this.contents = product.contents;
             }
 
             this.currency = product.currency;
@@ -247,8 +265,24 @@ export class ProductAddComponent implements OnInit {
     this.specName = '';
     this.specValue = '';
   }
+
   removeSpec(spec) {
     this.specs = this.specs.filter(item => item.name != spec.name && item.value != spec.value);
+  }  
+
+  addContent() {
+    if(!this.contentName || !this.contentQuantity) {
+      return;
+    }
+    this.contents.push(
+      {name: this.contentName, quantity:this.contentQuantity}
+    );
+    this.contentName = '';
+    this.contentQuantity = 0;
+  }
+
+  removeContent(content) {
+    this.contents = this.contents.filter(item => item.name != content.name && item.quantity != content.value);
   }  
 
   removeFeature(feature) {
@@ -278,16 +312,28 @@ export class ProductAddComponent implements OnInit {
     const featuresLan: TextLan = { name: 'features', en: this.features, sc: this.featuresChinese };
     const detailLan: TextLan = { name: 'detail', en: this.detail, sc: this.detailChinese };
     const descLan: TextLan = { name: 'description', en: this.description, sc: this.descriptionChinese };
-    const specLan: TextLan = { name: 'specification', en: this.specification, sc: this.specificationChinese };
+    const specLan = { 
+      en: 
+      [{
+        group: "",
+        details:this.specs
+      }], 
+      sc: 
+      [{ 
+        group: "",
+        details: this.specsChinese 
+      }]
+    };
     const data: any = {
       title: titleLan,
       subtitle: subtitleLan,
       briefIntroduction: detailLan,
       description: descLan,
       features:featuresLan,      
-      specification: specLan,
+      specs: specLan,
       price: parseInt(this.price), // in cents
       currency: 'USD',
+      contents: this.contents,
       primaryCategoryId: this.category,
       active: this.active,
       images: this.images,
@@ -300,7 +346,8 @@ export class ProductAddComponent implements OnInit {
       briefIntroduction: detailLan,
       description: descLan,
       features: featuresLan,
-      specification: specLan,
+      specs: specLan,
+      contents: this.contents,
       price: parseInt(this.price), // in cents
       currency: 'USD',
       primaryCategory: (this.categories && this.category) ? this.categories.filter(item => item._id === this.category)[0] : null,
@@ -309,27 +356,25 @@ export class ProductAddComponent implements OnInit {
       colors: this.colors,
       brand: (this.brands && this.brand) ? this.brands.filter(item => item._id === this.brand)[0]  : null   
     }
+
+    console.log('dataaaaaa=', data);
     if (this.id) {
 
-      (await this.iddockServ.updateIdDock(seed, this.product.objectId, 'things', null, dataInIddock, null)).subscribe(res => {
-        if(res) {
-          if(res.ok) {
-            this.productServ.update(this.id, data).subscribe(
-              (res: any) => {
-                console.log('res=', res);
-                if (res.ok) {
+
+      this.productServ.update(this.id, data).subscribe(
+        async (res: any) => {
+          console.log('res=', res);
+          if (res.ok) {
+            (await this.iddockServ.updateIdDock(seed, this.product.objectId, 'things', null, dataInIddock, null)).subscribe(res => {
+              if(res) {
+                if(res.ok) {
                   this.router.navigate(['/admin/products']);
                 }
               }
-            );
-          } else {
-
+            });            
           }
-          
         }
-      });
-
-
+      );
     } else {
          
 

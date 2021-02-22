@@ -12,7 +12,12 @@
 
   </li>
   <li class="table-row" *ngFor="let product of products">
-    <div class="col col-3" data-label="Title">{{product.title | translateField}}</div>
+    <div class="col col-3" data-label="Title">
+      <a target="_blank" href="/product/{{product._id}}">
+        {{product.title | translateField}}
+      </a>
+      
+    </div>
     <div class="col col-3" data-label="Price">{{product.price}}</div>
     <div class="col col-3" data-label="Currency">
       <a target="_blank" href="/blockchain/detail/things/{{product.objectId}}">

@@ -101,6 +101,16 @@ export class ProductComponent implements OnInit {
 
   }
 
+
+  getProductQuantity() {
+    let quantity = 0;
+    const contents = this.product.contents;
+    for(let i=0;i<contents.length;i++) {
+      quantity += contents[i].quantity;
+    }
+    return quantity;
+  }
+  
   decQuantity() {
     if(this.quantity > 1) {
       this.quantity --;

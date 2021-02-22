@@ -39,6 +39,13 @@ export class ProductService {
     return this.http.get('products/category/' + category_id, false);
   }
 
+  search(searchText, categoryId, merchantId) {
+    const data = {
+      searchText, categoryId, merchantId
+    };
+    return this.http.post('products/search', data, false);
+  }
+
   getAdminHotCategories() {
     return this.http.get('product-categories/admin/hot', false);
   }

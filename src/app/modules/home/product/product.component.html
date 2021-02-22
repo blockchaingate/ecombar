@@ -1,7 +1,4 @@
-
-
-
-<main id="content" role="main">
+<main id="content" role="main" *ngIf="product">
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">
         <div class="container">
@@ -9,9 +6,11 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home1</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
+                        <!--
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Product</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Bag</a></li>
+                        -->
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/category/{{product.primaryCategoryId._id}}">{{product.primaryCategoryId.category | translateField}}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{product && product.title | translateField}}</li>
                     </ol>
                 </nav>
@@ -45,7 +44,7 @@
                 <div class="col-md-7 mb-md-6 mb-lg-0">
                     <div class="mb-2">
                         <div class="border-bottom mb-3 pb-md-1 pb-3">
-                            <a href="#" class="font-size-12 text-gray-5 mb-2 d-inline-block">Headphones</a>
+                            <a href="/category/{{product.primaryCategoryId._id}}" class="font-size-12 text-gray-5 mb-2 d-inline-block">{{product.primaryCategoryId.category | translateField}}</a>
                             <h2 class="font-size-25 text-lh-1dot2">{{product && product.title | translateField}}</h2>
                             <div class="mb-2">
                                 <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="#">
@@ -63,7 +62,7 @@
                                 <!--
                                 <a href="#" class="max-width-150 ml-n2 mb-2 mb-md-0 d-block"><img class="img-fluid" src="../../assets/img/200X60/img1.png" alt="Image Description"></a>
                                 -->
-                                <div class="ml-md-3 text-gray-9 font-size-14">Availability: <span class="text-green font-weight-bold">26 in stock</span></div>
+                                <div class="ml-md-3 text-gray-9 font-size-14">Availability: <span class="text-green font-weight-bold">{{getProductQuantity()}} in stock</span></div>
                             </div>
                         </div>
                         <div class="flex-horizontal-center flex-wrap mb-4">
@@ -250,6 +249,8 @@
                     </div>
                 -->
                     <div class="tab-pane fade  active show" id="Jpills-two-example1" role="tabpanel" aria-labelledby="Jpills-two-example1-tab">
+                        <div [innerHtml]="product.description | translateField"></div>
+                        <!--
                         <h3 class="font-size-24 mb-3">Perfectly Done</h3>
                         <p>Praesent ornare, ex a interdum consectetur, lectus diam sodales elit, vitae egestas est enim ornare nisl. Nullam in lectus nec sem semper viverra. In lobortis egestas massa. Nam nec massa nisi. Suspendisse potenti. Quisque suscipit vulputate dui quis volutpat. Ut id elit facilisis, feugiat est in, tempus lacus. Ut ultrices dictum metus, a ultricies ex vulputate ac. Ut id cursus tellus, non tempor quam. Morbi porta diam nisi, id finibus nunc tincidunt eu.</p>
                         <div class="row">
@@ -285,16 +286,19 @@
                             <li class="nav-item text-gray-111 mx-3 flex-shrink-0 flex-xl-shrink-1">/</li>
                             <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>Tags:</strong> <a href="#" class="text-blue">Fast</a>, <a href="#" class="text-blue">Gaming</a>, <a href="#" class="text-blue">Strong</a></li>
                         </ul>
+                    -->
+                    
                     </div>
                     <div class="tab-pane fade" id="Jpills-three-example1" role="tabpanel" aria-labelledby="Jpills-three-example1-tab">
                         <div class="mx-md-5 pt-1">
                             <div class="table-responsive mb-4">
-                                <table class="table table-hover">
+                                <table class="table table-hover" *ngIf="product.specs && product.specs.en">
                                     <tbody>
-                                        <tr>
-                                            <th class="px-4 px-xl-5 border-top-0">Weight</th>
-                                            <td class="border-top-0">7.25kg</td>
+                                        <tr *ngFor="let spec of product.specs.en[0].details">
+                                            <th class="px-4 px-xl-5 border-top-0">{{spec.name}}</th>
+                                            <td class="border-top-0">{{spec.value}}</td>
                                         </tr>
+                                        <!--
                                         <tr>
                                             <th class="px-4 px-xl-5">Dimensions</th>
                                             <td>90 x 60 x 90 cm</td>
@@ -311,9 +315,11 @@
                                             <th class="px-4 px-xl-5">Guarantee</th>
                                             <td>5 years</td>
                                         </tr>
+                                        -->
                                     </tbody>
                                 </table>
                             </div>
+                            <!--
                             <h3 class="font-size-18 mb-4">Technical Specifications</h3>
                             <div class="table-responsive">
                                 <table class="table table-hover">
@@ -393,7 +399,10 @@
                                     </tbody>
                                 </table>
                             </div>
+                        -->
                         </div>
+
+                    
                     </div>
                     <div class="tab-pane fade" id="Jpills-four-example1" role="tabpanel" aria-labelledby="Jpills-four-example1-tab">
                         <div class="row mb-8">

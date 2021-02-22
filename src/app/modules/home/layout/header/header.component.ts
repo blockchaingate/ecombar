@@ -41,8 +41,19 @@ export class HeaderComponent implements OnInit {
       }
     );
 
-    this.merchantId = this.route.snapshot.paramMap.get('id');
+    console.log('this.merchantId111=', this.merchantId);
+    if(!this.merchantId) {
+      const currentURL= window.location.href; 
+      console.log('currentUrl=', currentURL);
+      const storeIndex = currentURL.indexOf('store/');
+      if(storeIndex > 0) {
+        this.merchantId = currentURL.substring(storeIndex + 6);
+      }
+    }
+
     
+    
+    console.log('this.merchantIdddd==', this.merchantId);
     if(!this.merchantId) {
       this.categoryServ.getAdminCategories().subscribe(
         (res: any) => {
