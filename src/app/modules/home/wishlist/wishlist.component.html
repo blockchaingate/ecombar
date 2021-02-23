@@ -35,20 +35,20 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr>
+                          <tr *ngFor="let favorite of favorites">
                               <td class="text-center">
                                   <a href="#" class="text-gray-32 font-size-26">×</a>
                               </td>
                               <td class="d-none d-md-table-cell">
-                                  <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" src="../../assets/img/300X300/img6.jpg" alt="Image Description"></a>
+                                  <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" src="{{favorite.parentId.images[0]}}" alt="Image Description"></a>
                               </td>
 
                               <td data-title="Product">
-                                  <a href="#" class="text-gray-90">Ultra Wireless S50 Headphones S50 with Bluetooth</a>
+                                  <a href="#" class="text-gray-90">{{favorite.parentId.title | translateField}}</a>
                               </td>
 
                               <td data-title="Unit Price">
-                                  <span class="">$1,100.00</span>
+                                  <span class="">${{favorite.parentId.price}}</span>
                               </td>
 
                               <td data-title="Stock Status">
@@ -58,9 +58,10 @@
                               </td>
 
                               <td>
-                                  <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Add to Cart</button>
+                                  <button type="button" (click)="addToCart(favorite.parentId)" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Add to Cart</button>
                               </td>
                           </tr>
+                          <!--
                           <tr class="">
                               <td class="text-center">
                                   <a href="#" class="text-gray-32 font-size-26">×</a>
@@ -78,15 +79,14 @@
                               </td>
 
                               <td data-title="Stock Status">
-                                  <!-- Stock Status -->
                                   <span>In stock</span>
-                                  <!-- End Stock Status -->
                               </td>
 
                               <td>
                                   <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Add to Cart</button>
                               </td>
                           </tr>
+                        -->
                       </tbody>
                   </table>
               </div>

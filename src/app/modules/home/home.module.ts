@@ -15,6 +15,7 @@ import { ProductItemTwoComponent } from './components/product-item-two/product-i
 import { ProductItemThreeComponent } from './components/product-item-three/product-item-three.component';
 import { ProductItemFourComponent } from './components/product-item-four/product-item-four.component';
 import { CompareComponent } from './compare/compare.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -30,7 +31,8 @@ import { CompareComponent } from './compare/compare.component';
     ProductItemTwoComponent,
     ProductItemThreeComponent,
     ProductItemFourComponent,
-    CompareComponent
+    CompareComponent,
+    WishlistComponent
   ],
   imports: [
     // QRCodeModule,
