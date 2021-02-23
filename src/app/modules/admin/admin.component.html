@@ -37,12 +37,17 @@
                 {{role | translate}}
             </div>
 
-            <div class="pt-2 text-center text-success">
-                <a target="_blank" href="/store/{{merchantId}}">
+            <div class="pt-2 text-center">
+                <a target="_blank" class="text-success"  *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
                     {{'My store' | translate}}
                 </a>
-                
-            </div>            
+
+                <a target="_blank" class="text-success" *ngIf="role == 'Customer'" href="/apply-for-merchant">
+                    {{'Apply for merchant' | translate}}
+                </a>                
+            </div>   
+            
+            
             <div class="pt-2">
                 <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
             </div>

@@ -36,4 +36,13 @@ export class WishlistComponent implements OnInit {
     this.cartStoreServ.addCartItem(cartItem);    
   }
 
+  unfavorite(id:string) {
+    this.favoriteServ.deleteFavorite(id).subscribe(
+      (res: any) => {
+        if(res&&res.ok) {
+          this.favorites = this.favorites.filter(item => item._id != id);
+        }
+      }
+    );
+  }
 }
