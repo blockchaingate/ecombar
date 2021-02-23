@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../shared/services/category.service';
-import { ProductService } from '../../shared/services/product.service';
-import {ActivatedRoute, Router, ParamMap} from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Merchant } from '../../../models/merchant';
 import { MerchantService } from '../../shared/services/merchant.service';
@@ -30,8 +29,6 @@ export class ApplyForMerchantComponent implements OnInit {
     });
 
     constructor(
-        private storageService: StorageService,
-        private _router: Router,
         private _userServ: UserService,
         private _mcServ: MerchantService) { }    
 
@@ -72,7 +69,8 @@ export class ApplyForMerchantComponent implements OnInit {
       const merchant = {
           name: this.merchantForm.get('merchantName').value,
           phone: this.merchantForm.get('phone').value,
-          email: this.merchantForm.get('email').value
+          email: this.merchantForm.get('email').value,
+          type: 'ecombar'
       };
 
       this._mcServ.create(merchant).subscribe(
