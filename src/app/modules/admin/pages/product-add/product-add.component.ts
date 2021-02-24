@@ -11,6 +11,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { UtilService } from '../../../shared/services/util.service';
 import { IddockService } from '../../../shared/services/iddock.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-product-add',
@@ -70,6 +71,7 @@ export class ProductAddComponent implements OnInit {
   detailChinese: string;
   specificationChinese: string;  
   constructor(
+    private toastrServ: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
     private iddockServ: IddockService,
@@ -334,11 +336,11 @@ export class ProductAddComponent implements OnInit {
       price: parseInt(this.price), // in cents
       currency: 'USD',
       contents: this.contents,
-      primaryCategoryId: this.category,
+      primaryCategoryId: this.category ? this.category : null,
       active: this.active,
       images: this.images,
       colors: this.colors,
-      brand: this.brand
+      brand: this.brand ? this.brand : null
     };
     
     const dataInIddock = {
@@ -394,10 +396,13 @@ export class ProductAddComponent implements OnInit {
                 console.log('res=', res);
                 if (res.ok) {
                   this.router.navigate(['/admin/products']);
+                } else {
+                  this.toastrServ.error('add to database error');
                 }
               }
             );
           } else {
+            this.toastrServ.error('add to id dock error');
           }
           
         }

@@ -267,7 +267,11 @@
                                         <a class="nav-link u-header__nav-link " href="/">{{'Home'|translate}}</a>
                                     </li>
                                     <li *ngFor="let category of categories" class="nav-item hs-has-mega-menu u-header__nav-item">
-                                        <a class="nav-link u-header__nav-link" href="/category/{{category._id}}">{{category.category | translateField}}</a>
+                                        <a class="nav-link u-header__nav-link u-header__nav-link-toggle" href="/category/{{category._id}}">{{category.category | translateField}}</a>
+                                        <div class="hs-mega-menu w-100 u-header__sub-menu"
+aria-labelledby="smartphonesMegaMenu">
+                                        <app-sub-categories [category]="category"></app-sub-categories>
+                                        </div>
                                     </li>
                                     <!-- Smart Phones -->
                                     <!-- <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="hover"

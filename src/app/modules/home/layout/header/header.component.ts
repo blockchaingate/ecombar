@@ -58,7 +58,8 @@ export class HeaderComponent implements OnInit {
       this.categoryServ.getAdminCategories().subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.categories = res._body;
+            const allCategories = res._body;
+            this.buildCategoryTree(allCategories);
             this.cd.detectChanges();
             $('.selectpicker').selectpicker('refresh');
           }
@@ -68,7 +69,8 @@ export class HeaderComponent implements OnInit {
       this.categoryServ.getMerchantCategories(this.merchantId).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.categories = res._body;
+            const allCategories = res._body;
+            this.buildCategoryTree(allCategories);
             this.cd.detectChanges();
           }
         }
@@ -98,6 +100,72 @@ export class HeaderComponent implements OnInit {
 
     });
 
+  }
+
+
+  arrayToTree(items) {
+ 
+    /**
+     * The nested tree.
+     * @type {*[]}
+     */
+    const rootItems = [];
+ 
+    // (1) Create a holder for each item.
+ 
+    const lookup = {};
+ 
+    for (const item of items) {
+ 
+        const itemId   = item["_id"];
+        const parentId = item["parentId"];
+ 
+        // (2) Create a placeholder for each item in the lookup. 
+        // Details are added later.
+ 
+        if (! lookup[itemId]) lookup[itemId] = { ["children"]: [] }
+ 
+        // (3) Add the details of the item.
+ 
+        lookup[itemId] = { ...item, ["children"]: lookup[itemId]["children"] }
+ 
+        // (4) Create a variable for the current item.
+ 
+        const TreeItem = lookup[itemId];
+ 
+        // (5) Determine where the item goes in the tree. 
+ 
+        // If the item has no parentId, it is the root node.
+        if (parentId === null || parentId === undefined || parentId === "") {
+ 
+            rootItems.push(TreeItem);
+        }
+ 
+        /*
+         * If the item has a parentId, add it to the tree.
+         */
+ 
+        else {
+ 
+            // (6) Add a placeholder for parent of the current item.
+ 
+            if (! lookup[parentId]) lookup[parentId] = { ["children"]: [] };
+ 
+            // (7) Add the current item to its parent.
+ 
+            lookup[parentId]["children"].push(TreeItem);
+        }
+    }
+ 
+    return rootItems
+}
+
+
+
+
+  buildCategoryTree(allCategories: any) {
+    this.categories = this.arrayToTree(allCategories);
+    console.log('this.categories==', this.categories);
   }
 
   openMenu(){
