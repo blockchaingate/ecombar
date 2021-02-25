@@ -8,11 +8,12 @@ import { ProductService } from '../../shared/services/product.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  
+  mode: string;
   products: any;  
   constructor(private cd: ChangeDetectorRef, private productServ: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.mode = 'mode1';
     this.route.paramMap.subscribe((params: any) => {
         const parameters = params.params;
         const searchText = parameters.text;

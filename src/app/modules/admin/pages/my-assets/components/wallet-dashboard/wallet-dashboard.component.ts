@@ -360,18 +360,15 @@ export class WalletDashboardComponent implements OnInit{
           return;
       }
 
-      if (!txHex || !txHash) {
-        /*
-          if (this.lan === 'zh') {
-              this.alertServ.openSnackBar('txHash内部错误', 'Ok');
-          } else {
-              this.alertServ.openSnackBar('Internal error for txHex or txHash', 'Ok');
-          }
-          */
-         this.toastr.error(this.translateServ.instant('Internal error for txHex or txHash'));
+      if (!txHex) {
+         this.toastr.error(this.translateServ.instant('Internal error for txHex'));
           return;
       }
 
+      if(!txHash) {
+        this.toastr.error(this.translateServ.instant('Internal error for txHash'));
+        return;        
+      }
       const amountInLink = new BigNumber(amount).multipliedBy(new BigNumber(1e18)); // it's for all coins.
 
       const amountInLinkString = amountInLink.toFixed();

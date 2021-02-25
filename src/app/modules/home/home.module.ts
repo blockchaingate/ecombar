@@ -8,6 +8,7 @@ import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.com
 import { FooterComponent } from './layout/footer/footer.component';
 import { SharedModule } from '../shared/shared.module';
 import { Category2Component } from './category2/category2.component';
+import { SearchComponent } from './search/search.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
 import { ProductItemOneComponent } from './components/product-item-one/product-item-one.component';
@@ -33,6 +34,7 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     ProductItemThreeComponent,
     ProductItemFourComponent,
     CompareComponent,
+    SearchComponent,
     WishlistComponent,
     SubCategoriesComponent
   ],
