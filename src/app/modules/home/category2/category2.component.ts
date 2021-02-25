@@ -12,13 +12,11 @@ export class Category2Component implements OnInit {
   maxItems = 2;
   categories: any;
   category: any;
-  mode: any;
+  
   products: any;
-  pageNum: number;
-  pageSize: number;
-  pageCount: number;
   brands: any;
   colors: any;
+  title: any;
   prices = [
     {
       name: 'Under $25',
@@ -49,7 +47,7 @@ export class Category2Component implements OnInit {
       isChecked: false
     }
   ];
-  totalProductsCount: number;
+  
   currentCatorory: any;
   categoryChildren: any;
   id: string;
@@ -60,11 +58,7 @@ export class Category2Component implements OnInit {
     private categoryServ: CategoryService) { }
 
   ngOnInit() {
-    this.pageCount = 1;
-    this.pageNum = 1;
-    this.totalProductsCount = 0;
-    this.pageSize = 20;
-    this.mode = 'mode1';
+
     this.products = [];
     this.route.paramMap.subscribe((params: ParamMap) =>  {
       this.id = params.get('id');    
@@ -79,6 +73,7 @@ export class Category2Component implements OnInit {
 
               this.category = body.filter(item => item._id === this.id)[0];
               this.currentCatorory = this.category;
+              this.title = this.currentCatorory.category;
               if(this.category.parentId) {
                 this.category = body.filter(item => item._id === this.category.parentId)[0];
               }
@@ -104,8 +99,7 @@ export class Category2Component implements OnInit {
            this.brands = body.brands;
            this.colors = body.colors;
             //this.products = res._body;
-            this.pageCount = Math.ceil(this.products.length / this.pageSize);
-            this.totalProductsCount = this.products.length;
+
           }
       });
     });
@@ -113,15 +107,7 @@ export class Category2Component implements OnInit {
 
   }
 
-  changeMode(mode: string) {
-    this.mode = mode;
-  }
 
-  changePageNum(num: number) {
-    if(num < 1) {num = 1}
-    if(num > this.pageCount) {num = this.pageCount}
-    this.pageNum = num;
-  }
   navigateTo(category) {
     this.router.navigate(['/category/' + category._id]);
   }

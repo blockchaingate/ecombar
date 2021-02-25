@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { Category2Component } from './category2/category2.component';
 import { SearchComponent } from './search/search.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductListWholeComponent } from './components/product-list-whole/product-list-whole.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
 import { ProductItemOneComponent } from './components/product-item-one/product-item-one.component';
 import { ProductItemTwoComponent } from './components/product-item-two/product-item-two.component';
@@ -35,6 +36,7 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     ProductItemFourComponent,
     CompareComponent,
     SearchComponent,
+    ProductListWholeComponent,
     WishlistComponent,
     SubCategoriesComponent
   ],

@@ -27,10 +27,10 @@
                     </a>
                 </div>
                 <ul class="font-size-12 p-0 text-gray-110 mb-4 d-none d-md-block">
-                    <li class="line-clamp-1 mb-1 list-bullet">Brand new and high quality</li>
-                    <li class="line-clamp-1 mb-1 list-bullet">Made of supreme quality, durable EVA crush resistant, anti-shock material.</li>
-                    <li class="line-clamp-1 mb-1 list-bullet">20 MP Electro and 28 megapixel CMOS rear camera</li>
-                </ul>
+                    <li class="line-clamp-1 mb-1 list-bullet" *ngFor="let feature of product.features[lang]">
+                        {{feature}}
+                    </li>
+              </ul>
             </div>
         </div>
         <div class="product-item__footer col-md-3 d-md-block">
