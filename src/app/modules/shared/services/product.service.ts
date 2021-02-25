@@ -46,6 +46,13 @@ export class ProductService {
     return this.http.post('products/search', data, false);
   }
 
+  customSearch(categoryId, brands, colors, prices) {
+    const data = {
+      categoryId, brands, colors, prices
+    };
+    return this.http.post('products/search', data, false);
+  }
+
   getAdminHotCategories() {
     return this.http.get('product-categories/admin/hot', false);
   }

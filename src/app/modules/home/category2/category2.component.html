@@ -67,14 +67,33 @@
                         <h4 class="font-size-14 mb-3 font-weight-bold">{{'Brands' | translate}}</h4>
 
                         <!-- Checkboxes -->
-                        <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
+                        <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1" *ngFor="let brand of brands.slice(0, maxItems); let i = index">
+                            <!--
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="brandAdidas">
-                                <label class="custom-control-label" for="brandAdidas">Adidas
-                                  <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span>
+                                <input type="checkbox" class="custom-control-input"
+                                [(ngModel)]="brand.isChecked"                           
+                                 id="brand{{i}}">
+                                 
+                                <label class="custom-control-label" for="brandAdidas">{{brand.name.name | translateField}}
+                                  <span class="text-gray-25 font-size-12 font-weight-normal"> ({{brand.value}})</span>
                               </label>
+                              
                             </div>
+                        -->
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" [(ngModel)]="brand.isChecked" id="brand{{i}}">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{brand.name.name | translateField}} 
+                                    <span class="text-gray-25 font-size-12 font-weight-normal">
+                                        ({{brand.value}})
+                                    </span>
+                                </label>                    
+                            </div>
+
                         </div>
+
+                        <!--
                         <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="brandNewBalance">
@@ -107,36 +126,34 @@
                               </label>
                             </div>
                         </div>
-                        <!-- End Checkboxes -->
 
-                        <!-- View More - Collapse -->
-                        <div class="collapse" id="collapseBrand">
-                            <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="brandGucci">
-                                    <label class="custom-control-label" for="brandGucci">Gucci
-                                      <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span>
-                                  </label>
+
+                        -->
+
+                        <div class="collapse" id="collapseBrand" *ngIf="brands && brands.length > maxItems">
+                            <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1" 
+                            *ngFor="let brand of brands.slice(maxItems); let i = index">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [(ngModel)]="brand.isChecked" id="brand{{i+maxItems}}">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        {{brand.name.name | translateField}} 
+                                        <span class="text-gray-25 font-size-12 font-weight-normal">
+                                            ({{brand.value}})
+                                        </span>
+                                    </label>                    
                                 </div>
                             </div>
-                            <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="brandMango">
-                                    <label class="custom-control-label" for="brandMango">Mango
-                                      <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span>
-                                  </label>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                        
                         <!-- End View More - Collapse -->
 
                         <!-- Link -->
-                        <a class="link link-collapse small font-size-13 text-gray-27 d-inline-flex mt-2" data-toggle="collapse" href="#collapseBrand" role="button" aria-expanded="false" aria-controls="collapseBrand">
+                        <a class="link link-collapse small font-size-13 text-gray-27 d-inline-flex mt-2" *ngIf="brands && brands.length > maxItems"
+                        data-toggle="collapse" href="#collapseBrand" role="button" aria-expanded="false" aria-controls="collapseBrand">
                             <span class="link__icon text-gray-27 bg-white">
                               <span class="link__icon-inner">+</span>
                             </span>
-                            <span class="link-collapse__default">Show more</span>
-                            <span class="link-collapse__active">Show less</span>
+                            <span class="link-collapse__default">{{'Show more' | translate}}</span>
+                            <span class="link-collapse__active">{{'Show less' | translate}}</span>
                         </a>
                         <!-- End Link -->
                     </div>
@@ -144,12 +161,19 @@
                         <h4 class="font-size-14 mb-3 font-weight-bold">{{'Color' | translate}}</h4>
 
                         <!-- Checkboxes -->
-                        <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="categoryTshirt">
-                                <label class="custom-control-label" for="categoryTshirt">Black <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span></label>
-                            </div>
+                        <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1" *ngFor="let color of colors.slice(0, maxItems); let i = index">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="color.isChecked" id="color{{i}}">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                {{color.name}} 
+                                <span class="text-gray-25 font-size-12 font-weight-normal"> 
+                                    ({{color.value}})
+                                </span>
+                            </label>
+                          </div>                       
                         </div>
+
+                        <!--
                         <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="categoryShoes">
@@ -174,56 +198,53 @@
                                 <label class="custom-control-label" for="categoryBottom">Spacegrey <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span></label>
                             </div>
                         </div>
+                        -->
                         <!-- End Checkboxes -->
 
                         <!-- View More - Collapse -->
-                        <div class="collapse" id="collapseColor">
-                            <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="categoryShorts">
-                                    <label class="custom-control-label" for="categoryShorts">Turquoise <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span></label>
-                                </div>
+
+                        
+                        <div class="collapse" id="collapseColor"  *ngIf="colors && colors.length > maxItems">
+                            <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1"
+                            *ngFor="let color of colors.slice(maxItems); let i = index">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [(ngModel)]="color.isChecked" id="color{{i+maxItems}}">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        {{color.name}} 
+                                        <span class="text-gray-25 font-size-12 font-weight-normal"> 
+                                            ({{color.value}})
+                                        </span>
+                                    </label>
+                                </div>  
                             </div>
-                            <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="categoryHats">
-                                    <label class="custom-control-label" for="categoryHats">White <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span></label>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="categorySocks">
-                                    <label class="custom-control-label" for="categorySocks">White with Gold <span class="text-gray-25 font-size-12 font-weight-normal"> (56)</span></label>
-                                </div>
-                            </div>
+
                         </div>
+                        
                         <!-- End View More - Collapse -->
 
                         <!-- Link -->
-                        <a class="link link-collapse small font-size-13 text-gray-27 d-inline-flex mt-2" data-toggle="collapse" href="#collapseColor" role="button" aria-expanded="false" aria-controls="collapseColor">
+                        <a class="link link-collapse small font-size-13 text-gray-27 d-inline-flex mt-2" *ngIf="colors && colors.length > maxItems" data-toggle="collapse" href="#collapseColor" role="button" aria-expanded="false" aria-controls="collapseColor">
                             <span class="link__icon text-gray-27 bg-white">
                               <span class="link__icon-inner">+</span>
                             </span>
-                            <span class="link-collapse__default">Show more</span>
-                            <span class="link-collapse__active">Show less</span>
+                            <span class="link-collapse__default">{{'Show more' | translate}}</span>
+                            <span class="link-collapse__active">{{'Show less' | translate}}</span>
                         </a>
                         <!-- End Link -->
                     </div>
                     <div class="range-slider">
                         <h4 class="font-size-14 mb-3 font-weight-bold">{{'Price' | translate}}</h4>
                         <!-- Range Slider -->
-                        <input class="js-range-slider" type="text" data-extra-classes="u-range-slider u-range-slider-indicator u-range-slider-grid" data-type="double" data-grid="false" data-hide-from-to="true" data-prefix="$" data-min="0" data-max="3456" data-from="0" data-to="3456"
-                            data-result-min="#rangeSliderExample3MinResult" data-result-max="#rangeSliderExample3MaxResult">
-                        <!-- End Range Slider -->
-                        <div class="mt-1 text-gray-111 d-flex mb-4">
-                            <span class="mr-0dot5">{{'Price' | translate}}: </span>
-                            <span>$</span>
-                            <span id="rangeSliderExample3MinResult" class=""></span>
-                            <span class="mx-0dot5"> — </span>
-                            <span>$</span>
-                            <span id="rangeSliderExample3MaxResult" class=""></span>
+                        <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1" *ngFor="let price of prices; let i = index">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" [(ngModel)]="price.isChecked" id="price{{i}}">
+                              <label class="form-check-label" for="flexCheckDefault">
+                                  {{price.name | translate}} 
+                              </label>
+                            </div>                       
                         </div>
-                        <button type="submit" class="btn px-4 btn-primary-dark-w py-2 rounded-lg">{{'Filter' | translate}}</button>
+
+                        <button type="button" (click)="filter()" class="btn px-4 btn-primary-dark-w py-2 rounded-lg">{{'Filter' | translate}}</button>
                     </div>
                 </div>
                 <div class="mb-8">
