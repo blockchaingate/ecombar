@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { ProductRoutingModule } from './product-routing.module';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from './product.component';
+import { CommentsComponent } from './comments/comments.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    ProductComponent
+    ProductComponent,
+    CommentsComponent
   ],
   imports: [
     ProductRoutingModule,
@@ -17,4 +19,4 @@ import { FormsModule } from '@angular/forms';
   ],
   providers: []
 })
-export class ProductModule { }
+export class ProductModule { } 

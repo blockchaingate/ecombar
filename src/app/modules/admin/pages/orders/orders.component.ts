@@ -91,6 +91,9 @@ export class OrdersComponent implements OnInit {
     return count;
   }
 
+  trimText(id:string) {
+    return id.substring(0,3) + '...' + id.substring(id.length - 3);
+  }
   getStatus(order) {
     let status = '';
     const paymentStatus = order.paymentStatus;

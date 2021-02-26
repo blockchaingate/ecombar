@@ -21,11 +21,17 @@ export class ProductComponent implements OnInit {
   product: any;
   comments: any;
   id: string;
-  rating: number;
   quantity: number;
   colors: any;
   favorite: any;
   token: any;
+  overall: number;
+  rating5: number;
+  rating4: number;
+  rating3: number;
+  rating2: number;
+  rating1: number;
+
   selectedImage: string;
   constructor(
     private cartStoreServ: CartStoreService,
@@ -46,6 +52,48 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
 
     this.id = this.route.snapshot.paramMap.get('id');
+
+
+    this.overall = 0;
+    this.rating1 = 0;
+    this.rating2 = 0;
+    this.rating3 = 0;
+    this.rating4 = 0;
+    this.rating5 = 0;
+  this.commentServ.getComments(this.id).subscribe(
+      (res: any) => {
+          if(res && res.ok) {
+              this.comments = res._body;
+              console.log('this.comments=', this.comments);
+              for(let i=0;i<this.comments.length;i++) {
+                  const comment = this.comments[i];
+                  const rating = comment.rating;
+                  this.overall += rating;
+                  if(rating == 1) {
+                      this.rating1 += 1;
+                  } else
+                  if(rating == 2) {
+                      this.rating2 += 1;
+                  } else
+                  if(rating == 3) {
+                      this.rating3 += 1;
+                  } else
+                  if(rating == 4) {
+                      this.rating4 += 1;
+                  } else
+                  if(rating == 5) {
+                      this.rating5 += 1;
+                  }                                   
+              }
+              if(this.comments.length > 0) {
+                  this.overall /= this.comments.length;
+              }
+          }
+      }
+  );
+
+
+
     this.quantity = 1;
 
     this.commentServ.getComments(this.id).subscribe(

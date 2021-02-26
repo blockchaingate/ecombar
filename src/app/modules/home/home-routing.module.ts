@@ -6,6 +6,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { Category2Component } from './category2/category2.component';
 import { SearchComponent } from './search/search.component';
+import { OrderComponent } from './order/order.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
 import { CompareComponent } from './compare/compare.component';
 
@@ -46,7 +47,11 @@ const routes: Routes = [
       {
         path: 'category/:id',
         component: Category2Component
-      },   
+      },  
+      {
+        path: 'order/:id',
+        component: OrderComponent
+      },         
       {
         path: 'apply-for-merchant',
         component: ApplyForMerchantComponent

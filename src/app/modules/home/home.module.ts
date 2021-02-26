@@ -18,6 +18,7 @@ import { ProductItemThreeComponent } from './components/product-item-three/produ
 import { ProductItemFourComponent } from './components/product-item-four/product-item-four.component';
 import { CompareComponent } from './compare/compare.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { OrderComponent } from './order/order.component';
 import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categories.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
@@ -36,6 +37,7 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     ProductItemFourComponent,
     CompareComponent,
     SearchComponent,
+    OrderComponent,
     ProductListWholeComponent,
     WishlistComponent,
     SubCategoriesComponent
