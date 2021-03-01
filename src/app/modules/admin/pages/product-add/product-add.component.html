@@ -107,8 +107,8 @@
                           <div>
                             {{spec.name}}: {{spec.value}}
                           </div>
-                          <div>
-                            <button class="btn" (click)="removeSpec(spec)">{{'Remove' | translate}}</button>
+                          <div (click)="removeSpec(spec)">
+                            <img src="/assets/svg/delete.svg">
                           </div>
                         </div>
                         
@@ -144,8 +144,9 @@
                           <div>
                             {{feature}}
                           </div>
-                          <div>
-                            <button class="btn" (click)="removeFeature(feature)">{{'Remove' | translate}}</button>
+                          <div (click)="removeFeature(feature)">
+                            
+                            <img src="/assets/svg/delete.svg">
                           </div>
                         </div>
                         
@@ -226,8 +227,8 @@
                           <div>
                             {{c}}
                           </div>
-                          <div>
-                            <button class="btn" (click)="removeColor(c)">{{'Remove' | translate}}</button>
+                          <div (click)="removeColor(c)">
+                            <img src="/assets/svg/delete.svg">
                           </div>
                         </div>
                         
@@ -290,7 +291,42 @@
     
                 </div>
               </div>
-            </div>             
+            </div>     
+            
+            
+            <div class="card-section">
+              <div class="card">
+                <div class="container">  
+                  <div class="py-2">
+                    <label for="psw"><b>Keywords</b></label>
+                    <div>
+                      <div *ngFor="let k of keywords">
+                        <div class="d-flex align-items-center justify-content-between py-2">
+                          <div>
+                            {{k}}
+                          </div>
+                          <div (click)="removeKeyword(k)">
+
+                              <img src="/assets/svg/delete.svg">
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div>
+                      <div class="d-inline-block px-2">
+                        <input type="text" placeholder="Enter Keyword" [(ngModel)]="keyword" name="keyword">
+                      </div>
+                    </div>
+
+                    <div class="pt-2">
+                      <button class="btn" (click)="addKeyword()">{{'Add' | translate}}</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>              
           </div>
         </div>
       </div>

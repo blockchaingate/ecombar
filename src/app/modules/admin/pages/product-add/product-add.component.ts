@@ -38,6 +38,8 @@ export class ProductAddComponent implements OnInit {
   subtitle: string;
   price: string;
   product: any;
+  keywords: any;
+  keyword: string;
   active: boolean;
   contents: any;
   noWallet: boolean;
@@ -95,6 +97,7 @@ export class ProductAddComponent implements OnInit {
     this.contents = [];
     this.colors = [];
     this.specs = [];
+    this.keywords = [];
     this.features = [];
     this.featuresChinese = [];
     this.title = '';
@@ -183,6 +186,10 @@ export class ProductAddComponent implements OnInit {
               }
             }
 
+            if(product.keywords) {
+              this.keywords = product.keywords;
+
+            }
             if (product.briefIntroduction) {
               this.detail = product.briefIntroduction.en;
               if(product.briefIntroduction.sc) {
@@ -249,6 +256,16 @@ export class ProductAddComponent implements OnInit {
     this.colors = this.colors.filter(item => item != c);
   }
 
+  addKeyword() {
+    this.keywords.push(this.keyword);
+    this.keyword = '';
+  }
+
+  removeKeyword(k) {
+    this.keywords = this.keywords.filter(item => item != k);
+  }
+
+
   createWallet() {
     this.router.navigate(['/admin/create-wallet']);
   }
@@ -305,7 +322,9 @@ export class ProductAddComponent implements OnInit {
 
   addFeature() {
     this.features.push(this.feature);
+    this.feature = '';
   }
+  
   async saveProductDo() {
     console.log('this.images=', this.images);
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
@@ -335,6 +354,7 @@ export class ProductAddComponent implements OnInit {
       specs: specLan,
       price: parseInt(this.price), // in cents
       currency: 'USD',
+      keywords: this.keywords,
       contents: this.contents,
       primaryCategoryId: this.category ? this.category : null,
       active: this.active,
@@ -349,6 +369,7 @@ export class ProductAddComponent implements OnInit {
       description: descLan,
       features: featuresLan,
       specs: specLan,
+      keywords: this.keywords,
       contents: this.contents,
       price: parseInt(this.price), // in cents
       currency: 'USD',

@@ -23,6 +23,7 @@ export class ProductComponent implements OnInit {
   id: string;
   quantity: number;
   colors: any;
+  relatedProducts: any;
   favorite: any;
   token: any;
   overall: number;
@@ -60,37 +61,47 @@ export class ProductComponent implements OnInit {
     this.rating3 = 0;
     this.rating4 = 0;
     this.rating5 = 0;
-  this.commentServ.getComments(this.id).subscribe(
+
+    this.productServ.getRelatedProducts(this.id).subscribe(
       (res: any) => {
-          if(res && res.ok) {
-              this.comments = res._body;
-              console.log('this.comments=', this.comments);
-              for(let i=0;i<this.comments.length;i++) {
-                  const comment = this.comments[i];
-                  const rating = comment.rating;
-                  this.overall += rating;
-                  if(rating == 1) {
-                      this.rating1 += 1;
-                  } else
-                  if(rating == 2) {
-                      this.rating2 += 1;
-                  } else
-                  if(rating == 3) {
-                      this.rating3 += 1;
-                  } else
-                  if(rating == 4) {
-                      this.rating4 += 1;
-                  } else
-                  if(rating == 5) {
-                      this.rating5 += 1;
-                  }                                   
-              }
-              if(this.comments.length > 0) {
-                  this.overall /= this.comments.length;
-              }
-          }
+        if(res && res.ok) {
+          this.relatedProducts = res._body;
+          console.log('this.relatedProducts=', this.relatedProducts);
+        }
       }
-  );
+    );
+
+    this.commentServ.getComments(this.id).subscribe(
+        (res: any) => {
+            if(res && res.ok) {
+                this.comments = res._body;
+                console.log('this.comments=', this.comments);
+                for(let i=0;i<this.comments.length;i++) {
+                    const comment = this.comments[i];
+                    const rating = comment.rating;
+                    this.overall += rating;
+                    if(rating == 1) {
+                        this.rating1 += 1;
+                    } else
+                    if(rating == 2) {
+                        this.rating2 += 1;
+                    } else
+                    if(rating == 3) {
+                        this.rating3 += 1;
+                    } else
+                    if(rating == 4) {
+                        this.rating4 += 1;
+                    } else
+                    if(rating == 5) {
+                        this.rating5 += 1;
+                    }                                   
+                }
+                if(this.comments.length > 0) {
+                    this.overall /= this.comments.length;
+                }
+            }
+        }
+    );
 
 
 
@@ -189,10 +200,10 @@ export class ProductComponent implements OnInit {
       this.selectedImage = image;
   }
 
-  addToFavorite() {
+  addToFavorite(id) {
     
     const data = {
-      parentId: this.id   
+      parentId: id   
     };
     this.favoriteServ.create(data).subscribe(
       (res) => {
@@ -202,6 +213,15 @@ export class ProductComponent implements OnInit {
         }
       }
     );
+  }
+
+  onAddToFavorite(event) {
+    this.addToFavorite(event);
+  }
+
+  onAddToCart(event) {
+    console.log('event in onAddToCart=', event);
+    this.addToCart(event.product, event.quantity);
   }
 
   removeFromFavorite() {
@@ -218,18 +238,18 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  addToCart() {
-    if(!Number(this.quantity)) {
+  addToCart(product: any, quantity: number) {
+    if(!Number(quantity)) {
         return;
     }
     const cartItem: CartItem = {
-        productId: this.id,
-        title: this.translateServ.transField(this.product.title),
-        price: this.product.price,
-        merchantId: this.product.merchantId,
-        currency: this.product.currency,
-        thumbnailUrl: this.product.images ? this.product.images[0] : null,
-        quantity: Number(this.quantity)
+        productId: product._id,
+        title: this.translateServ.transField(product.title),
+        price: product.price,
+        merchantId: product.merchantId,
+        currency: product.currency,
+        thumbnailUrl: product.images ? product.images[0] : null,
+        quantity: Number(quantity)
       };
       this.cartStoreServ.addCartItem(cartItem);
   }

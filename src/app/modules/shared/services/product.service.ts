@@ -18,6 +18,10 @@ export class ProductService {
     return this.http.get('products/' + id, false);
   }
 
+  getRelatedProducts(id: string) {
+    return this.http.get('products/' + id + '/related-products', false);
+  }
+
   getProducts() {
     return this.http.get('products', false);
   }
