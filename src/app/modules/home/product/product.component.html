@@ -427,7 +427,7 @@
         </div>
         <!-- End Single Product Tab -->
         <!-- Related products -->
-        <div class="mb-6">
+        <div class="mb-6" *ngIf="relatedProducts && relatedProducts.length > 0">
             <app-related-products [products]="relatedProducts" 
             (onAddToCart)="onAddToCart($event)"
             (onAddToFavorite)="onAddToFavorite($event)"></app-related-products>
