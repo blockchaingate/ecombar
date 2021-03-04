@@ -7,6 +7,9 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { UserService } from '../../../shared/services/user.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { increment, decrement, reset } from '../../../../reducers/counter.actions';
 
 @Component({
   selector: 'app-signin',
@@ -14,6 +17,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./signin.component.scss', '../../../../../button.scss']
 })
 export class SigninComponent implements OnInit {
+  count$: Observable<number>;
   email: string;
   emailSignup: string;
   passwordSignup: string;
@@ -27,10 +31,28 @@ export class SigninComponent implements OnInit {
   regexpEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   // const regexpPwd = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
 
-  constructor(private router: Router, private appServ: AppService, private authServ: AuthService,
+  constructor(
+    private store: Store<{ count: number }>,
+    private router: Router, private appServ: AppService, private authServ: AuthService,
               private storage: StorageService,private userServ: UserService, private merchantServ: MerchantService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.count$ = this.store.select('count');
+   }
+
+
+ 
+   increment() {
+    this.store.dispatch(increment());
+  }
+ 
+  decrement() {
+    this.store.dispatch(decrement());
+  }
+ 
+  reset() {
+    this.store.dispatch(reset());
+  }
 
   signin(): void {
     if(!this.regexpEmail.test(this.email) || !this.password || this.password.length < 6){

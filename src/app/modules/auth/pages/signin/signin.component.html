@@ -1,4 +1,13 @@
 
+<button (click)="increment()">Increment</button>
+
+<div>Current Count: {{ count$ | async }}</div>
+
+<button (click)="decrement()">Decrement</button>
+
+<button (click)="reset()">Reset Counter</button>
+
+
 <main id="content" role="main">
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">

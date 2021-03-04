@@ -6,6 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './reducers/counter.reducer';
+
+
+
 
 @NgModule({
   declarations: [
@@ -15,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StoreModule.forRoot({ count: counterReducer }),
     HttpClientModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule, // required animations module
