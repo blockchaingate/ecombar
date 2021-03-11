@@ -1,3 +1,7 @@
+ERC721
+
+https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
+
 LTRSQ2W7BYDCQQ77
 
 Testing:

@@ -45,6 +45,7 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { CartModule } from '../home/cart/cart.module';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
+import { RoleMenuPipe } from './pipes/role-menu.pipe';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     CategoryAddComponent,
     BrandsComponent,
     ConfirmMnemonicsComponent,
-    BrandAddComponent
+    BrandAddComponent,
+    RoleMenuPipe
   ],
   imports: [
     AdminRoutingModule,

@@ -9,7 +9,8 @@ import { UserService } from '../../../shared/services/user.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { increment, decrement, reset } from '../../../../reducers/counter.actions';
+import { login } from '../../../../store/actions/user.actions';
+import { UserState } from '../../../../store/states/user.state';
 
 @Component({
   selector: 'app-signin',
@@ -32,17 +33,21 @@ export class SigninComponent implements OnInit {
   // const regexpPwd = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
 
   constructor(
-    private store: Store<{ count: number }>,
-    private router: Router, private appServ: AppService, private authServ: AuthService,
-              private storage: StorageService,private userServ: UserService, private merchantServ: MerchantService) { }
+    private store: Store<{ userState: UserState }>,
+    private router: Router, 
+    private appServ: AppService, 
+    private authServ: AuthService,
+    private storage: StorageService,
+    private userServ: UserService, 
+    private merchantServ: MerchantService) { }
 
   ngOnInit(): void {
-    this.count$ = this.store.select('count');
-   }
+    //this.count$ = this.store.select('count');
+  }
 
 
- 
-   increment() {
+ /*
+  increment() {
     this.store.dispatch(increment());
   }
  
@@ -53,6 +58,7 @@ export class SigninComponent implements OnInit {
   reset() {
     this.store.dispatch(reset());
   }
+*/
 
   signin(): void {
     if(!this.regexpEmail.test(this.email) || !this.password || this.password.length < 6){
@@ -62,7 +68,7 @@ export class SigninComponent implements OnInit {
 
     const user: User = {};
     this.userServ.signin(this.email, this.password).subscribe(
-      (res: any) => {
+      async (res: any) => {
         if (res && res.token) {
           user._id = res.id;
           user.displayName = res.displayName;
@@ -70,22 +76,48 @@ export class SigninComponent implements OnInit {
           user.token = res.token;
           this.userServ.token = res.token;
           const decoded = this.authServ.decodeToken(res.token);
+
+          let isSysAdmin = false;
+          let role = 'Customer';
+          if (decoded.aud === 'isSystemAdmin') {
+            isSysAdmin = true;
+            role = 'Admin'
+          }
+
           if(res.defaultMerchant) {
+            console.log('res.defaultMerchant==', res.defaultMerchant);
             this.merchantServ.name = res.defaultMerchant.name;
-            this.merchantServ.id = decoded.merchantId || res.defaultMerchant._id;
+            this.merchantServ.id = res.defaultMerchant._id;
+
+            const merchant = await this.merchantServ.getMerchant(res.defaultMerchant._id).toPromise();
+
+            if(merchant) {
+              if(merchant.type == 'ecombar') {
+                role = 'Merchant'
+              } else
+              if(merchant.type == 'delivery') {
+                role = 'Delivery'
+              }
+            }
           }
           
           this.userServ.tokenExp = decoded.exp;
           
           this.appServ.id = res.appId || decoded.appId;
           this.appServ.name = res.appName || decoded.appName;
-          let isSysAdmin = false;
-          if (decoded.aud === 'isSystemAdmin') {
-            isSysAdmin = true;
-          }
+          
+
           this.userServ.isSystemAdmin = isSysAdmin;
           // const current = Math.floor(Date.now() / 1000);
           this.storage.user = user;
+          const userState: UserState = {
+            email: user.email, 
+            displayName: user.displayName,
+            role: role, 
+            token: user.token, 
+            myPhotoUrl: res.myPhotoUrl,
+            merchantId: res.defaultMerchant ? res.defaultMerchant._id : ''};
+          this.store.dispatch(login({userState}));
           this.router.navigate(['/admin']);
         }
       },

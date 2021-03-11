@@ -4,8 +4,9 @@ import { UserService } from '../shared/services/user.service';
 import { MerchantService } from '../shared/services/merchant.service';
 import { StorageService } from '../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
-import { IGNORE_BLOCK_TAGS } from '@syncfusion/ej2-angular-richtexteditor';
-
+import { Store } from '@ngrx/store';
+import { UserState } from '../../store/states/user.state';
+import { selectUserRole, selectMyPhotoUrl, selectDisplayName } from '../../store/selectors/user.selector';
 @Component({
   providers: [UserService],
   selector: 'app-admin',
@@ -15,18 +16,167 @@ import { IGNORE_BLOCK_TAGS } from '@syncfusion/ej2-angular-richtexteditor';
 export class AdminComponent implements OnInit {
   showNavMenu = false;
   dropDownActive = false;
-  displayName: string;
+  //displayName: string;
   merchantId: string;
-  myPhotoUrl: string;
-  email: string;
+
+  /*
+  myPhotoUrlSelect: Observable<string>;
+  displayNameSelect: Observable<string>;
+  roleSelect: Observable<string>;
+  */
+
   role: string;
+  myPhotoUrl: string;
+  displayName: string;
 
   menuItems: any;
-  constructor(private router: Router, private translateServ: TranslateService, private merchantServ: MerchantService,
-              private userServ: UserService, private storageServ: StorageService
+  constructor(
+    private store: Store<{ user: UserState }>,
+    private router: Router, 
+    private translateServ: TranslateService, 
+    private merchantServ: MerchantService,
+    private userServ: UserService, 
+    private storageServ: StorageService
   ) { }
 
   ngOnInit(): void {
+    //this.userState$ = this.store.select('user');
+    const roleSelect = this.store.select(selectUserRole);
+    const myPhotoUrlSelect = this.store.select(selectMyPhotoUrl);
+    const displayNameSelect = this.store.select(selectDisplayName);
+
+    roleSelect.subscribe(
+      (res: string) => {
+        this.role = res;
+      }
+    );
+
+    displayNameSelect.subscribe(
+      (res: string) => {
+        this.displayName = res;
+      }
+    );
+
+    myPhotoUrlSelect.subscribe(
+      (res: string) => {
+        this.myPhotoUrl = res;
+      }
+    );
+
+    this.menuItems = [
+      {
+        title: 'Dashboard',
+        link: 'dashboard',
+        icon: 'dashboard',
+        roles: ['Admin', 'Merchant', 'Customer']
+      },
+      {
+        title: 'Banners',
+        link: 'banners',
+        icon: 'banner',
+        roles: ['Admin', 'Merchant']
+      },
+      {
+        title: 'Brands',
+        link: 'brands',
+        icon: 'brand',
+        roles: ['Admin', 'Merchant']
+      },
+      {
+        title: 'Main Layout',
+        link: 'main-layout',
+        icon: 'category',
+        roles: ['Admin', 'Merchant']
+      },        
+      {
+        title: 'Categories',
+        link: 'categories',
+        icon: 'category',
+        roles: ['Admin', 'Merchant']
+      },
+      {
+        title: 'Collections',
+        link: 'collections',
+        icon: 'collection',
+        roles: ['Admin', 'Merchant']
+      },
+      {
+        title: 'Users',
+        link: 'users',
+        icon: 'user',
+        roles: ['Admin']
+      },
+      {
+        title: 'Merchant Applications',
+        link: 'merchant-applications',
+        icon: 'user',
+        roles: ['Admin']
+      },       
+      {
+        title: 'Orders',
+        link: 'orders',
+        icon: 'order',
+        roles: ['Admin', 'Merchant', 'Customer']
+      },
+      {
+        title: 'My assets',
+        link: 'my-assets',
+        icon: 'asset',
+        roles: ['Admin', 'Merchant']
+      },
+      {
+        title: 'Merchant information',
+        link: 'merchant-info',
+        icon: 'information',
+        roles: ['Merchant']
+      },
+
+      {
+        title: 'Address',
+        link: 'address',
+        icon: 'address',
+        roles: ['Customer']
+      },
+
+      {
+        title: 'My assets',
+        link: 'my-assets',
+        icon: 'asset',
+        roles: ['Customer']
+      },
+      {
+        title: 'My cart',
+        link: 'cart',
+        icon: 'cart',
+        roles: ['Customer']
+      },
+      {
+        title: 'My favorite',
+        link: 'favorite',
+        icon: 'favorite',
+        roles: ['Customer']
+      },
+      {
+        title: 'My products',
+        link: 'my-products',
+        icon: 'product',
+        roles: ['Customer']
+      },
+      {
+        title: 'My comments',
+        link: 'my-comments',
+        icon: 'comment',
+        roles: ['Customer'] 
+      }      
+    ];
+
+
+    /*
+    this.store.subscribe((res: any) => {
+      console.log('res in store=', res);
+    }
+    );
+    */
     const lang = this.storageServ.lang;
     if (!lang) {
       this.storageServ.get('_lang').subscribe(
@@ -41,38 +191,7 @@ export class AdminComponent implements OnInit {
       this.translateServ.setDefaultLang(lang);
     }
 
-    this.email = this.userServ.email;
-    this.displayName = this.userServ.displayName;
-    if (!this.email) {
-      this.storageServ.get('_user').subscribe(
-        (user: any) => {
-          this.email = user.email;
-          this.displayName = user.displayName;
-        }
-      );
-    }
 
-    this.userServ.getMe().subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          const user = res._body;
-          this.myPhotoUrl = user.myPhotoUrl;
-        }
-      }
-    );
-
-    let merchantId = this.merchantServ.id;
-    this.merchantId = merchantId;
-    if (!merchantId) {
-      this.storageServ.get('_merchantId').subscribe(
-        (ret: any) => {
-          merchantId = ret;
-          this.initMenu(merchantId);
-        }
-      );
-    } else {
-      this.initMenu(merchantId);
-    }
 
   }
 
@@ -83,171 +202,6 @@ export class AdminComponent implements OnInit {
     this.storageServ.lang = lang;
   }
 
-  initMenuWithSystemAdmin(merchantId: string, isSystemAdmin: boolean) {
-    if (isSystemAdmin) {
-      this.role = 'Admin';
-      this.menuItems = [
-        {
-          title: 'Dashboard',
-          link: 'dashboard',
-          icon: 'dashboard'
-        },
-        {
-          title: 'Banners',
-          link: 'banners',
-          icon: 'banner'
-        },
-        {
-          title: 'Brands',
-          link: 'brands',
-          icon: 'brand'
-        },
-        {
-          title: 'Main Layout',
-          link: 'main-layout',
-          icon: 'category'
-        },        
-        {
-          title: 'Categories',
-          link: 'categories',
-          icon: 'category'
-        },
-        {
-          title: 'Collections',
-          link: 'collections',
-          icon: 'collection'
-        },
-        {
-          title: 'Users',
-          link: 'users',
-          icon: 'user'
-        },
-        {
-          title: 'Merchant Applications',
-          link: 'merchant-applications',
-          icon: 'user'
-        },       
-        {
-          title: 'Orders',
-          link: 'orders',
-          icon: 'order'
-        }
-      ];
-    } else if (merchantId) {
-      this.merchantId = merchantId;
-        this.role = 'Merchant';
-        this.menuItems = [
-          {
-            title: 'Dashboard',
-            link: 'dashboard',
-            icon: 'dashboard'
-          },
-          {
-            title: 'Banners',
-            link: 'banners',
-            icon: 'banner'
-          },
-          {
-            title: 'Brands',
-            link: 'brands',
-            icon: 'brand'
-          },
-          {
-            title: 'Categories',
-            link: 'categories',
-            icon: 'category'
-          },
-          {
-            title: 'Main Layout',
-            link: 'main-layout',
-            icon: 'category'
-          },           
-          {
-            title: 'Collections',
-            link: 'collections',
-            icon: 'collection'
-          },
-          {
-            title: 'My assets',
-            link: 'my-assets',
-            icon: 'asset'
-          },
-          {
-            title: 'Products',
-            link: 'products',
-            icon: 'product'
-          },
-          {
-            title: 'Orders',
-            link: 'orders',
-            icon: 'order'
-          },
-          {
-            title: 'Merchant information',
-            link: 'merchant-info',
-            icon: 'information'
-          }
-        ];
-      } else {
-        this.role = 'Customer';
-        this.menuItems = [
-          {
-            title: 'Dashboard',
-            link: 'dashboard',
-            icon: 'dashboard'
-          },
-          {
-            title: 'Address',
-            link: 'address',
-            icon: 'address'
-          },
-          {
-            title: 'Orders',
-            link: 'orders',
-            icon: 'order'
-          },
-          {
-            title: 'My assets',
-            link: 'my-assets',
-            icon: 'asset'
-          },
-          {
-            title: 'My cart',
-            link: 'cart',
-            icon: 'cart'
-          },
-          {
-            title: 'My favorite',
-            link: 'favorite',
-            icon: 'favorite'
-          },
-          {
-            title: 'My products',
-            link: 'my-products',
-            icon: 'product'
-          },
-          {
-            title: 'My comments',
-            link: 'my-comments',
-            icon: 'comment'
-          }
-        ];
-      }
-  }
-
-  initMenu(merchantId: string) {
-
-    if (this.userServ.isSystemAdmin) {
-      this.initMenuWithSystemAdmin(merchantId, this.userServ.isSystemAdmin);
-
-    } else {
-      this.storageServ.get('_isSystemAdmin').subscribe(
-        (ret: boolean) => {
-          this.initMenuWithSystemAdmin(merchantId, ret);
-        }
-      );
-    }
-  }
   logout(): void {
     this.userServ.logout();
     this.router.navigate(['/auth/signin']);

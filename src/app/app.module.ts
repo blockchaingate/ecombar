@@ -6,11 +6,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './reducers/counter.reducer';
+import { userReducer } from './store/reducers/user.reducer';
+import { StoreModule, ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
+import { localStorageSync } from 'ngrx-store-localstorage';
+//import { UserState } from './reducers/user.state';
+import { reducers } from './store/reducers';
 
+export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+  return localStorageSync({keys: ['user'], rehydrate: true})(reducer);
+}
 
-
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -20,7 +26,7 @@ import { counterReducer } from './reducers/counter.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({ count: counterReducer }),
+    StoreModule.forRoot(reducers, {metaReducers}),   
     HttpClientModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule, // required animations module
