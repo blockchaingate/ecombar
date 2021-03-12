@@ -39,6 +39,10 @@ export class MerchantService {
         return this.http.get('merchants');
     }
 
+    getByType(type: string) {
+        return this.http.get('merchants/type/' + type);
+    }
+    
     approve(id: string) {
         const url = 'merchants/approve/' + id ;
         return this.http.get(url);

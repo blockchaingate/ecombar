@@ -6,5 +6,6 @@ export interface UserState {
     merchantId: string;
     merchantStatus: string;
     myPhotoUrl: string;
+    walletExgAddress: string;
 
 }

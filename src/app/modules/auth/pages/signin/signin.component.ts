@@ -132,6 +132,7 @@ export class SigninComponent implements OnInit {
             displayName: user.displayName,
             role: role, 
             token: user.token, 
+            walletExgAddress: res.walletExgAddress,
             myPhotoUrl: res.myPhotoUrl,
             merchantId: res.defaultMerchant ? res.defaultMerchant._id : '',
             merchantStatus: merchantStatus

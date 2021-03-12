@@ -26,6 +26,12 @@ export class HttpService {
             'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
+            if(!this.storage || !this.storage.token) {
+                const ret = new Observable((observer) => {
+                    observer.error('Token not existed');
+                });
+                return ret;
+            }            
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
                 'x-access-token': this.storage.token
@@ -39,10 +45,17 @@ export class HttpService {
     }
 
     post(path: string, data: any, jwtAuth = true): Observable<any> {
+        console.log('post:', path);
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json'
         });
         if (jwtAuth === true) {
+            if(!this.storage || !this.storage.token) {
+                const ret = new Observable((observer) => {
+                    observer.error('Token not existed');
+                });
+                return ret;
+            }
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
                 'x-access-token': this.storage.token
@@ -53,6 +66,8 @@ export class HttpService {
         };
         data.appId = environment.appid;
         const url = environment.endpoints.blockchaingate + path;
+        console.log('url=', url);
+        console.log('data=', data);
         return this.http.post(url, data, options);
     }
 

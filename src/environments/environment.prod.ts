@@ -125,6 +125,10 @@ export const environment = {
     hpp_key: 'hpRS5R56OATG'
   },  
 addresses: {
+    ecombarOfficial: {
+        ETH: '0x0dF198C80893c1373a11AdE9ad6454181aE18E73',
+    },
+
     smartContract: {
         FABLOCK: '0x04baa04d9550c49831427c6abe16def2c579af4a',
         EXG: '0xa3e26671a38978e8204b8a37f1c2897042783b00',

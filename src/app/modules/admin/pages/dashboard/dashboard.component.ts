@@ -34,9 +34,6 @@ export class DashboardComponent implements OnInit{
   my_comments_count: number;
 
   constructor(
-    private userServ: UserService,
-    private merchantServ: MerchantService,
-    private storageServ: StorageService,
     private brandServ: BrandService,
     private orderServ: OrderService,
     private favoriteServ: FavoriteService,

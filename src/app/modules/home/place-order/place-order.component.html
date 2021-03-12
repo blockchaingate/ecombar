@@ -1,6 +1,6 @@
 <div class="container" *ngIf="order">
     <div class="pb-2">
-        ObjectId: 
+        {{'ObjectId' | translate}}: 
         <a target="_blank" href="/blockchain/detail/things/{{order.objectId}}">
             {{order.objectId}}
         </a>
@@ -11,7 +11,7 @@
                 <div class="p-3">
                     <div class="py-3">
                         <div class="py-2 text-muted">
-                            Shipping information
+                            {{'Shipping information' | translate}}
                         </div>
                         <div class="font-weight-bold">
                             {{order.name}} {{order.streetNumber}} {{order.streetName}} {{order.city}} {{order.province}}, {{order.zip}} {{order.country}}
@@ -21,104 +21,88 @@
 
                     <div class="py-3">
                         <div class="py-2 text-muted">
-                            Shipping services
+                            {{'Shipping services' | translate}}
                         </div>
                         <div class="font-weight-bold d-flex align-items-center justify-content-between">
                             <div>
                                 {{order.shippingServiceSelected}}
                             </div>
                             
-                            <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="change()">Change</button>
+                            <button *ngIf="order.paymentStatus != 2" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="change()">{{'Change' | translate}}</button>
                         </div>
                     </div>
 
                     <div class="py-3">
                         <div class="py-2 text-muted">
-                            Payment options
+                            {{'Payment options' | translate}}
                         </div>
                         <div class="font-weight-bold d-flex align-items-center justify-content-between">
                             <div>
                                 {{order.paymentMethod}}
                             </div>
                                 
-                                <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="change()">Change</button>
+                                <button *ngIf="order.paymentStatus != 2" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="change()">{{'Change' | translate}}</button>
                         </div>
                     </div>
 
-                    <div *ngIf="order.paymentMethod == 'usdt'">
-                        <div class="text-center">
-                            Scan the QR Code with Ex App 
-                        </div>
-                        <div class="text-center py-5">
-                            <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
-                            <div class="py-2">
-                                <a href="{{link}}" download (click)="dlDataUrlBin()">
-                                    <div class="d-inline-block px-1">
-                                        <img src="/assets/download.png">
-                                    </div>
-                                    <div class="d-inline-block px-1">
-                                        {{'Download QR Code' | translate}}
-                                    </div>
-                                </a>
-                
+                    <div *ngIf="order.paymentStatus != 2">
+                        <div *ngIf="order.paymentMethod == 'usdt'">
+                            <div class="text-center">
+                                {{'Scan the QR Code with Ex App' | translate}} 
                             </div>
-                        </div>                    
+                            <div class="text-center py-5">
+                                <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+                                <div class="py-2">
+                                    <a href="{{link}}" download (click)="dlDataUrlBin()">
+                                        <div class="d-inline-block px-1">
+                                            <img src="/assets/download.png">
+                                        </div>
+                                        <div class="d-inline-block px-1">
+                                            {{'Download QR Code' | translate}}
+                                        </div>
+                                    </a>
+                    
+                                </div>
+                            </div>                    
 
-                        <div class="text-center py-3">
-                            Or
+                            <div class="text-center py-3">
+                                {{'Or' | translate}}
+                            </div>
+
+                            <div class="text-center">
+                                <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="pay()">
+                                    {{'Pay directly' | translate}}
+                                </button>
+                                <!--
+                                <div>
+                                    Wallet: {{walletName}}
+                                </div>
+                                -->
+                                <div>
+                                    USDT {{'balance' | translate}}: {{usdtBalance}}
+                                </div>
+                                <!--
+                                <button class="btn" (click)="payWithWeb()">
+                                    Pay with Ex Web
+                                </button>
+                                -->
+                            </div>
+                        </div>
+                        <div class="text-center" *ngIf="order.paymentMethod == 'paypal'">
+
+                            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
                         </div>
 
-                        <div class="text-center">
-                            <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="pay()">
-                                Pay
-                            </button>
-                            <!--
-                            <div>
-                                Wallet: {{walletName}}
-                            </div>
-                            -->
-                            <div>
-                                USDT balance: {{usdtBalance}}
-                            </div>
-                            <!--
-                            <button class="btn" (click)="payWithWeb()">
-                                Pay with Ex Web
-                            </button>
-                            -->
+                        <div class="text-center" *ngIf="order.paymentMethod == 'creditcard'">
+
+                            <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="payWithCreditCard()">
+                                {{'Pay with Credit card' | translate}}
+                            </button>                      
                         </div>
                     </div>
-                    <div class="text-center" *ngIf="order.paymentMethod == 'paypal'">
-
-                        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-
-                    </div>
-
-                    <div class="text-center" *ngIf="order.paymentMethod == 'creditcard'">
-
-                        <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="payWithCreditCard()">
-                            Pay with Credit card
-                        </button>   
-                        
-                        <!--
-                        <form method="post" action="https://esqa.moneris.com/HPPDP/index.php">
-                            <input type="hidden" name="ps_store_id" value="{{ps_store_id}}">
-                            <input type="hidden" name="hpp_key" value="{{hpp_key}}">
-                            <input type="hidden" name="charge_total" value="{{total}}">
-                            <input type="submit" name="submit" value="Pay with Credit card">
-                        </form>
-                        -->
-                        <!--
-                        <FORM METHOD="POST" ACTION= https://esqa.moneris.com/HPPDP/index.php>
-
-                            <INPUT TYPE="HIDDEN" NAME="ps_store_id" VALUE="{{ps_store_id}}">
-                       
-                            <INPUT TYPE="HIDDEN" NAME="hpp_key" VALUE="{{hpp_key}}">
-                       
-                            <INPUT TYPE="HIDDEN" NAME="charge_total" VALUE="{{total}}">
-                           <INPUT TYPE="SUBMIT" NAME="SUBMIT" VALUE="Pay with Credit card">
-                       
-                       </FORM>    
-                       -->                    
+                    <div class="text-center" *ngIf="order.paymentStatus == 2">
+                        {{'Your order was paid successfully'| translate}}
                     </div>
                 </div>
             </div>
@@ -128,7 +112,7 @@
             <div class="card w-100 p-3">
                 <div class="p-3 border-bottom">
                     <div class="text-muted py-3">
-                        Your order
+                        {{'Your order' | translate}}
                     </div>
                     <div *ngFor="let item of order.items" class="py-2">
                         <div class="row">
@@ -158,7 +142,7 @@
                 <div class="p-3">
                     <div class="row py-2">
                         <div class="col col-6">
-                            Subtotal
+                            {{'Subtotal' | translate}}
                         </div>
                         <div class="col col-6 text-right">
                             ${{subtotal}}
@@ -167,7 +151,7 @@
 
                     <div class="row py-2">
                         <div class="col col-6">
-                            Shipping
+                            {{'Shipping' | translate}}
                         </div>
                         <div class="col col-6 text-right">
                             {{shippingFee == '0' ? 'Free' : ('$' + shippingFee)}}
@@ -176,7 +160,7 @@
 
                     <div class="row py-2">
                         <div class="col col-6 font-weight-bold">
-                            Total
+                            {{'Total' | translate}}
                         </div>
                         <div class="col col-6 text-right font-weight-bold">
                             ${{total}}

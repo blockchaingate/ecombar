@@ -33,3 +33,8 @@ export const selectMerchantStatus = createSelector(
   selectUser,
   (state: UserState) => state.merchantStatus
 )
+
+export const selectWalletExgAddress = createSelector(
+  selectUser,
+  (state: UserState) => state.walletExgAddress
+)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
+import { MerchantService } from '../../../shared/services/merchant.service';
 import { AuthService } from '../../../shared/services/auth.service';
 import { OrderService } from '../../../shared/services/order.service';
 
@@ -11,10 +11,11 @@ import { OrderService } from '../../../shared/services/order.service';
   styleUrls: ['./shipping.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
 export class ShippingComponent implements OnInit{
-    serviceName: string;
+    provider: string;
     trackingNumber: string;
     status: number;
     orderID: string;
+    providers: any;
 
     statuses = [
         {
@@ -32,7 +33,7 @@ export class ShippingComponent implements OnInit{
     ];
 
     constructor(
-      private userServ: UserService,
+      private merchantServ: MerchantService,
       private authServ: AuthService,
       private route: ActivatedRoute, 
       private orderServ: OrderService,
@@ -41,13 +42,21 @@ export class ShippingComponent implements OnInit{
     }
 
     ngOnInit() {
+      this.merchantServ.getByType('delivery').subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            this.providers = res._body;
+            console.log('this.providers=', this.providers);
+          }
+        }
+      );
       this.orderID = this.route.snapshot.paramMap.get('orderID');
       this.orderServ.get(this.orderID).subscribe(
         (res: any) => {
           if(res && res.ok) {
             const data = res._body;
             console.log('data=', data);
-            this.serviceName = data.shippingServiceIdSelected;
+            this.provider = data.shippingServiceIdSelected;
             this.trackingNumber = data.trackingNumber,
             this.status = data.shippingStatus
           }
@@ -57,7 +66,7 @@ export class ShippingComponent implements OnInit{
 
     update() {
       const data = {
-        shippingServiceIdSelected: this.serviceName,
+        shippingServiceIdSelected: this.provider,
         shippingStatus: this.status,
         shippedTime: null,
         trackingNumber: this.trackingNumber
