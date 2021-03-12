@@ -6,7 +6,7 @@ import { StorageService } from '../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/states/user.state';
-import { selectUserRole, selectMyPhotoUrl, selectDisplayName } from '../../store/selectors/user.selector';
+import { updateMerchantStatus } from 'src/app/store/actions/user.actions';
 @Component({
   providers: [UserService],
   selector: 'app-admin',
@@ -28,6 +28,7 @@ export class AdminComponent implements OnInit {
   role: string;
   myPhotoUrl: string;
   displayName: string;
+  merchantStatus: string;
 
   menuItems: any;
   constructor(
@@ -39,66 +40,71 @@ export class AdminComponent implements OnInit {
     private storageServ: StorageService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     //this.userState$ = this.store.select('user');
-    const roleSelect = this.store.select(selectUserRole);
-    const myPhotoUrlSelect = this.store.select(selectMyPhotoUrl);
-    const displayNameSelect = this.store.select(selectDisplayName);
-
-    roleSelect.subscribe(
-      (res: string) => {
-        this.role = res;
+    console.log('ngiiiit');
+    this.store.select('user').subscribe((user: UserState) => {
+      this.role = user.role;
+      console.log('this.role=', this.role);
+      this.myPhotoUrl = user.myPhotoUrl;
+      this.displayName = user.displayName;
+      this.merchantId = user.merchantId;
+      this.merchantStatus = user.merchantStatus;
+  
+      console.log('this.merchantStatus=', this.merchantStatus);
+      if(this.merchantId && this.merchantStatus == 'pending') {
+        this.merchantServ.getMerchant(this.merchantId).subscribe(
+          (res: any) => {
+            console.log('res in gerMerchant=', res);
+            if(res.approved) {
+              this.merchantStatus = 'approved';
+              this.store.dispatch(updateMerchantStatus({newStatus: this.merchantStatus}));
+            }
+          }
+        );
       }
-    );
+    })
 
-    displayNameSelect.subscribe(
-      (res: string) => {
-        this.displayName = res;
-      }
-    );
 
-    myPhotoUrlSelect.subscribe(
-      (res: string) => {
-        this.myPhotoUrl = res;
-      }
-    );
+
+
 
     this.menuItems = [
       {
         title: 'Dashboard',
         link: 'dashboard',
         icon: 'dashboard',
-        roles: ['Admin', 'Merchant', 'Customer']
+        roles: ['Admin', 'Seller', 'Customer']
       },
       {
         title: 'Banners',
         link: 'banners',
         icon: 'banner',
-        roles: ['Admin', 'Merchant']
+        roles: ['Admin', 'Seller']
       },
       {
         title: 'Brands',
         link: 'brands',
         icon: 'brand',
-        roles: ['Admin', 'Merchant']
+        roles: ['Admin', 'Seller']
       },
       {
         title: 'Main Layout',
         link: 'main-layout',
         icon: 'category',
-        roles: ['Admin', 'Merchant']
+        roles: ['Admin', 'Seller']
       },        
       {
         title: 'Categories',
         link: 'categories',
         icon: 'category',
-        roles: ['Admin', 'Merchant']
+        roles: ['Admin', 'Seller']
       },
       {
         title: 'Collections',
         link: 'collections',
         icon: 'collection',
-        roles: ['Admin', 'Merchant']
+        roles: ['Admin', 'Seller']
       },
       {
         title: 'Users',
@@ -111,24 +117,30 @@ export class AdminComponent implements OnInit {
         link: 'merchant-applications',
         icon: 'user',
         roles: ['Admin']
-      },       
+      },  
+      {
+        title: 'Products',
+        link: 'products',
+        icon: 'order',
+        roles: ['Seller']
+      },           
       {
         title: 'Orders',
         link: 'orders',
         icon: 'order',
-        roles: ['Admin', 'Merchant', 'Customer']
+        roles: ['Admin', 'Seller', 'Customer']
       },
       {
         title: 'My assets',
         link: 'my-assets',
         icon: 'asset',
-        roles: ['Admin', 'Merchant']
+        roles: ['Admin', 'Seller']
       },
       {
         title: 'Merchant information',
         link: 'merchant-info',
         icon: 'information',
-        roles: ['Merchant']
+        roles: ['Seller']
       },
 
       {

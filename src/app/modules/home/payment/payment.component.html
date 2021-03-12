@@ -1,6 +1,6 @@
 <div class="container" *ngIf="order">
     <div class="pb-2">
-        ObjectId: 
+        {{'ObjectId' | translate}}: 
         <a target="_blank" href="/blockchain/detail/things/{{order.objectId}}">
             {{order.objectId}}
         </a>
@@ -12,7 +12,7 @@
                     <div class="py-3">
                         <div class="py-2 text-muted d-flex align-items-center justify-content-between">
                             <div>
-                                Shipping information
+                                {{'Shipping information' | translate}}
                             </div>
                             
                             <button class="btn" (click)="change()">Change</button>
@@ -25,7 +25,7 @@
 
                     <div class="py-3 ">
                         <div class="py-2 text-muted">
-                            Shipping services
+                            {{'Shipping services' | translate}}
                         </div>
                         <div class="row Shipping-method">
                             <div class="col col-4 border mx-2 p-3 " [ngClass]="selectedShippingService=='express' ? 'selected' : ''" (click)="selectShippingService('express')">
@@ -33,10 +33,10 @@
                                     <img src="/assets/svg/delivery2.svg">
                                     <div class="px-3">
                                         <div class="font-weight-bold">
-                                            Express delivery
+                                            {{'Express delivery' | translate}}
                                         </div>
                                         <div class="text-muted">
-                                            We ship in 1-2 hours
+                                            {{'We ship in 1-2 days' | translate}}
                                         </div>
                                         <div>
                                             $10
@@ -53,13 +53,13 @@
                                     <img src="/assets/svg/delivery.svg">
                                     <div class="px-3">
                                         <div class="font-weight-bold">
-                                            Standard delivery
+                                            {{'Standard delivery' | translate}}
                                         </div>
                                         <div class="text-muted">
-                                            We ship in 1 day
+                                            {{'We ship in 3-7 day' | translate}}
                                         </div>
                                         <div>
-                                            Free
+                                            {{'Free' | translate}}
                                         </div>
                                     </div>
                                 </div>
@@ -71,13 +71,13 @@
                                     <img src="/assets/svg/pickup.svg">
                                     <div class="px-3">
                                         <div class="font-weight-bold">
-                                            Pickup from store
+                                            {{'Pickup from store' | translate}}
                                         </div>
                                         <div class="text-muted">
-                                            Today
+                                            {{'Today' | translate}}
                                         </div>
                                         <div>
-                                            Free
+                                            {{'Free' | translate}}
                                         </div>
                                     </div>
                                 </div>

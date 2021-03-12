@@ -2,7 +2,7 @@
     <form style="border:1px solid #ccc">
         <div class="container">
             <div>
-                ObjectId: 
+                {{'ObjectId' | translate}}: 
                 <a target="_blank" href="/blockchain/detail/things/{{order.objectId}}">
                     {{order.objectId}}
                 </a>
@@ -10,12 +10,10 @@
             <h1>{{"Address"|translate}}</h1>
             <hr>
             <div class="address-detail">
-            <label for="email"><b>{{"Name" | translate}}</b></label>
-            <input type="text" placeholder="{{'Enter name'|translate}}" [(ngModel)]="name" name="name" required>
-            <label for="email"><b>{{"Unit" | translate}}</b></label>
+           <label for="email"><b>{{"Unit" | translate}}</b></label>
             <input type="text" placeholder="{{'Enter suite'|translate}}" [(ngModel)]="suite" name="suite">
             <label for="email"><b>{{"Street Number" | translate}}</b></label>
-            <input type="text" placeholder="{{'Enter street Number'|translate}}" [(ngModel)]="streetNumber" name="streetNumber">
+            <input type="text" placeholder="{{'Enter street number'|translate}}" [(ngModel)]="streetNumber" name="streetNumber">
             <label for="email"><b>{{"Street" | translate}}</b></label>
             <input type="text" placeholder="{{'Enter street'|translate}}" [(ngModel)]="street" name="street">
             <label for="email"><b>{{"District"|translate}}</b></label>

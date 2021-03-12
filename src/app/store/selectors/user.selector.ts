@@ -28,3 +28,8 @@ export const selectMerchantId = createSelector(
   selectUser,
   (state: UserState) => state.merchantId
 )
+
+export const selectMerchantStatus = createSelector(
+  selectUser,
+  (state: UserState) => state.merchantStatus
+)

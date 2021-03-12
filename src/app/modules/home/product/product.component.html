@@ -6,7 +6,7 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{'Home' | translate}}</a></li>
                         <!--
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Product</a></li>
                         -->
@@ -60,24 +60,24 @@
                                         <small class="fa-star"
                                         [ngClass]="overall >= 5 ? 'fas' : 'far text-muted'"></small>
                                     </div>
-                                    <span class="text-secondary font-size-13">({{comments ? comments.length : 0}} customer reviews)</span>
+                                    <span class="text-secondary font-size-13">({{comments ? comments.length : 0}} {{'customer reviews' | translate}})</span>
                                 </a>
                             </div>
                             <div class="d-md-flex align-items-center">
                                 <!--
                                 <a href="#" class="max-width-150 ml-n2 mb-2 mb-md-0 d-block"><img class="img-fluid" src="../../assets/img/200X60/img1.png" alt="Image Description"></a>
                                 -->
-                                <div class="ml-md-3 text-gray-9 font-size-14">Availability: <span class="text-green font-weight-bold">{{getProductQuantity()}} in stock</span></div>
+                                <div class="ml-md-3 text-gray-9 font-size-14">{{'Availability' | translate}}: <span class="text-green font-weight-bold">{{getProductQuantity()}} {{'in stock' | translate}}</span></div>
                             </div>
                         </div>
                         <div class="flex-horizontal-center flex-wrap mb-4">
-                            <a (click)="addToFavorite(id)" class="text-gray-6 font-size-13 mr-2"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                            <a (click)="addToFavorite(id)" class="text-gray-6 font-size-13 mr-2"><i class="ec ec-favorites mr-1 font-size-15"></i> {{'Wishlist' | translate}}</a>
                             <!--
                             <a href="#" class="text-gray-6 font-size-13 ml-2"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
                             -->
                         </div>
                         <div class="mb-2">
-                            Detail:
+                            {{'Detail' | translate}}:
                             <!-- <ul class="font-size-14 pl-3 ml-1 text-gray-110">
                                 <li>4.5 inch HD Touch Screen (1280 x 720)</li>
                                 <li>Android 4.4 KitKat OS</li>
@@ -98,11 +98,11 @@
                         </div>
                         <div class="border-top border-bottom py-3 mb-4">
                             <div class="d-flex align-items-center">
-                                <h6 class="font-size-14 mb-0">Color</h6>
+                                <h6 class="font-size-14 mb-0">{{'Color' | translate}}</h6>
                                 <!-- Select -->
                                 <select class="js-select selectpicker dropdown-select ml-3"
                                     data-style="btn-sm bg-white font-weight-normal py-2 border">
-                                    <option selected value="">Choose color</option>
+                                    <option selected value="">{{'Choose color' | translate}}</option>
                                     <option *ngFor="let color of colors" value="{{color}}">{{color}}</option>
                                 </select>
                                 <!-- End Select -->
@@ -110,7 +110,7 @@
                         </div>
                         <div class="d-md-flex align-items-end mb-3">
                             <div class="max-width-150 mb-4 mb-md-0">
-                                <h6 class="font-size-14">Quantity</h6>
+                                <h6 class="font-size-14">{{'Quantity' | translate}}</h6>
                                 <!-- Quantity -->
                                 <div class="border rounded-pill py-2 px-3 border-color-1">
                                     <div class="js-quantity row align-items-center">
@@ -130,7 +130,7 @@
                                 <!-- End Quantity -->
                             </div>
                             <div class="ml-md-3">
-                                <a (click)="addToCart(product, quantity)" class="btn px-5 btn-primary-dark transition-3d-hover"><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Add to Cart</a>
+                                <a (click)="addToCart(product, quantity)" class="btn px-5 btn-primary-dark transition-3d-hover"><i class="ec ec-add-to-cart mr-2 font-size-20"></i> {{'Add to Cart' | translate}}</a>
                             </div>
                         </div>
                     </div>
@@ -148,13 +148,13 @@
                     </li>
                 -->
                     <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link active" id="Jpills-two-example1-tab" data-toggle="pill" href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1" aria-selected="true">Description</a>
+                        <a class="nav-link active" id="Jpills-two-example1-tab" data-toggle="pill" href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1" aria-selected="true">{{'Description' | translate}}</a>
                     </li>
                     <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link" id="Jpills-three-example1-tab" data-toggle="pill" href="#Jpills-three-example1" role="tab" aria-controls="Jpills-three-example1" aria-selected="false">Specification</a>
+                        <a class="nav-link" id="Jpills-three-example1-tab" data-toggle="pill" href="#Jpills-three-example1" role="tab" aria-controls="Jpills-three-example1" aria-selected="false">{{'Specification' | translate}}</a>
                     </li>
                     <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link" id="Jpills-four-example1-tab" data-toggle="pill" href="#Jpills-four-example1" role="tab" aria-controls="Jpills-four-example1" aria-selected="false">Reviews</a>
+                        <a class="nav-link" id="Jpills-four-example1-tab" data-toggle="pill" href="#Jpills-four-example1" role="tab" aria-controls="Jpills-four-example1" aria-selected="false">{{'Reviews' | translate}}</a>
                     </li>
                 </ul>
             </div>

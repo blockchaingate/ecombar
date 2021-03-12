@@ -10,9 +10,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 */
 @Pipe({name: 'roleMenu'})
 export class RoleMenuPipe implements PipeTransform {
-  transform(menu: any, role?: string): number {
+  transform(menu: any, role?: string, merchantStatus?: string): any {
       if(!role) {
           return menu;
+      }
+      if(((role == 'Seller') || (role == 'delivery')) && (merchantStatus == 'pending')) {
+        return [];
       }
       return menu.filter(item => item.roles.indexOf(role) >= 0);
   }

@@ -84,20 +84,37 @@ export class SigninComponent implements OnInit {
             role = 'Admin'
           }
 
-          if(res.defaultMerchant) {
+          let merchantStatus = '';
+          if(res.defaultMerchant && res.defaultMerchant._id) {
             console.log('res.defaultMerchant==', res.defaultMerchant);
             this.merchantServ.name = res.defaultMerchant.name;
             this.merchantServ.id = res.defaultMerchant._id;
 
             const merchant = await this.merchantServ.getMerchant(res.defaultMerchant._id).toPromise();
 
+            console.log('merchant in login=', merchant);
+            
             if(merchant) {
+              const type = merchant.type;
+              if(type == 'seller') {
+                role = 'Seller';
+              }else 
+              if(type == 'delivery') {
+                role = 'Delivery';
+              }
+              if(merchant.approved) {
+                merchantStatus = 'approved';
+              } else {
+                merchantStatus = 'pending';
+              }
+              /*
               if(merchant.type == 'ecombar') {
                 role = 'Merchant'
               } else
               if(merchant.type == 'delivery') {
                 role = 'Delivery'
               }
+              */
             }
           }
           
@@ -116,7 +133,10 @@ export class SigninComponent implements OnInit {
             role: role, 
             token: user.token, 
             myPhotoUrl: res.myPhotoUrl,
-            merchantId: res.defaultMerchant ? res.defaultMerchant._id : ''};
+            merchantId: res.defaultMerchant ? res.defaultMerchant._id : '',
+            merchantStatus: merchantStatus
+          };
+
           this.store.dispatch(login({userState}));
           this.router.navigate(['/admin']);
         }

@@ -10,6 +10,8 @@ import { UserState } from '../../../store/states/user.state';
 import { Store } from '@ngrx/store';
 import { selectMerchantId, selectEmail } from '../../../store/selectors/user.selector';
 import { TranslateService } from '@ngx-translate/core';
+import { dispatch } from 'rxjs/internal/observable/pairs';
+import { updateMerchantStatus } from '../../../store/actions/user.actions';
 
 @Component({
   selector: 'app-apply-for-merchant',
@@ -100,6 +102,7 @@ export class ApplyForMerchantComponent implements OnInit {
       this._mcServ.create(merchant).subscribe(
           res => {  // this._router.navigate(['/otc/otc-merchant/waitting']);
               this.submited = true;
+              this.store.dispatch(updateMerchantStatus({newStatus:'pending'}) )
               this.msg = this.translateServ.instant('You have submited application successful, please waiting for review, it may take 3~5 business days.');
 
           },

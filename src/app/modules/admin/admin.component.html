@@ -39,7 +39,16 @@
                 -->
                 {{ (role | translate) }}
             </div>
-
+            <div *ngIf="role == 'Customer'" class="text-center">
+                <a href="/" class="text-success">
+                    {{'Go shopping' | translate}}
+                </a>
+                
+            </div>
+            <div class="text-center text-secondary" 
+            *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
+                ({{'In review' | translate}})
+            </div>
             <div class="pt-2 text-center">
                 <a target="_blank" class="text-success"  *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
                     {{'My store' | translate}}
@@ -62,7 +71,7 @@
         </div>
 
         <ul class="sidenav__list">
-            <li *ngFor="let item of menuItems | roleMenu : role" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
+            <li *ngFor="let item of menuItems | roleMenu : role : merchantStatus" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
                 <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
             </li>
             <li class="sidenav__list-item" (click)="changeLang()">

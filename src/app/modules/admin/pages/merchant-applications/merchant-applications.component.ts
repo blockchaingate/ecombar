@@ -37,7 +37,7 @@ export class MerchantApplicationsComponent implements OnInit {
           if(this.merchants && this.merchants.length) {
             for (let i = 0; i < this.merchants.length; i++) {
               if (this.merchants[i]._id === merchant._id) {
-                this.merchants[i].otcApproved = true;
+                this.merchants[i].approved = true;
                 break;
               }
             }

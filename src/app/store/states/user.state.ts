@@ -4,5 +4,7 @@ export interface UserState {
     token: string;
     displayName: string;
     merchantId: string;
+    merchantStatus: string;
     myPhotoUrl: string;
+
 }

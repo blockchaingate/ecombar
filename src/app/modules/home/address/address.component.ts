@@ -14,7 +14,6 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
   styleUrls: ['./address.component.scss', '../../../../select.scss', '../../../../button.scss']
 })
 export class AddressComponent implements OnInit {
-  name: string;
   suite: string;
   streetNumber: string;
   street: string;
@@ -78,7 +77,6 @@ export class AddressComponent implements OnInit {
                 console.log('res for addressss=', res);
                 if (res && res.ok) {
                   const address = res._body;
-                  this.name = address.name;
                   this.suite = address.suite;
                   this.streetNumber = address.streetNumber;
                   this.street = address.street;
@@ -113,7 +111,6 @@ export class AddressComponent implements OnInit {
   async updateOrderAddressDo() {
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
     const updatedOrder = {
-      name: this.name,
       unit: this.suite,
       streetNumber: this.streetNumber,
       streetName: this.street,
@@ -158,7 +155,6 @@ export class AddressComponent implements OnInit {
   addAddress() {
 
     const address = {
-      name: this.name,
       suite: this.suite,
       streetNumber: this.streetNumber,
       street: this.street,
