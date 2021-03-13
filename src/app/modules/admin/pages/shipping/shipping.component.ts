@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { AuthService } from '../../../shared/services/auth.service';
 import { OrderService } from '../../../shared/services/order.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../../store/states/user.state';
+import { selectMerchantId } from 'src/app/store/selectors/user.selector';
 
 @Component({
   selector: 'app-admin-shipping',
@@ -15,26 +18,16 @@ export class ShippingComponent implements OnInit{
     trackingNumber: string;
     status: number;
     orderID: string;
+    allItemsFlag: boolean;
     providers: any;
-
-    statuses = [
-        {
-            name: 'not started',
-            value: 0
-        },
-        {
-          name: 'sent',
-          value: 1
-        },
-        {
-          name: 'received',
-          value: 2
-        }
-    ];
+    items: any;
+    item: any;
+    itemsAdded: any;
+    quantity: number;
 
     constructor(
       private merchantServ: MerchantService,
-      private authServ: AuthService,
+      private store: Store<{ user: UserState }>,
       private route: ActivatedRoute, 
       private orderServ: OrderService,
       private router: Router) {
@@ -42,6 +35,9 @@ export class ShippingComponent implements OnInit{
     }
 
     ngOnInit() {
+      this.allItemsFlag = true;
+      this.items = [];
+      this.itemsAdded = [];
       this.merchantServ.getByType('delivery').subscribe(
         (res: any) => {
           if(res && res.ok) {
@@ -51,28 +47,36 @@ export class ShippingComponent implements OnInit{
         }
       );
       this.orderID = this.route.snapshot.paramMap.get('orderID');
-      this.orderServ.get(this.orderID).subscribe(
-        (res: any) => {
-          if(res && res.ok) {
-            const data = res._body;
-            console.log('data=', data);
-            this.provider = data.shippingServiceIdSelected;
-            this.trackingNumber = data.trackingNumber,
-            this.status = data.shippingStatus
-          }
+      this.store.select(selectMerchantId).subscribe(
+        merchantId => {
+          this.orderServ.get(this.orderID).subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                const data = res._body;
+                console.log('data=', data);
+                this.provider = data.shippingServiceIdSelected;
+                this.trackingNumber = data.trackingNumber,
+                this.status = data.shippingStatus;
+                const items = data.items;
+                for(let i=0;i<items.length;i++) {
+                  const item = items[i];
+                  if(item.productId.merchantId !== merchantId) {
+                    continue;
+                  }
+                  this.items.push(item);
+                }
+              }
+            }
+          );
         }
       );
+
     }
 
     update() {
       const data = {
         shippingServiceIdSelected: this.provider,
-        shippingStatus: this.status,
-        shippedTime: null,
         trackingNumber: this.trackingNumber
-      }
-      if(this.status == 1) {
-        data.shippedTime = Date.now();
       }
 
       this.orderServ.updateShipping(this.orderID, data).subscribe(
@@ -82,6 +86,30 @@ export class ShippingComponent implements OnInit{
           }
         }
       );
+    }
+
+    addItem() {
+      console.log('this.item=', this.item);
+      const existedItem = this.itemsAdded.filter(itemAdded => itemAdded.productId === this.item);
+      if(existedItem && existedItem.length > 0) {
+        existedItem[0].quantity += Number(this.quantity);
+      } else {
+        this.itemsAdded.push({productId: this.item, quantity: Number(this.quantity)});
+      }
+
+      console.log('this.itemsAdded==', this.itemsAdded);
+    }
+
+    deleteItem(productId) {
+      this.itemsAdded = this.itemsAdded.filter(itemAdded => itemAdded.productId !== productId);
+    }
+
+    getProductName(productId) {
+      const product = this.items.filter(item => item._id === productId);
+      if(product) {
+        return product.name;
+      }
+      return "";
     }
 }
 
