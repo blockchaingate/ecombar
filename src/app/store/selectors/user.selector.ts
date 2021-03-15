@@ -38,3 +38,8 @@ export const selectWalletExgAddress = createSelector(
   selectUser,
   (state: UserState) => state.walletExgAddress
 )
+
+export const selectToken = createSelector(
+  selectUser,
+  (state: UserState) => state.token
+)

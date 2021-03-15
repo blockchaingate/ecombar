@@ -24,7 +24,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     // MenuMobileComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     StoreModule.forRoot(reducers, {metaReducers}),   
     HttpClientModule,

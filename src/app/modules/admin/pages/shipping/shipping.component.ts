@@ -40,6 +40,7 @@ export class ShippingComponent implements OnInit{
       this.itemsAdded = [];
       this.merchantServ.getByType('delivery').subscribe(
         (res: any) => {
+          console.log('res for getdelivery===', res);
           if(res && res.ok) {
             this.providers = res._body;
             console.log('this.providers=', this.providers);
