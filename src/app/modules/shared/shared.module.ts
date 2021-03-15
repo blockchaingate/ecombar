@@ -15,6 +15,7 @@ import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
 import { IddockService } from './services/iddock.service';
 import { WalletService } from './services/wallet.service';
+import { ShipService } from './services/ship.service';
 import { TranslateService } from './services/translate.service';
 import { UtilService } from './services/util.service';
 import { UploadService } from './services/upload.service';
@@ -79,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ApiService,
     Web3Service,
     CommentService,
+    ShipService,
     KanbanService,
     IddockService,
     MainLayoutService
@@ -101,6 +103,7 @@ export class SharedModule {
         Web3Service,        
         KanbanService,
         IddockService,
+        ShipService,
         MainLayoutService
       ]
     };

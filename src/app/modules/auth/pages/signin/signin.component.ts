@@ -68,7 +68,7 @@ export class SigninComponent implements OnInit {
 
     const user: User = {};
     this.userServ.signin(this.email, this.password).subscribe(
-      async (res: any) => {
+     (res: any) => {
         if (res && res.token) {
           user._id = res.id;
           user.displayName = res.displayName;
@@ -90,56 +90,58 @@ export class SigninComponent implements OnInit {
             this.merchantServ.name = res.defaultMerchant.name;
             this.merchantServ.id = res.defaultMerchant._id;
 
-            const merchant = await this.merchantServ.getMerchant(res.defaultMerchant._id).toPromise();
-
-            console.log('merchant in login=', merchant);
+            this.merchantServ.getMerchant(res.defaultMerchant._id).subscribe(
+              (merchant: any) => {
+                console.log('merchant in login=', merchant);
             
-            if(merchant) {
-              const type = merchant.type;
-              if(type == 'seller') {
-                role = 'Seller';
-              }else 
-              if(type == 'delivery') {
-                role = 'Delivery';
+                if(merchant) {
+                  const type = merchant.type;
+                  if(type == 'seller') {
+                    role = 'Seller';
+                  }else 
+                  if(type == 'delivery') {
+                    role = 'Delivery';
+                  }
+                  if(merchant.approved) {
+                    merchantStatus = 'approved';
+                  } else {
+                    merchantStatus = 'pending';
+                  }
+
+                  const userState: UserState = {
+                    email: user.email, 
+                    displayName: user.displayName,
+                    role: role, 
+                    token: user.token, 
+                    walletExgAddress: res.walletExgAddress,
+                    myPhotoUrl: res.myPhotoUrl,
+                    merchantId: res.defaultMerchant._id,
+                    merchantStatus: merchantStatus
+                  };
+        
+                  this.store.dispatch(login({userState}));
+                  this.router.navigate(['/admin']);
+
+                }
               }
-              if(merchant.approved) {
-                merchantStatus = 'approved';
-              } else {
-                merchantStatus = 'pending';
-              }
-              /*
-              if(merchant.type == 'ecombar') {
-                role = 'Merchant'
-              } else
-              if(merchant.type == 'delivery') {
-                role = 'Delivery'
-              }
-              */
-            }
+            );
+          } else {
+            const userState: UserState = {
+              email: user.email, 
+              displayName: user.displayName,
+              role: role, 
+              token: user.token, 
+              walletExgAddress: res.walletExgAddress,
+              myPhotoUrl: res.myPhotoUrl,
+              merchantId: '',
+              merchantStatus: merchantStatus
+            };
+  
+            this.store.dispatch(login({userState}));
+            this.router.navigate(['/admin']);
           }
-          
-          this.userServ.tokenExp = decoded.exp;
-          
-          this.appServ.id = res.appId || decoded.appId;
-          this.appServ.name = res.appName || decoded.appName;
-          
 
-          this.userServ.isSystemAdmin = isSysAdmin;
-          // const current = Math.floor(Date.now() / 1000);
-          this.storage.user = user;
-          const userState: UserState = {
-            email: user.email, 
-            displayName: user.displayName,
-            role: role, 
-            token: user.token, 
-            walletExgAddress: res.walletExgAddress,
-            myPhotoUrl: res.myPhotoUrl,
-            merchantId: res.defaultMerchant ? res.defaultMerchant._id : '',
-            merchantStatus: merchantStatus
-          };
 
-          this.store.dispatch(login({userState}));
-          this.router.navigate(['/admin']);
         }
       },
       error => { this.rawErrMsg = error.message; this.errMsg = 'Invalid email or password'; }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MerchantService } from '../../../shared/services/merchant.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { ShipService } from '../../../shared/services/ship.service';
 import { OrderService } from '../../../shared/services/order.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
@@ -29,6 +29,7 @@ export class ShippingComponent implements OnInit{
       private merchantServ: MerchantService,
       private store: Store<{ user: UserState }>,
       private route: ActivatedRoute, 
+      private shipServ: ShipService,
       private orderServ: OrderService,
       private router: Router) {
 
@@ -75,12 +76,18 @@ export class ShippingComponent implements OnInit{
     }
 
     update() {
+      let items = [];
+      if(!this.allItemsFlag) {
+        items = this.itemsAdded;
+      }
       const data = {
-        shippingServiceIdSelected: this.provider,
-        trackingNumber: this.trackingNumber
+        deliveryMerchantId: this.provider,
+        orderId: this.orderID,
+        trackingNumber: this.trackingNumber,
+        items: items
       }
 
-      this.orderServ.updateShipping(this.orderID, data).subscribe(
+      this.shipServ.createShip(data).subscribe(
         (res: any) => {
           if(res && res.ok) {
             console.log('updated successfully');
