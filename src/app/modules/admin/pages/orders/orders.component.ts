@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../shared/services/order.service';
-import { UserService } from '../../../shared/services/user.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { StorageService } from '../../../shared/services/storage.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
 
@@ -16,10 +13,7 @@ export class OrdersComponent implements OnInit {
   orders: any;
   customerFlag: boolean;
   constructor(
-    private userServ: UserService,
-    private storageServ: StorageService,
     private store: Store<{ user: UserState }>,
-    private merchantServ: MerchantService,
     private orderServ: OrderService) {
   }
 

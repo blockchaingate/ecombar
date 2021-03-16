@@ -11,7 +11,7 @@ import { selectMerchantId } from 'src/app/store/selectors/user.selector';
   selector: 'app-admin-shipping',
   providers: [],
   templateUrl: './shipping.component.html',
-  styleUrls: ['./shipping.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  styleUrls: ['./shipping.component.scss']
 })
 export class ShippingComponent implements OnInit{
     provider: string;

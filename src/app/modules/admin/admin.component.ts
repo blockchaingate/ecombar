@@ -131,6 +131,12 @@ export class AdminComponent implements OnInit {
         roles: ['Admin', 'Seller', 'Customer']
       },
       {
+        title: 'Ships',
+        link: 'ships',
+        icon: 'order',
+        roles: ['Admin', 'Seller', 'Delivery', 'Customer']
+      },      
+      {
         title: 'My assets',
         link: 'my-assets',
         icon: 'asset',

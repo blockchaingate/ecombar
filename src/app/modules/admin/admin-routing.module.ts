@@ -12,6 +12,7 @@ import { CategoryAddComponent } from './pages/category-add/category-add.componen
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { ShipsComponent } from './pages/ships/ships.component';
 import { WalletPwdComponent } from './pages/my-assets/components/create-wallet/wallet-pwd.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
@@ -107,7 +108,10 @@ const routes: Routes = [
       }, 
       {
         path: 'shipping/:orderID', component: ShippingComponent
-      },             
+      },   
+      {
+        path: 'ships', component: ShipsComponent
+      },                    
       {
         path: 'product/add', component: ProductAddComponent
       },

@@ -17,6 +17,8 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { ShipsComponent } from './pages/ships/ships.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
@@ -64,6 +66,7 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    ShipsComponent,
     WalletPwdComponent,
     CommentComponent,
     CartComponent,
@@ -100,6 +103,7 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     FormsModule,
     CartModule,
     QRCodeModule,
+    ModalModule.forRoot(),
     NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
     RichTextEditorModule
