@@ -11,6 +11,11 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./modules/admin/admin.module').then(m => m.AdminModule)
+  },
+  {
+    path: 'nft',
+    loadChildren: () =>
+      import('./modules/nft/nft.module').then(m => m.NftModule)
   }
 ];
 

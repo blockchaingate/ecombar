@@ -47,7 +47,7 @@
           </li>      
         </ul>
       </div>   
-      
+      <div *ngIf="canAddDetails">
         <div class="row">
           <div class="col col-6">
             <div class="form-group">
@@ -79,7 +79,7 @@
         <input type="text" [(ngModel)]="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter text">
        </div>          
        <button type="submit" (click)="addDetail()" class="btn btn-primary">Add</button>
-    
+      </div>
   </div>
 </ng-template>
 

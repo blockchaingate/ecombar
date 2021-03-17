@@ -55,7 +55,7 @@ export class MerchantService {
     }
 
     getMerchant(id: string) {
-        return this.http.get('merchants/' + id);
+        return this.http.get('merchants/' + id, false);
     }
 
     find(data: any) {

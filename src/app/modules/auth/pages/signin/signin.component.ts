@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { login } from '../../../../store/actions/user.actions';
 import { UserState } from '../../../../store/states/user.state';
+import { Role } from '../../../../config/role';
 
 @Component({
   selector: 'app-signin',
@@ -77,10 +78,8 @@ export class SigninComponent implements OnInit {
           this.userServ.token = res.token;
           const decoded = this.authServ.decodeToken(res.token);
 
-          let isSysAdmin = false;
           let role = 'Customer';
           if (decoded.aud === 'isSystemAdmin') {
-            isSysAdmin = true;
             role = 'Admin'
           }
 
@@ -97,10 +96,13 @@ export class SigninComponent implements OnInit {
                 if(merchant) {
                   const type = merchant.type;
                   if(type == 'seller') {
-                    role = 'Seller';
+                    role = Role.Seller;
                   }else 
                   if(type == 'delivery') {
-                    role = 'Delivery';
+                    role = Role.Delivery;
+                  }else
+                  if(type == 'nftseller') {
+                    role = Role.NFTSeller;
                   }
                   if(merchant.approved) {
                     merchantStatus = 'approved';
@@ -165,15 +167,13 @@ export class SigninComponent implements OnInit {
         console.log('res==', res);
         if (res && res.activationCode) {
           this.msgSignupSuccess = true;
+          this.errMsgSignup = '';
         } else {
           this.errMsgSignup = 'Sign up error.';
         }
       },
       err => { 
-        console.log('error==', err);
         this.errMsgSignup = err.error.message;
-        console.log('this.errMsgSignup==', this.errMsgSignup);
-        //this.errMsg = 'Invalid email or password';
       }
     );
   }

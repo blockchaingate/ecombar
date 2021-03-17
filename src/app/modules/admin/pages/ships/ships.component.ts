@@ -18,6 +18,7 @@ export class ShipsComponent implements OnInit{
     modalRef: BsModalRef;
     ships: any;
     ship: any;
+    canAddDetails: boolean;
     dateCreated: string;
     status: string;
     city: string;
@@ -29,6 +30,7 @@ export class ShipsComponent implements OnInit{
         private shipServ: ShipService) {
     }    
     ngOnInit() {
+        this.canAddDetails = true;
         this.store.select('user').subscribe(
             (userState: UserState) => {
                 const role = userState.role;
@@ -51,6 +53,7 @@ export class ShipsComponent implements OnInit{
                     );                   
                 } else
                 if(role == Role.Customer) {
+                    this.canAddDetails = false;
                     this.shipServ.getCustomerShips().subscribe(
                         (res: any) => {
                             if(res && res.ok) {

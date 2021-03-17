@@ -25,7 +25,7 @@ export class HttpService {
 
     get(path: string, jwtAuth = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-
+        console.log('url for get==', url);
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
@@ -44,6 +44,10 @@ export class HttpService {
                             this.http.get(url, options).subscribe(
                                 (res) => {
                                     observer.next(res);
+                                },
+                                err => { 
+                                  observer.error(err)
+                                  //this.errMsg = 'Invalid email or password';
                                 }
                             );                       
                         }
@@ -58,6 +62,10 @@ export class HttpService {
                 this.http.get(url, options).subscribe(
                     (res) => {
                         observer.next(res);
+                    },
+                    err => { 
+                      observer.error(err)
+                      //this.errMsg = 'Invalid email or password';
                     }
                 );                           
             }
@@ -88,6 +96,10 @@ export class HttpService {
                             this.http.post(url, data, options).subscribe(
                                 (res) => {
                                     observer.next(res);
+                                },
+                                err => { 
+                                  observer.error(err)
+                                  //this.errMsg = 'Invalid email or password';
                                 }
                             );                       
                         }
@@ -102,6 +114,10 @@ export class HttpService {
                 this.http.post(url, data, options).subscribe(
                     (res) => {
                         observer.next(res);
+                    },
+                    err => { 
+                      observer.error(err)
+                      //this.errMsg = 'Invalid email or password';
                     }
                 );                           
             }
@@ -157,6 +173,10 @@ export class HttpService {
                             this.http.put(url, data, options).subscribe(
                                 (res) => {
                                     observer.next(res);
+                                },
+                                err => { 
+                                  observer.error(err)
+                                  //this.errMsg = 'Invalid email or password';
                                 }
                             );                       
                         }
@@ -171,6 +191,10 @@ export class HttpService {
                 this.http.put(url, data, options).subscribe(
                     (res) => {
                         observer.next(res);
+                    },
+                    err => { 
+                      observer.error(err)
+                      //this.errMsg = 'Invalid email or password';
                     }
                 );                           
             }
@@ -217,6 +241,10 @@ export class HttpService {
                             this.http.delete(url, options).subscribe(
                                 (res) => {
                                     observer.next(res);
+                                },
+                                err => { 
+                                  observer.error(err)
+                                  //this.errMsg = 'Invalid email or password';
                                 }
                             );                       
                         }
@@ -231,6 +259,10 @@ export class HttpService {
                 this.http.delete(url,  options).subscribe(
                     (res) => {
                         observer.next(res);
+                    },
+                    err => { 
+                      observer.error(err)
+                      //this.errMsg = 'Invalid email or password';
                     }
                 );                           
             }

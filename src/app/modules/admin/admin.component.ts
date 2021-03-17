@@ -6,7 +6,8 @@ import { StorageService } from '../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/states/user.state';
-import { updateMerchantStatus } from 'src/app/store/actions/user.actions';
+import { logout, updateMerchantStatus } from '../../store/actions/user.actions';
+
 @Component({
   providers: [UserService],
   selector: 'app-admin',
@@ -221,7 +222,7 @@ export class AdminComponent implements OnInit {
   }
 
   logout(): void {
-    this.userServ.logout();
+    this.store.dispatch(logout());
     this.router.navigate(['/auth/signin']);
   }
 
