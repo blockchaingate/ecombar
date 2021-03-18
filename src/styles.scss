@@ -596,3 +596,29 @@
     color: #6c757d!important;
 }
 
+.ActionButtonrContainer {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(32, 129, 226);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 12px 20px;
+    text-align: center;
+    user-select: none;    
+}
+
+.ActionButtonrContainer .ActionButton--content {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+}

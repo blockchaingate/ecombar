@@ -1,0 +1,123 @@
+.CreateCollection--form {
+    margin-bottom: 10px;
+}
+
+.CreateCollection--form h4 {
+    text-align: center;
+    font-size: 28px;
+    line-height: 110%;
+    margin-bottom: 30px;
+}
+
+.CreateCollection--form .CreateCollection--info {
+    font-weight: 400;
+    font-size: 15px;
+    margin: 3px 0px 15px;
+    text-align: center;
+}
+
+header {
+    color: rgb(170, 170, 170);
+}
+
+.CreateCollection--form .CreateCollection--input {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 3px dashed rgb(204, 204, 204);
+    cursor: pointer;
+    height: 160px;
+    margin-bottom: 20px;
+    margin-top: 6px;
+    padding: 4px;
+    width: 160px;    
+}
+
+.ImageInput--image {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.Image--content {
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.ImageInput--image .ImageInput--wrapper {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ImageInput--image .ImageInput--wrapper .ImageInput--input {
+    cursor: pointer;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.ImageInput--icon {
+    color: rgb(204, 204, 204);
+    font-size: 84px;
+    pointer-events: none;
+}
+
+.Input--main {
+    border-radius: 5px;
+    border: 1px solid rgb(229, 232, 235);
+    display: flex;
+    position: relative;
+}
+
+.Input--main .Input--prefix {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: transparent;
+    color: rgb(138, 147, 155);
+    display: flex;
+    padding-left: 12px;
+}
+
+.Input--main .Input--input {
+    background-color: transparent;
+    border: none;
+    flex: 1 0 0%;
+    height: 48px;
+    outline: none;
+    padding: 0px 12px 0px 0px;
+    min-width: 0px;
+}
+
+.TextAreareact__Text {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid rgb(226, 230, 239);
+    height: auto;
+    padding: 16px 12px;
+    resize: vertical;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    overflow: auto;        
+}
+
+.CreateCollection--actions {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}

@@ -1,1 +1,24 @@
 <app-nft-collections-header></app-nft-collections-header>
+<app-nft-collections-list (createEvent)="openModal(template)"></app-nft-collections-list>
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Create your collection</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-nft-collections-add (createEvent)="createCollection($event, templateDone)"></app-nft-collections-add>
+    </div>
+</ng-template>
+
+<ng-template #templateDone>
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-nft-collections-add-done></app-nft-collections-add-done>
+    </div>
+</ng-template>

@@ -1,0 +1,47 @@
+<div class="CreateCollection--form">
+    <div class="CreateCollection--form">
+        <h4 class="CreateCollection--header">Create your collection</h4>
+        <p class="CreateCollection--info">You can change these values later, along with configuring external URLs, payment options, and trading fees.</p>
+        <div class="form-container">
+            <div>
+                <label for="image">Logo</label>
+                <header class="light-text">
+                    (350 x 350 recommended)
+                </header>
+                <div class="CreateCollection--input">
+                    <div class="Image--isImageLoaderVisible ImageInput--image" style="height: 100%; width: 100%;">
+                        <div class="Image--content">
+                            <div class="ImageInput--wrapper">
+                                <input accept="image/*" class="ImageInput--input" type="file">
+                                <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV ImageInput--icon material-icons" value="image" size="24">image</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+            <div>
+                <label for="name">Name *</label>
+                <div>
+                    <div class="Input--main">
+                        <div class="Input--prefix"></div>
+                        <input autocapitalize="off" [(ngModel)]="name" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="e.g. OpenSea Gems" required="" spellcheck="false" type="text" value="">
+                    </div>
+                </div>
+            </div>   
+            
+            <div class="pt-3">
+                <label for="description" class="active">Description</label>
+                <header class="light-text">4 of 1000 characters used</header>
+                <textarea class="TextAreareact__Text" [(ngModel)]="description" maxlength="1000" name="description" placeholder="Provide a description for your store. Markdown syntax is supported." rows="4"></textarea>
+            </div>   
+            
+            <div class="CreateCollection--actions">
+                <div class="ActionButtonrContainer">
+                    <div class="ActionButton--content" (click)="createCollection()" style="min-width: 120px;">Create</div>
+                </div> 
+            </div>
+           
+        </div>
+    </div>
+</div>
