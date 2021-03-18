@@ -1,0 +1,16 @@
+.bmqDmb .AppContainer--main {
+    min-height: calc(100vh - 180px);
+}
+
+@media (min-width: 815px) {
+    .admin-main--body {
+        margin-left: 300px;
+        padding-bottom: initial;
+    }
+}
+
+@media (min-width: 815px) {
+    .admin--container-with-margins {
+        margin: 10px 30px 50px;
+    }
+}
