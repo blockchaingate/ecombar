@@ -11,6 +11,8 @@ import { CartStoreService } from '../../../shared/services/cart.store.service';
 import { FavoriteService } from '../../../shared/services/favorite.service';
 import { OrderService } from '../../../shared/services/order.service';
 import { CommentService } from '../../../shared/services/comment.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../../store/states/user.state';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -18,6 +20,7 @@ import { CommentService } from '../../../shared/services/comment.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit{
+  merchantStatus: string;
   summary: any;
   isUserSummary: boolean;
   brands_count: number;
@@ -31,9 +34,6 @@ export class DashboardComponent implements OnInit{
   my_comments_count: number;
 
   constructor(
-    private userServ: UserService,
-    private merchantServ: MerchantService,
-    private storageServ: StorageService,
     private brandServ: BrandService,
     private orderServ: OrderService,
     private favoriteServ: FavoriteService,
@@ -42,25 +42,9 @@ export class DashboardComponent implements OnInit{
     private productServ: ProductService,
     private categoryServ: CategoryService,
     private commentServ: CommentService,
-    private router: Router) {
+    private store: Store<{ user: UserState }>) {
   }
 
-  getSummaries(merchantId : string) {
-    if (this.userServ.isSystemAdmin) {
-      this.getAdminSummaries();
-    } else {
-      this.storageServ.get('_isSystemAdmin').subscribe(
-        (ret:boolean) => {
-          if(ret) {
-            this.getAdminSummaries();
-          } else {
-            this.getMerchantSummaries(merchantId);
-          }
-        }
-      );
-      
-    } 
-  }
   ngOnInit() {
     this.isUserSummary = false;
     this.brands_count = 0;
@@ -73,16 +57,32 @@ export class DashboardComponent implements OnInit{
     this.my_products_count = 0;
     this.my_comments_count = 0;
 
-    const merchantId = this.merchantServ.id;
-    if(merchantId) {
-      this.getSummaries(merchantId);
-    } else {
-      this.storageServ.get('_merchantId').subscribe(
-        (ret: any) => {
-          this.getSummaries(ret);
+
+    this.store.select('user').subscribe(
+      (userState: UserState) => {
+        const role = userState.role;
+        const merchantId = userState.merchantId;
+        this.merchantStatus = userState.merchantStatus;
+
+        if(role == 'Admin') {
+          this.getAdminSummaries();
+        } else
+        if(role == 'Seller') {
+          if(this.merchantStatus == 'approved') {
+            this.getMerchantSummaries(merchantId);
+          }
+        } else
+        if(role == 'Delivery') {
+          if(this.merchantStatus == 'approved') {
+            this.getDeliverySummary(merchantId);
+          }
+        } else
+        if(role == 'Customer') {
+          this.getUserSummaries();
         }
-      );      
-    }
+      }
+    )
+
 
   }
 
@@ -204,4 +204,10 @@ export class DashboardComponent implements OnInit{
     );    
   }
 
+
+  getDeliverySummary(merchantId: string) {
+
+  }
 }
+
+

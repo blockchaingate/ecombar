@@ -6,6 +6,12 @@ import { Merchant } from '../../../models/merchant';
 import { MerchantService } from '../../shared/services/merchant.service';
 import { StorageService } from '../../shared/services/storage.service';
 import { UserService } from '../../shared/services/user.service';
+import { UserState } from '../../../store/states/user.state';
+import { Store } from '@ngrx/store';
+import { selectMerchantId, selectEmail } from '../../../store/selectors/user.selector';
+import { TranslateService } from '@ngx-translate/core';
+import { dispatch } from 'rxjs/internal/observable/pairs';
+import { updateMerchantStatus } from '../../../store/actions/user.actions';
 
 @Component({
   selector: 'app-apply-for-merchant',
@@ -16,71 +22,89 @@ export class ApplyForMerchantComponent implements OnInit {
 
     //user: User;
     token: string;
+    errMsg: string;
     merchant: Merchant = new Merchant('', '');
     submited = false;
     msg = 'You applied merchant account already.';
-    errMsg: string;
     lan = 'en';
 
     merchantForm = new FormGroup({
+        merchantType: new FormControl(''),
         merchantName: new FormControl(''),
         phone: new FormControl(''),
         email: new FormControl(''),
     });
 
     constructor(
-        private _userServ: UserService,
+        private store: Store<{ user: UserState }>,
+        private merchantServ: MerchantService,
+        private translateServ: TranslateService,
         private _mcServ: MerchantService) { }    
 
     ngOnInit() {
-        this.lan = localStorage.getItem('Lan');
+        const merchantIdSelect = this.store.select(selectMerchantId);
+        merchantIdSelect.subscribe(merchantId => {
+            if(merchantId) {
+                this.merchantServ.getMerchant(merchantId).subscribe((res: any) => {
 
-                this._userServ.getMe().subscribe(
-                    (res: any) => {
-                        console.log('res for getMe=', res);
-                        if (res && res.ok) {
-                            const body = res._body;
-                            const defaultMerchant = body.defaultMerchant;
-                            if (!defaultMerchant) {
-                                return;
-                            }
-                            this.submited = true;
-                            if (defaultMerchant.otcApproved) {
-                                // this._router.navigate(['/otc/otc-merchant']);
-                            } else {
-                                if (this.lan === 'zh') {
-                                    this.msg = '您的商户申请正在审核，请耐心等候。';
-                                } else {
-                                    this.msg = 'Your merchant account is under review currently, please check later.';
-                                }
-                            }
-                        } else {
-                            // this._router.navigate(['/login/signin', { retUrl: '/otc/otc-merchant/merchant-application' }]);
-                        }
-                    },
-                    (error) => {
-                        console.log('error there we go', error);
-                    }
-                );
+                })
+                this.msg = this.translateServ
+                .instant('Your merchant account is under review currently, please check later.');
+            }
+        });
+
+        const emailSelect = this.store.select(selectEmail);
+        emailSelect.subscribe(
+            res =>  {
+                this.merchantForm.patchValue({'email': res});
+            }
+        );
+
     }
 
     onSubmit() {
+        const merchantType = this.merchantForm.get('merchantType').value;
+        const merchantName = this.merchantForm.get('merchantName').value;
+        const email = this.merchantForm.get('email').value;
+        const phone = this.merchantForm.get('phone').value;
+
+        if(!merchantType) {
+            this.errMsg = this.translateServ
+            .instant('Please select merchant type');            
+            return;
+        }
+
+        if(!merchantName) {
+            this.errMsg = this.translateServ
+            .instant('Please provide merchant name');            
+            return;
+        }
+
+        if(!email) {
+            this.errMsg = this.translateServ
+            .instant('Please provide email');            
+            return;
+        }
+
+        if(!phone) {
+            this.errMsg = this.translateServ
+            .instant('Please provide phone');            
+            return;
+        }    
 
       const merchant = {
-          name: this.merchantForm.get('merchantName').value,
-          phone: this.merchantForm.get('phone').value,
-          email: this.merchantForm.get('email').value,
-          type: 'ecombar'
+          name: merchantName,
+          phone: phone,
+          email: email,
+          type: merchantType
       };
 
       this._mcServ.create(merchant).subscribe(
           res => {  // this._router.navigate(['/otc/otc-merchant/waitting']);
               this.submited = true;
-              if (this.lan === 'zh') {
-                  this.msg = '您的申请已经成功提交，需要3~5个工作日审核，请耐心等候。';
-              } else {
-                  this.msg = 'You have submited application successful, please waiting for review, it may take 3~5 business days.';
-              }
+              this.store.dispatch(updateMerchantStatus({newStatus:'pending'}) )
+              this.msg = this.translateServ.instant('You have submited application successful, please waiting for review, it may take 3~5 business days.');
+
           },
           err => { this.errMsg = err.message || err; }
       );

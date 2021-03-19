@@ -7,22 +7,48 @@
 
     <form *ngIf="!submited" [formGroup]="merchantForm" (ngSubmit)="onSubmit()">
         <div class="py-3">
+
             <div class="row col col-12" style="margin-top: 12px">
-                <div style="width:168px">{{'Merchant name' | translate}}</div>
+                <div style="width:168px">{{'Merchant type' | translate}}*</div>
+                <div style="width:500px">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="seller" formControlName="merchantType">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          {{'Seller' | translate}}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="nftseller" formControlName="merchantType">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          {{'NFT Seller' | translate}}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="delivery" formControlName="merchantType">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                         {{'Delivery' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>            
+            <div class="row col col-12" style="margin-top: 12px">
+                <div style="width:168px">{{'Merchant name' | translate}}*</div>
                 <div style="width:500px">
                     <input placeholder="{{'Merchant name' | translate}}" class="form-control" formControlName="merchantName" />
                 </div>
             </div>
 
             <div class="row col col-12" style="margin-top: 12px">
-                <div style="width:168px">{{'Phone' | translate}}</div>
+                <div style="width:168px">{{'Phone' | translate}}*</div>
                 <div style="width:500px">
                     <input placeholder="{{'Phone' | translate}}" class="form-control" formControlName="phone" />
                 </div>
             </div>
 
             <div class="row col col-12" style="margin-top: 12px">
-                <div style="width:168px">{{'Email' | translate}}</div>
+                <div style="width:168px">{{'Email' | translate}}*</div>
                 <div style="width:500px">
                     <input placeholder="{{'Email' | translate}}" class="form-control" formControlName="email" />
                 </div>
@@ -31,6 +57,10 @@
 
         <div class="justify-content-center">
             <button class="btn py-2 px-5" type="submit">{{'Submit' | translate}}</button>
+        </div>
+
+        <div *ngIf="errMsg" class="text-danger">
+            {{errMsg}}
         </div>
     </form>
 

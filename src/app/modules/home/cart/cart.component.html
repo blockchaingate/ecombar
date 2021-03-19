@@ -77,10 +77,10 @@
                         <tr>
                             <th class="product-remove">&nbsp;</th>
                             <th class="product-thumbnail">&nbsp;</th>
-                            <th class="product-name">Product</th>
-                            <th class="product-price">Price</th>
-                            <th class="product-quantity w-lg-15">Quantity</th>
-                            <th class="product-subtotal">Total</th>
+                            <th class="product-name">{{'Product' | translate}}</th>
+                            <th class="product-price">{{'Price' | translate}}</th>
+                            <th class="product-quantity w-lg-15">{{'Quantity' | translate}}</th>
+                            <th class="product-subtotal">{{'Total' | translate}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,11 +94,11 @@
                                         <div class="mb-3 mb-md-0 w-xl-40">
                                             <!-- Apply coupon Form -->
                                             <form class="js-focus-state">
-                                                <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
+                                                <label class="sr-only" for="subscribeSrEmailExample1">{{'Coupon code' | translate}}</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="text" id="subscribeSrEmailExample1" placeholder="Coupon code" aria-label="Coupon code" aria-describedby="subscribeButtonExample2" required>
+                                                    <input type="text" class="form-control" name="text" id="subscribeSrEmailExample1" placeholder="{{'Coupon code' | translate}}" aria-label="Coupon code" aria-describedby="subscribeButtonExample2" required>
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"><i class="fas fa-tags d-md-none"></i><span class="d-none d-md-inline">Apply coupon</span></button>
+                                                        <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"><i class="fas fa-tags d-md-none"></i><span class="d-none d-md-inline">{{'Apply coupon' | translate}}</span></button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <!-- <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button> -->
-                                            <a (click)="checkout()" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">Proceed to checkout</a>
+                                            <a (click)="checkout()" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">{{'Proceed to checkout' | translate}}</a>
                                         </div>
                                     </div>
                                 </div>

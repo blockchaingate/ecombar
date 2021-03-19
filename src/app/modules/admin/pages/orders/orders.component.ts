@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../shared/services/order.service';
-import { UserService } from '../../../shared/services/user.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { StorageService } from '../../../shared/services/storage.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../../store/states/user.state';
 
 @Component({
   selector: 'app-admin-orders',
@@ -14,66 +13,48 @@ export class OrdersComponent implements OnInit {
   orders: any;
   customerFlag: boolean;
   constructor(
-    private userServ: UserService,
-    private storageServ: StorageService,
-    private merchantServ: MerchantService,
+    private store: Store<{ user: UserState }>,
     private orderServ: OrderService) {
   }
 
-  getOrders(merchantId: string, isSystemAdmin: boolean) {
-    if(isSystemAdmin) {
-      this.orderServ.getAllOrders().subscribe(
-        (res: any) => {
-            if(res && res.ok) {
-              this.orders = res._body;
-            }
-        }
-      );
-    } else 
-    if(merchantId) {
-      this.orderServ.gerMerchantOrders().subscribe(
-        (res: any) => {
-            if(res && res.ok) {
-              this.orders = res._body;
-            }
-        }
-      );
-    } else {
-      this.customerFlag = true;
-      this.orderServ.getMyOrders().subscribe(
-        (res: any) => {
-            if(res && res.ok) {
-              this.orders = res._body;
-            }
-        }
-      );
-    }
-  }
-  getMerchantOrders(merchantId: string) {
-
-
-    if(this.userServ.isSystemAdmin) {
-      this.getOrders(merchantId, this.userServ.isSystemAdmin);
-    } else {
-      this.storageServ.get('_isSystemAdmin').subscribe(
-        (ret:boolean) => {
-          this.getOrders(merchantId, ret);
-        }
-      );      
-    }
-
-  }
   ngOnInit() {
-    const merchantId = this.merchantServ.id;
-    if(merchantId) {
-      this.getMerchantOrders(merchantId);
-    } else {
-      this.storageServ.get('_merchantId').subscribe(
-        (ret: any) => {
-          this.getMerchantOrders(ret);
+
+
+    this.store.select('user').subscribe(
+      (userState: UserState) => {
+        const role = userState.role;
+        const merchantId = userState.merchantId;
+        if(role == 'Admin') {
+          this.orderServ.getAllOrders().subscribe(
+            (res: any) => {
+                if(res && res.ok) {
+                  this.orders = res._body;
+                }
+            }
+          );
+        } else
+        if((role == 'Seller') && merchantId) {
+          this.orderServ.gerMerchantOrders().subscribe(
+            (res: any) => {
+                if(res && res.ok) {
+                  this.orders = res._body;
+                }
+            }
+          );
+        } else
+        if(role == 'Customer') {
+          this.customerFlag = true;
+          this.orderServ.getMyOrders().subscribe(
+            (res: any) => {
+                if(res && res.ok) {
+                  this.orders = res._body;
+                }
+            }
+          );          
         }
-      );        
-    }
+      }
+    );
+
 
 
   }

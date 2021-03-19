@@ -6,6 +6,11 @@ import { UtilService } from '../../../shared/services/util.service';
 import { CoinService } from '../../../shared/services/coin.service';
 import { Web3Service } from '../../../shared/services/web3.service';
 import { IddockService } from '../../../shared/services/iddock.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../../store/states/user.state';
+import { updateWalletExgAddress } from '../../../../store/actions/user.actions';
+import { ToastrService } from 'ngx-toastr';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-merchant-info',
@@ -23,8 +28,11 @@ export class MerchantInfoComponent implements OnInit{
     constructor(
       private userServ: UserService,
       private localSt: LocalStorage,
+      private toastr: ToastrService,
       private coinServ: CoinService,
+      private translateServ: TranslateService,
       private iddockServ: IddockService,
+      private store: Store<{ user: UserState }>,
       private web3Serv: Web3Service,
       private ngxSmartModalServ: NgxSmartModalService,
       private utilServ: UtilService) {
@@ -59,19 +67,19 @@ export class MerchantInfoComponent implements OnInit{
     }
 
     update() {
-        this.ngxSmartModalServ.getModal('passwordModal').open();
+        //this.ngxSmartModalServ.getModal('passwordModal').open();
+        this.onConfirmPassword(null);
 
     }
 
     async onConfirmPassword(event) {
+
+        /*
         this.ngxSmartModalServ.getModal('passwordModal').close();
         this.password = event;
 
         const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password);
-        const item = {
-            name: this.name,
-            walletExgAddress: this.walletExgAddress
-        };
+
 
         const nvs = [];
         nvs.push(
@@ -105,22 +113,17 @@ export class MerchantInfoComponent implements OnInit{
             datahash: datahash,
             txhex: ''
         }
-
-        /*
-        console.log('data=', data);
-        const txhex = await this.iddockServ.getTxhex(keyPairsKanban, data);
-        data.txhex = txhex;
-
-        this.iddockServ.saveId(data).subscribe(
-            (res: any) => {
-                console.log('res===', res);
-            }
-        );
         */
+        const item = {
+            name: this.name,
+            walletExgAddress: this.walletExgAddress
+        };
         this.userServ.updateSelfMerchant(item).subscribe(
             (res: any) => {
                 if(res && res.ok) {
                     const body = res._body;
+                    this.store.dispatch(updateWalletExgAddress({newWalletExgAddress: this.walletExgAddress}));
+                    this.toastr.success(this.translateServ.instant('Good job'));
                 }
             }
         );        

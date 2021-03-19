@@ -105,78 +105,81 @@ export class PlaceOrderComponent implements OnInit {
           const items = this.order.items;
 
           const value = this.total.toString();
-          this.payPalConfig = {
-            currency,
-            clientId: environment.paypal_client_id,
-            createOrderOnClient: (data) => <ICreateOrderRequest>{
-              intent: 'CAPTURE',
-              purchase_units: [
-                {
-                  amount: {
-                    currency_code: currency,
-                    value,
-                    breakdown: {
-                      item_total: {
-                        currency_code: currency,
-                        value
-                      }
-                    }
-                  },
-                  items: [{
-                    name: 'Enterprise Subscription',
-                    quantity: '1',
-                    category: 'DIGITAL_GOODS',
-                    unit_amount: {
+          if(this.order.paymentStatus != 2) {
+            this.payPalConfig = {
+              currency,
+              clientId: environment.paypal_client_id,
+              createOrderOnClient: (data) => <ICreateOrderRequest>{
+                intent: 'CAPTURE',
+                purchase_units: [
+                  {
+                    amount: {
                       currency_code: currency,
                       value,
+                      breakdown: {
+                        item_total: {
+                          currency_code: currency,
+                          value
+                        }
+                      }
                     },
-                  }]
-
-                }
-              ]
-            },
-            advanced: {
-              commit: 'true'
-            },
-            style: {
-              label: 'paypal',
-              layout: 'vertical'
-            },
-            onApprove: (data, actions) => {
-              console.log('onApprove - transaction was approved, but not authorized', data, actions);
-              const orderID = data.orderID;
-              const payerID = data.payerID;
-
-              actions.order.get().then(details => {
-                console.log('onApprove - you can get full order details inside onApprove: ', details);
-              });
-            },
-            onClientAuthorization: (data) => {
-              console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
-              const orderID = data.id;
-              if (orderID) {
-
-                console.log('orderID=', orderID);
-                this.orderServ.updatePayment(this.orderID, data).subscribe(
-                  (res2: any) => {
-                    if (res2 && res2.ok) {
-                      this.toastr.success('Your payment was confirmed.', '');
-
-                    }
+                    items: [{
+                      name: 'Enterprise Subscription',
+                      quantity: '1',
+                      category: 'DIGITAL_GOODS',
+                      unit_amount: {
+                        currency_code: currency,
+                        value,
+                      },
+                    }]
+  
                   }
-                );
-              }
-            },
-            onCancel: (data, actions) => {
-              console.log('OnCancel', data, actions);
-            },
-            onError: err => {
-              console.log('OnError', err);
-            },
-            onClick: (data, actions) => {
-              console.log('onClick', data, actions);
-            },
-          };
+                ]
+              },
+              advanced: {
+                commit: 'true'
+              },
+              style: {
+                label: 'paypal',
+                layout: 'vertical'
+              },
+              onApprove: (data, actions) => {
+                console.log('onApprove - transaction was approved, but not authorized', data, actions);
+                const orderID = data.orderID;
+                const payerID = data.payerID;
+  
+                actions.order.get().then(details => {
+                  console.log('onApprove - you can get full order details inside onApprove: ', details);
+                });
+              },
+              onClientAuthorization: (data) => {
+                console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+                const orderID = data.id;
+                if (orderID) {
+  
+                  console.log('orderID=', orderID);
+                  this.orderServ.updatePayment(this.orderID, data).subscribe(
+                    (res2: any) => {
+                      if (res2 && res2.ok) {
+                        this.toastr.success('Your payment was confirmed.', '');
+  
+                      }
+                    }
+                  );
+                }
+              },
+              onCancel: (data, actions) => {
+                console.log('OnCancel', data, actions);
+              },
+              onError: err => {
+                console.log('OnError', err);
+              },
+              onClick: (data, actions) => {
+                console.log('onClick', data, actions);
+              },
+            };
+          }
+
 
 
         }
@@ -255,7 +258,7 @@ export class PlaceOrderComponent implements OnInit {
   async payOrderDo() {
 
     
-    const address = this.utilServ.fabToExgAddress(this.order.merchantId.walletExgAddress) ;
+    const address = environment.addresses.ecombarOfficial.ETH;
     const amount = this.order.totalToPay;
     const coin = this.coinServ.getCoinTypeIdByName('USDT');
     console.log('address=', address);
@@ -276,7 +279,9 @@ export class PlaceOrderComponent implements OnInit {
           (await this.iddockServ.updateIdDockWithNonce(++this.nonce, seed, this.order.objectId, 'things', null, order, null)).subscribe(res => {
             if(res) {
               if(res.ok) {
-                this.toastr.info(this.translateServ.instant('Your order was placed successfully.'));
+                this.order.paymentStatus = 2;
+                this.toastr.info(this.translateServ.instant('Your order was paid successfully'));
+                
               } else {
       
               }

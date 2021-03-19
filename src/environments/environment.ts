@@ -122,6 +122,9 @@ export const environment = {
   },
 
   addresses: {
+      ecombarOfficial: {
+        ETH: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
+      },
     smartContract: {
         FABLOCK: '0xa7d4a4e23bf7dd7a1e03eda9eb7c28a016fd54aa',
         EXG: '0x867480ba8e577402fa44f43c33875ce74bdc5df6',

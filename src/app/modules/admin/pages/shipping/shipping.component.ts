@@ -1,78 +1,123 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { MerchantService } from '../../../shared/services/merchant.service';
+import { ShipService } from '../../../shared/services/ship.service';
 import { OrderService } from '../../../shared/services/order.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../../store/states/user.state';
+import { selectMerchantId } from 'src/app/store/selectors/user.selector';
 
 @Component({
   selector: 'app-admin-shipping',
   providers: [],
   templateUrl: './shipping.component.html',
-  styleUrls: ['./shipping.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  styleUrls: ['./shipping.component.scss']
 })
 export class ShippingComponent implements OnInit{
-    serviceName: string;
+    provider: string;
     trackingNumber: string;
     status: number;
     orderID: string;
-
-    statuses = [
-        {
-            name: 'not started',
-            value: 0
-        },
-        {
-          name: 'sent',
-          value: 1
-        },
-        {
-          name: 'received',
-          value: 2
-        }
-    ];
+    allItemsFlag: boolean;
+    providers: any;
+    items: any;
+    item: any;
+    itemsAdded: any;
+    quantity: number;
 
     constructor(
-      private userServ: UserService,
-      private authServ: AuthService,
+      private merchantServ: MerchantService,
+      private store: Store<{ user: UserState }>,
       private route: ActivatedRoute, 
+      private shipServ: ShipService,
       private orderServ: OrderService,
       private router: Router) {
 
     }
 
     ngOnInit() {
-      this.orderID = this.route.snapshot.paramMap.get('orderID');
-      this.orderServ.get(this.orderID).subscribe(
+      this.allItemsFlag = true;
+      this.items = [];
+      this.itemsAdded = [];
+      this.merchantServ.getByType('delivery').subscribe(
         (res: any) => {
+          console.log('res for getdelivery===', res);
           if(res && res.ok) {
-            const data = res._body;
-            console.log('data=', data);
-            this.serviceName = data.shippingServiceIdSelected;
-            this.trackingNumber = data.trackingNumber,
-            this.status = data.shippingStatus
+            this.providers = res._body;
+            console.log('this.providers=', this.providers);
           }
         }
       );
+      this.orderID = this.route.snapshot.paramMap.get('orderID');
+      this.store.select(selectMerchantId).subscribe(
+        merchantId => {
+          this.orderServ.get(this.orderID).subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                const data = res._body;
+                console.log('data=', data);
+                this.provider = data.shippingServiceIdSelected;
+                this.trackingNumber = data.trackingNumber,
+                this.status = data.shippingStatus;
+                const items = data.items;
+                for(let i=0;i<items.length;i++) {
+                  const item = items[i];
+                  if(item.productId.merchantId !== merchantId) {
+                    continue;
+                  }
+                  this.items.push(item);
+                }
+              }
+            }
+          );
+        }
+      );
+
     }
 
     update() {
-      const data = {
-        shippingServiceIdSelected: this.serviceName,
-        shippingStatus: this.status,
-        shippedTime: null,
-        trackingNumber: this.trackingNumber
+      let items = [];
+      if(!this.allItemsFlag) {
+        items = this.itemsAdded;
       }
-      if(this.status == 1) {
-        data.shippedTime = Date.now();
+      const data = {
+        deliveryMerchantId: this.provider,
+        orderId: this.orderID,
+        trackingNumber: this.trackingNumber,
+        items: items
       }
 
-      this.orderServ.updateShipping(this.orderID, data).subscribe(
+      this.shipServ.createShip(data).subscribe(
         (res: any) => {
           if(res && res.ok) {
             console.log('updated successfully');
           }
         }
       );
+    }
+
+    addItem() {
+      console.log('this.item=', this.item);
+      const existedItem = this.itemsAdded.filter(itemAdded => itemAdded.productId === this.item);
+      if(existedItem && existedItem.length > 0) {
+        existedItem[0].quantity += Number(this.quantity);
+      } else {
+        this.itemsAdded.push({productId: this.item, quantity: Number(this.quantity)});
+      }
+
+      console.log('this.itemsAdded==', this.itemsAdded);
+    }
+
+    deleteItem(productId) {
+      this.itemsAdded = this.itemsAdded.filter(itemAdded => itemAdded.productId !== productId);
+    }
+
+    getProductName(productId) {
+      const product = this.items.filter(item => item._id === productId);
+      if(product) {
+        return product.name;
+      }
+      return "";
     }
 }
 

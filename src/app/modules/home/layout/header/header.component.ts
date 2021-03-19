@@ -4,6 +4,10 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { CartStoreService } from '../../../shared/services/cart.store.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../../store/states/user.state';
+import { selectMerchantId } from 'src/app/store/selectors/user.selector';
+
 declare var $: any;
 
 @Component({
@@ -22,6 +26,7 @@ export class HeaderComponent implements OnInit {
   _lang: string;
 
   constructor(
+    private store: Store<{ user: UserState }>,
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
@@ -34,48 +39,29 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryId = '';
+    this.store.select('user').subscribe(
+      (userState: UserState) => {
+        const role = userState.role;
+        if(role) {
+          this.user = true;
+        }
+        
+        this.initMenu();
+
+
+    
+      }
+    );
+
+    /*
     this.storageServ.getUser().subscribe(
       (user: any) => {
         console.log('user=', user);
         this.user = user;
       }
     );
+    */
 
-    console.log('this.merchantId111=', this.merchantId);
-    if(!this.merchantId) {
-      const currentURL= window.location.href; 
-      console.log('currentUrl=', currentURL);
-      const storeIndex = currentURL.indexOf('store/');
-      if(storeIndex > 0) {
-        this.merchantId = currentURL.substring(storeIndex + 6);
-      }
-    }
-
-    
-    
-    console.log('this.merchantIdddd==', this.merchantId);
-    if(!this.merchantId) {
-      this.categoryServ.getAdminCategories().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            const allCategories = res._body;
-            this.buildCategoryTree(allCategories);
-            this.cd.detectChanges();
-            $('.selectpicker').selectpicker('refresh');
-          }
-        }
-      );
-    } else {
-      this.categoryServ.getMerchantCategories(this.merchantId).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            const allCategories = res._body;
-            this.buildCategoryTree(allCategories);
-            this.cd.detectChanges();
-          }
-        }
-      );     
-    }
 
 
 
@@ -102,6 +88,42 @@ export class HeaderComponent implements OnInit {
 
   }
 
+
+  initMenu() {
+    this.merchantId = '';
+    if(!this.merchantId) {
+      const currentURL= window.location.href; 
+      const storeIndex = currentURL.indexOf('store/');
+      if(storeIndex > 0) {
+        this.merchantId = currentURL.substring(storeIndex + 6);
+      }
+    }
+
+    
+    console.log();
+    if(!this.merchantId) {
+      this.categoryServ.getAdminCategories().subscribe(
+        (res: any) => {
+          if (res && res.ok) {
+            const allCategories = res._body;
+            this.buildCategoryTree(allCategories);
+            this.cd.detectChanges();
+            $('.selectpicker').selectpicker('refresh');
+          }
+        }
+      );
+    } else {
+      this.categoryServ.getMerchantCategories(this.merchantId).subscribe(
+        (res: any) => {
+          if (res && res.ok) {
+            const allCategories = res._body;
+            this.buildCategoryTree(allCategories);
+            this.cd.detectChanges();
+          }
+        }
+      );     
+    }
+  }
 
   arrayToTree(items) {
  

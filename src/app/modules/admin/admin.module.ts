@@ -17,6 +17,8 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { ShipsComponent } from './pages/ships/ships.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
@@ -45,6 +47,7 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { CartModule } from '../home/cart/cart.module';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
+import { RoleMenuPipe } from './pipes/role-menu.pipe';
 
 @NgModule({
   declarations: [
@@ -63,6 +66,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
+    ShipsComponent,
     WalletPwdComponent,
     CommentComponent,
     CartComponent,
@@ -89,7 +93,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     CategoryAddComponent,
     BrandsComponent,
     ConfirmMnemonicsComponent,
-    BrandAddComponent
+    BrandAddComponent,
+    RoleMenuPipe
   ],
   imports: [
     AdminRoutingModule,
@@ -98,6 +103,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     FormsModule,
     CartModule,
     QRCodeModule,
+    ModalModule.forRoot(),
     NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
     RichTextEditorModule

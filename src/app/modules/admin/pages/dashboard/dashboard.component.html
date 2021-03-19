@@ -1,84 +1,91 @@
-<div class="main-overview" *ngIf="!isUserSummary">
-  <div class="overviewCard" [routerLink]="['/admin/brands']">
-    <div class="overviewCard-icon overviewCard-icon--document">
-       <img src="/assets/svg/brand-white.svg">
+<div *ngIf="merchantStatus != 'pending'">
+  <div class="main-overview" *ngIf="!isUserSummary">
+    <div class="overviewCard" [routerLink]="['/admin/brands']">
+      <div class="overviewCard-icon overviewCard-icon--document">
+         <img src="/assets/svg/brand-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'Brands' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{brands_count}}</p>
+      </div>
     </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'Brands' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{brands_count}}</p>
+    <div class="overviewCard" [routerLink]="['/admin/categories']">
+      <div class="overviewCard-icon overviewCard-icon--calendar">
+        <img src="/assets/svg/category-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'Categories' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{categories_count}}</p>
+      </div>
     </div>
+    <div class="overviewCard" [routerLink]="['/admin/products']">
+      <div class="overviewCard-icon overviewCard-icon--mail">
+        <img src="/assets/svg/product-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'Products' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{products_count}}</p>
+      </div>
+    </div>
+    <div class="overviewCard" [routerLink]="['/admin/collections']">
+      <div class="overviewCard-icon overviewCard-icon--photo">
+        <img src="/assets/svg/collection-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'Collections' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{collections_count}}</p>
+      </div>
+    </div>
+  </div> 
+  
+  <div class="main-overview" *ngIf="isUserSummary">
+    <div class="overviewCard" [routerLink]="['/admin/cart']">
+      <div class="overviewCard-icon overviewCard-icon--document">
+         <img src="/assets/svg/cart-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'My cart' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{my_cart_count}}</p>
+      </div>
+    </div>
+    <div class="overviewCard" [routerLink]="['/admin/favorite']">
+      <div class="overviewCard-icon overviewCard-icon--calendar">
+        <img src="/assets/svg/favorite-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'My favorite' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{my_favorite_count}}</p>
+      </div>
+    </div>
+    <div class="overviewCard" [routerLink]="['/admin/my-products']">
+      <div class="overviewCard-icon overviewCard-icon--mail">
+        <img src="/assets/svg/product-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'My products' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{my_products_count}}</p>
+      </div>
+    </div>
+    <div class="overviewCard" [routerLink]="['/admin/my-comments']">
+      <div class="overviewCard-icon overviewCard-icon--photo">
+        <img src="/assets/svg/comment-white.svg">
+      </div>
+      <div class="overviewCard-description">
+        <h3 class="overviewCard-title text-black"> <strong>{{'My comments' | translate}}</strong></h3>
+        <p class="overviewCard-subtitle">{{my_comments_count}}</p>
+      </div>
+    </div>
+  </div> 
+  
+  <div class="card">
+      <div class="card__header">{{'Orders' | translate}}</div>
+      <div class="card__main">
+        <app-admin-orders></app-admin-orders>
+      </div>
   </div>
-  <div class="overviewCard" [routerLink]="['/admin/categories']">
-    <div class="overviewCard-icon overviewCard-icon--calendar">
-      <img src="/assets/svg/category-white.svg">
-    </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'Categories' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{categories_count}}</p>
-    </div>
-  </div>
-  <div class="overviewCard" [routerLink]="['/admin/products']">
-    <div class="overviewCard-icon overviewCard-icon--mail">
-      <img src="/assets/svg/product-white.svg">
-    </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'Products' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{products_count}}</p>
-    </div>
-  </div>
-  <div class="overviewCard" [routerLink]="['/admin/collections']">
-    <div class="overviewCard-icon overviewCard-icon--photo">
-      <img src="/assets/svg/collection-white.svg">
-    </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'Collections' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{collections_count}}</p>
-    </div>
-  </div>
-</div> 
+  
+</div>
 
-<div class="main-overview" *ngIf="isUserSummary">
-  <div class="overviewCard" [routerLink]="['/admin/cart']">
-    <div class="overviewCard-icon overviewCard-icon--document">
-       <img src="/assets/svg/cart-white.svg">
-    </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'My cart' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{my_cart_count}}</p>
-    </div>
-  </div>
-  <div class="overviewCard" [routerLink]="['/admin/favorite']">
-    <div class="overviewCard-icon overviewCard-icon--calendar">
-      <img src="/assets/svg/favorite-white.svg">
-    </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'My favorite' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{my_favorite_count}}</p>
-    </div>
-  </div>
-  <div class="overviewCard" [routerLink]="['/admin/my-products']">
-    <div class="overviewCard-icon overviewCard-icon--mail">
-      <img src="/assets/svg/product-white.svg">
-    </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'My products' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{my_products_count}}</p>
-    </div>
-  </div>
-  <div class="overviewCard" [routerLink]="['/admin/my-comments']">
-    <div class="overviewCard-icon overviewCard-icon--photo">
-      <img src="/assets/svg/comment-white.svg">
-    </div>
-    <div class="overviewCard-description">
-      <h3 class="overviewCard-title text-black"> <strong>{{'My comments' | translate}}</strong></h3>
-      <p class="overviewCard-subtitle">{{my_comments_count}}</p>
-    </div>
-  </div>
-</div> 
-
-<div class="card">
-    <div class="card__header">{{'Orders' | translate}}</div>
-    <div class="card__main">
-      <app-admin-orders></app-admin-orders>
-    </div>
+<div *ngIf="merchantStatus == 'pending'" class="text-success d-flex justify-content-center align-items-center h-100">
+  {{'You have submited application successful, please waiting for review, it may take 3~5 business days.' | translate}}
 </div>

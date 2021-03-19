@@ -1,3 +1,15 @@
+https://testnets.opensea.io/collection/testmore/assets/create
+opensea
+
+https://github.com/martinzugnoni/auction-engine/blob/master/contracts/AuctionEngine.sol
+
+
+3295d51e000000000000000000000000000000000000000000000000000000070003000100000000000000000000000000000000000000000000000002c68af0bb1400000000000000000041de44a0022fa24706a1d23756d418980ff321db849686dcab
+
+ERC721
+
+https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
+
 LTRSQ2W7BYDCQQ77
 
 Testing:

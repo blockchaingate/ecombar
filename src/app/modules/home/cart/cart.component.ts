@@ -100,20 +100,22 @@ export class CartComponent implements OnInit, OnDestroy {
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
 
     const items: CartItem[] = [];
-    let merchantId = '';
+    const merchantIds = [];
     let currency = '';
     let transAmount = 0;
 
     this.cartItems.forEach(item => {
       console.log('item=', item);
-      merchantId = item.merchantId;
+      if(merchantIds.indexOf(item.merchantId) < 0) {
+        merchantIds.push(item.merchantId);
+      }
       currency = item.currency;
       transAmount += item.quantity * item.price;
       const titleTran = this.translateServ.transField(item.title);
       item.title = titleTran ? titleTran : item.title;
       items.push(item);
     });
-    const orderData = { merchantId, items, currency, transAmount };
+    const orderData = { merchantIds, items, currency, transAmount };
 
 
     (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe(res => {

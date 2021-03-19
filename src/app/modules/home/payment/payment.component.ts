@@ -100,6 +100,7 @@ export class PaymentComponent implements OnInit{
     }
     
     selectShippingService(service: string) {
+      console.log('service=', service);
       if(!service) {
         return;
       }

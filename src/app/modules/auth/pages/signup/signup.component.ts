@@ -36,6 +36,7 @@ export class SignupComponent implements OnInit {
     this.userServ.signup(this.email, this.password).subscribe(
       (res: any) => {
         if (res && res.token) {
+          this.errMsg = '';
         } else {
           this.errMsg = 'Invalid email or password';
         }

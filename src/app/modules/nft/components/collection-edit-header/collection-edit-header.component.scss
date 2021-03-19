@@ -1,0 +1,98 @@
+.collectionManagerView--header {
+    display: flex;
+    margin: 0px 8px 32px;
+}
+
+.collectionManagerView--collection-image {
+    background-position: center center;
+    background-size: cover;
+    border-radius: 12px;
+    flex: 0 0 64px;
+    height: 64px;
+    margin-right: 12px;
+}
+
+@media (min-width: 600px) {
+    .collectionManagerView--collection-image {
+        flex: 0 0 180px;
+        height: 180px;
+        margin-right: 24px;
+    }
+}
+
+.collectionManagerView--header #category {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.collectionManagerView--header #category #category-name {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@media (min-width: 600px) {
+    .collectionManagerView--header #category #category-name {
+        font-size: 40px;
+    }
+}
+
+.collectionManagerView--header #category #category-address {
+    color: rgb(117, 118, 123);
+    font-size: 12px;
+    font-family: "Fira Code", Menlo, monospace;
+    margin-top: 8px;
+    max-width: 65vw;
+    overflow: auto;
+}
+
+.collectionManagerView--header #category #category-description {
+    flex: 1 0 0%;
+    font-size: 11px;
+    margin-top: 12px;
+}
+
+@media (min-width: 600px) {
+    .collectionManagerView--header #category #category-description {
+        font-size: 14px;
+    }
+    
+} 
+
+.collectionManagerView--header #category #category-actions {
+    margin-top: 12px;
+}
+
+.collectionManagerView--actions {
+    display: flex;
+}
+
+.collectionManagerView--actions .collectionManagerView--collection-action-button {
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 6px;
+    border: 1px solid rgb(226, 230, 239);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 64px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-right: 12px;
+    width: 64px;
+}
+
+.collectionManagerView--actions .collectionManagerView--collection-action-button .collectionManagerView--collection-action-link {
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(117, 118, 123);
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+}
+
