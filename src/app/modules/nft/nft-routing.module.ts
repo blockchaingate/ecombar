@@ -4,6 +4,7 @@ import { NftComponent } from './nft.component';
 import { NftAdminComponent } from './components/admin/admin.component';
 import { NftCollectionsComponent } from './components/collections/collections.component';
 import { NftCollectionEditComponent } from './components/collection-edit/collection-edit.component';
+import { NftCollectionAssetsCreateComponent } from './components/collection-assets-create/collection-assets-create.component';
 
 const routes: Routes = [
     {
@@ -16,8 +17,11 @@ const routes: Routes = [
                 path: 'collections', component: NftCollectionsComponent
             },
             {
-              path: 'collection/:name/assets/edit', component: NftCollectionEditComponent
-          }                        
+              path: 'collections/:name/assets/edit', component: NftCollectionEditComponent
+            },
+            {
+              path: 'collections/:name/assets/create', component: NftCollectionAssetsCreateComponent
+            }                          
         ]
       }
 ];

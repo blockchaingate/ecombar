@@ -1,4 +1,8 @@
-<app-nft-collections-header></app-nft-collections-header>
+<app-nft-collections-header 
+[title]="'My Collections'" [new]="true"
+[subtitle]="'Create collections (your own storefronts), upload digital creations, configure your commission, and sell NFTs to your fans - all for free!'">
+</app-nft-collections-header>
+
 <app-nft-collections-list (createEvent)="openModal(template)"></app-nft-collections-list>
 <ng-template #template>
     <div class="modal-header">

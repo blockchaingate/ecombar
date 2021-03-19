@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./collections-header.component.scss']
   })
   export class NftCollectionsHeaderComponent implements OnInit {
+    @Input() title: string;
+    @Input() subtitle: string;
+    @Input() new: boolean;
       ngOnInit() {
           
       }

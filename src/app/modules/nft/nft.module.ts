@@ -10,6 +10,10 @@ import { NftCollectionsListComponent } from './components/collections-list/colle
 import { NftCollectionsAddComponent } from './components/collections-add/collections-add.component';
 import { NftCollectionsAddDoneComponent } from './components/collections-add-done/collections-add-done.component';
 import { NftCollectionEditComponent } from './components/collection-edit/collection-edit.component';
+import { NftCollectionEditTopbarComponent } from './components/collection-edit-topbar/collection-edit-topbar.component';
+import { NftCollectionEditHeaderComponent } from './components/collection-edit-header/collection-edit-header.component';
+import { NftCollectionEditItemsComponent } from './components/collection-edit-items/collection-edit-items.component';
+import { NftCollectionAssetsCreateComponent } from './components/collection-assets-create/collection-assets-create.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 
@@ -24,7 +28,11 @@ import { FormsModule } from '@angular/forms';
       NftCollectionsListComponent,
       NftCollectionsAddComponent,
       NftCollectionsAddDoneComponent,
-      NftCollectionEditComponent
+      NftCollectionEditComponent,
+      NftCollectionEditTopbarComponent,
+      NftCollectionEditHeaderComponent,
+      NftCollectionEditItemsComponent,
+      NftCollectionAssetsCreateComponent
     ],
     imports: [
         NftRoutingModule,

@@ -1,12 +1,11 @@
 <header class="CollectionManager--header-container">
     <div class="CollectionManager--header-title">
-        My Collections
-        <span class="CollectionManager--title-badge">new</span>
+        {{title}}
+        <span class="CollectionManager--title-badge" *ngIf="new">new</span>
     </div>
-    <div class="CollectionManager--header-subtitle">
+    <div class="CollectionManager--header-subtitle" *ngIf="subtitle">
         <div>
-            Create collections (your own storefronts), upload digital creations, configure your commission, and sell NFTs to your fans - all for free!<br>You can also manage smart contracts that you created outside of OpenSea. <a href="https://opensea.io/blog/announcements/introducing-the-collection-manager/" rel="nofollow noopener " target="_blank"><strong>Learn more</strong>
-            </a>
+            {{subtitle}}
         </div>
     </div>
 </header>
