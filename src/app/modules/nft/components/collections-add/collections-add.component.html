@@ -18,23 +18,15 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>  
             
-            <div>
-                <label for="name">Name *</label>
-                <div>
-                    <div class="Input--main">
-                        <div class="Input--prefix"></div>
-                        <input autocapitalize="off" [(ngModel)]="name" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="e.g. OpenSea Gems" required="" spellcheck="false" type="text" value="">
-                    </div>
-                </div>
-            </div>   
-            
+            <app-textbox [title]="'Name *'"></app-textbox>
+
             <div class="pt-3">
-                <label for="description" class="active">Description</label>
-                <header class="light-text">4 of 1000 characters used</header>
-                <textarea class="TextAreareact__Text" [(ngModel)]="description" maxlength="1000" name="description" placeholder="Provide a description for your store. Markdown syntax is supported." rows="4"></textarea>
-            </div>   
+                <app-textarea [title]="'Description'" [subtitle]="'4 of 1000 characters used'"></app-textarea>
+            </div>
+            
+
             
             <div class="CreateCollection--actions">
                 <div class="ActionButtonrContainer">

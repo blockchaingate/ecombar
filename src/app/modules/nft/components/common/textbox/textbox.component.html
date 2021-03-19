@@ -1,0 +1,10 @@
+<div>
+    <label for="name">{{title}}</label>
+    <header class="light-text" *ngIf="subtitle">{{subtitle}}</header>
+    <div>
+        <div class="Input--main">
+            <div class="Input--prefix"></div>
+            <input autocapitalize="off" [(ngModel)]="name" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="{{placeholder}}" required="" spellcheck="false" type="text" value="">
+        </div>
+    </div>
+</div>  

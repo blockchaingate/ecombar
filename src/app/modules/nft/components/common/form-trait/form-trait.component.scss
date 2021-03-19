@@ -1,0 +1,48 @@
+.AssetFormTraitSection--item {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.AssetFormTraitSection--item .AssetFormTraitSection--content {
+    display: flex;
+}
+
+.AssetFormTraitSection--item .AssetFormTraitSection--content .AssetFormTraitSection--content-main {
+    margin-left: 16px;
+}
+
+.AssetFormTraitSection--item .AssetFormTraitSection--content .AssetFormTraitSection--content-main .AssetFormTraitSection-input-label {
+    color: rgb(46, 54, 59);
+    font-weight: 600;
+    font-size: 16px;
+    display: block;
+}
+
+.kKbqlJ {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    max-width: 100%;
+}
+
+.ksFLxC.ActionButton--isSmall.ActionButton--iconOnly {
+    padding: 10px;
+}
+
+.ActionButton--content {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.ksFLxC.ActionButton--secondary {
+    background-color: white;
+    border: 1px solid rgb(32, 129, 226);
+    color: rgb(32, 129, 226);
+}
