@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     providers: [],
-    selector: 'app-nft-collections-header',
-    templateUrl: './collections-header.component.html',
-    styleUrls: ['./collections-header.component.scss']
+    selector: 'app-image-uploader',
+    templateUrl: './image-uploader.component.html',
+    styleUrls: ['./image-uploader.component.scss']
   })
-  export class NftCollectionsHeaderComponent implements OnInit {
+  export class ImageUploaderComponent implements OnInit {
     @Input() title: string;
     @Input() subtitle: string;
     @Input() new: boolean;
