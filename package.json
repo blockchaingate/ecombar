@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "scripts": {
         "ng": "ng",
+        "postinstall": "node patch-webpack.js",
         "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
