@@ -9,7 +9,6 @@ import { Component, OnInit, Input } from '@angular/core';
   export class ImageUploaderComponent implements OnInit {
     @Input() title: string;
     @Input() subtitle: string;
-    @Input() new: boolean;
       ngOnInit() {
           
       }

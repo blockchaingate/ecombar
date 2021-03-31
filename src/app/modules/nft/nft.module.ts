@@ -20,6 +20,8 @@ import { NftCollectionEditHeaderComponent } from './components/collection-edit-h
 import { NftCollectionEditItemsComponent } from './components/collection-edit-items/collection-edit-items.component';
 import { NftCollectionAssetsCreateComponent } from './components/collection-assets-create/collection-assets-create.component';
 import { NftCollectionAssetsCreateDoneComponent } from './components/collection-assets-create-done/collection-assets-create-done';
+import { PropertiesComponent } from './components/common/form-trait/modals/properties/properties.component';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -43,9 +45,11 @@ import { CommonModule } from '@angular/common';
       TextboxComponent,
       TextareaComponent,
       FormTraitComponent,
+      PropertiesComponent,
       TextareaSwitchComponent,
       NftCollectionAssetsCreateDoneComponent
     ],
+    entryComponents:[PropertiesComponent],
     imports: [
         NftRoutingModule,
         FormsModule,
