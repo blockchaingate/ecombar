@@ -33,6 +33,7 @@ table {
 }
 
 .Input--main .Input--label {
+    width: 48px;
     -webkit-box-align: center;
     align-items: center;
     color: rgb(138, 147, 155);
@@ -136,4 +137,58 @@ table {
     -webkit-box-pack: center;
     justify-content: center;
     width: 100%;
+}
+
+
+.NumericTraitTableRow--column {
+    padding: 0px 0px 20px;
+}
+
+.Input--main:focus-within {
+    color: inherit;
+    box-shadow: rgb(14 14 14 / 25%) 0px 0px 8px 0px;
+    z-index: 1;
+}
+
+.Input--main .Input--prefix {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: transparent;
+    color: rgb(138, 147, 155);
+    display: flex;
+    padding-left: 12px;
+}
+
+.Input--main .Input--input {
+    background-color: transparent;
+    border: none;
+    flex: 1 0 0%;
+    height: 48px;
+    outline: none;
+    padding: 0px 12px 0px 0px;
+    min-width: 0px;
+}
+
+.Input--main .Input--right-label {
+    border-bottom-right-radius: 5px;
+    border-left: 1px solid rgb(229, 232, 235);
+    border-top-right-radius: 5px;
+}
+
+.Input--main .Input--label {
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(138, 147, 155);
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.NumericTraitTableRow--value-input input {
+    width: 50px;
+}
+
+.NumericTraitTableRow--max-input input, .NumericTraitTableRow--value-input input {
+    width: 50px;
 }

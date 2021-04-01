@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { LevelsComponent } from './modals/levels/levels.component';
 import { PropertiesComponent } from './modals/properties/properties.component';
 @Component({
     providers: [],
@@ -11,6 +12,7 @@ export class FormTraitComponent implements OnInit {
     @Input() icon: string;
     @Input() title: string;
     @Input() subtitle: string;
+    @Input() modal: any;
     modalRef: BsModalRef;
     //@Output() newItemEvent = new EventEmitter<string>();
 
@@ -20,7 +22,17 @@ export class FormTraitComponent implements OnInit {
           
     }
 
-    addPopup(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(PropertiesComponent);
+    addPopup() {
+        const initialState = {
+            title: this.modal.title,
+            subtitle: this.modal.subtitle
+        };          
+        if(this.modal.type == 'properties') {
+          
+            this.modalRef = this.modalService.show(PropertiesComponent, {initialState});
+        } else {
+            this.modalRef = this.modalService.show(LevelsComponent, {initialState});
+        }
+        
     }
 }

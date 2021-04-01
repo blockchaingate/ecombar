@@ -14,9 +14,28 @@
 
 <app-textarea  [title]="'Description'" [subtitle]="'The description will be included on the item\'s detail page underneath its image.'"></app-textarea>
 
-<app-form-trait [icon]="'list'" [title]="'Properties'" [subtitle]="'Textual traits that show up as rectangles'"></app-form-trait>
-<app-form-trait [icon]="'star_rate'" [title]="'Levels'" [subtitle]="'Numerical traits that show as a progress bar'"></app-form-trait>
-<app-form-trait [icon]="'bar_chart'" [title]="'Stats'" [subtitle]="'Numerical traits that just show as numbers'"></app-form-trait>
+<app-form-trait 
+[icon]="'list'" 
+[title]="'Properties'" 
+[subtitle]="'Textual traits that show up as rectangles'" 
+[modal]="propertiesModal">
+</app-form-trait>
+
+<app-form-trait 
+[icon]="'star_rate'" 
+[title]="'Levels'" 
+[subtitle]="'Numerical traits that show as a progress bar'" 
+[modal]="levelsModal"
+>
+</app-form-trait>
+
+<app-form-trait 
+[icon]="'bar_chart'" 
+[title]="'Stats'" 
+[subtitle]="'Numerical traits that just show as numbers'" 
+[modal]="statsModal"
+>
+</app-form-trait>
 
 <app-textarea-switch></app-textarea-switch>
 
