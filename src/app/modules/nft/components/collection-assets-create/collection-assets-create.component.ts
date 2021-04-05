@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
     providers: [],
@@ -7,6 +8,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./collection-assets-create.component.scss']
   })
   export class NftCollectionAssetsCreateComponent implements OnInit {
+    name: string;
+
     propertiesModal = {
       type: 'properties',
       title: 'Add Properties',
@@ -25,10 +28,16 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
       subtitle: 'Stats show up underneath your item, are clickable, and can be filtered in your collection\'s sidebar.'
     };
 
+    constructor(private router: Router, private route: ActivatedRoute) {
+
+    }
+
     ngOnInit() {
-          
+      this.route.paramMap.subscribe((params: ParamMap) =>  {
+        this.name = params.get('name');   
+      });
     }
     createAssets() {
-      
+      this.router.navigate(['/nft/admin/collections/' + this.name + '/assets/create-done']);
     }
   }

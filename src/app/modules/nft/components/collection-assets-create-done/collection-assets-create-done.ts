@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
     providers: [],
@@ -7,10 +8,19 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./collection-assets-create-done.component.scss']
   })
   export class NftCollectionAssetsCreateDoneComponent implements OnInit {
+
+    constructor(private router: Router, private route: ActivatedRoute) {
+
+    }
+
     ngOnInit() {
           
     }
-    createAssets() {
-      
+    visit() {
+
+    }
+
+    sell() {
+      this.router.navigate(['/nft/admin/asset/sell']);
     }
   }

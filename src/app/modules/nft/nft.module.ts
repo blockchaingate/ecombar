@@ -5,6 +5,7 @@ import { NftHeaderComponent } from './components/header/header.component';
 import { NftAdminComponent } from './components/admin/admin.component';
 import { NftAdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
 import { NftCollectionsComponent } from './components/collections/collections.component';
+import { ButtonComponent } from './components/common/button/button.component';
 import { TextHeaderComponent } from './components/common/text-header/text-header.component';
 import { ImageUploaderComponent } from './components/common/image-uploader/image-uploader.component';
 import { TextboxComponent } from './components/common/textbox/textbox.component';
@@ -22,6 +23,8 @@ import { NftCollectionAssetsCreateComponent } from './components/collection-asse
 import { NftCollectionAssetsCreateDoneComponent } from './components/collection-assets-create-done/collection-assets-create-done';
 import { PropertiesComponent } from './components/common/form-trait/modals/properties/properties.component';
 import { LevelsComponent } from './components/common/form-trait/modals/levels/levels.component';
+import { NftAssetSellComponent } from './components/asset-sell/asset-sell.component';
+import { NftAssetOverviewComponent } from './components/asset-overview/asset-overview.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -41,12 +44,15 @@ import { CommonModule } from '@angular/common';
       NftCollectionEditHeaderComponent,
       NftCollectionEditItemsComponent,
       NftCollectionAssetsCreateComponent,
+      NftAssetSellComponent,
       ImageUploaderComponent,
       TextboxComponent,
       TextareaComponent,
       FormTraitComponent,
       PropertiesComponent,
       LevelsComponent,
+      NftAssetOverviewComponent,
+      ButtonComponent,
       TextareaSwitchComponent,
       NftCollectionAssetsCreateDoneComponent
     ],
