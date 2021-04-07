@@ -25,6 +25,14 @@ import { PropertiesComponent } from './components/common/form-trait/modals/prope
 import { LevelsComponent } from './components/common/form-trait/modals/levels/levels.component';
 import { NftAssetSellComponent } from './components/asset-sell/asset-sell.component';
 import { NftAssetOverviewComponent } from './components/asset-overview/asset-overview.component';
+import { NftAssetSellMethodComponent } from './components/asset-sell-method/asset-sell-method.component';
+import { NftAssetSellPriceComponent } from './components/asset-sell-price/asset-sell-price.component';
+import { NftAssetSellIncludeEndingPrinceComponent } from './components/asset-sell-include-ending-price/asset-sell-include-ending-price.component';
+import { NftAssetSellScheduleForFutureTimeComponent } from './components/asset-sell-schedule-for-future-time/asset-sell-schedule-for-future-time.component';
+import { NftAssetSellPrivacyComponent } from './components/asset-sell-privacy/asset-sell-privacy.component';
+import { NftAssetSellInstructionsComponent } from './components/asset-sell-instructions/asset-sell-instructions.component';
+import { NftAssetSellSummaryComponent } from './components/asset-sell-summary/asset-sell-summary.component';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -54,7 +62,14 @@ import { CommonModule } from '@angular/common';
       NftAssetOverviewComponent,
       ButtonComponent,
       TextareaSwitchComponent,
-      NftCollectionAssetsCreateDoneComponent
+      NftAssetSellMethodComponent,
+      NftCollectionAssetsCreateDoneComponent,
+      NftAssetSellPriceComponent,
+      NftAssetSellIncludeEndingPrinceComponent,
+      NftAssetSellScheduleForFutureTimeComponent,
+      NftAssetSellPrivacyComponent,
+      NftAssetSellInstructionsComponent,
+      NftAssetSellSummaryComponent
     ],
     entryComponents:[PropertiesComponent, LevelsComponent],
     imports: [

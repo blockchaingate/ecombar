@@ -622,3 +622,9 @@
     justify-content: center;
     width: 100%;
 }
+
+.clearfix {
+    display: table;
+    content: "";
+    clear: both;
+}

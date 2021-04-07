@@ -1,0 +1,95 @@
+.AssetSell {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    width: 100%;   
+}
+
+.AssetSell .header {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.AssetSell .desc {
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(138, 147, 155);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Input--main {
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    border: 1px solid rgb(229, 232, 235);
+    display: flex;
+    position: relative;
+}
+
+.Input--main .Input--left-label {
+    border-bottom-left-radius: 5px;
+    border-right: 1px solid rgb(229, 232, 235);
+    border-top-left-radius: 5px;
+}
+
+.Input--main .Input--label {
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(138, 147, 155);
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    user-select: none;
+    background-color: rgb(251, 253, 255);
+}
+
+.PaymentTokenInput--selector {
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin: 0px 4px;
+    width: 72px;
+}
+
+.PaymentTokenInput--selector .PaymentTokenInput--selected-token {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex: 1 0 0%;
+    font-size: 22px;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.PaymentTokenInput--selector .PaymentTokenInput--selected-token {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex: 1 0 0%;
+    font-size: 22px;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.Input--main .Input--prefix {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: transparent;
+    color: rgb(138, 147, 155);
+    display: flex;
+    padding-left: 12px;
+}
+
+.Input--main .Input--input {
+    background-color: transparent;
+    border: none;
+    flex: 1 0 0%;
+    height: 48px;
+    outline: none;
+    padding: 0px 12px 0px 0px;
+    min-width: 0px;
+}

@@ -1,0 +1,69 @@
+.kcUBiv {
+    margin-top: 20px;
+}
+
+.juZdza {
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(229, 232, 235);
+    color: rgb(14, 14, 14);
+    background-color: rgb(255, 255, 255);
+}
+
+.dsjMXu.Panel--isClosed .Panel--header {
+    margin-bottom: 2px;
+}
+
+.juZdza .BasePanel--header {
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px 12px;
+    user-select: none;
+    border-top: 1px solid rgb(229, 232, 235);
+    border-right: 1px solid rgb(229, 232, 235);
+    border-left: 1px solid rgb(229, 232, 235);
+    border-image: initial;
+    background-color: rgb(255, 255, 255);
+    border-bottom: none;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.dsjMXu .Panel--icon {
+    margin-right: 10px;
+}
+
+.kFnBGV {
+    font-size: 24px;
+}
+
+.dsjMXu .Panel--toggle {
+    margin-left: auto;
+    color: rgba(14, 14, 14, 0.5);
+}
+
+.dsjMXu.Panel--isClosed .Panel--body {
+    border: none;
+}
+
+.dsjMXu .Panel--content-container {
+    overflow: hidden;
+    transition: height 100ms ease 0s;
+}
+
+.dsjMXu .Panel--isContentPadded {
+    padding: 20px;
+}
+
+.juZdza .BasePanel--body {
+    border-radius: 0px 0px 5px 5px;
+    border-top: 1px solid rgb(229, 232, 235);
+    border-right: 1px solid rgb(229, 232, 235);
+    border-left: 1px solid rgb(229, 232, 235);
+    border-image: initial;
+    border-bottom: none;
+    color: rgb(53, 56, 64);
+    background-color: rgb(251, 253, 255);
+}
