@@ -1,0 +1,69 @@
+.eyduij {
+    bottom: 0px;
+    position: fixed;
+    top: auto;
+    width: 100%;
+    right: 0px;
+    padding: 10px 20px;
+    z-index: 2;
+    background-color: rgb(251, 253, 255);
+    border-bottom: 1px solid rgb(229, 232, 235);
+}
+
+@media (min-width: 1024px) {
+    .eyduij {
+        position: sticky;
+        top: 72px;
+        height: 70px;
+    }
+}
+
+
+.eyduij .OrderManager--cta-container {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex: 1 0 0%;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+@media (min-width: 1024px) {
+    .eyduij .OrderManager--cta-container {
+        max-width: 1280px;
+        margin: auto;
+        padding: 0px 20px;
+    }
+}
+
+.eyduij .OrderManager--cta-container .OrderManager--second-button {
+    margin: 0px 10px;
+}
+
+.bwFKIF.ActionButton--light.ActionButton--tertiary {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 232, 235);
+    color: rgb(138, 147, 155);
+}
+
+.bwFKIF.ActionButton--iconOnly {
+    padding: 12px;
+}
+
+.bwFKIF {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(32, 129, 226);
+    border: 1px solid rgb(32, 129, 226);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 12px 20px;
+    text-align: center;
+    user-select: none;
+}

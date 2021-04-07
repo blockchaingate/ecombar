@@ -1,0 +1,35 @@
+.asset-sell-subheader {
+    margin-bottom: 5px;
+}
+
+.asset-sell-subheader {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+ul {
+    font-size: 14px;
+}
+
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+ul li {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+ul:not(.browser-default) li {
+    list-style-type: none;
+}
+
+ul li .separator {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    height: 16px;
+    border-bottom: 1px dotted rgb(158, 158, 158);
+    margin: 0px 5px;
+}

@@ -1,0 +1,15 @@
+<div class="panel">
+    <header class="BasePanel--header" (click)="expanded = !expanded">
+        <i class="Panel--icon material-icons" size="24">{{icon}}</i>
+        {{title}}
+        <i *ngIf="toggleable" class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Panel--toggle material-icons" 
+        value="{{!expanded ? 'expand_more' : 'expand_less'}}" size="24">
+            {{!expanded ? 'expand_more' : 'expand_less'}}
+        </i>
+    </header>
+    <div class="Panel-body">
+        <div class="Panel--isContentPadded" *ngIf="!toggleable || expanded">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

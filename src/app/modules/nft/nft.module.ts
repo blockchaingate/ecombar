@@ -23,6 +23,7 @@ import { NftCollectionAssetsCreateComponent } from './components/collection-asse
 import { NftCollectionAssetsCreateDoneComponent } from './components/collection-assets-create-done/collection-assets-create-done';
 import { PropertiesComponent } from './components/common/form-trait/modals/properties/properties.component';
 import { LevelsComponent } from './components/common/form-trait/modals/levels/levels.component';
+import { ExpansionComponent } from './components/common/expansion/expansion.component';
 import { NftAssetSellComponent } from './components/asset-sell/asset-sell.component';
 import { NftAssetOverviewComponent } from './components/asset-overview/asset-overview.component';
 import { NftAssetSellMethodComponent } from './components/asset-sell-method/asset-sell-method.component';
@@ -32,10 +33,18 @@ import { NftAssetSellScheduleForFutureTimeComponent } from './components/asset-s
 import { NftAssetSellPrivacyComponent } from './components/asset-sell-privacy/asset-sell-privacy.component';
 import { NftAssetSellInstructionsComponent } from './components/asset-sell-instructions/asset-sell-instructions.component';
 import { NftAssetSellSummaryComponent } from './components/asset-sell-summary/asset-sell-summary.component';
+import { NftAssetSellSummaryListingComponent } from './components/asset-sell-summary-listing/asset-sell-summary-listing.component';
+import { NftAssetSellSummaryBountiesComponent } from './components/asset-sell-summary-bounties/asset-sell-summary-bounties.component';
+import { NftAssetSellSummaryFeesComponent } from './components/asset-sell-summary-fees/asset-sell-summary-fees.component';
 
+import { NftAssetComponent } from './components/asset/asset.component';
+import { NftAssetActionComponent } from './components/asset-action/asset-action.component';
+import { NftAssetImageComponent } from './components/asset-image/asset-image.component';
+import { NftAssetDetailsComponent } from './components/asset-details/asset-details.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 @NgModule({
     declarations: [
       NftComponent,
@@ -69,7 +78,15 @@ import { CommonModule } from '@angular/common';
       NftAssetSellScheduleForFutureTimeComponent,
       NftAssetSellPrivacyComponent,
       NftAssetSellInstructionsComponent,
-      NftAssetSellSummaryComponent
+      NftAssetSellSummaryComponent,
+      NftAssetSellSummaryListingComponent,
+      NftAssetSellSummaryBountiesComponent,
+      NftAssetSellSummaryFeesComponent,
+      NftAssetComponent,
+      NftAssetActionComponent,
+      NftAssetImageComponent,
+      NftAssetDetailsComponent,
+      ExpansionComponent
     ],
     entryComponents:[PropertiesComponent, LevelsComponent],
     imports: [
