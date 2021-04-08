@@ -51,6 +51,8 @@ import { NftAccountInWalletSearchComponent } from './components/account-in-walle
 import { NftAccountInWalletAssetsComponent } from './components/account-in-wallet-assets/account-in-wallet-assets.component';
 import { NftAccountInWalletAssetComponent } from './components/account-in-wallet-asset/account-in-wallet-asset.component';
 
+import { NftAssetsComponent } from './components/assets/assets.component';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -104,7 +106,8 @@ import { CommonModule } from '@angular/common';
       NftAccountInWalletComponent,
       NftAccountInWalletSearchComponent,
       NftAccountInWalletAssetsComponent,
-      NftAccountInWalletAssetComponent
+      NftAccountInWalletAssetComponent,
+      NftAssetsComponent
     ],
     entryComponents:[PropertiesComponent, LevelsComponent],
     imports: [
