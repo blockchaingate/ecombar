@@ -10,6 +10,7 @@ import { NftAssetSellComponent } from './components/asset-sell/asset-sell.compon
 import { NftAssetComponent } from './components/asset/asset.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftAccountComponent } from './components/account/account.component';
+import { NftIndexComponent } from './components/index/index.component';
 
 const routes: Routes = [
     {
