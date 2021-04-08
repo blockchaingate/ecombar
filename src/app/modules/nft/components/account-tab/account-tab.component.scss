@@ -1,0 +1,63 @@
+.ghFVUF .account--navbar {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.jKagte {
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(229, 232, 235);
+    display: flex;
+    padding: 12px 20px;
+    position: sticky;
+    z-index: 4;
+}
+
+.Pisok {
+    background-color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    margin: 0px 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.Pisok.TabNavItem--active {
+    background-color: rgb(229, 232, 235);
+    font-weight: 500;
+}
+
+.Pisok.TabNavItem--active .TabNavItem--name {
+    color: rgb(53, 56, 64);
+}
+
+@media (min-width: 600px) {
+    .Pisok .TabNavItem--name {
+        display: block;
+        margin-left: 8px;
+        color: rgb(138, 147, 155);
+    }
+}
+
+.Pisok .TabNavItem--name {
+    margin-left: 8px;
+    color: rgb(138, 147, 155);
+}
+
+.Pisok {
+    background-color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    margin: 0px 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}

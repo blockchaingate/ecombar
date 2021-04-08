@@ -44,6 +44,8 @@ import { NftAssetDetailsComponent } from './components/asset-details/asset-detai
 import { NftAssetInfoComponent } from './components/asset-info/asset-info.component';
 
 import { NftAccountComponent } from './components/account/account.component';
+import { NftAccountOverviewComponent } from './components/account-overview/account-overview.component';
+import { NftAccountTabComponent } from './components/account-tab/account-tab.component';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
@@ -92,7 +94,9 @@ import { CommonModule } from '@angular/common';
       NftAssetDetailsComponent,
       ExpansionComponent,
       NftAssetInfoComponent,
-      NftAccountComponent
+      NftAccountComponent,
+      NftAccountOverviewComponent,
+      NftAccountTabComponent
     ],
     entryComponents:[PropertiesComponent, LevelsComponent],
     imports: [
