@@ -1,0 +1,57 @@
+.main-container {
+    margin: 20px 20px 15px;
+}
+
+.Toolbar--interface {
+    display: flex;
+}
+
+.Toolbar--icon {
+    font-size: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 28px;
+    color: rgba(53, 56, 64, 0.75);
+    margin: 0px;
+    padding: 0px;
+}
+
+.Toolbar--interface .Toolbar--tool:first-of-type {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left: 2px solid rgb(229, 232, 235);
+    border-right: 1px solid rgb(229, 232, 235);
+}
+
+.Toolbar--interface .Toolbar--tool {
+    width: 100%;
+    min-width: 40px;
+    border: 1px solid rgb(229, 232, 235);
+    padding: 5px 5px 5px 6px;
+    margin-bottom: -1px;
+    cursor: pointer;
+}
+
+.item--title {
+    font-size: 30px;
+    font-weight: 600;
+    max-width: 100%;
+    width: 588px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Image--image {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.ImageWrapper {
+    cursor: pointer;
+    margin-right: 5px;    
+}
+
+.omega{
+    float:right;
+}

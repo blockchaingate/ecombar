@@ -10,6 +10,47 @@
         </section>
     </div>
     <div class="col col-7">
+        <app-nft-asset-info></app-nft-asset-info>
 
+        <div class="item-frame">
+            <app-expansion 
+            [title]="'Price History'"
+            [icon]="'timeline'"
+             [toggleable]="true">
+                price
+            </app-expansion> 
+        </div>
+     
+        <div class="item-frame">
+            <app-expansion 
+            [title]="'Listing'"
+            [icon]="'local_offer'"
+             [toggleable]="true">
+                price
+            </app-expansion>   
+        </div>
+ 
+        <div class="item-frame">
+            <app-expansion 
+            [title]="'Offers'"
+            [icon]="'toc'"
+             [toggleable]="true">
+                price
+            </app-expansion>   
+        </div>        
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-12">
+        <div class="item-frame">
+            <app-expansion 
+            [title]="'Trading History'"
+            [icon]="'swap_vert'"
+             [toggleable]="true">
+                price
+            </app-expansion>   
+        </div>        
     </div>
 </div>
