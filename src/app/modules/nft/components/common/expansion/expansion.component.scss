@@ -17,6 +17,9 @@
     color: rgb(14, 14, 14);
 }
 
+.BasePanel--header.no-border-top {
+    border-top: none!important;
+}
 .Panel--icon {
     margin-right: 10px;
 }

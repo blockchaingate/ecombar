@@ -1,5 +1,5 @@
 <div class="panel">
-    <header class="BasePanel--header" (click)="expanded = !expanded">
+    <header class="BasePanel--header" [ngClass]="noBorderTop ? 'no-border-top' : ''" (click)="expanded = !expanded">
         <i class="Panel--icon material-icons" size="24">{{icon}}</i>
         {{title}}
         <i *ngIf="toggleable" class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Panel--toggle material-icons" 

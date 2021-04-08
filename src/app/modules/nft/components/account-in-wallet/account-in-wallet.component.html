@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col col-3">
+        <app-expansion 
+        [title]="'Status'"
+        [icon]="'star'"
+        [options]="optionsNoBorderTop"
+        [toggleable]="true">
+            ono
+        </app-expansion>
+
+        <app-expansion 
+        [title]="'Collections'"
+        [icon]="'view_comfy'"
+        [options]="options"
+        [toggleable]="true">
+            ono
+        </app-expansion>        
+
+        <app-expansion 
+        [title]="'On Sale In'"
+        [icon]="'local_offer'"
+        [options]="options"
+        [toggleable]="true">
+            ono
+        </app-expansion>          
+    </div>
+    <div class="col col-9">
+        <app-nft-account-in-wallet-search></app-nft-account-in-wallet-search>
+        <app-nft-account-in-wallet-assets></app-nft-account-in-wallet-assets>
+    </div>
+
+</div>
