@@ -8,13 +8,18 @@ import { NftCollectionAssetsCreateComponent } from './components/collection-asse
 import { NftCollectionAssetsCreateDoneComponent } from './components/collection-assets-create-done/collection-assets-create-done';
 import { NftAssetSellComponent } from './components/asset-sell/asset-sell.component';
 import { NftAssetComponent } from './components/asset/asset.component';
+import { NftAccountComponent } from './components/account/account.component';
+
 const routes: Routes = [
     {
       path: '', component: NftComponent,
     },
     {
       path: 'asset', component: NftAssetComponent
-    },     
+    },   
+    {
+      path: 'account', component: NftAccountComponent
+    },        
     {
         path: 'admin', component: NftAdminComponent,
         children: [
