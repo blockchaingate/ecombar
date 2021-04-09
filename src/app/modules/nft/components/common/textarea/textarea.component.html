@@ -1,5 +1,7 @@
 <div>
     <label for="description" class="active">{{title}}</label>
     <header class="light-text" *ngIf="subtitle">{{subtitle}}</header>
-    <textarea class="TextAreareact__Text" [(ngModel)]="name" maxlength="1000" name="description" placeholder="{{placeholder}}" rows="4"></textarea>
+    <textarea class="TextAreareact__Text" 
+    [(ngModel)]="value" (ngModelChange)="updateChanges()"
+     maxlength="1000" name="description" placeholder="{{placeholder}}" rows="4"></textarea>
 </div>   
