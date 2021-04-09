@@ -12,15 +12,15 @@
             </div>
         </div>
 
-        <div class="card-list-card">
+        <div class="card-list-card" *ngFor="let collection of collections">
             <a href="/">
                 <div class="card-content-full">
                     <a href="/nft/admin/collections/ddd/assets/edit" class="image-card-primary-link">
-                        <div class="image-card-image" style="background-image: url(https://lh3.googleusercontent.com/E_vznLJI8etM3V_AmkgNeaIFDZ1ve4v9w-IBMkU4BzgisoX4kptb3jiD0fJcJpQoNwjrEmD61sA8cWVw9GDXIN7MlvVnjkUEcGCU=w250);">
+                        <div class="image-card-image" style="background-image: url({{collection.image}});">
                         </div>
                         <footer>
                             <div class="image-card-title">
-                                test asset V2
+                                {{collection.name}}
                             </div>
                         </footer>
                     </a>

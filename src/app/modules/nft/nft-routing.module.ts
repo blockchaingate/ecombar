@@ -35,13 +35,13 @@ const routes: Routes = [
               path: 'asset/sell', component: NftAssetSellComponent
             },            
             {
-              path: 'collections/:name/assets/edit', component: NftCollectionEditComponent
+              path: 'collections/:slug/assets/edit', component: NftCollectionEditComponent
             },
             {
-              path: 'collections/:name/assets/create', component: NftCollectionAssetsCreateComponent
+              path: 'collections/:slug/assets/create', component: NftCollectionAssetsCreateComponent
             },
             {
-              path: 'collections/:name/assets/create-done', component: NftCollectionAssetsCreateDoneComponent
+              path: 'collections/:slug/assets/create-done', component: NftCollectionAssetsCreateDoneComponent
             }                             
         ]
       }

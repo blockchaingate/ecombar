@@ -3,7 +3,9 @@
 [subtitle]="'Create collections (your own storefronts), upload digital creations, configure your commission, and sell NFTs to your fans - all for free!'">
 </app-text-header>
 
-<app-nft-collections-list (createEvent)="openModal(template)"></app-nft-collections-list>
+<app-nft-collections-list
+[collections]="collections"
+ (createEvent)="openModal(template)"></app-nft-collections-list>
 <ng-template #template>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Create your collection</h4>
@@ -23,6 +25,8 @@
       </button>
     </div>
     <div class="modal-body">
-      <app-nft-collections-add-done (createEvent)="createItem($event)"></app-nft-collections-add-done>
+      <app-nft-collections-add-done
+       [collection]="collection"
+       (createEvent)="createItem($event)"></app-nft-collections-add-done>
     </div>
 </ng-template>

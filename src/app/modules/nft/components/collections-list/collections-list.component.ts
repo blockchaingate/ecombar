@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./collections-list.component.scss']
   })
   export class NftCollectionsListComponent implements OnInit {
+    @Input() collections: any;
     @Output() createEvent = new EventEmitter<string>();
     ngOnInit() {
           

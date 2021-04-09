@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./collections-add-done.component.scss']
   })
   export class NftCollectionsAddDoneComponent implements OnInit {
+    @Input() collection: any;
     @Output() createEvent = new EventEmitter<any>();
     name: string;
     description: string;
@@ -14,7 +15,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
           
     }
 
-    createCollection() {
+    createItem() {
         const data = {
             name: this.name,
             description: this.description

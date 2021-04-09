@@ -1,9 +1,11 @@
 <div>
-    <h4><strong>another test</strong> has been created!</h4>
-    <div class="CreateCollection--success"></div>
+    <h4><strong>{{collection.name}}</strong> has been created!</h4>
+    <div class="CreateCollection--success"
+    style="background-image: url({{collection.image}});"
+    ></div>
     <div class="CreateCollection--actions">
         <div class="ActionButtonrContainer">
-            <div class="ActionButton--content" (click)="createCollection()" style="min-width: 120px;">Add Item</div>
+            <div class="ActionButton--content" (click)="createItem()" style="min-width: 120px;">Add Item</div>
         </div> 
     </div>
 </div>
