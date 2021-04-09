@@ -8,7 +8,7 @@
             <img class="Image--image" *ngIf="image" src="{{image}}" style="object-fit: contain;">
             <div class="Image--content">
                 <div class="ImageInput--wrapper">
-                    <input accept="image/*" class="ImageInput--input" type="file">
+                    <input accept="image/*" (change)="fileChange($event)" class="ImageInput--input" type="file">
                     <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV ImageInput--icon material-icons" value="image" size="24">image</i>
                 </div>
             </div>

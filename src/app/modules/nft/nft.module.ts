@@ -55,6 +55,8 @@ import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftIndexComponent } from './components/index/index.component';
 
 import { NftCollectionService } from './services/nft-collection.service';
+import { UploadService } from './services/upload.service';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -112,9 +114,13 @@ import { CommonModule } from '@angular/common';
       NftAssetsComponent,
       NftIndexComponent
     ],
-    entryComponents:[PropertiesComponent, LevelsComponent],
+    entryComponents:[
+      PropertiesComponent, 
+      LevelsComponent
+    ],
     providers: [
-      NftCollectionService
+      NftCollectionService,
+      UploadService
     ],
     imports: [
         NftRoutingModule,

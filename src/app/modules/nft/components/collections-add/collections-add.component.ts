@@ -34,14 +34,16 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     @Output() createEvent = new EventEmitter<any>();
     name: string;
     description: string;
+    image: string;
     ngOnInit() {
-          
+      //this.image = 'https://lh3.googleusercontent.com/E_vznLJI8etM3V_AmkgNeaIFDZ1ve4v9w-IBMkU4BzgisoX4kptb3jiD0fJcJpQoNwjrEmD61sA8cWVw9GDXIN7MlvVnjkUEcGCU=w250';    
     }
 
     createCollection() {
         const data = {
             name: this.name,
-            description: this.description
+            description: this.description,
+            image: this.image
         }
         this.createEvent.emit(data);
     }

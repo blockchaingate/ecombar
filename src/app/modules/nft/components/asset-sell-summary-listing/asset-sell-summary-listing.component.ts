@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     providers: [],
@@ -7,8 +8,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./asset-sell-summary-listing.component.scss']
   })
   export class NftAssetSellSummaryListingComponent implements OnInit {
+    constructor(private router: Router) {
+
+    }
     ngOnInit() {
-          
+            
     }
 
+    postListing() {
+      this.router.navigate(['/nft/asset']);
+    }
   }
