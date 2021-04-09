@@ -3,23 +3,7 @@
         <h4 class="CreateCollection--header">Create your collection</h4>
         <p class="CreateCollection--info">You can change these values later, along with configuring external URLs, payment options, and trading fees.</p>
         <div class="form-container">
-            <div>
-                <label for="image">Logo</label>
-                <header class="light-text">
-                    (350 x 350 recommended)
-                </header>
-                <div class="CreateCollection--input">
-                    <div class="Image--isImageLoaderVisible ImageInput--image" style="height: 100%; width: 100%;">
-                        <div class="Image--content">
-                            <div class="ImageInput--wrapper">
-                                <input accept="image/*" class="ImageInput--input" type="file">
-                                <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV ImageInput--icon material-icons" value="image" size="24">image</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>  
-            
+            <app-image-uploader [title]="'Logo*'" [subtitle]="'(350 x 350 recommended)'"></app-image-uploader>
             <app-textbox [(ngModel)]="name" [title]="'Name *'" ></app-textbox>
 
             <div class="pt-3">

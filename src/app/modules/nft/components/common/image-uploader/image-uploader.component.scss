@@ -1,71 +1,95 @@
-.AssetForm-input-label {
-    color: rgb(46, 54, 59);
-    font-weight: 600;
-    font-size: 16px;
-    display: block;
-    margin: 8px 0px 5px;
-    text-transform: none;
+.CreateCollection--form {
+    margin-bottom: 10px;
 }
 
-.AssetForm--input-header, .AssetForm--unlockable-content-caption {
+.CreateCollection--form h4 {
+    text-align: center;
+    font-size: 28px;
+    line-height: 110%;
+    margin-bottom: 30px;
+}
+
+.CreateCollection--form .CreateCollection--info {
+    font-weight: 400;
+    font-size: 15px;
+    margin: 3px 0px 15px;
+    text-align: center;
+}
+
+header {
     color: rgb(170, 170, 170);
-    margin-bottom: 5px;
 }
 
-.MediaInput--media.MediaInput--media-padded {
-    padding: 50px;
-}
-
-.MediaInput--media {
-    width: 100%;
-    max-width: 350px;
+.CreateCollection--form .CreateCollection--input {
+    margin-bottom: 20px;
     border-radius: 5px;
     border: 3px dashed rgb(204, 204, 204);
+    cursor: pointer;
+    height: 160px;
     margin-bottom: 20px;
     margin-top: 6px;
     padding: 4px;
+    width: 160px;    
+}
+
+.ImageInput--image {
     -webkit-box-align: center;
     align-items: center;
+    display: flex;
     -webkit-box-pack: center;
     justify-content: center;
-    display: flex;
-    flex-direction: column;
-}
-
-.MediaInput--input-wrapper {
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
     position: relative;
-    width: 100%;
-    padding: 8px;
-    text-align: center;
-    font-size: 14px;
-    color: rgb(170, 170, 170);
-    font-weight: 500;
 }
 
-.MediaInput--icon {
+.Image--content {
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.ImageInput--image .ImageInput--wrapper {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ImageInput--image .ImageInput--wrapper .ImageInput--input {
+    cursor: pointer;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.ImageInput--icon {
     color: rgb(204, 204, 204);
     font-size: 84px;
     pointer-events: none;
 }
 
-.MediaInput--header {
-    color: rgb(46, 54, 59);
-    font-size: 16px;
-    font-weight: 600;
+
+
+
+
+.CreateCollection--actions {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.MediaInput--input-wrapper .MediaInput--input {
-    cursor: pointer;
+.Image--image {
     height: 100%;
-    opacity: 0;
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    object-fit: contain;
+    transition: opacity 400ms ease 0s;
     width: 100%;
 }
-
-a {
-    color: #039be5!important;
-    -webkit-tap-highlight-color: transparent;
-}
-

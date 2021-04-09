@@ -1,24 +1,17 @@
-<div>
-    <label class="AssetForm-input-label" for="media">
-        {{title}}
-    </label>
-    <header class="AssetForm--input-header">
+<div class="CreateCollection--form">
+    <label for="image">{{title}}</label>
+    <header class="light-text">
         {{subtitle}}
     </header>
-    <div>
-        <div class="MediaInput--media MediaInput--media-padded">
-            <div class="MediaInput--input-wrapper">
-                <div>
-                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV MediaInput--icon material-icons" value="image" size="24">image</i>
-                    <header class="MediaInput--header">
-                        Drag &amp; drop file
-                    </header>
-                    <div>
-                        or <a>browse media on your device</a>
-                    </div>
+    <div class="CreateCollection--input">
+        <div class="Image--isImageLoaderVisible ImageInput--image" style="height: 100%; width: 100%;">
+            <img class="Image--image" *ngIf="image" src="{{image}}" style="object-fit: contain;">
+            <div class="Image--content">
+                <div class="ImageInput--wrapper">
+                    <input accept="image/*" class="ImageInput--input" type="file">
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV ImageInput--icon material-icons" value="image" size="24">image</i>
                 </div>
-                <input type="file" class="MediaInput--input">
             </div>
         </div>
     </div>
-</div>
+</div>  
