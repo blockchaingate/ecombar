@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,10 +7,22 @@ import { Component, OnInit, Input } from '@angular/core';
     styleUrls: ['./textbox.component.scss']
 })
 export class TextboxComponent implements OnInit {
-    name: string;
+    /**
+     * Holds the current value of the slider
+     */
+    @Input() inputValue: string = "";
+
+    /**
+     * Invoked when the model has been changed
+     */
+    @Output() inputValueChange: EventEmitter<string> = new EventEmitter<string>();
+
+
     @Input() title: string;
     @Input() subtitle: string;
     @Input() placeholder: string;
+
+    
     ngOnInit() {
           
     }
