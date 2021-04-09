@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
+import { NftCollectionService } from '../../services/nft-collection.service';
 @Component({
     providers: [],
     selector: 'app-nft-collections',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
     modalRef: BsModalRef;
 
     constructor(
+      private collectionServ: NftCollectionService,
       private router: Router,
       private modalService: BsModalService) {}
  
@@ -25,8 +27,16 @@ import { Router } from '@angular/router';
 
     createCollection(event, templateDone) {
         console.log('event in createCollection=', event);
-        this.modalRef.hide();
-        this.modalRef = this.modalService.show(templateDone);
+        this.collectionServ.create(event).subscribe(
+          (res: any) => {
+            console.log('res from create collection=', res);
+            if(res && res.ok) {
+              this.modalRef.hide();
+              this.modalRef = this.modalService.show(templateDone);
+            }
+          }
+        );
+
     }
 
     createItem(event) {
