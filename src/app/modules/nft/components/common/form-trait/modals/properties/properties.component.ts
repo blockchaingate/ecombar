@@ -16,13 +16,13 @@ export class PropertiesComponent implements OnInit {
         private bsModalRef: BsModalRef) {}    
 
     ngOnInit() {
-        if(!this.data || this.data.length == 0) {
-            this.data = [
+        if(this.data.length == 0) {
+            this.data.push(
                 {
                     type: '',
                     name: ''
                 }
-            ];
+            );
         }
         
     }

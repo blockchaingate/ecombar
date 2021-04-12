@@ -37,9 +37,7 @@ export class FormTraitComponent implements OnInit {
         }
         
         this.modalRef.onHide.subscribe((modalContainerComponent : any) => {
-            console.log('modalContainerComponent in onHide=', modalContainerComponent);
             const data = modalContainerComponent.initialState.data;
-            console.log('date emitted=', data);
             this.save.emit(data);
         });
     }

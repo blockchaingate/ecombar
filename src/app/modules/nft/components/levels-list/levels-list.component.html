@@ -6,7 +6,7 @@
                 <div class="NumericTrait--value">{{level.value}} of {{level.max}}</div>
             </div>
             <div class="NumericTrait--bar" *ngIf="level.max && (level.max > 0)">
-                <div class="NumericTrait--bar-fill" [ngStyle]="'width: ' + (level.value / level.max * 100) + '%;'"></div>
+                <div class="NumericTrait--bar-fill" [ngStyle]="{'width': + (level.value / level.max * 100) + '%'}"></div>
             </div>
         </div>
     </a>

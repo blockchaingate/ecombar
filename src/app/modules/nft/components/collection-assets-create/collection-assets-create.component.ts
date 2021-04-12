@@ -19,10 +19,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
       title: 'Add Properties',
       subtitle: 'Properties show up underneath your item, are clickable, and can be filtered in your collection\'s sidebar.',
       data: [
-        {
-          type: "aaa",
-          name: "ooo"
-        }
+
       ]
     };
 
