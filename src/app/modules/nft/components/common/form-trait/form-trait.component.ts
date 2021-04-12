@@ -14,7 +14,7 @@ export class FormTraitComponent implements OnInit {
     @Input() subtitle: string;
     @Input() modal: any;
     modalRef: BsModalRef;
-    //@Output() newItemEvent = new EventEmitter<string>();
+    @Output() save = new EventEmitter<any>();
 
     constructor(private modalService: BsModalService) {}
     
@@ -25,8 +25,10 @@ export class FormTraitComponent implements OnInit {
     addPopup() {
         const initialState = {
             title: this.modal.title,
-            subtitle: this.modal.subtitle
-        };          
+            subtitle: this.modal.subtitle,
+            data: this.modal.data
+        };    
+
         if(this.modal.type == 'properties') {
           
             this.modalRef = this.modalService.show(PropertiesComponent, {initialState});
@@ -34,5 +36,9 @@ export class FormTraitComponent implements OnInit {
             this.modalRef = this.modalService.show(LevelsComponent, {initialState});
         }
         
+        this.modalRef.onHide.subscribe((modalContainerComponent : any) => {
+            console.log('data in onHide=', modalContainerComponent.initialState.data);
+            this.save.emit(modalContainerComponent.initialState.data);
+        });
     }
 }

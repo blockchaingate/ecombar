@@ -17,15 +17,16 @@
     </thead>
 
     <tbody class="AssetTraitsForm--body">
-      <tr class="AssetPropertiesFormreact__TrContainer-g5scfi-0">
+
+      <tr class="AssetPropertiesFormreact__TrContainer-g5scfi-0" *ngFor="let property of data; let i = index">
         <td class="AssetPropertiesForm--column">
-          <div class="Inputreact__DivContainer-sc-17icy78-0  ">
+          <div class="Inputreact__DivContainer-sc-17icy78-0">
             <div class="Input--main AssetPropertiesForm--name-input">
-              <div class="Input--label Input--left-label">
+              <div class="Input--label Input--left-label" (click)="removeByIndex(i)">
                 <i class="Iconreact__Icon-sc-1gugx8q-0 cVyyPB AssetPropertiesForm--close material-icons" value="close" size="24">close</i>
               </div>
               <div class="Input--prefix"></div>
-              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Character" spellcheck="false" type="text" value="dd">
+              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Character" spellcheck="false" type="text" [(ngModel)]="property.type">
             </div>
           </div>
         </td>
@@ -33,42 +34,22 @@
           <div class="Inputreact__DivContainer-sc-17icy78-0  ">
             <div class="Input--main AssetPropertiesForm--value-input">
               <div class="Input--prefix"></div>
-              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Male" spellcheck="false" type="text" value="www">
+              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Male" spellcheck="false" type="text" [(ngModel)]="property.name">
             </div>
           </div>
         </td>
-      </tr>
-      <tr class="AssetPropertiesFormreact__TrContainer-g5scfi-0 bDjQCz">
-        <td class="AssetPropertiesForm--column">
-          <div class="Inputreact__DivContainer-sc-17icy78-0  ">
-            <div class="Input--main AssetPropertiesForm--name-input">
-              <div class="Input--label Input--left-label">
-                <i class="Iconreact__Icon-sc-1gugx8q-0 cVyyPB AssetPropertiesForm--close material-icons" value="close" size="24">close</i>
-              </div>
-              <div class="Input--prefix"></div>
-              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Character" spellcheck="false" type="text" value="faefaw">
-            </div>
-          </div>
-        </td>
-        <td class="AssetPropertiesForm--column">
-          <div class="Inputreact__DivContainer-sc-17icy78-0  ">
-            <div class="Input--main AssetPropertiesForm--value-input">
-              <div class="Input--prefix"></div>
-              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Male" spellcheck="false" type="text" value="faefw">
-            </div>
-          </div>
-        </td>
-      </tr>
+      </tr>     
+
     </tbody>    
   </table>
 
-  <div>
+  <div (click)="addMore()">
     <div class="ActionButtonreact__DivButton-sc-7jpoey-0 fwfywF ActionButton--secondary ActionButton--light " data-testid="ActionButton" role="button" tabindex="0" type="secondary">
       <div class="ActionButton--content " style="min-width: 120px;">Add more</div>
     </div>
   </div>
   
-  <div class="AssetTraitsForm--save">
+  <div class="AssetTraitsForm--save" (click)="saveClick()">
     <div class="ActionButtonreact__DivButton-sc-7jpoey-0 fwfywF ActionButton--light " data-testid="ActionButton" role="button" tabindex="0">
       <div class="ActionButton--content " style="min-width: 120px;">Save</div>
     </div>

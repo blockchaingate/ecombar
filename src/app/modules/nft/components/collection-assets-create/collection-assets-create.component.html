@@ -18,8 +18,11 @@
 [icon]="'list'" 
 [title]="'Properties'" 
 [subtitle]="'Textual traits that show up as rectangles'" 
+(save)="saveProperties($event)"
 [modal]="propertiesModal">
 </app-form-trait>
+
+<app-properties-list></app-properties-list>
 
 <app-form-trait 
 [icon]="'star_rate'" 
@@ -28,6 +31,7 @@
 [modal]="levelsModal"
 >
 </app-form-trait>
+<app-levels-list></app-levels-list>
 
 <app-form-trait 
 [icon]="'bar_chart'" 
@@ -36,6 +40,7 @@
 [modal]="statsModal"
 >
 </app-form-trait>
+<app-levels-list></app-levels-list>
 
 <app-textarea-switch></app-textarea-switch>
 

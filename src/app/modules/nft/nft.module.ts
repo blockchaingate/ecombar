@@ -54,6 +54,9 @@ import { NftAccountInWalletAssetComponent } from './components/account-in-wallet
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftIndexComponent } from './components/index/index.component';
 
+import { NftPropertiesListComponent } from './components/properties-list/properties-list.component';
+import { NftLevelsListComponent } from './components/levels-list/levels-list.component';
+
 import { NftCollectionService } from './services/nft-collection.service';
 import { UploadService } from './services/upload.service';
 
@@ -112,7 +115,9 @@ import { CommonModule } from '@angular/common';
       NftAccountInWalletAssetsComponent,
       NftAccountInWalletAssetComponent,
       NftAssetsComponent,
-      NftIndexComponent
+      NftIndexComponent,
+      NftPropertiesListComponent,
+      NftLevelsListComponent
     ],
     entryComponents:[
       PropertiesComponent, 
