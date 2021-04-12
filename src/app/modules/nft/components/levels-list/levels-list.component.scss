@@ -1,0 +1,52 @@
+a {
+    color: #039be5;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+}
+
+.cVEjBN .AssetForm--levels .item--numeric-trait, .cVEjBN .AssetForm--stats .item--numeric-trait {
+    border-radius: 5px;
+    border: 1px solid rgb(229, 232, 235);
+    padding: 12px;
+    width: 428px;
+    margin-top: 8px;
+}
+
+.kwFxNp .NumericTrait--label {
+    display: flex;
+    font-weight: 500;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.kwFxNp .NumericTrait--label .NumericTrait--type {
+    color: rgb(138, 147, 155);
+}
+
+.kwFxNp .NumericTrait--label .NumericTrait--value {
+    color: rgb(138, 147, 155);
+    min-width: fit-content;
+    padding-left: 4px;
+}
+
+.kwFxNp .NumericTrait--bar {
+    background-color: rgb(251, 253, 255);
+    border: 1px solid rgb(229, 232, 235);
+    border-radius: 14px;
+    height: 14px;
+    margin-top: 4px;
+    overflow: hidden;
+}
+
+.kwFxNp .NumericTrait--bar .NumericTrait--bar-fill {
+    background-color: rgb(32, 129, 226);
+    height: 100%;
+}
+
+.AssetForm--levels .item--numeric-trait, .cVEjBN .AssetForm--stats .item--numeric-trait {
+    border-radius: 5px;
+    border: 1px solid rgb(229, 232, 235);
+    padding: 12px;
+    width: 428px;
+    margin-top: 8px;
+}

@@ -15,32 +15,41 @@
 <app-textarea  [title]="'Description'" [subtitle]="'The description will be included on the item\'s detail page underneath its image.'"></app-textarea>
 
 <app-form-trait 
+[icon]="'star_rate'" 
+[title]="'Levels'" 
+[subtitle]="'Numerical traits that show as a progress bar'" 
+(save)="saveLevels($event)"
+[modal]="levelsModal"
+>
+</app-form-trait>
+<app-levels-list [levels]="levels"></app-levels-list>
+
+
+
+<app-form-trait 
 [icon]="'list'" 
 [title]="'Properties'" 
 [subtitle]="'Textual traits that show up as rectangles'" 
 (save)="saveProperties($event)"
 [modal]="propertiesModal">
 </app-form-trait>
+<app-properties-list [properties]="properties"></app-properties-list>
 
-<app-properties-list></app-properties-list>
 
-<app-form-trait 
-[icon]="'star_rate'" 
-[title]="'Levels'" 
-[subtitle]="'Numerical traits that show as a progress bar'" 
-[modal]="levelsModal"
->
-</app-form-trait>
-<app-levels-list></app-levels-list>
+
+
+
+
 
 <app-form-trait 
 [icon]="'bar_chart'" 
 [title]="'Stats'" 
 [subtitle]="'Numerical traits that just show as numbers'" 
+(save)="saveStats($event)"
 [modal]="statsModal"
 >
 </app-form-trait>
-<app-levels-list></app-levels-list>
+<app-levels-list [levels]="stats"></app-levels-list>
 
 <app-textarea-switch></app-textarea-switch>
 

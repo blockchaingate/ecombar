@@ -45,10 +45,7 @@ export class PropertiesComponent implements OnInit {
     }
 
     saveClick() {
-        //console.log('saveClick start');
         this.data = this.data.filter(item => item.type != '' && item.name != '');
-        ///console.log('this.data in saveClick=', this.data);
-       // this.save.emit(this.data);
         this.close();
     }
 }

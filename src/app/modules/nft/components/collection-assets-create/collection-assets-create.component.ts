@@ -11,6 +11,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
     name: string;
 
     properties: any;
+    levels: any;
+    stats: any;
 
     propertiesModal = {
       type: 'properties',
@@ -44,6 +46,14 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
     saveProperties(props: any) {
       this.properties = props;
+    }
+
+    saveLevels(props: any) {
+      this.levels = props;
+    }
+
+    saveStats(props: any) {
+      this.stats = props;
     }
 
     ngOnInit() {

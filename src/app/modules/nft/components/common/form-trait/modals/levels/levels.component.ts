@@ -8,7 +8,6 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     styleUrls: ['./levels.component.scss']
 })
 export class LevelsComponent implements OnInit {
-    @Output() save: EventEmitter<any> = new EventEmitter();
 
     title: string;
     subtitle: string;
@@ -50,7 +49,8 @@ export class LevelsComponent implements OnInit {
 
     saveClick() {
         this.data = this.data.filter(item => item.name != '');
-        this.save.emit(this.data);
+        console.log('this.data=', this.data);
+        this.close();
     }    
 }
 

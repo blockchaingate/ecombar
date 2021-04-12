@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./properties-list.component.scss']
   })
   export class NftPropertiesListComponent implements OnInit {
+      @Input() properties: any;
       ngOnInit() {
           
       }

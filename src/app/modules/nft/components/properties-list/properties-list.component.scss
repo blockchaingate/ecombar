@@ -1,0 +1,39 @@
+.AssetForm--properties {
+    display: flex;
+    flex-wrap: wrap;
+}
+a {
+    color: #039be5;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+}
+
+.AssetForm--properties .item--property {
+    margin: 5px;
+    width: 150px;
+}
+
+.KqUWi {
+    background-color: rgba(21, 178, 229, 0.06);
+    border-radius: 6px;
+    border: 1px solid rgb(21, 178, 229);
+    padding: 10px;
+    text-align: center;
+}
+
+.KqUWi .Property--type {
+    color: rgb(21, 178, 229);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.KqUWi .Property--value {
+    color: rgb(53, 56, 64);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./levels-list.component.scss']
   })
   export class NftLevelsListComponent implements OnInit {
+      @Input() levels: any;
       ngOnInit() {
           
       }
