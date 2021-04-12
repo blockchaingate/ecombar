@@ -2,6 +2,6 @@
 <app-nft-collection-edit-topbar></app-nft-collection-edit-topbar>
 -->
 <div class="collectionManagerView--main">
-    <app-nft-collection-edit-header></app-nft-collection-edit-header>
-    <app-nft-collection-edit-items></app-nft-collection-edit-items>
+    <app-nft-collection-edit-header *ngIf="collection" [collection]="collection"></app-nft-collection-edit-header>
+    <app-nft-collection-edit-items *ngIf="collection" [collection]="collection"></app-nft-collection-edit-items>
 </div>

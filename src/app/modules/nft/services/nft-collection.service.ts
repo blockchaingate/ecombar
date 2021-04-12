@@ -16,4 +16,9 @@ export class NftCollectionService {
     const url = environment.endpoints.blockchaingate + 'nft-collection/address/' + address;
     return this.http.get(url);    
   }
+
+  getBySlug(slug: string) {
+    const url = environment.endpoints.blockchaingate + 'nft-collection/slug/' + slug;
+    return this.http.get(url);    
+  }
 }

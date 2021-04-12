@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./collection-edit-items.component.scss']
   })
   export class NftCollectionEditItemsComponent implements OnInit {
+    @Input() collection: any;
     ngOnInit() {
           
     }
