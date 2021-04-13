@@ -58,6 +58,7 @@ import { NftPropertiesListComponent } from './components/properties-list/propert
 import { NftLevelsListComponent } from './components/levels-list/levels-list.component';
 
 import { NftCollectionService } from './services/nft-collection.service';
+import { NftAssetService } from './services/nft-asset.service';
 import { UploadService } from './services/upload.service';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -125,6 +126,7 @@ import { CommonModule } from '@angular/common';
     ],
     providers: [
       NftCollectionService,
+      NftAssetService,
       UploadService
     ],
     imports: [

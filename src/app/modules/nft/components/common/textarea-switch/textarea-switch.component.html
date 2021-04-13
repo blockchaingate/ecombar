@@ -10,9 +10,9 @@
             </header>
         </div>
         <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 ijQNAs irGSTk jpdfEF">
-            <div class="switch" (click)="switch()">
+            <div class="switch">
                 <label>
-                    <input type="checkbox">
+                    <input type="checkbox" (click)="switch()">
                     <span class="lever"></span>
                 </label>
             </div>
@@ -21,8 +21,7 @@
 </div>
 
 <div class="AssetForm--unlockable-content" *ngIf="unlocked">
-    <textarea class="TextAreareact__TextAreaImpl-sc-1dlb6ar-0 jFLKqz" placeholder="Enter content (access key, code to redeem, link to a file, etc.)" rows="4"></textarea>
-    <header class="AssetForm--unlockable-content-caption">
-        <a href="https://www.markdownguide.org/cheat-sheet/" rel="nofollow noopener " target="_blank">Markdown</a> syntax is supported.
-    </header>
+    <textarea class="TextAreareact__TextAreaImpl-sc-1dlb6ar-0 jFLKqz" 
+    [(ngModel)]="value" (ngModelChange)="updateChanges()"
+    placeholder="Enter content (access key, code to redeem, link to a file, etc.)" rows="4"></textarea>
 </div>
