@@ -25,6 +25,20 @@ export class Web3Service {
     }
   }
 
+  formCreateSmartContractABI(abiArray, bytecode, args) {
+
+    const web3 = this.getWeb3Provider();
+    var MyContract = new web3.eth.Contract(abiArray);
+
+    const abi = MyContract.deploy({
+        data: bytecode,
+        arguments: args
+    })
+    .encodeABI();   
+
+    return abi;
+  }
+  
   getCreateIDABI(typeId: number, hashData: string) {
     const func: any = {
       "constant": false,

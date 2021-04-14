@@ -40,6 +40,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     }
 
     createCollection() {
+      
         const data = {
             name: this.name,
             description: this.description,
