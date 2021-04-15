@@ -75,11 +75,9 @@ import { environment } from '../../../../../environments/environment';
     async deployKanbanDo(seed) {
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       // const nonce = await this.apiServ.getEthNonce(this.ethCoin.receiveAdds[0].address);
-      let gasPrice = 40;
+      let gasPrice = 2;
       let gasLimit = 8000000;
       const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(this.address));
-  
-      let kanbanTo = '0x0000000000000000000000000000000000000000';
   
       let kanbanValue = 0;
   
@@ -88,7 +86,6 @@ import { environment } from '../../../../../environments/environment';
           nonce: nonce,
           gasPrice: gasPrice,
           gasLimit: gasLimit,
-          to: kanbanTo,
           value: kanbanValue,
           data: '0x' + this.utilServ.stripHexPrefix(kanbanData)          
       };
