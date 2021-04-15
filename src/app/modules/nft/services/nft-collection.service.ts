@@ -12,6 +12,11 @@ export class NftCollectionService {
     return this.http.post(url, data);
   }
 
+  update(id: string, data: any) {
+    const url = environment.endpoints.blockchaingate + 'nft-collection/' + id + '/update';
+    return this.http.post(url, data);
+  }
+
   getByAddress(address: string) {
     const url = environment.endpoints.blockchaingate + 'nft-collection/address/' + address;
     return this.http.get(url);    

@@ -12,13 +12,13 @@ import { NftCollectionService } from '../../services/nft-collection.service';
   export class NftCollectionViewComponent implements OnInit {
     collection: any;
     assets: any;
+    
     constructor(
       private route: ActivatedRoute,
       private assetServ: NftAssetService,
       private collectionServ: NftCollectionService
-      ) {
+      ) { }
 
-    }
     ngOnInit() {
       this.route.paramMap.subscribe( paramMap => {
         const slug = paramMap.get('slug');

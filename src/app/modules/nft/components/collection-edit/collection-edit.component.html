@@ -1,0 +1,22 @@
+<div class="CreateCollection--form" *ngIf="collection">
+    <div class="CreateCollection--form">
+        <h4 class="CreateCollection--header">Edit your collection</h4>
+        <div class="form-container">
+            <app-image-uploader [(ngModel)]="collection.image" [title]="'Logo*'" [subtitle]="'This image will also be used for navigation. 300 x 300 recommended.'"></app-image-uploader>
+            <app-textbox [(ngModel)]="collection.name" [title]="'Name *'" ></app-textbox>
+
+            <div class="pt-3">
+                <app-textarea [title]="'Description'" [(ngModel)]="collection.description" [subtitle]="'4 of 1000 characters used'"></app-textarea>
+            </div>
+            
+
+            
+            <div class="CreateCollection--actions">
+                <div class="ActionButtonrContainer">
+                    <div class="ActionButton--content" (click)="updateCollection()" style="min-width: 120px;">Submit Changes</div>
+                </div> 
+            </div>
+           
+        </div>
+    </div>
+</div>
