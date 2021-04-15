@@ -27,6 +27,11 @@ export class KanbanService {
         return this.http.getRaw(path);
     }    
 
+    getTransactionReceipt(txid: string) {
+        const path = this.baseUrl + 'kanban/gettransactionreceipt/' + txid;
+        return this.http.getRaw(path);
+    }
+    
     submitDeposit(rawTransaction: string, rawKanbanTransaction: string) {
         const data = {
             'rawTransaction': rawTransaction,

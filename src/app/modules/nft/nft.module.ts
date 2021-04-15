@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NftRoutingModule } from './nft-routing.module';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { NftComponent } from './nft.component';
 import { NftHeaderComponent } from './components/header/header.component';
 import { NftAdminComponent } from './components/admin/admin.component';
@@ -132,9 +133,11 @@ import { CommonModule } from '@angular/common';
     imports: [
         NftRoutingModule,
         FormsModule,
+        NgxSpinnerModule,
         CommonModule,
         ModalModule.forRoot()
-    ]    
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]    
 })
 
 export class NftModule { }

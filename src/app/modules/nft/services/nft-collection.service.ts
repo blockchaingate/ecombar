@@ -21,4 +21,9 @@ export class NftCollectionService {
     const url = environment.endpoints.blockchaingate + 'nft-collection/slug/' + slug;
     return this.http.get(url);    
   }
+
+  checkNameExist(name: string) {
+    const url = environment.endpoints.blockchaingate + 'nft-collection/nameExist/' + name;
+    return this.http.get(url);      
+  }
 }

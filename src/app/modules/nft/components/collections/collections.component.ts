@@ -12,6 +12,8 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import Common from 'ethereumjs-common';
 import KanbanTxService from '../../../shared/services/kanban.tx.service';
 import { environment } from '../../../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 
 @Component({
     providers: [],
@@ -26,6 +28,8 @@ import { environment } from '../../../../../environments/environment';
     collection: any;
     collections: any;
     constructor(
+      private spinner: NgxSpinnerService,
+      private toastr: ToastrService,
       private localSt: LocalStorage,
       private collectionServ: NftCollectionService,
       private router: Router,
@@ -72,7 +76,7 @@ import { environment } from '../../../../../environments/environment';
         this.modalRef = this.modalService.show(template);
     } 
 
-    async deployKanbanDo(seed) {
+    async deployKanbanDo(seed, templateDone) {
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       // const nonce = await this.apiServ.getEthNonce(this.ethCoin.receiveAdds[0].address);
       let gasPrice = 2;
@@ -117,10 +121,40 @@ import { environment } from '../../../../../environments/environment';
       this.kanbanServ.sendRawSignedTransaction(txhex).subscribe(
         (resp: any) => {
         if (resp && resp.transactionHash) {
+          const txid = resp.transactionHash;
           console.log('txid=', resp.transactionHash);
+          var that = this;
+          var myInterval = setInterval(function(){ 
+            that.kanbanServ.getTransactionReceipt(txid).subscribe(
+              (receipt: any) => {
+                if(receipt && receipt.transactionReceipt) {
+                  clearInterval(myInterval);
+                  if(receipt.transactionReceipt.contractAddress) {
+                    that.collection.smartContractAddress = receipt.transactionReceipt.contractAddress;
+                    that.collectionServ.create(that.collection).subscribe(
+                      (res: any) => {
+                        console.log('res from create collection=', res);
+                        that.spinner.hide();
+                        if(res && res.ok) {
+                          that.collection = res.data;
+                          that.collections.push(that.collection);
+                          that.modalRef = that.modalService.show(templateDone);
+                        }
+                      }
+                    );
+                  } else {
+                    this.spinner.hide();
+                    this.toastr.error('Error with creating smart contract.', 'Ok');
+                  }
+                }
+              }
+            );
+           }, 1000);
+
           //this.result = 'txid:' + resp.transactionHash;
           //this.alertServ.openSnackBarSuccess('Smart contract was created successfully.', 'Ok');
         } else {
+          this.toastr.error('Failed to create smart contract.', 'Ok');
           //this.alertServ.openSnackBar('Failed to create smart contract.', 'Ok');
         }
       },
@@ -132,8 +166,10 @@ import { environment } from '../../../../../environments/environment';
     }
 
 
-    createCollection(event, templatePassword, templateDone) {
+    createCollection(event, templateDone) {
         console.log('event in createCollection=', event);
+        
+ 
 
         const collection = {
           name: event.name,
@@ -153,23 +189,29 @@ import { environment } from '../../../../../environments/environment';
         
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
-        this.modalRef.content.onClose.subscribe(async (seed: Buffer) => {
-          console.log('seed', seed);
-          await this.deployKanbanDo(seed);
+        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+          this.spinner.show();
+          this.collectionServ.checkNameExist(event.name).subscribe(
+            async (res: any) => {
+              if(res && res.ok) {
+
+
+                                
+                const existed = res.data;
+                if(existed) {
+                  this.spinner.hide();
+                  this.toastr.info('name existed', 'Ok');
+                  return;
+                }
+                await this.deployKanbanDo(seed, templateDone);
+              }
+            }
+          );
+          
         });
         
         /*
-        this.collectionServ.create(collection).subscribe(
-          (res: any) => {
-            console.log('res from create collection=', res);
-            if(res && res.ok) {
-              this.collection = res.data;
-              this.collections.push(this.collection);
-              this.modalRef.hide();
-              this.modalRef = this.modalService.show(templateDone);
-            }
-          }
-        );
+
         */
     }
 
