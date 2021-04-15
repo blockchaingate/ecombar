@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NftComponent } from './nft.component';
 import { NftAdminComponent } from './components/admin/admin.component';
 import { NftCollectionsComponent } from './components/collections/collections.component';
+import { NftCollectionViewComponent } from './components/collection-view/collection-view.component';
 import { NftCollectionEditComponent } from './components/collection-edit/collection-edit.component';
 import { NftCollectionAssetsCreateComponent } from './components/collection-assets-create/collection-assets-create.component';
 import { NftCollectionAssetsCreateDoneComponent } from './components/collection-assets-create-done/collection-assets-create-done';
@@ -33,9 +34,12 @@ const routes: Routes = [
             },
             {
               path: 'asset/sell', component: NftAssetSellComponent
-            },            
+            },  
             {
-              path: 'collections/:slug/assets/edit', component: NftCollectionEditComponent
+              path: 'collections/:slug/edit', component: NftCollectionEditComponent
+            },                      
+            {
+              path: 'collections/:slug/view', component: NftCollectionViewComponent
             },
             {
               path: 'collections/:slug/assets/create', component: NftCollectionAssetsCreateComponent

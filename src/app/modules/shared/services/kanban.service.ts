@@ -56,6 +56,13 @@ export class KanbanService {
         return this.http.postRaw(this.baseUrl + 'kanban/sendRawTransaction', data);
     }
 
+    async sendRawSignedTransactionPromise(txhex: string) {
+        const data = {
+            signedTransactionData: txhex
+        };
+        return this.http.postRaw(this.baseUrl + 'kanban/sendRawTransaction', data).toPromise();
+    }
+
     async getCoinPoolAddress() {
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         let path = 'exchangily/getCoinPoolAddress';
@@ -101,6 +108,7 @@ export class KanbanService {
         const addr = await this.http.getRaw(path, { headers, responseType: 'text' }).toPromise() as string;
         return addr;
     }    
+
 
     getWalletBalances(addresses: any) {
         let btcAddress = '';

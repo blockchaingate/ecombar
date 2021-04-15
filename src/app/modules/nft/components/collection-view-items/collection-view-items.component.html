@@ -1,0 +1,106 @@
+<section class="collectionManagerView--section">
+    <header class="collectionManagerView--section-header">
+        <i class="material-icons">view_module</i>
+        <span>Items</span>
+    </header>
+    <a rel="noreferrer" href="/nft/admin/collections/{{collection.slug}}/assets/create" style="color: white; display: inline-block;">
+        <div class="ActionButtonrContainer">
+            <div class="ActionButton--content" (click)="addNewItems()" style="min-width: 120px;">
+                Add New Items
+            </div>
+        </div> 
+    </a>
+</section>
+
+
+<div class="AssetSearchViewreact__DivContainer-sc-13pg143-0 dvcqEV">
+    <div class="AssetSearchView--main">
+        <div class="AssetSearchView--results">
+            <div class="AssetSearchView--results-header">
+                <div class="Inputreact__DivContainer-sc-17icy78-0 cSjrfg  AssetSearchView--search-container">
+                    <div class="Input--main AssetSearchView--search">
+                        <div class="Input--label Input--left-label">
+                            <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV AssetSearchView--search-icon material-icons" value="search" size="24">search</i>
+                        </div>
+                        <div class="Input--prefix"></div>
+                        <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Search" spellcheck="false" type="text" value="">
+                    </div>
+                </div>
+                <div class="AssetSearchView--results-header-pills"></div>
+                <div class="AssetSearchView--results-header-dropdowns">
+                    <div class="Dropdownreact__DivContainer-gd2cw9-0 lezrxE  AssetSearchView--results-header-dropdown" tabindex="-1">
+                        <section class="Framereact__Frame-sc-139h1ex-0 cUPysq Dropdown--content-container">
+                            <div class="Dropdown--header" data-testid="Dropdown--header">
+                                <div>Sort by</div>
+                                <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Dropdown--icon material-icons" value="expand_more" size="24">expand_more</i>
+                            </div>
+                            <ul class="Dropdown--items Dropdown--showAllOptions ">
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Recently Listed</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Recently Created</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Recently Sold</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Ending Soon</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Price: Low to High</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Price: High to Low</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Highest Last Sale</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Most Viewed</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Most Favorited</li>
+                                <li class="Dropdown--item" data-testid="Dropdown--item">Oldest</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="Blockreact__Block-sc-18q9hu0-0 jExUsd AssetsSearchView--assets">
+                <div overflow="auto" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 iFhmyz dIKUNj">
+                    <div *ngFor="let asset of assets" class="Blockreact__Block-sc-18q9hu0-0 jExUsd" style="padding: 8px;">
+                        <article class="Assetreact__DivContainer-bnjqwy-0 epuAXJ Asset--loaded AssetSearchList--asset " style="width: 285px">
+                            <a class="Asset--anchor " role="link" href="/assets/0x3c2bba1da42ff986039197bed9ceb30060b7cbad/2">
+                                <header class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardHeaderreact__StyledContainer-sc-2dsmm1-0 jExUsd irGSTk hUGXgk gFCSNk">
+                                    <span></span>
+                                    <span display="flex" class="Blockreact__Block-sc-18q9hu0-0 Textreact__Text-sc-1cvs3a3-0 gvgkex ilXIqv">
+                                        <i size="20" aria-label="Favorite" value="favorite_border" class="Iconreact__Icon-sc-1gugx8q-0 FavoriteIconreact__StyledIcon-sc-289aae-0 etJEnN brbNPj material-icons">favorite_border</i>
+                                        <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 cZMzZt irGSTk fZwyPT jpdfEF">0</div>
+                                    </span>
+                                </header>
+                                <div class="Blockreact__Block-sc-18q9hu0-0 AssetCardContentreact__StyledContainer-a8q9zx-0 fccnhl iuJoOI">
+                                    <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 hiRPrY irGSTk AssetCardContent--actions"></div>
+                                    <div class="AssetMediareact__DivContainer-sc-1vbfbdi-0 cFPAYn">
+                                        <div height="100%" width="100%" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 CenterAlignedreact__CenterAligned-sc-1ek5672-0 ezLLcx irGSTk fZwyPT jpdfEF hQRXeM" style="background-color: rgb(255, 255, 255);">
+                                            <div class="Imagereact__DivContainer-dy59cl-0 dHtAcF Image--fade Image--isImageLoaded Image--isImageLoaderVisible AssetMedia--img ">
+                                                <img class="Image--image" src="{{getImage(asset)}}" style="object-fit: contain; width: auto; height: auto; max-width: 100%; max-height: 100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardFooterreact__StyledContainer-nedjig-0 fPFfwx dTytCM hUGXgk jcdZXm">
+                                    <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 jExUsd irGSTk hUGXgk">
+                                        <div class="Blockreact__Block-sc-18q9hu0-0 bCnMVJ">
+                                            <div class="AssetCardFooter--collection">{{collection.name}}</div>
+                                            <div class="AssetCardFooter--name">{{asset.name}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="AssetCardFooter--annotations">
+                                        <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 jExUsd irGSTk"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+
+                    <!--
+                    <div class="Blockreact__Block-sc-18q9hu0-0 jExUsd" style="padding: 8px;">
+                        <article class="Assetreact__DivContainer-bnjqwy-0 epuAXJ Asset--loaded AssetSearchList--asset " style="width: 473px;"><a class="Asset--anchor " role="link" href="/assets/0x3c2bba1da42ff986039197bed9ceb30060b7cbad/1"><header class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardHeaderreact__StyledContainer-sc-2dsmm1-0 jExUsd irGSTk hUGXgk gFCSNk"><span></span><span display="flex" class="Blockreact__Block-sc-18q9hu0-0 Textreact__Text-sc-1cvs3a3-0 gvgkex ilXIqv"><i size="20" aria-label="Favorite" value="favorite_border" class="Iconreact__Icon-sc-1gugx8q-0 FavoriteIconreact__StyledIcon-sc-289aae-0 etJEnN brbNPj material-icons">favorite_border</i><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 cZMzZt irGSTk fZwyPT jpdfEF">0</div></span></header><div class="Blockreact__Block-sc-18q9hu0-0 AssetCardContentreact__StyledContainer-a8q9zx-0 fccnhl iuJoOI" style="height: 471px; width: 471px;"><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 hiRPrY irGSTk AssetCardContent--actions"></div><div class="AssetMediareact__DivContainer-sc-1vbfbdi-0 cFPAYn"><div height="100%" width="100%" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 CenterAlignedreact__CenterAligned-sc-1ek5672-0 ezLLcx irGSTk fZwyPT jpdfEF hQRXeM" style="background-color: rgb(255, 255, 255);"><div class="Imagereact__DivContainer-dy59cl-0 dHtAcF Image--fade Image--isImageLoaded Image--isImageLoaderVisible AssetMedia--img " style="height: 471px; width: 471px;"><img class="Image--image" src="/static/images/placeholder.png" style="object-fit: contain; width: auto; height: auto; max-width: 100%; max-height: 100%;"></div></div></div></div><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardFooterreact__StyledContainer-nedjig-0 fPFfwx dTytCM hUGXgk jcdZXm"><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 jExUsd irGSTk hUGXgk"><div class="Blockreact__Block-sc-18q9hu0-0 bCnMVJ"><div class="AssetCardFooter--collection">OpenSeaCreature Item Sale - dfTjPhVcnh</div><div class="AssetCardFooter--name">1</div></div></div><div class="AssetCardFooter--annotations"><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 jExUsd irGSTk"></div></div></div></a>
+                        </article>
+                    </div>
+
+                    <div class="Blockreact__Block-sc-18q9hu0-0 jExUsd" style="padding: 8px;">
+                        <article class="Assetreact__DivContainer-bnjqwy-0 epuAXJ Asset--loaded AssetSearchList--asset " style="width: 473px;"><a class="Asset--anchor " role="link" href="/assets/0x3c2bba1da42ff986039197bed9ceb30060b7cbad/0"><header class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardHeaderreact__StyledContainer-sc-2dsmm1-0 jExUsd irGSTk hUGXgk gFCSNk"><span></span><span display="flex" class="Blockreact__Block-sc-18q9hu0-0 Textreact__Text-sc-1cvs3a3-0 gvgkex ilXIqv"><i size="20" aria-label="Favorite" value="favorite_border" class="Iconreact__Icon-sc-1gugx8q-0 FavoriteIconreact__StyledIcon-sc-289aae-0 etJEnN brbNPj material-icons">favorite_border</i><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 cZMzZt irGSTk fZwyPT jpdfEF">0</div></span></header><div class="Blockreact__Block-sc-18q9hu0-0 AssetCardContentreact__StyledContainer-a8q9zx-0 fccnhl iuJoOI" style="height: 471px; width: 471px;"><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 hiRPrY irGSTk AssetCardContent--actions"></div><div class="AssetMediareact__DivContainer-sc-1vbfbdi-0 cFPAYn"><div height="100%" width="100%" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 CenterAlignedreact__CenterAligned-sc-1ek5672-0 ezLLcx irGSTk fZwyPT jpdfEF hQRXeM" style="background-color: rgb(255, 255, 255);"><div class="Imagereact__DivContainer-dy59cl-0 dHtAcF Image--fade Image--isImageLoaded Image--isImageLoaderVisible AssetMedia--img " style="height: 471px; width: 471px;"><img class="Image--image" src="/static/images/placeholder.png" style="object-fit: contain; width: auto; height: auto; max-width: 100%; max-height: 100%;"></div></div></div></div><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardFooterreact__StyledContainer-nedjig-0 fPFfwx dTytCM hUGXgk jcdZXm"><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 jExUsd irGSTk hUGXgk"><div class="Blockreact__Block-sc-18q9hu0-0 bCnMVJ"><div class="AssetCardFooter--collection">OpenSeaCreature Item Sale - dfTjPhVcnh</div><div class="AssetCardFooter--name">0</div></div></div><div class="AssetCardFooter--annotations"><div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 jExUsd irGSTk"></div></div></div></a>
+                        </article>
+                    </div>
+                    -->
+                    <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 CenterAlignedreact__CenterAligned-sc-1ek5672-0 jExUsd irGSTk fZwyPT jpdfEF hQRXeM"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

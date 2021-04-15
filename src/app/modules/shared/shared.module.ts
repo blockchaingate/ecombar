@@ -24,6 +24,7 @@ import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
 import { MainLayoutService } from './services/mainlayout.service';
 import { KanbanService } from './services/kanban.service';
+import { KanbanSmartContractService } from './services/kanban.smartcontract.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
 import { HttpClient } from '@angular/common/http';
@@ -83,7 +84,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ShipService,
     KanbanService,
     IddockService,
-    MainLayoutService
+    MainLayoutService,
+    KanbanSmartContractService
   ]
 })
 export class SharedModule {
@@ -104,7 +106,8 @@ export class SharedModule {
         KanbanService,
         IddockService,
         ShipService,
-        MainLayoutService
+        MainLayoutService,
+        KanbanSmartContractService
       ]
     };
   }

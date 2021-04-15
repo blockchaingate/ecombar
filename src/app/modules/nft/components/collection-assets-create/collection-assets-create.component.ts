@@ -1,6 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 import { NftAssetService } from '../../services/nft-asset.service';
+import { NftCollectionService } from '../../services/nft-collection.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
     providers: [],
@@ -9,10 +17,13 @@ import { NftAssetService } from '../../services/nft-asset.service';
     styleUrls: ['./collection-assets-create.component.scss']
   })
   export class NftCollectionAssetsCreateComponent implements OnInit {
+    modalRef: BsModalRef;
     slug: string;
-
+    collection: any;
     media: string;
     name: string;
+    address: string;
+    wallet: any;
     externalLink: string;
     description: string;
     properties: any;
@@ -42,6 +53,13 @@ import { NftAssetService } from '../../services/nft-asset.service';
     };
 
     constructor(
+      private toastr: ToastrService,
+      private spinner: NgxSpinnerService,
+      private modalService: BsModalService,
+      private localSt: LocalStorage,
+      private collectionServ: NftCollectionService,
+      private kanbanSmartContract: KanbanSmartContractService,
+      private utilServ: UtilService,
       private assetServ: NftAssetService,
       private router: Router, 
       private route: ActivatedRoute) {
@@ -63,9 +81,114 @@ import { NftAssetService } from '../../services/nft-asset.service';
     ngOnInit() {
       this.route.paramMap.subscribe((params: ParamMap) =>  {
         this.slug = params.get('slug');   
+        this.collectionServ.getBySlug(this.slug).subscribe(
+          (res: any) => {
+            if(res && res.ok) {
+              this.collection = res._body;
+              console.log('this.collection==', this.collection);
+            }
+          }
+        );
       });
+
+      this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+
+        if(!wallets || (wallets.length == 0)) {
+          return;
+        }
+        const wallet = wallets.items[wallets.currentIndex];
+        this.wallet = wallet;
+        const addresses = wallet.addresses;
+        this.address = addresses.filter(item => item.name == 'FAB')[0].address;        
+      });      
     }
+
+    async mineAssetDo(seed: Buffer, smartContractAddress: string) {
+      this.spinner.show();
+      const abi = {
+          "constant": false,
+          "inputs": [
+            {
+              "name": "_to",
+              "type": "address"
+            }
+          ],
+          "name": "mintTo",
+          "outputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "function"
+      };
+
+      const args = [this.utilServ.fabToExgAddress(this.address)];
+      const resp = await this.kanbanSmartContract.execSmartContract(seed, smartContractAddress, abi, args);
+
+      if (resp && resp.transactionHash) {
+          const txid = resp.transactionHash;
+          console.log('txid=', resp.transactionHash);
+          var that = this;
+          var myInterval = setInterval(function(){ 
+          that.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
+            (receipt: any) => {
+                if(receipt && receipt.transactionReceipt) {
+                  clearInterval(myInterval);
+                  that.spinner.hide();
+                  if(receipt.transactionReceipt && receipt.transactionReceipt.logs && receipt.transactionReceipt.logs.length > 0) {
+                    const log = receipt.transactionReceipt.logs[0];
+                    console.log('receipt.transactionReceipt.logs=', receipt.transactionReceipt.logs);
+                    console.log('log=', log);
+                    const topics = log.topics;
+                    const tokenId = topics[3];
+
+                    const asset = {
+                      media: that.media,
+                      name: that.name,
+                      externalLink: that.externalLink,
+                      description: that.description,
+                      properties: that.properties,
+                      levels: that.levels,
+                      stats: that.stats,
+                      smartContractAddress: that.collection.smartContractAddress,
+                      tokenId: tokenId,
+                      unlockableContent: that.unlockableContent
+                    }
+              
+                    that.assetServ.create(asset).subscribe(
+                      (res: any) => {
+                        console.log('res from create asset=', res);
+                        that.router.navigate(['/nft/admin/collections/' + that.slug + '/assets/create-done']);
+                      }
+                    );
+
+                  }
+                }
+              }
+            );
+           }, 1000);
+      } else {
+        this.spinner.hide();
+        this.toastr.error('Failed to create smart contract.', 'Ok');
+      }
+    }
+
     createAssets() {
+
+      const initialState = {
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
+      
+      this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+      this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+        this.spinner.show();
+        await this.mineAssetDo(seed, this.collection.smartContractAddress);
+        
+      });
+
+
+
+      /*
       const asset = {
         media: this.media,
         name: this.name,
@@ -83,6 +206,6 @@ import { NftAssetService } from '../../services/nft-asset.service';
           this.router.navigate(['/nft/admin/collections/' + this.slug + '/assets/create-done']);
         }
       );
-      
+      */
     }
   }

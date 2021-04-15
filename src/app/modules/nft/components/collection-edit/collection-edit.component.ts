@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NftAssetService } from '../../services/nft-asset.service';
 import { NftCollectionService } from '../../services/nft-collection.service';
 
 @Component({
@@ -9,24 +10,7 @@ import { NftCollectionService } from '../../services/nft-collection.service';
     styleUrls: ['./collection-edit.component.scss']
   })
   export class NftCollectionEditComponent implements OnInit {
-    collection: any;
-    constructor(
-      private route: ActivatedRoute,
-      private collectionServ: NftCollectionService
-      ) {
+      ngOnInit() {
 
-    }
-    ngOnInit() {
-      this.route.paramMap.subscribe( paramMap => {
-        const slug = paramMap.get('slug');
-        this.collectionServ.getBySlug(slug).subscribe(
-          (res: any) => {
-            if(res && res.ok) {
-              this.collection = res.data;
-            }
-          }
-        );
-      });          
-    }
-
+      }
   }

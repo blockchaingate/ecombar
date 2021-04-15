@@ -16,10 +16,11 @@ import { FormTraitComponent } from './components/common/form-trait/form-trait.co
 import { NftCollectionsListComponent } from './components/collections-list/collections-list.component';
 import { NftCollectionsAddComponent } from './components/collections-add/collections-add.component';
 import { NftCollectionsAddDoneComponent } from './components/collections-add-done/collections-add-done.component';
+import { NftCollectionViewComponent } from './components/collection-view/collection-view.component';
 import { NftCollectionEditComponent } from './components/collection-edit/collection-edit.component';
-import { NftCollectionEditTopbarComponent } from './components/collection-edit-topbar/collection-edit-topbar.component';
-import { NftCollectionEditHeaderComponent } from './components/collection-edit-header/collection-edit-header.component';
-import { NftCollectionEditItemsComponent } from './components/collection-edit-items/collection-edit-items.component';
+import { NftCollectionViewTopbarComponent } from './components/collection-view-topbar/collection-view-topbar.component';
+import { NftCollectionViewHeaderComponent } from './components/collection-view-header/collection-view-header.component';
+import { NftCollectionViewItemsComponent } from './components/collection-view-items/collection-view-items.component';
 import { NftCollectionAssetsCreateComponent } from './components/collection-assets-create/collection-assets-create.component';
 import { NftCollectionAssetsCreateDoneComponent } from './components/collection-assets-create-done/collection-assets-create-done';
 import { PropertiesComponent } from './components/common/form-trait/modals/properties/properties.component';
@@ -77,10 +78,9 @@ import { CommonModule } from '@angular/common';
       NftCollectionsListComponent,
       NftCollectionsAddComponent,
       NftCollectionsAddDoneComponent,
-      NftCollectionEditComponent,
-      NftCollectionEditTopbarComponent,
-      NftCollectionEditHeaderComponent,
-      NftCollectionEditItemsComponent,
+      NftCollectionViewTopbarComponent,
+      NftCollectionViewHeaderComponent,
+      NftCollectionViewItemsComponent,
       NftCollectionAssetsCreateComponent,
       NftAssetSellComponent,
       ImageUploaderComponent,
@@ -103,6 +103,8 @@ import { CommonModule } from '@angular/common';
       NftAssetSellSummaryListingComponent,
       NftAssetSellSummaryBountiesComponent,
       NftAssetSellSummaryFeesComponent,
+      NftCollectionViewComponent,
+      NftCollectionEditComponent,
       NftAssetComponent,
       NftAssetActionComponent,
       NftAssetImageComponent,
