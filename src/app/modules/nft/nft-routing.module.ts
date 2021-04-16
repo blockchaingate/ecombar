@@ -21,7 +21,7 @@ const routes: Routes = [
       path: 'assets', component: NftAssetsComponent
     },      
     {
-      path: 'asset', component: NftAssetComponent
+      path: 'assets/:smartContractAddress/:tokenId', component: NftAssetComponent
     },   
     {
       path: 'account', component: NftAccountComponent

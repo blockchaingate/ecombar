@@ -17,6 +17,8 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     styleUrls: ['./collection-assets-create.component.scss']
   })
   export class NftCollectionAssetsCreateComponent implements OnInit {
+    step: number;
+    asset: any;
     modalRef: BsModalRef;
     slug: string;
     collection: any;
@@ -79,6 +81,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     }
 
     ngOnInit() {
+      this.step = 1;
       this.route.paramMap.subscribe((params: ParamMap) =>  {
         this.slug = params.get('slug');   
         this.collectionServ.getBySlug(this.slug).subscribe(
@@ -155,8 +158,14 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
               
                     that.assetServ.create(asset).subscribe(
                       (res: any) => {
-                        console.log('res from create asset=', res);
-                        that.router.navigate(['/nft/admin/collections/' + that.slug + '/assets/create-done']);
+                        if(res && res.ok) {
+                          that.step = 2;
+                          that.asset = res._body;
+                        } else {
+                          that.toastr.error('error while creating asset', 'Ok');
+                        }
+                        //console.log('res from create asset=', res);
+                        //that.router.navigate(['/nft/admin/collections/' + that.slug + '/assets/create-done']);
                       }
                     );
 

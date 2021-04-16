@@ -21,4 +21,10 @@ export class NftAssetService {
     const url = environment.endpoints.blockchaingate + 'nft-asset/smartContractAddress/' + smartContractAddress;
     return this.http.get(url);    
   }
+
+  getBySmartContractTokenId(smartContractAddress: string, tokenId: string) {
+    const url = environment.endpoints.blockchaingate + 'nft-asset/smartContractAddressTokenId/' 
+    + smartContractAddress + '/' + tokenId;
+    return this.http.get(url);      
+  }
 }
