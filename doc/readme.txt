@@ -1,3 +1,5 @@
+http://localhost:4200/nft/admin/assets/ddd/0/sell
+
 https://testnets.opensea.io/assets/0xee45b41d1ac24e9a620169994deb22739f64f231/5404270212490003160468058955419049373696167535371251252745102991339628265473/sell
 
 https://testnets.opensea.io/collection/testmore/assets/create

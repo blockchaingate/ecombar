@@ -25,6 +25,14 @@ export class Web3Service {
     }
   }
 
+  getProvider() {
+    if (typeof window.web3 !== 'undefined') {
+      return window.web3.currentProvider;
+    } else {
+      return Web3.givenProvider;
+    }    
+  }
+
   formCreateSmartContractABI(abiArray, bytecode, args) {
 
     const web3 = this.getWeb3Provider();

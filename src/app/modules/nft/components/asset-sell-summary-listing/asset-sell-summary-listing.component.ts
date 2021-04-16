@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { NftPortService } from '../../services/nft-port.service';
 
 @Component({
     providers: [],
@@ -8,7 +9,10 @@ import { Router } from '@angular/router';
     styleUrls: ['./asset-sell-summary-listing.component.scss']
   })
   export class NftAssetSellSummaryListingComponent implements OnInit {
-    constructor(private router: Router) {
+    constructor(
+      private nftPortServ: NftPortService,
+      private router: Router
+      ) {
 
     }
     ngOnInit() {
@@ -16,6 +20,6 @@ import { Router } from '@angular/router';
     }
 
     postListing() {
-      this.router.navigate(['/nft/asset']);
+      this.nftPortServ.createSellOrder();
     }
   }

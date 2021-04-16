@@ -33,7 +33,7 @@ const routes: Routes = [
                 path: 'collections', component: NftCollectionsComponent
             },
             {
-              path: 'asset/sell', component: NftAssetSellComponent
+              path: 'assets/:smartContractAddress/:tokenId/sell', component: NftAssetSellComponent
             },  
             {
               path: 'collections/:slug/edit', component: NftCollectionEditComponent
