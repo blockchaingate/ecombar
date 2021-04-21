@@ -21,6 +21,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
     }
 
     sell() {
-      this.router.navigate(['/nft/admin/assets/' + this.asset.smartContractAddress + '/' + this.asset.tokenId + '/sell']);
+      this.router.navigate(['/nft/assets/' + this.asset.smartContractAddress + '/' + this.asset.tokenId + '/sell']);
     }
   }

@@ -538,11 +538,15 @@ export class WalletDashboardComponent implements OnInit{
       this.currentTab = tabName;
     }
 
-    onChange(value) {
-      console.log('value==', value);
-      this.wallet = this.wallets.items.filter(item => (item.id == value))[0];
+    onChange(index) {
+      console.log('index==', index);
+      this.wallet = this.wallets.items[index];
+      this.wallets.currentIndex = index;
       console.log('this.wallet=', this.wallet);
-      this.loadWallet();
+
+      this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+        this.loadWallet();
+      });
     }
 
     getCurrentCoinAddress() {

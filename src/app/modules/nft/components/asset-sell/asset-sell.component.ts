@@ -3,6 +3,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NftAssetService } from '../../services/nft-asset.service';
+import { NftOrder } from '../../models/nft-order';
+import { NftPortService } from '../../services/nft-port.service';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
     providers: [],
@@ -12,16 +16,35 @@ import { NftAssetService } from '../../services/nft-asset.service';
   })
   export class NftAssetSellComponent implements OnInit {
     asset: any;
+    smartContractAddress: string;
+    tokenId: string;
+    address: string;
     constructor(
+      private localSt: LocalStorage,
       private route: ActivatedRoute,
-      private assetServ: NftAssetService
+      private utilServ: UtilService,
+      private assetServ: NftAssetService,
+      private nftPortServ: NftPortService
       ) {
 
     }
     ngOnInit() {
+
+      this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+
+        if(!wallets || (wallets.length == 0)) {
+          return;
+        }
+        const wallet = wallets.items[wallets.currentIndex];
+        const addresses = wallet.addresses;
+        this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+      });      
+
       this.route.paramMap.subscribe((params: ParamMap) =>  {
         const smartContractAddress = params.get('smartContractAddress');   
         const tokenId = params.get('tokenId'); 
+        this.smartContractAddress = smartContractAddress;
+        this.tokenId = tokenId;
         this.assetServ.getBySmartContractTokenId(smartContractAddress, tokenId).subscribe(
           (res: any) => {
             if(res && res.ok) {
@@ -30,6 +53,22 @@ import { NftAssetService } from '../../services/nft-asset.service';
           }
         );
       });          
+    }
+
+    postListing() {
+      console.log('postListing do');
+      const makerRelayerFee = 250;
+      const coinType = 12234;
+      const price = 1;
+      const order: NftOrder = this.nftPortServ.createSellOrder(
+        this.utilServ.fabToExgAddress(this.address), 
+        this.asset.smartContractAddress, 
+        this.asset.tokenId,
+        coinType, 
+        price,
+        makerRelayerFee);
+      console.log('order = ', order );
+      //this.nftPortServ.createSellOrder(this.asset.smartContractAddress, this.asset.tokenId);
     }
 
   }

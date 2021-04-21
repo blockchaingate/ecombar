@@ -1,16 +1,16 @@
 <app-nft-header></app-nft-header>
-<app-nft-asset-action></app-nft-asset-action>
+<app-nft-asset-action [asset]="asset"></app-nft-asset-action>
 <div class="row">
     <div class="col col-5 dPgrCP">
         <section class="Framereact__Frame-sc-139h1ex-0 cUPysq item--frame item--media-frame">
-            <app-nft-asset-image></app-nft-asset-image>
+            <app-nft-asset-image [asset]="asset"></app-nft-asset-image>
         </section>
         <section class="Framereact__Frame-sc-139h1ex-0 cUPysq item--frame item--media-frame">
-            <app-nft-asset-details></app-nft-asset-details>
+            <app-nft-asset-details [asset]="asset"></app-nft-asset-details>
         </section>
     </div>
     <div class="col col-7">
-        <app-nft-asset-info></app-nft-asset-info>
+        <app-nft-asset-info [collection]="collection" [asset]="asset"></app-nft-asset-info>
 
         <div class="item-frame">
             <app-expansion 

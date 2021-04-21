@@ -207,7 +207,7 @@
                 <div class="row py-3">
                     <div class="col col-8">
                         <select (change)="onChange($event.target.value)">
-                            <option *ngFor="let item of wallets.items" [value]="item.id" [selected]="item.id == wallet.id">
+                            <option *ngFor="let item of wallets.items; let i = index" [value]="i" [selected]="item.id == wallet.id">
                                 {{item.name}}
                             </option>
                         </select>

@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { NftPortService } from '../../services/nft-port.service';
 
 @Component({
     providers: [],
@@ -7,8 +8,17 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./asset-sell-summary.component.scss']
   })
   export class NftAssetSellSummaryComponent implements OnInit {
+    @Input() asset: any;
+    @Output() postListing = new EventEmitter();
+    constructor(private nftPortServ: NftPortService,) {
+
+    }
     ngOnInit() {
           
     }
 
+    postList() {
+      this.postListing.emit();
+      //
+    }
   }

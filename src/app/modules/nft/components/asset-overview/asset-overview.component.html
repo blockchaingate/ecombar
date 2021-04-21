@@ -1,4 +1,4 @@
-<div class="AssetNavbar--container">
+<div class="AssetNavbar--container" *ngIf="asset">
     <a href="/nft/assets/{{asset.smartContractAddress}}/{{asset.tokenId}}">
         <div class="AssetNavbar--place-bid-navbar-outer">
             <button class="btn-flat AssetNavbar--place-bid-chevron">
