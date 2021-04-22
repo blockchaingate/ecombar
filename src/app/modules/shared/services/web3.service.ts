@@ -9,7 +9,8 @@ import BigNumber from 'bignumber.js';
 import Common from 'ethereumjs-common';
 import KanbanTxService from './kanban.tx.service';
 import { Signature, EthTransactionObj } from '../../../interfaces/kanban.interface';
-
+import { Account } from 'eth-lib/lib/account';
+import { Hash } from 'eth-lib/lib/hash';
 
 @Injectable({ providedIn: 'root' })
 export class Web3Service {
@@ -338,6 +339,43 @@ export class Web3Service {
 
     return abiHex;
 
+  }
+
+  hashKanbanMessage(data) {
+    const web3 = this.getWeb3Provider();
+    var messageHex = web3.utils.isHexStrict(data) ? data : web3.utils.utf8ToHex(data);
+    var messageBytes = web3.utils.hexToBytes(messageHex);
+    var messageBuffer = Buffer.from(messageBytes);
+    var preamble = '\x17Kanban Signed Message:\n' + messageBytes.length;
+    var preambleBuffer = Buffer.from(preamble);
+    var ethMessage = Buffer.concat([preambleBuffer, messageBuffer]);
+    return Hash.keccak256s(ethMessage);    
+  }
+
+  signKanbanMessageWithPrivateKey(message: string, keyPair: any) {
+    let privateKey = `0x${keyPair.privateKey.toString('hex')}`;
+
+    // 64 hex characters + hex-prefix
+    if (privateKey.length !== 66) {
+        throw new Error("Private key must be 32 bytes long");
+    }
+
+    var hash = this.hashKanbanMessage(message);
+    var signature = Account.sign(hash, privateKey);
+    var vrs = Account.decodeSignature(signature);
+    return {
+        message: message,
+        messageHash: hash,
+        v: vrs[0],
+        r: vrs[1],
+        s: vrs[2],
+        signature: signature
+    };
+
+  /*
+    const signMess = web3.eth.accounts.sign(message, privateKey, true);
+    return signMess;
+    */
   }
 
   signMessageWithPrivateKey(message: string, keyPair: any) {

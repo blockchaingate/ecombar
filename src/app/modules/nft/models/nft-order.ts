@@ -22,6 +22,9 @@ export class NftOrder {
     listingTime: number; /* Listing timestamp. */ 
     expirationTime: number; /* Expiration timestamp - 0 for no expiry. */ 
     salt: number;  /* Order salt, used to prevent duplicate hashes. */ 
+    r: string;
+    s: string;
+    v: string;
     constructor(
         exchange: string, 
         maker: string, 
@@ -45,7 +48,10 @@ export class NftOrder {
         extra: number,
         listingTime: number,
         expirationTime: number,
-        salt: number
+        salt: number,
+        r: string = '',
+        s: string = '',
+        v: string = ''
     ) {
       this.exchange = exchange;
       this.maker = maker;
@@ -70,5 +76,8 @@ export class NftOrder {
       this.listingTime = listingTime;
       this.expirationTime = expirationTime;
       this.salt = salt;
+      this.r = r;
+      this.s = s;
+      this.v = v;
     }
 }

@@ -7,6 +7,10 @@ import { NftOrder } from '../../models/nft-order';
 import { NftPortService } from '../../services/nft-port.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { NftOrderService } from '../../services/nft-order.service';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 
 @Component({
     providers: [],
@@ -19,12 +23,19 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     smartContractAddress: string;
     tokenId: string;
     address: string;
+    wallet: any;
+    modalRef: BsModalRef;
+
     constructor(
       private localSt: LocalStorage,
       private route: ActivatedRoute,
+      private router: Router,
+      private spinner: NgxSpinnerService,
       private utilServ: UtilService,
       private assetServ: NftAssetService,
-      private nftPortServ: NftPortService
+      private nftPortServ: NftPortService,
+      private orderServ: NftOrderService,
+      private modalServ: BsModalService
       ) {
 
     }
@@ -55,8 +66,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
       });          
     }
 
-    postListing() {
-      console.log('postListing do');
+    postListingDo(seed: Buffer) {
       const makerRelayerFee = 250;
       const coinType = 12234;
       const price = 1;
@@ -67,8 +77,32 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
         coinType, 
         price,
         makerRelayerFee);
-      console.log('order = ', order );
-      //this.nftPortServ.createSellOrder(this.asset.smartContractAddress, this.asset.tokenId);
+        
+      this.orderServ.create(order).subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            this.spinner.hide();
+            this.router.navigate(
+              ['/nft/assets/' + this.smartContractAddress + '/' + this.tokenId]
+            );
+          }
+        }
+      );
+    } 
+
+    postListing() {
+      
+      const initialState = {
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
+      
+      this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+
+      this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+        this.spinner.show();
+        this.postListingDo(seed);
+      });
     }
 
   }

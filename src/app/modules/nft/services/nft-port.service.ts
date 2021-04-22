@@ -11,6 +11,51 @@ export class NftPortService {
 
   }
   
+  createBuyOrder(taker: string, sellOrder: NftOrder) {
+    const order = sellOrder;
+    order.taker = taker;
+    return order;
+  }
+
+  atomicMatch(sell: NftOrder, buy: NftOrder, metadata) {
+    const args = [
+      [
+        buy.exchange, buy.maker, buy.taker, buy.feeRecipient, 
+        buy.target,buy.staticTarget, sell.exchange, sell.maker, 
+        sell.taker, sell.feeRecipient,sell.target, sell.staticTarget
+      ],
+      [
+        buy.makerRelayerFee, buy.takerRelayerFee, buy.makerProtocolFee, 
+        buy.takerProtocolFee, buy.coinType, buy.basePrice, buy.extra, 
+        buy.listingTime, buy.expirationTime, buy.salt, 
+        sell.makerRelayerFee, sell.takerRelayerFee, sell.makerProtocolFee, 
+        sell.takerProtocolFee, sell.coinType, sell.basePrice, sell.extra, 
+        sell.listingTime, sell.expirationTime, sell.salt
+      ],
+      [
+        buy.feeMethod, buy.side, buy.saleKind, buy.howToCall, 
+        sell.feeMethod, sell.side, sell.saleKind, sell.howToCall
+      ],
+      buy.calldata,
+      sell.calldata,
+      buy.replacementPattern,
+      sell.replacementPattern,
+      buy.staticExtradata,
+      sell.staticExtradata,
+      [
+        buy.v,
+        sell.v
+      ],
+      [
+        buy.r,
+        buy.s,
+        sell.r,
+        sell.s,
+        metadata
+      ]
+    ];
+  }
+
   createSellOrder(
     maker: string, 
     smartContractAddress: string, 

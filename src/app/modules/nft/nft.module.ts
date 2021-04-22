@@ -61,6 +61,8 @@ import { NftLevelsListComponent } from './components/levels-list/levels-list.com
 
 import { NftCollectionService } from './services/nft-collection.service';
 import { NftAssetService } from './services/nft-asset.service';
+import { NftOrderService } from './services/nft-order.service';
+import { NftTradeService } from './services/nft-trade.service';
 import { NftPortService } from './services/nft-port.service';
 import { UploadService } from './services/upload.service';
 
@@ -131,6 +133,8 @@ import { CommonModule } from '@angular/common';
     providers: [
       NftCollectionService,
       NftAssetService,
+      NftOrderService,
+      NftTradeService,
       UploadService,
       NftPortService
     ],
