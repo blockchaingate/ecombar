@@ -11,6 +11,7 @@ import { NftOrderService } from '../../services/nft-order.service';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 @Component({
     providers: [],
@@ -30,6 +31,7 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
       private localSt: LocalStorage,
       private route: ActivatedRoute,
       private router: Router,
+      private kanbanServ: KanbanService,
       private spinner: NgxSpinnerService,
       private utilServ: UtilService,
       private assetServ: NftAssetService,
@@ -47,6 +49,7 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
           return;
         }
         const wallet = wallets.items[wallets.currentIndex];
+        this.wallet = wallet;
         const addresses = wallet.addresses;
         this.address = addresses.filter(item => item.name == 'FAB')[0].address;
       });      
@@ -70,21 +73,30 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
       const makerRelayerFee = 250;
       const coinType = 12234;
       const price = 1;
+      const addressHex = this.utilServ.fabToExgAddress(this.address);
       const order: NftOrder = this.nftPortServ.createSellOrder(
-        this.utilServ.fabToExgAddress(this.address), 
+        addressHex, 
         this.asset.smartContractAddress, 
         this.asset.tokenId,
         coinType, 
         price,
         makerRelayerFee);
-        
+
+      console.log('order=', order);
+      
+      const hashToSignABI = this.nftPortServ.hashToSign(order);
+
+      const res = this.kanbanServ.kanbanCall(order.exchange, hashToSignABI);
+      console.log('res=', res);  
       this.orderServ.create(order).subscribe(
         (res: any) => {
           if(res && res.ok) {
             this.spinner.hide();
+            /*
             this.router.navigate(
               ['/nft/assets/' + this.smartContractAddress + '/' + this.tokenId]
             );
+            */
           }
         }
       );

@@ -56,7 +56,8 @@ import { NftPortService } from '../../services/nft-port.service';
     
     buyDo(seed: Buffer) {
       const buyorder: NftOrder = this.nftPortServ.createBuyOrder(this.address, this.sellOrder);
-        
+      const hashToSign = this.nftPortServ.hashToSign(buyorder);
+      console.log('hashToSign==', hashToSign);  
       const metadata = '0x0';
       this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
     }

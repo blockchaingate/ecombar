@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpService } from './http.service';
 import { HttpHeaders } from '@angular/common/http';
 import { KanbanGetBanalceResponse, KanbanNonceResponse, DepositStatusResp, TransactionAccountResponse } from '../../../interfaces/kanban.interface';
+import { from } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +26,19 @@ export class KanbanService {
         const path = this.baseUrl + 'kanban/getBalance/' + address;
         // console.log('path1=' + path);
         return this.http.getRaw(path);
-    }    
+    }  
+
+    async kanbanCall(to: string, abiData: string) {
+        const data = {
+            transactionOptions: {
+                to: to,
+                data: abiData
+            }
+        };
+        const path = this.baseUrl + 'kanban/call';
+        const res = await this.http.postRaw(path, data).toPromise();
+        return res;
+    }
 
     getTransactionReceipt(txid: string) {
         const path = this.baseUrl + 'kanban/gettransactionreceipt/' + txid;

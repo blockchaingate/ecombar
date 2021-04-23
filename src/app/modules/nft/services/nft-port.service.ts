@@ -4,6 +4,8 @@ import { OpenSeaPort, Network } from '../../../../../../nft-js';
 import { Web3Service } from '../../shared/services/web3.service';
 import { NftOrder } from '../models/nft-order';
 //const Network = opensea.Network;
+const nullAddress = '0x0000000000000000000000000000000000000000';
+const nullBytes = '0x00';
 @Injectable({ providedIn: 'root' })
 export class NftPortService {
 
@@ -15,6 +17,116 @@ export class NftPortService {
     const order = sellOrder;
     order.taker = taker;
     return order;
+  }
+
+  recoverAddress(hash, v, r, s) {
+    const args = [hash, v, r ,s];
+    const abi = {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "recoverAddressTest",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+    return this.web3Serv.getGeneralFunctionABI(abi, args);
+  }
+
+  hashToSign(order: NftOrder) {
+    const args = [
+      [
+        order.exchange??nullAddress, order.maker??nullAddress, order.taker??nullAddress,  
+        order.feeRecipient??nullAddress,order.target??nullAddress,order.staticTarget??nullAddress
+      ],
+      [
+        order.makerRelayerFee, order.takerRelayerFee, order.makerProtocolFee, 
+        order.takerProtocolFee, order.coinType, order.basePrice, order.extra, 
+        order.listingTime, order.expirationTime, order.salt
+      ],
+      order.feeMethod,
+      order.side,
+      order.saleKind,
+      order.howToCall,
+      Buffer.from(order.calldata.replace('0x', ''), 'hex'),
+      Buffer.from(order.replacementPattern.replace('0x', ''), 'hex'),
+      order.staticExtradata??nullBytes      
+    ];
+
+    const abi = {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "addrs",
+          "type": "address[6]"
+        },
+        {
+          "name": "uints",
+          "type": "uint256[10]"
+        },
+        {
+          "name": "feeMethod",
+          "type": "uint8"
+        },
+        {
+          "name": "side",
+          "type": "uint8"
+        },
+        {
+          "name": "saleKind",
+          "type": "uint8"
+        },
+        {
+          "name": "howToCall",
+          "type": "uint8"
+        },
+        {
+          "name": "calldata",
+          "type": "bytes"
+        },
+        {
+          "name": "replacementPattern",
+          "type": "bytes"
+        },
+        {
+          "name": "staticExtradata",
+          "type": "bytes"
+        }
+      ],
+      "name": "hashToSign_",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    };
+    return this.web3Serv.getGeneralFunctionABI(abi, args);
   }
 
   atomicMatch(sell: NftOrder, buy: NftOrder, metadata) {
@@ -54,6 +166,63 @@ export class NftPortService {
         metadata
       ]
     ];
+
+    const abi = {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "addrs",
+          "type": "address[12]"
+        },
+        {
+          "name": "uints",
+          "type": "uint256[20]"
+        },
+        {
+          "name": "feeMethodsSidesKindsHowToCalls",
+          "type": "uint8[8]"
+        },
+        {
+          "name": "calldataBuy",
+          "type": "bytes"
+        },
+        {
+          "name": "calldataSell",
+          "type": "bytes"
+        },
+        {
+          "name": "replacementPatternBuy",
+          "type": "bytes"
+        },
+        {
+          "name": "replacementPatternSell",
+          "type": "bytes"
+        },
+        {
+          "name": "staticExtradataBuy",
+          "type": "bytes"
+        },
+        {
+          "name": "staticExtradataSell",
+          "type": "bytes"
+        },
+        {
+          "name": "vs",
+          "type": "uint8[2]"
+        },
+        {
+          "name": "rssMetadata",
+          "type": "bytes32[5]"
+        }
+      ],
+      "name": "atomicMatch_",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    };
+
+    return this.web3Serv.getGeneralFunctionABI(abi, args);
   }
 
   createSellOrder(
@@ -81,9 +250,9 @@ export class NftPortService {
 
     const listingTime = Date.now();
     const salt = 1;
-    const order = new NftOrder(exchange, maker, '', makerRelayerFee, 
+    const order = new NftOrder(exchange, maker, null, makerRelayerFee, 
     0, 0, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
-    callData, replacementPattern, '', '', coinType, price, 0, listingTime, 
+    callData, replacementPattern, null, null, coinType, price, 0, listingTime, 
     listingTime + 10000, salt);
 
     return order;
