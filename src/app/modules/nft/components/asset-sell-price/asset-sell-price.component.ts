@@ -7,8 +7,27 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./asset-sell-price.component.scss']
   })
   export class NftAssetSellPriceComponent implements OnInit {
+    selectedCoin: string;
+    showPopup: boolean;
+    quantity: number;
+    acceptableCoins = [
+      'BTC',
+      'ETH',
+      'DUSD',
+      'USDT',
+      'FAB',
+      'EXG',
+      'BST',
+      'DSC'
+    ];
     ngOnInit() {
-          
+      this.showPopup = false;
+      this.selectedCoin = 'DUSD';  
+    }
+
+    select(coin: string) {
+      this.selectedCoin = coin;
+      this.showPopup = false;
     }
 
   }

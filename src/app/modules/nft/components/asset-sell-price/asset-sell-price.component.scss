@@ -93,3 +93,40 @@
     padding: 0px 12px 0px 0px;
     min-width: 0px;
 }
+
+
+.Popper {
+    max-height: 380px;
+    overflow-y: auto;
+    box-shadow: rgb(0 0 0 / 16%) 0px 4px 16px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(14, 14, 14);
+    min-width: 220px;
+    position: relative;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    outline: 0px;
+    transition-property: transform, visibility, opacity;
+}
+
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+ul > :not(:last-child) {
+    border-bottom: 1px solid rgb(229, 232, 235);
+}
+
+ul li {
+    font-weight: 600;
+    padding: 16px;
+    cursor: pointer;
+}
+
+ul li:hover {
+    transition: all 0.2s ease 0s;
+    box-shadow: rgb(14 14 14 / 25%) 0px 0px 8px 0px;
+    background-color: rgb(251, 253, 255);
+}
