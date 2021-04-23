@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs/Subject';
+import { CoinService } from '../../services/coin.service';
 
 @Component({
   selector: 'app-password-modal',
@@ -12,14 +13,17 @@ import { Subject } from 'rxjs/Subject';
 })
 export class PasswordModalComponent implements OnInit{
     public onClose: Subject<Buffer>;
+    public onCloseFabPrivateKey: Subject<any>;
     pwdHash: string;
     encryptedSeed: any;
     password: string;
+    fabPrivateKey: any;
     seed: Buffer;
 
     constructor(
         private bsModalRef: BsModalRef,
         private toastr:ToastrService,
+        private coinServ: CoinService,
         private translateServ: TranslateService,
         public utilServ: UtilService) {
             
@@ -27,6 +31,7 @@ export class PasswordModalComponent implements OnInit{
 
     ngOnInit() {
         this.onClose = new Subject();
+        this.onCloseFabPrivateKey = new Subject();
     }
 
     confirmPassword() {
@@ -36,6 +41,9 @@ export class PasswordModalComponent implements OnInit{
             return;
         }
         const seed = this.utilServ.aesDecryptSeed(this.encryptedSeed, this.password);
+        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+        const privateKey = keyPair.privateKeyBuffer.privateKey;
+        this.onCloseFabPrivateKey.next(privateKey);
         this.onClose.next(seed);
         this.bsModalRef.hide();
     }

@@ -12,6 +12,7 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 
 @Component({
     providers: [],
@@ -31,6 +32,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
       private localSt: LocalStorage,
       private route: ActivatedRoute,
       private router: Router,
+      private web3Serv: Web3Service,
       private kanbanServ: KanbanService,
       private spinner: NgxSpinnerService,
       private utilServ: UtilService,
@@ -69,11 +71,12 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
       });          
     }
 
-    postListingDo(seed: Buffer) {
+    async postListingDo(privateKey: Buffer) {
       const makerRelayerFee = 250;
       const coinType = 12234;
       const price = 1;
       const addressHex = this.utilServ.fabToExgAddress(this.address);
+      console.log('addressHex==', addressHex);
       const order: NftOrder = this.nftPortServ.createSellOrder(
         addressHex, 
         this.asset.smartContractAddress, 
@@ -82,12 +85,31 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
         price,
         makerRelayerFee);
 
-      console.log('order=', order);
+      /*
       
       const hashToSignABI = this.nftPortServ.hashToSign(order);
 
-      const res = this.kanbanServ.kanbanCall(order.exchange, hashToSignABI);
-      console.log('res=', res);  
+      const res =  await this.kanbanServ.kanbanCall(order.exchange, hashToSignABI);
+
+      const hash = res.data;
+      
+      const hashForSignature = this.web3Serv.hashKanbanMessage(hash);
+
+      console.log('final hash=', hash);
+      const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);
+      */
+
+     const signature = await this.nftPortServ.getOrderSignature(order, privateKey);
+      order.r = signature.r;
+      order.s = signature.s;
+      order.v = signature.v;
+
+      /*
+      const recoveryABI = this.nftPortServ.recoverAddress(hash, order.v, order.r, order.s);
+      const res2 = await this.kanbanServ.kanbanCall(order.exchange, recoveryABI);
+      console.log('res2=', res2);
+      */
+
       this.orderServ.create(order).subscribe(
         (res: any) => {
           if(res && res.ok) {
@@ -111,9 +133,10 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
       
       this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
 
-      this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+        console.log('privateKey==', privateKey);
         this.spinner.show();
-        this.postListingDo(seed);
+        this.postListingDo(privateKey);
       });
     }
 

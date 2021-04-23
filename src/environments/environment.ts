@@ -126,6 +126,8 @@ export const environment = {
         ETH: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       },
     smartContract: {
+        NFT_Exchange: '0x2c8aa9e76fc3c92a799c6c68926bd24e53ff9abb',
+        ProxyRegistry: '0x2e553ad1cd6ba24be952cc7273e4d869d19b1586',
         FABLOCK: '0xa7d4a4e23bf7dd7a1e03eda9eb7c28a016fd54aa',
         EXG: '0x867480ba8e577402fa44f43c33875ce74bdc5df6',
         USDT: '0x1c35eCBc06ae6061d925A2fC2920779a1896282c',

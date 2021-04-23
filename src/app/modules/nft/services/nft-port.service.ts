@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { OpenSeaPort, Network } from '../../../../../../nft-js';
 import { Web3Service } from '../../shared/services/web3.service';
+import { KanbanService } from '../../shared/services/kanban.service';
 import { NftOrder } from '../models/nft-order';
 //const Network = opensea.Network;
 const nullAddress = '0x0000000000000000000000000000000000000000';
@@ -9,7 +10,7 @@ const nullBytes = '0x00';
 @Injectable({ providedIn: 'root' })
 export class NftPortService {
 
-  constructor(private web3Serv: Web3Service) {
+  constructor(private kanbanServ: KanbanService, private web3Serv: Web3Service) {
 
   }
   
@@ -55,6 +56,21 @@ export class NftPortService {
     return this.web3Serv.getGeneralFunctionABI(abi, args);
   }
 
+  async getOrderSignature(order: NftOrder, privateKey: any) {
+    const hashToSignABI = this.hashToSign(order);
+
+    const res =  await this.kanbanServ.kanbanCall(order.exchange, hashToSignABI);
+
+    const hash = res.data;
+    
+    const hashForSignature = this.web3Serv.hashKanbanMessage(hash);
+
+    console.log('final hash=', hash);
+    const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);    
+
+    return signature;
+  }
+
   hashToSign(order: NftOrder) {
     const args = [
       [
@@ -75,6 +91,7 @@ export class NftPortService {
       order.staticExtradata??nullBytes      
     ];
 
+    console.log('final args=', args);
     const abi = {
       "constant": true,
       "inputs": [

@@ -8,6 +8,7 @@ import { ABI, Bytecode } from '../../../../config/erc721';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     providers: [],
@@ -62,7 +63,7 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
 
     async deployKanbanDo(seed, templateDone) {
       this.spinner.show();
-      let args = ['NFT','NFT','0xe4a44dbe32be2cadfde734bb2084b5f6c3672e44'];
+      let args = ['NFT','NFT',environment.addresses.smartContract.ProxyRegistry];
       const resp = await this.kanbanSmartContract.deploySmartContract(seed, ABI, Bytecode, args);
 
       if (resp && resp.transactionHash) {
