@@ -89,7 +89,9 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 
 
 
-     const signature = await this.nftPortServ.getOrderSignature(order, privateKey);
+      const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
+      order.hash = hash;
+      order.hashForSignature = hashForSignature;
       order.r = signature.r;
       order.s = signature.s;
       order.v = signature.v;

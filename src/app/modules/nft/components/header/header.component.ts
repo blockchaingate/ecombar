@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./header.component.scss']
   })
   export class NftHeaderComponent implements OnInit {
-      ngOnInit() {
-          
-      }
+    showAside: boolean;
+    ngOnInit() {
+        this.showAside = false;    
+    }
   }

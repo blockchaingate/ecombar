@@ -166,3 +166,18 @@ ul:not(.browser-default) li {
     font-weight: 500;
     font-size: 16px;    
 }
+
+aside {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    width: 420px;
+    height: calc(100% - 72px);
+    z-index: 20;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 232, 235);
+    filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px);
+    transition: transform 0.5s ease 0s, opacity 0.5s ease 0s;
+    visibility: visible;
+    opacity: 1;    
+}

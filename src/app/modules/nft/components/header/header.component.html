@@ -45,8 +45,18 @@
                         ddd
                     </li>
                 </ul>
-            </li>               
+            </li>  
+            
+            <li class="NavItemreact__LiContainer-sc-1agh4ne-0 eUbTNn NavItem--isRoot" (click)="showAside = !showAside">
+                <div class="NavItem--main ">
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">account_balance_wallet</i>
+                </div>
+            </li>
+
         </ul>
     </nav>
-    
 </div>
+
+<aside *ngIf="showAside">
+    dddddd
+</aside>
