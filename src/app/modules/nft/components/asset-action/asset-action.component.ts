@@ -9,7 +9,7 @@ import { NftOrderService } from '../../services/nft-order.service';
 import { NftPortService } from '../../services/nft-port.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { KanbanSmartContractService } from '../../../shared/services/kanban.smartcontract.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
@@ -95,6 +95,8 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
       const metadata = null;
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
 
+      console.log('smart contract address=', environment.addresses.smartContract.NFT_Exchange);
+      console.log('atomicMathAbiArgs.args=', atomicMathAbiArgs.args);
       const resp = await this.kanbanSmartContract.execSmartContract(
         seed, environment.addresses.smartContract.NFT_Exchange, atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
 

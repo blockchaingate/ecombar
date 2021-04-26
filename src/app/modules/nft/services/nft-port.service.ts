@@ -19,8 +19,29 @@ export class NftPortService {
     const order = {
       ...sellOrder,
       side: 0,
-      taker: taker
+      taker: taker,
+      callData: this.getTransferFromAbi(nullAddress, taker, sellOrder.calldata.substring(sellOrder.calldata.length - 64)), 
+      replacementPattern: '0x00000000'
+      + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+      + '0000000000000000000000000000000000000000000000000000000000000000'
+      + '0000000000000000000000000000000000000000000000000000000000000000'
     };
+
+/*
+        0x23b872dd - function signature for transfer, based on what function you use
+        0000000000000000000000000000000000000000000000000000000000000000
+        000000000000000000000000Ab8483F64d9C6d1EcF9b849Ae677dD3315835cb2
+        0000000000000000000000000000000000000000000000000000000000000001
+
+        // replacementPattern
+        0x00000000
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+*/
+
+
+
     return order;
   }
 
@@ -250,6 +271,35 @@ export class NftPortService {
     };
   }
 
+  getTransferFromAbi(from: string, to: string, tokenId: string) {
+    const abi = 	{
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    const args = [from, to, tokenId];
+
+    return this.web3Serv.getGeneralFunctionABI(abi, args);
+  }
+
   createSellOrder(
     maker: string, 
     smartContractAddress: string, 
@@ -264,10 +314,14 @@ export class NftPortService {
     const side = 1;
     const saleKind = 0;
     const howToCall = 0;
+    /*
     const callData = '0x23b872dd' // - function signature for transfer, based on what function you use
     + '000000000000000000000000d46d7e8d5a9f482aeeb0918bef6a10445159f297'
     + '0000000000000000000000000000000000000000000000000000000000000000'
     + tokenId;
+    */
+   const callData = this.getTransferFromAbi(maker, nullAddress, tokenId);
+   console.log('callData==', callData);
     const replacementPattern = '0x00000000'
     + '0000000000000000000000000000000000000000000000000000000000000000'
     + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
