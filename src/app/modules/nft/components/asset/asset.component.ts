@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NftAssetService } from '../../services/nft-asset.service';
 import { NftCollectionService } from '../../services/nft-collection.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { NftOrderService } from '../../services/nft-order.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
     providers: [],
@@ -12,6 +14,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
   })
   export class NftAssetComponent implements OnInit {
     asset: any;
+    owner: string;
     collection: any;
     address: string;
     wallet: any;
@@ -20,6 +23,8 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
       private localSt: LocalStorage,
       private route: ActivatedRoute,
       private assetServ: NftAssetService,
+      private orderServ: NftOrderService,
+      private utilServ: UtilService,
       private collectionServ: NftCollectionService
       ) {
 
@@ -47,6 +52,15 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
             }
           }
         );
+
+        this.assetServ.getOwner(smartContractAddress, tokenId).subscribe(
+          (res: any) => {
+            this.owner = res.data;
+            this.owner = this.utilServ.exgToFabAddress(this.owner.replace('0x000000000000000000000000', '0x'));
+
+          }
+        );
+
 
         this.collectionServ.getBySmartContractAddress(smartContractAddress).subscribe(
           (res: any) => {

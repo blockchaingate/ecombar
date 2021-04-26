@@ -1,8 +1,9 @@
 <app-nft-header></app-nft-header>
 <div *ngIf="asset">
-    <app-nft-asset-action 
+    <app-nft-asset-action *ngIf="owner && address && asset && wallet"
     [wallet]="wallet"
     [asset]="asset" 
+    [owner]="owner"
     [address]="address"></app-nft-asset-action>
     <div class="row">
         <div class="col col-5 dPgrCP">
@@ -14,7 +15,11 @@
             </section>
         </div>
         <div class="col col-7">
-            <app-nft-asset-info [collection]="collection" [asset]="asset"></app-nft-asset-info>
+            <app-nft-asset-info *ngIf="owner && address && asset"
+            [collection]="collection" [asset]="asset"
+            [owner]="owner"
+            [address]="address"
+            ></app-nft-asset-info>
     
             <div class="item-frame">
                 <app-expansion 

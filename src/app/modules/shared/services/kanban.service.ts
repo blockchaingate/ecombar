@@ -28,7 +28,12 @@ export class KanbanService {
         return this.http.getRaw(path);
     }  
 
-    async kanbanCall(to: string, abiData: string) {
+    async kanbanCallAsync(to: string, abiData: string) {
+        const res = await this.kanbanCall(to, abiData).toPromise();
+        return res;
+    }
+
+    kanbanCall(to: string, abiData: string) {
         const data = {
             transactionOptions: {
                 to: to,
@@ -36,10 +41,10 @@ export class KanbanService {
             }
         };
         const path = this.baseUrl + 'kanban/call';
-        const res = await this.http.postRaw(path, data).toPromise();
-        return res;
+        const res = this.http.postRaw(path, data);
+        return res;        
     }
-
+    
     getTransactionReceipt(txid: string) {
         const path = this.baseUrl + 'kanban/gettransactionreceipt/' + txid;
         return this.http.getRaw(path);

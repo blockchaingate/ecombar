@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" *ngIf="collection">
     <div class="d-flex justify-content-between">
         <div>
             <a href="/nft/admin/collections/{{collection.slug}}/view">
@@ -29,7 +29,7 @@
                 <img class="Image--image" src="https://storage.googleapis.com/opensea-static/opensea-profile/20.png" style="object-fit: cover;">
  
             </div>
-            <span>Owned by bus</span>
+            <span>Owned by {{owner == address ? 'you' : owner}}</span>
         </div>
 
         <div class="pl-2">

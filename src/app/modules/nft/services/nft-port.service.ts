@@ -59,7 +59,7 @@ export class NftPortService {
   async getOrderSignature(order: NftOrder, privateKey: any) {
     const hashToSignABI = this.hashToSign(order);
 
-    const res =  await this.kanbanServ.kanbanCall(order.exchange, hashToSignABI);
+    const res =  await this.kanbanServ.kanbanCallAsync(order.exchange, hashToSignABI);
 
     const hash = res.data;
     

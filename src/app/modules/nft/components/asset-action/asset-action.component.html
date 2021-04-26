@@ -1,10 +1,11 @@
+
 <div class="OrderManagerreact__DivContainer-rw3i3h-0 eyduij">
     <div class="OrderManager--cta-container">
-        <div *ngIf="isOwner()">
-            <div *ngIf="!hasSellOrder()" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="sell()" data-testid="ActionButton" role="button" tabindex="0">
+        <div *ngIf="isOwner">
+            <div *ngIf="!hasSellOrder" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="sell()" data-testid="ActionButton" role="button" tabindex="0">
                 <div class="ActionButton--content " style="min-width: 120px;">Sell</div>
             </div>  
-            <div *ngIf="hasSellOrder()">
+            <div *ngIf="hasSellOrder">
                 <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--tertiary ActionButton--light ActionButton--iconOnly OrderManager--second-button" data-testid="ActionButton" role="button" tabindex="0" type="tertiary">
                     <div class="ActionButton--content ">Cancel Listing</div>
                 </div>
@@ -13,7 +14,7 @@
                 </div>                
             </div>
         </div>
-        <div *ngIf="!isOwner()" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="buy()" data-testid="ActionButton" role="button" tabindex="0">
+        <div *ngIf="!isOwner" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="buy()" data-testid="ActionButton" role="button" tabindex="0">
             <div class="ActionButton--content " style="min-width: 120px;">Buy</div>
         </div>  
 

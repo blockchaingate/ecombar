@@ -87,30 +87,13 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
         price,
         makerRelayerFee);
 
-      /*
-      
-      const hashToSignABI = this.nftPortServ.hashToSign(order);
 
-      const res =  await this.kanbanServ.kanbanCall(order.exchange, hashToSignABI);
-
-      const hash = res.data;
-      
-      const hashForSignature = this.web3Serv.hashKanbanMessage(hash);
-
-      console.log('final hash=', hash);
-      const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);
-      */
 
      const signature = await this.nftPortServ.getOrderSignature(order, privateKey);
       order.r = signature.r;
       order.s = signature.s;
       order.v = signature.v;
 
-      /*
-      const recoveryABI = this.nftPortServ.recoverAddress(hash, order.v, order.r, order.s);
-      const res2 = await this.kanbanServ.kanbanCall(order.exchange, recoveryABI);
-      console.log('res2=', res2);
-      */
 
       this.orderServ.create(order).subscribe(
         (res: any) => {

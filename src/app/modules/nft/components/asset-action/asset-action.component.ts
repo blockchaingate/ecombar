@@ -18,7 +18,10 @@ import { NftPortService } from '../../services/nft-port.service';
     @Input() asset: any;
     @Input() address: string;
     @Input() wallet: any;
+    @Input() owner: string;
     sellOrder: any;
+    isOwner: boolean;
+    hasSellOrder: boolean;
     modalRef: BsModalRef;
 
     constructor(
@@ -32,7 +35,23 @@ import { NftPortService } from '../../services/nft-port.service';
 
     }
     ngOnInit() {
+      this.isOwner = false;
+      this.hasSellOrder = false;
+      if(this.owner && this.address) {
+        this.isOwner = this.owner == this.address;
+      }
+      if(this.asset) {
+        if(this.asset.orders && this.asset.orders.length > 0) {
+          const sellOrders = this.asset.orders.filter(item => item.side == 1);
           
+          if(sellOrders && sellOrders.length > 0) {
+            this.sellOrder = sellOrders[sellOrders.length - 1];
+            this.hasSellOrder = true;
+            console.log('this.sellOrder1111=', this.sellOrder);
+          }
+          
+        }        
+      }                
     }
 
     sell() {
@@ -57,19 +76,10 @@ import { NftPortService } from '../../services/nft-port.service';
     buyDo(seed: Buffer) {
       const buyorder: NftOrder = this.nftPortServ.createBuyOrder(this.address, this.sellOrder);
       const hashToSign = this.nftPortServ.hashToSign(buyorder);
-      console.log('hashToSign==', hashToSign);  
       const metadata = '0x0';
       this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
     }
 
-    isOwner() {
-      return this.asset.owner == this.address;
-    }
 
-    hasSellOrder() {
-      if(this.asset.orders && this.asset.orders.length > 0) {
-        this.sellOrder = this.asset.orders[0];
-      }
-    }
 
   }

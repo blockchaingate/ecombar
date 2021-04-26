@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
     providers: [],
@@ -9,8 +10,12 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
   export class NftAssetInfoComponent implements OnInit {
     @Input() asset: any;
     @Input() collection: any;
+    @Input() owner: string;
+    @Input() address: string;
+
+    constructor(private utilServ: UtilService) {}
     ngOnInit() {
-          
+         
     }
 
   }
