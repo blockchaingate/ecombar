@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
   })
   export class NftAssetSellSummaryListingComponent implements OnInit {
     @Output() postListing = new EventEmitter();
+    @Input() coin: string;
+    @Input() quantity: number;    
     constructor(
       
       private router: Router

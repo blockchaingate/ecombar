@@ -11,7 +11,7 @@ import { NftOrderService } from '../../services/nft-order.service';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 
 @Component({
@@ -27,13 +27,15 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
     address: string;
     wallet: any;
     modalRef: BsModalRef;
+    coin: string;
+    quantity: number;
 
     constructor(
       private localSt: LocalStorage,
       private route: ActivatedRoute,
       private router: Router,
       private web3Serv: Web3Service,
-      private kanbanServ: KanbanService,
+      private coinServ: CoinService,
       private spinner: NgxSpinnerService,
       private utilServ: UtilService,
       private assetServ: NftAssetService,
@@ -73,10 +75,10 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 
     async postListingDo(privateKey: Buffer) {
       const makerRelayerFee = 250;
-      const coinType = 12234;
-      const price = 1;
+      const coinType = this.coinServ.getCoinTypeIdByName(this.coin);
+      const price = this.quantity;
       const addressHex = this.utilServ.fabToExgAddress(this.address);
-      console.log('addressHex==', addressHex);
+
       const order: NftOrder = this.nftPortServ.createSellOrder(
         addressHex, 
         this.asset.smartContractAddress, 
@@ -134,10 +136,14 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
       this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
 
       this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
-        console.log('privateKey==', privateKey);
         this.spinner.show();
         this.postListingDo(privateKey);
       });
     }
 
+    onUpdateEntity(event) {
+      this.coin = event.coin;
+      this.quantity = event.quantity;
+    }
+  
   }

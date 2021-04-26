@@ -10,6 +10,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     selectedCoin: string;
     showPopup: boolean;
     quantity: number;
+    @Output() updateEntity = new EventEmitter<any>();
     acceptableCoins = [
       'BTC',
       'ETH',
@@ -20,14 +21,25 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
       'BST',
       'DSC'
     ];
+    
     ngOnInit() {
       this.showPopup = false;
       this.selectedCoin = 'DUSD';  
     }
 
+    emitEntity() {
+      this.updateEntity.emit(
+        {
+          coin: this.selectedCoin,
+          quantity: this.quantity
+        }
+      );
+    }
+
     select(coin: string) {
       this.selectedCoin = coin;
       this.showPopup = false;
+      this.emitEntity()
     }
 
   }

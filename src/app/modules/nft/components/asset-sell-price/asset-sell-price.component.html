@@ -22,7 +22,8 @@
                 </div>
             </div>
             <div class="Input--prefix"></div>
-            <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="Amount" spellcheck="false" type="number" [(ngModel)]="quantity">
+            <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="Amount" spellcheck="false" type="number" 
+            [(ngModel)]="quantity" (ngModelChange)="emitEntity()">
         </div>
     </div>
 </div>

@@ -9,6 +9,8 @@ import { NftPortService } from '../../services/nft-port.service';
   })
   export class NftAssetSellSummaryComponent implements OnInit {
     @Input() asset: any;
+    @Input() coin: string;
+    @Input() quantity: number;
     @Output() postListing = new EventEmitter();
     constructor(private nftPortServ: NftPortService,) {
 
