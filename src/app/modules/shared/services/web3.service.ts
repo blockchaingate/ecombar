@@ -358,9 +358,8 @@ export class Web3Service {
   }
 
   signKanbanMessageHashWithPrivateKey(hash: string, privateKey: any) {
-    console.log('privateKey==', privateKey);
+
     const privateKeyHex = `0x${privateKey.toString('hex')}`;
-    console.log('privateKeyHex==', privateKeyHex);
     // 64 hex characters + hex-prefix
     if (privateKeyHex.length !== 66) {
         throw new Error("Private key must be 32 bytes long");
@@ -377,10 +376,8 @@ export class Web3Service {
   }
 
   signMessageWithPrivateKey(message: string, keyPair: any) {
-    console.log('message==', message);
-    console.log('keyPair==', keyPair);
+
     const privateKey = `0x${keyPair.privateKey.toString('hex')}`;
-    console.log('privateKey==', privateKey);
     //const privateKey = keyPair.privateKey;
     const web3 = this.getWeb3Provider();
 

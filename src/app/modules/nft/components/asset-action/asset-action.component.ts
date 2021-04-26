@@ -4,9 +4,13 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { NftOrder } from '../../models/nft-order';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { NftOrderService } from '../../services/nft-order.service';
 import { NftPortService } from '../../services/nft-port.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { KanbanSmartContractService } from '../../../shared/services/kanban.smartcontract.service';
+import { environment } from 'src/environments/environment';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
     providers: [],
@@ -27,9 +31,11 @@ import { NftPortService } from '../../services/nft-port.service';
     constructor(
       private router: Router, 
       private spinner: NgxSpinnerService,
-      private utilServ: UtilService,
+      private coinServ: CoinService,
       private nftPortServ: NftPortService,
-      private orderServ: NftOrderService,      
+      private kanbanServ: KanbanService,
+      private utilServ: UtilService,
+      private kanbanSmartContract: KanbanSmartContractService,      
       private modalServ: BsModalService
       ) {
 
@@ -73,11 +79,27 @@ import { NftPortService } from '../../services/nft-port.service';
 
     }
     
-    buyDo(seed: Buffer) {
-      const buyorder: NftOrder = this.nftPortServ.createBuyOrder(this.address, this.sellOrder);
-      const hashToSign = this.nftPortServ.hashToSign(buyorder);
-      const metadata = '0x0';
-      this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
+    async buyDo(seed: Buffer) {
+      const buyorder: NftOrder = this.nftPortServ.createBuyOrder(
+        this.utilServ.fabToExgAddress(this.address), this.sellOrder);
+
+      console.log('buyorder=', buyorder);
+      //const hashToSign = this.nftPortServ.hashToSign(buyorder);
+      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const privateKey = keyPair.privateKeyBuffer.privateKey;
+      const signature = await this.nftPortServ.getOrderSignature(buyorder, privateKey);
+      buyorder.r = signature.r;
+      buyorder.s = signature.s;
+      buyorder.v = signature.v;
+
+      const metadata = null;
+      const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
+
+      const resp = await this.kanbanSmartContract.execSmartContract(
+        seed, environment.addresses.smartContract.NFT_Exchange, atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
+
+      console.log('resp from execSmartContract=', resp);
+
     }
 
 

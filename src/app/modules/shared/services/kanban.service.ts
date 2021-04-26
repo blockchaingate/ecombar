@@ -45,6 +45,11 @@ export class KanbanService {
         return res;        
     }
     
+    kanbanSend(to: string, abiData: string) {
+        const txhex = '';   
+        return this.sendRawSignedTransaction(txhex);   
+    }
+
     getTransactionReceipt(txid: string) {
         const path = this.baseUrl + 'kanban/gettransactionreceipt/' + txid;
         return this.http.getRaw(path);

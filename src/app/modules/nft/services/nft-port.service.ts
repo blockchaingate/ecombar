@@ -7,6 +7,7 @@ import { NftOrder } from '../models/nft-order';
 //const Network = opensea.Network;
 const nullAddress = '0x0000000000000000000000000000000000000000';
 const nullBytes = '0x00';
+const nullBytes32 = '0x0000000000000000000000000000000000000000000000000000000000000000';
 @Injectable({ providedIn: 'root' })
 export class NftPortService {
 
@@ -15,8 +16,11 @@ export class NftPortService {
   }
   
   createBuyOrder(taker: string, sellOrder: NftOrder) {
-    const order = sellOrder;
-    order.taker = taker;
+    const order = {
+      ...sellOrder,
+      side: 0,
+      taker: taker
+    };
     return order;
   }
 
@@ -149,9 +153,10 @@ export class NftPortService {
   atomicMatch(sell: NftOrder, buy: NftOrder, metadata) {
     const args = [
       [
-        buy.exchange, buy.maker, buy.taker, buy.feeRecipient, 
-        buy.target,buy.staticTarget, sell.exchange, sell.maker, 
-        sell.taker, sell.feeRecipient,sell.target, sell.staticTarget
+        buy.exchange??nullAddress, buy.maker??nullAddress, buy.taker??nullAddress, 
+        buy.feeRecipient??nullAddress, buy.target??nullAddress,buy.staticTarget??nullAddress, 
+        sell.exchange??nullAddress, sell.maker??nullAddress, sell.taker??nullAddress, 
+        sell.feeRecipient??nullAddress, sell.target??nullAddress, sell.staticTarget??nullAddress
       ],
       [
         buy.makerRelayerFee, buy.takerRelayerFee, buy.makerProtocolFee, 
@@ -165,12 +170,12 @@ export class NftPortService {
         buy.feeMethod, buy.side, buy.saleKind, buy.howToCall, 
         sell.feeMethod, sell.side, sell.saleKind, sell.howToCall
       ],
-      buy.calldata,
-      sell.calldata,
-      buy.replacementPattern,
-      sell.replacementPattern,
-      buy.staticExtradata,
-      sell.staticExtradata,
+      Buffer.from(buy.calldata.replace('0x', ''), 'hex'),
+      Buffer.from(sell.calldata.replace('0x', ''), 'hex'),
+      Buffer.from(buy.replacementPattern.replace('0x', ''), 'hex'),
+      Buffer.from(sell.replacementPattern.replace('0x', ''), 'hex'),
+      buy.staticExtradata??nullBytes,
+      sell.staticExtradata??nullBytes,
       [
         buy.v,
         sell.v
@@ -180,7 +185,7 @@ export class NftPortService {
         buy.s,
         sell.r,
         sell.s,
-        metadata
+        metadata??nullBytes32
       ]
     ];
 
@@ -239,7 +244,10 @@ export class NftPortService {
       "type": "function"
     };
 
-    return this.web3Serv.getGeneralFunctionABI(abi, args);
+    return {
+      abi: abi,
+      args: args
+    };
   }
 
   createSellOrder(
@@ -249,7 +257,7 @@ export class NftPortService {
     coinType: number,
     price: number,
     makerRelayerFee: number) {
-    const exchange = '0xbfdee10992140b342683837468eb24a728fe7c6b';
+    const exchange = environment.addresses.smartContract.NFT_Exchange;
 
     const feeRecipient = '0x0000000000000000000000000000000000000FEE';
     const feeMethod = 0;
