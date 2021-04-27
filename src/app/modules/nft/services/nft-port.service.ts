@@ -466,6 +466,50 @@ export class NftPortService {
     return this.web3Serv.getGeneralFunctionABI(abi, args);
   }
 
+  getUserAuthenticatedAbi(address: string) {
+    const abi = {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "getUserAuthenticatedProxies",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+    const args = [address];
+    const funAbi = this.web3Serv.getGeneralFunctionABI(abi, args);
+    return funAbi; 
+  }
+
+  getRegisterProxyAbiArgs() {
+    const abi = {
+      "constant": false,
+      "inputs": [],
+      "name": "registerProxy",
+      "outputs": [
+        {
+          "name": "proxy",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+    const args = [];
+    return { abi, args };    
+  }
+
   createSellOrder(
     maker: string, 
     smartContractAddress: string, 

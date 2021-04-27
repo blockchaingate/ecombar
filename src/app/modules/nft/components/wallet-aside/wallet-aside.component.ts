@@ -1,6 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { env } from 'process';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { environment } from 'src/environments/environment';
+import { NftPortService } from '../../services/nft-port.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+
 @Component({
     providers: [],
     selector: 'app-wallet-aside',
@@ -11,30 +21,104 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
       wallet: any;
       wallets: any;
       address: string;
-
-      constructor(private route: Router, private localSt: LocalStorage) {}
+      modalRef: BsModalRef;
+      isProxyAuthenticated: boolean;
+      constructor(
+          private route: Router, 
+          private spinner: NgxSpinnerService,
+          private nftPortServ: NftPortService,
+          private utilServ: UtilService,
+          private modalServ: BsModalService,
+          private kanbanServ: KanbanService,
+          private kanbanSmartContractServ: KanbanSmartContractService,
+          private localSt: LocalStorage) {}
       ngOnInit() {
-          console.log('fafeaw');
+          this.isProxyAuthenticated = true;
         this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
-            console.log('wallets=', wallets);
             if(!wallets || !wallets.items || (wallets.items.length == 0)) {
               return;
             }
             this.wallets = wallets;
             const wallet = wallets.items[wallets.currentIndex];
-            console.log('wallet===', wallet);
             this.wallet = wallet;
-            const addresses = wallet.addresses;
-            this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+            this.changeWallet(this.wallet.id);
         });           
       }
 
       changeWallet(walltId: string) {
-          this.wallet = this.wallets.items.filter(item => item.id == walltId)[0];
+          let index = -1;
+          for(let i = 0; i < this.wallets.items.length; i++) {
+              const item = this.wallets.items[i];
+              if(item.id == walltId) {
+                  index = i;
+                this.wallet = item;
+                break;
+              }
+          }
+          //this.wallet = this.wallets.items.filter(item => item.id == walltId)[0];
           const addresses = this.wallet.addresses;
-          this.address = addresses.filter(item => item.name == 'FAB')[0].address;          
+
+          this.address = addresses.filter(item => item.name == 'FAB')[0].address;     
+          
+          const abi = this.nftPortServ.getUserAuthenticatedAbi(this.utilServ.fabToExgAddress(this.address));
+
+          this.kanbanServ.kanbanCall(environment.addresses.smartContract.ProxyRegistry, abi)
+          .subscribe(
+              (res: any) => {
+                  console.log('res from kanbanCallkanbanCall=', res);
+                  const data = res.data;
+                  if(data == "0x0000000000000000000000000000000000000000000000000000000000000000") {
+                    this.isProxyAuthenticated = false;
+                  } else {
+                      this.isProxyAuthenticated = true;
+                  }
+              }
+          );
+          this.wallets.currentIndex = index;
+          this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+          });          
+
       } 
-      
+
+      async authenticateDo(seed: Buffer) {
+        const {abi, args} = this.nftPortServ.getRegisterProxyAbiArgs();
+        const resp = await this.kanbanSmartContractServ.execSmartContract(seed, environment.addresses.smartContract.ProxyRegistry, abi, args);
+        console.log('resp===', resp);
+
+        if (resp && resp.transactionHash) {
+            const txid = resp.transactionHash;
+            console.log('txid=', resp.transactionHash);
+            var that = this;
+            var myInterval = setInterval(function(){ 
+              that.kanbanSmartContractServ.getTransactionReceipt(txid).subscribe(
+                (receipt: any) => {
+                  if(receipt && receipt.transactionReceipt) {
+                    clearInterval(myInterval);
+                    that.spinner.hide();
+                    that.isProxyAuthenticated = true;
+                    console.log('receipt.transactionReceipt==', receipt.transactionReceipt);
+                  }
+                }
+              );
+            }, 1000);
+        }
+
+      }
+
+      authenticate() {
+        const initialState = {
+            pwdHash: this.wallet.pwdHash,
+            encryptedSeed: this.wallet.encryptedSeed
+          };          
+          
+          this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+    
+          this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+            this.spinner.show();
+            this.authenticateDo(seed);
+          });          
+      }
+
       createWallet() {
         this.route.navigate(['/admin/create-wallet']);
       }
