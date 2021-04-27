@@ -25,7 +25,17 @@
             [owner]="owner"
             [address]="address"
             ></app-nft-asset-info>
-    
+
+            <div class="item-frame">
+                <app-expansion 
+                [title]="'Reveal unlockable content'"
+                [icon]="'lock_open'"
+                [nocontent]="true"
+                [toggleable]="false">
+                    
+                </app-expansion> 
+            </div>
+
             <div class="item-frame">
                 <app-expansion 
                 [title]="'Price History'"

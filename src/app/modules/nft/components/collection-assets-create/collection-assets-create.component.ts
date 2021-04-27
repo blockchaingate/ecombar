@@ -153,7 +153,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
                       stats: that.stats,
                       smartContractAddress: that.collection.smartContractAddress,
                       tokenId: tokenId,
-                      creator: this.address,
+                      creator: that.address,
                       unlockableContent: that.unlockableContent
                     }
               

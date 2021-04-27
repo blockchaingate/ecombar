@@ -8,7 +8,7 @@
         </i>
     </header>
     <div class="Panel-body">
-        <div class="Panel--isContentPadded" *ngIf="!toggleable || expanded">
+        <div class="Panel--isContentPadded" *ngIf="!nocontent && (!toggleable || expanded)">
             <ng-content></ng-content>
         </div>
     </div>
