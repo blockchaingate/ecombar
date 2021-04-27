@@ -1,0 +1,45 @@
+<div class="overview" *ngIf="!wallet">
+    <div class="py-3">
+        <div class="button-primary" (click)="restoreWallet()" style="min-width:120px">
+            Import
+        </div>
+    </div>
+    <div class="py-3">
+        <div class="button-outline" (click)="createWallet()" style="min-width:120px">
+            Create
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="wallets && wallet">
+    <div class="d-flex justify-content-between overview">
+        <div>
+            <select class="form-select" (change)="changeWallet($event.target.value)">
+                <option *ngFor="let item of wallets.items" value="{{item.id}}" 
+                [selected]="wallet.id == item.id"
+                >{{item.name}}</option>
+            </select>
+        </div>
+        <div>
+            {{address}}
+        </div>
+    </div>
+    <div class="content">
+        <div class="assets">
+            <ul>
+                <li class="d-flex">
+                    <div class="coin-name">
+                        eth
+                    </div>
+                    <div class="coin-value">
+                        1.2223
+                    </div>
+                </li>
+                <li class="d-flex">2333</li>
+                <li class="d-flex">555</li>
+            </ul>
+        </div>
+    </div>
+
+</div>

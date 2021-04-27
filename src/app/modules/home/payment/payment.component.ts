@@ -67,7 +67,7 @@ export class PaymentComponent implements OnInit{
 
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
-        if(!wallets || (wallets.length == 0)) {
+        if(!wallets || !wallets.items || (wallets.items.length == 0)) {
           this.noWallet = true;
           return;
         }

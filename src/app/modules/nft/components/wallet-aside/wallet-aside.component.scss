@@ -1,0 +1,79 @@
+.overview {
+    padding: 20px;
+    border-bottom: 1px solid rgb(229, 232, 235);   
+
+}
+
+.button-primary {
+    text-align: center;
+    padding: 12px 20px;
+    background-color: rgb(32, 129, 226);
+    border-radius: 5px;
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.button-outline {
+    text-align: center;
+    padding: 12px 20px;
+    background-color: white;
+    border: 1px solid #2081e2;
+    color: #2081e2;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.content {
+    padding: 20px;
+    height: 100%;
+    overflow: auto;    
+}
+
+.assets {
+    margin-top: 24px;
+}
+
+.assets ul {
+    padding-left: 0;
+    margin: 0;
+    list-style-type: none;
+    border: 1px solid rgb(229, 232, 235);
+    border-radius: 5px;        
+}
+
+.assets ul > li {
+    width: 100%;
+    font-weight: 600;
+    padding: 16px;
+}
+
+.coin-name {
+    align-self: stretch;
+    flex: 1 1 auto;
+    flex-flow: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-right: 16px;
+    order: 3;
+    overflow: hidden;
+    font-size: 16px;    
+}
+
+.coin-value {
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-flow: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    max-width: 40%;
+    order: 4;
+    overflow: hidden;
+    text-align: right;    
+}
+
+.assets ul > li:not(:last-child) {
+    border-bottom: 1px solid rgb(229, 232, 235);
+}

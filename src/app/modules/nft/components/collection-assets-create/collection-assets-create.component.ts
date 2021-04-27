@@ -96,7 +96,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
-        if(!wallets || (wallets.length == 0)) {
+        if(!wallets || !wallets.items || (wallets.items.length == 0)) {
           return;
         }
         const wallet = wallets.items[wallets.currentIndex];

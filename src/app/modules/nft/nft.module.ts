@@ -44,7 +44,7 @@ import { NftAssetActionComponent } from './components/asset-action/asset-action.
 import { NftAssetImageComponent } from './components/asset-image/asset-image.component';
 import { NftAssetDetailsComponent } from './components/asset-details/asset-details.component';
 import { NftAssetInfoComponent } from './components/asset-info/asset-info.component';
-
+import { NftWalletAsideComponent } from './components/wallet-aside/wallet-aside.component';
 import { NftAccountComponent } from './components/account/account.component';
 import { NftAccountOverviewComponent } from './components/account-overview/account-overview.component';
 import { NftAccountTabComponent } from './components/account-tab/account-tab.component';
@@ -96,6 +96,7 @@ import { CommonModule } from '@angular/common';
       ButtonComponent,
       TextareaSwitchComponent,
       NftAssetSellMethodComponent,
+      NftWalletAsideComponent,
       NftCollectionAssetsCreateDoneComponent,
       NftAssetSellPriceComponent,
       NftAssetSellIncludeEndingPrinceComponent,
