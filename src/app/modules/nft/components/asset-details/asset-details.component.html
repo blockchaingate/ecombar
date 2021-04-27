@@ -3,35 +3,58 @@
 [icon]="'subject'"
  [toggleable]="false">
     <section>
-        Created by you
+        Created by <span>{{asset.creator == address ? 'you' : asset.creator}}</span>
     </section>
-    <p>fawefawefwaf</p>
+    <p>{{asset.description}}</p>
 </app-expansion>
 
 <app-expansion 
 [title]="'Properties'"
 [icon]="'label'"
 [toggleable]="true">
-    ono
+    <app-properties-list [properties]="asset.properties"></app-properties-list>
 </app-expansion>
 
 <app-expansion 
 [title]="'Levels'"
 [icon]="'stars'"
 [toggleable]="true">
-    ono
+    <app-levels-list [levels]="asset.levels"></app-levels-list>
 </app-expansion>
 
 <app-expansion 
-[title]="'About testme'"
+[title]="'Stats'"
+[icon]="'bar_chart'"
+[toggleable]="true">
+    <app-levels-list [levels]="asset.stats"></app-levels-list>
+</app-expansion>
+
+<app-expansion 
+[title]="'About ' + collection.name"
 [icon]="'vertical_split'"
 [toggleable]="true">
-    ono
+    <img class="img-thumbnail" src="{{collection.image}}">{{collection.description}}
 </app-expansion>
 
 <app-expansion 
 [title]="'Chain Info'"
 [icon]="'ballot'"
 [toggleable]="true">
-    ono
+    <div class="d-flex justify-content-between">
+        <div>
+            Contract Address
+        </div>
+        <div>
+            {{smartContractAddress}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div>
+            Token ID
+        </div>
+        <div>
+            {{showId(tokenId)}}
+        </div>
+    </div>    
 </app-expansion>

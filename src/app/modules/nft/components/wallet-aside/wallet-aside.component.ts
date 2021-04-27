@@ -20,6 +20,7 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
   export class NftWalletAsideComponent implements OnInit {
       wallet: any;
       wallets: any;
+      assets: any;
       address: string;
       modalRef: BsModalRef;
       isProxyAuthenticated: boolean;
@@ -60,7 +61,8 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
 
           this.address = addresses.filter(item => item.name == 'FAB')[0].address;     
           
-          const abi = this.nftPortServ.getUserAuthenticatedAbi(this.utilServ.fabToExgAddress(this.address));
+          const kanbanAddress = this.utilServ.fabToExgAddress(this.address);
+          const abi = this.nftPortServ.getUserAuthenticatedAbi(kanbanAddress);
 
           this.kanbanServ.kanbanCall(environment.addresses.smartContract.ProxyRegistry, abi)
           .subscribe(
@@ -76,7 +78,21 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
           );
           this.wallets.currentIndex = index;
           this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
-          });          
+          });  
+          
+
+          
+
+          this.kanbanServ.getExchangeBalance(kanbanAddress).subscribe(
+            (resp: any) => {
+                this.assets = resp;
+                console.log('this.assets=', this.assets);
+            },
+            error => {
+                // console.log('errorrrr=', error);
+            }
+        );
+
 
       } 
 
@@ -125,5 +141,14 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
   
       restoreWallet() {
         this.route.navigate(['/admin/import-wallet']);
-      }      
+      }   
+      
+      getCoinName(coinType) {
+          return this.utilServ.getCoinNameByTypeId(coinType);
+      }
+
+      getCoinAmount(amount) {
+          return this.utilServ.toNumber(this.utilServ.showAmount(amount, 18));
+      }
   }
+

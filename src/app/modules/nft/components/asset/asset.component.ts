@@ -18,6 +18,8 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     collection: any;
     address: string;
     wallet: any;
+    smartContractAddress: string;
+    tokenId: string;
     
     constructor(
       private localSt: LocalStorage,
@@ -45,6 +47,8 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
       this.route.paramMap.subscribe((params: ParamMap) =>  {
         const smartContractAddress = params.get('smartContractAddress');   
         const tokenId = params.get('tokenId'); 
+        this.smartContractAddress = smartContractAddress;
+        this.tokenId = tokenId;
         this.assetServ.getBySmartContractTokenId(smartContractAddress, tokenId).subscribe(
           (res: any) => {
             if(res && res.ok) {

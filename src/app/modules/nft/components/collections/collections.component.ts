@@ -77,6 +77,7 @@ import { environment } from 'src/environments/environment';
                   clearInterval(myInterval);
                   if(receipt.transactionReceipt.contractAddress) {
                     that.collection.smartContractAddress = receipt.transactionReceipt.contractAddress;
+                    this.collection.creator = this.address;
                     that.collectionServ.create(that.collection).subscribe(
                       (res: any) => {
                         console.log('res from create collection=', res);

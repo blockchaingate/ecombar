@@ -167,6 +167,14 @@ ul:not(.browser-default) li {
     font-size: 16px;    
 }
 
+.aside-container {
+    position: relative;  
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(76, 175, 80, 0.01);
+    z-index: 100;
+}
+
 aside {
     position: fixed;
     right: 0px;

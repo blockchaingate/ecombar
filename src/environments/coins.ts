@@ -11,6 +11,9 @@ export const coin_list: Coin[] = [
     { id: 131072, name: 'FAB', icon: '' },
     { id: 131073, name: 'EXG', icon: '' },
     { id: 131074, name: 'DUSD', icon: ''},
+    { id: 131075, name: 'CNB', icon: ''},
+    { id: 131076, name: 'DSC', icon: ''},
+    { id: 131077, name: 'BST', icon: ''},
     { id: 262144, name: 'BCH', icon: ''},
     { id: 327680, name: 'LTC', icon: ''},
     { id: 393216, name: 'DOGE', icon: ''},
@@ -31,5 +34,11 @@ export const coin_list: Coin[] = [
     { id: 196624, name: 'REP', icon: ''},
     { id: 196625, name: 'FUN', icon: ''},
     { id: 196626, name: 'DRGN', icon: ''},
-    { id: 196627, name: 'NVZN', icon: ''}
+    { id: 196627, name: 'NVZN', icon: ''},
+    { id: 458752, name: 'TRX', icon: ''},
+    { id: 458753, name: 'USDTX', icon: ''},
+    { id: 196628, name: 'FABE', icon: ''},
+    { id: 196629, name: 'EXGE', icon: ''},
+    { id: 196630, name: 'DSCE', icon: ''},
+    { id: 196631, name: 'BSTE', icon: ''}
 ];

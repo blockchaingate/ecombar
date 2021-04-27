@@ -11,7 +11,12 @@
                 <app-nft-asset-image [asset]="asset"></app-nft-asset-image>
             </section>
             <section class="Framereact__Frame-sc-139h1ex-0 cUPysq item--frame item--media-frame">
-                <app-nft-asset-details [asset]="asset"></app-nft-asset-details>
+                <app-nft-asset-details 
+                [collection]="collection" 
+                [asset]="asset" 
+                [smartContractAddress]="smartContractAddress"
+                [tokenId]="tokenId"
+                [address]="address"></app-nft-asset-details>
             </section>
         </div>
         <div class="col col-7">

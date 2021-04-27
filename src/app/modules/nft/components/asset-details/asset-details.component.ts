@@ -8,8 +8,15 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   })
   export class NftAssetDetailsComponent implements OnInit {
     @Input() asset: any;
+    @Input() collection: any;
+    @Input() address: string;
+    @Input() smartContractAddress: string;
+    @Input() tokenId: string;
     ngOnInit() {
           
     }
 
+    showId(tokenId) {
+      return parseInt(tokenId, 16);
+    }
   }

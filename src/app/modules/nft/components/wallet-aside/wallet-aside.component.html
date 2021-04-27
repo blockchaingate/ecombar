@@ -31,16 +31,16 @@
         </div>        
         <div class="assets">
             <ul>
-                <li class="d-flex">
+                <li class="d-flex" *ngFor="let asset of assets">
                     <div class="coin-name">
-                        eth
+                        {{getCoinName(asset.coinType)}}
                     </div>
                     <div class="coin-value">
-                        1.2223
+                        <div>
+                            {{getCoinAmount(asset.unlockedAmount)}}
+                        </div>                        
                     </div>
                 </li>
-                <li class="d-flex">2333</li>
-                <li class="d-flex">555</li>
             </ul>
         </div>
     </div>
