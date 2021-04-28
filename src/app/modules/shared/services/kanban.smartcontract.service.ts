@@ -32,48 +32,53 @@ export class KanbanSmartContractService {
         return this.web3Serv.getGeneralFunctionABI(abi, args);
     }
 
+    async getExecSmartContractHex(seed: Buffer, smartContractAddress: string, abi: any, args: any) {
+      const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      let gasPrice = environment.chains.KANBAN.gasPrice;
+      let gasLimit = 8000000;
+      const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
+  
+      let kanbanValue = 0;
+  
+      const kanbanData = this.formExecKanbanSmartContractABI(abi, args);
+      const txObject = {
+          nonce: nonce,
+          to: smartContractAddress,
+          gasPrice: gasPrice,
+          gasLimit: gasLimit,
+          value: kanbanValue,
+          data: '0x' + this.utilServ.stripHexPrefix(kanbanData)          
+      };
+  
+      let privKey: any = keyPairsKanban.privateKeyBuffer;
+  
+      if(!Buffer.isBuffer(privKey)) {
+        privKey = privKey.privateKey;
+      }
+      
+      let txhex = '';
+  
+  
+      const customCommon = Common.forCustomChain(
+        environment.chains.ETH.chain,
+        {
+          name: environment.chains.KANBAN.chain.name,
+          networkId: environment.chains.KANBAN.chain.networkId,
+          chainId: environment.chains.KANBAN.chain.chainId
+        },
+        environment.chains.ETH.hardfork,
+      );
+      const tx = new KanbanTxService(txObject, { common: customCommon });
+  
+      tx.sign(privKey);
+      const serializedTx = tx.serialize();
+      txhex = '0x' + serializedTx.toString('hex');     
+      return txhex; 
+    }
+    
     async execSmartContract(seed: Buffer, smartContractAddress: string, abi: any, args: any) {
-        const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-        let gasPrice = environment.chains.KANBAN.gasPrice;
-        let gasLimit = 8000000;
-        const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
-    
-        let kanbanValue = 0;
-    
-        const kanbanData = this.formExecKanbanSmartContractABI(abi, args);
-        const txObject = {
-            nonce: nonce,
-            to: smartContractAddress,
-            gasPrice: gasPrice,
-            gasLimit: gasLimit,
-            value: kanbanValue,
-            data: '0x' + this.utilServ.stripHexPrefix(kanbanData)          
-        };
-    
-        let privKey: any = keyPairsKanban.privateKeyBuffer;
-    
-        if(!Buffer.isBuffer(privKey)) {
-          privKey = privKey.privateKey;
-        }
-        
-        let txhex = '';
-    
-    
-        const customCommon = Common.forCustomChain(
-          environment.chains.ETH.chain,
-          {
-            name: environment.chains.KANBAN.chain.name,
-            networkId: environment.chains.KANBAN.chain.networkId,
-            chainId: environment.chains.KANBAN.chain.chainId
-          },
-          environment.chains.ETH.hardfork,
-        );
-        const tx = new KanbanTxService(txObject, { common: customCommon });
-    
-        tx.sign(privKey);
-        const serializedTx = tx.serialize();
-        txhex = '0x' + serializedTx.toString('hex');
-    
+
+      const txhex = await this.getExecSmartContractHex(seed, smartContractAddress, abi, args);
         const res = await this.kanbanServ.sendRawSignedTransactionPromise(txhex);
         return res;
     }
