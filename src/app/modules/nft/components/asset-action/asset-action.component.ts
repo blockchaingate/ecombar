@@ -57,7 +57,7 @@ import { ToastrService } from 'ngx-toastr';
             this.sellOrder = NftOrder.from(sellOrders[sellOrders.length - 1]);
 
             this.hasSellOrder = true;
-            console.log('this.sellOrder=', this.sellOrder);
+            console.log('this.sellOrder33333=', this.sellOrder.toString());
           }
           
         }        
@@ -108,14 +108,18 @@ import { ToastrService } from 'ngx-toastr';
       buyorder.s = signature.s;
       buyorder.v = signature.v;
 
+      buyorder.salt = this.utilServ.getRandomInteger();
+
+      /*
       this.nftPortServ.ordersCanMatch(buyorder, this.sellOrder).subscribe(
         (res: any) => {
           console.log('res for ordersCanMatch=', res);
         }
       );
+      */
 
       const metadata = null;
-      console.log('this.sellOrder=', this.sellOrder.toString());
+      console.log('this.sellOrder2222=', this.sellOrder.toString());
       console.log('buyorder=', buyorder.toString());
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
 
@@ -126,10 +130,11 @@ import { ToastrService } from 'ngx-toastr';
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
 
       //console.log('txhex==', txhex);
-        
+      
       this.nftOrderServ.atomicMatch(this.sellOrder.id, buyorder, txhex).subscribe(
         (res: any) => {
           console.log('res from atomicMatch=', res);
+          this.spinner.hide();
           if(res && res.ok) {
             this.toastr.info('Post the transaction successfully');
           }else {

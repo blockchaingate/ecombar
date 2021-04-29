@@ -564,7 +564,7 @@ export class NftPortService {
     + '0000000000000000000000000000000000000000000000000000000000000000';
 
     const listingTime = Math.round(Date.now() / 1000);
-    const salt = 1;
+    const salt = this.utilServ.getRandomInteger();
     const order = new NftOrder(exchange, maker, null, makerRelayerFee, 
     0, 0, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
     callData, replacementPattern, null, null, coinType, price, 0, listingTime, 

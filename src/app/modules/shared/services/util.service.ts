@@ -6,6 +6,7 @@ import * as createHash from 'create-hash';
 import BigNumber from 'bignumber.js/bignumber';
 import { coin_list } from '../../../../environments/coins';
 import { MyCoin } from '../../../models/mycoin';
+import Web3 from 'web3';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
@@ -23,6 +24,12 @@ export class UtilService {
             return 18;
         }
         return 8;
+    }
+
+    getRandomInteger() {
+        return Math.floor(Math.random() * (new BigNumber(65535, 16).toNumber() - 1));
+        //const web3 = new Web3();
+        //return web3.utils.randomHex(32);
     }
 
     sequenceId2ObjectId(sequenceId: string) {
