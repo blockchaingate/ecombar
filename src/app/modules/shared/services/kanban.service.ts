@@ -4,6 +4,7 @@ import { HttpService } from './http.service';
 import { HttpHeaders } from '@angular/common/http';
 import { KanbanGetBanalceResponse, KanbanNonceResponse, DepositStatusResp, TransactionAccountResponse } from '../../../interfaces/kanban.interface';
 import { from } from 'rxjs';
+import { UtilService } from './util.service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +20,7 @@ export class KanbanService {
     "dogeAddress":"DQ8jsAhfvBm8uMHDu6ytoYcMAdo5GQGbeU",
     "ltcAddress":"LNfTRKWKeeGxvQNvJAVuLW3TGzx8qkeoyT","timestamp":0}    
     */
-    constructor(private http: HttpService) {
+    constructor(private http: HttpService, private utilServ: UtilService) {
     }
 
     getKanbanBalance(address: string) {
@@ -32,6 +33,7 @@ export class KanbanService {
         const res = await this.kanbanCall(to, abiData).toPromise();
         return res;
     }
+
 
     kanbanCall(to: string, abiData: string) {
         const data = {
@@ -83,7 +85,15 @@ export class KanbanService {
         const data = {
             signedTransactionData: txhex
         };
-        return this.http.postRaw(this.baseUrl + 'kanban/sendRawTransaction', data).toPromise();
+        let resp = {
+            transactionHash: null
+        };
+        try {
+            resp = await this.http.postRaw(this.baseUrl + 'kanban/sendRawTransaction', data).toPromise();
+        } catch (e) {
+        }
+
+        return resp;
     }
 
     async getCoinPoolAddress() {

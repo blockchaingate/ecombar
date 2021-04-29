@@ -13,6 +13,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
     providers: [],
@@ -26,6 +28,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
     tokenId: string;
     address: string;
     wallet: any;
+    isProxyAuthenticated: boolean;
     modalRef: BsModalRef;
     coin: string;
     quantity: number;
@@ -35,6 +38,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
       private route: ActivatedRoute,
       private router: Router,
       private web3Serv: Web3Service,
+      private kanbanSmartContractServ: KanbanSmartContractService,
       private coinServ: CoinService,
       private spinner: NgxSpinnerService,
       private utilServ: UtilService,
@@ -56,6 +60,13 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
         this.wallet = wallet;
         const addresses = wallet.addresses;
         this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+
+        this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
+          ret => {
+            this.isProxyAuthenticated = ret;
+            console.log('this.isProxyAuthenticatedff=', this.isProxyAuthenticated);
+          }
+        );          
       });      
 
       this.route.paramMap.subscribe((params: ParamMap) =>  {
@@ -73,7 +84,10 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
       });          
     }
 
-    async postListingDo(privateKey: Buffer) {
+    async postListingDo(seed: Buffer) {
+
+      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const privateKey = keyPair.privateKeyBuffer.privateKey;      
       const makerRelayerFee = 250;
       const coinType = this.coinServ.getCoinTypeIdByName(this.coin);
       const price = this.quantity;
@@ -97,6 +111,12 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
       order.v = signature.v;
 
 
+      if(!this.isProxyAuthenticated) {
+        const {abi, args} = this.nftPortServ.getRegisterProxyAbiArgs();
+        const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(
+          seed, environment.addresses.smartContract.ProxyRegistry, abi, args);
+        order.txhex = txhex;
+      }
       this.orderServ.create(order).subscribe(
         (res: any) => {
           if(res && res.ok) {
@@ -120,9 +140,9 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
       
       this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
 
-      this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+      this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
         this.spinner.show();
-        this.postListingDo(privateKey);
+        this.postListingDo(seed);
       });
     }
 

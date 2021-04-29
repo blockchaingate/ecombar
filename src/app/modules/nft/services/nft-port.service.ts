@@ -4,6 +4,8 @@ import { OpenSeaPort, Network } from '../../../../../../nft-js';
 import { Web3Service } from '../../shared/services/web3.service';
 import { KanbanService } from '../../shared/services/kanban.service';
 import { NftOrder } from '../models/nft-order';
+import { UtilService } from '../../shared/services/util.service';
+import { Observable } from 'rxjs';
 //const Network = opensea.Network;
 const nullAddress = '0x0000000000000000000000000000000000000000';
 const nullBytes = '0x00';
@@ -11,7 +13,10 @@ const nullBytes32 = '0x000000000000000000000000000000000000000000000000000000000
 @Injectable({ providedIn: 'root' })
 export class NftPortService {
 
-  constructor(private kanbanServ: KanbanService, private web3Serv: Web3Service) {
+  constructor(
+    private utilServ: UtilService,
+    private kanbanServ: KanbanService, 
+    private web3Serv: Web3Service) {
 
   }
   
@@ -31,6 +36,27 @@ export class NftPortService {
     order.feeRecipient = null;
     return order;
   }
+
+  isProxyAuthenticated(address: string) {
+    const kanbanAddress = this.utilServ.fabToExgAddress(address);
+    const abi = this.getUserAuthenticatedAbi(kanbanAddress);
+
+    const ret = new Observable<any>((observer) => {
+      this.kanbanServ.kanbanCall(environment.addresses.smartContract.ProxyRegistry, abi)
+      .subscribe(
+          (res: any) => {
+              console.log('res from kanbanCallkanbanCall=', res);
+              const data = res.data;
+              if(data == "0x0000000000000000000000000000000000000000000000000000000000000000") {
+                observer.next(false);
+              } else {
+                observer.next(true);
+              }
+          }
+      );
+    });
+    return ret;
+}
 
   recoverAddress(hash, v, r, s) {
     const args = [hash, v, r ,s];

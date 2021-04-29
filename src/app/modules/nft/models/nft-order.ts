@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js/bignumber';
 
 export class NftOrder {
     hash: string;
+    txhex: string;
     hashForSignature: string;
     exchange: string; //address
     maker: string; //address

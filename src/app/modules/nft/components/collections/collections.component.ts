@@ -98,7 +98,8 @@ import { environment } from 'src/environments/environment';
             );
            }, 1000);
       } else {
-          this.toastr.error('Failed to create smart contract.', 'Ok');
+        this.spinner.hide();
+        this.toastr.error('Failed to create smart contract.', 'Ok');
       }
     }
 

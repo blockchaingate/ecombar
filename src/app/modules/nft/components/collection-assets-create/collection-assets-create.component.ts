@@ -9,6 +9,9 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { environment } from '../../../../../environments/environment';
+import { NftPortService } from '../../services/nft-port.service';
 
 @Component({
     providers: [],
@@ -31,6 +34,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     properties: any;
     levels: any;
     stats: any;
+    isProxyAuthenticated: boolean;
     unlockableContent: string;
 
     propertiesModal = {
@@ -56,6 +60,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 
     constructor(
       private toastr: ToastrService,
+      private kanbanServ: KanbanService,
       private spinner: NgxSpinnerService,
       private modalService: BsModalService,
       private localSt: LocalStorage,
@@ -102,7 +107,10 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
         const wallet = wallets.items[wallets.currentIndex];
         this.wallet = wallet;
         const addresses = wallet.addresses;
-        this.address = addresses.filter(item => item.name == 'FAB')[0].address;        
+        this.address = addresses.filter(item => item.name == 'FAB')[0].address;   
+        
+     
+
       });      
     }
 
@@ -124,8 +132,39 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
       };
 
       const args = [this.utilServ.fabToExgAddress(this.address)];
-      const resp = await this.kanbanSmartContract.execSmartContract(seed, smartContractAddress, abi, args);
+      const txhex = await this.kanbanSmartContract.getExecSmartContractHex(seed, smartContractAddress, abi, args);
 
+      const asset = {
+        media: this.media,
+        name: this.name,
+        externalLink: this.externalLink,
+        description: this.description,
+        properties: this.properties,
+        levels: this.levels,
+        stats: this.stats,
+        smartContractAddress: this.collection.smartContractAddress,
+        txhex: txhex,
+        creator: this.address,
+        unlockableContent: this.unlockableContent
+      }
+
+      this.assetServ.create(asset).subscribe(
+        (res: any) => {
+          if(res) {
+            this.spinner.hide();
+            if(res.ok) {
+              this.step = 2;
+              this.asset = res._body;
+            } else {
+              this.toastr.error('error while creating asset', 'Ok');
+            }
+          }
+          //console.log('res from create asset=', res);
+          //that.router.navigate(['/nft/admin/collections/' + that.slug + '/assets/create-done']);
+        }
+      );
+
+      /*
       if (resp && resp.transactionHash) {
           const txid = resp.transactionHash;
           console.log('txid=', resp.transactionHash);
@@ -143,32 +182,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
                     const topics = log.topics;
                     const tokenId = topics[3];
 
-                    const asset = {
-                      media: that.media,
-                      name: that.name,
-                      externalLink: that.externalLink,
-                      description: that.description,
-                      properties: that.properties,
-                      levels: that.levels,
-                      stats: that.stats,
-                      smartContractAddress: that.collection.smartContractAddress,
-                      tokenId: tokenId,
-                      creator: that.address,
-                      unlockableContent: that.unlockableContent
-                    }
-              
-                    that.assetServ.create(asset).subscribe(
-                      (res: any) => {
-                        if(res && res.ok) {
-                          that.step = 2;
-                          that.asset = res._body;
-                        } else {
-                          that.toastr.error('error while creating asset', 'Ok');
-                        }
-                        //console.log('res from create asset=', res);
-                        //that.router.navigate(['/nft/admin/collections/' + that.slug + '/assets/create-done']);
-                      }
-                    );
+
 
                   }
                 }
@@ -179,6 +193,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
         this.spinner.hide();
         this.toastr.error('Failed to create smart contract.', 'Ok');
       }
+      */
     }
 
     createAssets() {

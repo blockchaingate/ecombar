@@ -61,21 +61,13 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
 
           this.address = addresses.filter(item => item.name == 'FAB')[0].address;     
           
-          const kanbanAddress = this.utilServ.fabToExgAddress(this.address);
-          const abi = this.nftPortServ.getUserAuthenticatedAbi(kanbanAddress);
-
-          this.kanbanServ.kanbanCall(environment.addresses.smartContract.ProxyRegistry, abi)
-          .subscribe(
-              (res: any) => {
-                  console.log('res from kanbanCallkanbanCall=', res);
-                  const data = res.data;
-                  if(data == "0x0000000000000000000000000000000000000000000000000000000000000000") {
-                    this.isProxyAuthenticated = false;
-                  } else {
-                      this.isProxyAuthenticated = true;
-                  }
-              }
+          this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
+            ret => {
+              this.isProxyAuthenticated = ret;
+            }
           );
+          const kanbanAddress = this.utilServ.fabToExgAddress(this.address);
+
           this.wallets.currentIndex = index;
           this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
           });  
