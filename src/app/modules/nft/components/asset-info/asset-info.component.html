@@ -1,4 +1,4 @@
-<div class="main-container" *ngIf="collection">
+<div class="main-container" *ngIf="collection && asset">
     <div class="d-flex justify-content-between">
         <div>
             <a href="/nft/admin/collections/{{collection.slug}}/view">
@@ -30,7 +30,9 @@
  
             </div>
             <span>Owned by {{owner == address ? 'you' : owner}}</span>
-            <div class="pt-2"><span class="price">0.25 USDT</span></div>
+            <div class="pt-2" *ngIf="sellOrder">
+                <span class="price">{{sellOrder.basePrice}} {{getCoinName(sellOrder.coinType)}}</span>
+            </div>
         </div>
 
         <div class="pl-2">

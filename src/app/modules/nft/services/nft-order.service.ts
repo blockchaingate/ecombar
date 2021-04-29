@@ -22,4 +22,13 @@ export class NftOrderService {
     + smartContractAddress + '/' + tokenId;
     return this.http.get(url);      
   }
+
+  atomicMatch(makerOrderId: string, takerOrder: any, txhex: string) {
+    const data = {
+      makerOrderId, takerOrder, txhex
+    };
+
+    const url = environment.endpoints.blockchaingate + 'nft-order/atomicMatch';
+    return this.http.post(url, data);    
+  }
 }

@@ -35,6 +35,7 @@ import { ToastrService } from 'ngx-toastr';
       private coinServ: CoinService,
       private nftPortServ: NftPortService,
       private kanbanServ: KanbanService,
+      private nftOrderServ: NftOrderService,
       private utilServ: UtilService,
       private toastr: ToastrService,
       private kanbanSmartContract: KanbanSmartContractService,      
@@ -120,18 +121,33 @@ import { ToastrService } from 'ngx-toastr';
 
       //console.log('smart contract address=', environment.addresses.smartContract.NFT_Exchange);
       //console.log('atomicMathAbiArgs.args=', atomicMathAbiArgs.args);
-      const resp = await this.kanbanSmartContract.execSmartContract(
-        seed, environment.addresses.smartContract.NFT_Exchange, atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
+      const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
+        seed, environment.addresses.smartContract.NFT_Exchange, 
+        atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
 
+      //console.log('txhex==', txhex);
+        
+      this.nftOrderServ.atomicMatch(this.sellOrder.id, buyorder, txhex).subscribe(
+        (res: any) => {
+          console.log('res from atomicMatch=', res);
+          if(res && res.ok) {
+            this.toastr.info('Post the transaction successfully');
+          }else {
+            this.toastr.error('Error while posting the transaction');
+          }
+        }
+      );  
+        
+      /*
       console.log('resp from execSmartContract=', resp);
       if(resp) {
         if(resp.transactionHash) {
-          this.toastr.info('Post the transaction successfully');
+          
         } else {
           this.toastr.error('Error while posting the transaction');
         }
       }
-
+      */
     }
 
 

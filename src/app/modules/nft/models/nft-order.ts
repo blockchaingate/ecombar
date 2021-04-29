@@ -4,6 +4,7 @@ const nullBytes32 = '0x000000000000000000000000000000000000000000000000000000000
 import BigNumber from 'bignumber.js/bignumber';
 
 export class NftOrder {
+    id: string;
     hash: string;
     txhex: string;
     hashForSignature: string;
@@ -230,6 +231,7 @@ export class NftOrder {
         json.r,
         json.s,
         json.v);
+      order.id = json._id;
       order.hash = json.hash;
       order.hashForSignature = json.hashForSignature;
       return order;

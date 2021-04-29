@@ -121,11 +121,11 @@ import { environment } from '../../../../../environments/environment';
         (res: any) => {
           if(res && res.ok) {
             this.spinner.hide();
-            /*
+            
             this.router.navigate(
               ['/nft/assets/' + this.smartContractAddress + '/' + this.tokenId]
             );
-            */
+            
           }
         }
       );
