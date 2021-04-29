@@ -11,6 +11,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { KanbanSmartContractService } from '../../../shared/services/kanban.smartcontract.service';
 import { environment } from '../../../../../environments/environment';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     providers: [],
@@ -35,6 +36,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
       private nftPortServ: NftPortService,
       private kanbanServ: KanbanService,
       private utilServ: UtilService,
+      private toastr: ToastrService,
       private kanbanSmartContract: KanbanSmartContractService,      
       private modalServ: BsModalService
       ) {
@@ -122,6 +124,13 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
         seed, environment.addresses.smartContract.NFT_Exchange, atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
 
       console.log('resp from execSmartContract=', resp);
+      if(resp) {
+        if(resp.transactionHash) {
+          this.toastr.info('Post the transaction successfully');
+        } else {
+          this.toastr.error('Error while posting the transaction');
+        }
+      }
 
     }
 
