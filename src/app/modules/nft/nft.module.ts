@@ -54,6 +54,7 @@ import { NftAccountInWalletSearchComponent } from './components/account-in-walle
 import { NftAccountInWalletAssetsComponent } from './components/account-in-wallet-assets/account-in-wallet-assets.component';
 import { NftAccountInWalletAssetComponent } from './components/account-in-wallet-asset/account-in-wallet-asset.component';
 
+import { NftAssetPriceHistoryComponent } from './components/asset-price-history/asset-price-history.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftIndexComponent } from './components/index/index.component';
 
@@ -70,6 +71,7 @@ import { UploadService } from './services/upload.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     declarations: [
@@ -87,6 +89,7 @@ import { CommonModule } from '@angular/common';
       NftCollectionViewItemsComponent,
       NftCollectionAssetsCreateComponent,
       NftAssetSellComponent,
+      NftAssetPriceHistoryComponent,
       ImageUploaderComponent,
       TextboxComponent,
       TextareaComponent,
@@ -146,6 +149,7 @@ import { CommonModule } from '@angular/common';
         FormsModule,
         NgxSpinnerModule,
         CommonModule,
+        NgxChartsModule,
         ModalModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]    

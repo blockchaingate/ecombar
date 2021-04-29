@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
@@ -24,6 +24,7 @@ import { ToastrService } from 'ngx-toastr';
     @Input() address: string;
     @Input() wallet: any;
     @Input() owner: string;
+    @Output() refresh = new EventEmitter();
     sellOrder: NftOrder;
     isOwner: boolean;
     hasSellOrder: boolean;
@@ -135,6 +136,7 @@ import { ToastrService } from 'ngx-toastr';
         (res: any) => {
           console.log('res from atomicMatch=', res);
           this.spinner.hide();
+          this.refresh.emit();
           if(res && res.ok) {
             this.toastr.info('Post the transaction successfully');
           }else {

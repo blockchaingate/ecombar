@@ -4,7 +4,9 @@
     [wallet]="wallet"
     [asset]="asset" 
     [owner]="owner"
-    [address]="address"></app-nft-asset-action>
+    [address]="address"
+    (refresh)="loadAsset()"
+    ></app-nft-asset-action>
     <div class="row">
         <div class="col col-5 dPgrCP">
             <section class="Framereact__Frame-sc-139h1ex-0 cUPysq item--frame item--media-frame">
@@ -41,7 +43,7 @@
                 [title]="'Price History'"
                 [icon]="'timeline'"
                  [toggleable]="true">
-                    price
+                    <app-nft-asset-price-history [sales]="sales"></app-nft-asset-price-history>
                 </app-expansion> 
             </div>
          

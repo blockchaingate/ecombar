@@ -17,6 +17,7 @@
     "private": true,
     "dependencies": {
         "@angular/animations": "^10.2.2",
+        "@angular/cdk": "^11.2.11",
         "@angular/common": "~10.2.1",
         "@angular/compiler": "~10.2.1",
         "@angular/core": "~10.2.1",
@@ -33,6 +34,7 @@
         "@ngx-pwa/local-storage": "^11.0.1",
         "@ngx-translate/core": "^13.0.0",
         "@ngx-translate/http-loader": "^6.0.0",
+        "@swimlane/ngx-charts": "^17.0.1",
         "@syncfusion/ej2-angular-richtexteditor": "^18.4.32",
         "angularx-qrcode": "^10.0.11",
         "bchaddrjs": "^0.4.9",

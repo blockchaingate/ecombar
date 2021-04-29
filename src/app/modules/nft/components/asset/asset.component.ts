@@ -15,6 +15,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
   export class NftAssetComponent implements OnInit {
     asset: any;
     owner: string;
+    sales: any;
     collection: any;
     address: string;
     wallet: any;
@@ -49,22 +50,8 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
         const tokenId = params.get('tokenId'); 
         this.smartContractAddress = smartContractAddress;
         this.tokenId = tokenId;
-        this.assetServ.getBySmartContractTokenId(smartContractAddress, tokenId).subscribe(
-          (res: any) => {
-            if(res && res.ok) {
-              this.asset = res._body;
-            }
-          }
-        );
 
-        this.assetServ.getOwner(smartContractAddress, tokenId).subscribe(
-          (res: any) => {
-            this.owner = res.data;
-            this.owner = this.utilServ.exgToFabAddress(this.owner.replace('0x000000000000000000000000', '0x'));
-
-          }
-        );
-
+        this.loadAsset();
 
         this.collectionServ.getBySmartContractAddress(smartContractAddress).subscribe(
           (res: any) => {
@@ -76,4 +63,86 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
       });           
     }
 
+    loadAsset() {
+      console.log('loadAsset() start');
+      this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            this.asset = res._body;
+            if(this.asset && this.asset.events) {
+              this.sales = [];
+
+              const events = this.asset.events.filter(event => event.event == 'Sale');
+
+              if(events && events.length > 0) {
+                for(let i = 0; i < events.length; i++) {
+                  const event = events[i];
+                  console.log('event=', event);
+                  const coin = this.utilServ.getCoinNameByTypeId(event.coinType);
+                  const price = event.price;
+                  const date = event.date;
+                  const existedSale = events.filter(item => item.name == coin);
+                  if(existedSale && existedSale.length > 0) {
+                    existedSale[0].series.push(
+                      {
+                        name: date,
+                        value: price
+                      }
+                    );
+                  } else {
+                    this.sales.push(
+                      {
+                        name: coin,
+                        series: [
+                          {
+                            name: date,
+                            value: price
+                          }                          
+                        ]
+                      }
+                    )
+                  }
+                } 
+              }
+             
+              console.log('this.sales=', this.sales);
+            }
+          }
+        }
+      );
+
+/*
+
+      [
+        {
+          "name": "Germany",
+          "series": [
+            {
+              "name": "1990",
+              "value": 62000000
+            },
+            {
+              "name": "2010",
+              "value": 73000000
+            },
+            {
+              "name": "2011",
+              "value": 89400000
+            }
+          ]
+        }
+    ];
+
+*/
+
+
+
+      this.assetServ.getOwner(this.smartContractAddress, this.tokenId).subscribe(
+        (res: any) => {
+          this.owner = res.data;
+          this.owner = this.utilServ.exgToFabAddress(this.owner.replace('0x000000000000000000000000', '0x'));
+
+        }
+      );
+    }
   }
