@@ -8,10 +8,10 @@
             <div class="Row--cell Row--cellIsSpaced ">Date</div>
         </div>
 
-        <div class="Rowreact__DivContainer-amt98e-0 iaHvzF  EventHistory--row " role="row"
-        *ngIf="asset.events" 
-        >
-            <ng-container *ngFor="let event of asset.events.reverse() ">
+        <ng-container *ngIf="asset.events">
+            <div class="Rowreact__DivContainer-amt98e-0 iaHvzF  EventHistory--row " role="row"
+            *ngFor="let event of asset.events.reverse() "
+            >
                 <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">
                     <i class="material-icons" value="{{getIcon(event.event)}}" size="24">
                         {{getIcon(event.event)}}
@@ -32,10 +32,9 @@
                         {{event.date ? (event.date | date) : ''}}
                     </div>
                 </div>
-            </ng-container>
 
-        </div>
-
+            </div>
+        </ng-container>
         <div class="Rowreact__DivContainer-amt98e-0 iaHvzF  EventHistory--row " role="row">
             <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">
                 <i class="material-icons" value="child_friendly" size="24">child_friendly</i>Created

@@ -24,6 +24,7 @@ export class NftPortService {
     console.log('1111');
     const order = sellOrder.clone();
     console.log('2222');
+    order.tokenId = sellOrder.tokenId;
     order.maker = taker;
     order.side = 0;
     order.taker = sellOrder.maker;

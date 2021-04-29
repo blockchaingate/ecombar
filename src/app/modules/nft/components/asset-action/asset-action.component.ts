@@ -119,8 +119,8 @@ import { ToastrService } from 'ngx-toastr';
       */
 
       const metadata = null;
-      console.log('this.sellOrder2222=', this.sellOrder.toString());
-      console.log('buyorder=', buyorder.toString());
+      console.log('this.sellOrder2222=', this.sellOrder);
+      console.log('buyorder=', buyorder);
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
 
       //console.log('smart contract address=', environment.addresses.smartContract.NFT_Exchange);

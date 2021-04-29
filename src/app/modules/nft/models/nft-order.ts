@@ -234,11 +234,13 @@ export class NftOrder {
         json.v);
       order.id = json._id;
       order.hash = json.hash;
+      order.tokenId = json.tokenId;
       order.hashForSignature = json.hashForSignature;
       return order;
     }
     public toString() {
       return {
+        tokenId: this.tokenId,
         hash: this.hash,
         hashForSignature: this.hashForSignature,
         exchange: this.getExchange(),
@@ -264,6 +266,7 @@ export class NftOrder {
         listingTime: this.getListingTime(),
         expirationTime: this.getExpirationTime(),
         salt: this.getSalt(),
+
         r: this.getR(),
         s: this.getS(),
         v: this.getV()
