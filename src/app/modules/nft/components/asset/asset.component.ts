@@ -16,6 +16,8 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     asset: any;
     owner: string;
     sales: any;
+    listings: any;
+    offers: any;
     collection: any;
     address: string;
     wallet: any;
@@ -64,7 +66,6 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     }
 
     loadAsset() {
-      console.log('loadAsset() start');
       this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
         (res: any) => {
           if(res && res.ok) {
@@ -77,7 +78,6 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
               if(events && events.length > 0) {
                 for(let i = 0; i < events.length; i++) {
                   const event = events[i];
-                  console.log('event=', event);
                   const coin = this.utilServ.getCoinNameByTypeId(event.coinType);
                   const price = event.price;
                   const date = event.date;
@@ -105,36 +105,10 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
                 } 
               }
              
-              console.log('this.sales=', this.sales);
             }
           }
         }
       );
-
-/*
-
-      [
-        {
-          "name": "Germany",
-          "series": [
-            {
-              "name": "1990",
-              "value": 62000000
-            },
-            {
-              "name": "2010",
-              "value": 73000000
-            },
-            {
-              "name": "2011",
-              "value": 89400000
-            }
-          ]
-        }
-    ];
-
-*/
-
 
 
       this.assetServ.getOwner(this.smartContractAddress, this.tokenId).subscribe(

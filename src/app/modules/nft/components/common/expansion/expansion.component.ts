@@ -12,6 +12,7 @@ export class ExpansionComponent implements OnInit {
     @Input() title: string;
     @Input() icon: string;
     @Input() nocontent: boolean;
+    @Input() height: number;
     expanded: boolean;
     noBorderTop: boolean;
     ngOnInit() {

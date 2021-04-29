@@ -42,7 +42,8 @@
                 <app-expansion 
                 [title]="'Price History'"
                 [icon]="'timeline'"
-                 [toggleable]="true">
+                [height]="'400px'"
+                [toggleable]="true">
                     <app-nft-asset-price-history [sales]="sales"></app-nft-asset-price-history>
                 </app-expansion> 
             </div>
@@ -52,7 +53,7 @@
                 [title]="'Listing'"
                 [icon]="'local_offer'"
                  [toggleable]="true">
-                    price
+                    <app-nft-asset-listing [listings]="listings"></app-nft-asset-listing>
                 </app-expansion>   
             </div>
      
@@ -61,7 +62,7 @@
                 [title]="'Offers'"
                 [icon]="'toc'"
                  [toggleable]="true">
-                    price
+                 <app-nft-asset-offers [offers]="offers"></app-nft-asset-offers>
                 </app-expansion>   
             </div>        
     

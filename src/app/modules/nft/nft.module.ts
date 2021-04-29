@@ -60,7 +60,8 @@ import { NftIndexComponent } from './components/index/index.component';
 
 import { NftPropertiesListComponent } from './components/properties-list/properties-list.component';
 import { NftLevelsListComponent } from './components/levels-list/levels-list.component';
-
+import { NftAssetListingComponent } from './components/asset-listing/asset-listing.component';
+import { NftAssetOffersComponent } from './components/asset-offers/asset-offers.component';
 import { NftCollectionService } from './services/nft-collection.service';
 import { NftAssetService } from './services/nft-asset.service';
 import { NftOrderService } from './services/nft-order.service';
@@ -92,6 +93,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
       NftAssetPriceHistoryComponent,
       ImageUploaderComponent,
       TextboxComponent,
+      NftAssetListingComponent,
+      NftAssetOffersComponent,
       TextareaComponent,
       FormTraitComponent,
       PropertiesComponent,
