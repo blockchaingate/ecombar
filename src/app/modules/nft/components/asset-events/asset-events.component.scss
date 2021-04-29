@@ -1,0 +1,65 @@
+.EventHistory--container {
+    max-height: 332px;
+    overflow-x: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;       
+}
+
+.Scrollbox--content {
+    border-color: rgba(0, 0, 0, 0);
+    overflow-y: auto;
+    transition: border-color 0.2s ease-in 0s;
+}
+
+.Row--isHeader {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    display: flex;
+}
+
+.Row--isHeader .Row--cell {
+    background-color: rgb(255, 255, 255);
+    color: rgb(14, 14, 14);
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.Row--cell:first-child {
+    padding-left: 16px;
+}
+
+.EventHistory--event-col {
+    flex-basis: 130px;
+}
+
+.Row--cell {
+    -webkit-box-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(229, 232, 235);
+    display: flex;
+    flex: 1 0 100px;
+    overflow-x: auto;
+    padding: 16px 4px;
+}
+
+.EventHistory--price-col {
+    flex-basis: 140px;
+}
+
+@media (min-width: 600px) {
+    .EventHistory--price-col {
+        flex-basis: 100px;
+    }
+}
+
+@media (min-width: 600px) {
+    .Row--cellIsSpaced {
+        flex-basis: 100px;
+    }
+} 
+
+.iaHvzF {
+    display: flex;
+}

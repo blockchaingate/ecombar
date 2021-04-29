@@ -1,0 +1,61 @@
+<div class="EventHistory--container" *ngIf="asset">
+    <div class="Scrollbox--content">
+        <div class="Row--isHeader" role="row">
+            <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">Event</div>
+            <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">Price</div>
+            <div class="Row--cell Row--cellIsSpaced ">From</div>
+            <div class="Row--cell Row--cellIsSpaced ">To</div>
+            <div class="Row--cell Row--cellIsSpaced ">Date</div>
+        </div>
+
+        <div class="Rowreact__DivContainer-amt98e-0 iaHvzF  EventHistory--row " role="row"
+        *ngIf="asset.events" 
+        >
+            <ng-container *ngFor="let event of asset.events.reverse() ">
+                <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">
+                    <i class="material-icons" value="{{getIcon(event.event)}}" size="24">
+                        {{getIcon(event.event)}}
+                    </i>
+                    {{event.event}}
+                </div>
+                <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">
+                    {{event.price}} {{getCoinName(event.coinType)}}
+                </div>
+                <div class="Row--cell Row--cellIsSpaced ">
+                    {{addressDisplay(event.from)}}
+                </div>
+                <div class="Row--cell Row--cellIsSpaced ">
+                    {{addressDisplay(event.to)}}
+                </div>
+                <div class="Row--cell Row--cellIsSpaced ">
+                    <div class="EventTimestamp__DivContainer-sc-3gbwf4-0 dYoAYR" data-testid="EventTimestamp">
+                        {{event.date ? (event.date | date) : ''}}
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+
+        <div class="Rowreact__DivContainer-amt98e-0 iaHvzF  EventHistory--row " role="row">
+            <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">
+                <i class="material-icons" value="child_friendly" size="24">child_friendly</i>Created
+            </div>
+            <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">
+                
+            </div>
+            <div class="Row--cell Row--cellIsSpaced ">
+                NullAddress
+            </div>
+            <div class="Row--cell Row--cellIsSpaced ">{{addressDisplay(asset.creator)}}</div>
+            <div class="Row--cell Row--cellIsSpaced ">
+                <div class="EventTimestamp__DivContainer-sc-3gbwf4-0 dYoAYR" data-testid="EventTimestamp">
+                    {{asset.dateCreated ? (asset.dateCreated | date) : ''}}
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+
+<div *ngIF="asset.events">
+    events
+</div>

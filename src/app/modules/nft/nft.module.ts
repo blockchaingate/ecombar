@@ -40,6 +40,7 @@ import { NftAssetSellSummaryBountiesComponent } from './components/asset-sell-su
 import { NftAssetSellSummaryFeesComponent } from './components/asset-sell-summary-fees/asset-sell-summary-fees.component';
 
 import { NftAssetComponent } from './components/asset/asset.component';
+import { NftAssetEventsComponent } from './components/asset-events/asset-events.component';
 import { NftAssetActionComponent } from './components/asset-action/asset-action.component';
 import { NftAssetImageComponent } from './components/asset-image/asset-image.component';
 import { NftAssetDetailsComponent } from './components/asset-details/asset-details.component';
@@ -110,6 +111,7 @@ import { CommonModule } from '@angular/common';
       NftCollectionViewComponent,
       NftCollectionEditComponent,
       NftAssetComponent,
+      NftAssetEventsComponent,
       NftAssetActionComponent,
       NftAssetImageComponent,
       NftAssetDetailsComponent,

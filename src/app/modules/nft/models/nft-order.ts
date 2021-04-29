@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js/bignumber';
 
 export class NftOrder {
     id: string;
+    tokenId: string;
     hash: string;
     txhex: string;
     hashForSignature: string;

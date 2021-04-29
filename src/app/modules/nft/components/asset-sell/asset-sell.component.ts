@@ -106,6 +106,7 @@ import { environment } from '../../../../../environments/environment';
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
       order.hash = hash;
       order.hashForSignature = hashForSignature;
+      order.tokenId = this.tokenId;
       order.r = signature.r;
       order.s = signature.s;
       order.v = signature.v;
