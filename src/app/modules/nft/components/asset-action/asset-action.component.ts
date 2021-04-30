@@ -85,9 +85,6 @@ import { ToastrService } from 'ngx-toastr';
       const buyorder: NftOrder = this.nftPortServ.createBuyOrder(
         this.utilServ.fabToExgAddress(this.address), this.sellOrder);
 
-        
-      
-      //const hashToSign = this.nftPortServ.hashToSign(buyorder);
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey;
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(buyorder, privateKey);
@@ -99,26 +96,23 @@ import { ToastrService } from 'ngx-toastr';
 
       buyorder.salt = this.utilServ.getRandomInteger();
 
+      const metadata = null;
+      /*
+      console.log('this.sellOrder2222=', this.sellOrder);
+      console.log('buyorder=', buyorder);
+      */
+      const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
       /*
       this.nftPortServ.ordersCanMatch(buyorder, this.sellOrder).subscribe(
-        (res: any) => {
-          console.log('res for ordersCanMatch=', res);
+        (ret:any) => {
+          console.log('ret for can match=', ret);
         }
       );
       */
-
-      const metadata = null;
-      console.log('this.sellOrder2222=', this.sellOrder);
-      console.log('buyorder=', buyorder);
-      const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
-
-      //console.log('smart contract address=', environment.addresses.smartContract.NFT_Exchange);
-      //console.log('atomicMathAbiArgs.args=', atomicMathAbiArgs.args);
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
         seed, environment.addresses.smartContract.NFT_Exchange, 
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
-
-      //console.log('txhex==', txhex);
+      
       
       this.nftOrderServ.atomicMatch(this.sellOrder.id, buyorder, txhex).subscribe(
         (res: any) => {
@@ -132,17 +126,7 @@ import { ToastrService } from 'ngx-toastr';
           }
         }
       );  
-        
-      /*
-      console.log('resp from execSmartContract=', resp);
-      if(resp) {
-        if(resp.transactionHash) {
-          
-        } else {
-          this.toastr.error('Error while posting the transaction');
-        }
-      }
-      */
+
     }
 
 
