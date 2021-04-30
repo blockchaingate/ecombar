@@ -28,11 +28,29 @@ export class NftPortService {
     order.maker = taker;
     order.side = 0;
     order.taker = sellOrder.maker;
-    order.calldata = this.getTransferFromAbi(nullAddress, taker, sellOrder.calldata.substring(sellOrder.calldata.length - 64));
+    order.calldata = this.getTransferFromAbi(nullAddress, taker, sellOrder.tokenId);
     order.replacementPattern = '0x00000000'
       + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
       + '0000000000000000000000000000000000000000000000000000000000000000'
       + '0000000000000000000000000000000000000000000000000000000000000000';
+
+    order.feeRecipient = null;
+    return order;
+  }
+
+  createSellOrder(maker: string, buyOrder: NftOrder) {
+    const order = buyOrder.clone();
+    order.tokenId = buyOrder.tokenId;
+    order.maker = maker;
+    order.side = 1;
+    order.taker = null;
+
+    order.calldata = this.getTransferFromAbi(maker, nullAddress, buyOrder.tokenId);
+
+    order.replacementPattern = '0x00000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+     + '0000000000000000000000000000000000000000000000000000000000000000';
 
     order.feeRecipient = null;
     return order;
@@ -539,6 +557,7 @@ export class NftPortService {
 
   createOrder(
     maker: string, 
+    taker: string,
     smartContractAddress: string, 
     tokenId: string, 
     coinType: number,
@@ -558,16 +577,24 @@ export class NftPortService {
     + '0000000000000000000000000000000000000000000000000000000000000000'
     + tokenId;
     */
-   const callData = this.getTransferFromAbi(maker, nullAddress, tokenId);
+   let callData = this.getTransferFromAbi(maker, nullAddress, tokenId);
    console.log('callData==', callData);
-    const replacementPattern = '0x00000000'
+    let replacementPattern = '0x00000000'
     + '0000000000000000000000000000000000000000000000000000000000000000'
     + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     + '0000000000000000000000000000000000000000000000000000000000000000';
 
+    if(side == 0) {
+      callData = this.getTransferFromAbi(nullAddress, taker, tokenId);
+      replacementPattern = '0x00000000'
+        + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+        + '0000000000000000000000000000000000000000000000000000000000000000'
+        + '0000000000000000000000000000000000000000000000000000000000000000';
+    }
+
     const listingTime = Math.round(Date.now() / 1000);
     const salt = this.utilServ.getRandomInteger();
-    const order = new NftOrder(exchange, maker, null, makerRelayerFee, 
+    const order = new NftOrder(exchange, maker, taker, makerRelayerFee, 
     0, 0, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
     callData, replacementPattern, null, null, coinType, price, 0, listingTime, 
     0, salt);

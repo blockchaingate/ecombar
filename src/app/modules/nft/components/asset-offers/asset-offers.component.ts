@@ -91,15 +91,14 @@ import { environment } from '../../../../../environments/environment';
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
       const order: NftOrder = this.nftPortServ.createOrder(
-        addressHex, 
+        addressHex,
+        this.utilServ.fabToExgAddress(this.owner), 
         this.asset.smartContractAddress, 
         this.asset.tokenId,
         coinType, 
         price,
         makerRelayerFee,
         0);
-
-
 
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
       order.hash = hash;
@@ -136,7 +135,7 @@ import { environment } from '../../../../../environments/environment';
 
     async acceptOfferDo(seed: Buffer, offer) {
       const buyorder = NftOrder.from(offer);
-      const sellorder: NftOrder = this.nftPortServ.createBuyOrder(
+      const sellorder: NftOrder = this.nftPortServ.createSellOrder(
         this.utilServ.fabToExgAddress(this.address), buyorder);
 
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
@@ -153,6 +152,13 @@ import { environment } from '../../../../../environments/environment';
       const metadata = null;
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(sellorder, buyorder, metadata);
 
+      console.log('sellorder==', sellorder.toString());
+      console.log('buyorder==', buyorder.toString());
+      this.nftPortServ.ordersCanMatch(buyorder, sellorder).subscribe(
+        (ret: any) => {
+          console.log('ret for can match=', ret);
+        }
+      );
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
         seed, environment.addresses.smartContract.NFT_Exchange, 
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);

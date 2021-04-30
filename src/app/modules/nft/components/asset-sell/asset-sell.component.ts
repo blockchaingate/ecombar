@@ -94,6 +94,7 @@ import { environment } from '../../../../../environments/environment';
 
       const order: NftOrder = this.nftPortServ.createOrder(
         addressHex, 
+        null,
         this.asset.smartContractAddress, 
         this.asset.tokenId,
         coinType, 
