@@ -73,7 +73,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
+import { NftMakeOfferComponent } from './modals/make-offer/make-offer.component';
 @NgModule({
     declarations: [
       NftComponent,
@@ -93,6 +93,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
       NftAssetPriceHistoryComponent,
       ImageUploaderComponent,
       TextboxComponent,
+      NftMakeOfferComponent,
       NftAssetListingComponent,
       NftAssetOffersComponent,
       TextareaComponent,
@@ -137,7 +138,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ],
     entryComponents:[
       PropertiesComponent, 
-      LevelsComponent
+      LevelsComponent,
+      NftMakeOfferComponent
     ],
     providers: [
       NftCollectionService,

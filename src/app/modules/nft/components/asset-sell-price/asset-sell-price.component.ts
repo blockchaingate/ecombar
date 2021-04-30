@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -10,6 +10,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     selectedCoin: string;
     showPopup: boolean;
     quantity: number;
+    @Input() noText: boolean;
     @Output() updateEntity = new EventEmitter<any>();
     acceptableCoins = [
       'BTC',

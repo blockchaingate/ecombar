@@ -4,6 +4,7 @@
     [wallet]="wallet"
     [asset]="asset" 
     [owner]="owner"
+    [sellOrder]="sellOrder"
     [address]="address"
     (refresh)="loadAsset()"
     ></app-nft-asset-action>
@@ -53,7 +54,8 @@
                 [title]="'Listing'"
                 [icon]="'local_offer'"
                  [toggleable]="true">
-                    <app-nft-asset-listing [listings]="listings"></app-nft-asset-listing>
+                    <app-nft-asset-listing *ngIf="owner && address" 
+                    [listings]="listings" [owner]="owner" [address]="address"></app-nft-asset-listing>
                 </app-expansion>   
             </div>
      
@@ -62,7 +64,10 @@
                 [title]="'Offers'"
                 [icon]="'toc'"
                  [toggleable]="true">
-                 <app-nft-asset-offers [offers]="offers"></app-nft-asset-offers>
+                 <app-nft-asset-offers *ngIf="owner && address && wallet" 
+                 [offers]="offers" 
+                 [wallet]="wallet"
+                 [owner]="owner" [address]="address"></app-nft-asset-offers>
                 </app-expansion>   
             </div>        
     

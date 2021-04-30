@@ -5,6 +5,7 @@ import { NftCollectionService } from '../../services/nft-collection.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { NftOrderService } from '../../services/nft-order.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { NftOrder } from '../../models/nft-order';
 
 @Component({
     providers: [],
@@ -21,6 +22,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     collection: any;
     address: string;
     wallet: any;
+    sellOrder: any;
     smartContractAddress: string;
     tokenId: string;
     
@@ -70,6 +72,22 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
         (res: any) => {
           if(res && res.ok) {
             this.asset = res._body;
+
+            if(this.asset) {
+              if(this.asset.orders && this.asset.orders.length > 0) {
+                const sellOrders = this.asset.orders.filter(item => item.side == 1);              
+
+                this.listings = sellOrders;
+                this.offers = this.asset.orders.filter(item => item.side == 0);   
+
+                console.log('this.offers=', this.offers);
+                if(sellOrders && sellOrders.length > 0) {
+                  this.sellOrder = NftOrder.from(sellOrders[sellOrders.length - 1]);
+                }
+                
+              }        
+            } 
+
             if(this.asset && this.asset.events) {
               this.sales = [];
 

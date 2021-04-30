@@ -29,13 +29,6 @@ export class NftAssetEventsComponent implements OnInit {
       return 'local_offer';
     }
     addressDisplay(address: string) {
-      if(!address) {
-        return '';
-      }
-
-      if(address.indexOf('0x') === 0) {
-        address = this.utilServ.exgToFabAddress(address);
-      }
-      return address.substring(0,3) + '...' + address.substring(address.length - 3);
+      return this.utilServ.addressDisplay(address);
     }
 }

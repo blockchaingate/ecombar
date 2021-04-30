@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 @Component({
     providers: [],
     selector: 'app-nft-asset-listing',
@@ -8,8 +8,27 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   })
   export class NftAssetListingComponent implements OnInit {
     @Input() listings: any;
+    @Input() address: string;
+    @Input() owner: string;
+
+    isOwner: boolean;
+    constructor(private utilServ: UtilService) {}
     ngOnInit() {
-          
+      this.isOwner = false;
+      if(this.owner && this.address) {
+        this.isOwner = this.owner == this.address;
+      }    
+      
+      console.log('thisowner=', this.owner);
+      console.log('address=', this.address);
     }
 
+
+    addressDisplay(address: string) {
+      return this.utilServ.addressDisplay(address);
+    }
+
+    displayCoinName(coinType: number) {
+      return this.utilServ.getCoinNameByTypeId(coinType);
+    }
   }

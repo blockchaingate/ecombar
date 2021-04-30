@@ -22,12 +22,13 @@ import { ToastrService } from 'ngx-toastr';
   export class NftAssetActionComponent implements OnInit {
     @Input() asset: any;
     @Input() address: string;
-    @Input() wallet: any;
     @Input() owner: string;
+    @Input() wallet: any;
+    
+    
     @Output() refresh = new EventEmitter();
-    sellOrder: NftOrder;
+    @Input() sellOrder: NftOrder;
     isOwner: boolean;
-    hasSellOrder: boolean;
     modalRef: BsModalRef;
 
     constructor(
@@ -46,23 +47,10 @@ import { ToastrService } from 'ngx-toastr';
     }
     ngOnInit() {
       this.isOwner = false;
-      this.hasSellOrder = false;
       if(this.owner && this.address) {
         this.isOwner = this.owner == this.address;
       }
-      if(this.asset) {
-        if(this.asset.orders && this.asset.orders.length > 0) {
-          const sellOrders = this.asset.orders.filter(item => item.side == 1);
-          
-          if(sellOrders && sellOrders.length > 0) {
-            this.sellOrder = NftOrder.from(sellOrders[sellOrders.length - 1]);
-
-            this.hasSellOrder = true;
-            console.log('this.sellOrder33333=', this.sellOrder.toString());
-          }
-          
-        }        
-      }                
+               
     }
 
     sell() {

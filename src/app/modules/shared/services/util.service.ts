@@ -26,6 +26,17 @@ export class UtilService {
         return 8;
     }
 
+    addressDisplay(address: string) {
+        if(!address) {
+          return '';
+        }
+  
+        if(address.indexOf('0x') === 0) {
+          address = this.exgToFabAddress(address);
+        }
+        return address.substring(0,3) + '...' + address.substring(address.length - 3);
+    }
+
     getRandomInteger() {
         return Math.floor(Math.random() * (new BigNumber(65535, 16).toNumber() - 1));
         //const web3 = new Web3();
