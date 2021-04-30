@@ -20,13 +20,10 @@
                 </div>
                 <div class="Row--cell "></div>
                 <div class="Row--cell ">
-                    <div class="BaseModalreact__DivContainer-sc-1b6y25y-0 kxKpvP">
-                        <div class=" Orders--button" *ngIf="!isOwner">
-                            Buy<i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Orders--order-fill-icon material-icons" value="keyboard_arrow_right" size="24">keyboard_arrow_right</i>
-                        </div>
+                    <div class="BaseModalreact__DivContainer-sc-1b6y25y-0 kxKpvP" *ngIf="!offer.txid">
 
-                        <div class=" Orders--button" *ngIf="isOwner">
-                            Cancel<i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Orders--order-fill-icon material-icons" value="keyboard_arrow_right" size="24">keyboard_arrow_right</i>
+                        <div class=" Orders--button" *ngIf="isOwner" (click)="acceptOffer(offer)">
+                            Accept<i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Orders--order-fill-icon material-icons" value="keyboard_arrow_right" size="24">keyboard_arrow_right</i>
                         </div>                    
                     </div>
                 </div>

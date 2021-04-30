@@ -537,18 +537,19 @@ export class NftPortService {
     return { abi, args };    
   }
 
-  createSellOrder(
+  createOrder(
     maker: string, 
     smartContractAddress: string, 
     tokenId: string, 
     coinType: number,
     price: number,
-    makerRelayerFee: number) {
+    makerRelayerFee: number,
+    side: number) { //side = 1, sell;  side == 0 buy
     const exchange = environment.addresses.smartContract.NFT_Exchange;
 
     const feeRecipient = '0x0000000000000000000000000000000000000FEE';
     const feeMethod = 0;
-    const side = 1;
+    // const side = 1;
     const saleKind = 0;
     const howToCall = 0;
     /*
@@ -571,6 +572,7 @@ export class NftPortService {
     callData, replacementPattern, null, null, coinType, price, 0, listingTime, 
     0, salt);
 
+    order.tokenId = tokenId;
     return order;
 
   }

@@ -64,7 +64,6 @@ import { environment } from '../../../../../environments/environment';
         this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
           ret => {
             this.isProxyAuthenticated = ret;
-            console.log('this.isProxyAuthenticatedff=', this.isProxyAuthenticated);
           }
         );          
       });      
@@ -93,20 +92,20 @@ import { environment } from '../../../../../environments/environment';
       const price = this.quantity;
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
-      const order: NftOrder = this.nftPortServ.createSellOrder(
+      const order: NftOrder = this.nftPortServ.createOrder(
         addressHex, 
         this.asset.smartContractAddress, 
         this.asset.tokenId,
         coinType, 
         price,
-        makerRelayerFee);
+        makerRelayerFee,
+        1);
 
 
 
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
       order.hash = hash;
       order.hashForSignature = hashForSignature;
-      order.tokenId = this.tokenId;
       order.r = signature.r;
       order.s = signature.s;
       order.v = signature.v;

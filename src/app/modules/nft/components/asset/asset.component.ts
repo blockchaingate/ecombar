@@ -76,15 +76,15 @@ import { NftOrder } from '../../models/nft-order';
             if(this.asset) {
               if(this.asset.orders && this.asset.orders.length > 0) {
                 const sellOrders = this.asset.orders.filter(item => item.side == 1);              
-
+                const activeSellOrders = sellOrders.filter(item => !item.txid);
                 this.listings = sellOrders;
                 this.offers = this.asset.orders.filter(item => item.side == 0);   
 
                 console.log('this.offers=', this.offers);
-                if(sellOrders && sellOrders.length > 0) {
-                  this.sellOrder = NftOrder.from(sellOrders[sellOrders.length - 1]);
+                if(activeSellOrders && activeSellOrders.length > 0) {
+                  this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
                 }
-                
+                // { txid: null }
               }        
             } 
 
