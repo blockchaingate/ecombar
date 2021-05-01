@@ -133,7 +133,7 @@ import { NftOrder } from '../../models/nft-order';
         (res: any) => {
           this.owner = res.data;
           this.owner = this.utilServ.exgToFabAddress(this.owner.replace('0x000000000000000000000000', '0x'));
-
+          console.log('this.owner==', this.owner);
         }
       );
     }

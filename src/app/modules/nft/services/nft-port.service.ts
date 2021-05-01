@@ -52,7 +52,7 @@ export class NftPortService {
      + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
      + '0000000000000000000000000000000000000000000000000000000000000000';
 
-    order.feeRecipient = null;
+    order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
     return order;
   }
 
@@ -566,7 +566,10 @@ export class NftPortService {
     side: number) { //side = 1, sell;  side == 0 buy
     const exchange = environment.addresses.smartContract.NFT_Exchange;
 
-    const feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    let feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    if(side == 0) {
+      feeRecipient = '0x0000000000000000000000000000000000000000';
+    }
     const feeMethod = 0;
     // const side = 1;
     const saleKind = 0;
@@ -585,7 +588,7 @@ export class NftPortService {
     + '0000000000000000000000000000000000000000000000000000000000000000';
 
     if(side == 0) {
-      callData = this.getTransferFromAbi(nullAddress, taker, tokenId);
+      callData = this.getTransferFromAbi(nullAddress, maker, tokenId);
       replacementPattern = '0x00000000'
         + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
         + '0000000000000000000000000000000000000000000000000000000000000000'

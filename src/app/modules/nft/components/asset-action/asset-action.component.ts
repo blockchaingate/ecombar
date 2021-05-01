@@ -97,10 +97,10 @@ import { ToastrService } from 'ngx-toastr';
       buyorder.salt = this.utilServ.getRandomInteger();
 
       const metadata = null;
-      /*
-      console.log('this.sellOrder2222=', this.sellOrder);
-      console.log('buyorder=', buyorder);
-      */
+      
+      console.log('this.sellOrder=', this.sellOrder.toString());
+      console.log('buyorder=', buyorder.toString());
+      
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
       /*
       this.nftPortServ.ordersCanMatch(buyorder, this.sellOrder).subscribe(
