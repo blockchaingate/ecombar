@@ -13,7 +13,7 @@ export class MnemonicComponent {
     }
 
     next() {
-        this.route.navigate(['/admin/confirm-words']);
+        this.route.navigate(['/wallet/confirm-words']);
     }
 
 }

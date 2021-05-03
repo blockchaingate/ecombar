@@ -25,15 +25,7 @@ import { UploadMediaComponent } from './components/upload-media/upload-media.com
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
-import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
-import { MnemonicComponent } from './pages/my-assets/components/mnemonic/mnemonic.component';
-import { MnemeditComponent } from './pages/my-assets/components/mnemonic/mnemedit.component';
-import { NoWalletComponent } from './pages/my-assets/components/create-wallet/no-wallet.component';
-import { WalletPwdComponent } from './pages/my-assets/components/create-wallet/wallet-pwd.component';
-import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
-import { ConfirmMnemonicsComponent } from './pages/my-assets/components/create-wallet/confirmmnem.component';
-import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
+
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { CommentComponent } from './pages/comment/comment.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
@@ -52,28 +44,21 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
 @NgModule({
   declarations: [
     AdminComponent,
-    WalletDashboardComponent,
-    NoWalletComponent,
-    MnemonicComponent,
-    MnemeditComponent,
-    CreateWalletComponent,
-    ImportWalletComponent,
+
     MyCommentsComponent,
     FavoriteComponent,
-    WalletPwdComponent,
-    MnemonicComponent,
-    MnemeditComponent,
+
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
     ShipsComponent,
-    WalletPwdComponent,
+    
     CommentComponent,
     CartComponent,
     MainLayoutAddComponent,
     MainLayoutComponent,
     MerchantApplicationsComponent,
-    MyAssetsComponent,
+    
     MyProductsComponent,
     BannersComponent,
     OrdersComponent,
@@ -82,7 +67,7 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     CollectionAddComponent,
     UserAddComponent,
     AddressComponent,
-    ConfirmMnemonicsComponent,
+    
     ShippingComponent,
     MerchantsComponent,
     ProductsComponent,
@@ -92,7 +77,6 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     ProductAddComponent,
     CategoryAddComponent,
     BrandsComponent,
-    ConfirmMnemonicsComponent,
     BrandAddComponent,
     RoleMenuPipe
   ],

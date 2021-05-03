@@ -267,11 +267,11 @@ export class ProductAddComponent implements OnInit {
 
 
   createWallet() {
-    this.router.navigate(['/admin/create-wallet']);
+    this.router.navigate(['/wallet/create-wallet']);
   }
 
   importWallet() {
-    this.router.navigate(['/admin/import-wallet']);
+    this.router.navigate(['/wallet/import-wallet']);
   }
 
   addSpec() {

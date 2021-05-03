@@ -21,10 +21,10 @@ export class NoWalletComponent implements OnInit{
     }
     // Create Wallet
     createWallet() {
-      this.route.navigate(['/admin/create-wallet']);
+      this.route.navigate(['/wallet/create-wallet']);
     }
 
     restoreWallet() {
-      this.route.navigate(['/admin/import-wallet']);
+      this.route.navigate(['/wallet/import-wallet']);
     }
 }

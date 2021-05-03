@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { UtilService } from '../../../../../shared/services/util.service';
-import { KanbanService } from '../../../../../shared/services/kanban.service';
-import { CoinService } from '../../../../../shared/services/coin.service';
+import { UtilService } from '../../../shared/services/util.service';
+import { KanbanService } from '../../../shared/services/kanban.service';
+import { CoinService } from '../../../shared/services/coin.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import BigNumber from 'bignumber.js/bignumber';
-import { Signature } from '../../../../../../interfaces/kanban.interface';
+import { Signature } from '../../../../interfaces/kanban.interface';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
-import { environment } from '../../../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import * as bs58 from 'bs58';
 import * as createHash from 'create-hash';
 
@@ -18,7 +18,7 @@ import * as createHash from 'create-hash';
   selector: 'app-admin-wallet-dashboard',
   providers: [],
   templateUrl: './wallet-dashboard.component.html',
-  styleUrls: ['./wallet-dashboard.component.scss',  '../../../../../../../table.scss',  '../../../../../../../select.scss',  '../../../../../../../button.scss']
+  styleUrls: ['./wallet-dashboard.component.scss',  '../../../../../table.scss',  '../../../../../select.scss',  '../../../../../button.scss']
 })
 export class WalletDashboardComponent implements OnInit{
   coins: any;
@@ -574,7 +574,7 @@ export class WalletDashboardComponent implements OnInit{
     }
 
     addWallet() {
-      this.router.navigate(['/admin/create-wallet']);
+      this.router.navigate(['/wallet/create-wallet']);
     }
 
     loadWallet() {

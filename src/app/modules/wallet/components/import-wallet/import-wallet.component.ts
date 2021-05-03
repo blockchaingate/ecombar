@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WalletService } from '../../../../../shared/services/wallet.service';
+import { WalletService } from '../../../shared/services/wallet.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -82,7 +82,7 @@ export class ImportWalletComponent implements OnInit {
                 wallets.currentIndex ++;
               }
               this.localSt.setItem('ecomwallets', wallets).subscribe(() => {
-                  this.route.navigate(['/admin/wallet-dashboard']);
+                  this.route.navigate(['/wallet/dashboard']);
               });
           });
 

@@ -13,6 +13,11 @@ const routes: Routes = [
       import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
   {
+    path: 'wallet',
+    loadChildren: () =>
+      import('./modules/wallet/wallet.module').then(m => m.WalletModule)
+  },  
+  {
     path: 'nft',
     loadChildren: () =>
       import('./modules/nft/nft.module').then(m => m.NftModule)

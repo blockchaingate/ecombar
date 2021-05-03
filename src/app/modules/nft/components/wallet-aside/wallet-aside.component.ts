@@ -128,11 +128,11 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
       }
 
       createWallet() {
-        this.route.navigate(['/admin/create-wallet']);
+        this.route.navigate(['/wallet/create-wallet']);
       }
   
       restoreWallet() {
-        this.route.navigate(['/admin/import-wallet']);
+        this.route.navigate(['/wallet/import-wallet']);
       }   
       
       getCoinName(coinType) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { WalletService } from '../../../../../shared/services/wallet.service';
+import { WalletService } from '../../../shared/services/wallet.service';
 
 @Component({
   selector: 'app-admin-create-wallet',

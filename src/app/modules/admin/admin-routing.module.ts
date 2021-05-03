@@ -13,13 +13,12 @@ import { CollectionsComponent } from './pages/collections/collections.component'
 import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ShipsComponent } from './pages/ships/ships.component';
-import { WalletPwdComponent } from './pages/my-assets/components/create-wallet/wallet-pwd.component';
+
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
 import { BrandsComponent } from './pages/brands/brands.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
-import { ConfirmMnemonicsComponent } from './pages/my-assets/components/create-wallet/confirmmnem.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
@@ -30,10 +29,6 @@ import { CartComponent } from './pages/cart/cart.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
-import { MyAssetsComponent } from './pages/my-assets/my-assets.component';
-import { CreateWalletComponent } from './pages/my-assets/components/create-wallet/create-wallet.component';
-import { ImportWalletComponent } from './pages/my-assets/components/import-wallet/import-wallet.component';
-import { WalletDashboardComponent } from './pages/my-assets/components/wallet-dashboard/wallet-dashboard.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 
@@ -77,32 +72,8 @@ const routes: Routes = [
         path: 'my-comments', component: MyCommentsComponent
       },  
       {
-        path: 'my-assets', component: MyAssetsComponent
-      }, 
-      {
-        path: 'wallet-dashboard', component: WalletDashboardComponent
-      },
-      {
         path: 'merchant-applications', component: MerchantApplicationsComponent
       },      
-      {
-        path: 'wallet-pwd', component: WalletPwdComponent
-      },
-      {
-        path: 'confirm-mnemonics', component: ConfirmMnemonicsComponent
-      }, 
-      {
-        path: 'create-wallet', component: CreateWalletComponent
-      },  
-      {
-        path: 'wallet-pwd', component: WalletPwdComponent
-      },       
-      {
-        path: 'confirm-words', component: ConfirmMnemonicsComponent
-      },        
-      {
-        path: 'import-wallet', component: ImportWalletComponent
-      },  
       {
         path: 'orders', component: OrdersComponent
       }, 
