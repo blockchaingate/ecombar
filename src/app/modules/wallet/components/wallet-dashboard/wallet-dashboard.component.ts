@@ -9,12 +9,19 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import BigNumber from 'bignumber.js/bignumber';
 import { Signature } from '../../../../interfaces/kanban.interface';
-import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { Web3Service } from '../../../shared/services/web3.service';
 import { environment } from '../../../../../environments/environment';
 import * as bs58 from 'bs58';
 import * as createHash from 'create-hash';
 import { ReceiveComponent } from '../../modals/receive/receive.component';
+import { SendComponent } from '../../modals/send/send.component';
+import { AddGasComponent } from '../../modals/add-gas/add-gas.component';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { MyCoin } from '../../../../models/mycoin';
+import { TransactionItem } from '../../../../models/transaction-item';
+import { TimerService } from '../../../shared/services/timer.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -33,6 +40,7 @@ export class WalletDashboardComponent implements OnInit{
   depositAmount: number;
   comment: string;
   link: string;
+  sendCoinParams: any;
   fabBalance: number;
   password: string;
   satoshisPerByte: number;
@@ -60,8 +68,10 @@ export class WalletDashboardComponent implements OnInit{
       private translateServ: TranslateService,
       private localSt: LocalStorage,
       public utilServ: UtilService,
+      private timerServ: TimerService,
       private modalServ: BsModalService,
       private web3Serv: Web3Service,
+      private storageServ: StorageService,
       private coinServ: CoinService,
       public ngxSmartModalService: NgxSmartModalService,
       private kanbanServ: KanbanService,
@@ -94,20 +104,193 @@ export class WalletDashboardComponent implements OnInit{
       this.modalRef = this.modalServ.show(ReceiveComponent, {initialState});      
     }
     
+    /*
     sendCoin() {
       this.opType = 'sendCoin';
       this.ngxSmartModalService.getModal('sendModal').close();
       this.ngxSmartModalService.getModal('passwordModal').open();
       
     }
-    
+    */
+
+   async checkAmount(seed) {
+    //this.sendCoinParams
+    //this.coins
+    let fabBalance = 0;
+    let ethBalance = 0;
+    let btcBalance = 0;
+    let trxBalance = 0;
+
+    const amount = this.sendCoinParams.sendAmount;
+    const currentCoin = this.sendCoinParams.currentCoin;
+    const mycoin = this.coinServ.formMyCoin(this.addresses, currentCoin);
+    const to = this.sendCoinParams.to;
+    const options = {
+      gasPrice: this.sendCoinParams.gasPrice,
+      gasLimit: this.sendCoinParams.gasLimit,
+      satoshisPerBytes: this.sendCoinParams.satoshisPerByte,
+      feeLimit: this.sendCoinParams.feeLimit,
+      getTransFeeOnly: true
+    };
+    const { transFee, tranFeeUnit } = await this.coinServ.sendTransaction(
+      mycoin, seed,
+      to, amount, options, false
+    );    
+    console.log('amount=', amount);
+    console.log('transFee=', transFee);
+    console.log('tranFeeUnit=', tranFeeUnit);
+    for (let i = 0; i < this.wallet.mycoins.length; i++) {
+        if (this.wallet.mycoins[i].name === 'FAB' && !fabBalance) {
+            fabBalance = this.wallet.mycoins[i].balance;
+        } else if (this.wallet.mycoins[i].name === 'ETH' && !ethBalance) {
+            ethBalance = this.wallet.mycoins[i].balance;
+        } else if (this.wallet.mycoins[i].name === 'BTC' && !btcBalance) {
+            btcBalance = this.wallet.mycoins[i].balance;
+        } else if (this.wallet.mycoins[i].name === 'TRX' && !trxBalance) {
+            trxBalance = this.wallet.mycoins[i].balance;
+        }
+    }
+
+    const currentCoinBalance = this.coins.filter(item => item.coin == currentCoin)[0].balance;
+
+    if(mycoin.tokenType) {
+      if(currentCoinBalance < amount) {
+       this.toastr.error(
+         this.translateServ.instant('Insufficient Coin', {coin: currentCoin}), 
+         this.translateServ.instant('Ok')); 
+      }
+      else if(
+        ((tranFeeUnit == 'ETH') && (ethBalance < transFee))
+        || ((tranFeeUnit == 'FAB') && (fabBalance < transFee))
+        || ((tranFeeUnit == 'TRX') && (trxBalance < transFee))
+      ) {
+        this.toastr.error(
+          this.translateServ.instant('Insufficient Coin', {coin: tranFeeUnit}), 
+          this.translateServ.instant('Ok'));   
+      }
+    } else {
+      if(currentCoinBalance < amount + transFee) {
+        this.toastr.error(
+          this.translateServ.instant('Insufficient Coin', {coin: tranFeeUnit}), 
+          this.translateServ.instant('Ok'));        
+      }
+    }
+    return true;
+}
+
+   send() {
+    const initialState = {
+      coins: this.coins,
+      addresses: this.addresses
+    }
+    this.modalRef = this.modalServ.show(SendComponent, {initialState});
+
+    this.modalRef.content.onClose.subscribe(result => {
+      this.sendCoinParams = result;
+      //console.log('results', result);
+      const initialState = {
+        coins: this.coins,
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
+      
+      this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+
+      this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+
+        this.kanbanServ.getWalletBalances(this.addresses).subscribe(
+          (res: any) => {
+            console.log('res for getWalletBalances=', res);
+            if (res && res.success) {
+              this.coins = res.data.filter(item => ((item.coin != 'CAD') && (item.coin != 'RMB')));
+              if(!this.checkAmount(seed)) {
+                return;
+              }
+              this.sendCoinDo(seed);
+            }
+          });        
+        
+      });      
+    });    
+  }
+
+  async sendCoinDo(seed: Buffer) {
+    const currentCoin = this.sendCoinParams.currentCoin;
+
+    const amount = this.sendCoinParams.sendAmount;
+    const to = this.sendCoinParams.to.trim();
+    const doSubmit = true;
+    const options = {
+      gasPrice: this.sendCoinParams.gasPrice,
+      gasLimit: this.sendCoinParams.gasLimit,
+      satoshisPerBytes: this.sendCoinParams.satoshisPerByte,
+      feeLimit: this.sendCoinParams.feeLimit
+    };
+    const mycoin: MyCoin = this.coinServ.formMyCoin(this.wallet.addresses, currentCoin);
+    const { txHex, txHash, errMsg, txids } = await this.coinServ.sendTransaction(
+      mycoin, seed,
+      to, amount, options, doSubmit
+    );
+    if (errMsg) {
+      this.toastr.error(errMsg);
+      return;
+    }
+    if (txHex && txHash) {
+      this.toastr.info(
+        this.translateServ.instant('your transaction was submitted successful, please wait a while to check status.'));
+      //this.ngxSmartModalService.getModal('passwordModal').close();
+      
+      const item:TransactionItem = {
+          walletId: this.wallet.id,
+          type: 'Send',
+          coin: currentCoin,
+          tokenType: mycoin.tokenType,
+          amount: amount,
+          txid: txHash,
+          to: this.to,
+          time: new Date(),
+          confirmations: '0',
+          blockhash: '',
+          comment: this.sendCoinParams.comment,
+          status: 'pending'
+      };
+      this.timerServ.transactionStatus.next(item);
+      this.timerServ.checkTransactionStatus(item);
+      this.storageServ.storeToTransactionHistoryList(item);
+      
+    }
+  }
+
     addGas() {
       console.log('fabBalance===', this.fabBalance);
       if(this.fabBalance <= 0) {
         this.toastr.info(this.translateServ.instant("Not enough FAB in wallet, can not add gas"));
         return;
-      }
-      this.ngxSmartModalService.getModal('addGasModal').open();  
+      } 
+
+      this.modalRef = this.modalServ.show(AddGasComponent);
+  
+      this.modalRef.content.onClose.subscribe(result => {
+        this.gasAmount = result;
+        if(this.fabBalance <= 0) {
+          this.toastr.info(this.translateServ.instant("Not enough FAB in wallet, can not add gas"));
+          return;
+        }   
+        
+        const initialState = {
+          coins: this.coins,
+          pwdHash: this.wallet.pwdHash,
+          encryptedSeed: this.wallet.encryptedSeed
+        };          
+        
+        this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+  
+        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+          this.addGasDo(seed);       
+          
+        });         
+
+      });      
     }
 
     deposit(coin) {
@@ -140,27 +323,6 @@ export class WalletDashboardComponent implements OnInit{
 
     }
 
-    confirmPassword() {
-      const pinHash = this.utilServ.SHA256(this.password).toString();
-      if (pinHash !== this.wallet.pwdHash) {
-          this.warnPwdErr();
-          return;
-      }
-      if(this.opType == 'addGas') {
-        this.addGasDo();
-      } else 
-      if(this.opType == 'sendCoin') {
-        this.sendCoinDo();
-      } else
-      if(this.opType == 'deposit') {
-        console.log('deposit do start');
-        this.depositDo();
-      } else
-      if(this.opType == 'withdraw') {
-        console.log('withdrawDo do start');
-        this.withdrawDo();
-      }      
-    }
 
     async withdrawDo() {
       const amount = this.withdrawAmount;
@@ -168,7 +330,6 @@ export class WalletDashboardComponent implements OnInit{
       const currentCoin = this.coinServ.formMyCoin(this.wallet.addresses, this.currentCoin);
       const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
       if (!seed) {
-        this.warnPwdErr();
         return;
       }
       console.log('amount withdraw=', amount);
@@ -272,15 +433,10 @@ export class WalletDashboardComponent implements OnInit{
       });
   }
 
-    async addGasDo() {
+    async addGasDo(seed: Buffer) {
       const amount = this.gasAmount;
-      const pin = this.password;
 
-      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
-      if (!seed) {
-          this.warnPwdErr();
-          return;
-      }
+
       const scarAddress = await this.kanbanServ.getScarAddress();
       console.log('scarAddress=', scarAddress);
       const currentCoin = this.coinServ.formMyCoin(this.wallet.addresses, 'FAB');
@@ -289,7 +445,7 @@ export class WalletDashboardComponent implements OnInit{
           this.toastr.error(errMsg);
       } else {
 
-        /*
+        
           const addr = environment.addresses.exchangilyOfficial.FAB;
 
           const item: TransactionItem = {
@@ -306,16 +462,8 @@ export class WalletDashboardComponent implements OnInit{
               comment: '',
               status: 'pending'
           };
-          this.storageService.storeToTransactionHistoryList(item);
+          this.storageServ.storeToTransactionHistoryList(item);
           
-
-          if (this.lan === 'zh') {
-              this.alertServ.openSnackBarSuccess('加燃料交易提交成功，请等40分钟后查看结果', 'Ok');
-          } else {
-              this.alertServ.openSnackBarSuccess('Add gas transaction was submitted successfully, please check gas balance 40 minutes later.', 'Ok');
-          }
-          */
-         this.ngxSmartModalService.getModal('passwordModal').close(); 
          this.toastr.info(this.translateServ.instant('Add gas transaction was submitted successfully, please check gas balance 40 minutes later.'));
       }
     }
@@ -330,10 +478,7 @@ export class WalletDashboardComponent implements OnInit{
 
       console.log('coinType is', coinType);
       const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
-      if (!seed) {
-          this.warnPwdErr();
-          return;
-      }
+
 
       console.log('currentCoin==', currentCoin);
       const myCoin = this.coinServ.formMyCoin(this.wallet.addresses, currentCoin);
@@ -489,6 +634,7 @@ export class WalletDashboardComponent implements OnInit{
       );
 
   }
+  /*
     async sendCoinDo() {
       const pin = this.password;
       const currentCoin = this.currentCoin;
@@ -513,33 +659,11 @@ export class WalletDashboardComponent implements OnInit{
       if (txHex && txHash) {
         this.toastr.info(this.translateServ.instant('your transaction was submitted successful, please wait a while to check status.'));
         this.ngxSmartModalService.getModal('passwordModal').close(); 
-          /*
-          const item = {
-              walletId: this.wallet.id,
-              type: 'Send',
-              coin: this.currentCoin,
-              amount: amount,
-              txid: txHash,
-              to: this.to,
-              time: new Date(),
-              confirmations: '0',
-              blockhash: '',
-              comment: this.comment,
-              status: 'pending'
-          };
-          console.log('before next');
-          this.timerServ.transactionStatus.next(item);
-          this.timerServ.checkTransactionStatus(item);
-          console.log('after next');
-          this.storageService.storeToTransactionHistoryList(item);
-          this.coinService.addTxids(txids);
-          */
+
       }
     }
-    
-    warnPwdErr() {
-     this.toastr.error(this.translateServ.instant('Your password is invalid.'));
-    }   
+    */
+ 
 
     onCoinChange(newCoin) {
       console.log('newCoin==', newCoin);

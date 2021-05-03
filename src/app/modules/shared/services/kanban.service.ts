@@ -29,6 +29,28 @@ export class KanbanService {
         return this.http.getRaw(path);
     }  
 
+    getDepositStatusSync(txid: string) {
+        txid = this.utilServ.stripHexPrefix(txid);
+        return this.http.get(this.baseUrl + 'checkstatus/' + txid);
+    }   
+     
+    getOrdersByAddressStatus(address: string, status: string, start: number = 0, count: number = 200) {
+        let path = 'ordersbyaddresspaged/' + address + '/' + start + '/' + count + '/' + status;
+        path = environment.endpoints.kanban + path;
+        console.log('path for getOrdersByAddress=' + path);
+        const res = this.http.get(path);
+        return res;
+    }
+ 
+    getTransactionStatusSync(txid: string) {
+        return this.http.get(this.baseUrl + 'kanban/getTransactionReceipt/' + txid);
+    }
+        
+    getBalance(address: string) {
+        const url = 'exchangily/getBalances/' + address;
+        return this.http.getRaw(this.baseUrl + url);
+    }
+    
     async kanbanCallAsync(to: string, abiData: string) {
         const res = await this.kanbanCall(to, abiData).toPromise();
         return res;

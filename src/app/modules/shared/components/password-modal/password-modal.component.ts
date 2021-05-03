@@ -36,7 +36,9 @@ export class PasswordModalComponent implements OnInit{
 
     confirmPassword() {
         const pinHash = this.utilServ.SHA256(this.password).toString();
-        if (pinHash !== this.pwdHash) {
+        console.log('pinHash==', pinHash);
+        console.log('this.pwdHash=', this.pwdHash);
+        if (pinHash != this.pwdHash) {
             this.warnPwdErr();
             return;
         }

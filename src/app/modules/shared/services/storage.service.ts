@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { TransactionItem } from '../../../models/transaction-item';
+import {Transaction} from '../../../interfaces/kanban.interface';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -12,7 +15,7 @@ export class StorageService {
     private _isSystemAdmin: boolean;
     private _user: User = {};
 
-    constructor(private storage: StorageMap) {
+    constructor(private storage: StorageMap, private localSt: LocalStorage) {
         if (!this._appId) {
             this.storage.get('_appId').subscribe((ret: string) => { this._appId = ret; });
         }
@@ -75,6 +78,16 @@ export class StorageService {
         return this.storage.get('_token');
     }
     
+    storeToTransactionHistoryList(transactionItem: TransactionItem) {
+        this.getTransactionHistoryList().subscribe((transactionHistory: TransactionItem[]) => {
+            if (!transactionHistory) {
+                transactionHistory = [];
+            }
+            transactionHistory.push(transactionItem);
+            // console.log('transactionHistory for storeToTransactionHistoryList=', transactionHistory);
+            return this.localSt.setItem('transactions', transactionHistory).subscribe(() => {});
+        });
+    }      
     deleteToken(): void {
         this._token = '';
         this.storage.delete('_token').subscribe(ret => { });
@@ -114,6 +127,11 @@ export class StorageService {
     get isSystemAdmin() {
         return this._isSystemAdmin;
     }
+
+    getTransactionHistoryList() {
+        return this.localSt.getItem('transactions');
+    }   
+        
     checkSystemAdmin() {
         if (this._isSystemAdmin) {
             const obs = new Observable((observer) => {

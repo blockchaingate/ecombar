@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Add gas' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+<div class="modal-body">
+    <div>
+        <input type="number" class="form-control" placeholder="{{'Amount' | translate}}" [(ngModel)]="gasAmount" name="gasAmount" required>
+    </div>  
+</div>
+
+<div class="modal-footer">
+
+    <div class="CreateCollection--actions">
+        <div class="ActionButtonrContainer">
+            <div class="ActionButton--content" (click)="confirm()" style="min-width: 120px;">
+                {{'Confirm' | translate}}
+            </div>
+        </div> 
+    </div>
+ 
+</div>

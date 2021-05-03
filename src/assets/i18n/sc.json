@@ -14,6 +14,7 @@
     "Show more": "显示更多",
     "Show less": "显示更少",    
     "Checkout": "付款",
+    "Insufficient Coin": "{{coin}}余额不足",
     "Order Tracking": "订单追踪",
     "Compare": "比价",
     "Wishlist": "心仪产品",

@@ -4,10 +4,24 @@ import {Balance,  EthTransactionRes
     , FabTransactionResponse, CoinsPrice, BtcUtxo, KEthBalance, FabUtxo, EthTransactionStatusRes, GasPrice,
     FabTokenBalance, FabTransactionJson, BtcTransactionResponse, BtcTransaction} from '../../../interfaces/balance.interface';
 import { HttpClient} from '@angular/common/http';
+import { UtilService } from './util.service';
+import TronWeb from 'tronweb';
+
+const HttpProvider = TronWeb.providers.HttpProvider;
+const fullNode = new HttpProvider(environment.chains.TRX.fullNode);
+const solidityNode = new HttpProvider(environment.chains.TRX.solidityNode);
+const eventServer = new HttpProvider(environment.chains.TRX.eventServer);
+const ADDRESS_PREFIX_REGEX = /^(41)/;
+
+const tronWeb = new TronWeb(
+    fullNode,
+    solidityNode,
+    eventServer
+);
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private utilServ: UtilService) {}
     
     async getBtcUtxos(address: string): Promise<[BtcUtxo]> {
         const url = environment.endpoints.BTC.exchangily + 'getutxos/' + address;
@@ -28,7 +42,40 @@ export class ApiService {
         
         return this.http.post(url, data);
     }
+
+    getEthTransactionStatusSync(txid: string) {
+        const url = environment.endpoints.ETH.exchangily + 'gettransactionstatus/' + txid;
+        return this.http.get(url);
+    }
+
+    getFabTransactionJsonSync(txid: string) {
+        txid = this.utilServ.stripHexPrefix(txid);
+        const url = environment.endpoints.FAB.exchangily + 'gettransactionjson/' + txid;
+        return this.http.get(url);
+    }  
+
+    async getTrxTransactionStatus(txid: string) {
+        const transactionInfo = await tronWeb.trx.getTransactionInfo(txid);
+        if(transactionInfo && transactionInfo.receipt) {
+            if(transactionInfo.receipt.result == 'SUCCESS') {
+                return 'confirmed';
+            } 
+            return 'failed';
+        }
+        return 'pending';
+    }
     
+    getEthTransactionSync(txid: string) {
+        const url = environment.endpoints.ETH.exchangily + 'gettransaction/' + txid;
+        return this.http.get(url);
+    }
+    
+    getBtcTransactionSync(txid: string) {
+        txid = this.utilServ.stripHexPrefix(txid);
+        const url = environment.endpoints.BTC.exchangily + 'gettransactionjson/' + txid;
+        return this.http.get(url);        
+    }
+
     async postTx(coin, txHex: string) {
         let txHash = '';
         let errMsg = '';

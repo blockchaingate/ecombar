@@ -11,6 +11,7 @@ import { ImportWalletComponent } from './components/import-wallet/import-wallet.
 import { TransactionDetailComponent } from './modals/transaction-detail/transaction-detail.component';
 import { ReceiveComponent } from './modals/receive/receive.component';
 import { SendComponent } from './modals/send/send.component';
+import { AddGasComponent } from './modals/add-gas/add-gas.component';
 import { LoginSettingModal } from './modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from './modals/show-seed-phrase/show-seed-phrase.modal';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -20,6 +21,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { CommonModule } from '@angular/common';
 import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
     declarations: [
@@ -37,6 +39,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         TransactionDetailComponent,
         ReceiveComponent,
         SendComponent,
+        AddGasComponent,
         LoginSettingModal,
         ShowSeedPhraseModal
     ],
@@ -48,6 +51,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         ReactiveFormsModule,
         CommonModule,
         ModalModule.forRoot(),
+        BsDropdownModule.forRoot(),
         NgxSmartModalModule.forRoot(),
         NgxBootstrapSwitchModule.forRoot()
     ]

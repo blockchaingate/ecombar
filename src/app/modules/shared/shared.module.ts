@@ -18,7 +18,7 @@ import { WalletService } from './services/wallet.service';
 import { ShipService } from './services/ship.service';
 import { TranslateService } from './services/translate.service';
 import { UtilService } from './services/util.service';
-import { UploadService } from './services/upload.service';
+import { TimerService } from './services/timer.service';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
@@ -83,6 +83,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommentService,
     ShipService,
     KanbanService,
+    TimerService,
+    UtilService,
     IddockService,
     MainLayoutService,
     KanbanSmartContractService
@@ -106,6 +108,8 @@ export class SharedModule {
         KanbanService,
         IddockService,
         ShipService,
+        TimerService,
+        UtilService,        
         MainLayoutService,
         KanbanSmartContractService
       ]
