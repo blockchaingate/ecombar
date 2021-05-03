@@ -4,32 +4,6 @@
 </div>
 
 
-<ngx-smart-modal #depositModal identifier="depositModal">
-    <h1 class="text-center">{{'Deposit' | translate}} {{currentCoin}}</h1>
-    <div>
-        <input type="number" placeholder="{{'Amount' | translate}}" [(ngModel)]="depositAmount" name="depositAmount" required>
-    </div>
-    <div class="text-center">
-        <button class="btn" (click)="depositConfirm()">
-            {{'Confirm' | translate}}
-        </button>
-    </div>
-</ngx-smart-modal>
-
-
-<ngx-smart-modal #withdrawModal identifier="withdrawModal">
-    <h1 class="text-center">{{'Withdraw' | translate}} {{currentCoin}}</h1>
-    <div>
-        <input type="number" placeholder="{{'Withdraw Amount' | translate}}" [(ngModel)]="withdrawAmount" name="withdrawAmount" required>
-    </div>
-    <div class="text-center">
-        <button class="btn" (click)="withdrawConfirm()">
-            {{'Confirm' | translate}}
-        </button>
-    </div>
-</ngx-smart-modal>
-
-
 <div class="container" *ngIf="wallets">
 
   <div class="d-flex align-items-center  navigate-bar my-3">
@@ -180,7 +154,7 @@
                                 <div class="col col-2 text-right" data-label="Operations">
                         
                                 <div class="d-inline-block px-2">
-                                    <a (click)="withdraw(coin.coinType, utilServ.getCoinNameByTypeId(coin.coinType))">
+                                    <a (click)="withdraw(coin.coinType)">
                                     <img src="/assets/svg/withdraw.svg">
                                     </a>
                                 </div>

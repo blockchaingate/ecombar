@@ -16,6 +16,8 @@ import * as createHash from 'create-hash';
 import { ReceiveComponent } from '../../modals/receive/receive.component';
 import { SendComponent } from '../../modals/send/send.component';
 import { AddGasComponent } from '../../modals/add-gas/add-gas.component';
+import { DepositComponent } from '../../modals/deposit/deposit.component';
+import { WithdrawComponent } from '../../modals/withdraw/withdraw.component';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MyCoin } from '../../../../models/mycoin';
@@ -136,9 +138,8 @@ export class WalletDashboardComponent implements OnInit{
       mycoin, seed,
       to, amount, options, false
     );    
-    console.log('amount=', amount);
-    console.log('transFee=', transFee);
-    console.log('tranFeeUnit=', tranFeeUnit);
+
+    
     for (let i = 0; i < this.wallet.mycoins.length; i++) {
         if (this.wallet.mycoins[i].name === 'FAB' && !fabBalance) {
             fabBalance = this.wallet.mycoins[i].balance;
@@ -295,19 +296,47 @@ export class WalletDashboardComponent implements OnInit{
 
     deposit(coin) {
       this.currentCoin = coin;
-      this.ngxSmartModalService.getModal('depositModal').open();  
+      this.modalRef = this.modalServ.show(DepositComponent);
+  
+      this.modalRef.content.onClose.subscribe(result => {
+        this.depositAmount = result;
+
+        const initialState = {
+          coins: this.coins,
+          pwdHash: this.wallet.pwdHash,
+          encryptedSeed: this.wallet.encryptedSeed
+        };          
+        
+        this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+  
+        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+          this.depositDo(seed);
+        });        
+      });
     }
 
-    depositConfirm() {
-      this.opType = 'deposit';
-      this.ngxSmartModalService.getModal('depositModal').close();
-      this.ngxSmartModalService.getModal('passwordModal').open(); 
-    }
 
-    withdraw(coinId, coin) {
+
+    withdraw(coinId) {
       this.currentCoinId = coinId;
-      this.currentCoin = coin;
-      this.ngxSmartModalService.getModal('withdrawModal').open();  
+      this.currentCoin = this.utilServ.getCoinNameByTypeId(this.currentCoinId);
+      this.modalRef = this.modalServ.show(WithdrawComponent);
+  
+      this.modalRef.content.onClose.subscribe(result => {
+        this.withdrawAmount = result;
+
+        const initialState = {
+          coins: this.coins,
+          pwdHash: this.wallet.pwdHash,
+          encryptedSeed: this.wallet.encryptedSeed
+        };          
+        
+        this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+  
+        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+          this.withdrawDo(seed);
+        });        
+      });      
     }
 
     withdrawConfirm() {
@@ -324,15 +353,10 @@ export class WalletDashboardComponent implements OnInit{
     }
 
 
-    async withdrawDo() {
+    async withdrawDo(seed: Buffer) {
       const amount = this.withdrawAmount;
-      const pin = this.password;
       const currentCoin = this.coinServ.formMyCoin(this.wallet.addresses, this.currentCoin);
-      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
-      if (!seed) {
-        return;
-      }
-      console.log('amount withdraw=', amount);
+
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const amountInLink = new BigNumber(amount).multipliedBy(new BigNumber(1e18)); // it's for all coins.
       let addressInWallet = currentCoin.receiveAdds[0].address;
@@ -468,19 +492,13 @@ export class WalletDashboardComponent implements OnInit{
       }
     }
 
-    async depositDo() {
+    async depositDo(seed: Buffer) {
       const currentCoin = this.currentCoin;
 
       const amount = this.depositAmount;
-      const pin = this.password;
 
       const coinType = this.coinServ.getCoinTypeIdByName(currentCoin);
 
-      console.log('coinType is', coinType);
-      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, pin);
-
-
-      console.log('currentCoin==', currentCoin);
       const myCoin = this.coinServ.formMyCoin(this.wallet.addresses, currentCoin);
       let keyPairs = this.coinServ.getKeyPairs(myCoin.tokenType ? myCoin.tokenType : myCoin.name, seed, 0, 0, 'b');
       keyPairs.tokenType = myCoin.tokenType;

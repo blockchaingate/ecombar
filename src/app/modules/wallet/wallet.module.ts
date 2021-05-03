@@ -12,6 +12,8 @@ import { TransactionDetailComponent } from './modals/transaction-detail/transact
 import { ReceiveComponent } from './modals/receive/receive.component';
 import { SendComponent } from './modals/send/send.component';
 import { AddGasComponent } from './modals/add-gas/add-gas.component';
+import { DepositComponent } from './modals/deposit/deposit.component';
+import { WithdrawComponent } from './modals/withdraw/withdraw.component';
 import { LoginSettingModal } from './modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from './modals/show-seed-phrase/show-seed-phrase.modal';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -40,6 +42,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         ReceiveComponent,
         SendComponent,
         AddGasComponent,
+        DepositComponent,
+        WithdrawComponent,
         LoginSettingModal,
         ShowSeedPhraseModal
     ],
