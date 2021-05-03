@@ -13,6 +13,8 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { environment } from '../../../../../environments/environment';
 import * as bs58 from 'bs58';
 import * as createHash from 'create-hash';
+import { ReceiveComponent } from '../../modals/receive/receive.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -24,6 +26,7 @@ export class WalletDashboardComponent implements OnInit{
   coins: any;
   wallets: any;
   wallet: any;
+  addresses: any;
   withdrawAmount: number;
   currentCoinId: number;
   gasAmount: number;
@@ -41,6 +44,7 @@ export class WalletDashboardComponent implements OnInit{
   kanbanGasLimit: number;
   isAdvance: boolean;
   sendAmount: number;
+  modalRef: BsModalRef;
   currentCoin: string;
   currentCoinAddress: string;
   walletAddress: string;
@@ -56,6 +60,7 @@ export class WalletDashboardComponent implements OnInit{
       private translateServ: TranslateService,
       private localSt: LocalStorage,
       public utilServ: UtilService,
+      private modalServ: BsModalService,
       private web3Serv: Web3Service,
       private coinServ: CoinService,
       public ngxSmartModalService: NgxSmartModalService,
@@ -79,6 +84,14 @@ export class WalletDashboardComponent implements OnInit{
         this.loadWallet();
 
       });
+    }
+    
+    receive() {
+      const initialState = {
+        addresses: this.addresses,
+        coins: this.coins
+      }
+      this.modalRef = this.modalServ.show(ReceiveComponent, {initialState});      
     }
     
     sendCoin() {
@@ -579,6 +592,7 @@ export class WalletDashboardComponent implements OnInit{
 
     loadWallet() {
       const addresses = this.wallet.addresses;
+      this.addresses = addresses;
       const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
       this.walletAddress = walletAddressItem.address;
       this.kanbanAddress = this.utilServ.fabToExgAddress(this.walletAddress);

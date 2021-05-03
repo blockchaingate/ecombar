@@ -1,0 +1,119 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Send' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<div class="modal-body">
+    <div>
+        {{'Send to' | translate}}
+    </div>
+
+    <div>
+        <input class="form-control" type="text" placeholder="{{'To address' | translate}}" [(ngModel)]="to" name="to" required>
+    </div>
+
+    <div>{{'Currency' | translate}}</div>
+    <div class="py-2">
+        <!--
+        <select [(ngModel)]="currentCoin" name="currentCoin" (change)="onCoinChange($event.target.value)">
+            <option value="0">{{'Select Currency' | translate}}:</option>
+
+            <option *ngFor="let coin of coins" value="{{coin.coin}}">
+                {{coin.coin}}
+            </option>
+
+        </select>
+        -->
+
+        <div class="btn-group" dropdown>
+            <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+                    {{currentCoin}} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" *ngFor="let coin of coins">
+                    <a class="dropdown-item" (click)="onCoinChange(coin.coin)">{{formatName(coin.coin)}}</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        {{'Balance' | translate}}: {{balance}}
+    </div>
+
+    <div>
+        {{'Send amount' | translate}}
+    </div>
+    <div>
+        <input class="form-control" type="number" placeholder="{{'Send amount' | translate}}" [(ngModel)]="sendAmount" name="sendAmount" required>
+    </div>
+
+    <div>
+        {{'Comment' | translate}}
+    </div>
+    <div>
+        <input class="form-control" type="text" placeholder="{{'Comment' | translate}}" [(ngModel)]="comment" name="comment" required>
+    </div>
+
+    <div>
+        {{"Transaction fee"| translate}}:
+    </div>
+
+    <div>
+        {{"depends on the gas used on the blockchain"| translate}}
+    </div>
+
+    <div>
+        {{'Advanced'| translate}}
+        <ngx-switch [status]="isAdvance" [onText]="onText" [offText]="offText" [onColor]="onColor" [offColor]="offColor" (statusChange)="onFlagChange($event)">
+        </ngx-switch>
+    </div>
+
+    <div *ngIf="isAdvance">
+        <div *ngIf="mycoin.name == 'ETH' || mycoin.tokenType == 'ETH' || mycoin.tokenType == 'FAB'">
+            <div>
+                {{'Gas price'| translate}}
+            </div>
+            <div>
+                <input class="form-control" type="number" placeholder="{{'Gas price'| translate}}" [(ngModel)]="gasPrice" name="gasPrice">
+            </div>
+
+            <div>
+                {{'Gas limit'| translate}}
+            </div>
+            <div>
+                <input class="form-control" type="number" placeholder="{{'Gas limit'| translate}}" [(ngModel)]="gasLimit" name="gasLimit">
+            </div>
+        </div>
+
+        <div *ngIf="mycoin.name == 'BTC' || mycoin.name == 'FAB' 
+        || mycoin.name == 'LTC' || mycoin.name == 'BCH'
+        || mycoin.name == 'DOGE' || mycoin.tokenType == 'FAB'">
+            <div>
+                {{'Fiu/Byte'| translate}}
+            </div>
+            <div>
+                <input class="form-control" type="number" placeholder="{{'Fiu/Byte'| translate}}" [(ngModel)]="satoshisPerByte" name="satoshisPerByte">
+            </div>
+        </div>
+
+        <div *ngIf="mycoin.name == 'TRX' || mycoin.tokenType == 'TRX'">
+            <div>
+                {{'Fee limit'| translate}}
+            </div>
+            <div>
+                <input class="form-control" type="number" placeholder="{{'Fee limit'| translate}}" [(ngModel)]="feeLimit" name="feeLimit">
+            </div>
+        </div>
+
+    </div>
+    <div class="text-center">
+        <button class="btn" (click)="sendCoin()">
+            {{'Send'| translate}}
+        </button>
+    </div>
+</div>

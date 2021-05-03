@@ -54,6 +54,7 @@
         "ngrx-store-localstorage": "^11.0.0",
         "ngx-bootstrap": "^6.2.0",
         "ngx-bootstrap-spinner": "^10.0.5",
+        "ngx-bootstrap-switch": "0.0.3",
         "ngx-paypal": "^6.2.0",
         "ngx-smart-modal": "^7.4.1",
         "ngx-toastr": "^13.2.0",

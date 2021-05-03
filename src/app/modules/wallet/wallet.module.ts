@@ -8,11 +8,18 @@ import { WalletPwdComponent } from './components/create-wallet/wallet-pwd.compon
 import { CreateWalletComponent } from './components/create-wallet/create-wallet.component';
 import { ConfirmMnemonicsComponent } from './components/create-wallet/confirmmnem.component';
 import { ImportWalletComponent } from './components/import-wallet/import-wallet.component';
+import { TransactionDetailComponent } from './modals/transaction-detail/transaction-detail.component';
+import { ReceiveComponent } from './modals/receive/receive.component';
+import { SendComponent } from './modals/send/send.component';
+import { LoginSettingModal } from './modals/login-setting/login-setting.modal';
+import { ShowSeedPhraseModal } from './modals/show-seed-phrase/show-seed-phrase.modal';
 import { QRCodeModule } from 'angularx-qrcode';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { CommonModule } from '@angular/common';
+import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     declarations: [
@@ -26,7 +33,12 @@ import { CommonModule } from '@angular/common';
         MnemonicComponent,
         MnemeditComponent,   
         WalletPwdComponent,
-        ConfirmMnemonicsComponent
+        ConfirmMnemonicsComponent,
+        TransactionDetailComponent,
+        ReceiveComponent,
+        SendComponent,
+        LoginSettingModal,
+        ShowSeedPhraseModal
     ],
     imports: [
         WalletRoutingModule,
@@ -35,7 +47,9 @@ import { CommonModule } from '@angular/common';
         FormsModule, 
         ReactiveFormsModule,
         CommonModule,
-        NgxSmartModalModule.forRoot()
+        ModalModule.forRoot(),
+        NgxSmartModalModule.forRoot(),
+        NgxBootstrapSwitchModule.forRoot()
     ]
 })
 export class WalletModule { }

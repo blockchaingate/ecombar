@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Receive' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+<div class="modal-body">
+    <div>{{'Currency' | translate}}</div>
+    <div class="py-2">
+        <!--
+        <select [(ngModel)]="currentCoin" name="currentCoin" 
+        (change)="onCoinChange($event.target.value)">
+            <option value="0">{{'Select Currency' | translate}}:</option>
+            <option *ngFor="let coin of coins" value="{{coin.coin}}">
+            {{formatName(coin.coin)}}
+            </option>
+        </select>
+        -->
+
+        <div class="btn-group" dropdown>
+            <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                    aria-controls="dropdown-basic">
+                    {{currentCoin}} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="button-basic">
+              <li role="menuitem" *ngFor="let coin of coins">
+                  <a class="dropdown-item" (click)="onCoinChange(coin.coin)">{{formatName(coin.coin)}}</a>
+              </li>
+
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="py-2">
+        {{"Wallet address"| translate}}
+    </div>
+
+    <div class="d-flex">
+        <div class="px-2">
+            {{currentCoinAddress}}
+        </div>
+
+        <div class="px-2">
+            <img src="assets/svg/copy.svg">
+        </div>
+
+    </div>
+
+    <div class="text-center py-5" *ngIf="currentCoinAddress">
+        <qrcode [qrdata]="currentCoinAddress" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+        <div class="py-2">
+            <a href="{{link}}" download (click)="dlDataUrlBin()">
+                <div class="d-inline-block px-1">
+                    <img src="/assets/download.png">
+                </div>
+                <div class="d-inline-block px-1">
+                    {{'Download QR Code' | translate}}
+                </div>
+            </a>
+
+        </div>
+    </div>
+</div>
