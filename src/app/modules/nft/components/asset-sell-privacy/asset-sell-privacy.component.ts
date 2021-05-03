@@ -7,8 +7,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./asset-sell-privacy.component.scss']
   })
   export class NftAssetSellPrivacyComponent implements OnInit {
+    showPrivacy: boolean;
     ngOnInit() {
-          
+      this.showPrivacy = false;
     }
 
   }

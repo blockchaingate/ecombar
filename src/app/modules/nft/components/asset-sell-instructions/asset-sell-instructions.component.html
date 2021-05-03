@@ -1,1 +1,26 @@
+<!--
 <div class="OrderCreationInstructionsreact__DivContainer-sc-1nyqtcj-0 kcUBiv"><div class="Panelreact__DivContainer-sc-1u1w6l0-0 dsjMXu Panel--isClosed " data-testid="Panel"><div class="BasePanelreact__DivContainer-sc-1d6z6bk-0 juZdza Panel--panel"><header class=" BasePanel--header Panel--header "><i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Panel--icon material-icons" value="view_comfy" size="24">view_comfy</i>Instructions<i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Panel--toggle material-icons" value="expand_more" size="24">expand_more</i></header><div class="BasePanel--body Panel--body "><div class="Panel--content-container" style="height: 0px;"><div class="Panel--isContentPadded "><div><div>OpenSea is <strong>decentralized</strong>, so we never escrow your items. As a result, if this is your first time <a href="https://opensea.io/blog/tutorials/sell-your-crypto-collectibles-without-paying-gas-77d2a7477612/" rel="noreferrer" target="_blank">selling a crypto collectible</a>, you need to complete 2 free (plus gas) transactions:</div><ol><li>To initialize your account for making sell orders, which only needs to be done once for your account.</li><li>To allow OpenSea to access your item (or all items in the collection, if the collection supports it) when a sale occurs.</li></ol><div>After those, you'll see a signature request to finalize your listing. In the future, as long as the item was approved in step 2 above, <strong>you won't have any transactions at all, only a signature!</strong> This is how we can (almost) achieve gas-free listings.</div><br><div>Note that you can always decrease the price of your listing for free, without making a transaction or paying gas. You can view all your items <a role="link" href="/account">here</a>.</div></div></div></div></div></div></div></div>
+-->
+
+<app-expansion 
+[title]="'Instructions'"
+[icon]="'local_offer'"
+ [toggleable]="true">
+    <div>
+        <div>
+            Ecombar is <strong>decentralized</strong>,so we never escrow your items. 
+            As a result, if this is your first time 
+            selling a crypto collectible, you need to complete 2 free (plus gas) transactions:
+        </div>
+        <ol>
+            <li>To initialize your account for making sell orders, which only needs to be done once for your account.</li>
+            <li>To allow OpenSea to access your item (or all items in the collection, if the collection supports it) when a sale occurs.</li>
+        </ol>
+        <div>After those, you'll see a signature request to finalize your listing. 
+            In the future, as long as the item was approved in step 2 above, 
+            <strong>you won't have any transactions at all, only a signature!</strong> 
+            This is how we can (almost) achieve gas-free listings.
+        </div>
+        <br>
+        <div>Note that you can always decrease the price of your listing for free, without making a transaction or paying gas. You can view all your items <a role="link" href="/nft/collections">here</a>.</div></div>
+</app-expansion> 
