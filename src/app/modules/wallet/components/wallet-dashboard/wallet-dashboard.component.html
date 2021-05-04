@@ -7,10 +7,10 @@
 <div class="container" *ngIf="wallets">
 
   <div class="d-flex align-items-center  navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer text-black" [ngClass]="currentTab == 'wallet' ? 'current-tab' : ''" (click)="changeTab('wallet')">
+        <div class="px-3 py-3 cursor-pointer " [ngClass]="currentTab == 'wallet' ? 'current-tab' : 'text-black'" (click)="changeTab('wallet')">
             {{'My Wallet' | translate}}
         </div>
-        <div class="px-3 py-3 cursor-pointer text-black" [ngClass]="currentTab == 'assets' ? 'current-tab' : ''" (click)="changeTab('assets')">
+        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'assets' ? 'current-tab' : 'text-black'" (click)="changeTab('assets')">
             {{'My Assets' | translate}}
         </div>
   </div>
@@ -38,31 +38,58 @@
                         </div>
                     </div>        
                 </div>
-                <div class="py-3 text-black">
-                    Wallet address: {{walletAddress}}
-                </div>
-            
-                <div class="py-3 text-black">
-                    Gas: {{gas}}
-                </div>
 
-                <div class="row text-black">
-                    <button class="btn mx-3" (click)="receive()">
-                        Receive
-                    </button>
-            
-                    <button class="btn mx-3" (click)="send()">
-                        Send
-                    </button>     
+                <div class="row py-3">
+                    <div class="col col-8">
+
+                        <div class="py-3 text-black">
+                            Wallet address: {{walletAddress}}
+                        </div>
                     
-                    <button class="btn mx-3" (click)="addGas()">
-                        Add Gas
-                    </button>    
+                        <div class="py-3 text-black">
+                            Gas: {{gas}}
+                        </div>
+
+                        <div class="row text-black">
+
+                            <div class="CreateCollection--actions m-1 py-3 text-center">
+                                <div class="ActionButtonrContainer ">
+                                    <div class="ActionButton--content" (click)="receive()" style="min-width: 120px;">{{'Receive' | translate}}</div>
+                                </div> 
+                            </div>  
+
+
+                            <div class="CreateCollection--actions m-1 py-3 text-center">
+                                <div class="ActionButtonrContainer ActionButton--secondary">
+                                    <div class="ActionButton--content" (click)="send()" style="min-width: 120px;">{{'Send' | translate}}</div>
+                                </div> 
+                            </div>              
+        
+                            <div class="CreateCollection--actions m-1 py-3 text-center">
+                                <div class="ActionButtonrContainer ActionButton--secondary">
+                                    <div class="ActionButton--content" (click)="addGas()" style="min-width: 120px;">{{'Add Gas' | translate}}</div>
+                                </div> 
+                            </div>                        
+                            
                     
-                    <button class="btn mx-3" (click)="addWallet()">
-                        Add Wallet
-                    </button>                       
-                </div>                
+                        </div>    
+                    </div>
+                    <div class="col col-4 text-black">
+                        <ul>
+                            <li>
+                                <a (click)="addWallet()">
+                                    Add Wallet
+                                </a>                                  
+                            </li>
+                            <li>
+                                <a (click)="importWallet()">
+                                    Import Wallet
+                                </a> 
+                            </li>
+                        </ul>
+                      
+                    </div>
+                </div>            
             </div>
         </div>
     </div>

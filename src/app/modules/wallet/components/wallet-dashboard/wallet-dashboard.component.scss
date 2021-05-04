@@ -5,3 +5,15 @@ select {
 .current-tab {
     color: blue;
 }
+
+.cursor-pointer, a {
+    cursor: pointer;
+}
+
+ul, ul li {
+    list-style: none;
+}
+
+li a:hover {
+    color: blue;
+}

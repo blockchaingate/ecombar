@@ -732,6 +732,10 @@ export class WalletDashboardComponent implements OnInit{
       this.router.navigate(['/wallet/create-wallet']);
     }
 
+    importWallet() {
+      this.router.navigate(['/wallet/import-wallet']);
+    }
+    
     loadWallet() {
       const addresses = this.wallet.addresses;
       this.addresses = addresses;
