@@ -10,7 +10,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { CollectionService } from './services/collection.service';
 import { OrderService } from './services/order.service';
 import { PaymentService } from './services/payment.service';
-import { AddressService } from './services/address.service';
+import { NftHeaderComponent } from './components/header/header.component';
 import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
 import { IddockService } from './services/iddock.service';
@@ -30,6 +30,7 @@ import { TranslateFieldPipe } from './pipes/translate-field.pipe';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NftWalletAsideComponent } from './components/wallet-aside/wallet-aside.component';
 import { ProductsGridComponent } from './components/products-grid/products-grid.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { PasswordModalComponent } from './components/password-modal/password-modal.component';
@@ -47,6 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateFieldPipe,
     ProductsGridComponent,
     StarRatingComponent,
+    NftHeaderComponent,
+    NftWalletAsideComponent,
     PasswordModalComponent
   ],
   imports: [
@@ -68,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductsGridComponent,
     StarRatingComponent,
     PasswordModalComponent,
+    NftHeaderComponent,
     TranslateModule
   ],
   providers: [

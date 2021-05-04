@@ -5,7 +5,6 @@ import { env } from 'process';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { environment } from 'src/environments/environment';
-import { NftPortService } from '../../services/nft-port.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
@@ -27,7 +26,6 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
       constructor(
           private route: Router, 
           private spinner: NgxSpinnerService,
-          private nftPortServ: NftPortService,
           private utilServ: UtilService,
           private modalServ: BsModalService,
           private kanbanServ: KanbanService,
@@ -60,12 +58,7 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
           const addresses = this.wallet.addresses;
 
           this.address = addresses.filter(item => item.name == 'FAB')[0].address;     
-          
-          this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
-            ret => {
-              this.isProxyAuthenticated = ret;
-            }
-          );
+
           const kanbanAddress = this.utilServ.fabToExgAddress(this.address);
 
           this.wallets.currentIndex = index;
@@ -87,45 +80,6 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
 
 
       } 
-
-      async authenticateDo(seed: Buffer) {
-        const {abi, args} = this.nftPortServ.getRegisterProxyAbiArgs();
-        const resp = await this.kanbanSmartContractServ.execSmartContract(seed, environment.addresses.smartContract.ProxyRegistry, abi, args);
-        console.log('resp===', resp);
-
-        if (resp && resp.transactionHash) {
-            const txid = resp.transactionHash;
-            console.log('txid=', resp.transactionHash);
-            var that = this;
-            var myInterval = setInterval(function(){ 
-              that.kanbanSmartContractServ.getTransactionReceipt(txid).subscribe(
-                (receipt: any) => {
-                  if(receipt && receipt.transactionReceipt) {
-                    clearInterval(myInterval);
-                    that.spinner.hide();
-                    that.isProxyAuthenticated = true;
-                    console.log('receipt.transactionReceipt==', receipt.transactionReceipt);
-                  }
-                }
-              );
-            }, 1000);
-        }
-
-      }
-
-      authenticate() {
-        const initialState = {
-            pwdHash: this.wallet.pwdHash,
-            encryptedSeed: this.wallet.encryptedSeed
-          };          
-          
-          this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
-    
-          this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            this.spinner.show();
-            this.authenticateDo(seed);
-          });          
-      }
 
       createWallet() {
         this.route.navigate(['/wallet/create-wallet']);

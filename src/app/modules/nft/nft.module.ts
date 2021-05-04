@@ -2,7 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NftRoutingModule } from './nft-routing.module';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { NftComponent } from './nft.component';
-import { NftHeaderComponent } from './components/header/header.component';
 import { NftAdminComponent } from './components/admin/admin.component';
 import { NftAdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
 import { NftCollectionsComponent } from './components/collections/collections.component';
@@ -45,7 +44,6 @@ import { NftAssetActionComponent } from './components/asset-action/asset-action.
 import { NftAssetImageComponent } from './components/asset-image/asset-image.component';
 import { NftAssetDetailsComponent } from './components/asset-details/asset-details.component';
 import { NftAssetInfoComponent } from './components/asset-info/asset-info.component';
-import { NftWalletAsideComponent } from './components/wallet-aside/wallet-aside.component';
 import { NftAccountComponent } from './components/account/account.component';
 import { NftAccountOverviewComponent } from './components/account-overview/account-overview.component';
 import { NftAccountTabComponent } from './components/account-tab/account-tab.component';
@@ -68,7 +66,7 @@ import { NftOrderService } from './services/nft-order.service';
 import { NftTradeService } from './services/nft-trade.service';
 import { NftPortService } from './services/nft-port.service';
 import { UploadService } from './services/upload.service';
-
+import { SharedModule } from '../shared/shared.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -78,7 +76,6 @@ import { WalletModule } from '../wallet/wallet.module';
 @NgModule({
     declarations: [
       NftComponent,
-      NftHeaderComponent,
       NftAdminComponent,
       NftAdminSidebarComponent,
       NftCollectionsComponent,
@@ -106,7 +103,6 @@ import { WalletModule } from '../wallet/wallet.module';
       NftGetStartedComponent,
       TextareaSwitchComponent,
       NftAssetSellMethodComponent,
-      NftWalletAsideComponent,
       NftCollectionAssetsCreateDoneComponent,
       NftAssetSellPriceComponent,
       NftAssetSellIncludeEndingPrinceComponent,
@@ -158,6 +154,7 @@ import { WalletModule } from '../wallet/wallet.module';
         CommonModule,
         NgxChartsModule,
         WalletModule,
+        SharedModule,
         ModalModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]    
