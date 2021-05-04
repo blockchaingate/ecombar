@@ -57,7 +57,7 @@ import { NftAccountInWalletAssetComponent } from './components/account-in-wallet
 import { NftAssetPriceHistoryComponent } from './components/asset-price-history/asset-price-history.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftIndexComponent } from './components/index/index.component';
-
+import { NftGetStartedComponent } from './components/get-started/get-started.component';
 import { NftPropertiesListComponent } from './components/properties-list/properties-list.component';
 import { NftLevelsListComponent } from './components/levels-list/levels-list.component';
 import { NftAssetListingComponent } from './components/asset-listing/asset-listing.component';
@@ -102,6 +102,7 @@ import { NftMakeOfferComponent } from './modals/make-offer/make-offer.component'
       LevelsComponent,
       NftAssetOverviewComponent,
       ButtonComponent,
+      NftGetStartedComponent,
       TextareaSwitchComponent,
       NftAssetSellMethodComponent,
       NftWalletAsideComponent,

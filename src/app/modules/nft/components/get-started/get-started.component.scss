@@ -1,0 +1,66 @@
+.title {
+    color: rgb(14, 14, 14);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 110%;
+    margin: 1.46rem 0 1.168rem;    
+}
+
+.GettingStarted--step-container {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 40px 0px 20px;
+    width: 100%;
+    display: flex;
+}
+
+
+.GettingStarted--step-container .GettingStarted--step {
+    max-width: 100%;
+    padding: 0px 20px;
+    margin-bottom: 40px;
+    margin-right: 20px;
+    margin-left: 20px;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+}
+
+@media (min-width: 600px) {
+    .GettingStarted--step-container .GettingStarted--step {
+        max-width: 240px;
+        padding: 0px;
+    }
+}
+
+
+.image-container {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: inherit;
+    height: 40px;
+    width: 40px;   
+}
+
+.subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(53, 56, 64);
+    margin-bottom: 4px;   
+}
+
+.content {
+    color: rgb(138, 147, 155);
+    font-size: 16px;    
+    margin-top: 4px;
+}
