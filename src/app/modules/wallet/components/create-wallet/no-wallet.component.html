@@ -1,15 +1,28 @@
 <div class="no-wallet">
-<div class="container ">
-    <div class="row">
-        <div class="col-12 text-center">
-            <button class="btn btn1 gradient-back-area" (click)="createWallet()">{{"Create Wallet" | translate }}</button>
+    <div class="container ">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-black pt-3">Connect to you wallet</h1>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="CreateCollection--actions m-1 py-3">
+                    <div class="ActionButtonrContainer ">
+                        <div class="ActionButton--content" (click)="createWallet()" style="min-width: 120px;">{{"Create Wallet" | translate }}</div>
+                    </div> 
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 text-center text-black">
-            <button class="btn btn2 gradient-back-area" (click)="restoreWallet()">{{"Restore Wallet" | translate }}</button>
-        </div>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-12 text-center text-black">
 
+                <div class="CreateCollection--actions m-1 py-3">
+                    <div class="ActionButtonrContainer ActionButton--secondary">
+                        <div class="ActionButton--content" (click)="restoreWallet()" style="min-width: 120px;">{{"Restore Wallet" | translate }}</div>
+                    </div> 
+                </div>                
+            </div>
+        </div>
+    </div>
 </div>

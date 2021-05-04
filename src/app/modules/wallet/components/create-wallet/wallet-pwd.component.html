@@ -1,11 +1,6 @@
-<div class="container">
-    <div class="row text-white menu">
-        <div menuleft>{{"Set Password" | translate }}
-        </div>
-        <div menuright>
-        </div>
-    </div>
-    <div class="outpanel">
+<div class="container pt-3">
+
+    <div class="outpanel border">
         <div class="row">
             <!--
             <div class="col-2 fxHide-sm">
@@ -19,19 +14,19 @@
             </div>
             -->
             <div class="col-md-12 col-sm-12 panel text-white">
-                <div class="header">
+                <div class="header text-black">
                     <h4>{{"Set Password" | translate }}</h4>
                 </div>
                 <div class="row textarea text-light">
                     <div class="col-2 item">
                         <img src="/assets/images/verify.png" width="100%">
                     </div>
-                    <div class="col-10 item">
+                    <div class="col-10 item text-black">
                         {{"PwdNote" | translate }}
                     </div>
                 </div>
 
-                <form class="user-form" [formGroup]="userForm" (submit)="onSubmit()">
+                <form class="user-form" [formGroup]="userForm">
                     <!-- Grid column -->
                     <div class="form-group col-auto item">
                         <label for="name">{{"Wallet Name" | translate}}</label>
@@ -79,8 +74,13 @@
 
                     <!-- Grid column -->
                     <div class="col-auto submitarea" *ngIf="userForm.get('password').valid && userForm.get('password').valid && !userForm.hasError('notSame')">
-                        <button type="submit" class="btn btn-md btn-gradient mt-0">{{"Submit" | translate }}</button>
-                    </div>
+
+                        <div class="CreateCollection--actions m-1 py-3 text-center">
+                            <div class="ActionButtonrContainer ">
+                                <div class="ActionButton--content" (click)="onSubmit()" style="min-width: 120px;">{{'Submit' | translate}}</div>
+                            </div> 
+                        </div>
+                  </div>
                     <!-- Grid column -->
                 </form>
             </div>

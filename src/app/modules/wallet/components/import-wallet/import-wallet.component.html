@@ -1,14 +1,14 @@
 <div class="container">
-    <div class="row text-white menu">
+    <div class="row menu text-black">
         {{'Restore Wallet' | translate }}
     </div>
-    <div class="row panel">
+    <div class="row panel border">
         <div class="col-md-3 col-sm-12"></div>
-        <div class="col-md-6 col-sm-12 text-white">
-            <form class="user-form" [formGroup]="userForm" (submit)="onSubmit()">
+        <div class="col-md-6 col-sm-12 text-black">
+            <form class="user-form" [formGroup]="userForm">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{{'Wallet Name' | translate }}</label>
-                    <input type="text" class="form-control transparent-input" formControlName="name" id="name" aria-describedby="emailHelp" placeholder="{{ 'Type wallet name' | translate }}">
+                    <input type="text" class="form-control" formControlName="name" id="name" aria-describedby="emailHelp" placeholder="{{ 'Type wallet name' | translate }}">
                     <div class="error text-danger smallfont" *ngIf="!userForm.get('name').valid && userForm.get('name').touched">
                         {{"Wnvalid" | translate}}.
                     </div>
@@ -17,7 +17,7 @@
 
                 <div class="form-group">
                     <label for="exampleInputPassword1">{{'Wallet Password' | translate }}</label>
-                    <input type="password" autocomplete="off" class="form-control transparent-input" formControlName="password" id="password" placeholder="{{ 'Type wallet password' | translate }}">
+                    <input type="password" autocomplete="off" class="form-control" formControlName="password" id="password" placeholder="{{ 'Type wallet password' | translate }}">
                     <div class="error text-danger smallfont" *ngIf="!userForm.get('password').valid && userForm.get('password').touched">
                         {{"Pwdvalid" | translate}}
                     </div>
@@ -26,14 +26,14 @@
 
                 <div class="form-group">
                     <label for="exampleInputPassword2">{{'Confirm Wallet Password' | translate }}</label>
-                    <input type="password" autocomplete="off" class="form-control transparent-input" formControlName="pwdconfirm" id="pwdconfirm" placeholder="{{'Type wallet password' | translate }}">
+                    <input type="password" autocomplete="off" class="form-control" formControlName="pwdconfirm" id="pwdconfirm" placeholder="{{'Type wallet password' | translate }}">
                     <div class="error text-danger smallfont" *ngIf="userForm.get('pwdconfirm').touched && userForm.hasError('notSame')">
                         {{"Password doesn't match" | translate }}!
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">{{'Seed phrase, seperated by space' | translate }}</label>
-                    <textarea class="form-control transparent-input" (input)="autoGrow($event.target.value)" formControlName="seedphrase" id="seedphrase" name="seedphrase" id="exampleFormControlTextarea1" rows="5"></textarea>
+                    <textarea class="form-control" (input)="autoGrow($event.target.value)" formControlName="seedphrase" id="seedphrase" name="seedphrase" id="exampleFormControlTextarea1" rows="5"></textarea>
                     <div class="error text-danger smallfont" *ngIf="seedPhraseInvalid">
                         {{"Seed Phrase is invalid" | translate }}!
                     </div>
@@ -41,7 +41,12 @@
 
                 <div class="row words">
                     <div class="col-12" *ngIf="userForm.get('password').valid && userForm.get('password').valid && !userForm.hasError('notSame') && userForm.get('seedphrase').valid && !seedPhraseInvalid">
-                        <button class="btn btn-gradient text-white btn-lg-fixed-width" type="submit">{{"Import Wallet"|translate}}</button>
+
+                        <div class="CreateCollection--actions m-1 py-3 text-center">
+                            <div class="ActionButtonrContainer ">
+                                <div class="ActionButton--content" (click)="onSubmit()" style="min-width: 120px;">{{'Import Wallet' | translate}}</div>
+                            </div> 
+                        </div>                        
                     </div>
                 </div>
             </form>

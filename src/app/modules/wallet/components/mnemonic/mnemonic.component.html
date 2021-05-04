@@ -1,12 +1,12 @@
-<div class="container">
+<div class="container ">
     <div class="header">
-        <h3>{{"Backup Wallet Seed Phrases" | translate }}</h3>
+        <h3 class="text-black">{{"Backup Wallet Seed Phrases" | translate }}</h3>
     </div>
     <div class="row textarea text-light fxHide-sm">
         <div class="col-md-2 col-xs-12">
             <img src="/assets/images/lighting.png" width="100%">
         </div>
-        <div class="col-md-10 col-xs-12">
+        <div class="col-md-10 col-xs-12 text-black">
             {{"MnemNote" | translate }}
         </div>
     </div>
@@ -19,13 +19,19 @@
     </div>
     <div class="row words">
         <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-            <button class="btn btn-gradient text-white" (click)="next()">{{"Next"|translate}}</button>
+
+            <div class="CreateCollection--actions m-1 py-3">
+                <div class="ActionButtonrContainer ">
+                    <div class="ActionButton--content" (click)="next()" style="min-width: 120px;">{{'Next' | translate}}</div>
+                </div> 
+            </div>
+
         </div>
     </div>
 
     <div class="row words">
         <div class="col-12">
-            <a routerLink="/wallet/import-wallet" class="text-primary">
+            <a routerLink="/wallet/import-wallet" class="nft-text-primary">
                 {{'Already have mnemonics? Restore' | translate }}
             </a>
 

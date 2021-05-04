@@ -74,6 +74,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NftMakeOfferComponent } from './modals/make-offer/make-offer.component';
+import { WalletModule } from '../wallet/wallet.module';
 @NgModule({
     declarations: [
       NftComponent,
@@ -156,6 +157,7 @@ import { NftMakeOfferComponent } from './modals/make-offer/make-offer.component'
         NgxSpinnerModule,
         CommonModule,
         NgxChartsModule,
+        WalletModule,
         ModalModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]    

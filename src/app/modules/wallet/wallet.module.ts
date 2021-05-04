@@ -58,6 +58,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         BsDropdownModule.forRoot(),
         NgxSmartModalModule.forRoot(),
         NgxBootstrapSwitchModule.forRoot()
+    ],
+    exports: [
+        NoWalletComponent
     ]
 })
 export class WalletModule { }

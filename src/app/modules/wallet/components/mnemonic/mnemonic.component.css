@@ -14,7 +14,7 @@
 
 .word {
     display: flex;
-    border: 1px solid #444564;
+    border: 1px solid grey;
     margin: 0.5em 0 0.5em 0.5em;
     width: 80%;
     text-align: center;
@@ -22,6 +22,7 @@
 
 .letterbox {
     width: 20%;
+    color: black;
 }
 
 .numbox {
@@ -30,7 +31,7 @@
 }
 
 code {
-    color: white;
+    color: black;
 }
 
 @media (max-width:600px){
@@ -41,4 +42,10 @@ code {
     .word, .numbox{
         font-size: 14px;
     }
+}
+
+.ActionButton--secondary {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(32, 129, 226);
+    color: rgb(32, 129, 226);
 }

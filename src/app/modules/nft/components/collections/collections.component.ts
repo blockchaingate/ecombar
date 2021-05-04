@@ -45,7 +45,6 @@ import { environment } from 'src/environments/environment';
           this.wallet = wallet;
           const addresses = wallet.addresses;
           this.address = addresses.filter(item => item.name == 'FAB')[0].address;
-          console.log('this.address=', this.address);
           this.collectionServ.getByAddress(this.address).subscribe(
             (res:any) => {
               if(res && res.ok) {

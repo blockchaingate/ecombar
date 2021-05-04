@@ -6,7 +6,7 @@
         <div class="col col-md-2 col-sm-12">
             <img src="/assets/images/verify.png" width="100%">
         </div>
-        <div class="col col-md-10 col-sm-12">
+        <div class="col col-md-10 col-sm-12 text-black">
             {{"VerifyMnemNote" | translate }}
         </div>
     </div>
@@ -90,10 +90,18 @@
     </div>
     <div class="row words">
         <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-            <button class="btn btn-gradient text-white" (click)="back()">{{"Back"|translate}}</button>
+            <div class="CreateCollection--actions m-1 py-3">
+                <div class="ActionButtonrContainer ActionButton--secondary">
+                    <div class="ActionButton--content" (click)="back()" style="min-width: 120px;">{{'Back' | translate}}</div>
+                </div> 
+            </div>            
         </div>
         <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-            <button class="btn btn-gradient text-white" (click)="confirm()">{{"Confirm"|translate}}</button>
+            <div class="CreateCollection--actions m-1 py-3">
+                <div class="ActionButtonrContainer ">
+                    <div class="ActionButton--content" (click)="confirm()" style="min-width: 120px;">{{'Confirm' | translate}}</div>
+                </div> 
+            </div>
         </div>
     </div>
 </div>

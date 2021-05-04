@@ -17,7 +17,6 @@
 
 .panel {
     height: 480px;
-    background-color: #1f2233;
     margin-bottom: 4em;
     padding: 1em 2em;
 }
@@ -70,13 +69,11 @@
 }
 
 .py-0 {
-    background-color: #3a3b5a;
     border: 1px solid #4a4b6a;
     border-left-style: hidden;
 }
 
 .py-1 {
-    background-color: #343554;
     border: 1px solid #4a4b6a;
 }
 
