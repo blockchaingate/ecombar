@@ -13,6 +13,7 @@ import { CoinService } from '../../services/coin.service';
 })
 export class PasswordModalComponent implements OnInit{
     public onClose: Subject<Buffer>;
+    public onClosePin: Subject<string>;
     public onCloseFabPrivateKey: Subject<any>;
     pwdHash: string;
     encryptedSeed: any;
@@ -31,6 +32,7 @@ export class PasswordModalComponent implements OnInit{
 
     ngOnInit() {
         this.onClose = new Subject();
+        this.onClosePin = new Subject();
         this.onCloseFabPrivateKey = new Subject();
     }
 
@@ -42,6 +44,7 @@ export class PasswordModalComponent implements OnInit{
             this.warnPwdErr();
             return;
         }
+        this.onClosePin.next(this.password);
         const seed = this.utilServ.aesDecryptSeed(this.encryptedSeed, this.password);
         const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
         const privateKey = keyPair.privateKeyBuffer.privateKey;

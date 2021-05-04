@@ -172,6 +172,7 @@ export class KanbanService {
         let bchAddress = '';
         let dogeAddress = '';
         let ltcAddress = '';
+        let trxAddress = '';
 
         for(let i=0;i<addresses.length;i++) {
             const addr = addresses[i];
@@ -192,6 +193,9 @@ export class KanbanService {
             } else   
             if(addr.name == 'LTC') {
                 ltcAddress = addr.address;
+            } else   
+            if(addr.name == 'TRX') {
+                trxAddress = addr.address;
             }                                            
         }
         const data = {
@@ -200,7 +204,8 @@ export class KanbanService {
             fabAddress: fabAddress,
             bchAddress: bchAddress,
             dogeAddress: dogeAddress,
-            ltcAddress: ltcAddress
+            ltcAddress: ltcAddress,
+            trxAddress: trxAddress
         }
 
         const url = this.baseUrl + 'walletBalances';

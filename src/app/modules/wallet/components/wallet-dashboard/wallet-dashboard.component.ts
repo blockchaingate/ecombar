@@ -24,6 +24,9 @@ import { MyCoin } from '../../../../models/mycoin';
 import { TransactionItem } from '../../../../models/transaction-item';
 import { TimerService } from '../../../shared/services/timer.service';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { WalletService } from 'src/app/modules/shared/services/wallet.service';
+import { LoginSettingModal } from '../../modals/login-setting/login-setting.modal';
+import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phrase.modal';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -35,6 +38,7 @@ export class WalletDashboardComponent implements OnInit{
   coins: any;
   wallets: any;
   wallet: any;
+  subtab: string;
   addresses: any;
   withdrawAmount: number;
   currentCoinId: number;
@@ -42,6 +46,7 @@ export class WalletDashboardComponent implements OnInit{
   depositAmount: number;
   comment: string;
   link: string;
+  transactions: any;
   sendCoinParams: any;
   fabBalance: number;
   password: string;
@@ -73,6 +78,7 @@ export class WalletDashboardComponent implements OnInit{
       private timerServ: TimerService,
       private modalServ: BsModalService,
       private web3Serv: Web3Service,
+      private walletServ: WalletService,
       private storageServ: StorageService,
       private coinServ: CoinService,
       public ngxSmartModalService: NgxSmartModalService,
@@ -84,6 +90,7 @@ export class WalletDashboardComponent implements OnInit{
     ngOnInit() {
       this.gas = 0;
       this.currentTab = 'wallet';
+      this.subtab = 'assets';
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {
@@ -203,7 +210,6 @@ export class WalletDashboardComponent implements OnInit{
           (res: any) => {
             console.log('res for getWalletBalances=', res);
             if (res && res.success) {
-              this.coins = res.data.filter(item => ((item.coin != 'CAD') && (item.coin != 'RMB')));
               if(!this.checkAmount(seed)) {
                 return;
               }
@@ -749,6 +755,7 @@ export class WalletDashboardComponent implements OnInit{
           console.log('res for getWalletBalances=', res);
           if(res && res.success) {
             this.coins = res.data.filter(item => ((item.coin != 'CAD') && (item.coin != 'RMB')));
+            console.log('this.coins=', this.coins);
             const exgCoin = this.coins.filter(item => item.coin == 'EXG')[0];
             const fabCoin = this.coins.filter(item => item.coin == 'FAB')[0];
             this.fabBalance = fabCoin.balance;
@@ -760,17 +767,90 @@ export class WalletDashboardComponent implements OnInit{
           }
         }
       );
+
+      this.coinServ.getTransactionHistoryEvents(addresses).subscribe(
+        (res: any) => {
+            if (res && res.success) {
+                const data = res.data;
+                this.transactions = data;
+            }
+        }
+      );       
     }
 
-    dlDataUrlBin() {
-      const y = document.getElementById('address_qr_code').getElementsByTagName('canvas')[0];
-      //console.log('y.src=' + y.src);
-      if(y) {
-          var link = y.toDataURL("image/png");
-          this.link = link;   
-      }
-   
+
+  loginSetting() {
+
+    const initialState = {
+      coins: this.coins,
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClosePin.subscribe( (pin: string) => {
+      this.modalRef = this.modalServ.show(LoginSettingModal);
+      this.modalRef.content.onClose.subscribe( (newPassword: string) => {
+        this.wallet = this.walletServ.updateWalletPassword(this.wallet, pin, newPassword);
+        this.walletServ.updateToWalletList(this.wallet, this.wallets.currentIndex);
+        this.toastr.info(
+          this.translateServ.instant('Your password was changed successfully'),
+          this.translateServ.instant('Ok'));
+      });
+    }); 
+  
   }
+
+  showSeedPhrase() {
+    const initialState = {
+      coins: this.coins,
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClosePin.subscribe( (pin: string) => {
+      const seedPhrase = this.utilServ.aesDecrypt(this.wallet.encryptedMnemonic, pin);
+      const initialState = {
+        seedPhrase
+      };
+      this.modalRef = this.modalServ.show(ShowSeedPhraseModal, { initialState });     
+    });
+
+  }
+
+
+  deleteWallet() {
+    const initialState = {
+      coins: this.coins,
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClosePin.subscribe( (pin: string) => {
+      console.log('this.wallets=', this.wallets);
+      this.wallets.items.splice(this.wallets.currentIndex, 1);
+      if(this.wallets.items.length > 0) {
+        this.wallets.currentIndex = 0;
+      } else {
+        this.wallets.currentIndex = -1;
+      }
+
+      console.log('this.wallets==', this.wallets);
+      this.walletServ.updateWallets(this.wallets).subscribe((res: any) => {
+        console.log('res===', res);
+        this.toastr.info(
+          this.translateServ.instant('Your wallet was deleted successfully'),
+          this.translateServ.instant('Ok')); 
+      });
+     
+    });
+  }
+
 
     refreshAssets() {
       this.kanbanServ.getExchangeBalance(this.kanbanAddress).subscribe(

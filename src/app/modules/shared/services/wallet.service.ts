@@ -13,10 +13,11 @@ import * as hdkey from 'ethereumjs-wallet/hdkey';
 import * as bchaddr from 'bchaddrjs';
 import * as wif from 'wif';
 import { Wallet } from '../../../models/wallet';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Injectable({ providedIn: 'root' })
 export class WalletService {
-    constructor(private utilServ: UtilService, private coinServ: CoinService) {
+    constructor(private localSt: LocalStorage, private utilServ: UtilService, private coinServ: CoinService) {
 
     }
 
@@ -37,6 +38,32 @@ export class WalletService {
     }
 
 
+    updateWalletPassword(wallet: Wallet, oldPassword: string, newPassword: string) {
+        const pwdHashStr = this.utilServ.SHA256(newPassword).toString();
+        const  mnemonic = this.utilServ.aesDecrypt(wallet.encryptedMnemonic, oldPassword);
+        const seed = bip39.mnemonicToSeedSync(mnemonic);
+        const encryptedMnemonic = this.utilServ.aesEncrypt(mnemonic, newPassword);   
+        const encryptedSeed = this.utilServ.aesEncryptSeed(seed, newPassword);
+        wallet.pwdHash = pwdHashStr;
+        wallet.encryptedMnemonic = encryptedMnemonic;
+        wallet.encryptedSeed = encryptedSeed;
+        return wallet;
+    }
+
+    updateToWalletList(wallet: Wallet, index: number) {
+
+        this.localSt.getItem('ecomwallets').subscribe((wallets: Wallet[]) => {
+            if (!wallets) {
+                wallets = [];
+            }
+            if (wallets && wallets.length > 0) {
+                wallets[index] = wallet;
+            }
+
+            this.localSt.setItem('ecomwallets', wallets).subscribe(() => {
+            });
+        });
+    }
 
     validateMnemonic(mnemonic: string) {
         return bip39.validateMnemonic(mnemonic);
@@ -100,5 +127,9 @@ export class WalletService {
     generateMnemonic() {
         const words = bip39.generateMnemonic();
         return words;
+    }    
+
+    updateWallets(wallets) {
+        return this.localSt.setItem('ecomwallets', wallets);
     }    
 }

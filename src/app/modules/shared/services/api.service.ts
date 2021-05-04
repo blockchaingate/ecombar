@@ -43,6 +43,11 @@ export class ApiService {
         return this.http.post(url, data);
     }
 
+    getTransactionHistoryEvents(data) {
+        const url = environment.endpoints.kanban + 'getTransactionHistoryEvents';
+        return this.http.post(url, data);
+    }  
+          
     getEthTransactionStatusSync(txid: string) {
         const url = environment.endpoints.ETH.exchangily + 'gettransactionstatus/' + txid;
         return this.http.get(url);

@@ -1,0 +1,68 @@
+<div class="container" *ngIf="transactions">
+    <div class=" row apair header">
+        <div class="col-2">
+            <div class="btn-group" dropdown>
+                <button id="button-basic" dropdownToggle type="button" class="btn btn-link dropdown-toggle text-white" aria-controls="dropdown-basic">
+                    {{currentType | translate}} <span class="caret"></span>
+                </button>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem" *ngIf="currentType !== 'All'">
+                        <a class="dropdown-item" (click)="changeType('All')">{{"All" | translate}}</a>
+                    </li>
+                    <li role="menuitem" *ngIf="currentType !== 'Deposit'">
+                        <a class="dropdown-item" (click)="changeType('Deposit')">{{"Deposit" | translate}}</a>
+                    </li>
+                    <li role="menuitem" *ngIf="currentType !== 'Withdraw'">
+                        <a class="dropdown-item" (click)="changeType('Withdraw')">{{"Withdraw" | translate}}</a>
+                    </li>
+                    <li role="menuitem" *ngIf="currentType !== 'Send'">
+                        <a class="dropdown-item" (click)="changeType('Send')">{{"Send" | translate}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-custom-1">
+            {{"Asset" | translate}}
+        </div>
+        <div class="col-3 ">
+            {{"Time" | translate}}
+        </div>
+        <div class="col-2 ">
+            {{"Quantity" | translate}}
+        </div>
+        <div class="col-2 ">
+            {{"Value(USD)" | translate}}
+        </div>
+        <div class="col-custom-2">
+            {{"Comment" | translate}}
+        </div>
+    </div>
+    <div class="container-wallet-main scroll-bar">
+
+        <div class="row apair dataline" *ngFor="let item of transactions ; index as i">
+            <div class="col-2">
+                <p>{{item.action}}</p>
+            </div>
+            <div class="col-custom-1">
+                <p>{{showCoinName(item.coin)}}</p>
+            </div>
+            <div class="col-3 ">
+                <p>{{item.timestamp?utilServ.getFormattedDate(item.timestamp):''}}</p>
+            </div>
+            <div class="col-2 ">
+                <p>{{item.quantity}}</p>
+            </div>
+            <div class="col-2 ">
+            </div>
+            <div class="col-custom-2">
+                <p>
+                    {{item.comment}}
+                    <button class="btn" (click)="showTransactionDetail2(item)" aria-label="Example icon-button with a heart icon">
+                        Detail
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="px-3 text-muted container-no-transactions" *ngIf="!transactions">{{"No transaction"|translate}}</div>

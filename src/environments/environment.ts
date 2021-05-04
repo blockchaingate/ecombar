@@ -214,7 +214,8 @@ export const environment = {
     FAB: 1150,
     BCH: 1,
     LTC: 1,
-    DOGE: 1
+    DOGE: 1,
+    TRX: 195
   },
   moneris: {
     ps_store_id: '9VGAUtore3',

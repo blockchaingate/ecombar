@@ -536,6 +536,53 @@ export class CoinService {
         return { txHex: txHex, errMsg: '', transFee: transFee, amountInTx: amountInTx, txids: txids };
     }
 
+    getTransactionHistoryEvents(addresses) {
+
+        let btcAddress = '';
+        let ethAddress = '';
+        let fabAddress = '';
+        let bchAddress = '';
+        let dogeAddress = '';
+        let ltcAddress = '';
+        let trxAddress = '';
+
+        for(let i=0;i<addresses.length;i++) {
+            const addr = addresses[i];
+            if(addr.name == 'BTC') {
+                btcAddress = addr.address;
+            } else 
+            if(addr.name == 'ETH') {
+                ethAddress = addr.address;
+            } else 
+            if(addr.name == 'FAB') {
+                fabAddress = addr.address;
+            } else  
+            if(addr.name == 'BCH') {
+                bchAddress = addr.address;
+            } else  
+            if(addr.name == 'DOGE') {
+                dogeAddress = addr.address;
+            } else   
+            if(addr.name == 'LTC') {
+                ltcAddress = addr.address;
+            }  else   
+            if(addr.name == 'TRX') {
+                trxAddress = addr.address;
+            }                                            
+        }
+        const data = {
+            btcAddress: btcAddress,
+            ethAddress: ethAddress,
+            fabAddress: fabAddress,
+            bchAddress: bchAddress,
+            dogeAddress: dogeAddress,
+            ltcAddress: ltcAddress,
+            trxAddress: trxAddress
+        }
+
+        return this.apiServ.getTransactionHistoryEvents(data);
+    }
+
     getKeyPairs(name: string, seed: Buffer, chain: number, index: number, type: string) {
 
         let addr = '';
@@ -573,9 +620,8 @@ export class CoinService {
 
             buffer = wif.decode(priKey);
             priKeyDisp = priKey;
-        } else
-
-            if (name === 'ETH') {
+        } else  
+        if (name === 'ETH') {
 
                 const root = hdkey.fromMasterSeed(seed);
                 const childNode = root.derivePath(path);
@@ -588,7 +634,17 @@ export class CoinService {
                 console.log('priKey for eth=', priKey);
                 priKeyDisp = buffer.toString('hex');
 
-            }
+        } else
+        if(name == 'TRX') {
+            const root = BIP32.fromSeed(seed);
+            const childNode = root.derivePath(path);
+            priKey = childNode.privateKey;
+
+            buffer = wif.decode(childNode.toWIF());
+            addr = 
+            TronWeb.utils.crypto.getBase58CheckAddress(TronWeb.utils.crypto.getAddressFromPriKey(priKey));
+      
+        }
         /*
         const keyPairs = {
             address: addr,

@@ -50,7 +50,7 @@
                             Gas: {{gas}}
                         </div>
 
-                        <div class="row text-black">
+                        <div class="row text-black px-3">
 
                             <div class="CreateCollection--actions m-1 py-3 text-center">
                                 <div class="ActionButtonrContainer ">
@@ -86,6 +86,33 @@
                                     Import Wallet
                                 </a> 
                             </li>
+                            <li>
+                                <a (click)="subtab = 'assets'">
+                                    Wallet
+                                </a> 
+                            </li>
+
+                            <li>
+                                <a (click)="subtab = 'history'">
+                                    Transaction History
+                                </a> 
+                            </li>    
+                            
+                            <li>
+                                <a (click)="loginSetting()">
+                                    {{"Login Setting"|translate}}
+                                </a> 
+                            </li>     
+                            <li>
+                                <a (click)="showSeedPhrase()">
+                                    {{"Show seed phrase"|translate}}
+                                </a> 
+                            </li>          
+                            <li>
+                                <a (click)="deleteWallet()">
+                                    {{"DeleteWallet"|translate}}
+                                </a> 
+                            </li>   
                         </ul>
                       
                     </div>
@@ -98,51 +125,13 @@
     <div class="card-section my-3">
         <div class="card">
             <div class="container">
-
-                <ul class="responsive-table">
-                    <li class="table-header">
-                      <div class="col col-2">{{'Asset' | translate}}</div>
-                      <div class="col col-2">{{'Balance' | translate}}</div>
-                      <div class="col col-2">{{'Locked Balance' | translate}}</div>
-                      <div class="col col-2">{{'Value(USD)' | translate}}</div>
-                      <div class="col col-2">{{'Dividend' | translate}}</div>
-                      <div class="col col-2"></div>
-                    </li>
-                        <li class="table-row" *ngFor="let coin of coins">
-                            
-                                <div class="col col-2 text-black" data-label="Coin">{{coin.coin | translate}}</div>
-                                <div class="col col-2" data-label="Balance">
-                                    <div *ngIf="coin.balance && (coin.balance >= 0)" class="text-black">
-                                        {{coin.balance}}
-                                    </div>
-                                </div>
-
-                                <div class="col col-2" data-label="Locked Balance">
-                                    <div class="text-black" *ngIf="coin.lockBalance && (coin.lockBalance > 0)">
-                                        {{coin.lockBalance}}
-                                    </div>
-                                </div>
-
-                                <div class="col col-2 text-black" data-label="Value(USD)">
-                                    <div *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
-                                        {{(coin.balance + coin.lockBalance) * coin.usdValue.USD}}
-                                    </div>
-                                    
-                                </div>
-                                <div class="col col-2" data-label="Dividend"></div>
-                                <div class="col col-2 text-right" data-label="Operations">
-                        
-                                <div class="d-inline-block px-2">
-                                    <a (click)="deposit(coin.coin)">
-                                    <img src="/assets/svg/deposit.svg">
-                                    </a>
-                                </div>
-                            
-                                </div>
-                            
-
-                        </li>
-                  </ul>                
+                
+                <app-admin-coins-list *ngIf="subtab == 'assets'"  [coins]="coins">
+                </app-admin-coins-list>
+                
+                <app-transaction-history *ngIf="subtab == 'history'" [transactions]="transactions" [walletId]="wallet.id">
+                </app-transaction-history>
+            
             </div>
         </div>
     </div>
