@@ -26,7 +26,6 @@ import { CommonModule } from '@angular/common';
 import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
 @NgModule({
     declarations: [
         WalletDashboardComponent,

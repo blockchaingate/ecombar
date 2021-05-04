@@ -4,7 +4,7 @@
         <div class="col col-3">{{'Balance' | translate}}</div>
         <div class="col col-3">{{'Locked Balance' | translate}}</div>
         <div class="col col-2">{{'Value(USD)' | translate}}</div>
-        <div class="col col-2">{{'Dividend' | translate}}</div>
+        <div class="col col-2"></div>
     </li>
     <li class="table-row" *ngFor="let coin of coins">
 
@@ -27,7 +27,11 @@
             </div>
 
         </div>
-        <div class="col col-2" data-label="Dividend"></div>
+        <div class="col col-2" data-label="Dividend">
+            <a (click)="depositDo(coin)">
+                <img src="/assets/svg/deposit.svg">
+                </a>           
+        </div>
 
     </li>
 </ul>

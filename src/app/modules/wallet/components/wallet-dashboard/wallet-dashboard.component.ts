@@ -300,8 +300,9 @@ export class WalletDashboardComponent implements OnInit{
       });      
     }
 
-    deposit(coin) {
-      this.currentCoin = coin;
+    depositCoin(coin) {
+      console.log('coin for deposit=', coin);
+      this.currentCoin = coin.coin;
       this.modalRef = this.modalServ.show(DepositComponent);
   
       this.modalRef.content.onClose.subscribe(result => {
@@ -440,7 +441,7 @@ export class WalletDashboardComponent implements OnInit{
       this.kanbanServ.sendRawSignedTransaction(txKanbanHex).subscribe((resp: any) => {
           // console.log('resp=', resp);
           if (resp && resp.transactionHash) {
-            this.toastr.error(this.translateServ.instant('Your withdraw request is pending.'));
+            this.toastr.info(this.translateServ.instant('Your withdraw request is pending.'));
               /*
               this.modalWithdrawRef.hide();
               this.kanbanServ.incNonce();
@@ -607,36 +608,7 @@ export class WalletDashboardComponent implements OnInit{
       this.kanbanServ.submitDeposit(txHex, txKanbanHex).subscribe((resp: any) => {
           // console.log('resp=', resp);
           if (resp && resp.data && resp.data.transactionID) {
-              /*
-              const item = {
-                  walletId: this.wallet.id,
-                  type: 'Deposit',
-                  coin: currentCoin.name,
-                  tokenType: currentCoin.tokenType,
-                  amount: amount,
-                  txid: resp.data.transactionID,
-                  to: officalAddress,
-                  time: new Date(),
-                  confirmations: '0',
-                  blockhash: '',
-                  comment: '',
-                  status: 'pending'
-              };
-              this.storageService.storeToTransactionHistoryList(item);
-              this.timerServ.transactionStatus.next(item);
-              this.timerServ.checkTransactionStatus(item);
-              */
-              //this.kanbanServ.incNonce();
-              //this.coinServ.addTxids(txids);
-              /*
-              if (this.lan === 'zh') {
-                  this.alertServ.openSnackBarSuccess('转币去交易所请求已提交，请等待' + environment.depositMinimumConfirmations[currentCoin.name] + '个确认', 'Ok');
-              } else {
-                  this.alertServ.openSnackBarSuccess('Moving fund to DEX was submitted, please wait for ' + environment.depositMinimumConfirmations[currentCoin.name] + ' confirmations.', 'Ok');
-              }
-              */
 
-             this.ngxSmartModalService.getModal('passwordModal').close(); 
              this.toastr.info(this.translateServ.instant('Moving fund to DEX was submitted, please wait for ') 
              + environment.depositMinimumConfirmations[currentCoin] + this.translateServ.instant('confirmations.'));
           } else if (resp.error) {
