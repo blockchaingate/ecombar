@@ -6,11 +6,11 @@
                 <div class="ActionButton--content " style="min-width: 120px;">Sell</div>
             </div>  
             <div *ngIf="sellOrder">
-                <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--tertiary ActionButton--light ActionButton--iconOnly OrderManager--second-button" data-testid="ActionButton" role="button" tabindex="0" type="tertiary">
+                <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--tertiary ActionButton--light ActionButton--iconOnly OrderManager--second-button" (click)="cancelListing()" data-testid="ActionButton" role="button" tabindex="0" type="tertiary">
                     <div class="ActionButton--content ">Cancel Listing</div>
                 </div>
-                <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light " data-testid="ActionButton" role="button" tabindex="0">
-                    <div class="ActionButton--content " style="min-width: 120px;">Price Drop</div>
+                <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light " data-testid="ActionButton" role="button" tabindex="0" (click)="priceChange()">
+                    <div class="ActionButton--content " style="min-width: 120px;">Price Change</div>
                 </div>                
             </div>
         </div>

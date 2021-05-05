@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NftAssetService } from '../../services/nft-asset.service';
 import { NftCollectionService } from '../../services/nft-collection.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { NftOrderService } from '../../services/nft-order.service';
+import { NftEventService } from '../../services/nft-event.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NftOrder } from '../../models/nft-order';
 
@@ -22,6 +22,7 @@ import { NftOrder } from '../../models/nft-order';
     collection: any;
     address: string;
     wallet: any;
+    events: any;
     sellOrder: any;
     smartContractAddress: string;
     tokenId: string;
@@ -30,7 +31,7 @@ import { NftOrder } from '../../models/nft-order';
       private localSt: LocalStorage,
       private route: ActivatedRoute,
       private assetServ: NftAssetService,
-      private orderServ: NftOrderService,
+      private eventServ: NftEventService,
       private utilServ: UtilService,
       private collectionServ: NftCollectionService
       ) {
@@ -68,30 +69,16 @@ import { NftOrder } from '../../models/nft-order';
     }
 
     loadAsset() {
-      this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
+      this.eventServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
         (res: any) => {
           if(res && res.ok) {
-            this.asset = res._body;
+            this.events = res._body;
 
-            if(this.asset) {
-              if(this.asset.orders && this.asset.orders.length > 0) {
-                const sellOrders = this.asset.orders.filter(item => item.side == 1);              
-                const activeSellOrders = sellOrders.filter(item => !item.txid);
-                this.listings = sellOrders;
-                this.offers = this.asset.orders.filter(item => item.side == 0);   
-
-                console.log('this.offers=', this.offers);
-                if(activeSellOrders && activeSellOrders.length > 0) {
-                  this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
-                }
-                // { txid: null }
-              }        
-            } 
-
-            if(this.asset && this.asset.events) {
+            console.log('this.events=', this.events);
+            if(this.events && this.events.length > 0) {
               this.sales = [];
 
-              const events = this.asset.events.filter(event => event.event == 'Sale');
+              const events = this.asset.events.filter(event => event.name == 'Sale');
 
               if(events && events.length > 0) {
                 for(let i = 0; i < events.length; i++) {
@@ -123,7 +110,31 @@ import { NftOrder } from '../../models/nft-order';
                 } 
               }
              
-            }
+            }            
+          }
+      });  
+
+      this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            this.asset = res._body;
+
+            if(this.asset) {
+              if(this.asset.orders && this.asset.orders.length > 0) {
+                const sellOrders = this.asset.orders.filter(item => item.side == 1);              
+                const activeSellOrders = sellOrders.filter(item => !item.txid);
+                this.listings = sellOrders;
+                this.offers = this.asset.orders.filter(item => item.side == 0);   
+
+                console.log('this.offers=', this.offers);
+                if(activeSellOrders && activeSellOrders.length > 0) {
+                  this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
+                }
+                // { txid: null }
+              }        
+            } 
+
+
           }
         }
       );

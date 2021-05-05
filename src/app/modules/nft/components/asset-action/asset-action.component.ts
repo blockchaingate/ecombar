@@ -12,6 +12,8 @@ import { KanbanSmartContractService } from '../../../shared/services/kanban.smar
 import { environment } from '../../../../../environments/environment';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { ToastrService } from 'ngx-toastr';
+import { NftCancelListingComponent } from '../../modals/cancel-listing/cancel-listing.component';
+import { NftPriceChangeComponent } from '../../modals/price-change/price-change.component';
 
 @Component({
     providers: [],
@@ -29,6 +31,7 @@ import { ToastrService } from 'ngx-toastr';
     @Output() refresh = new EventEmitter();
     @Input() sellOrder: NftOrder;
     isOwner: boolean;
+    newPriceEntity: any;
     modalRef: BsModalRef;
 
     constructor(
@@ -55,6 +58,95 @@ import { ToastrService } from 'ngx-toastr';
 
     sell() {
       this.router.navigate(['/nft/assets/' + this.asset.smartContractAddress + '/' + this.asset.tokenId + '/sell']);
+    }
+
+    priceChange() {
+      this.modalRef = this.modalServ.show(NftPriceChangeComponent);
+      this.modalRef.content.onClose.subscribe( (entity: any) => {
+          this.newPriceEntity = entity;
+          const initialState = {
+            pwdHash: this.wallet.pwdHash,
+            encryptedSeed: this.wallet.encryptedSeed
+          };          
+          
+          this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+    
+          this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+            this.spinner.show();
+            this.priceChangeDo(seed);
+          });  
+      });
+    }
+
+    async priceChangeDo(seed: Buffer) {
+      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const privateKey = keyPair.privateKeyBuffer.privateKey;      
+      const makerRelayerFee = 250;
+      const coinType = this.coinServ.getCoinTypeIdByName(this.newPriceEntity.coin);
+      const price = this.newPriceEntity.quantity;
+      const addressHex = this.utilServ.fabToExgAddress(this.address);
+
+      const order: NftOrder = this.nftPortServ.createOrder(
+        addressHex, 
+        null,
+        this.asset.smartContractAddress, 
+        this.asset.tokenId,
+        coinType, 
+        price,
+        makerRelayerFee,
+        1);
+
+
+
+      const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
+      order.hash = hash;
+      order.hashForSignature = hashForSignature;
+      order.r = signature.r;
+      order.s = signature.s;
+      order.v = signature.v;
+
+
+      this.nftOrderServ.changePrice(this.sellOrder.id, order).subscribe(
+        (res: any) => {
+          this.spinner.hide();
+          if(res && res.ok) {
+            this.toastr.info('Price was changed successfully');
+          } else {
+            this.toastr.error('Failed to change price');
+          }
+        }
+      );      
+    }
+
+    cancelListing() {
+      this.modalRef = this.modalServ.show(NftCancelListingComponent);
+      this.modalRef.content.onClose.subscribe( (op: String) => {
+        if(op == 'confirm') {
+          const initialState = {
+            pwdHash: this.wallet.pwdHash,
+            encryptedSeed: this.wallet.encryptedSeed
+          };          
+          
+          this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+    
+          this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+            this.cancelListingDo(seed);
+          });          
+        }
+      });
+    }
+
+    cancelListingDo(seed: Buffer) {
+      this.nftOrderServ.cancel(this.sellOrder.id).subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            const body = res._body;
+            this.toastr.info('Your listing was canceled successfully');
+          } else {
+            this.toastr.error('Failed to cancel your listing');
+          }
+        }
+      );
     }
 
     buy() {

@@ -9,7 +9,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     styleUrls: ['./asset-events.component.scss']
 })
 export class NftAssetEventsComponent implements OnInit {
-    @Input() asset: any;
+    @Input() events: any;
     constructor(private utilServ: UtilService, private coinServ: CoinService) {}
     ngOnInit() {
           

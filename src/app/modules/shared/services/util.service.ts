@@ -55,6 +55,9 @@ export class UtilService {
           return '';
         }
   
+        if(address == 'NullAddress') {
+            return address;
+        }
         if(address.indexOf('0x') === 0) {
           address = this.exgToFabAddress(address);
         }

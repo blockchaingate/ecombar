@@ -51,7 +51,8 @@ import { NftAccountInWalletComponent } from './components/account-in-wallet/acco
 import { NftAccountInWalletSearchComponent } from './components/account-in-wallet-search/account-in-wallet-search.component';
 import { NftAccountInWalletAssetsComponent } from './components/account-in-wallet-assets/account-in-wallet-assets.component';
 import { NftAccountInWalletAssetComponent } from './components/account-in-wallet-asset/account-in-wallet-asset.component';
-
+import { NftCancelListingComponent } from './modals/cancel-listing/cancel-listing.component';
+import { NftPriceChangeComponent } from './modals/price-change/price-change.component';
 import { NftAssetPriceHistoryComponent } from './components/asset-price-history/asset-price-history.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftIndexComponent } from './components/index/index.component';
@@ -64,6 +65,7 @@ import { NftCollectionService } from './services/nft-collection.service';
 import { NftAssetService } from './services/nft-asset.service';
 import { NftOrderService } from './services/nft-order.service';
 import { NftTradeService } from './services/nft-trade.service';
+import { NftEventService } from './services/nft-event.service';
 import { NftPortService } from './services/nft-port.service';
 import { UploadService } from './services/upload.service';
 import { SharedModule } from '../shared/shared.module';
@@ -91,6 +93,8 @@ import { WalletModule } from '../wallet/wallet.module';
       NftAssetPriceHistoryComponent,
       ImageUploaderComponent,
       TextboxComponent,
+      NftCancelListingComponent,
+      NftPriceChangeComponent,
       NftMakeOfferComponent,
       NftAssetListingComponent,
       NftAssetOffersComponent,
@@ -137,13 +141,16 @@ import { WalletModule } from '../wallet/wallet.module';
     entryComponents:[
       PropertiesComponent, 
       LevelsComponent,
-      NftMakeOfferComponent
+      NftMakeOfferComponent,
+      NftPriceChangeComponent,
+      NftCancelListingComponent
     ],
     providers: [
       NftCollectionService,
       NftAssetService,
       NftOrderService,
       NftTradeService,
+      NftEventService,
       UploadService,
       NftPortService
     ],

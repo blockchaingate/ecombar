@@ -12,6 +12,16 @@ export class NftOrderService {
     return this.http.post(url, data);
   }
 
+  changePrice(orderId: string, data: any) {
+    const url = environment.endpoints.blockchaingate + 'nft-order/' + orderId + '/change';
+    return this.http.post(url, data);
+  }
+
+  cancel(orderId: string) {
+    const url = environment.endpoints.blockchaingate + 'nft-order/' + orderId;
+    return this.http.delete(url);    
+  }
+
   getBySmartContract(smartContractAddress: string) {
     const url = environment.endpoints.blockchaingate + 'nft-order/smartContractAddress/' + smartContractAddress;
     return this.http.get(url);    
