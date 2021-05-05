@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NftOrder } from '../../models/nft-order';
 
@@ -13,6 +13,7 @@ import { NftOrder } from '../../models/nft-order';
     @Input() collection: any;
     @Input() owner: string;
     @Input() address: string;
+    @Output() refresh = new EventEmitter();
     sellOrder: NftOrder;
     constructor(private utilServ: UtilService) {}
     ngOnInit() {
@@ -31,6 +32,9 @@ import { NftOrder } from '../../models/nft-order';
       }         
     }
 
+    onRefresh() {
+      this.refresh.emit();
+    }
     getCoinName(coinType: number) {
       return this.utilServ.getCoinNameByTypeId(coinType);
     }
