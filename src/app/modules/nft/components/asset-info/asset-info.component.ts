@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NftOrder } from '../../models/nft-order';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
     providers: [],
@@ -15,8 +17,11 @@ import { NftOrder } from '../../models/nft-order';
     @Input() address: string;
     @Output() refresh = new EventEmitter();
     sellOrder: NftOrder;
-    constructor(private utilServ: UtilService) {}
+
+    showShareDropdown: boolean;
+    constructor(private router: Router, private toastr: ToastrService, private utilServ: UtilService) {}
     ngOnInit() {
+      this.showShareDropdown = false;
       if(this.asset) {
         console.log('this.asset=', this.asset);
         if(this.asset.orders && this.asset.orders.length > 0) {
@@ -35,6 +40,26 @@ import { NftOrder } from '../../models/nft-order';
     onRefresh() {
       this.refresh.emit();
     }
+
+    transfer() {
+      this.router.navigate(['/nft/assets/' + this.asset.smartContractAddress + '/' + this.asset.tokenId + '/transfer'])
+    }
+    
+    copyLink() {
+      const selBox = document.createElement('textarea');
+      selBox.style.position = 'fixed';
+      selBox.style.left = '0';
+      selBox.style.top = '0';
+      selBox.style.opacity = '0';
+      selBox.value = window.location.href;
+      document.body.appendChild(selBox);
+      selBox.focus();
+      selBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(selBox);
+      this.toastr.info('Link copied');
+    }
+    
     getCoinName(coinType: number) {
       return this.utilServ.getCoinNameByTypeId(coinType);
     }

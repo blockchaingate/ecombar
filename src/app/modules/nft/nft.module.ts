@@ -53,6 +53,7 @@ import { NftAccountInWalletAssetsComponent } from './components/account-in-walle
 import { NftAccountInWalletAssetComponent } from './components/account-in-wallet-asset/account-in-wallet-asset.component';
 import { NftCancelListingComponent } from './modals/cancel-listing/cancel-listing.component';
 import { NftPriceChangeComponent } from './modals/price-change/price-change.component';
+import { NftTransferComponent } from './components/transfer/transfer.component';
 import { NftAssetPriceHistoryComponent } from './components/asset-price-history/asset-price-history.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftIndexComponent } from './components/index/index.component';
@@ -90,6 +91,7 @@ import { WalletModule } from '../wallet/wallet.module';
       NftCollectionViewItemsComponent,
       NftCollectionAssetsCreateComponent,
       NftAssetSellComponent,
+      NftTransferComponent,
       NftAssetPriceHistoryComponent,
       ImageUploaderComponent,
       TextboxComponent,

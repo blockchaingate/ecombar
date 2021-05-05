@@ -27,6 +27,17 @@ export class NftAssetService {
     return this.http.get(url);    
   }
 
+  transfer(smartContractAddress: string, tokenId: string, newOwner: string, txhex: string) {
+    const url = environment.endpoints.blockchaingate  + 'nft-asset/smartContractAddressTokenId/' 
+    + smartContractAddress + '/' + tokenId + '/transfer';
+    const data = {
+      newOwner,
+      txhex
+    };
+
+    return this.http.post(url, data);
+  }
+
   getBySmartContractTokenId(smartContractAddress: string, tokenId: string) {
     const url = environment.endpoints.blockchaingate + 'nft-asset/smartContractAddressTokenId/' 
     + smartContractAddress + '/' + tokenId;

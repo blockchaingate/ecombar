@@ -11,12 +11,43 @@
                 <span class="Toolbar--tool" (click)="onRefresh()">
                     <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Toolbar--icon material-icons" value="refresh" size="24">refresh</i>
                 </span>
-                <span class="Toolbar--click-handler Toolbar--tool" aria-expanded="false">
-                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Toolbar--icon material-icons" value="share" size="24">share</i>
+
+                <span class="Toolbar--tool" *ngIf="owner == address" (click)="transfer()">
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Toolbar--icon material-icons" value="card_giftcard" size="24">card_giftcard</i>
                 </span>
+
+
+                <div class="Toolbar--click-handler Toolbar--tool dropdownParent" aria-expanded="false" (click)="showShareDropdown = !showShareDropdown">
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Toolbar--icon material-icons"   value="share" size="24">share</i>
+                    <div class="dropdown border" [ngClass]="!showShareDropdown ? 'hide' : ''">
+                        <ul>
+                            <li role="menuitem">
+                                <button class="dropdown-item" (click)="copyLink()">
+                                    Copy Link
+                                </button>
+                            </li>
+                            <!--
+                            <li role="menuitem">
+                                <button class="dropdown-item">
+                                    Share on Facebook
+                                </button>
+                            </li>
+                            <li role="menuitem">
+                                <button class="dropdown-item">
+                                    Share on Twitter
+                                </button>
+                            </li>  
+                            -->                          
+                        </ul>  
+                    </div>
+                  
+                </div>
+
+                <!--
                 <span class="Toolbar--click-handler Toolbar--tool" aria-expanded="false">
                     <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV Toolbar--icon material-icons" value="more_vert" size="24">more_vert</i>
                 </span>
+                -->
             </div>
         </div>
     </div>
