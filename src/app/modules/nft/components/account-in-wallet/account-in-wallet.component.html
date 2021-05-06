@@ -1,5 +1,6 @@
 <div class="row">
     <div class="col col-3">
+        <!--
         <app-expansion 
         [title]="'Status'"
         [icon]="'star'"
@@ -7,13 +8,13 @@
         [toggleable]="true">
             ono
         </app-expansion>
-
+        -->
         <app-expansion 
         [title]="'Collections'"
         [icon]="'view_comfy'"
         [options]="options"
         [toggleable]="true">
-            ono
+            <app-nft-account-in-wallet-collections></app-nft-account-in-wallet-collections>
         </app-expansion>        
 
         <app-expansion 
@@ -21,7 +22,7 @@
         [icon]="'local_offer'"
         [options]="options"
         [toggleable]="true">
-            ono
+            <app-nft-account-in-wallet-currency></app-nft-account-in-wallet-currency>
         </app-expansion>          
     </div>
     <div class="col col-9">

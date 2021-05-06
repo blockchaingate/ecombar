@@ -1,0 +1,31 @@
+<div class="Scrollboxreact__DivContainer-sc-1b04elr-0 fAClQF CollectionFilter--results" *ngIf="collections">
+    <div class="Scrollbox--content">
+        <div class="CollectionFilter--item " *ngFor="let collection of collections" (click)="changeSelection(collection)">
+            <div class="Imagereact__DivContainer-dy59cl-0 bEpYNa Image--isImageLoaded Image--isImageLoaderVisible CollectionFilter--item-image" style="height: 32px; width: 32px;">
+                <img class="Image--image small-img" *ngIf="isSelected(collection)" src="/assets/images/checkmark.svg" style="object-fit: cover;">
+                <img *ngIf="!isSelected(collection) && collection.image" class="Image--image" src="{{collection.image}}" style="object-fit: cover;">
+            </div>
+            <div class="CollectionFilter--item-name">{{collection.name}}</div>
+        </div>
+        <!--
+        <div class="CollectionFilter--item ">
+            <div class="Imagereact__DivContainer-dy59cl-0 bEpYNa Image--isImageLoaded Image--isImageLoaderVisible CollectionFilter--item-image" style="height: 32px; width: 32px;">
+                <img class="Image--image" src="https://lh3.googleusercontent.com/UDbSYTJeiC4G3Rw2eVKc2hQFBJfxNeMjj7gDBQPITa6GeKpM6VlbdLkPSsK0yWnTrlJfWjgYAai3hsCdXHymVLySngr0zs-yMTdQXw=s64" style="object-fit: cover;">
+            </div>
+            <div class="CollectionFilter--item-name">MK Artista 002</div>
+        </div>
+        <div class="CollectionFilter--item ">
+            <div class="Imagereact__DivContainer-dy59cl-0 bEpYNa Image--isImageLoaderDisplayed Image--isImageLoaderVisible CollectionFilter--item-image" style="height: 32px; width: 32px;">
+
+            </div>
+            <div class="CollectionFilter--item-name">OpenSea Creatures - CANLV1TZMh</div>
+        </div>
+        <div class="CollectionFilter--item ">
+            <div class="Imagereact__DivContainer-dy59cl-0 bEpYNa Image--isImageLoaderDisplayed Image--isImageLoaderVisible CollectionFilter--item-image" style="height: 32px; width: 32px;">
+
+            </div>
+            <div class="CollectionFilter--item-name">SOLV Investment Certificate - zj914xxz77</div>
+        </div> 
+        -->
+    </div>
+</div>

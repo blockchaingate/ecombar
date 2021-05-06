@@ -7,6 +7,11 @@ export class NftCollectionService {
 
   constructor(private http: HttpClient) { }
 
+  getAll() {
+    const url = environment.endpoints.blockchaingate + 'nft-collection';
+    return this.http.get(url);           
+  }
+
   create(data: any) {
     const url = environment.endpoints.blockchaingate + 'nft-collection/create';
     return this.http.post(url, data);

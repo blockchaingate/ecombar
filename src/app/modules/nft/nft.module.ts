@@ -37,7 +37,7 @@ import { NftAssetSellSummaryComponent } from './components/asset-sell-summary/as
 import { NftAssetSellSummaryListingComponent } from './components/asset-sell-summary-listing/asset-sell-summary-listing.component';
 import { NftAssetSellSummaryBountiesComponent } from './components/asset-sell-summary-bounties/asset-sell-summary-bounties.component';
 import { NftAssetSellSummaryFeesComponent } from './components/asset-sell-summary-fees/asset-sell-summary-fees.component';
-
+import { NftAccountInWalletCurrencyComponent } from './components/account-in-wallet-currency/account-in-wallet-currency.component';
 import { NftAssetComponent } from './components/asset/asset.component';
 import { NftAssetEventsComponent } from './components/asset-events/asset-events.component';
 import { NftAssetActionComponent } from './components/asset-action/asset-action.component';
@@ -63,6 +63,7 @@ import { NftLevelsListComponent } from './components/levels-list/levels-list.com
 import { NftAssetListingComponent } from './components/asset-listing/asset-listing.component';
 import { NftAssetOffersComponent } from './components/asset-offers/asset-offers.component';
 import { NftActivitiesComponent } from './components/activities/activities.component';
+import { NftAccountInWalletCollectionsComponent } from './components/account-in-wallet-collections/account-in-wallet-collections.component';
 import { NftCollectionService } from './services/nft-collection.service';
 import { NftAssetService } from './services/nft-asset.service';
 import { NftOrderService } from './services/nft-order.service';
@@ -86,7 +87,9 @@ import { WalletModule } from '../wallet/wallet.module';
       NftCollectionsComponent,
       TextHeaderComponent,
       NftCollectionsListComponent,
+      NftAccountInWalletCollectionsComponent,
       NftCollectionsAddComponent,
+      NftAccountInWalletCurrencyComponent,
       NftCollectionsAddDoneComponent,
       NftCollectionViewTopbarComponent,
       NftCollectionViewHeaderComponent,
