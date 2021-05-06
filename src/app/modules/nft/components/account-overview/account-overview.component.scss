@@ -136,3 +136,49 @@
     margin-top: 4px;
 }
 
+.hiIhff {
+    margin-right: 10px;
+}
+
+.gZqYMT.ActionButton--light.ActionButton--tertiary {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 232, 235);
+    color: rgb(138, 147, 155);
+}
+
+.gZqYMT {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(32, 129, 226);
+    border: 1px solid rgb(32, 129, 226);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 12px;
+    text-align: center;
+    user-select: none;
+}
+
+.ActionButton--content {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.ActionButton--light.ActionButton--tertiary:hover {
+    color: rgb(53, 56, 64);
+}
+
+.gZqYMT:hover {
+    transition: all 0.2s ease 0s;
+    box-shadow: rgb(14 14 14 / 25%) 0px 0px 8px 0px;
+}

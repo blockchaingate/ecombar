@@ -45,6 +45,7 @@ import { NftAssetImageComponent } from './components/asset-image/asset-image.com
 import { NftAssetDetailsComponent } from './components/asset-details/asset-details.component';
 import { NftAssetInfoComponent } from './components/asset-info/asset-info.component';
 import { NftAccountComponent } from './components/account/account.component';
+import { NftSettingsComponent } from './components/settings/settings.component';
 import { NftAccountOverviewComponent } from './components/account-overview/account-overview.component';
 import { NftAccountTabComponent } from './components/account-tab/account-tab.component';
 import { NftAccountInWalletComponent } from './components/account-in-wallet/account-in-wallet.component';
@@ -69,6 +70,7 @@ import { NftAssetService } from './services/nft-asset.service';
 import { NftOrderService } from './services/nft-order.service';
 import { NftTradeService } from './services/nft-trade.service';
 import { NftEventService } from './services/nft-event.service';
+import { NftSettingService } from './services/nft-setting.service';
 import { NftPortService } from './services/nft-port.service';
 import { UploadService } from './services/upload.service';
 import { SharedModule } from '../shared/shared.module';
@@ -86,6 +88,7 @@ import { WalletModule } from '../wallet/wallet.module';
       NftAdminSidebarComponent,
       NftCollectionsComponent,
       TextHeaderComponent,
+      NftSettingsComponent,
       NftCollectionsListComponent,
       NftAccountInWalletCollectionsComponent,
       NftCollectionsAddComponent,
@@ -158,6 +161,7 @@ import { WalletModule } from '../wallet/wallet.module';
       NftOrderService,
       NftTradeService,
       NftEventService,
+      NftSettingService,
       UploadService,
       NftPortService
     ],

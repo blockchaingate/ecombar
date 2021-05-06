@@ -14,6 +14,8 @@ import { NftAccountComponent } from './components/account/account.component';
 import { NftIndexComponent } from './components/index/index.component';
 import { NftActivitiesComponent } from './components/activities/activities.component';
 import { NftTransferComponent } from './components/transfer/transfer.component';
+import { NftSettingsComponent } from './components/settings/settings.component';
+
 const routes: Routes = [
     {
       path: '', component: NftComponent,
@@ -35,7 +37,13 @@ const routes: Routes = [
     },       
     {
       path: 'account', component: NftAccountComponent
-    },        
+    }, 
+    {
+      path: 'account/settings', component: NftSettingsComponent
+    },     
+    {
+      path: 'accounts/:address', component: NftAccountComponent
+    },            
     {
         path: 'admin', component: NftAdminComponent,
         children: [
