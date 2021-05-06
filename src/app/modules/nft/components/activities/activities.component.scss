@@ -70,11 +70,11 @@
 }
 
 .hxNpnh .ActivitySearch--event-history-scrollbox {
-    max-height: calc((100vh - 72px) - 173px);
+    max-height: calc((100vh - 72px)-100px);
 }
 
 .lnJzFU .EventHistory--container {
-    max-height: 332px;
+    max-height: calc((100vh - 72px)-100px);
     overflow-x: auto;
     width: 100%;
 }

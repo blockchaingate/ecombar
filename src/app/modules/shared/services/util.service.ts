@@ -50,6 +50,16 @@ export class UtilService {
         return str;
     }
     
+    getIcon(event: string) {
+        if(event == 'Sale') {
+          return 'shopping_cart';
+        } else 
+        if(event == 'Transfer') {
+          return 'swap_horiz';
+        }
+        return 'local_offer';
+    }  
+
     addressDisplay(address: string) {
         if(!address) {
           return '';

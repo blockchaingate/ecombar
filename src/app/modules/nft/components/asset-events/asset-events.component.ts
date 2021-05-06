@@ -20,14 +20,9 @@ export class NftAssetEventsComponent implements OnInit {
     }
 
     getIcon(event: string) {
-      if(event == 'Sale') {
-        return 'shopping_cart';
-      } else 
-      if(event == 'Transfer') {
-        return 'swap_horiz';
-      }
-      return 'local_offer';
+      return this.utilServ.getIcon(event);
     }
+    
     addressDisplay(address: string) {
       return this.utilServ.addressDisplay(address);
     }
