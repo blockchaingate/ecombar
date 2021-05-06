@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
     providers: [],
@@ -12,18 +13,14 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     quantity: number;
     @Input() noText: boolean;
     @Output() updateEntity = new EventEmitter<any>();
-    acceptableCoins = [
-      'BTC',
-      'ETH',
-      'DUSD',
-      'USDT',
-      'FAB',
-      'EXG',
-      'BST',
-      'DSC'
-    ];
+
+    constructor(private utilServ: UtilService) {
+
+    }
+    acceptableCoins: any;
     
     ngOnInit() {
+      this.acceptableCoins = this.utilServ.getAcceptableCoins();
       this.showPopup = false;
       this.selectedCoin = 'DUSD';  
     }

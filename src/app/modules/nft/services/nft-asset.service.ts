@@ -17,6 +17,11 @@ export class NftAssetService {
     return this.http.post(url, data);
   }
 
+  getAll() {
+    const url = environment.endpoints.blockchaingate + 'nft-asset';
+    return this.http.get(url);           
+  }
+
   getBySlug(slug: string) {
     const url = environment.endpoints.blockchaingate + 'nft-asset/slug/' + slug;
     return this.http.get(url);    

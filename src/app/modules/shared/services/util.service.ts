@@ -26,6 +26,19 @@ export class UtilService {
         return 8;
     }
 
+    getAcceptableCoins() {
+        return [
+            'BTC',
+            'ETH',
+            'DUSD',
+            'USDT',
+            'FAB',
+            'EXG',
+            'BST',
+            'DSC'
+        ];
+    }
+
     getFormattedDate(date: any) {
         // console.log('origin date=', date);
         // if(Number.is)
@@ -56,6 +69,12 @@ export class UtilService {
         } else 
         if(event == 'Transfer') {
           return 'swap_horiz';
+        } else 
+        if(event == 'Offer') {
+            return 'pan_tool';
+        } else
+        if(event == 'Create') {
+            return 'child_friendly';
         }
         return 'local_offer';
     }  

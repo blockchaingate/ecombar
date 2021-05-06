@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,7 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./account-in-wallet-asset.component.scss']
   })
   export class NftAccountInWalletAssetComponent implements OnInit {
-
+    @Input() asset: any;
     
     ngOnInit() {
           
