@@ -12,6 +12,7 @@ import { NftAssetComponent } from './components/asset/asset.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftAccountComponent } from './components/account/account.component';
 import { NftIndexComponent } from './components/index/index.component';
+import { NftActivitiesComponent } from './components/activities/activities.component';
 import { NftTransferComponent } from './components/transfer/transfer.component';
 const routes: Routes = [
     {
@@ -19,7 +20,10 @@ const routes: Routes = [
     },
     {
       path: 'assets', component: NftAssetsComponent
-    },      
+    },  
+    {
+      path: 'activities', component: NftActivitiesComponent
+    },         
     {
       path: 'assets/:smartContractAddress/:tokenId', component: NftAssetComponent
     },  

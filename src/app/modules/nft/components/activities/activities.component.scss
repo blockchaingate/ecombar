@@ -1,0 +1,155 @@
+.lnJzFU {
+    overflow-x: scroll;
+}
+
+.AxlxQ {
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(229, 232, 235);
+    color: rgb(14, 14, 14);
+    background-color: rgb(255, 255, 255);
+}
+
+.AxlxQ .BasePanel--header {
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px 12px;
+    user-select: none;
+    border-top: 1px solid rgb(229, 232, 235);
+    border-right: 1px solid rgb(229, 232, 235);
+    border-left: 1px solid rgb(229, 232, 235);
+    border-image: initial;
+    background-color: rgb(255, 255, 255);
+    border-bottom: none;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.gtaqPw .Panel--icon {
+    margin-right: 10px;
+}
+
+.cdETdX {
+    font-size: 24px;
+}
+
+.Panel--header .Panel--toggle {
+    display: none;
+}
+
+
+.AxlxQ .BasePanel--body {
+    border-radius: 0px 0px 5px 5px;
+    border-top: 1px solid rgb(229, 232, 235);
+    border-right: 1px solid rgb(229, 232, 235);
+    border-left: 1px solid rgb(229, 232, 235);
+    border-image: initial;
+    border-bottom: none;
+    color: rgb(53, 56, 64);
+    background-color: rgb(251, 253, 255);
+}
+
+.Panel--isOpen .Panel--content-container {
+    overflow: visible;
+}
+
+.gtaqPw .Panel--content-container {
+    overflow: hidden;
+    transition: height 100ms ease 0s;
+}
+
+.gtaqPw .Panel--content-container {
+    overflow: hidden;
+    transition: all 100ms ease 0s;
+}
+
+.lnJzFU .EventHistory--Panel {
+    overflow-x: scroll;
+}
+
+.hxNpnh .ActivitySearch--event-history-scrollbox {
+    max-height: calc((100vh - 72px) - 173px);
+}
+
+.lnJzFU .EventHistory--container {
+    max-height: 332px;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.fAClQF {
+    display: flex;
+    flex-direction: column;
+}
+
+.fAClQF .Scrollbox--content {
+    border-color: rgba(0, 0, 0, 0);
+    overflow-y: auto;
+    transition: border-color 0.2s ease-in 0s;
+}
+
+.bISFhL.Row--isHeader {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+}
+
+.bISFhL {
+    display: flex;
+}
+
+.bISFhL.Row--isHeader .Row--cell {
+    background-color: rgb(255, 255, 255);
+    color: rgb(14, 14, 14);
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.bISFhL .Row--cell:first-child {
+    padding-left: 16px;
+}
+
+.lnJzFU .EventHistory--event-col {
+    flex-basis: 130px;
+}
+
+.bISFhL .Row--cellIsSpaced {
+    flex-basis: 150px;
+}
+
+.bISFhL .Row--cell {
+    -webkit-box-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(229, 232, 235);
+    display: flex;
+    flex: 1 0 100px;
+    overflow-x: auto;
+    padding: 16px 4px;
+}
+
+@media (min-width: 600px) {
+    .bISFhL .Row--cellIsSpaced {
+        flex-basis: 100px;
+    }
+}
+
+@media (min-width: 600px) {
+    .lnJzFU .EventHistory--Panel {
+        overflow-x: auto;
+    }
+}
+
+
+@media (min-width: 600px) {
+    .ActivitySearch--event-history {
+        margin-top: 24px;
+    }
+}
+
+@media (min-width: 600px) {
+    .lnJzFU {
+        overflow: auto;
+    }
+}

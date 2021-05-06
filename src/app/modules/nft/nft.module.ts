@@ -62,6 +62,7 @@ import { NftPropertiesListComponent } from './components/properties-list/propert
 import { NftLevelsListComponent } from './components/levels-list/levels-list.component';
 import { NftAssetListingComponent } from './components/asset-listing/asset-listing.component';
 import { NftAssetOffersComponent } from './components/asset-offers/asset-offers.component';
+import { NftActivitiesComponent } from './components/activities/activities.component';
 import { NftCollectionService } from './services/nft-collection.service';
 import { NftAssetService } from './services/nft-asset.service';
 import { NftOrderService } from './services/nft-order.service';
@@ -80,6 +81,7 @@ import { WalletModule } from '../wallet/wallet.module';
     declarations: [
       NftComponent,
       NftAdminComponent,
+      NftActivitiesComponent,
       NftAdminSidebarComponent,
       NftCollectionsComponent,
       TextHeaderComponent,
