@@ -87,7 +87,7 @@ import { environment } from '../../../../../environments/environment';
 
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey;      
-      const makerRelayerFee = 250;
+      const makerRelayerFee = 0;
       const coinType = this.coinServ.getCoinTypeIdByName(this.coin);
       const price = this.quantity;
       const addressHex = this.utilServ.fabToExgAddress(this.address);

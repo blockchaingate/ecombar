@@ -206,12 +206,15 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
       
       
-      this.nftOrderServ.atomicMatch(this.sellOrder.id, buyorder, txhex).subscribe(
+      this.nftOrderServ.atomicMatch(this.owner, this.sellOrder.id, buyorder, txhex).subscribe(
         (res: any) => {
           console.log('res from atomicMatch=', res);
           this.spinner.hide();
           this.refresh.emit();
           if(res && res.ok) {
+            this.owner = this.address;
+            this.isOwner = true;
+            this.sellOrder = null;
             this.toastr.info('Post the transaction successfully');
           }else {
             this.toastr.error('Error while posting the transaction');

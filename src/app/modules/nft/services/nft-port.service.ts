@@ -564,6 +564,7 @@ export class NftPortService {
     price: number,
     makerRelayerFee: number,
     side: number) { //side = 1, sell;  side == 0 buy
+    const makerProtocolFee = 250;
     const exchange = environment.addresses.smartContract.NFT_Exchange;
 
     let feeRecipient = '0x0000000000000000000000000000000000000FEE';
@@ -598,7 +599,7 @@ export class NftPortService {
     const listingTime = Math.round(Date.now() / 1000);
     const salt = this.utilServ.getRandomInteger();
     const order = new NftOrder(exchange, maker, taker, makerRelayerFee, 
-    0, 0, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
+    0, makerProtocolFee, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
     callData, replacementPattern, null, null, coinType, price, 0, listingTime, 
     0, salt);
 

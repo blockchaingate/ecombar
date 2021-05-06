@@ -163,7 +163,7 @@ import { environment } from '../../../../../environments/environment';
         seed, environment.addresses.smartContract.NFT_Exchange, 
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
       
-      this.orderServ.atomicMatch(buyorder.id, sellorder, txhex).subscribe(
+      this.orderServ.atomicMatch(this.owner, buyorder.id, sellorder, txhex).subscribe(
         (res: any) => {
           console.log('res from atomicMatch=', res);
           this.spinner.hide();
