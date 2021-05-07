@@ -5,6 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { KanbanGetBanalceResponse, KanbanNonceResponse, DepositStatusResp, TransactionAccountResponse } from '../../../interfaces/kanban.interface';
 import { from } from 'rxjs';
 import { UtilService } from './util.service';
+import { Web3Service } from './web3.service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -20,7 +21,7 @@ export class KanbanService {
     "dogeAddress":"DQ8jsAhfvBm8uMHDu6ytoYcMAdo5GQGbeU",
     "ltcAddress":"LNfTRKWKeeGxvQNvJAVuLW3TGzx8qkeoyT","timestamp":0}    
     */
-    constructor(private http: HttpService, private utilServ: UtilService) {
+    constructor(private http: HttpService, private utilServ: UtilService, private web3Serv: Web3Service) {
     }
 
     getKanbanBalance(address: string) {
@@ -79,6 +80,13 @@ export class KanbanService {
         return this.http.getRaw(path);
     }
     
+    signJsonData(privateKey: any, data: any) {
+        var queryString = Object.keys(data).map(key => key + '=' + data[key]).sort().join('&');
+        var hashForSignature = this.web3Serv.hashKanbanMessage(queryString);
+        const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);
+        return signature;  
+    }
+
     submitDeposit(rawTransaction: string, rawKanbanTransaction: string) {
         const data = {
             'rawTransaction': rawTransaction,
