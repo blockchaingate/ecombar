@@ -27,18 +27,24 @@ export class Web3Service {
     }
   }
 
-  signMessageTest(hashForSignature, privateKey) {
-    const msg = 'hello';
+  signMessageTest(msg: string, privateKey) {
     const sig = this.signKanbanMessageWithPrivateKey(msg, privateKey);
 
+    console.log('sig there=', sig);
     const prefix = Buffer.from("\x17Kanban Signed Message:\n");
     let prefixedMsg = Hash.keccak256s(
       Buffer.concat([prefix, Buffer.from(String(msg.length)), Buffer.from(msg)])
     );
     
-    console.log('prefixedMsg=', prefixedMsg);
     const buf = Buffer.from(prefixedMsg.replace('0x', ''), 'hex');
     console.log('buf=', buf);
+
+    console.log('before recover:');
+    console.log('buf=', buf);
+    console.log('v=', sig.v);
+    console.log('r=', sig.r);
+    console.log('s=', sig.s);
+
     const pubKey  = ethUtil.ecrecover(buf, sig.v, sig.r, sig.s);
 
     /*

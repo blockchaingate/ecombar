@@ -63,7 +63,7 @@ import { ToastrService } from 'ngx-toastr';
         };
         
         const sig = this.kanbanServ.signJsonData(privateKey, body);
-        /*
+        
         console.log('r=', sig.r);
         console.log('s=', sig.s);
         console.log('v=', sig.v);
@@ -78,6 +78,6 @@ import { ToastrService } from 'ngx-toastr';
             }
           }
         );
-        */
+        
       }
   }
