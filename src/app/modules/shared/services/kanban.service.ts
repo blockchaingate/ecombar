@@ -83,7 +83,8 @@ export class KanbanService {
     signJsonData(privateKey: any, data: any) {
         var queryString = Object.keys(data).map(key => key + '=' + data[key]).sort().join('&');
         var hashForSignature = this.web3Serv.hashKanbanMessage(queryString);
-        const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);
+        //const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);
+        const signature = this.web3Serv.signMessageTest(hashForSignature, privateKey);
         return signature;  
     }
 

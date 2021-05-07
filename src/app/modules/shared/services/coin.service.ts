@@ -583,6 +583,15 @@ export class CoinService {
         return this.apiServ.getTransactionHistoryEvents(data);
     }
 
+    fabPublicKey2Address(publicKey) {
+        const { address } = Btc.payments.p2pkh({
+            pubkey: publicKey,
+            network: environment.chains['FAB']['network']
+        });
+
+        return address;
+    }
+
     getKeyPairs(name: string, seed: Buffer, chain: number, index: number, type: string) {
 
         let addr = '';
@@ -602,6 +611,8 @@ export class CoinService {
             const root = BIP32.fromSeed(seed, environment.chains[name]['network']);
 
             const childNode = root.derivePath(path);
+
+            console.log('childNode.publicKey==', childNode.publicKey);
             const { address } = Btc.payments.p2pkh({
                 pubkey: childNode.publicKey,
                 network: environment.chains[name]['network']
@@ -677,6 +688,7 @@ export class CoinService {
         name: name
         };
 
+        console.log('keyPairs=', keyPairs);
         return keyPairs;
     }
 

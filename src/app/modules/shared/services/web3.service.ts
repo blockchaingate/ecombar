@@ -11,6 +11,7 @@ import KanbanTxService from './kanban.tx.service';
 import { Signature, EthTransactionObj } from '../../../interfaces/kanban.interface';
 import * as Account from 'eth-lib/lib/account';
 import * as  Hash from 'eth-lib/lib/hash';
+import * as Btc from 'bitcoinjs-lib';
 
 @Injectable({ providedIn: 'root' })
 export class Web3Service {
@@ -24,6 +25,53 @@ export class Web3Service {
       const web3 = new Web3(Web3.givenProvider);
       return web3;
     }
+  }
+
+  signMessageTest(hashForSignature, privateKey) {
+    const msg = 'hello';
+    const sig = this.signKanbanMessageWithPrivateKey(msg, privateKey);
+
+    const prefix = Buffer.from("\x17Kanban Signed Message:\n");
+    let prefixedMsg = Hash.keccak256s(
+      Buffer.concat([prefix, Buffer.from(String(msg.length)), Buffer.from(msg)])
+    );
+    
+    console.log('prefixedMsg=', prefixedMsg);
+    const buf = Buffer.from(prefixedMsg.replace('0x', ''), 'hex');
+    console.log('buf=', buf);
+    const pubKey  = ethUtil.ecrecover(buf, sig.v, sig.r, sig.s);
+
+    /*
+    var sender = ethUtil.publicToAddress(pubKey)
+    var addr = ethUtil.bufferToHex(sender)
+    console.log('sender=', sender);
+    console.log('addr=', addr);
+    */
+    console.log('pubKey=', pubKey);
+
+    /*
+    const { address } = Btc.payments.p2pkh({
+      pubkey: pubKey
+    });
+
+    console.log('address=', address);
+    */
+    //const pubkey = Buffer.from( '0250863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b2352', 'hex' );
+    //const pubkeyBuf = Buffer.from('04a097026e876544a0e40f9ca836435560af4470e161bf60c23465dcb3151c947d1cbe052875211972107e25fca8dd939f1c6e749a43862673ec5cf7a8567f2d95', 'hex')
+    const pubkeyBuf = Buffer.concat([Buffer.from('04', 'hex'), pubKey]);
+    console.log('pubkeyBuf=', pubkeyBuf);
+    const pubkey = Btc.ECPair.fromPublicKey(pubkeyBuf);
+    console.log('pubkey=', pubkey);
+    console.log('pubkey.publicKey=', pubkey.publicKey);
+    const { address } = Btc.payments.p2pkh({ 
+      pubkey: pubkey.publicKey,
+      network: environment.chains['FAB']['network']
+     });
+
+
+    console.log('address=', address);
+    return address;
+    //console.log('pubKey=', pubKey);
   }
 
   getProvider() {
@@ -349,7 +397,9 @@ export class Web3Service {
     var preamble = '\x17Kanban Signed Message:\n' + messageBytes.length;
     var preambleBuffer = Buffer.from(preamble);
     var ethMessage = Buffer.concat([preambleBuffer, messageBuffer]);
-    return Hash.keccak256s(ethMessage);    
+    var hash = Hash.keccak256s(ethMessage);    
+    console.log('hash1=', hash);
+    return hash;
   }
 
   signKanbanMessageWithPrivateKey(message: string, privateKey: any) {
