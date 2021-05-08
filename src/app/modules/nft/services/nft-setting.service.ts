@@ -11,5 +11,8 @@ export class NftSettingService {
     const url = environment.endpoints.blockchaingate + 'nft-setting/save';
     return this.http.post(url, data);
   }  
-  
+  get(address: string) {
+    const url = environment.endpoints.blockchaingate + 'nft-setting/' + address;
+    return this.http.get(url);
+  }  
 }

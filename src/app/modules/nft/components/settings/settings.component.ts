@@ -39,6 +39,17 @@ import { ToastrService } from 'ngx-toastr';
             this.wallet = wallet;
             const addresses = wallet.addresses;
             this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+            this.settingServ.get(this.address).subscribe(
+              (ret: any) => {
+                console.log('ret=', ret);
+                if (ret && ret.ok) {
+                  const setting = ret._body;
+                  this.username = setting.username;
+                  this.email = setting.email;
+                  this.bio = setting.bio;
+                }
+              }
+            );
           });            
       }
 
@@ -63,10 +74,7 @@ import { ToastrService } from 'ngx-toastr';
         };
         
         const sig = this.kanbanServ.signJsonData(privateKey, body);
-        
-        console.log('r=', sig.r);
-        console.log('s=', sig.s);
-        console.log('v=', sig.v);
+
         body['sig'] = sig.signature;
         this.settingServ.save(body).subscribe(
           (ret: any) => {
