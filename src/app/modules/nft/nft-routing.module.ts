@@ -11,8 +11,7 @@ import { NftAssetSellComponent } from './components/asset-sell/asset-sell.compon
 import { NftAssetComponent } from './components/asset/asset.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftAccountComponent } from './components/account/account.component';
-import { NftIndexComponent } from './components/index/index.component';
-import { NftActivitiesComponent } from './components/activities/activities.component';
+import { NftActivitiesPageComponent } from './components/activities-page/activities-page.component';
 import { NftTransferComponent } from './components/transfer/transfer.component';
 import { NftSettingsComponent } from './components/settings/settings.component';
 import { NftRankingsComponent } from './components/rankings/rankings.component';
@@ -27,7 +26,7 @@ const routes: Routes = [
       path: 'rankings', component: NftRankingsComponent
     },      
     {
-      path: 'activities', component: NftActivitiesComponent
+      path: 'activities', component: NftActivitiesPageComponent
     },         
     {
       path: 'assets/:smartContractAddress/:tokenId', component: NftAssetComponent

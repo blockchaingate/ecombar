@@ -80,6 +80,8 @@ import { UploadService } from './services/upload.service';
 import { SharedModule } from '../shared/shared.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
+import { NftActivitiesPageComponent } from './components/activities-page/activities-page.component';
+import { NftAccountOffersTableComponent } from './components/account-offers-table/account-offers-table.component';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NftMakeOfferComponent } from './modals/make-offer/make-offer.component';
@@ -90,8 +92,10 @@ import { WalletModule } from '../wallet/wallet.module';
       NftAdminComponent,
       NftActivitiesComponent,
       NftAdminSidebarComponent,
+      NftActivitiesPageComponent,
       NftCollectionsComponent,
       TextHeaderComponent,
+      NftAccountOffersTableComponent,
       NftRankingsComponent,
       NftAccountActivityComponent,
       NftSettingsComponent,
