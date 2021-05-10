@@ -1,3 +1,5 @@
+dune stem onion cliff equip seek kiwi salute area elegant atom injury
+
 https://testnets.opensea.io/assets/0xee45b41d1ac24e9a620169994deb22739f64f231/67926874432809837113607890820803941222772864177501246377210324806432943243265
 
 

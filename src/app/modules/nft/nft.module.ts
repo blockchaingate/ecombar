@@ -26,6 +26,10 @@ import { PropertiesComponent } from './components/common/form-trait/modals/prope
 import { LevelsComponent } from './components/common/form-trait/modals/levels/levels.component';
 import { ExpansionComponent } from './components/common/expansion/expansion.component';
 import { NftAssetSellComponent } from './components/asset-sell/asset-sell.component';
+import { NftRankingsComponent } from './components/rankings/rankings.component';
+import { NftAccountActivityComponent } from './components/account-activity/account-activity.component';
+import { NftAccountOffersComponent } from './components/account-offers/account-offers.component';
+import { NftAccountFavoritesComponent } from './components/account-favorites/account-favorites.component';
 import { NftAssetOverviewComponent } from './components/asset-overview/asset-overview.component';
 import { NftAssetSellMethodComponent } from './components/asset-sell-method/asset-sell-method.component';
 import { NftAssetSellPriceComponent } from './components/asset-sell-price/asset-sell-price.component';
@@ -88,11 +92,15 @@ import { WalletModule } from '../wallet/wallet.module';
       NftAdminSidebarComponent,
       NftCollectionsComponent,
       TextHeaderComponent,
+      NftRankingsComponent,
+      NftAccountActivityComponent,
       NftSettingsComponent,
       NftCollectionsListComponent,
       NftAccountInWalletCollectionsComponent,
       NftCollectionsAddComponent,
       NftAccountInWalletCurrencyComponent,
+      NftAccountOffersComponent,
+      NftAccountFavoritesComponent,
       NftCollectionsAddDoneComponent,
       NftCollectionViewTopbarComponent,
       NftCollectionViewHeaderComponent,

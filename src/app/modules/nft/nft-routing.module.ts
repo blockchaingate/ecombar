@@ -15,7 +15,7 @@ import { NftIndexComponent } from './components/index/index.component';
 import { NftActivitiesComponent } from './components/activities/activities.component';
 import { NftTransferComponent } from './components/transfer/transfer.component';
 import { NftSettingsComponent } from './components/settings/settings.component';
-
+import { NftRankingsComponent } from './components/rankings/rankings.component';
 const routes: Routes = [
     {
       path: '', component: NftComponent,
@@ -23,6 +23,9 @@ const routes: Routes = [
     {
       path: 'assets', component: NftAssetsComponent
     },  
+    {
+      path: 'rankings', component: NftRankingsComponent
+    },      
     {
       path: 'activities', component: NftActivitiesComponent
     },         

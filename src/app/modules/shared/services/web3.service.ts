@@ -30,6 +30,7 @@ export class Web3Service {
   signMessageTest(msg: string, privateKey) {
     const sig = this.signKanbanMessageWithPrivateKey(msg, privateKey);
 
+    console.log('msg=', msg);
     console.log('sig there=', sig);
     const prefix = Buffer.from("\x17Kanban Signed Message:\n");
     let prefixedMsg = Hash.keccak256s(

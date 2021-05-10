@@ -81,10 +81,11 @@ export class KanbanService {
     }
     
     signJsonData(privateKey: any, data: any) {
-        var queryString = Object.keys(data).map(key => key + '=' + data[key]).sort().join('&');
-        //var hashForSignature = this.web3Serv.hashKanbanMessage(queryString);
+
+        var queryString = Object.keys(data).filter((k) => (data[k] != null) && (data[k] != undefined))
+        .map(key => key + '=' + data[key]).sort().join('&');
+
         //const test = this.web3Serv.signMessageTest(queryString, privateKey);
-        //console.log('test=', test);
         const signature = this.web3Serv.signKanbanMessageWithPrivateKey(queryString, privateKey);
         //console.log('signature here=', signature);
         return signature;  

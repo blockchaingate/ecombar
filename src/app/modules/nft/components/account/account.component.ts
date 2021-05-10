@@ -10,11 +10,15 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
   })
   export class NftAccountComponent implements OnInit {
     address: string;
+    self: boolean;
+    currentTab: string;
     wallet: any;
     constructor(
       private localSt: LocalStorage,
       private route: ActivatedRoute) {}
     ngOnInit() {
+      this.currentTab = 'wallet';
+      this.self = false;
       this.route.paramMap.subscribe((params: ParamMap) =>  {
         this.address = params.get('address');   
         if(!this.address) {
@@ -27,6 +31,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
             this.wallet = wallet;
             const addresses = wallet.addresses;
             this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+            this.self = true;
           });           
         }
       });          

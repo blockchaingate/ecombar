@@ -9,7 +9,6 @@
 }
 
 .hIFVgG {
-    display: flex;
     min-height: 120px;
     height: 300px;
     overflow: hidden;
@@ -181,4 +180,56 @@
 .gZqYMT:hover {
     transition: all 0.2s ease 0s;
     box-shadow: rgb(14 14 14 / 25%) 0px 0px 8px 0px;
+}
+
+.Image--image {
+    height: 100%;
+    transition: opacity 400ms ease 0s;
+    width: 100%;
+}
+
+
+
+
+.AccountHeader--banner-edit {
+    position: absolute;
+    z-index: 1;
+    top: 15px;
+    right: 15px;
+}
+
+
+.AccountHeader--banner-edit .AccountHeader--banner-input {
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    width: 100%;
+}
+
+.Image--content {
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.ProfileImage--editable:hover::after {
+    content: "Edit";
+    text-transform: capitalize;
+    color: white;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    text-align: center;
+    bottom: 5px;
+    font-size: 0.8rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.image-input {
+    opacity: 0;
 }
