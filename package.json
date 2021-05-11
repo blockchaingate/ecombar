@@ -35,6 +35,7 @@
         "@ngx-translate/core": "^13.0.0",
         "@ngx-translate/http-loader": "^6.0.0",
         "@swimlane/ngx-charts": "^17.0.1",
+        "ethereumjs-util": "^6.2.1",
         "@syncfusion/ej2-angular-richtexteditor": "^18.4.32",
         "angularx-qrcode": "^10.0.11",
         "bchaddrjs": "^0.4.9",

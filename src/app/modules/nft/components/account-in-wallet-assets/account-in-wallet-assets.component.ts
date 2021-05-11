@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { NftAssetService } from '../../services/nft-asset.service';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -8,17 +7,32 @@ import { NftAssetService } from '../../services/nft-asset.service';
     styleUrls: ['./account-in-wallet-assets.component.scss']
   })
   export class NftAccountInWalletAssetsComponent implements OnInit {
-    assets: any;
-    constructor(private assetServ: NftAssetService) {}
+    @Input() wallet: any;
+    @Input() favorites: any;
+    @Input() assets: any;
+    @Input() address: string;
+
+    favoriteCount: number;
+    constructor() {}
     
     ngOnInit() {
-      this.assetServ.getAll().subscribe(
-        (ret: any) => {
-          if(ret && ret.ok) {
-            this.assets = ret._body;
-          }
-        }
-      );      
+      this.favoriteCount = 0;
     }
 
+    checkFavorite(asset) {
+      if(!this.favorites) {
+        return false;
+      }
+      const tokenFavorites = this.favorites.filter(item => item.smartContractAddress == asset.smartContractAddress && item.tokenId == asset.tokenId);
+      if(tokenFavorites && tokenFavorites.length > 0) {
+        
+        this.favoriteCount = tokenFavorites.length;
+        const myFavorites = tokenFavorites.filter(item => item.address == this.address);
+        if(myFavorites && myFavorites.length > 0) {
+          return true;
+        }
+        
+      }
+      return false;
+    }
   }

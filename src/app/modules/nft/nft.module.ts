@@ -75,6 +75,7 @@ import { NftOrderService } from './services/nft-order.service';
 import { NftTradeService } from './services/nft-trade.service';
 import { NftEventService } from './services/nft-event.service';
 import { NftSettingService } from './services/nft-setting.service';
+import { NftFavoriteService } from './services/nft-favorite.service';
 import { NftPortService } from './services/nft-port.service';
 import { UploadService } from './services/upload.service';
 import { SharedModule } from '../shared/shared.module';
@@ -174,6 +175,7 @@ import { WalletModule } from '../wallet/wallet.module';
       NftTradeService,
       NftEventService,
       NftSettingService,
+      NftFavoriteService,
       UploadService,
       NftPortService
     ],

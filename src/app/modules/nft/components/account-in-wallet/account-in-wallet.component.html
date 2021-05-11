@@ -18,7 +18,12 @@
     </div>
     <div class="col col-9">
         <app-nft-account-in-wallet-search></app-nft-account-in-wallet-search>
-        <app-nft-account-in-wallet-assets></app-nft-account-in-wallet-assets>
+        <app-nft-account-in-wallet-assets 
+        [wallet]="wallet"
+        [address]="address"
+        [favorites]="favorites"
+        [assets]="assets"
+        ></app-nft-account-in-wallet-assets>
     </div>
 
 </div>

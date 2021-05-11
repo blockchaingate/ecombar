@@ -1,13 +1,20 @@
 <article class="Assetreact__DivContainer-bnjqwy-0 epuAXJ Asset--loaded AssetSearchList--asset " style="width: 362px;">
-    <a class="Asset--anchor " role="link" href="/nft/assets/{{asset.smartContractAddress}}/{{asset.tokenId}}">
+    <a class="Asset--anchor " role="link">
         <header class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardHeaderreact__StyledContainer-sc-2dsmm1-0 jExUsd irGSTk hUGXgk gFCSNk">
             <span></span>
             <span display="flex" class="Blockreact__Block-sc-18q9hu0-0 Textreact__Text-sc-1cvs3a3-0 gvgkex ilXIqv">
-                <i size="20" aria-label="Unfavorite" value="favorite" class="Iconreact__Icon-sc-1gugx8q-0 FavoriteIconreact__StyledIcon-sc-289aae-0 etJEnN dFAeok material-icons">favorite</i>
-                <div color="coral" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 eMVbuh irGSTk jpdfEF">1</div>
+                <i size="20" aria-label="Unfavorite" value="favorite" class="Iconreact__Icon-sc-1gugx8q-0 FavoriteIconreact__StyledIcon-sc-289aae-0 etJEnN dFAeok material-icons" *ngIf="isFavorite" (click)="removeFavorite()">
+                    favorite
+                </i>
+                <i size="20" aria-label="Favorite" value="favorite_border" class="Iconreact__Icon-sc-1gugx8q-0 FavoriteIconreact__StyledIcon-sc-289aae-0 gZoxPL hJChUh material-icons" *ngIf="!isFavorite" (click)="addFavorite()">
+                    favorite_border
+                </i>
+                <div color="coral" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 eMVbuh irGSTk jpdfEF">
+                    {{favoriteCount}}
+                </div>
             </span>
         </header>
-        <div class="Blockreact__Block-sc-18q9hu0-0 AssetCardContentreact__StyledContainer-a8q9zx-0 fccnhl iuJoOI" style="height: 360px; width: 360px;">
+        <a class="Blockreact__Block-sc-18q9hu0-0 AssetCardContentreact__StyledContainer-a8q9zx-0 fccnhl iuJoOI" style="height: 360px; width: 360px;"  href="/nft/assets/{{asset.smartContractAddress}}/{{asset.tokenId}}">
             <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 hiRPrY irGSTk AssetCardContent--actions"></div>
             <div class="AssetMediareact__DivContainer-sc-1vbfbdi-0 cFPAYn">
                 <div height="100%" width="100%" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 CenterAlignedreact__CenterAligned-sc-1ek5672-0 ezLLcx irGSTk jpdfEF hQRXeM" style="background-color: rgb(255, 255, 255);">
@@ -16,8 +23,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardFooterreact__StyledContainer-nedjig-0 fPFfwx dTytCM hUGXgk jcdZXm">
+        </a>
+        <a class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 AssetCardFooterreact__StyledContainer-nedjig-0 fPFfwx dTytCM hUGXgk jcdZXm"  href="/nft/assets/{{asset.smartContractAddress}}/{{asset.tokenId}}">
             <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 SpaceBetweenreact__SpaceBetween-sc-1fhztth-0 jExUsd irGSTk hUGXgk">
                 <div class="Blockreact__Block-sc-18q9hu0-0 bCnMVJ">
                     <div class="AssetCardFooter--collection">{{asset.name}}</div>
@@ -37,6 +44,6 @@
                 </div>
             </div>
             -->
-        </div>
+        </a>
     </a>
 </article>

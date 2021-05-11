@@ -1,5 +1,9 @@
 <div class="main-container pb-3" *ngIf="assets">
     <div class="asset-item" *ngFor="let asset of assets">
-        <app-nft-account-in-wallet-asset [asset]="asset"></app-nft-account-in-wallet-asset>
+        <app-nft-account-in-wallet-asset 
+        [isFavorite]="checkFavorite(asset)"
+        [favoriteCount]="favoriteCount"
+        [wallet]="wallet"
+        [asset]="asset"></app-nft-account-in-wallet-asset>
     </div>
 </div>
