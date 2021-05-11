@@ -5,7 +5,7 @@
         [icon]="'view_comfy'"
         [options]="options"
         [toggleable]="true">
-            <app-nft-account-in-wallet-collections></app-nft-account-in-wallet-collections>
+            <app-nft-account-in-wallet-collections [(ngModel)]="selectedCollections"></app-nft-account-in-wallet-collections>
         </app-expansion>        
 
         <app-expansion 
@@ -22,6 +22,7 @@
         [wallet]="wallet"
         [address]="address"
         [favorites]="favorites"
+        [selectedCollections]="selectedCollections"
         [assets]="assets"
         ></app-nft-account-in-wallet-assets>
     </div>

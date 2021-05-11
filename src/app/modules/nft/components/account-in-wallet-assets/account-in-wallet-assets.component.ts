@@ -11,6 +11,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     @Input() favorites: any;
     @Input() assets: any;
     @Input() address: string;
+    @Input() selectedCollections: any;
 
     favoriteCount: number;
     constructor() {}
