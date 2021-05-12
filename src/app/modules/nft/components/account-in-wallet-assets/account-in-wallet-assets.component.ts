@@ -12,6 +12,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     @Input() assets: any;
     @Input() address: string;
     @Input() selectedCollections: any;
+    @Input() selectedCurrencies: any;
 
     favoriteCount: number;
     constructor() {}

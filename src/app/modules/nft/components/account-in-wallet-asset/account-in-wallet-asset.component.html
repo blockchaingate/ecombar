@@ -32,18 +32,17 @@
                 </div>
             </div>
 
-            <!--
-            <div class="AssetCardFooter--annotations">
+            
+            <div class="AssetCardFooter--annotations" *ngIf="asset.sellOrder">
                 <div class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 jExUsd irGSTk"></div>
                 <div class="AssetCardFooter--annotations-item">
-                    <div class="AssetCardFooter--annotations-item-text">Last</div>
+                    <div class="AssetCardFooter--annotations-item-text">Listing</div>
                     <div class="Pricereact__DivContainer-t54vn5-0 dnWXUG Price--main ">
-                        <span>Ξ</span>
-                        <div class="Price--amount">1 </div>
+                        <div class="Price--amount">{{asset.sellOrder.basePrice}} {{getCoinName(asset.sellOrder.coinType)}}</div>
                     </div>
                 </div>
             </div>
-            -->
+            
         </a>
     </a>
 </article>

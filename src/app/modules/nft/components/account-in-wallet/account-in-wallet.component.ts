@@ -24,6 +24,7 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
     favorites: any;
     assets: any;
     selectedCollections: any;
+    selectedCurrencies: any;
 
     constructor(
       private localSt: LocalStorage,
@@ -32,6 +33,7 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
 
     ngOnInit() {
       this.selectedCollections = [];
+      this.selectedCurrencies = [];
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {

@@ -13,7 +13,7 @@
         [icon]="'local_offer'"
         [options]="options"
         [toggleable]="true">
-            <app-nft-account-in-wallet-currency></app-nft-account-in-wallet-currency>
+            <app-nft-account-in-wallet-currency [(ngModel)]="selectedCurrencies"></app-nft-account-in-wallet-currency>
         </app-expansion>          
     </div>
     <div class="col col-9">
@@ -23,6 +23,7 @@
         [address]="address"
         [favorites]="favorites"
         [selectedCollections]="selectedCollections"
+        [selectedCurrencies]="selectedCurrencies"
         [assets]="assets"
         ></app-nft-account-in-wallet-assets>
     </div>
