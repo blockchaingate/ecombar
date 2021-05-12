@@ -1,11 +1,18 @@
-<div class="pills-content">
+<div class="pills-content" *ngIf="selectedEventTypes">
+    <section *ngFor="let selectedEventType of selectedEventTypes; let i = index">
+        <span>{{selectedEventType}}</span>
+        <i class="Pill--delete material-icons" title="Remove" value="close" size="24" (click)="removeEventType(i)">close</i>
+    </section>    
+</div>
+
+<div class="pills-content" *ngIf="selectedCollections">
     <section *ngFor="let selectedCollection of selectedCollections; let i = index">
         <span>{{selectedCollection.name}}</span>
         <i class="Pill--delete material-icons" title="Remove" value="close" size="24" (click)="removeCollection(i)">close</i>
     </section> 
 </div>
 
-<div class="pills-content">
+<div class="pills-content" *ngIf="selectedCurrencies">
     <section *ngFor="let selectedCurrency of selectedCurrencies; let i = index">
         <span>{{selectedCurrency}}</span>
         <i class="Pill--delete material-icons" title="Remove" value="close" size="24" (click)="removeCurrency(i)">close</i>

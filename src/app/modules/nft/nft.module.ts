@@ -43,6 +43,7 @@ import { NftAssetSellSummaryBountiesComponent } from './components/asset-sell-su
 import { NftAssetSellSummaryFeesComponent } from './components/asset-sell-summary-fees/asset-sell-summary-fees.component';
 import { NftAccountInWalletCurrencyComponent } from './components/account-in-wallet-currency/account-in-wallet-currency.component';
 import { NftAssetComponent } from './components/asset/asset.component';
+import { NftAccountActivityEventTypeComponent } from './components/account-activity-event-type/account-activity-event-type.component';
 import { NftAssetEventsComponent } from './components/asset-events/asset-events.component';
 import { NftAssetActionComponent } from './components/asset-action/asset-action.component';
 import { NftAssetImageComponent } from './components/asset-image/asset-image.component';
@@ -96,6 +97,7 @@ import { AssetsSearchPipe } from './pipes/assets-search.pipe';
       NftAdminComponent,
       NftActivitiesComponent,
       NftAdminSidebarComponent,
+      NftAccountActivityEventTypeComponent,
       NftActivitiesPageComponent,
       NftCollectionsComponent,
       TextHeaderComponent,

@@ -1,45 +1,46 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
-    selector: 'app-nft-account-in-wallet-currency',
-    templateUrl: './account-in-wallet-currency.component.html',
-    styleUrls: ['./account-in-wallet-currency.component.scss'],
+    selector: 'app-nft-account-activity-event-type',
+    templateUrl: './account-activity-event-type.component.html',
+    styleUrls: ['./account-activity-event-type.component.scss'],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => NftAccountInWalletCurrencyComponent),
+        useExisting: forwardRef(() => NftAccountActivityEventTypeComponent),
         multi: true
     }]
   })
-  export class NftAccountInWalletCurrencyComponent implements ControlValueAccessor,OnInit {
-    acceptableCoins: any;
-
-    selectedCoins: any;
-
-    constructor(private utilServ: UtilService) {}
-    ngOnInit() {
-      if(!this.selectedCoins) {
-        this.selectedCoins = [];
-      }      
-      this.acceptableCoins = this.utilServ.getAcceptableCoins();
-    }
-
-    changeSelection(coin) {
-      const index = this.selectedCoins.indexOf(coin);
-      if( index >= 0) {
-          this.selectedCoins.splice(index, 1);
-      } else {
-          this.selectedCoins.push(coin);
-      }      
-    }
-
-    isSelected(coin) {
-      if(!this.selectedCoins) {
-        return false;
+  export class NftAccountActivityEventTypeComponent implements ControlValueAccessor, OnInit {
+      eventTypes = [
+        'Listings',
+        'Sales',
+        'Offers',
+        'Transfers'
+      ];
+      selectedEventTypes: any;
+      ngOnInit() {
+        if(!this.selectedEventTypes) {
+            this.selectedEventTypes = [];
+          }   
       }
-      return this.selectedCoins.indexOf(coin) >= 0;
-    }    
+
+      changeSelection(eventType) {
+        const index = this.selectedEventTypes.indexOf(eventType);
+        if( index >= 0) {
+            this.selectedEventTypes.splice(index, 1);
+        } else {
+            this.selectedEventTypes.push(eventType);
+        }      
+      }  
+      
+      isSelected(eventType) {
+        if(!this.selectedEventTypes) {
+          return false;
+        }
+        return this.selectedEventTypes.indexOf(eventType) >= 0;
+      }   
+      
      /**
       * Invoked when the model has been changed
       */
@@ -55,7 +56,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
        * Method that is invoked on an update of a model.
        */
       updateChanges() {
-          this.onChange(this.selectedCoins);
+          this.onChange(this.selectedEventTypes);
       }
   
       ///////////////
@@ -67,7 +68,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
        * @param value the value
        */
       writeValue(value: any): void {
-          this.selectedCoins = value;
+          this.selectedEventTypes = value;
           this.updateChanges();
       }
   
@@ -85,5 +86,5 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
        */
       registerOnTouched(fn: any): void {
           this.onTouched = fn;
-      }    
+      }       
   }

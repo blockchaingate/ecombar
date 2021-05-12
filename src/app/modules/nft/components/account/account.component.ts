@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { NftCollectionService } from '../../services/nft-collection.service';
 
 @Component({
     providers: [],
@@ -13,8 +14,10 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
     self: boolean;
     currentTab: string;
     wallet: any;
+    collections: any;
     constructor(
       private localSt: LocalStorage,
+      private collectionServ: NftCollectionService,
       private route: ActivatedRoute) {}
     ngOnInit() {
       this.currentTab = 'wallet';
@@ -34,7 +37,16 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
             this.self = true;
           });           
         }
-      });          
+      });   
+      
+      this.collectionServ.getAll().subscribe(
+        (ret: any) => {
+            if(ret && ret.ok) {
+                this.collections = ret._body;
+                console.log('this.collections=', this.collections);
+            }
+        }
+    );
     }
 
   }

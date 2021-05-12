@@ -43,8 +43,6 @@ import { NftEventService } from '../../services/nft-event.service';
     }
     
     getName(smartContractAddress: string, tokenId: string) {
-        console.log('smartContractAddress=', smartContractAddress);
-        console.log('tokenId=', tokenId);
         const assets = this.assets.filter(item => item.smartContractAddress == smartContractAddress && item.tokenId == tokenId);
         if(assets && assets.length > 0) {
             return assets[0].name;
@@ -53,8 +51,6 @@ import { NftEventService } from '../../services/nft-event.service';
     }
 
     getImage(smartContractAddress: string, tokenId: string) {
-        console.log('smartContractAddress=', smartContractAddress);
-        console.log('tokenId=', tokenId);
         const assets = this.assets.filter(item => item.smartContractAddress == smartContractAddress && item.tokenId == tokenId);
         if(assets && assets.length > 0) {
             return assets[0].media;

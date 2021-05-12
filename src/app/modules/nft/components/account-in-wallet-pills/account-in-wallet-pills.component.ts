@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
   export class NftAccountInWalletPillsComponent implements OnInit {
     @Input() selectedCollections: any;
     @Input() selectedCurrencies: any;      
+    @Input() selectedEventTypes: any;
     ngOnInit() {
 
     }
@@ -19,4 +20,8 @@ import { Component, OnInit, Input } from '@angular/core';
     removeCurrency(index) {
         this.selectedCurrencies.splice(index, 1);
     }
+
+    removeEventType(index) {
+      this.selectedEventTypes.splice(index, 1);
+    }    
   }

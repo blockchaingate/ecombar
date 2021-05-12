@@ -1,5 +1,4 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
-import { NftCollectionService } from '../../services/nft-collection.service';
+import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -13,22 +12,14 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     }]
   })
   export class NftAccountInWalletCollectionsComponent implements ControlValueAccessor, OnInit {
-    collections: any;
+    @Input() collections: any;
     selectedCollections: any;
-    constructor(private collectionServ: NftCollectionService) {}
+    constructor() {}
     ngOnInit() {
-        this.collections = [];
+        //this.collections = [];
         if(!this.selectedCollections) {
             this.selectedCollections = [];
         }
-        this.collectionServ.getAll().subscribe(
-            (ret: any) => {
-                if(ret && ret.ok) {
-                    this.collections = ret._body;
-                    console.log('this.collections=', this.collections);
-                }
-            }
-        );
     }
 
     changeSelection(collection) {
@@ -41,6 +32,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     }
 
     isSelected(collection) {
+        if(!this.selectedCollections || this.selectedCollections.length == 0) {
+            return false;
+        }
         return this.selectedCollections.indexOf(collection) >= 0;
     }
 

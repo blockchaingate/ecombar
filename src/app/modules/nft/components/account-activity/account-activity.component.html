@@ -6,16 +6,25 @@
         [options]="options"
         [toggleable]="true">
         </app-expansion>        
-eee
+        <app-nft-account-activity-event-type
+        [(ngModel)]="selectedEventTypes"
+        ></app-nft-account-activity-event-type>
         <app-expansion 
         [title]="'Collections'"
         [icon]="'view_comfy'"
         [options]="options"
         [toggleable]="true">
-        fewadwa
+        <app-nft-account-in-wallet-collections 
+        [collections]="collections"
+        [(ngModel)]="selectedCollections"
+        ></app-nft-account-in-wallet-collections>
         </app-expansion>          
     </div>
     <div class="col col-9">
+        <app-nft-account-in-wallet-pills
+        [selectedCollections]="selectedCollections"
+        [selectedEventTypes]="selectedEventTypes"        
+        ></app-nft-account-in-wallet-pills>        
         <app-nft-activities></app-nft-activities>
     </div>
 

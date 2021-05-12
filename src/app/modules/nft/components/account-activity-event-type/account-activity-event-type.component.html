@@ -1,0 +1,8 @@
+<div class="Panel--isContentPadded FeaturedFilter--items">
+    <div class="FeaturedFilter--item" 
+    [ngClass]="isSelected(eventType) ? 'selected' : ''"
+    *ngFor="let eventType of eventTypes" 
+    (click)="changeSelection(eventType)">
+        {{eventType}}
+    </div>
+</div>

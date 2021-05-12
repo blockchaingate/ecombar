@@ -21,6 +21,7 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
     
     wallet: any;
     @Input() address: string;
+    @Input() collections: any;
     favorites: any;
     assets: any;
     selectedCollections: any;

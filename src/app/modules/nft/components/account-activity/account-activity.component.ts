@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,11 +7,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./account-activity.component.scss']
   })
   export class NftAccountActivityComponent implements OnInit {
-
+    @Input() collections: any;
+    selectedCollections: any;
+    selectedEventTypes: any;
     options = {
         expanded: true
     }    
     ngOnInit() {
-
+      this.selectedCollections = [];
+      this.selectedEventTypes = [];
     }
   }

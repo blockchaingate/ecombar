@@ -5,7 +5,10 @@
         [icon]="'view_comfy'"
         [options]="options"
         [toggleable]="true">
-            <app-nft-account-in-wallet-collections [(ngModel)]="selectedCollections"></app-nft-account-in-wallet-collections>
+            <app-nft-account-in-wallet-collections 
+            [collections]="collections"
+            [(ngModel)]="selectedCollections"
+            ></app-nft-account-in-wallet-collections>
         </app-expansion>        
 
         <app-expansion 
@@ -13,7 +16,9 @@
         [icon]="'local_offer'"
         [options]="options"
         [toggleable]="true">
-            <app-nft-account-in-wallet-currency [(ngModel)]="selectedCurrencies"></app-nft-account-in-wallet-currency>
+            <app-nft-account-in-wallet-currency 
+            [(ngModel)]="selectedCurrencies"
+            ></app-nft-account-in-wallet-currency>
         </app-expansion>          
     </div>
     <div class="col col-9">
@@ -22,9 +27,7 @@
         [selectedCurrencies]="selectedCurrencies"        
         ></app-nft-account-in-wallet-pills>
         <!--
-        <app-nft-account-in-wallet-search>
-
-        </app-nft-account-in-wallet-search>
+        <app-nft-account-in-wallet-search></app-nft-account-in-wallet-search>
         -->
         <app-nft-account-in-wallet-assets 
         [wallet]="wallet"
