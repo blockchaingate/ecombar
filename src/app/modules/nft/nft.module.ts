@@ -68,6 +68,7 @@ import { NftLevelsListComponent } from './components/levels-list/levels-list.com
 import { NftAssetListingComponent } from './components/asset-listing/asset-listing.component';
 import { NftAssetOffersComponent } from './components/asset-offers/asset-offers.component';
 import { NftActivitiesComponent } from './components/activities/activities.component';
+import { NftAccountInWalletPillsComponent } from './components/account-in-wallet-pills/account-in-wallet-pills.component';
 import { NftAccountInWalletCollectionsComponent } from './components/account-in-wallet-collections/account-in-wallet-collections.component';
 import { NftCollectionService } from './services/nft-collection.service';
 import { NftAssetService } from './services/nft-asset.service';
@@ -87,6 +88,8 @@ import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NftMakeOfferComponent } from './modals/make-offer/make-offer.component';
 import { WalletModule } from '../wallet/wallet.module';
+
+import { AssetsSearchPipe } from './pipes/assets-search.pipe';
 @NgModule({
     declarations: [
       NftComponent,
@@ -96,10 +99,12 @@ import { WalletModule } from '../wallet/wallet.module';
       NftActivitiesPageComponent,
       NftCollectionsComponent,
       TextHeaderComponent,
+      AssetsSearchPipe,
       NftAccountOffersTableComponent,
       NftRankingsComponent,
       NftAccountActivityComponent,
       NftSettingsComponent,
+      NftAccountInWalletPillsComponent,
       NftCollectionsListComponent,
       NftAccountInWalletCollectionsComponent,
       NftCollectionsAddComponent,

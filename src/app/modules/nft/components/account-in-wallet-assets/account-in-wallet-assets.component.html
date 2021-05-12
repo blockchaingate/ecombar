@@ -1,6 +1,5 @@
-length: {{selectedCollections.length}}
 <div class="main-container pb-3" *ngIf="assets">
-    <div class="asset-item" *ngFor="let asset of assets">
+    <div class="asset-item" *ngFor="let asset of assets | assetsSearch : selectedCollections.length : selectedCurrencies.length : selectedCollections : selectedCurrencies">
         <app-nft-account-in-wallet-asset 
         [isFavorite]="checkFavorite(asset)"
         [favoriteCount]="favoriteCount"

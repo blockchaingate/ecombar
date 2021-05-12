@@ -26,6 +26,21 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
       this.acceptableCoins = this.utilServ.getAcceptableCoins();
     }
 
+    changeSelection(coin) {
+      const index = this.selectedCoins.indexOf(coin);
+      if( index >= 0) {
+          this.selectedCoins.splice(index, 1);
+      } else {
+          this.selectedCoins.push(coin);
+      }      
+    }
+
+    isSelected(coin) {
+      if(!this.selectedCoins) {
+        return false;
+      }
+      return this.selectedCoins.indexOf(coin) >= 0;
+  }    
      /**
       * Invoked when the model has been changed
       */

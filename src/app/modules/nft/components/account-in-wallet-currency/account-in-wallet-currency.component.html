@@ -1,7 +1,10 @@
 <div class="Scrollboxreact__DivContainer-sc-1b04elr-0 kCDZAF PaymentFilter--results" *ngIf="acceptableCoins">
     <div class="Scrollbox--content">
         <div class="PaymentFilter--item" *ngFor="let coin of acceptableCoins">
-            <input class="PaymentFilter--checkbox" readonly="" type="checkbox">
+            <input class="PaymentFilter--checkbox" readonly="" type="checkbox"
+            (change)="changeSelection(coin)"
+            [checked]="isSelected(coin)"
+            >
             <div class="PaymentFilter--symbol">
                 {{coin}}
             </div>

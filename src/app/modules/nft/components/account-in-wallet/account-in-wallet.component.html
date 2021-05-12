@@ -17,7 +17,15 @@
         </app-expansion>          
     </div>
     <div class="col col-9">
-        <app-nft-account-in-wallet-search></app-nft-account-in-wallet-search>
+        <app-nft-account-in-wallet-pills
+        [selectedCollections]="selectedCollections"
+        [selectedCurrencies]="selectedCurrencies"        
+        ></app-nft-account-in-wallet-pills>
+        <!--
+        <app-nft-account-in-wallet-search>
+
+        </app-nft-account-in-wallet-search>
+        -->
         <app-nft-account-in-wallet-assets 
         [wallet]="wallet"
         [address]="address"
