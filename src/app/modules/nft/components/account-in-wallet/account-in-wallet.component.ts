@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { NftAssetService } from '../../services/nft-asset.service';
 import { NftFavoriteService } from '../../services/nft-favorite.service';
@@ -20,7 +20,7 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
     };
     
     wallet: any;
-    address: string;
+    @Input() address: string;
     favorites: any;
     assets: any;
     selectedCollections: any;
@@ -42,7 +42,10 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
         const wallet = wallets.items[wallets.currentIndex];
         this.wallet = wallet;
         const addresses = wallet.addresses;
-        this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+        if(!this.address) {
+          this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+        }
+        
         this.favoriteServ.getByAddress(this.address).subscribe(
           (ret: any) => {
             if(ret && ret.ok) {
@@ -52,14 +55,26 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
         );
       });  
       
-      this.assetServ.getAll().subscribe(
-        (ret: any) => {
-          if(ret && ret.ok) {
-            this.assets = ret._body;
-            console.log('');
+      if(this.address) {
+        this.assetServ.getAllByOwner(this.address).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.assets = ret._body;
+              console.log('');
+            }
           }
-        }
-      );       
+        ); 
+      } else {
+        this.assetServ.getAll().subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.assets = ret._body;
+              console.log('');
+            }
+          }
+        ); 
+      }
+      
     }
 
   }

@@ -1,7 +1,7 @@
 <app-nft-header></app-nft-header>
 <app-nft-account-overview *ngIf="address" [wallet]="wallet" [address]="address" [self]="self"></app-nft-account-overview>
 <app-nft-account-tab [(ngModel)]="currentTab"></app-nft-account-tab>
-<app-nft-account-in-wallet *ngIf="currentTab == 'wallet'"></app-nft-account-in-wallet>
+<app-nft-account-in-wallet *ngIf="(currentTab == 'wallet') && address" [address]="address"></app-nft-account-in-wallet>
 <app-nft-account-activity *ngIf="currentTab == 'activity'"></app-nft-account-activity>
 <app-nft-account-offers *ngIf="currentTab == 'offers'"></app-nft-account-offers>
 <app-nft-account-favorites *ngIf="currentTab == 'favorites'"></app-nft-account-favorites>
