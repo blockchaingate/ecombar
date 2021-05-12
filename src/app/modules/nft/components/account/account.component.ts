@@ -46,7 +46,7 @@ import { NftCollectionService } from '../../services/nft-collection.service';
                 console.log('this.collections=', this.collections);
             }
         }
-    );
+      );
     }
 
   }

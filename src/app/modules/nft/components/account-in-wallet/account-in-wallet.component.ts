@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { NftAssetService } from '../../services/nft-asset.service';
+import { NftCollectionService } from '../../services/nft-collection.service';
 import { NftFavoriteService } from '../../services/nft-favorite.service';
 
 @Component({
@@ -30,11 +31,24 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
     constructor(
       private localSt: LocalStorage,
       private assetServ: NftAssetService,
+      private collectionServ: NftCollectionService,
       private favoriteServ: NftFavoriteService) {}
 
     ngOnInit() {
       this.selectedCollections = [];
       this.selectedCurrencies = [];
+
+      if(!this.collections) {
+        this.collectionServ.getAll().subscribe(
+          (ret: any) => {
+              if(ret && ret.ok) {
+                  this.collections = ret._body;
+                  console.log('this.collections=', this.collections);
+              }
+          }
+        );
+      }
+
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {

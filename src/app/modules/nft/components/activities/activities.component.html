@@ -22,7 +22,8 @@
                                             <div class="Row--cell Row--cellIsSpaced ">To</div>
                                             <div class="Row--cell Row--cellIsSpaced ">Date</div>
                                         </div>
-                                        <div class="Rowreact__DivContainer-amt98e-0 bISFhL  EventHistory--row EventHistory--polledData " role="row" *ngFor="let event of events">
+                                        <div class="Rowreact__DivContainer-amt98e-0 bISFhL  EventHistory--row EventHistory--polledData " role="row" 
+                                        *ngFor="let event of events | eventsSearch : selectedCollections.length : selectedEventTypes.length : selectedCollections : selectedEventTypes">
                                             <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">
                                                 <i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX EventHistory--icon material-icons" value="{{getIcon(event.name)}}" size="24">{{getIcon(event.name)}}</i>{{event.name}}
                                             </div>
@@ -33,11 +34,11 @@
                                                             <div class="AssetMediareact__DivContainer-sc-1vbfbdi-0 iGXkUF AssetCell--img">
                                                                 <div height="100%" width="100%" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 FlexVerticalreact__FlexVertical-x35rw8-0 VerticalAlignedreact__VerticalAligned-sc-1v4gkkl-0 CenterAlignedreact__CenterAligned-sc-1ek5672-0 jPFzsV gWUZeS qhVAl exleMn jKDYFy" style="background-color: rgb(255, 255, 255);">
                                                                     <div class="Imagereact__DivContainer-dy59cl-0 eltLFv Image--fade Image--isImageLoaded Image--isImageLoaderVisible AssetMedia--img " style="height: 48px; width: 48px;">
-                                                                        <img class="Image--image" src="{{getImage(event.smartContractAddress, event.tokenId)}}" style="object-fit: contain; width: auto; height: auto; max-width: 100%; max-height: 100%;">
+                                                                        <img class="Image--image" src="{{event.asset.media}}" style="object-fit: contain; width: auto; height: auto; max-width: 100%; max-height: 100%;">
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <span class="AssetCell--name">{{getName(event.smartContractAddress, event.tokenId)}}</span>
+                                                            <span class="AssetCell--name">{{event.asset.name}}</span>
                                                         </div>
                                                     </a>
                                                 </div>

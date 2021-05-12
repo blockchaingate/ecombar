@@ -13,10 +13,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
   })
   export class NftAccountActivityEventTypeComponent implements ControlValueAccessor, OnInit {
       eventTypes = [
-        'Listings',
-        'Sales',
-        'Offers',
-        'Transfers'
+        'Create',
+        'List',
+        'Sale',
+        'Offer',
+        'Transfer'
       ];
       selectedEventTypes: any;
       ngOnInit() {

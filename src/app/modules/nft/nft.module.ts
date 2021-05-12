@@ -91,6 +91,7 @@ import { NftMakeOfferComponent } from './modals/make-offer/make-offer.component'
 import { WalletModule } from '../wallet/wallet.module';
 
 import { AssetsSearchPipe } from './pipes/assets-search.pipe';
+import { EventsSearchPipe } from './pipes/events-search.pipe';
 @NgModule({
     declarations: [
       NftComponent,
@@ -102,6 +103,7 @@ import { AssetsSearchPipe } from './pipes/assets-search.pipe';
       NftCollectionsComponent,
       TextHeaderComponent,
       AssetsSearchPipe,
+      EventsSearchPipe,
       NftAccountOffersTableComponent,
       NftRankingsComponent,
       NftAccountActivityComponent,

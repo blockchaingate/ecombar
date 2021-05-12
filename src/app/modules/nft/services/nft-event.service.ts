@@ -15,6 +15,12 @@ export class NftEventService {
         return this.http.get(url);           
     }
 
+    getAllByAddress(address: string) {
+        const url = environment.endpoints.blockchaingate + 'nft-event/address/' 
+        + address;
+        return this.http.get(url);  
+    }
+
     getBySmartContractTokenId(smartContractAddress: string, tokenId: string) {
         const url = environment.endpoints.blockchaingate + 'nft-event/smartContractAddressTokenId/' 
         + smartContractAddress + '/' + tokenId;
