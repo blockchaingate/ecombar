@@ -17,9 +17,13 @@
 
     <app-nft-account-offers 
     *ngIf="currentTab == 'offers'" 
+    [collections]="collections"
+    [address]="address"
     ></app-nft-account-offers>
     
     <app-nft-account-favorites 
     *ngIf="currentTab == 'favorites'"
+    [address]="address"   
+    [wallet]="wallet" 
     ></app-nft-account-favorites>
 </div>

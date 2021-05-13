@@ -5,11 +5,16 @@
         [icon]="'view_comfy'"
         [options]="options"
         [toggleable]="true">
-        fewadwa
+        <app-nft-account-in-wallet-collections 
+        [collections]="collections"
+        [(ngModel)]="selectedCollections"
+        ></app-nft-account-in-wallet-collections>
         </app-expansion>          
     </div>
     <div class="col col-9">
-        <app-nft-account-offers-table></app-nft-account-offers-table>
+        <app-nft-account-offers-table
+        [address]="address"
+        ></app-nft-account-offers-table>
     </div>
 
 </div>

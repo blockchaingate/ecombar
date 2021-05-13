@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     providers: [],
@@ -7,7 +7,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./account-offers.component.scss']
   })
   export class NftAccountOffersComponent implements OnInit {
+    @Input() address: string;
+    @Input() collections: any;
 
+    selectedCollections: any;
     options = {
         expanded: true
     }   

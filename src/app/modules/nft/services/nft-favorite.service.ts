@@ -17,7 +17,7 @@ export class NftFavoriteService {
     }  
 
     getByAddress(address: string) {
-        const url = environment.endpoints.blockchaingate + 'nft-favorite/address/' + address;
+        const url = environment.endpoints.blockchaingate + 'nft-asset/favoritedBy/' + address;
         return this.http.get(url);    
     }    
 }

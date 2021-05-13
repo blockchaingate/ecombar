@@ -27,6 +27,11 @@ export class NftOrderService {
     return this.http.get(url);    
   }
 
+  getOffersByAddress(address: string) {
+    const url = environment.endpoints.blockchaingate + 'nft-order/offers/address/' + address;
+    return this.http.get(url);  
+  }
+
   getBySmartContractTokenId(smartContractAddress: string, tokenId: string) {
     const url = environment.endpoints.blockchaingate + 'nft-order/smartContractAddressTokenId/' 
     + smartContractAddress + '/' + tokenId;
