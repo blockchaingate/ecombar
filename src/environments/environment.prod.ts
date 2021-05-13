@@ -141,8 +141,8 @@ addresses: {
     },
 
     smartContract: {
-        NFT_Exchange: '',
-        ProxyRegistry: '',        
+        NFT_Exchange: '0xd10c5f37c78058d82fb708cdac6c7278f3747721',
+        ProxyRegistry: '0x87f4ca4ee743c2521879f6f4d58ab3e0fc2c9bdf',        
         FABLOCK: '0x04baa04d9550c49831427c6abe16def2c579af4a',
         EXG: '0xa3e26671a38978e8204b8a37f1c2897042783b00',
         USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
