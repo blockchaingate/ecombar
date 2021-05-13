@@ -1,13 +1,13 @@
 
 <div class="modal-header">
-    <h4 class="modal-title pull-left">{{'Password' | translate}}</h4>
+    <h4 class="modal-title pull-left">{{'Logout' | translate}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
     <div class="input-group input-group-pill my-3">
-        <input type="password" class="form-control border-1 height-40" placeholder="{{'Password' | translate}}" [(ngModel)]="password" name="password" required>
+        {{'Once you delete your wallet, you can only recover it if you keep your seed phrase.' | translate }}
     </div>
 </div>
 
@@ -15,7 +15,7 @@
 
     <div class="CreateCollection--actions">
         <div class="ActionButtonrContainer">
-            <div class="ActionButton--content" (click)="confirmPassword()" style="min-width: 120px;">
+            <div class="ActionButton--content" (click)="confirm()" style="min-width: 120px;">
                 {{'Confirm' | translate}}
             </div>
         </div> 

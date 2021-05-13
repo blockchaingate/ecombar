@@ -15,6 +15,8 @@ import { NftActivitiesPageComponent } from './components/activities-page/activit
 import { NftTransferComponent } from './components/transfer/transfer.component';
 import { NftSettingsComponent } from './components/settings/settings.component';
 import { NftRankingsComponent } from './components/rankings/rankings.component';
+import { NftAccountFavoritesComponent } from './components/account-favorites/account-favorites.component';
+
 const routes: Routes = [
     {
       path: '', component: NftComponent,
@@ -49,6 +51,9 @@ const routes: Routes = [
     {
         path: 'admin', component: NftAdminComponent,
         children: [
+           {
+                path: 'favorites', component: NftAccountFavoritesComponent
+           },          
             {
                 path: 'collections', component: NftCollectionsComponent
             },

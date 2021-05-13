@@ -34,6 +34,7 @@ import { NftWalletAsideComponent } from './components/wallet-aside/wallet-aside.
 import { ProductsGridComponent } from './components/products-grid/products-grid.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { PasswordModalComponent } from './components/password-modal/password-modal.component';
+import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
@@ -50,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     StarRatingComponent,
     NftHeaderComponent,
     NftWalletAsideComponent,
-    PasswordModalComponent
+    PasswordModalComponent,
+    LogoutModalComponent
   ],
   imports: [
     FormsModule,
@@ -71,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductsGridComponent,
     StarRatingComponent,
     PasswordModalComponent,
+    LogoutModalComponent,
     NftHeaderComponent,
     TranslateModule
   ],

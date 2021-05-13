@@ -43,20 +43,40 @@
                 </a>
             </li>  
             
-            <!--
-            <li class="NavItem--isRoot">
+            
+            <li class="NavItem--isRoot" *ngIf="setting">
                 <a class="NavItem--main" href="/">
                     <div class="img-container" style="height: 32px; width: 32px;">
-                        <img class="Image--image" src="https://storage.googleapis.com/opensea-static/opensea-profile/12.png" style="object-fit: cover;">
+                        <img class="Image--image" *ngIf="setting.logo" src="{{setting.logo}}" style="object-fit: cover;">
                     </div>
                 </a>
                 <ul class="NavDropdown--items">
                     <li>
-                        ddd
+                        <a href="/nft/account">
+                            My Profile
+                        </a>
                     </li>
+                    <li>
+                        <a href="/nft/admin/collections">
+                            My Collections
+                        </a>
+                    </li>  
+                    <li>
+                        <a href="/nft/admin/favorites">
+                            My Favorites
+                        </a>
+                    </li>   
+                    <li>
+                        <a href="/nft/account/settings">
+                            My Account Settings
+                        </a>
+                    </li> 
+                    <li (click)="logout()">
+                        Logout
+                    </li>                                                                              
                 </ul>
             </li>  
-            -->
+            
             <li class="NavItemreact__LiContainer-sc-1agh4ne-0 eUbTNn NavItem--isRoot" (click)="showAside = !showAside">
                 <div class="NavItem--main ">
                     <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">account_balance_wallet</i>
