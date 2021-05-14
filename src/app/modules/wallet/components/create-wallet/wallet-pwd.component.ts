@@ -69,7 +69,7 @@ export class WalletPwdComponent implements OnInit {
                 }
                 if (wallets.items.indexOf(wallet) < 0) {
                     wallets.items.push(wallet);
-                    wallets.currentIndex ++;
+                    wallets.currentIndex = wallets.items.length - 1;
                 }
                 this.localSt.setItem('ecomwallets', wallets).subscribe(() => {
                     this.route.navigate(['/wallet/dashboard']);

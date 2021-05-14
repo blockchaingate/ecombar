@@ -7,6 +7,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { WalletService } from '../../services/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
     providers: [],
@@ -27,7 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
       private modalServ: BsModalService,
       private walletServ: WalletService,
       private toastr: ToastrService,
-
+      private router: Router,
       private translateServ: TranslateService,
       private settingServ: NftSettingService) {}
 
@@ -67,6 +68,10 @@ import { TranslateService } from '@ngx-translate/core';
       this.translateServ.use(lang);
     }
 
+    navigateTo(url: string) {
+      console.log('url===', url);
+      this.router.navigate([url]);
+    }
     logout() {
       this.modalRef = this.modalServ.show( LogoutModalComponent );
       this.modalRef.content.onClose.subscribe(
