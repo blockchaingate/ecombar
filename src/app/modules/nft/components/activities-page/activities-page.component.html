@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col col-3 pt-3 mt-24">
         <app-expansion 
-        [title]="'Event Type'"
+        [title]="'Event Type' | translate"
         [icon]="'star'"
         [options]="options"
         [toggleable]="true">
@@ -11,7 +11,7 @@
         [(ngModel)]="selectedEventTypes"
         ></app-nft-account-activity-event-type>
         <app-expansion 
-        [title]="'Collections'"
+        [title]="'Collections' | translate"
         [icon]="'view_comfy'"
         [options]="options"
         [toggleable]="true">
