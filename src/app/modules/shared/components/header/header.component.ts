@@ -27,6 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
       private modalServ: BsModalService,
       private walletServ: WalletService,
       private toastr: ToastrService,
+
       private translateServ: TranslateService,
       private settingServ: NftSettingService) {}
 
@@ -59,6 +60,11 @@ import { TranslateService } from '@ngx-translate/core';
             }
           );
         });        
+    }
+
+    changeLanguage(lang: string) {
+      this.translateServ.setDefaultLang(lang);
+      this.translateServ.use(lang);
     }
 
     logout() {

@@ -3,7 +3,7 @@
         <div class="nav-bar-left">
             <img src="/assets/images/logo/ecombar-logo.png">
             <span class="logo-text">
-                ecombar
+                {{'ecombar' | translate}}
             </span>
         </div>
         <div class="search-container">
@@ -15,23 +15,23 @@
         <ul class="Navbar--items">
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" href="/">
-                    Home
+                    {{'Home' | translate}}
                 </a>
             </li>   
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" href="/wallet">
-                    Wallet
+                    {{'Wallet' | translate}}
                 </a>
             </li>            
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" href="/nft/assets">
-                    Browse
+                    {{'Explore' | translate}}
                 </a>
             </li>
 
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" href="/nft/activities">
-                    Activity
+                    {{'Activity' | translate}}
                 </a>
             </li>  
             <!--   
@@ -43,13 +43,28 @@
         -->
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" href="/nft/admin/collections">
-                    Create
+                    {{'Create' | translate}}
                 </a>
             </li>  
-            
+
+            <li class="NavItem--isRoot">
+                <a class="NavItem--main">
+                    {{'Language' | translate}}
+                </a>
+                <ul class="NavDropdown--items">
+                  
+                    <li (click)="changeLanguage('en')">
+                        English
+                    </li>
+
+                    <li (click)="changeLanguage('sc')">
+                        中文
+                    </li>                    
+                </ul>
+            </li>            
             
             <li class="NavItem--isRoot" *ngIf="setting">
-                <a class="NavItem--main" href="/">
+                <a class="NavItem--main">
                     <div class="img-container" style="height: 32px; width: 32px;">
                         <img class="Image--image" *ngIf="setting.logo" src="{{setting.logo}}" style="object-fit: cover;">
                     </div>
