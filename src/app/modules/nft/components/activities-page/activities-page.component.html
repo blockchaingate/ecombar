@@ -1,2 +1,36 @@
 <app-nft-header></app-nft-header>
-<app-nft-activities></app-nft-activities>
+<div class="row">
+    <div class="col col-3 pt-3 mt-24">
+        <app-expansion 
+        [title]="'Event Type'"
+        [icon]="'star'"
+        [options]="options"
+        [toggleable]="true">
+        </app-expansion>        
+        <app-nft-account-activity-event-type
+        [(ngModel)]="selectedEventTypes"
+        ></app-nft-account-activity-event-type>
+        <app-expansion 
+        [title]="'Collections'"
+        [icon]="'view_comfy'"
+        [options]="options"
+        [toggleable]="true">
+        <app-nft-account-in-wallet-collections 
+        [collections]="collections"
+        [(ngModel)]="selectedCollections"
+        ></app-nft-account-in-wallet-collections>
+        </app-expansion>          
+    </div>
+    <div class="col col-9">
+        <app-nft-account-in-wallet-pills
+        [selectedCollections]="selectedCollections"
+        [selectedEventTypes]="selectedEventTypes"        
+        ></app-nft-account-in-wallet-pills>        
+        <app-nft-activities
+        [events]="events"
+        [selectedCollections]="selectedCollections"
+        [selectedEventTypes]="selectedEventTypes"
+        ></app-nft-activities>
+    </div>
+
+</div>

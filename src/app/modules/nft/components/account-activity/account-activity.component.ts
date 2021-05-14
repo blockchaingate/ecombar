@@ -41,7 +41,7 @@ import { NftEventService } from '../../services/nft-event.service';
                   this.events = body;
               }
           }
-      );
+        );
       }
     }
   }
