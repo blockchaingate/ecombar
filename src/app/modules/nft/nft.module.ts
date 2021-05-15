@@ -29,6 +29,7 @@ import { NftAssetSellComponent } from './components/asset-sell/asset-sell.compon
 import { NftRankingsComponent } from './components/rankings/rankings.component';
 import { NftAccountActivityComponent } from './components/account-activity/account-activity.component';
 import { NftAccountOffersComponent } from './components/account-offers/account-offers.component';
+import { NftUnlockableContentComponent } from './modals/unlockable-content/unlockable-content.component';
 import { NftAccountFavoritesComponent } from './components/account-favorites/account-favorites.component';
 import { NftAssetOverviewComponent } from './components/asset-overview/asset-overview.component';
 import { NftAssetSellMethodComponent } from './components/asset-sell-method/asset-sell-method.component';
@@ -108,6 +109,7 @@ import { EventsSearchPipe } from './pipes/events-search.pipe';
       NftRankingsComponent,
       NftAccountActivityComponent,
       NftSettingsComponent,
+      NftUnlockableContentComponent,
       NftAccountInWalletPillsComponent,
       NftCollectionsListComponent,
       NftAccountInWalletCollectionsComponent,
@@ -175,6 +177,7 @@ import { EventsSearchPipe } from './pipes/events-search.pipe';
       LevelsComponent,
       NftMakeOfferComponent,
       NftPriceChangeComponent,
+      NftUnlockableContentComponent,
       NftCancelListingComponent
     ],
     providers: [

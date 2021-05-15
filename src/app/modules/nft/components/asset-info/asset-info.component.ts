@@ -23,14 +23,11 @@ import { Router } from '@angular/router';
     ngOnInit() {
       this.showShareDropdown = false;
       if(this.asset) {
-        console.log('this.asset=', this.asset);
         if(this.asset.orders && this.asset.orders.length > 0) {
           const sellOrders = this.asset.orders.filter(item => item.side == 1);
-          console.log('sellOrders==', sellOrders);
           if(sellOrders && sellOrders.length > 0) {
             this.sellOrder = NftOrder.from(sellOrders[sellOrders.length - 1]);
 
-            console.log('this.sellOrder=', this.sellOrder);
           }
           
         }        

@@ -8,6 +8,7 @@ export const environment = {
   appid: '5f80c3b09577e8dc2f8db596',
   cat_typ: 'ecombar',
   IDDOCK: 'http://localhost:4201',
+  PUBLIC_KEY: '8aff99f9727143fccd28e62df14e4e67305faa70d19b4cb0b9d4cde18ea3cd23c8e58bda3c26e10813aaa6020f3d07a3d9f83a9062cfe662a600949325378b99',
 //  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
 //  EX_WEBSITE: 'http://localhost:4200/',
 

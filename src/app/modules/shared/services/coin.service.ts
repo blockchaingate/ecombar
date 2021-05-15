@@ -15,6 +15,7 @@ import { coin_list } from '../../../../environments/coins';
 import { Signature } from '../../../interfaces/kanban.interface';
 import * as bitcoinMessage from 'bitcoinjs-message';
 import TronWeb from 'tronweb';
+import { instantiateSecp256k1, hexToBin, binToHex } from '@bitauth/libauth';
 
 const HttpProvider = TronWeb.providers.HttpProvider;
 const fullNode = new HttpProvider(environment.chains.TRX.fullNode);
@@ -53,6 +54,21 @@ export class CoinService {
         buf += this.utilServ.fixedLengh(address, 64);
 
         return buf;
+    }
+
+    async toUncompressedPublicKey(compressedKey: string) {
+        //var compressedKey = "03d061e9c5891f579fd548cfd22ff29f5c642714cc7e7a9215f0071ef5a5723f69";
+        console.log('compressedKey====', compressedKey);
+        compressedKey = compressedKey.replace(/^0x/, "");
+        const secp256k1 = await instantiateSecp256k1();
+        console.log('1');
+        const compressed = hexToBin(compressedKey);
+        console.log('2');
+        const uncompressed = secp256k1.uncompressPublicKey(compressed);
+        console.log('3');
+        console.log(binToHex(uncompressed));
+        
+        return binToHex(uncompressed).replace(/^04/, "");;
     }
 
     signedMessage(originalMessage: string, keyPair: any) {
@@ -688,7 +704,6 @@ export class CoinService {
         name: name
         };
 
-        console.log('keyPairs=', keyPairs);
         return keyPairs;
     }
 

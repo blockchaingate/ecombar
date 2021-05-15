@@ -19,8 +19,6 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
         this.isOwner = this.owner == this.address;
       }    
       
-      console.log('thisowner=', this.owner);
-      console.log('address=', this.address);
     }
 
 

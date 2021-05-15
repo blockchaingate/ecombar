@@ -6,6 +6,10 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { NftEventService } from '../../services/nft-event.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NftOrder } from '../../models/nft-order';
+import { NftUnlockableContentComponent } from '../../modals/unlockable-content/unlockable-content.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 @Component({
     providers: [],
@@ -24,6 +28,7 @@ import { NftOrder } from '../../models/nft-order';
     wallet: any;
     events: any;
     sellOrder: any;
+    modalRef: BsModalRef;
     smartContractAddress: string;
     tokenId: string;
     
@@ -33,6 +38,8 @@ import { NftOrder } from '../../models/nft-order';
       private assetServ: NftAssetService,
       private eventServ: NftEventService,
       private utilServ: UtilService,
+      private kanbanServ: KanbanService,
+      private modalServ: BsModalService,
       private collectionServ: NftCollectionService
       ) {
 
@@ -66,6 +73,33 @@ import { NftOrder } from '../../models/nft-order';
           }          
         );
       });           
+    }
+
+    reveal() {
+      console.log('revealing');
+      const initialState = {
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
+      
+      this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+
+      this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+        const body = {id: this.asset._id};
+        const sig = this.kanbanServ.signJsonData(privateKey, body);
+        body['sig'] = sig.signature; 
+        this.assetServ.reveal(body).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              const content = ret._body;
+              const initialState = {
+                content
+              };
+              this.modalRef = this.modalServ.show(NftUnlockableContentComponent, { initialState });              
+            }
+          }
+        );
+      });
     }
 
     loadAsset() {

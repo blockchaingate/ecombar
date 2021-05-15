@@ -6,7 +6,7 @@ import * as createHash from 'create-hash';
 import BigNumber from 'bignumber.js/bignumber';
 import { coin_list } from '../../../../environments/coins';
 import { MyCoin } from '../../../models/mycoin';
-import Web3 from 'web3';
+import * as ecies from 'eth-ecies';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
@@ -97,6 +97,31 @@ export class UtilService {
         return Math.floor(Math.random() * (new BigNumber(65535, 16).toNumber() - 1));
         //const web3 = new Web3();
         //return web3.utils.randomHex(32);
+    }
+
+    encrypt(publicKey, data) {
+
+        const userPublicKey = Buffer.from(publicKey, 'hex');
+        let bufferData = Buffer.from(data);
+        //bufferData = Buffer.from(`{foo:"bar",baz:42}`);
+        const encryptedData = ecies.encrypt(userPublicKey, bufferData);
+
+        return encryptedData.toString('base64')
+    }
+
+    decrypt(privateKey, encryptedData) {
+        console.log('privateKey for decrypt=', privateKey);
+        //const userPrivateKey = Buffer.from(privateKey, 'hex');
+        console.log('encryptedData==', encryptedData);
+        if(!encryptedData) {
+            return '';
+        }
+        const bufferEncryptedData = Buffer.from(encryptedData, 'base64');
+        console.log('1111');
+        const decryptedData = ecies.decrypt(privateKey, bufferEncryptedData);
+
+        console.log('222');
+        return decryptedData.toString('utf8');
     }
 
     sequenceId2ObjectId(sequenceId: string) {

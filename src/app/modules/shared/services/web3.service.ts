@@ -54,7 +54,6 @@ export class Web3Service {
     console.log('sender=', sender);
     console.log('addr=', addr);
     */
-    console.log('pubKey=', pubKey);
 
     /*
     const { address } = Btc.payments.p2pkh({
@@ -66,17 +65,14 @@ export class Web3Service {
     //const pubkey = Buffer.from( '0250863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b2352', 'hex' );
     //const pubkeyBuf = Buffer.from('04a097026e876544a0e40f9ca836435560af4470e161bf60c23465dcb3151c947d1cbe052875211972107e25fca8dd939f1c6e749a43862673ec5cf7a8567f2d95', 'hex')
     const pubkeyBuf = Buffer.concat([Buffer.from('04', 'hex'), pubKey]);
-    console.log('pubkeyBuf=', pubkeyBuf);
     const pubkey = Btc.ECPair.fromPublicKey(pubkeyBuf);
-    console.log('pubkey=', pubkey);
-    console.log('pubkey.publicKey=', pubkey.publicKey);
+
     const { address } = Btc.payments.p2pkh({ 
       pubkey: pubkey.publicKey,
       network: environment.chains['FAB']['network']
      });
 
 
-    console.log('address=', address);
     return address;
     //console.log('pubKey=', pubKey);
   }

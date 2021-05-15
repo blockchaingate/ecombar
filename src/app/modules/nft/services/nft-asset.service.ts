@@ -22,6 +22,11 @@ export class NftAssetService {
     return this.http.get(url);           
   }
 
+  reveal(data: any) {
+    const url = environment.endpoints.blockchaingate  + 'nft-asset/reveal';
+    return this.http.post(url, data);    
+  }
+  
   getAllByOwner(address: string) {
     const url = environment.endpoints.blockchaingate + 'nft-asset/owner/' + address;
     return this.http.get(url);   

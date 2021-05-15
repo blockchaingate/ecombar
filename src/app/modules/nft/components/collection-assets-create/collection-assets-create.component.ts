@@ -10,8 +10,8 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { environment } from '../../../../../environments/environment';
-import { NftPortService } from '../../services/nft-port.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     providers: [],
@@ -60,7 +60,7 @@ import { NftPortService } from '../../services/nft-port.service';
 
     constructor(
       private toastr: ToastrService,
-      private kanbanServ: KanbanService,
+      private coinServ: CoinService,
       private spinner: NgxSpinnerService,
       private modalService: BsModalService,
       private localSt: LocalStorage,
@@ -134,6 +134,9 @@ import { NftPortService } from '../../services/nft-port.service';
       const args = [this.utilServ.fabToExgAddress(this.address)];
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(seed, smartContractAddress, abi, args);
 
+      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const publicKey = await this.coinServ.toUncompressedPublicKey(keyPair.publicKey);
+      console.log('publicKey===', publicKey);
       const asset = {
         media: this.media,
         name: this.name,
@@ -146,6 +149,8 @@ import { NftPortService } from '../../services/nft-port.service';
         txhex: txhex,
         creator: this.address,
         unlockableContent: this.unlockableContent
+        //unlockableContent: this.unlockableContent ? this.utilServ.encrypt(publicKey, this.unlockableContent) : '',
+        //unlockableContent: this.unlockableContent ? this.utilServ.encrypt(environment.PUBLIC_KEY, this.unlockableContent) : ''
       }
 
       this.assetServ.create(asset).subscribe(

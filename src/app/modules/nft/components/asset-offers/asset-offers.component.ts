@@ -46,9 +46,7 @@ import { environment } from '../../../../../environments/environment';
       if(this.owner && this.address) {
         this.isOwner = this.owner == this.address;
       }    
-      
-      console.log('thisowner=', this.owner);
-      console.log('address=', this.address);
+
     }
 
 

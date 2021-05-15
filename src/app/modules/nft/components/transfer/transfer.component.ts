@@ -57,7 +57,6 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
             (res: any) => {
               if(res && res.ok) {
                 this.asset = res._body;
-                console.log('this.asset=', this.asset);
               }
         });          
       }
