@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { OpenSeaPort, Network } from '../../../../../../nft-js';
 import { Web3Service } from '../../shared/services/web3.service';
 import { KanbanService } from '../../shared/services/kanban.service';
 import { NftOrder } from '../models/nft-order';
