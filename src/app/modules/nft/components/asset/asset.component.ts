@@ -108,11 +108,11 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
           if(res && res.ok) {
             this.events = res._body;
 
-            console.log('this.events=', this.events);
+            console.log('this.eventssss=', this.events);
             if(this.events && this.events.length > 0) {
               this.sales = [];
 
-              const events = this.asset.events.filter(event => event.name == 'Sale');
+              const events = this.events.filter(event => event.name == 'Sale');
 
               if(events && events.length > 0) {
                 for(let i = 0; i < events.length; i++) {

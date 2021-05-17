@@ -1,7 +1,7 @@
 <div class="row AssetSell">
     <div class="col col-6" *ngIf="!noText">
-        <div class="header"> Price </div>
-        <div class="desc">Will be on sale until you transfer this item or cancel it. </div>
+        <div class="header"> {{'Price' | translate}} </div>
+        <div class="desc">{{'Will be on sale until you transfer this item or cancel it.' | translate}} </div>
     </div>
     <div class="col" [ngClass]="noText ? 'col-12' : 'col-6'">
         <div class="Input--main">
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="Input--prefix"></div>
-            <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="Amount" spellcheck="false" type="number" 
+            <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="{{'Amount' | translate}}" spellcheck="false" type="number" 
             [(ngModel)]="quantity" (ngModelChange)="emitEntity()">
         </div>
     </div>

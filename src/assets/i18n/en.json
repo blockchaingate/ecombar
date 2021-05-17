@@ -15,6 +15,7 @@
     "Insufficient Coin": "Insufficient {{coin}} for this transaction",
     "Show more": "Show more",
     "Show less": "Show less",
+    "InstructionDetails": "<div>Ecombar is <strong>decentralized</strong>,so we never escrow your items.</div><div>As a result, you need to sign for your listing and orders</div><div>Note that you can always change the price of your listing for free, without making a transaction or paying gas. You can view all your items <a href=\"/nft/assets\">here</a>.</div>",
     "Under $25": "Under $25",
     "$25 to $50": "$25 to $50",
     "$50 to $100": "$50 to $100",
