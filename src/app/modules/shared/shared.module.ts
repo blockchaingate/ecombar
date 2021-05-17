@@ -11,6 +11,7 @@ import { CollectionService } from './services/collection.service';
 import { OrderService } from './services/order.service';
 import { PaymentService } from './services/payment.service';
 import { NftHeaderComponent } from './components/header/header.component';
+import { NftFooterComponent } from './components/footer/footer.component';
 import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
 import { IddockService } from './services/iddock.service';
@@ -52,6 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductsGridComponent,
     StarRatingComponent,
     NftHeaderComponent,
+    NftFooterComponent,
     NftWalletAsideComponent,
     PasswordModalComponent,
     LogoutModalComponent
@@ -78,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordModalComponent,
     LogoutModalComponent,
     NftHeaderComponent,
+    NftFooterComponent,
     TranslateModule
   ],
   providers: [
