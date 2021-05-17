@@ -4,8 +4,8 @@
 
 <div *ngIf="wallet">
   <app-text-header 
-  [title]="'My Collections'" [new]="true"
-  [subtitle]="'Create collections (your own storefronts), upload digital creations, configure your commission, and sell NFTs to your fans - all for free!'">
+  [title]="'My Collections' | translate" [new]="true"
+  [subtitle]="'Create collections (your own storefronts), upload digital creations, and sell NFTs to your fans - all for free!' | translate">
   </app-text-header>
   
   <app-nft-collections-list
@@ -14,7 +14,7 @@
   
   <ng-template #templateCreateCollection>
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Create your collection</h4>
+        <h4 class="modal-title pull-left">{{'Create your collection' | translate}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>

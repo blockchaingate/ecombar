@@ -1,27 +1,27 @@
 <ul class="responsive-table">
     <li class="table-header">
-        <div class="col col-2">{{'CoinT' | translate}}</div>
+        <div class="col col-2">{{'Coin' | translate}}</div>
         <div class="col col-3">{{'Balance' | translate}}</div>
-        <div class="col col-3">{{'Locked Balance' | translate}}</div>
+        <div class="col col-3">{{'Locked' | translate}}</div>
         <div class="col col-2">{{'Value(USD)' | translate}}</div>
         <div class="col col-2"></div>
     </li>
     <li class="table-row" *ngFor="let coin of coins">
 
-        <div class="col col-2 text-black" data-label="Coin">{{coin.coin | translate}}</div>
-        <div class="col col-3" data-label="Balance">
+        <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">{{coin.coin | translate}}</div>
+        <div class="col col-3" data-label="{{'Balance' | translate}}">
             <div *ngIf="coin.balance && (coin.balance >= 0)" class="text-black">
                 {{coin.balance}}
             </div>
         </div>
 
-        <div class="col col-3" data-label="Locked Balance">
+        <div class="col col-3" data-label="{{'Locked' | translate}}">
             <div class="text-black" *ngIf="coin.lockBalance && (coin.lockBalance > 0)">
                 {{coin.lockBalance}}
             </div>
         </div>
 
-        <div class="col col-2 text-black" data-label="Value(USD)">
+        <div class="col col-2 text-black" data-label="{{'Value(USD)' | translate}}">
             <div *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
                 {{(coin.balance + coin.lockBalance) * coin.usdValue.USD}}
             </div>

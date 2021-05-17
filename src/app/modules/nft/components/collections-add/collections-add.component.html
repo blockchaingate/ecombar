@@ -1,20 +1,26 @@
 <div class="CreateCollection--form">
     <div class="CreateCollection--form">
-        <h4 class="CreateCollection--header">Create your collection</h4>
-        <p class="CreateCollection--info">You can change these values later, along with configuring external URLs, payment options, and trading fees.</p>
+        <h4 class="CreateCollection--header">
+            {{'Create your collection' | translate}}
+        </h4>
+        <p class="CreateCollection--info">
+            {{'You can change these values later, along with configuring external URLs, and payment options.' | translate}}
+        </p>
         <div class="form-container">
-            <app-image-uploader [(ngModel)]="image" [title]="'Logo*'" [subtitle]="'(350 x 350 recommended)'"></app-image-uploader>
-            <app-textbox [(ngModel)]="name" [title]="'Name *'" ></app-textbox>
+            <app-image-uploader [(ngModel)]="image" [title]="'Logo*' | translate" [subtitle]="'(350 x 350 recommended)' | translate"></app-image-uploader>
+            <app-textbox [(ngModel)]="name" [title]="'Name *' | translate" ></app-textbox>
 
             <div class="pt-3">
-                <app-textarea [title]="'Description'" [(ngModel)]="description" [subtitle]="'4 of 1000 characters used'"></app-textarea>
+                <app-textarea [title]="'Description' | translate" [(ngModel)]="description"></app-textarea>
             </div>
             
 
             
             <div class="CreateCollection--actions">
                 <div class="ActionButtonrContainer">
-                    <div class="ActionButton--content" (click)="createCollection()" style="min-width: 120px;">Create</div>
+                    <div class="ActionButton--content" (click)="createCollection()" style="min-width: 120px;">
+                        {{'Create' | translate}}
+                    </div>
                 </div> 
             </div>
            

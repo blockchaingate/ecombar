@@ -1,12 +1,12 @@
 <section class="collectionManagerView--section" *ngIf="collection">
     <header class="collectionManagerView--section-header">
         <i class="material-icons">view_module</i>
-        <span>Items</span>
+        <span>{{'Your items' | translate}}</span>
     </header>
     <a rel="noreferrer" href="/nft/admin/collections/{{collection.slug}}/assets/create" style="color: white; display: inline-block;">
         <div class="ActionButtonrContainer">
             <div class="ActionButton--content" (click)="addNewItems()" style="min-width: 120px;">
-                Add New Items
+                {{'Add new items' | translate}}
             </div>
         </div> 
     </a>
@@ -16,6 +16,7 @@
 <div class="AssetSearchViewreact__DivContainer-sc-13pg143-0 dvcqEV">
     <div class="AssetSearchView--main">
         <div class="AssetSearchView--results">
+            <!--
             <div class="AssetSearchView--results-header">
                 <div class="Inputreact__DivContainer-sc-17icy78-0 cSjrfg  AssetSearchView--search-container">
                     <div class="Input--main AssetSearchView--search">
@@ -50,6 +51,7 @@
                     </div>
                 </div>
             </div>
+        -->
             <div class="Blockreact__Block-sc-18q9hu0-0 jExUsd AssetsSearchView--assets">
                 <div overflow="auto" class="Blockreact__Block-sc-18q9hu0-0 Flexreact__Flex-sc-19zejk6-0 iFhmyz dIKUNj">
                     <div *ngFor="let asset of assets" class="Blockreact__Block-sc-18q9hu0-0 jExUsd" style="padding: 8px;">

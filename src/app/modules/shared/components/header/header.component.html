@@ -73,33 +73,35 @@
                 <ul class="NavDropdown--items">
                   
                     <li click="navigateTo('/nft/account')">
-                            My Profile
+                            {{'My Profile' | translate}}
                     </li>
 
                     <li>
                         <a href="/nft/admin/collections">
-                            My Collections
+                            {{'My Collections' | translate}}
                         </a>
                     </li>  
                     <li>
                         <a href="/nft/admin/favorites">
-                            My Favorites
+                            {{'My Favorites' | translate}}
                         </a>
                     </li>   
                     <li>
                         <a href="/nft/account/settings">
-                            My Account Settings
+                            {{'My Account Settings' | translate}}
                         </a>
                     </li> 
                     <li (click)="logout()">
-                        Logout
+                        {{'Logout' | translate}}
                     </li>                                                                              
                 </ul>
             </li>  
             
             <li class="NavItemreact__LiContainer-sc-1agh4ne-0 eUbTNn NavItem--isRoot" (click)="showAside = !showAside">
                 <div class="NavItem--main ">
-                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">account_balance_wallet</i>
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">
+                        account_balance_wallet
+                    </i>
                 </div>
             </li>
 

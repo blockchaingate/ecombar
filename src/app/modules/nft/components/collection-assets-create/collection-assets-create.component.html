@@ -1,5 +1,5 @@
 <div *ngIf="step == 1">
-    <app-text-header [title]="'Create new item'"></app-text-header>
+    <app-text-header [title]="'Create new item' | translate"></app-text-header>
     <app-image-uploader 
     [(ngModel)]="media"
     [title]="'Image, Video, Audio, or 3D Model'"
