@@ -69,9 +69,9 @@ import { Router } from '@angular/router';
     }
 
     navigateTo(url: string) {
-      console.log('url===', url);
       this.router.navigate([url]);
     }
+    
     logout() {
       this.modalRef = this.modalServ.show( LogoutModalComponent );
       this.modalRef.content.onClose.subscribe(

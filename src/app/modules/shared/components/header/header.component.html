@@ -14,23 +14,24 @@
         </div>
         <ul class="Navbar--items">
             <li class="NavItem--isRoot">
-                <a class="NavItem--main" href="/">
+                <a class="NavItem--main" routerLink="/">
                     {{'Home' | translate}}
                 </a>
             </li>   
+        
             <li class="NavItem--isRoot">
-                <a class="NavItem--main" href="/wallet">
+                <a class="NavItem--main" routerLink="/wallet">
                     {{'Wallet' | translate}}
                 </a>
             </li>            
             <li class="NavItem--isRoot">
-                <a class="NavItem--main" href="/nft/assets">
+                <a class="NavItem--main" routerLink="/nft/assets">
                     {{'Explore' | translate}}
                 </a>
             </li>
 
             <li class="NavItem--isRoot">
-                <a class="NavItem--main" href="/nft/activities">
+                <a class="NavItem--main" routerLink="/nft/activities">
                     {{'Events' | translate}}
                 </a>
             </li>  
@@ -42,7 +43,7 @@
             </li>   
         -->
             <li class="NavItem--isRoot">
-                <a class="NavItem--main" href="/nft/admin/collections">
+                <a class="NavItem--main" routerLink="/nft/admin/collections">
                     {{'Create' | translate}}
                 </a>
             </li>  
@@ -74,6 +75,7 @@
                     <li click="navigateTo('/nft/account')">
                             My Profile
                     </li>
+
                     <li>
                         <a href="/nft/admin/collections">
                             My Collections

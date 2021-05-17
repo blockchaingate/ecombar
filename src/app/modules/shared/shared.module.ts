@@ -35,6 +35,7 @@ import { ProductsGridComponent } from './components/products-grid/products-grid.
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { PasswordModalComponent } from './components/password-modal/password-modal.component';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
@@ -57,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     FormsModule,
     CommonModule,
+    RouterModule,
     NgxSmartModalModule.forRoot(),
     TranslateModule.forChild({
       defaultLanguage: 'en',
