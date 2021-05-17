@@ -60,7 +60,7 @@
                 <img class="Image--image" src="https://storage.googleapis.com/opensea-static/opensea-profile/20.png" style="object-fit: cover;">
  
             </div>
-            <span>Owned by {{owner == address ? 'you' : owner}}</span>
+            <span>{{'Owned by ' | translate}}{{(owner == address ? 'you' : owner) | translate}}</span>
             <div class="pt-2" *ngIf="sellOrder">
                 <span class="price">{{sellOrder.basePrice}} {{getCoinName(sellOrder.coinType)}}</span>
             </div>
@@ -71,7 +71,7 @@
                 <i class="Panel--icon material-icons" size="24">visibility</i>
             </div>
             
-            <span class="omega">3 views</span>
+            <span class="omega">3 {{'views' | translate}}</span>
         </div>
     </div>
 </div>

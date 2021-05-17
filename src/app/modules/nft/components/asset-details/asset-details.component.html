@@ -1,49 +1,50 @@
+
 <app-expansion 
-[title]="'Details'"
+[title]="'Details' | translate"
 [icon]="'subject'"
  [toggleable]="false">
     <section>
-        Created by <span>{{asset.creator == address ? 'you' : asset.creator}}</span>
+        {{'Created by ' | translate}}<span>{{asset.creator == address ? 'you' : asset.creator}}</span>
     </section>
     <p>{{asset.description}}</p>
     
 </app-expansion>
 
 <app-expansion 
-[title]="'Properties'"
+[title]="'Properties' | translate"
 [icon]="'label'"
 [toggleable]="true">
     <app-properties-list [properties]="asset.properties"></app-properties-list>
 </app-expansion>
 
 <app-expansion 
-[title]="'Levels'"
+[title]="'Levels' | translate"
 [icon]="'stars'"
 [toggleable]="true">
     <app-levels-list [levels]="asset.levels"></app-levels-list>
 </app-expansion>
 
 <app-expansion 
-[title]="'Stats'"
+[title]="'Stats' | translate"
 [icon]="'bar_chart'"
 [toggleable]="true">
     <app-levels-list [levels]="asset.stats"></app-levels-list>
 </app-expansion>
 
 <app-expansion 
-[title]="'About ' + collection.name"
+[title]="('About ' | translate) + collection.name"
 [icon]="'vertical_split'"
 [toggleable]="true">
     <img class="img-thumbnail" src="{{collection.image}}">{{collection.description}}
 </app-expansion>
 
 <app-expansion 
-[title]="'Chain Info'"
+[title]="'Chain Info' | translate"
 [icon]="'ballot'"
 [toggleable]="true">
     <div class="d-flex justify-content-between">
         <div>
-            Contract Address
+            {{'Contract Address' | translate}}
         </div>
         <div>
             {{smartContractAddress}}
@@ -52,7 +53,7 @@
 
     <div class="d-flex justify-content-between">
         <div>
-            Token ID
+            {{'Token ID' | translate}}
         </div>
         <div>
             {{showId(tokenId)}}

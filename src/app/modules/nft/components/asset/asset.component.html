@@ -32,7 +32,7 @@
 
             <div class="item-frame" *ngIf="owner == address" (click)="reveal()">
                 <app-expansion 
-                [title]="'Reveal unlockable content'"
+                [title]="'Reveal unlockable content' | translate"
                 [icon]="'lock_open'"
                 [nocontent]="true"
                 [toggleable]="false">
@@ -42,7 +42,7 @@
 
             <div class="item-frame">
                 <app-expansion 
-                [title]="'Price History'"
+                [title]="'Price History' | translate"
                 [icon]="'timeline'"
                 [height]="'400px'"
                 [toggleable]="true">
@@ -52,7 +52,7 @@
          
             <div class="item-frame">
                 <app-expansion 
-                [title]="'Listings'"
+                [title]="'Listings' | translate"
                 [icon]="'local_offer'"
                  [toggleable]="true">
                     <app-nft-asset-listing *ngIf="owner && address" 
@@ -62,7 +62,7 @@
      
             <div class="item-frame">
                 <app-expansion 
-                [title]="'Offers'"
+                [title]="'Offers' | translate"
                 [icon]="'toc'"
                  [toggleable]="true">
                  <app-nft-asset-offers *ngIf="owner && address && wallet && asset" 
@@ -82,7 +82,7 @@
         <div class="col col-12">
             <div class="item-frame">
                 <app-expansion 
-                [title]="'Trading History'"
+                [title]="'Trading History' | translate"
                 [icon]="'swap_vert'"
                  [toggleable]="true">
                     <app-nft-asset-events [events]="events"></app-nft-asset-events>
