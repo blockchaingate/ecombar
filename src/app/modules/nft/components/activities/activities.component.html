@@ -14,13 +14,12 @@
                                 <div class="Scrollboxreact__DivContainer-sc-1b04elr-0 fAClQF EventHistory--container ActivitySearch--event-history-scrollbox">
                                     <div class="Scrollbox--content">
                                         <div class="Rowreact__DivContainer-amt98e-0 bISFhL Row--isHeader " role="row">
-                                            <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">Event</div>
-                                            <div class="Row--cell Row--cellIsSpaced EventHistory--item-col">Item</div>
-                                            <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">Unit Price</div>
-                                            <div class="Row--cell Row--cellIsSpaced EventHistory--quantity-col">Quantity</div>
-                                            <div class="Row--cell Row--cellIsSpaced ">From</div>
-                                            <div class="Row--cell Row--cellIsSpaced ">To</div>
-                                            <div class="Row--cell Row--cellIsSpaced ">Date</div>
+                                            <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">{{'Event' | translate}}</div>
+                                            <div class="Row--cell Row--cellIsSpaced EventHistory--item-col">{{'Item' | translate}}</div>
+                                            <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">{{'Price' | translate}}</div>
+                                            <div class="Row--cell Row--cellIsSpaced ">{{'From' | translate}}</div>
+                                            <div class="Row--cell Row--cellIsSpaced ">{{'To' | translate}}</div>
+                                            <div class="Row--cell Row--cellIsSpaced ">{{'Date' | translate}}</div>
                                         </div>
                                         <div class="Rowreact__DivContainer-amt98e-0 bISFhL  EventHistory--row EventHistory--polledData " role="row" 
                                         *ngFor="let event of events | eventsSearch : selectedCollections.length : selectedEventTypes.length : selectedCollections : selectedEventTypes">
@@ -50,7 +49,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="Row--cell Row--cellIsSpaced EventHistory--quantity-col">1</div>
                                             <div class="Row--cell Row--cellIsSpaced ">
                                                 {{addressDisplay(event.from)}}
                                             </div>
