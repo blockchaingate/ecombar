@@ -1,18 +1,18 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left">{{title}}</h4>
+  <h4 class="modal-title pull-left">{{title | translate}}</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
   <p class="text-muted">
-    {{subtitle}}
+    {{subtitle | translate}}
   </p>
   <table>
     <thead class="AssetTraitsForm--head">
       <tr class="AssetTraitsForm--head-row">
-        <th class="AssetTraitsForm--head-column">Type</th>
-        <th class="AssetTraitsForm--head-column">Name</th>
+        <th class="AssetTraitsForm--head-column">{{'Type' | translate}}</th>
+        <th class="AssetTraitsForm--head-column">{{'Name' | translate}}</th>
       </tr>
     </thead>
 
@@ -26,7 +26,7 @@
                 <i class="Iconreact__Icon-sc-1gugx8q-0 cVyyPB AssetPropertiesForm--close material-icons" value="close" size="24">close</i>
               </div>
               <div class="Input--prefix"></div>
-              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Character" spellcheck="false" type="text" [(ngModel)]="property.type">
+              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="{{'Character' | translate}}" spellcheck="false" type="text" [(ngModel)]="property.type">
             </div>
           </div>
         </td>
@@ -34,7 +34,7 @@
           <div class="Inputreact__DivContainer-sc-17icy78-0  ">
             <div class="Input--main AssetPropertiesForm--value-input">
               <div class="Input--prefix"></div>
-              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="Male" spellcheck="false" type="text" [(ngModel)]="property.name">
+              <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" placeholder="{{'Male' | translate}}" spellcheck="false" type="text" [(ngModel)]="property.name">
             </div>
           </div>
         </td>
@@ -45,13 +45,13 @@
 
   <div (click)="addMore()">
     <div class="ActionButtonreact__DivButton-sc-7jpoey-0 fwfywF ActionButton--secondary ActionButton--light " data-testid="ActionButton" role="button" tabindex="0" type="secondary">
-      <div class="ActionButton--content " style="min-width: 120px;">Add more</div>
+      <div class="ActionButton--content " style="min-width: 120px;">{{'Add more' | translate}}</div>
     </div>
   </div>
   
   <div class="AssetTraitsForm--save" (click)="saveClick()">
     <div class="ActionButtonreact__DivButton-sc-7jpoey-0 fwfywF ActionButton--light " data-testid="ActionButton" role="button" tabindex="0">
-      <div class="ActionButton--content " style="min-width: 120px;">Save</div>
+      <div class="ActionButton--content " style="min-width: 120px;">{{'Save' | translate}}</div>
     </div>
   </div>  
 </div>

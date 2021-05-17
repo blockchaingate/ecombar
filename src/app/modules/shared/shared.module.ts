@@ -17,6 +17,7 @@ import { IddockService } from './services/iddock.service';
 import { WalletService } from './services/wallet.service';
 import { ShipService } from './services/ship.service';
 import { TranslateService } from './services/translate.service';
+import { TranslateService as NgxTransalteService } from '@ngx-translate/core';
 import { UtilService } from './services/util.service';
 import { TimerService } from './services/timer.service';
 import { ApiService } from './services/api.service';

@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     providers: [],
@@ -37,26 +38,11 @@ import { environment } from 'src/environments/environment';
     isProxyAuthenticated: boolean;
     unlockableContent: string;
 
-    propertiesModal = {
-      type: 'properties',
-      title: 'Add Properties',
-      subtitle: 'Properties show up underneath your item, are clickable, and can be filtered in your collection\'s sidebar.',
-      data: []
-    };
+    propertiesModal: any;
 
-    levelsModal = {
-      type: 'levels',
-      title: 'Add Levels',
-      subtitle: 'Levels show up underneath your item, are clickable, and can be filtered in your collection\'s sidebar.',
-      data: []
-    };
+    levelsModal: any;
 
-    statsModal = {
-      type: 'levels',
-      title: 'Add Stats',
-      subtitle: 'Stats show up underneath your item, are clickable, and can be filtered in your collection\'s sidebar.',
-      data: []
-    };
+    statsModal: any;
 
     constructor(
       private toastr: ToastrService,
@@ -68,6 +54,7 @@ import { environment } from 'src/environments/environment';
       private kanbanSmartContract: KanbanSmartContractService,
       private utilServ: UtilService,
       private assetServ: NftAssetService,
+      private translateServ: TranslateService,
       private router: Router, 
       private route: ActivatedRoute) {
 
@@ -85,7 +72,30 @@ import { environment } from 'src/environments/environment';
       this.stats = props;
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+
+      await this.translateServ.get('Add Properties').toPromise().then();
+      this.propertiesModal = {
+        type: 'properties',
+        title: 'Add Properties',
+        subtitle: "Properties show up underneath your item, are clickable, and can be filtered in your collection's sidebar.",
+        data: []
+      };
+  
+      this.levelsModal = {
+        type: 'levels',
+        title: 'Add Levels',
+        subtitle: 'Levels show up underneath your item, are clickable, and can be filtered in your collection\'s sidebar.',
+        data: []
+      };
+  
+      this.statsModal = {
+        type: 'levels',
+        title: 'Add Stats',
+        subtitle: 'Stats show up underneath your item, are clickable, and can be filtered in your collection\'s sidebar.',
+        data: []
+      };
+
       this.step = 1;
       this.route.paramMap.subscribe((params: ParamMap) =>  {
         this.slug = params.get('slug');   

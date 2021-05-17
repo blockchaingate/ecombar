@@ -2,31 +2,31 @@
     <app-text-header [title]="'Create new item' | translate"></app-text-header>
     <app-image-uploader 
     [(ngModel)]="media"
-    [title]="'Image, Video, Audio, or 3D Model'"
-    [subtitle]="'File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB'"
+    [title]="'Image, Video, Audio, or 3D Model' | translate"
+    [subtitle]="'File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB' | translate"
     >
     </app-image-uploader>
     
-    <app-textbox [title]="'Name *'" [(ngModel)]="name"></app-textbox>
+    <app-textbox [title]="'Name *' | translate" [(ngModel)]="name"></app-textbox>
     
     <div class="py-3">
         <app-textbox 
         [(ngModel)]="externalLink"
-        [title]="'External Link'" 
-        [subtitle]="'OpenSea will include a link to this URL on this item\'s detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details.'"></app-textbox>
+        [title]="'External Link' | translate" 
+        [subtitle]="'Ecombar will include a link to this URL on this item\'s detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details.' | translate"></app-textbox>
     </div>
     
     
     <app-textarea  
     [(ngModel)]="description"
-    [title]="'Description'" 
-    [subtitle]="'The description will be included on the item\'s detail page underneath its image.'"></app-textarea>
+    [title]="'Description' | translate" 
+    [subtitle]="'The description will be included on the item\'s detail page underneath its image.' | translate"></app-textarea>
     
     
     <app-form-trait 
     [icon]="'list'" 
-    [title]="'Properties'" 
-    [subtitle]="'Textual traits that show up as rectangles'" 
+    [title]="'Properties' | translate" 
+    [subtitle]="'Textual traits that show up as rectangles' | translate" 
     (save)="saveProperties($event)"
     [modal]="propertiesModal">
     </app-form-trait>
@@ -34,8 +34,8 @@
     
     <app-form-trait 
     [icon]="'star_rate'" 
-    [title]="'Levels'" 
-    [subtitle]="'Numerical traits that show as a progress bar'" 
+    [title]="'Levels' | translate" 
+    [subtitle]="'Numerical traits that show as a progress bar' | translate" 
     (save)="saveLevels($event)"
     [modal]="levelsModal"
     >
@@ -44,8 +44,8 @@
     
     <app-form-trait 
     [icon]="'bar_chart'" 
-    [title]="'Stats'" 
-    [subtitle]="'Numerical traits that just show as numbers'" 
+    [title]="'Stats' | translate" 
+    [subtitle]="'Numerical traits that just show as numbers' | translate" 
     (save)="saveStats($event)"
     [modal]="statsModal"
     >
@@ -57,7 +57,9 @@
     
     <div class="CreateCollection--actions py-3">
         <div class="ActionButtonrContainer">
-            <div class="ActionButton--content" (click)="createAssets()" style="min-width: 120px;">Create</div>
+            <div class="ActionButton--content" (click)="createAssets()" style="min-width: 120px;">
+                {{'Create' | translate}}
+            </div>
         </div> 
     </div>
     
