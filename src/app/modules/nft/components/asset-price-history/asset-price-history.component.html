@@ -1,7 +1,7 @@
-<div *ngIf="!sales" class="text-center">
-    No trading data yet
+<div *ngIf="!sales || (sales.length == 0)" class="text-center">
+    {{'No trading data yet' | translate}}
 </div>
-<div *ngIf="sales">
+<div *ngIf="sales && (sales.length > 0)">
     <ngx-charts-line-chart
     [view]="view"
     [scheme]="colorScheme"

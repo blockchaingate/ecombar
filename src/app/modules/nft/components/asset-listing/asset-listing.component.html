@@ -1,5 +1,5 @@
 <div *ngIf="!listings || listings.length == 0" class="text-center">
-    No listings
+    {{'No listings' | translate}}
 </div>
 
 <div *ngIf="listings && listings.length > 0">
@@ -7,9 +7,8 @@
     <div class="Orders--container ">
         <div class="Scrollbox--content">
             <div class="Row--isHeader  " role="row">
-                <div class="Row--cell ">From</div>
-                <div class="Row--cell ">Price</div>
-                <div class="Row--cell ">Expiration</div>
+                <div class="Row--cell ">{{'From' | translate}}</div>
+                <div class="Row--cell ">{{'Price' | translate}}</div>
                 <div class="Row--cell "></div>
             </div>
             <div class="Row-notHeader" role="row" *ngFor="let listing of listings">
@@ -19,15 +18,14 @@
                 <div class="Row--cell ">
                     {{listing.basePrice}} {{displayCoinName(listing.coinType)}}
                 </div>
-                <div class="Row--cell "></div>
                 <div class="Row--cell ">
                     <div class="BaseModalreact__DivContainer-sc-1b6y25y-0 kxKpvP" *ngIf="!listing.txid">
                         <div class=" Orders--button" *ngIf="!isOwner">
-                            Buy<i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Orders--order-fill-icon material-icons" value="keyboard_arrow_right" size="24">keyboard_arrow_right</i>
+                            {{'Buy' | translate}}<i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Orders--order-fill-icon material-icons" value="keyboard_arrow_right" size="24">keyboard_arrow_right</i>
                         </div>
 
                         <div class=" Orders--button" *ngIf="isOwner">
-                            Cancel<i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Orders--order-fill-icon material-icons" value="keyboard_arrow_right" size="24">keyboard_arrow_right</i>
+                            {{'Cancel' | translate}}<i class="Iconreact__Icon-sc-1gugx8q-0 cdETdX Orders--order-fill-icon material-icons" value="keyboard_arrow_right" size="24">keyboard_arrow_right</i>
                         </div>                    
                     </div>
                 </div>

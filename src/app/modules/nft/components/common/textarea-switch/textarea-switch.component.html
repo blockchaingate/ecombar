@@ -23,5 +23,6 @@
 <div class="AssetForm--unlockable-content" *ngIf="unlocked">
     <textarea class="TextAreareact__TextAreaImpl-sc-1dlb6ar-0 jFLKqz" 
     [(ngModel)]="value" (ngModelChange)="updateChanges()"
-    placeholder="Enter content (access key, code to redeem, link to a file, etc.)" rows="4"></textarea>
+    placeholder="{{'Enter content (access key, code to redeem, link to a file, etc.)' | translate}}" 
+    rows="4"></textarea>
 </div>

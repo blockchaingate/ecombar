@@ -30,7 +30,7 @@
             (refresh)="loadAsset()"
             ></app-nft-asset-info>
 
-            <div class="item-frame" *ngIf="owner == address" (click)="reveal()">
+            <div class="item-frame" *ngIf="(owner == address) && asset.unlockableContent" (click)="reveal()">
                 <app-expansion 
                 [title]="'Reveal unlockable content' | translate"
                 [icon]="'lock_open'"

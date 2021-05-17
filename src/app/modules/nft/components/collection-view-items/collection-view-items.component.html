@@ -3,9 +3,9 @@
         <i class="material-icons">view_module</i>
         <span>{{'Your items' | translate}}</span>
     </header>
-    <a rel="noreferrer" href="/nft/admin/collections/{{collection.slug}}/assets/create" style="color: white; display: inline-block;">
+    <a rel="noreferrer" routerLink="/nft/admin/collections/{{collection.slug}}/assets/create" style="color: white; display: inline-block;">
         <div class="ActionButtonrContainer">
-            <div class="ActionButton--content" (click)="addNewItems()" style="min-width: 120px;">
+            <div class="ActionButton--content" style="min-width: 120px;">
                 {{'Add new items' | translate}}
             </div>
         </div> 

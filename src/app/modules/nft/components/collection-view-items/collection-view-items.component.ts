@@ -12,9 +12,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     ngOnInit() {
           
     }
-    addNewItems() {
-        
-    }
+
 
     getImage(asset) {
       if(asset.media) {

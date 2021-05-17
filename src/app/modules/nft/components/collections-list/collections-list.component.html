@@ -13,9 +13,9 @@
         </div>
 
         <div class="card-list-card" *ngFor="let collection of collections">
-            <a href="/">
+
                 <div class="card-content-full">
-                    <a href="/nft/admin/collections/{{collection.slug}}/view" class="image-card-primary-link">
+                    <a routerLink="/nft/admin/collections/{{collection.slug}}/view" class="image-card-primary-link">
                         <div class="image-card-image" style="background-image: url({{collection.image}});">
                         </div>
                         <footer>
@@ -26,7 +26,6 @@
                     </a>
 
                 </div>
-            </a>
         </div>
     </div>
 </div>
