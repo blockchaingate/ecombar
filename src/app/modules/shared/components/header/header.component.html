@@ -72,23 +72,23 @@
                 </a>
                 <ul class="NavDropdown--items">
                   
-                    <li click="navigateTo('/nft/account')">
+                    <li routerLink="/nft/account">
                             {{'My Profile' | translate}}
                     </li>
 
                     <li>
-                        <a href="/nft/admin/collections">
+                        <a routerLink="/nft/admin/collections">
                             {{'My Collections' | translate}}
                         </a>
                     </li>  
                     <li>
-                        <a href="/nft/admin/favorites">
+                        <a routerLink="/nft/admin/favorites">
                             {{'My Favorites' | translate}}
                         </a>
                     </li>   
                     <li>
-                        <a href="/nft/account/settings">
-                            {{'My Account Settings' | translate}}
+                        <a routerLink="/nft/account/settings">
+                            {{'Account Settings' | translate}}
                         </a>
                     </li> 
                     <li (click)="logout()">
