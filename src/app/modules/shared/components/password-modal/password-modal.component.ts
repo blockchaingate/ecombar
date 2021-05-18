@@ -3,7 +3,7 @@ import { UtilService } from '../../services/util.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from "rxjs";
 import { CoinService } from '../../services/coin.service';
 
 @Component({
@@ -38,8 +38,6 @@ export class PasswordModalComponent implements OnInit{
 
     confirmPassword() {
         const pinHash = this.utilServ.SHA256(this.password).toString();
-        console.log('pinHash==', pinHash);
-        console.log('this.pwdHash=', this.pwdHash);
         if (pinHash != this.pwdHash) {
             this.warnPwdErr();
             return;

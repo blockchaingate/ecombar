@@ -8,8 +8,8 @@
         </div>
         <div class="search-container">
             <div class="search-input">
-                <i class="material-icons" value="search" size=24>search</i>
-                <input type="text" class="search-input--input">
+                <i class="material-icons" value="search" size=24 (click)="onSearch()">search</i>
+                <input type="text" class="search-input--input" [(ngModel)]="searchText" (keydown.enter)="onKeyDownEvent($event)">
             </div>
         </div>
         <ul class="Navbar--items">

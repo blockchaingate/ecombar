@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
   export class NftHeaderComponent implements OnInit {
     showAside: boolean;
     setting: any;
+    searchText: string;
     modalRef: BsModalRef;
     wallet: any;
     wallets: any;
@@ -67,11 +68,16 @@ import { Router } from '@angular/router';
       this.translateServ.setDefaultLang(lang);
       this.translateServ.use(lang);
     }
-
-    navigateTo(url: string) {
-      this.router.navigate([url]);
-    }
     
+    onSearch() {
+      console.log('on Search');
+      console.log('searchText=', this.searchText);
+    }
+
+    onKeyDownEvent(event) {
+      this.onSearch();
+    }
+
     logout() {
       this.modalRef = this.modalServ.show( LogoutModalComponent );
       this.modalRef.content.onClose.subscribe(
