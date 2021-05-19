@@ -117,8 +117,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
               if(events && events.length > 0) {
                 for(let i = 0; i < events.length; i++) {
                   const event = events[i];
-                  console.log('event=', event);
-                  console.log('event.coinType=', event.coinType);
+
                   const coin = event.coinType ? this.utilServ.getCoinNameByTypeId(event.coinType) : '';
                   const price = event.price;
                   const date = event.dateCreated;
@@ -150,38 +149,43 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
           }
       });  
 
-      this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
-        (res: any) => {
-          if(res && res.ok) {
-            this.asset = res._body;
-
-            if(this.asset) {
-              if(this.asset.orders && this.asset.orders.length > 0) {
-                const sellOrders = this.asset.orders.filter(item => item.side == 1);              
-                const activeSellOrders = sellOrders.filter(item => !item.txid);
-                this.listings = sellOrders;
-                this.offers = this.asset.orders.filter(item => item.side == 0);   
-
-                console.log('this.offers=', this.offers);
-                if(activeSellOrders && activeSellOrders.length > 0) {
-                  this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
-                }
-                // { txid: null }
-              }        
-            } 
-
-
-          }
-        }
-      );
-
-
       this.assetServ.getOwner(this.smartContractAddress, this.tokenId).subscribe(
         (res: any) => {
           this.owner = res.data;
           this.owner = this.utilServ.exgToFabAddress(this.owner.replace('0x000000000000000000000000', '0x'));
-          console.log('this.owner==', this.owner);
+
+          this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                this.asset = res._body;
+    
+                if(this.asset) {
+                  if(this.asset.orders && this.asset.orders.length > 0) {
+                    const sellOrders = this.asset.orders.filter(item => item.side == 1);              
+                    const activeSellOrders = sellOrders.filter(item => !item.txid && (item.maker == this.utilServ.fabToExgAddress(this.owner)));
+                    this.listings = sellOrders;
+                    this.offers = this.asset.orders.filter(item => item.side == 0);   
+    
+                    console.log('this.offers=', this.offers);
+                    console.log('activeSellOrders=', activeSellOrders);
+                    if(activeSellOrders && activeSellOrders.length > 0) {
+                      this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
+                    }
+                    // { txid: null }
+                  }        
+                } 
+    
+    
+              }
+            }
+          );
+
         }
       );
+
+
+
+
+
     }
   }

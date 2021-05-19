@@ -15,23 +15,13 @@ import { Router } from '@angular/router';
     @Input() collection: any;
     @Input() owner: string;
     @Input() address: string;
+    @Input() sellOrder: any;
     @Output() refresh = new EventEmitter();
-    sellOrder: NftOrder;
 
     showShareDropdown: boolean;
     constructor(private router: Router, private toastr: ToastrService, private utilServ: UtilService) {}
     ngOnInit() {
-      this.showShareDropdown = false;
-      if(this.asset) {
-        if(this.asset.orders && this.asset.orders.length > 0) {
-          const sellOrders = this.asset.orders.filter(item => item.side == 1);
-          if(sellOrders && sellOrders.length > 0) {
-            this.sellOrder = NftOrder.from(sellOrders[sellOrders.length - 1]);
-
-          }
-          
-        }        
-      }         
+      this.showShareDropdown = false;        
     }
 
     onRefresh() {
