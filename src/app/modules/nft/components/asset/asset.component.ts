@@ -115,13 +115,17 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
               const events = this.events.filter(event => event.name == 'Sale');
 
               if(events && events.length > 0) {
-                for(let i = 0; i < events.length; i++) {
+                for(let i = events.length - 1; i >= 0 ; i--) {
                   const event = events[i];
 
-                  const coin = event.coinType ? this.utilServ.getCoinNameByTypeId(event.coinType) : '';
+                  const coinType = event.coinType;
+                  const coin = event.coinType ? this.utilServ.getCoinNameByTypeId(coinType) : '';
                   const price = event.price;
-                  const date = event.dateCreated;
-                  const existedSale = events.filter(item => item.name == coin);
+                  const date = event.dateCreated.
+                  replace(/T/, ' ').      // replace T with a space
+                  replace(/\..+/, '')     // delete the dot and everything after;
+                  const existedSale = this.sales.filter(item => item.name == coin);
+
                   if(existedSale && existedSale.length > 0) {
                     existedSale[0].series.push(
                       {
@@ -165,9 +169,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
                     const activeSellOrders = sellOrders.filter(item => !item.txid && (item.maker == this.utilServ.fabToExgAddress(this.owner)));
                     this.listings = sellOrders;
                     this.offers = this.asset.orders.filter(item => item.side == 0);   
-    
-                    console.log('this.offers=', this.offers);
-                    console.log('activeSellOrders=', activeSellOrders);
+
                     if(activeSellOrders && activeSellOrders.length > 0) {
                       this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
                     }

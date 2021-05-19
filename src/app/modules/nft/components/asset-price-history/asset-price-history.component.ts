@@ -16,15 +16,15 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
           "name": "Germany",
           "series": [
             {
-              "name": "1990",
+              "name": "2010-01-01 11:11:11",
               "value": 62000000
             },
             {
-              "name": "2010",
+              "name": "2010-01-01 11:10:11",
               "value": 73000000
             },
             {
-              "name": "2011",
+              "name": "2010-01-01 10:11:11",
               "value": 89400000
             }
           ]
