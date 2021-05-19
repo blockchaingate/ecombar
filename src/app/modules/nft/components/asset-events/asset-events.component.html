@@ -7,6 +7,7 @@
             <div class="Row--cell Row--cellIsSpaced ">{{'From' | translate}}</div>
             <div class="Row--cell Row--cellIsSpaced ">{{'To' | translate}}</div>
             <div class="Row--cell Row--cellIsSpaced ">{{'Date' | translate}}</div>
+            <div class="Row--cell Row--cellIsSpaced ">{{'Txid' | translate}}</div>
         </div>
 
         <div class="Rowreact__DivContainer-amt98e-0 iaHvzF  EventHistory--row " role="row"
@@ -30,6 +31,14 @@
                 <div class="Row--cell Row--cellIsSpaced ">
                     <div class="EventTimestamp__DivContainer-sc-3gbwf4-0 dYoAYR" data-testid="EventTimestamp">
                         {{event.dateCreated ? (event.dateCreated | date) : ''}}
+                    </div>
+                </div>
+                <div class="Row--cell Row--cellIsSpaced ">
+                    <div *ngIf="event.txid">
+                        <a target="_blank" href="{{getTxidLink(event.txid)}}">
+                            {{txidDisplay(event.txid)}}
+                        </a>
+                        
                     </div>
                 </div>
 

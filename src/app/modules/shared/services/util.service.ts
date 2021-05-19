@@ -93,6 +93,23 @@ export class UtilService {
         return address.substring(0,3) + '...' + address.substring(address.length - 3);
     }
 
+    txidDisplay(txid: string) {
+        if(!txid) {
+          return '';
+        }
+
+        return txid.substring(0,3) + '...' + txid.substring(txid.length - 3);
+    }
+
+    getKanbanTxidLink(txid: string) {
+        if(!txid) {
+          return '';
+        }
+
+        const url = 'https://' + (environment.production ? 'www' : 'test') + '.exchangily.com/explorer/tx-detail/' + txid;
+        return url ;
+    }
+
     getRandomInteger() {
         return Math.floor(Math.random() * (new BigNumber(65535, 16).toNumber() - 1));
         //const web3 = new Web3();

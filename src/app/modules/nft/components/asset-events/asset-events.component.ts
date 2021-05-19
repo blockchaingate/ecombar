@@ -26,4 +26,11 @@ export class NftAssetEventsComponent implements OnInit {
     addressDisplay(address: string) {
       return this.utilServ.addressDisplay(address);
     }
+    txidDisplay(txid: string) {
+      return this.utilServ.txidDisplay(txid);
+    }    
+
+    getTxidLink(txid: string) {
+      return this.utilServ.getKanbanTxidLink(txid);
+    }
 }

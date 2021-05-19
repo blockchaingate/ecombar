@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
 
 @Component({
     providers: [],
@@ -28,6 +29,7 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
           private spinner: NgxSpinnerService,
           private utilServ: UtilService,
           private modalServ: BsModalService,
+          private nftPortServ: NftPortService,
           private kanbanServ: KanbanService,
           private kanbanSmartContractServ: KanbanSmartContractService,
           private localSt: LocalStorage) {}
@@ -58,6 +60,14 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
           const addresses = this.wallet.addresses;
 
           this.address = addresses.filter(item => item.name == 'FAB')[0].address;     
+
+          console.log('this.address=', this.address);
+          this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
+            ret => {
+              this.isProxyAuthenticated = ret;
+              console.log('this.isProxyAuthenticated=', this.isProxyAuthenticated);
+            }
+          );  
 
           const kanbanAddress = this.utilServ.fabToExgAddress(this.address);
 
