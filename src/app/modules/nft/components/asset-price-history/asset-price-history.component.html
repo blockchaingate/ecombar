@@ -1,7 +1,9 @@
 <div *ngIf="!sales || (sales.length == 0)" class="text-center">
     {{'No trading data yet' | translate}}
 </div>
+
 <div *ngIf="sales && (sales.length > 0)">
+  
     <ngx-charts-line-chart
     [view]="view"
     [scheme]="colorScheme"
@@ -19,4 +21,5 @@
     (deactivate)="onDeactivate($event)"
     >
   </ngx-charts-line-chart>
+  
 </div>

@@ -117,9 +117,11 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
               if(events && events.length > 0) {
                 for(let i = 0; i < events.length; i++) {
                   const event = events[i];
-                  const coin = this.utilServ.getCoinNameByTypeId(event.coinType);
+                  console.log('event=', event);
+                  console.log('event.coinType=', event.coinType);
+                  const coin = event.coinType ? this.utilServ.getCoinNameByTypeId(event.coinType) : '';
                   const price = event.price;
-                  const date = event.date;
+                  const date = event.dateCreated;
                   const existedSale = events.filter(item => item.name == coin);
                   if(existedSale && existedSale.length > 0) {
                     existedSale[0].series.push(

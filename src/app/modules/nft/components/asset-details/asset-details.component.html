@@ -31,7 +31,7 @@
     <app-levels-list [levels]="asset.stats"></app-levels-list>
 </app-expansion>
 
-<app-expansion 
+<app-expansion *ngIf="collection"
 [title]="('About ' | translate) + collection.name"
 [icon]="'vertical_split'"
 [toggleable]="true">

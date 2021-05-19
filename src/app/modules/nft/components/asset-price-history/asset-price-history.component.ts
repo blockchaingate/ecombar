@@ -10,7 +10,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     @Input()  sales: any;
 
     // data goes here
-    /*
+    
     multi = [
         {
           "name": "Germany",
@@ -30,9 +30,9 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
           ]
         }
     ];
-    */
+   
     ngOnInit() {
-  
+      console.log('sales=', this.sales);
     }
     title = 'Price history';
 
