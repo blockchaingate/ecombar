@@ -14,4 +14,10 @@
             </div>
         </div>
     </div>
-</div>  
+    <div class="green" *ngIf="errMsg">
+        {{successMsg | translate}}
+    </div>
+    <div class="red" *ngIf="errMsg">
+        {{errMsg | translate}}
+    </div>
+</div>

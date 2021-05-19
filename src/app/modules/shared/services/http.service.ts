@@ -23,7 +23,7 @@ interface OPTIONS {
 export class HttpService {
     constructor(private http: HttpClient, private storage: StorageService, private store: Store) { }
 
-    get(path: string, jwtAuth = true): Observable<any> {
+    get(path: string, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
         console.log('url for get==', url);
         const ret = new Observable<any>((observer) => {
@@ -32,7 +32,7 @@ export class HttpService {
                     (token: string) => {
                         console.log('token=', token);
                         if(!token) {
-                            observer.error('Token not existed');
+                            observer.error('Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
@@ -49,9 +49,25 @@ export class HttpService {
                                   observer.error(err)
                                   //this.errMsg = 'Invalid email or password';
                                 }
-                            );                       
+                            );
                         }
-                    });                
+                    });
+            } else if (pubkey === true) {
+                const httpHeaders = new HttpHeaders({
+                    'Content-Type': 'application/json'
+                });
+                const options: OPTIONS = {
+                    headers: httpHeaders
+                };  
+                this.http.get(url, options).subscribe(
+                    (res) => {
+                        observer.next(res);
+                    },
+                    err => {
+                      observer.error(err)
+                      //this.errMsg = 'Invalid email or password';
+                    }
+                );
             } else {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
@@ -67,14 +83,14 @@ export class HttpService {
                       observer.error(err)
                       //this.errMsg = 'Invalid email or password';
                     }
-                );                           
+                );
             }
 
         });
         return ret;
     }
 
-    post(path: string, data: any, jwtAuth = true): Observable<any> {
+    post(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
         data.appId = environment.appid;
         const ret = new Observable<any>((observer) => {
@@ -83,7 +99,7 @@ export class HttpService {
                     (token: string) => {
                         console.log('token=', token);
                         if(!token) {
-                            observer.error('Token not existed');
+                            observer.error('Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
@@ -104,7 +120,23 @@ export class HttpService {
                             );                       
                         }
                     });                
-            } else {
+                } else if (pubkey === true) {
+                    const httpHeaders = new HttpHeaders({
+                        'Content-Type': 'application/json'
+                    });
+                    const options: OPTIONS = {
+                        headers: httpHeaders
+                    };  
+                    this.http.get(url, options).subscribe(
+                        (res) => {
+                            observer.next(res);
+                        },
+                        err => {
+                          observer.error(err)
+                          //this.errMsg = 'Invalid email or password';
+                        }
+                    );
+                } else {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
                 });
@@ -131,7 +163,7 @@ export class HttpService {
         if (jwtAuth === true) {
             if(!this.storage || !this.storage.token) {
                 const ret = new Observable((observer) => {
-                    observer.error('Token not existed');
+                    observer.error('Token not exists');
                 });
                 return ret;
             }
@@ -151,7 +183,7 @@ export class HttpService {
         */
     }
 
-    put(path: string, data: any, jwtAuth = true): Observable<any> {
+    put(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
         data.appId = environment.appid;
         const ret = new Observable<any>((observer) => {
@@ -160,7 +192,7 @@ export class HttpService {
                     (token: string) => {
                         console.log('token=', token);
                         if(!token) {
-                            observer.error('Token not existed');
+                            observer.error('Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
@@ -180,8 +212,24 @@ export class HttpService {
                                 }
                             );                       
                         }
-                    });                
-            } else {
+                    });
+                } else if (pubkey === true) {
+                    const httpHeaders = new HttpHeaders({
+                        'Content-Type': 'application/json'
+                    });
+                    const options: OPTIONS = {
+                        headers: httpHeaders
+                    };  
+                    this.http.get(url, options).subscribe(
+                        (res) => {
+                            observer.next(res);
+                        },
+                        err => {
+                          observer.error(err)
+                          //this.errMsg = 'Invalid email or password';
+                        }
+                    );
+                } else {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
                 });
@@ -220,7 +268,7 @@ export class HttpService {
         */
     }
 
-    delete(path: string, jwtAuth = true): Observable<any> {
+    delete(path: string, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
@@ -228,7 +276,7 @@ export class HttpService {
                     (token: string) => {
                         console.log('token=', token);
                         if(!token) {
-                            observer.error('Token not existed');
+                            observer.error('Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
@@ -246,10 +294,26 @@ export class HttpService {
                                   observer.error(err)
                                   //this.errMsg = 'Invalid email or password';
                                 }
-                            );                       
+                            );
                         }
                     });                
-            } else {
+                } else if (pubkey === true) {
+                    const httpHeaders = new HttpHeaders({
+                        'Content-Type': 'application/json'
+                    });
+                    const options: OPTIONS = {
+                        headers: httpHeaders
+                    };  
+                    this.http.get(url, options).subscribe(
+                        (res) => {
+                            observer.next(res);
+                        },
+                        err => {
+                          observer.error(err)
+                          //this.errMsg = 'Invalid email or password';
+                        }
+                    );
+                } else {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
                 });

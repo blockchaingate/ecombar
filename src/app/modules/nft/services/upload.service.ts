@@ -1,15 +1,17 @@
+  
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
 import {Observable} from "rxjs";
 import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class UploadService {
+export class LocalUploadService {
 
   constructor(private http: HttpClient) { }
 
   // file from event.target.files[0]
-  uploadFile(path: string, file: File): Observable<any> {
+  // This service can't serve S3 uploading.
+  uploadFileLocal(path: string, file: File): Observable<any> {
     const url = environment.endpoints.blockchaingate + path;
     let formData = new FormData();
     formData.append('upload', file);

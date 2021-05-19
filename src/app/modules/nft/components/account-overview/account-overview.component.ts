@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NftSettingService } from '../../services/nft-setting.service';
-import { UploadService } from '../../services/upload.service';
+import { UploadService, DocType } from '../../../shared/services/upload.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
@@ -17,13 +17,17 @@ import { ToastrService } from 'ngx-toastr';
     @Input() wallet: any;
     @Input() self: boolean;
 
+    url = '';
     logo: String;
     banner: String;
     username: string;
     modalRef: BsModalRef;
+    successMsg = '';
+    errMsg = '';
+    uploadSuccess = false;
 
     constructor(
-      private uploadServ: UploadService, 
+      private uploadService: UploadService, 
       private modalServ: BsModalService,
       private kanbanServ: KanbanService,
       private toastr: ToastrService,
@@ -55,6 +59,43 @@ import { ToastrService } from 'ngx-toastr';
       let fileList: FileList = event.target.files;
       if(fileList.length > 0) {
           let file: File = fileList[0];
+          const fileName = file.name;
+          const fileType = file.type;
+          if(!this.username) {
+            this.username = 'account_' + fileName;
+          }
+          this.uploadService.applyPresignedUrl(fileName, fileType, DocType.PRODUCT, this.username).subscribe(
+            ret => {
+              const signedUrl = ret.signed_request;
+              this.url = ret.url;
+              this.uploadService.uploadFileToSignedUrl(signedUrl, file.type, file).subscribe(
+                retn => {
+                  if(type == 'banner') {
+                    this.banner = this.url;
+                  } else
+                  if(type == 'logo') {
+                    this.logo = this.url;
+                  }
+  
+                  const initialState = {
+                    pwdHash: this.wallet.pwdHash,
+                    encryptedSeed: this.wallet.encryptedSeed
+                  };          
+                  
+                  this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+            
+                  this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+                    this.saveDo(privateKey);
+                  });                 
+      
+                  this.successMsg = 'Uploaded'; this.uploadSuccess = true;
+                },
+                err => { this.errMsg = 'Error in uploading.'; });
+            },
+            error => this.errMsg = 'Error happened during apply presigned url.'
+          );
+
+/*
           this.uploadServ.uploadFile('s3/nft/upload', file).subscribe(
             (res: any) => {
               console.log('res for upload file=', res);
@@ -79,6 +120,8 @@ import { ToastrService } from 'ngx-toastr';
               }
             }
           );
+*/
+
       }
     }
 

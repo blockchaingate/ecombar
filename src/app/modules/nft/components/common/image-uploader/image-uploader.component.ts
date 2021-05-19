@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import { UploadService } from '../../../services/upload.service';
+// import { UploadService } from '../../../services/upload.service';
+import { UploadService, DocType } from '../../../../shared/services/upload.service';
 
 @Component({
     providers: [{
@@ -15,11 +16,14 @@ import { UploadService } from '../../../services/upload.service';
   export class ImageUploaderComponent implements ControlValueAccessor,OnInit {
     @Input() title: string;
     @Input() subtitle: string;
+    @Input() productId: string; 
+    url = '';
     image: string;
+    successMsg = '';
+    errMsg = '';
+    uploadSuccess = false;
 
-    constructor(private uploadServ: UploadService) {
-
-    }
+    constructor(private uploadService: UploadService) {}
 
     ngOnInit() {
         //this.image = "blob:https://testnets.opensea.io/bda6b063-8f9c-495c-86d4-76260b42c86f";
@@ -32,6 +36,34 @@ import { UploadService } from '../../../services/upload.service';
       let fileList: FileList = event.target.files;
       if(fileList.length > 0) {
           let file: File = fileList[0];
+
+          const fileName = file.name;
+          const fileType = file.type;
+          if(!this.productId) {
+            this.productId = 'nft_' + 'pubkey';
+          }
+          // alert('prodid: '+this.productId);
+          this.uploadService.applyPresignedUrl(fileName, fileType, DocType.PRODUCT, this.productId).subscribe(
+            ret => {
+              const signedUrl = ret.signed_request;
+              this.url = ret.url;
+              alert('url: ' + this.url);
+              this.uploadService.uploadFileToSignedUrl(signedUrl, file.type, file).subscribe(
+                retn => {
+                  // this.images.push(this.url);
+                  this.image = this.url;
+                  this.updateChanges();
+      
+                  this.successMsg = 'Uploaded'; this.uploadSuccess = true;
+                },
+                err => { this.errMsg = 'Error in uploading.'; });
+            },
+            error => this.errMsg = error.message || error //'Error happened during apply presigned url.'
+          );
+     
+
+
+         /*
           this.uploadServ.uploadFile('s3/nft/upload', file).subscribe(
             (res: any) => {
               console.log('res for upload file=', res);
@@ -39,8 +71,8 @@ import { UploadService } from '../../../services/upload.service';
                 this.image = res.data;
                 this.updateChanges();
               }
-            }
-          );
+            });
+          */
       }
     }    
 
