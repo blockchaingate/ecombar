@@ -1,3 +1,14 @@
+FAB
+20807
+
+https://www.debutinfotech.com/blockchain-development?_bk=blockchain%20solutions&_bt=504151998672&_bm=p&_bn=g&gclid=Cj0KCQjwkZiFBhD9ARIsAGxFX8DRT5r9hjZHIdyGowQmYk6y7ozejahuAR1TqszzLb-1JJBMCR543roaAswsEALw_wcB
+
+https://www.accenture.com/us-en/services/blockchain/true-supplier-marketplace
+
+https://www.hyperledger.org/tag/supply-chain
+
+https://www.hyperledger.org/learn/publications/walmart-case-study
+
 remove 
 
         //"chartist": "0.11.4",
