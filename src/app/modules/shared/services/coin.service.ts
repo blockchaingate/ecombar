@@ -647,8 +647,7 @@ export class CoinService {
 
             buffer = wif.decode(priKey);
             priKeyDisp = priKey;
-        } else  
-        if (name === 'ETH') {
+        } else if (name === 'ETH') {
 
                 const root = hdkey.fromMasterSeed(seed);
                 const childNode = root.derivePath(path);
@@ -661,16 +660,13 @@ export class CoinService {
                 console.log('priKey for eth=', priKey);
                 priKeyDisp = buffer.toString('hex');
 
-        } else
-        if(name == 'TRX') {
+        } else if(name == 'TRX') {
             const root = BIP32.fromSeed(seed);
             const childNode = root.derivePath(path);
             priKey = childNode.privateKey;
 
             buffer = wif.decode(childNode.toWIF());
-            addr = 
-            TronWeb.utils.crypto.getBase58CheckAddress(TronWeb.utils.crypto.getAddressFromPriKey(priKey));
-      
+            addr = TronWeb.utils.crypto.getBase58CheckAddress(TronWeb.utils.crypto.getAddressFromPriKey(priKey));
         }
         /*
         const keyPairs = {

@@ -93,6 +93,7 @@ export class HttpService {
     post(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
         data.appId = environment.appid;
+
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
@@ -126,17 +127,18 @@ export class HttpService {
                     });
                     const options: OPTIONS = {
                         headers: httpHeaders
-                    };  
-                    this.http.get(url, options).subscribe(
+                    };   
+                    
+                    this.http.post(url, data, options).subscribe(
                         (res) => {
                             observer.next(res);
                         },
-                        err => {
+                        err => { 
                           observer.error(err)
                           //this.errMsg = 'Invalid email or password';
                         }
-                    );
-                } else {
+                    );                       
+        } else {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
                 });
@@ -219,17 +221,18 @@ export class HttpService {
                     });
                     const options: OPTIONS = {
                         headers: httpHeaders
-                    };  
-                    this.http.get(url, options).subscribe(
+                    };   
+                    
+                    this.http.put(url, data, options).subscribe(
                         (res) => {
                             observer.next(res);
                         },
-                        err => {
+                        err => { 
                           observer.error(err)
                           //this.errMsg = 'Invalid email or password';
                         }
-                    );
-                } else {
+                    );                       
+        } else {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
                 });
@@ -303,17 +306,18 @@ export class HttpService {
                     });
                     const options: OPTIONS = {
                         headers: httpHeaders
-                    };  
-                    this.http.get(url, options).subscribe(
+                    };   
+                    
+                    this.http.delete(url, options).subscribe(
                         (res) => {
                             observer.next(res);
                         },
-                        err => {
+                        err => { 
                           observer.error(err)
                           //this.errMsg = 'Invalid email or password';
                         }
                     );
-                } else {
+        } else {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
                 });

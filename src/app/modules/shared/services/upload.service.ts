@@ -27,7 +27,7 @@ export class UploadService {
     } else {
       data.objectId = objectId;
     }
-
+// alert(JSON.stringify(data))
     return this.http.post('s3/apply-upload-permit', data);
   }
 
