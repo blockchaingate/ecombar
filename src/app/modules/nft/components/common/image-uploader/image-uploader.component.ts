@@ -47,7 +47,7 @@ import { UploadService, DocType } from '../../../../shared/services/upload.servi
             ret => {
               const signedUrl = ret.signed_request;
               this.url = ret.url;
-              alert('url: ' + this.url);
+              // alert('url: ' +  this.url);
               this.uploadService.uploadFileToSignedUrl(signedUrl, file.type, file).subscribe(
                 retn => {
                   // this.images.push(this.url);
