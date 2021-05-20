@@ -47,6 +47,7 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
       }
 
       changeWallet(walltId: string) {
+        console.log('walletId=', walltId);
           let index = -1;
           for(let i = 0; i < this.wallets.items.length; i++) {
               const item = this.wallets.items[i];
