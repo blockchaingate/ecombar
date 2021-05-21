@@ -50,9 +50,16 @@
                                                 </div>
                                             </div>
                                             <div class="Row--cell Row--cellIsSpaced ">
-                                                {{addressDisplay(event.from)}}
+                                                <a routerLink="/nft/accounts/{{event.from}}">
+                                                    {{addressDisplay(event.from)}}
+                                                </a>
+
                                             </div>
-                                            <div class="Row--cell Row--cellIsSpaced ">{{addressDisplay(event.to)}}</div>
+                                            <div class="Row--cell Row--cellIsSpaced ">
+                                                <a routerLink="/nft/accounts/{{event.to}}">
+                                                    {{addressDisplay(event.to)}}
+                                                </a>
+                                            </div>
                                             <div class="Row--cell Row--cellIsSpaced ">
                                                 <div class="EventTimestamp__DivContainer-sc-3gbwf4-0 hzYpUP" data-testid="EventTimestamp">
                                                     {{event.dateCreated ? (event.dateCreated | date) : ''}}
