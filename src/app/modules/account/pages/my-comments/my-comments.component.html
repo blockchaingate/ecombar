@@ -1,0 +1,26 @@
+<ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-3">{{'Product' | translate}}</div>
+      <div class="col col-3">{{'Rating' | translate}}</div>
+      <div class="col col-3"></div>
+  
+    </li>
+    <li class="table-row" *ngFor="let comment of comments">
+      <div class="col col-3" data-label="Title">{{comment.parentId.title | translateField}}</div>
+      <div class="col col-3" data-label="Price">{{comment.rating}}</div>
+      <div class="col col-3 text-right" data-label="Operations">
+
+        <div class="d-inline-block px-2">
+          <a (click)="editComment(comment)">
+            <img src="/assets/svg/edit.svg">
+          </a>
+        </div>
+
+        <div class="d-inline-block px-2">
+          <a (click)="deleteComment(comment)">
+            <img src="/assets/svg/delete.svg">
+          </a>
+        </div>
+      </div>
+    </li>
+  </ul>

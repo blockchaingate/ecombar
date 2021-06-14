@@ -1,0 +1,47 @@
+<div class="container">
+  
+  <ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-4">{{'Email' | translate}}</div>
+      <div class="col col-4">{{'Role' | translate}}</div>
+      <div class="col col-3"></div>
+    </li>
+    <li class="table-row" *ngFor="let user of users">
+      <div class="col col-4" data-label="Email">{{user.email}}</div>
+      <div class="col col-4" data-label="Ref Code">{{(user.defaultMerchant ? 'Merchant' : 'Customer') | translate}}</div>
+      <div class="col col-3 text-right" data-label="Operations">
+        <!--
+        <div class="d-inline-block px-2">
+          <a>
+            <img src="/assets/svg/edit.svg">
+          </a>
+        </div>
+      -->
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<!--
+<div>
+  <input [(ngModel)]="email">
+  <button (click)="find()">Find</button>
+</div>
+<table>
+    <tr>
+      <th>Email</th>
+      <th>RefCode</th>
+      <th>Parent RefCode</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{user.email}}</td>
+      <td>{{user.refCode}}</td>
+      <td>{{user.parentRefCode}}</td>
+      <td>
+        <button class="btn" (click)="edit(user)">Edit</button>
+      </td>
+    </tr>
+  </table>
+  -->

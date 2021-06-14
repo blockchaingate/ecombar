@@ -1,0 +1,23 @@
+<ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-3">{{'Product' | translate}}</div>
+      <div class="col col-3">{{'Price' | translate}}</div>
+      <div class="col col-3">{{'Currency' | translate}}</div>
+      <div class="col col-3"></div>
+  
+    </li>
+    <li class="table-row" *ngFor="let product of products">
+      <div class="col col-3" data-label="Title">{{product.title | translateField}}</div>
+      <div class="col col-3" data-label="Price">{{product.price}}</div>
+      <div class="col col-3" data-label="Currency">{{product.currency}}</div>
+      <div class="col col-3 text-right" data-label="Operations">
+        <div class="d-inline-block px-2">
+          <a href="/admin/comment/{{product._id}}">
+            <img src="/assets/svg/comment.svg">
+          </a>
+        </div>
+      </div>
+    </li>
+  </ul>
+  
+  

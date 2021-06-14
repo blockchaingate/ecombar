@@ -13,6 +13,7 @@ import { OrderService } from '../../../shared/services/order.service';
 import { CommentService } from '../../../shared/services/comment.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -40,12 +41,19 @@ export class DashboardComponent implements OnInit{
     private cartStoreServ: CartStoreService,
     private collectionServ: CollectionService,
     private productServ: ProductService,
+    private dataServ: DataService,
     private categoryServ: CategoryService,
     private commentServ: CommentService,
     private store: Store<{ user: UserState }>) {
   }
 
   ngOnInit() {
+
+    this.dataServ.currentWalletAddress.subscribe(
+      (address: string) => {
+        console.log('address11qqaa=', address);
+      }
+    );
     this.isUserSummary = false;
     this.brands_count = 0;
     this.categories_count = 0;

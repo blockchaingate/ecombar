@@ -76,25 +76,7 @@ export class AdminComponent implements OnInit {
         link: 'dashboard',
         icon: 'dashboard',
         roles: ['Admin', 'Seller', 'Customer']
-      },
-      {
-        title: 'Banners',
-        link: 'banners',
-        icon: 'banner',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Brands',
-        link: 'brands',
-        icon: 'brand',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Main Layout',
-        link: 'main-layout',
-        icon: 'category',
-        roles: ['Admin', 'Seller']
-      },        
+      },      
       {
         title: 'Categories',
         link: 'categories',
@@ -130,63 +112,13 @@ export class AdminComponent implements OnInit {
         link: 'orders',
         icon: 'order',
         roles: ['Admin', 'Seller', 'Customer']
-      },
-      {
-        title: 'Ships',
-        link: 'ships',
-        icon: 'order',
-        roles: ['Admin', 'Seller', 'Delivery', 'Customer']
-      },      
-      {
-        title: 'My assets',
-        link: 'my-assets',
-        icon: 'asset',
-        roles: ['Admin', 'Seller']
-      },
+      },    
       {
         title: 'Merchant information',
         link: 'merchant-info',
         icon: 'information',
         roles: ['Seller']
-      },
-
-      {
-        title: 'Address',
-        link: 'address',
-        icon: 'address',
-        roles: ['Customer']
-      },
-
-      {
-        title: 'My assets',
-        link: 'my-assets',
-        icon: 'asset',
-        roles: ['Customer']
-      },
-      {
-        title: 'My cart',
-        link: 'cart',
-        icon: 'cart',
-        roles: ['Customer']
-      },
-      {
-        title: 'My favorite',
-        link: 'favorite',
-        icon: 'favorite',
-        roles: ['Customer']
-      },
-      {
-        title: 'My products',
-        link: 'my-products',
-        icon: 'product',
-        roles: ['Customer']
-      },
-      {
-        title: 'My comments',
-        link: 'my-comments',
-        icon: 'comment',
-        roles: ['Customer'] 
-      }      
+      }    
     ];
 
 

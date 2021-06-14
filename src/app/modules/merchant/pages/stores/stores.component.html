@@ -1,0 +1,32 @@
+
+<div class="container">
+    <div class="text-right">
+      <button class="btn" routerLink="/merchant/store/add" routerLinkActive="active">{{'New' | translate}}</button>
+  </div>
+  
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">{{'Name' | translate}}</div>
+        <div class="col col-3">{{'Sequence' | translate}}</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let store of stores">
+        <div class="col col-3" data-label="Name">{{store.name | translateField}}</div>
+        <div class="col col-3" data-label="Sequance">{{store.sequence}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+  
+          <div class="d-inline-block px-2">
+            <a (click)="editStore(store)">
+              <img src="/assets/svg/edit.svg">
+            </a>
+          </div>
+    
+          <div class="d-inline-block px-2">
+            <a (click)="deleteStore(store)">
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div>        
+        </div>
+      </li>
+    </ul>
+  </div>

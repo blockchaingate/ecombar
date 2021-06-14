@@ -1,0 +1,60 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'New Collection' | translate}}</h1>
+      <hr>
+      
+      <div class="d-flex align-items-center navigate-bar my-3">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+          English
+        </div>
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Chinese')">
+          中文
+        </div>
+      </div>
+
+      <div *ngIf="currentTab=='default'">
+        <div>
+          <label for="email"><b>Name</b></label>
+          <input type="text" placeholder="Enter collection name" [(ngModel)]="name" name="name" required>
+  
+        </div>
+
+        <div>
+          <label for="email"><b>{{'Products' | translate}}</b></label>
+          <div class="pb-1">
+            <div *ngFor="let prod of collectionProducts" class="product-item d-flex justify-content-between p-2">
+              <div>
+                {{prod.title | translateField}}
+              </div>
+              <div (click)="deleteProduct(prod)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+          </div>
+          <div class="pb-1">
+            <select [(ngModel)]="productId" name="productId" *ngIf="products">
+              <option value="">{{'Select Product' | translate}}:</option>
+              <option *ngFor="let prod of products | excludeProducts : collectionProducts" value="{{prod._id}}">{{prod.title | translateField}}</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn cancelbtn" (click)="addProduct()">{{'Add Product' | translate}}</button>
+        </div>
+
+        <div>
+          <label for="email"><b>{{'Sequence' | translate}}</b></label>
+          <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>  
+        </div>
+
+      </div>
+      
+      <div *ngIf="currentTab=='Chinese'">
+        <label for="email"><b>名称</b></label>
+        <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
+      </div>
+
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="addCollection()">{{(id?'Update':'Add') | translate}}</button>
+      </div>
+    </div>
+</form>

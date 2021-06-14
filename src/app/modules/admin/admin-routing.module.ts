@@ -33,13 +33,13 @@ import { MerchantApplicationsComponent } from './pages/merchant-applications/mer
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 
 import { 
-  AuthGuardService as AuthGuard 
-} from '../shared/services/auth-guard.service';
+  WalletGuardService as WalletGuard 
+} from '../shared/services/wallet-guard.service';
 
 const routes: Routes = [
   {
     path: '', component: AdminComponent,
-    canActivate: [AuthGuard], 
+    canActivate: [WalletGuard], 
     children: [
       {
         path: 'dashboard', component: DashboardComponent

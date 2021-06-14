@@ -13,6 +13,21 @@ const routes: Routes = [
       import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
   {
+    path: 'merchant',
+    loadChildren: () =>
+      import('./modules/merchant/merchant.module').then(m => m.MerchantModule)
+  },  
+  {
+    path: 'account',
+    loadChildren: () =>
+      import('./modules/account/account.module').then(m => m.AccountModule)
+  },   
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then(m => m.AuthModule)
+  },  
+  {
     path: 'wallet',
     loadChildren: () =>
       import('./modules/wallet/wallet.module').then(m => m.WalletModule)

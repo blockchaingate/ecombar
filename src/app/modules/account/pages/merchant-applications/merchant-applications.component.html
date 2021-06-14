@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">{{'Type' | translate}}</th>
+        <th scope="col">{{'Name' | translate}}</th>
+        <th scope="col">{{'Phone' | translate}}</th>
+        <th scope="col">{{'Email' | translate}}</th>
+        <th scope="col">{{'Status' | translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let merchant of merchants">
+        <td>{{merchant.type | translate}}</td>
+        <td>{{merchant.name}}</td>
+        <td>{{merchant.phone}}</td>
+        <td>{{merchant.email}}</td>
+
+        <td>
+          {{(merchant.approved ? 'Approved' : 'Not Approved') | translate}}
+          <button class="btn" color="primary" *ngIf="!merchant.otcApproved" (click)="approve(merchant)">{{'Confirm' | translate}}</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  

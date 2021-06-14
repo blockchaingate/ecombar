@@ -24,7 +24,11 @@ import { TimerService } from './services/timer.service';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
+import { DataService } from './services/data.service';
+import { TextLanService } from './services/textlan.service';
+import { StoreService } from './services/store.service';
 import { MainLayoutService } from './services/mainlayout.service';
+import { WalletGuardService } from './services/wallet-guard.service';
 import { KanbanService } from './services/kanban.service';
 import { KanbanSmartContractService } from './services/kanban.smartcontract.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
@@ -97,8 +101,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     ShipService,
     KanbanService,
     TimerService,
+    WalletGuardService,
     UtilService,
+    DataService,
     IddockService,
+    TextLanService,
+    StoreService,
     MainLayoutService,
     KanbanSmartContractService
   ]
@@ -117,12 +125,16 @@ export class SharedModule {
         CommentService,
         CoinService,
         ApiService,
-        Web3Service,        
+        Web3Service,   
+        DataService,     
         KanbanService,
         IddockService,
         ShipService,
         TimerService,
-        UtilService,        
+        WalletGuardService,
+        UtilService,    
+        TextLanService,
+        StoreService,            
         MainLayoutService,
         KanbanSmartContractService
       ]

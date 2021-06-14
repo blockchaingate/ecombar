@@ -1,5 +1,5 @@
-FAB
-20807
+https://medium.datadriveninvestor.com/creating-shopping-smartcontract-f7f80add48c4
+
 
 https://www.debutinfotech.com/blockchain-development?_bk=blockchain%20solutions&_bt=504151998672&_bm=p&_bn=g&gclid=Cj0KCQjwkZiFBhD9ARIsAGxFX8DRT5r9hjZHIdyGowQmYk6y7ozejahuAR1TqszzLb-1JJBMCR543roaAswsEALw_wcB
 

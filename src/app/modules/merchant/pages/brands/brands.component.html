@@ -1,0 +1,32 @@
+
+<div class="container">
+    <div class="text-right">
+      <button class="btn" routerLink="/admin/brand/add" routerLinkActive="active">{{'New' | translate}}</button>
+  </div>
+  
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">{{'Name' | translate}}</div>
+        <div class="col col-3">{{'Sequence' | translate}}</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let brand of brands">
+        <div class="col col-3" data-label="Name">{{brand.name | translateField}}</div>
+        <div class="col col-3" data-label="Sequance">{{brand.sequence}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+  
+          <div class="d-inline-block px-2">
+            <a (click)="editBrand(brand)">
+              <img src="/assets/svg/edit.svg">
+            </a>
+          </div>
+    
+          <div class="d-inline-block px-2">
+            <a (click)="deleteBrand(brand)">
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div>        
+        </div>
+      </li>
+    </ul>
+  </div>
