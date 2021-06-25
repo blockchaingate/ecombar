@@ -235,7 +235,7 @@ export class IddockService {
   }
 
 
-  async addIdDock(seed, type: string, rfid: string, nvs: any, parents: any) {
+  async signIdDock(seed, type: string, rfid: string, nvs: any, parents: any) {
     const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b'); 
 
     const newNvs = [];
@@ -277,6 +277,11 @@ export class IddockService {
     const txhex = await this.getAddTxhex(keyPairsKanban, type, data);
     data.txhex = txhex;
 
+    return data;     
+  }
+  
+  async addIdDock(seed, type: string, rfid: string, nvs: any, parents: any) {
+    const data = await this.signIdDock(seed, type, rfid, nvs, parents);
     return this.saveDock(type, data); 
   }
 

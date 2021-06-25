@@ -16,6 +16,20 @@
         <label for="email"><b>Name</b></label>
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
+        <label for="email"><b>{{'Smart Contract Address' | translate}}</b></label>
+        <input type="text" placeholder="{{'Enter smart contract address' | translate}}" [(ngModel)]="smartContractAddress" name="smartContractAddress" required>
+       
+        <div>
+          <label for="email"><b>Coin</b></label>
+        </div>
+        <div>
+          <select [(ngModel)]="coin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option value="">Select Coin:</option>
+            <option *ngFor="let coin of coins" value="{{coin}}">
+              {{coin}}
+            </option>
+          </select>          
+        </div>
         <label for="email"><b>{{'Sequence' | translate}}</b></label>
         <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
           

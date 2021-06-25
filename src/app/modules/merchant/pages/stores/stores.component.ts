@@ -22,8 +22,12 @@ export class StoresComponent implements OnInit {
   ngOnInit() {
     this.dataServ.currentWalletAddress.subscribe(
       (address: string) => {
-        this.address = address;
-        this.getStores(address);
+        console.log('address===', address);
+        if(address) {
+          this.address = address;
+          this.getStores(address);
+        }
+
       }
     );
     
