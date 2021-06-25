@@ -1,66 +1,47 @@
 [
 	{
+		"constant": true,
 		"inputs": [
 			{
-				"internalType": "bytes32",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "products",
+		"outputs": [
+			{
 				"name": "id",
-				"type": "bytes32"
+				"type": "bytes30"
 			},
 			{
-				"internalType": "bytes32",
-				"name": "store_id",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
 				"name": "price",
 				"type": "uint256"
 			}
 		],
-		"name": "createProduct",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"constant": true,
+		"inputs": [],
+		"name": "idDockInstance",
+		"outputs": [
 			{
-				"internalType": "bytes32",
-				"name": "id",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "address",
-				"name": "smartContractAddress",
+				"name": "",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "coinType",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "taxRate",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "shippingTaxRate",
-				"type": "uint256"
 			}
 		],
-		"name": "createStore",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
-				"internalType": "bytes32",
 				"name": "id",
-				"type": "bytes32"
+				"type": "bytes30"
 			}
 		],
 		"name": "getProductById",
@@ -68,155 +49,61 @@
 			{
 				"components": [
 					{
-						"internalType": "bytes32",
 						"name": "id",
-						"type": "bytes32"
+						"type": "bytes30"
 					},
 					{
-						"internalType": "bytes32",
-						"name": "store_id",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "uint256",
 						"name": "price",
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Ecombar.Product",
 				"name": "",
 				"type": "tuple"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "store_id",
+				"name": "_type",
+				"type": "bytes2"
+			},
+			{
+				"name": "_hashData",
 				"type": "bytes32"
-			}
-		],
-		"name": "getProductsByStoreId",
-		"outputs": [
+			},
 			{
-				"components": [
-					{
-						"internalType": "bytes32",
-						"name": "id",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "bytes32",
-						"name": "store_id",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "uint256",
-						"name": "price",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct Ecombar.Product[]",
-				"name": "",
-				"type": "tuple[]"
+				"name": "price",
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "createProduct",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "id",
-				"type": "bytes32"
-			}
-		],
-		"name": "getStoreById",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "bytes32",
-						"name": "id",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "address",
-						"name": "smartContractAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "coinType",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "taxRate",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "shippingTaxRate",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct Ecombar.Store",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
+				"name": "iddockSmartContractAddr",
 				"type": "address"
-			}
-		],
-		"name": "getStoresByAddress",
-		"outputs": [
+			},
 			{
-				"components": [
-					{
-						"internalType": "bytes32",
-						"name": "id",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "address",
-						"name": "smartContractAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "coinType",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "taxRate",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "shippingTaxRate",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct Ecombar.Store[]",
-				"name": "",
-				"type": "tuple[]"
+				"name": "coinId",
+				"type": "uint256"
+			},
+			{
+				"name": "taxrate",
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	}
 ]

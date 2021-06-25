@@ -1,0 +1,211 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"name": "_coordinator",
+				"type": "address"
+			}
+		],
+		"name": "addCoordinator",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"name": "_hashData",
+				"type": "bytes32"
+			}
+		],
+		"name": "updateID",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_type",
+				"type": "bytes2"
+			},
+			{
+				"name": "_hashData",
+				"type": "bytes32"
+			}
+		],
+		"name": "createID",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes30"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"name": "_newOwner",
+				"type": "address"
+			}
+		],
+		"name": "changeOwner",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_sequenceID",
+				"type": "bytes32"
+			}
+		],
+		"name": "getHashDataBySequenceID",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"name": "_coordinator",
+				"type": "address"
+			}
+		],
+		"name": "removeCoordinator",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"indexed": false,
+				"name": "_sequenceID",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "_hashData",
+				"type": "bytes32"
+			}
+		],
+		"name": "CreateID",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"indexed": false,
+				"name": "_sequenceID",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "_hashData",
+				"type": "bytes32"
+			}
+		],
+		"name": "UpdateID",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"indexed": false,
+				"name": "_newOwner",
+				"type": "address"
+			}
+		],
+		"name": "ChangeOwner",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"indexed": false,
+				"name": "_coordinator",
+				"type": "address"
+			}
+		],
+		"name": "AddCoordinator",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_objectID",
+				"type": "bytes30"
+			},
+			{
+				"indexed": false,
+				"name": "_coordinator",
+				"type": "address"
+			}
+		],
+		"name": "RemoveCoordinator",
+		"type": "event"
+	}
+]
