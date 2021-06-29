@@ -9,7 +9,7 @@ import { MerchantService } from '../../../shared/services/merchant.service';
   selector: 'app-admin-collections',
   providers: [CollectionService],
   templateUrl: './collections.component.html',
-  styleUrls: ['./collections.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./collections.component.scss']
 })
 export class CollectionsComponent implements OnInit {
   collections: any;

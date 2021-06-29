@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { User } from '../models/user';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
     private _appId: string;
     private _token: string;
     private _tokenExp: Date;
+    private _lang: string;
     private _isSystemAdmin: boolean;
     private _user: User = {};
 
@@ -18,12 +20,16 @@ export class StorageService {
         if (!this._token) {
             this.storage.get('_token').subscribe((ret: string) => { this._token = ret; });
         }
-
         if (!this._user) {
-            this.storage.get('_user').subscribe((ret: User) => {
-                this._user = ret;
-            });
+            this.storage.get('_user').subscribe((ret: User) => { this._user = ret; });
         }
+        if (!this._lang) {
+            this._lang = localStorage.getItem('_lang');
+        }
+    }
+
+    get(fieldName) {
+        return this.storage.get(fieldName);
     }
 
     set appId(appID: string) {
@@ -33,6 +39,15 @@ export class StorageService {
 
     get appId(): string {
         return this._appId;
+    }
+
+    set lang(newLang: string) {
+        this._lang = newLang;
+        localStorage.setItem('_lang', newLang);
+    }
+
+    get lang(): string {
+        return this._lang;
     }
 
     deleteAppId(): void {
@@ -63,6 +78,9 @@ export class StorageService {
         return this._user;
     }
 
+    getUser() {
+        return this.storage.get('_user');
+    }
     deleteUser(): void {
         this._user = null;
         this.storage.delete('_user').subscribe(ret => { });
@@ -82,8 +100,17 @@ export class StorageService {
         this.storage.set('_isSystemAdmin', sysAdmin).subscribe(ret => { });
     }
 
-    get isSystemAdmin(): boolean {
+    get isSystemAdmin() {
         return this._isSystemAdmin;
+    }
+    checkSystemAdmin() {
+        if (this._isSystemAdmin) {
+            const obs = new Observable((observer) => {
+                observer.next(this._isSystemAdmin);
+            });
+            return obs;
+        }
+        return this.storage.get('_isSystemAdmin');
     }
 
 }

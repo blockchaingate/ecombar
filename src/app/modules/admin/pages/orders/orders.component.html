@@ -1,0 +1,41 @@
+
+<div class="container">
+  
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">{{'Date Created' | translate}}</div>
+        <div class="col col-3">{{'Items' | translate}}</div>
+        <div class="col col-3">{{'Total' | translate}}</div>
+        <div class="col col-3">{{'Payment Method' | translate}}</div>
+        <div class="col col-3">{{'Status' | translate}}</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let order of orders">
+        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
+        <div class="col col-3" data-label="{{'Items' | translate}}">{{getItemsCount(order)}}</div>
+        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
+        <div class="col col-3" data-label="{{'Payment Method' | translate}}">{{order.paymentMethod}}</div>
+        <div class="col col-3" data-label="{{'Status' | translate}}">{{getStatus(order)}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+  
+          <div class="d-inline-block px-2" *ngIf="customerFlag && (order.paymentStatus == 0)">
+            <a href="/place-order/{{order._id}}">
+              <img src="/assets/svg/pay.svg">
+            </a>
+          </div>
+
+          <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">
+            <a href="/admin/shipping/{{order._id}}">
+              <img src="/assets/svg/shipping.svg">
+            </a>
+          </div>
+
+          <div class="d-inline-block px-2" *ngIf="customerFlag && (!order.paymentStatus || order.paymentStatus == 0)">
+            <a (click)="deleteOrder(order)">
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div>        
+        </div>
+      </li>
+    </ul>
+  </div>

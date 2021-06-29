@@ -1,17 +1,17 @@
 
 <div class="container">
     <div class="text-right">
-      <button class="btn" routerLink="/admin/banner/add" routerLinkActive="active">New</button>
+      <button class="btn" routerLink="/admin/banner/add" routerLinkActive="active">{{'New' | translate}}</button>
   </div>
   
     <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-3">Title</div>
-        <div class="col col-3">Sequence</div>
+        <div class="col col-3">{{'Title' | translate}}</div>
+        <div class="col col-3">{{'Sequence' | translate}}</div>
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let banner of banners">
-        <div class="col col-3" data-label="Title">{{banner.title.en}}</div>
+        <div class="col col-3" data-label="Title">{{banner.title | translate}}</div>
         <div class="col col-3" data-label="Sequance">{{banner.sequence}}</div>
         <div class="col col-3 text-right" data-label="Operations">
   

@@ -20,7 +20,7 @@ export class ActivateComponent implements OnInit {
     this.userServ.activateUser(userId, activationCode).subscribe(
       (res: any) => {
         console.log('resssss=', res);
-        if (res.ok) {
+        if (res.ok || res._id) {
           this.activated = true;
           console.log('your account was activated successfully');
         }

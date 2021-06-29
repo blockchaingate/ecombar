@@ -1,39 +1,12 @@
 
-<div class="container">
+<div [ngClass]="!noPadding?'container': ''">
 
     <div class="card">
         <div *ngIf="cartItems && (cartItems.length > 0)">
             <h4 class="border-bottom p-3 m-3">Items in your cart</h4>
-            <div class="border-bottom p-3 m-3" *ngFor="let item of cartItems">
-                <div class="d-flex justify-content-between border-bottom">
-                    <div *ngIf="item.image" class="w-25">
-                        <img [src]="item.image" class="img-thumbnail">
-                    </div>
-                    <div class="w-75 py-3">
-                        <div class="py-3 d-flex justify-content-between border-bottom px-3">
-                            <div class="title">
-                                {{item.title | translateField}} 
-                            </div>
-                            <div>
-                                {{item.price}} {{item.currency}}
-                            </div>
-                            <div>
-                                <input value="{{item.quantity}}">
-                            </div>
-                            <div>
-                                {{item.price * item.quantity}} {{item.currency}}
-                            </div>                        
-                        </div>
-                        <div class="py-3 text-right">
-                            <div class="link" (click)="remove(item)">
-                                Remove
-                            </div>
-                            
-                        </div>                    
-                    </div>
-    
-                </div>
-    
+            <div class="border-bottom p-3 m-3" *ngFor="let item of cartItems;let i = index;">
+                
+                <app-cart-product (productUpdated)="updateProduct($event)" [product]="item"></app-cart-product>
             </div>
     
             <div class="text-right p-3">
@@ -43,11 +16,13 @@
                 </span>
             </div> 
 
-            <div class="row text-right">
+            <div class="d-flex justify-content-between">
                 <button class="btn" (click)="checkout()">
                     Checkout
                 </button>
-                
+                <button class="btn" (click)="clear()">
+                    Clear
+                </button>                
             </div>            
         </div>
         <div *ngIf="!cartItems || (cartItems.length == 0)" class="justify-content-center p-3">

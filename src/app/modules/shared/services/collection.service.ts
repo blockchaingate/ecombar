@@ -15,7 +15,7 @@ export class CollectionService {
   }
 
   getCollections() {
-    return this.http.get('product-collections/');
+    return this.http.get('product-collections/', false);
   }
 
   getAdminCollections() {

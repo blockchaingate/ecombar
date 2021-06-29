@@ -7,6 +7,10 @@ export class ExcludeProductsPipe implements PipeTransform {
             return arr;
         }
         const newArr = [];
+        if(!arr) {
+            return [];
+        }
+        console.log('this.images6');
         for(let i=0;i<arr.length;i++) {
             const item = arr[i];
             let included = false;

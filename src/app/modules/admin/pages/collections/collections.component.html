@@ -1,13 +1,13 @@
 
 <div class="container">
     <div class="text-right">
-      <button class="btn" routerLink="/admin/collection/add" routerLinkActive="active">New</button>
+      <button class="btn" routerLink="/admin/collection/add" routerLinkActive="active">{{'New' | translate}}</button>
   </div>
   
     <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-3">Name</div>
-        <div class="col col-3">Sequence</div>
+        <div class="col col-3">{{'Name' | translate}}</div>
+        <div class="col col-3">{{'Sequence' | translate}}</div>
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let collection of collections">

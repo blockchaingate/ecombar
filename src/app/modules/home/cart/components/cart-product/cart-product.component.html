@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between border-bottom">
+    <div *ngIf="product.thumbnailUrl" class="w-25">
+        <img [src]="product.thumbnailUrl" class="img-thumbnail">
+    </div>
+    <div class="w-75 py-3">
+        <div class="py-3 d-flex justify-content-between border-bottom px-3">
+            <div class="title">
+                {{product.title | translate}}
+            </div>
+            <div>
+                {{product.price}} {{product.currency}}
+            </div>
+            <div>
+                <input type="number" (ngModelChange)="modelChanged($event)" [(ngModel)]="product.quantity">
+            </div>
+            <div>
+                {{product.price * product.quantity}} {{product.currency}}
+            </div>
+        </div>
+        <div class="py-3 text-right">
+            <div class="link" (click)="remove()">
+                Remove
+            </div>
+
+        </div>
+    </div>
+
+</div>

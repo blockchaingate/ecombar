@@ -13,8 +13,8 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class BannerAddComponent implements OnInit {
   sequence: number;
-  banners: any;
   title: string;
+  images: any;
   titleChinese: string;
   subtitle: string;
   subtitleChinese: string;
@@ -31,26 +31,8 @@ export class BannerAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.images = [];
     this.currentTab = 'default';
-    const merchantId = this.merchantServ.id;
-
-    if (this.userServ.isSystemAdmin) {
-      this.bannerServ.getAdminBanners().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.banners = res._body;
-          }
-        }
-      );
-    } else if (merchantId) {
-      this.bannerServ.getMerchantBanners(merchantId).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.banners = res._body;
-          }
-        }
-      );
-    }
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
@@ -63,8 +45,11 @@ export class BannerAddComponent implements OnInit {
             this.title = banner.title.en;
             this.subtitle = banner.subtitle.en;
             this.sequence = banner.sequence;
-            this.titleChinese = banner.title.zh;
-            this.subtitleChinese = banner.subtitle.zh;
+            this.titleChinese = banner.title.sc;
+            this.subtitleChinese = banner.subtitle.sc;
+            if(banner.image) {
+              this.images.push(banner.image);
+            }
           }
 
         }
@@ -80,12 +65,13 @@ export class BannerAddComponent implements OnInit {
     const data = {
       title: {
         en: this.title,
-        zh: this.titleChinese
+        sc: this.titleChinese
       },
       subtitle: {
         en: this.subtitle,
-        zh: this.subtitleChinese
+        sc: this.subtitleChinese
       },
+      image: (this.images && (this.images.length > 0)) ? this.images[0] : null,
       sequence: this.sequence ? this.sequence : 0
     };
     if (!this.id) {

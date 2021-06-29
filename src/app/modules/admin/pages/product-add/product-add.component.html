@@ -16,8 +16,9 @@
       </div>   
       
       <div *ngIf="currentTab == 'default'">
-        <div class="layout">
-          <div class="column">
+
+        <div class="row">
+          <div class="col col-8">
             <div class="card-section">
               <div class="card">
                 <div class="container">
@@ -28,25 +29,27 @@
     
                   <div class="form-field">
                     <label for="email">Description</label>
-                    <input type="text" placeholder="Enter product description" [(ngModel)]="description" name="description" required>              
-      
+
+
+                    <ejs-richtexteditor [(ngModel)]='description'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+
+
+
                   </div>
                 </div>
               </div>
             </div>
 
-
             <div class="card-section">
               <div class="card">
                 <div class="container">
-                  <app-admin-upload-media [images]="images"></app-admin-upload-media>
+                  <app-admin-upload-media [(images)]="images" [singleFile]="false"></app-admin-upload-media>
                 </div>
               </div>
             </div>   
-            
-            
+
           </div>
-          <div class="column">
+          <div class="col col-4">
             <div class="card-section">
               <div class="card">
                 <div class="container">
@@ -80,14 +83,6 @@
 
                   </div>
 
-                  <!--
-                  <div class="custom-select py-2" *ngIf="currencies">
-                    <select [(ngModel)]="currency">
-                      <option value="0">Select Currency:</option>
-                      <option *ngFor="let cur of currencies" value="{{cur}}">{{cur}}</option>
-                    </select>
-                  </div>
-                  -->
                 </div>
               </div>
             </div>    
@@ -101,15 +96,32 @@
                   <div class="custom-select py-2" *ngIf="categories">
                     <select [(ngModel)]="category">
                       <option value="0">Select Category:</option>
-                      <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category}}</option>
+                      <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category | translateField}}</option>
+                    </select>
+                  </div>
+    
+                </div>
+              </div>
+            </div> 
+
+
+            <div class="card-section">
+              <div class="card">
+                <div class="container">  
+                  <div class="py-2">
+                    <label for="psw"><b>Brand</b></label>
+                  </div>
+                  <div class="custom-select py-2" *ngIf="brands">
+                    <select [(ngModel)]="brand">
+                      <option value="0">Select Brand:</option>
+                      <option *ngFor="let br of brands" value="{{br._id}}">{{br.name | translateField}}</option>
                     </select>
                   </div>
     
                 </div>
               </div>
             </div>             
-          </div>       
-        
+          </div>
         </div>
       </div>
 
@@ -118,7 +130,7 @@
         <input type="text" placeholder="输入名称" [(ngModel)]="titleChinese" name="titleChinese">     
         
         <label for="name"><b>描述</b></label>
-        <input type="text" placeholder="输入描述" [(ngModel)]="descriptionChinese" name="descriptionChinese">             
+        <ejs-richtexteditor [(ngModel)]='descriptionChinese'  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
       </div>
 
 

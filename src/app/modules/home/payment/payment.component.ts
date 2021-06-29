@@ -14,6 +14,7 @@ export class PaymentComponent implements OnInit{
 
     id: string;
     order: any;
+    discount: number;
     orderID: string;
     total: number;
     subtotal: number;
@@ -36,6 +37,7 @@ export class PaymentComponent implements OnInit{
       if(!this.order || !this.order.items || (this.order.items.length == 0)) {
         return;
       }
+      console.log('this.images5');
       for(let i=0;i<this.order.items.length;i++) {
         const item = this.order.items[i];
         this.subtotal += item.price * item.quantity;
@@ -50,6 +52,7 @@ export class PaymentComponent implements OnInit{
     }
 
     ngOnInit() {
+      this.discount = 0;
       this.shippingFee = 0;
       this.total = 0;
       this.subtotal = 0;
@@ -59,6 +62,8 @@ export class PaymentComponent implements OnInit{
           if(res && res.ok) {
             this.order = res._body;
             console.log('this.order=', this.order);
+            this.selectPayment(this.order.paymentMethod);
+            this.selectShippingService(this.order.shippingServiceSelected);
             this.calculateTotal();
           }
         }
@@ -66,7 +71,14 @@ export class PaymentComponent implements OnInit{
 
     }
 
+    change() {
+      this.router.navigate(['/address/' + this.orderID]);
+    }
+    
     selectShippingService(service: string) {
+      if(!service) {
+        return;
+      }
       this.selectedShippingService = service;
       if(service == 'express') {
         this.shippingFee = 10;
@@ -77,6 +89,14 @@ export class PaymentComponent implements OnInit{
     }
 
     selectPayment(payment: string) {
+      if(!payment) {
+        return;
+      }
+      if(payment == 'usdt') {
+        this.discount = 3;
+      } else {
+        this.discount = 0;
+      }
       this.selectedPayment = payment;
     }   
     
@@ -96,7 +116,7 @@ export class PaymentComponent implements OnInit{
       const item = {
         totalSale: this.subtotal,
         totalShipping: this.shippingFee,
-        totalToPay: this.total,
+        totalToPay: this.total * (1 - this.discount / 100),
         paymentMethod: this.selectedPayment,
         paymentStatus: 0,
         shippingServiceSelected: this.selectedShippingService

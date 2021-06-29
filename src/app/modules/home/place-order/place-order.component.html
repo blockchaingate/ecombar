@@ -18,8 +18,12 @@
                         <div class="py-2 text-muted">
                             Shipping services
                         </div>
-                        <div class="font-weight-bold">
-                            {{order.shippingServiceSelected}}
+                        <div class="font-weight-bold d-flex align-items-center justify-content-between">
+                            <div>
+                                {{order.shippingServiceSelected}}
+                            </div>
+                            
+                            <button class="btn" (click)="change()">Change</button>
                         </div>
                     </div>
 
@@ -27,39 +31,78 @@
                         <div class="py-2 text-muted">
                             Payment options
                         </div>
-                        <div class="font-weight-bold">
-                            {{order.paymentMethod}}
+                        <div class="font-weight-bold d-flex align-items-center justify-content-between">
+                            <div>
+                                {{order.paymentMethod}}
+                            </div>
+                                
+                                <button class="btn" (click)="change()">Change</button>
                         </div>
                     </div>
 
-                    <div class="text-center">
-                        Scan the QR Code with Ex App 
-                    </div>
-                    <div class="text-center py-5">
-                        <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
-                        <div class="py-2">
-                            <a href="{{link}}" download (click)="dlDataUrlBin()">
-                                <div class="d-inline-block px-1">
-                                    <img src="/assets/download.png">
-                                </div>
-                                <div class="d-inline-block px-1">
-                                    {{'Download QR Code' | translate}}
-                                </div>
-                            </a>
-            
+                    <div *ngIf="order.paymentMethod == 'usdt'">
+                        <div class="text-center">
+                            Scan the QR Code with Ex App 
                         </div>
-                    </div>                    
+                        <div class="text-center py-5">
+                            <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+                            <div class="py-2">
+                                <a href="{{link}}" download (click)="dlDataUrlBin()">
+                                    <div class="d-inline-block px-1">
+                                        <img src="/assets/download.png">
+                                    </div>
+                                    <div class="d-inline-block px-1">
+                                        {{'Download QR Code' | translate}}
+                                    </div>
+                                </a>
+                
+                            </div>
+                        </div>                    
 
-                    <div class="text-center py-3">
-                        Or
+                        <div class="text-center py-3">
+                            Or
+                        </div>
+
+                        <div class="text-center">
+
+                            <button class="btn" (click)="payWithWeb()">
+                                Pay with Ex Web
+                            </button>
+                            
+                        </div>
+                    </div>
+                    <div class="text-center" *ngIf="order.paymentMethod == 'paypal'">
+
+                        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center" *ngIf="order.paymentMethod == 'creditcard'">
 
-                        <button class="btn" (click)="payWithWeb()">
-                            Pay with Ex Web
-                        </button>
+                        <button class="btn" (click)="payWithCreditCard()">
+                            Pay with Credit card
+                        </button>   
                         
+                        <!--
+                        <form method="post" action="https://esqa.moneris.com/HPPDP/index.php">
+                            <input type="hidden" name="ps_store_id" value="{{ps_store_id}}">
+                            <input type="hidden" name="hpp_key" value="{{hpp_key}}">
+                            <input type="hidden" name="charge_total" value="{{total}}">
+                            <input type="submit" name="submit" value="Pay with Credit card">
+                        </form>
+                        -->
+                        <!--
+                        <FORM METHOD="POST" ACTION= https://esqa.moneris.com/HPPDP/index.php>
+
+                            <INPUT TYPE="HIDDEN" NAME="ps_store_id" VALUE="{{ps_store_id}}">
+                       
+                            <INPUT TYPE="HIDDEN" NAME="hpp_key" VALUE="{{hpp_key}}">
+                       
+                            <INPUT TYPE="HIDDEN" NAME="charge_total" VALUE="{{total}}">
+                           <INPUT TYPE="SUBMIT" NAME="SUBMIT" VALUE="Pay with Credit card">
+                       
+                       </FORM>    
+                       -->                    
                     </div>
                 </div>
             </div>

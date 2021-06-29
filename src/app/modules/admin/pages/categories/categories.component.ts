@@ -2,20 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 
 @Component({
   selector: 'app-admin-categories',
   providers: [CategoryService],
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
   categories: any;
   constructor(
     private userServ: UserService,
-    private authServ: AuthService,
     private merchantServ: MerchantService,
     private router: Router,
     private categoryServ: CategoryService) {
@@ -27,9 +25,9 @@ export class CategoriesComponent implements OnInit {
     if (this.userServ.isSystemAdmin) {
       this.getAdminCategories();
     } else
-      if (merchantId) {
+    if (merchantId) {
         this.getMerchantCategories(merchantId);
-      }
+    }
   }
 
   getMerchantCategories(merchantId: string) {

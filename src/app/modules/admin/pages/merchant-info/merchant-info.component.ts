@@ -7,7 +7,7 @@ import { AuthService } from '../../../shared/services/auth.service';
   selector: 'app-admin-merchant-info',
   providers: [],
   templateUrl: './merchant-info.component.html',
-  styleUrls: ['./merchant-info.component.scss', '../../../../../table.scss', '../../../../../button.scss']
+  styleUrls: ['./merchant-info.component.scss']
 })
 export class MerchantInfoComponent implements OnInit{
     name: string;

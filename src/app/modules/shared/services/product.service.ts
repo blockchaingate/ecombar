@@ -15,11 +15,11 @@ export class ProductService {
   }
 
   getProduct(id: string) {
-    return this.http.get('products/' + id);
+    return this.http.get('products/' + id, false);
   }
 
   getProducts() {
-    return this.http.get('products');
+    return this.http.get('products', false);
   }
 
   getMerchantProducts(merchantId: string) {
@@ -36,6 +36,6 @@ export class ProductService {
   }
 
   getCategoryProducts(category_id: string) {
-    return this.http.get('products/category/' + category_id);
+    return this.http.get('products/category/' + category_id, false);
   }
 }

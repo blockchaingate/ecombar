@@ -15,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
     FooterComponent
   ],
   imports: [
-    //QRCodeModule,
+    // QRCodeModule,
     HomeRoutingModule,
     CommonModule,
     FormsModule,
