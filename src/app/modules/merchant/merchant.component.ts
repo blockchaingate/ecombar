@@ -77,8 +77,8 @@ export class MerchantComponent implements OnInit {
         icon: 'dashboard'
       },
       {
-        title: 'Stores',
-        link: 'stores',
+        title: 'Store',
+        link: 'store',
         icon: 'store'
       },      
       {

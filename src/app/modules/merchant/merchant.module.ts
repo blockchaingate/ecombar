@@ -32,8 +32,7 @@ import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
-import { StoresComponent } from './pages/stores/stores.component';
-import { StoreAddComponent } from './pages/store-add/store-add.component';
+import { StoreComponent } from './pages/store/store.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -54,8 +53,7 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     DashboardComponent,
     UsersComponent,
     ShipsComponent,
-    StoresComponent,
-    StoreAddComponent,
+    StoreComponent,
     CommentComponent,
     CartComponent,
     MainLayoutAddComponent,

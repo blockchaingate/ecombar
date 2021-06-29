@@ -1,45 +1,155 @@
 [
 	{
-		"constant": true,
 		"inputs": [
 			{
-				"name": "",
+				"internalType": "address",
+				"name": "iddockSmartContractAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "feeChargerSmartContractAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "uint32",
+				"name": "_coinType",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint8",
+				"name": "taxrate",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bytes30",
+				"name": "_objectID",
+				"type": "bytes30"
+			}
+		],
+		"name": "CreateProduct",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hashData",
+				"type": "bytes32"
+			},
+			{
+				"components": [
+					{
+						"internalType": "bytes30",
+						"name": "product_id",
+						"type": "bytes30"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Ecombar.OrderItem[]",
+				"name": "items",
+				"type": "tuple[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "itemsCount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "fullfilmentFee",
 				"type": "uint256"
 			}
 		],
-		"name": "products",
-		"outputs": [
+		"name": "createOrder",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
-				"name": "id",
-				"type": "bytes30"
+				"internalType": "bytes32",
+				"name": "_hashData",
+				"type": "bytes32"
 			},
 			{
+				"internalType": "uint256",
 				"name": "price",
 				"type": "uint256"
 			}
 		],
-		"payable": false,
-		"stateMutability": "view",
+		"name": "createProduct",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hashData",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes30",
+				"name": "order_id",
+				"type": "bytes30"
+			}
+		],
+		"name": "createShipping",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
-		"name": "idDockInstance",
+		"name": "feeChargerInstance",
 		"outputs": [
 			{
+				"internalType": "contract FeeChargerInterface",
 				"name": "",
 				"type": "address"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [
 			{
+				"internalType": "bytes30",
 				"name": "id",
 				"type": "bytes30"
 			}
@@ -49,61 +159,148 @@
 			{
 				"components": [
 					{
+						"internalType": "bytes30",
 						"name": "id",
 						"type": "bytes30"
 					},
 					{
+						"internalType": "uint256",
 						"name": "price",
 						"type": "uint256"
 					}
 				],
+				"internalType": "struct Ecombar.Product",
 				"name": "",
 				"type": "tuple"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"inputs": [],
+		"name": "idDockInstance",
+		"outputs": [
+			{
+				"internalType": "contract IdDockInterface",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "isOwner",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
-				"name": "_type",
-				"type": "bytes2"
+				"internalType": "bytes30",
+				"name": "id",
+				"type": "bytes30"
+			}
+		],
+		"name": "isPaid",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "orders",
+		"outputs": [
+			{
+				"internalType": "bytes30",
+				"name": "id",
+				"type": "bytes30"
 			},
 			{
-				"name": "_hashData",
-				"type": "bytes32"
+				"internalType": "uint256",
+				"name": "total",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "products",
+		"outputs": [
+			{
+				"internalType": "bytes30",
+				"name": "id",
+				"type": "bytes30"
 			},
 			{
+				"internalType": "uint256",
 				"name": "price",
 				"type": "uint256"
 			}
 		],
-		"name": "createProduct",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
 		"outputs": [],
-		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
-				"name": "iddockSmartContractAddr",
+				"internalType": "address",
+				"name": "newOwner",
 				"type": "address"
-			},
-			{
-				"name": "coinId",
-				"type": "uint256"
-			},
-			{
-				"name": "taxrate",
-				"type": "uint256"
 			}
 		],
-		"payable": false,
+		"name": "transferOwnership",
+		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "constructor"
+		"type": "function"
 	}
 ]

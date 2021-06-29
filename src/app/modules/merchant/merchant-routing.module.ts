@@ -31,8 +31,7 @@ import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
-import { StoresComponent } from './pages/stores/stores.component';
-import { StoreAddComponent } from './pages/store-add/store-add.component';
+import { StoreComponent } from './pages/store/store.component';
 
 import { 
   AuthGuardService as AuthGuard 
@@ -112,14 +111,8 @@ const routes: Routes = [
         path: 'category/:id/edit', component: CategoryAddComponent
       },
       {
-        path: 'stores', component: StoresComponent
-      },
-      {
-        path: 'store/add', component: StoreAddComponent
-      },
-      {
-        path: 'store/:id/edit', component: StoreAddComponent
-      },      
+        path: 'store', component: StoreComponent
+      },     
       {
         path: 'brands', component: BrandsComponent
       },

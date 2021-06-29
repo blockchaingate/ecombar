@@ -23,7 +23,7 @@ contract IDDock {
     event AddCoordinator(bytes30 _objectID, address _coordinator);
     event RemoveCoordinator(bytes30 _objectID, address _coordinator);
     
-    function createID(bytes2 _type, bytes32 _hashData) external returns (bytes30){
+    function createID(bytes2 _type, bytes32 _hashData) external {
         // generate objectID: creator’s address(20 bytes) + type(2 bytes) + internal ID(8 bytes)
         bytes32 objectID32;
         objectID32 = (((objectID32 | bytes8(internalIDOf[msg.sender])) >> 16) | _type) >> 160 | bytes20(msg.sender);
@@ -40,7 +40,6 @@ contract IDDock {
         hashDataOfSequenceID[sequenceID] = _hashData;
         
         emit CreateID(objectID, sequenceID, _hashData);
-        return objectID;
     }
     
     function updateID(bytes30 _objectID, bytes32 _hashData) public {

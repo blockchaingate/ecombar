@@ -48,12 +48,7 @@
 			}
 		],
 		"name": "createID",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bytes30"
-			}
-		],
+		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"

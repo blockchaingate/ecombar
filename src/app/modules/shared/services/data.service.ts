@@ -9,6 +9,12 @@ export class DataService {
     this.walletAddressSource.next(address);
   }  
 
+  private storeSource = new BehaviorSubject({});
+  currentStore = this.storeSource.asObservable();
+  changeStore(store: any) {
+    this.storeSource.next(store);
+  }  
+
   constructor() { }
 
 
