@@ -23,12 +23,14 @@ export class HttpService {
 
     get(path: string, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-app-id': this.storage.appId
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.storage.token
+                'x-access-token': this.storage.token,
+                'x-app-id': this.storage.appId
             });
         }
         const options: OPTIONS = {
@@ -40,12 +42,14 @@ export class HttpService {
 
     post(path: string, data: any, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-app-id': this.storage.appId
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.storage.token
+                'x-access-token': this.storage.token,
+                'x-app-id': this.storage.appId
             });
         }
         const options: OPTIONS = {
@@ -58,12 +62,14 @@ export class HttpService {
 
     put(path: string, data: any, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-app-id': this.storage.appId
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.storage.token
+                'x-access-token': this.storage.token,
+                'x-app-id': this.storage.appId
             });
         }
         const options: OPTIONS = {
@@ -76,12 +82,14 @@ export class HttpService {
 
     delete(path: string, jwtAuth = true): Observable<any> {
         let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-app-id': this.storage.appId
         });
         if (jwtAuth === true) {
             httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'x-access-token': this.storage.token
+                'x-access-token': this.storage.token,
+                'x-app-id': this.storage.appId
             });
         }
         const options: OPTIONS = {
@@ -98,7 +106,8 @@ export class HttpService {
 
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
-            'x-access-token': token
+            'x-access-token': token,
+            'x-app-id': this.storage.appId
         });
         const options: OPTIONS = {
             headers: httpHeaders
@@ -114,7 +123,8 @@ export class HttpService {
 
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
-            'x-access-token': token
+            'x-access-token': token,
+            'x-app-id': this.storage.appId
         });
         const options: OPTIONS = {
             headers: httpHeaders

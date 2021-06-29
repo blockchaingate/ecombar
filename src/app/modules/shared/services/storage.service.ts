@@ -14,6 +14,7 @@ export class StorageService {
         if (!this._appId) {
             this.storage.get('_appId').subscribe((ret: string) => { this._appId = ret; });
         }
+
         if (!this._token) {
             this.storage.get('_token').subscribe((ret: string) => { this._token = ret; });
         }
@@ -23,7 +24,6 @@ export class StorageService {
                 this._user = ret;
             });
         }
-
     }
 
     set appId(appID: string) {
