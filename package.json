@@ -36,7 +36,7 @@
         "ethereumjs-common": "1.5.2",
         "ethereumjs-tx": "^2.1.2",
         "ethereumjs-wallet": "^0.6.3",
-        "lodash": "^4.17.20",
+        "lodash": "^4.17.21",
         "ngx-paypal": "^6.2.0",
         "ngx-smart-modal": "^7.4.1",
         "ngx-toastr": "^13.2.0",
