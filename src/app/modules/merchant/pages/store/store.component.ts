@@ -11,6 +11,7 @@ import { ABI, Bytecode } from '../../../../config/ecombar';
 import { environment } from '../../../../../environments/environment';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-store',
@@ -43,11 +44,14 @@ export class StoreComponent implements OnInit {
     private modalService: BsModalService,
     private kanbanSmartContract: KanbanSmartContractService,
     private utilServ: UtilService,
+    private dataServ: DataService,
     private storeServ: StoreService) {
   }
 
   ngOnInit() {
     this.smartContractAddress = environment.addresses.smartContract.FEE_CHARGER;
+
+    /*
     this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
       if(!wallets || !wallets.items || (wallets.items.length == 0)) {
@@ -59,13 +63,43 @@ export class StoreComponent implements OnInit {
       this.address = addresses.filter(item => item.name == 'FAB')[0].address;  
       this.storeServ.getStoresByAddress(this.address).subscribe(
         (ret: any) => {
-          console.log('ret==', ret);
+          console.log('ret for store==', ret);
+          if(ret && ret.ok && ret._body && ret._body.length > 0) {
+            const store = ret._body[ret._body.length - 1];
+            console.log('store==', store);
+            this.coin = store.coin;
+            this.taxRate = store.taxRate;
+            this.name = store.name.en;
+            this.nameChinese = store.name.sc;
+          }
         }
       );    
     });
+    */
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );
+    this.dataServ.currentStore.subscribe(
+      (store: any) => {
+        console.log('store for subscribe=', store);
+        if(store) {
+          this.coin = store.coin;
+          this.taxRate = store.taxRate;
+          if(store.name) {
+            this.name = store.name.en;
+            this.nameChinese = store.name.sc;  
+          }
 
+          this.smartContractAddress = store.smartContractAddress;      
+          this.objectId = store.objectId;  
+        }
+      }
+    );
     this.currentTab = 'default';
 
+    /*
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.storeServ.getStore(this.id).subscribe(
@@ -83,6 +117,7 @@ export class StoreComponent implements OnInit {
         }
       );
     }
+    */
   }
 
   changeTab(tabName: string) {

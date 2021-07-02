@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { userReducer } from './store/reducers/user.reducer';
 import { StoreModule, ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { DataService } from './modules/shared/services/data.service';
 //import { UserState } from './reducers/user.state';
 import { reducers } from './store/reducers';
 
@@ -32,7 +33,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

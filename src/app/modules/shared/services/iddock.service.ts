@@ -224,17 +224,19 @@ export class IddockService {
   }
 
   getHashSign(keyPair, data: any) {
-    const obj = this.clean(data);
-    let nvsString = JSON.stringify(obj);
-
-    const selfSign = this.coinServ.signedMessage(nvsString, keyPair);
+    const datahash = this.getDataHash(data);  
+    const selfSign = this.coinServ.signedMessage(datahash, keyPair);
     const sign = this.utilServ.stripHexPrefix(selfSign.r)  + this.utilServ.stripHexPrefix(selfSign.s) + this.utilServ.stripHexPrefix(selfSign.v);
-    const datahash = this.web3Serv.getHash(nvsString);    
-
     return [datahash, sign];
   }
 
 
+  getDataHash(data: any) {
+    const obj = this.clean(data);
+    let nvsString = JSON.stringify(obj);
+    const datahash = this.web3Serv.getHash(nvsString); 
+    return datahash;
+  }
   async signIdDock(seed, type: string, rfid: string, nvs: any, parents: any) {
     const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b'); 
 

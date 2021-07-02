@@ -66,6 +66,10 @@ contract Ecombar is Ownable {
         taxRate = taxrate;
     }
  
+    function changeFeeChargerSmartContractAddr(address addr) {
+        feeChargerInstance = FeeChargerInterface(addr);
+    }
+
     function createProduct(bytes32 _hashData, uint price) public onlyOwner {
         bytes30 id = idDockInstance.createID(0x0201, _hashData);
         Product memory newProduct = Product(id, price);  

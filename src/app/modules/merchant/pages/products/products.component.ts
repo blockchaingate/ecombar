@@ -63,7 +63,7 @@ export class ProductsComponent implements OnInit {
       return;
     }
     */
-    this.router.navigate(['/admin/product/add']);
+    this.router.navigate(['/merchant/product/add']);
   }
 
   editProduct(product) {
@@ -74,7 +74,7 @@ export class ProductsComponent implements OnInit {
       return;
     } 
     */   
-    this.router.navigate(['/admin/product/' + product._id + '/edit']);
+    this.router.navigate(['/merchant/product/' + product._id + '/edit']);
   }
 
   deleteProduct(product) {

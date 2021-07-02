@@ -24,7 +24,7 @@ import { TimerService } from './services/timer.service';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
-import { DataService } from './services/data.service';
+
 import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
 import { MainLayoutService } from './services/mainlayout.service';
@@ -103,7 +103,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     TimerService,
     WalletGuardService,
     UtilService,
-    DataService,
     IddockService,
     TextLanService,
     StoreService,
@@ -125,8 +124,7 @@ export class SharedModule {
         CommentService,
         CoinService,
         ApiService,
-        Web3Service,   
-        DataService,     
+        Web3Service,     
         KanbanService,
         IddockService,
         ShipService,

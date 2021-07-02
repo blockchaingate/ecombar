@@ -8,10 +8,13 @@ import { currencies } from '../../../../../environments/currencies';
 import { TextLan } from '../../../shared/models/textlan';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+//import { NgxSmartModalService } from 'ngx-smart-modal';
 import { UtilService } from '../../../shared/services/util.service';
 import { IddockService } from '../../../shared/services/iddock.service';
 import { ToastrService } from 'ngx-toastr';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-product-add',
@@ -44,6 +47,7 @@ export class ProductAddComponent implements OnInit {
   contents: any;
   noWallet: boolean;
   id: string;
+  modalRef: BsModalRef;
   password: string;
   color: string;
   objectId: string;
@@ -76,8 +80,10 @@ export class ProductAddComponent implements OnInit {
     private toastrServ: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
+    private dataServ: DataService,
     private iddockServ: IddockService,
-    private ngxSmartModalServ: NgxSmartModalService,
+    private modalService: BsModalService,
+    //private ngxSmartModalServ: NgxSmartModalService,
     private localSt: LocalStorage,
     private userServ: UserService,
     private categoryServ: CategoryService,
@@ -118,18 +124,11 @@ export class ProductAddComponent implements OnInit {
     this.currentTab = 'default';
     this.currencies = currencies;
 
-    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
-
-      if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-        this.noWallet = true;
-        return;
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
       }
-      this.wallets = wallets;
-      console.log('this.wallets==', this.wallets);
-      this.wallet = this.wallets.items[this.wallets.currentIndex];
-
-
-  });
+    );
 
     this.userServ.getMe().subscribe(
       ret => {
@@ -309,25 +308,36 @@ export class ProductAddComponent implements OnInit {
   }
 
   saveProduct() {
-    this.ngxSmartModalServ.getModal('passwordModal').open();
+    //this.ngxSmartModalServ.getModal('passwordModal').open();
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
+    this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.saveProductDo(seed);
+    });
   }
 
+  /*
   onConfirmPassword(event) {
+    
       this.ngxSmartModalServ.getModal('passwordModal').close();
       this.password = event;
       this.saveProductDo();
       
   }  
-
+  */
   addFeature() {
     this.features.push(this.feature);
     this.feature = '';
   }
   
-  async saveProductDo() {
+  async saveProductDo(seed: Buffer) {
     console.log('this.images=', this.images);
-    const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
+    //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
     const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
     const subtitleLan: TextLan = { name: 'subtitle', en: this.subtitle, sc: this.subtitleChinese };
     const featuresLan: TextLan = { name: 'features', en: this.features, sc: this.featuresChinese };
@@ -363,6 +373,9 @@ export class ProductAddComponent implements OnInit {
       brand: this.brand ? this.brand : null
     };
     
+    const datahash = this.iddockServ.getDataHash(data);
+    console.log('datahash==', datahash);
+    /*
     const dataInIddock = {
       title: titleLan,
       briefIntroduction: detailLan,
@@ -431,6 +444,6 @@ export class ProductAddComponent implements OnInit {
 
 
     }
-
+    */
   }
 }

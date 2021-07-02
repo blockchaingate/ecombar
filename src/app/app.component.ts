@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from './modules/shared/services/app.service';
 import { StorageService } from './modules/shared/services/storage.service';
 import { environment } from '../environments/environment';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,37 @@ import { environment } from '../environments/environment';
 export class AppComponent implements OnInit {
   title = 'ecombar';
 
-  constructor(private appServ: AppService, private storageServ: StorageService, private translate: TranslateService) {
+  constructor(
+    private appServ: AppService, 
+    private localSt: LocalStorage,
+    private storageServ: StorageService, 
+    private translate: TranslateService) {
     appServ.id = environment.appid;
     // this.setLan();
   }
 
   ngOnInit() {
+
+    /*
+    .pipe(
+      take(1),
+      map((wallets: any) => {
+        console.log('wallets==', wallets);
+        if(!wallets || !wallets.items || (wallets.items.length == 0)) {
+          this.router.navigate(['/wallet']);
+          return false;
+        }
+
+        const wallet = wallets.items[wallets.currentIndex];
+
+        const addresses = wallet.addresses;
+        const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
+        const walletAddress = walletAddressItem.address;
+        this.dataServ.changeWalletAddress(walletAddress);
+        return true;
+      })
+    );
+    */
   }
 
   setLan() {
