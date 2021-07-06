@@ -15,6 +15,9 @@ import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import BigNumber from 'bignumber.js/bignumber';
+
 
 @Component({
   selector: 'app-admin-product-add',
@@ -31,10 +34,12 @@ export class ProductAddComponent implements OnInit {
 
   public insertImageSettings :ImageSettingsModel = { allowedTypes: ['.jpeg', '.jpg', '.png'], display: 'inline', width: 'auto', height: 'auto', saveFormat: 'Blob', saveUrl: null, path: null,}
 
+  smartContractAddress: string;
   wallets: any;
   wallet: any;
   features: any;
   feature: string;
+  walletAddress: string;
   featureChinese: string;
   featuresChinese: any;
   title: string;
@@ -87,6 +92,7 @@ export class ProductAddComponent implements OnInit {
     private localSt: LocalStorage,
     private userServ: UserService,
     private categoryServ: CategoryService,
+    private kanbanSmartContractServ: KanbanSmartContractService,
     private brandServ: BrandService,
     private utilServ: UtilService,
     private productServ: ProductService) {
@@ -129,7 +135,20 @@ export class ProductAddComponent implements OnInit {
         this.wallet = wallet;
       }
     );
-
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        this.walletAddress = walletAddress;
+      }
+    );  
+    
+    this.dataServ.currentStore.subscribe(
+      (store: any) => {
+        if(store) {
+          this.smartContractAddress = store.smartContractAddress;
+        }
+      }
+    );
+    /*
     this.userServ.getMe().subscribe(
       ret => {
         console.log('ret==', ret);
@@ -158,7 +177,7 @@ export class ProductAddComponent implements OnInit {
         }
       }
     );
-
+    */
 
 
 
@@ -356,6 +375,7 @@ export class ProductAddComponent implements OnInit {
       }]
     };
     const data: any = {
+      smartContractAddress: this.smartContractAddress,
       title: titleLan,
       subtitle: subtitleLan,
       briefIntroduction: detailLan,
@@ -373,8 +393,68 @@ export class ProductAddComponent implements OnInit {
       brand: this.brand ? this.brand : null
     };
     
-    const datahash = this.iddockServ.getDataHash(data);
-    console.log('datahash==', datahash);
+    //const datahash = this.iddockServ.getDataHash(data);
+    //console.log('datahash==', datahash);
+
+    if(!this.id) {
+      (await this.iddockServ.addIdDock(seed, 'things', null, data, null)).subscribe( async res => {
+        console.log('ress=', res);
+        if(res) {
+          if(res.ok) {
+            console.log('res.body._id=', res._body._id);
+            this.objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
+            data.objectId = this.objectId;
+            //data.address = this.walletAddress;
+            //console.log('this.objectId=', this.objectId);
+            const abi = 	{
+              "inputs": [
+                {
+                  "internalType": "bytes30",
+                  "name": "objectId",
+                  "type": "bytes30"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "price",
+                  "type": "uint256"
+                }
+              ],
+              "name": "createProduct",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            };
+            const args = ['0x' + res._body._id.substring(0, 60), new BigNumber(data.price).multipliedBy(new BigNumber(1e18)).toFixed()];
+            console.log('args===', args);
+            const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
+            console.log('rettt=', ret);
+            this.productServ.create(data).subscribe(
+              (res: any) => {
+                this.router.navigate(['/merchant/products']);
+              }
+            );
+          } else {
+            this.toastrServ.error('add to id dock error');
+          }
+          
+        }
+      });      
+    } else {
+      this.productServ.update(this.id, data).subscribe(
+        async (res: any) => {
+          console.log('res=', res);
+          if (res.ok) {
+            (await this.iddockServ.updateIdDock(seed, this.product.objectId, 'things', null, data, null)).subscribe(res => {
+              if(res) {
+                if(res.ok) {
+                  this.router.navigate(['/merchant/products']);
+                }
+              }
+            });            
+          }
+        }
+      );      
+    }
     /*
     const dataInIddock = {
       title: titleLan,

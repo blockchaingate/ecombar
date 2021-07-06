@@ -17,7 +17,7 @@
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
         <label for="email"><b>{{'Fee Charger Smart Contract Address' | translate}}</b></label>
-        <input type="text" placeholder="{{'Enter smart contract address' | translate}}" [(ngModel)]="smartContractAddress" name="smartContractAddress" required>
+        <input type="text" placeholder="{{'Enter smart contract address' | translate}}" [(ngModel)]="feeChargerSmartContractAddress" name="smartContractAddress" required>
        
         <div>
           <label for="email"><b>Coin</b></label>
@@ -35,7 +35,11 @@
           <input type="text" placeholder="{{'Tax rate' | translate}}" [(ngModel)]="taxRate" name="taxRate" required>
      
         </div>
-       
+        <div *ngIf="smartContractAddress">
+          <label for="email"><b>{{'Smart contract address' | translate}}:</b></label>
+          {{smartContractAddress}}
+     
+        </div>       
       </div>
       
       <div *ngIf="currentTab=='Chinese'">

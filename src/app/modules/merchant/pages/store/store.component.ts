@@ -24,7 +24,9 @@ export class StoreComponent implements OnInit {
   name: string;
   nameChinese: string;
   currentTab: string;
+  feeChargerSmartContractAddress: string;
   smartContractAddress: string;
+
   coin: string;
   id: string;
   modalRef: BsModalRef;
@@ -49,7 +51,7 @@ export class StoreComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.smartContractAddress = environment.addresses.smartContract.FEE_CHARGER;
+    this.feeChargerSmartContractAddress = environment.addresses.smartContract.FEE_CHARGER;
 
     /*
     this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
@@ -92,7 +94,8 @@ export class StoreComponent implements OnInit {
             this.nameChinese = store.name.sc;  
           }
 
-          this.smartContractAddress = store.smartContractAddress;      
+          this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
+          this.smartContractAddress = store.smartContractAddress; 
           this.objectId = store.objectId;  
         }
       }
@@ -125,25 +128,24 @@ export class StoreComponent implements OnInit {
   }
 
   async addStoreDo(seed: Buffer) {
-    console.log('seed==', seed);
     const data = {
       name: {
         en: this.name,
         sc: this.nameChinese
       },
-      smartContractAddress: this.smartContractAddress,
+      smartContractAddress: '',
+      feeChargerSmartContractAddress: this.feeChargerSmartContractAddress,
       coin: this.coin,
       taxRate: this.taxRate ? this.taxRate : 0
     };
 
     let args = [
-      environment.addresses.smartContract.IDDOCK, 
-      this.smartContractAddress, 
+      this.feeChargerSmartContractAddress, 
       this.coinServ.getCoinTypeIdByName(this.coin), 
       this.taxRate];
     const resp = await this.kanbanSmartContract.deploySmartContract(seed, ABI, Bytecode, args);
-    const txid = resp.transactionHash;
 
+    console.log('resp from deploy smart contract=', resp);
     if (resp && resp.transactionHash) {
       const txid = resp.transactionHash;
       console.log('txid=', resp.transactionHash);

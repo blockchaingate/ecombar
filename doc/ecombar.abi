@@ -3,11 +3,6 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "iddockSmartContractAddr",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
 				"name": "feeChargerSmartContractAddr",
 				"type": "address"
 			},
@@ -60,9 +55,22 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "_hashData",
-				"type": "bytes32"
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"name": "changeFeeChargerSmartContractAddr",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes30",
+				"name": "objectId",
+				"type": "bytes30"
 			},
 			{
 				"components": [
@@ -100,9 +108,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "_hashData",
-				"type": "bytes32"
+				"internalType": "bytes30",
+				"name": "objectId",
+				"type": "bytes30"
 			},
 			{
 				"internalType": "uint256",
@@ -118,9 +126,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "_hashData",
-				"type": "bytes32"
+				"internalType": "bytes30",
+				"name": "objectId",
+				"type": "bytes30"
 			},
 			{
 				"internalType": "bytes30",

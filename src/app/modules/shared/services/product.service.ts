@@ -31,6 +31,10 @@ export class ProductService {
     return this.http.get('products/merchant/' + merchantId, true);
   }
 
+  getProductsOwnedBy(address: string){
+    return this.http.get('products/ownedBy/' + address, true);
+  }
+  
   deleteProduct(id: string) {
     return this.http.delete('products/delete/' + id, true);
   }

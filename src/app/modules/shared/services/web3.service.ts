@@ -217,7 +217,6 @@ export class Web3Service {
   async signAbiHexWithPrivateKey(abiHex: string, keyPair: any, address: string, nonce: number,
     value = 0, options = { gasPrice: 0, gasLimit: 0 }) {
     // console.log('abiHex before', abiHex);
-    console.log('keyPair===', keyPair);
     if (abiHex.startsWith('0x')) {
       abiHex = abiHex.slice(2);
     }

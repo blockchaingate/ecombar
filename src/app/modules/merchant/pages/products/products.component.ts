@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
 import { ToastrService } from 'ngx-toastr';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -15,18 +17,34 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductsComponent implements OnInit {
   products: any;
+  walletAddress: string;
 
   walletExgAddress: string;
   constructor(
     private store: Store<{ user: UserState }>,
     private toastr: ToastrService,
     private router: Router,
+    private dataServ: DataService,
+    private utilServ: UtilService,
     private translateServ: TranslateService,
     private productServ: ProductService) {
 
   }
 
   ngOnInit() {
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        this.walletAddress = walletAddress;
+        this.productServ.getProductsOwnedBy(walletAddress).subscribe(
+          (res: any) => {
+            if (res) {
+              this.products = res;
+            }
+          }
+        );        
+      }
+    );      
+    /*
     this.store.select('user').subscribe(
       (userState: UserState) => {
         const role = userState.role;
@@ -52,6 +70,7 @@ export class ProductsComponent implements OnInit {
         }
       }
     );
+    */
   }
 
 
@@ -77,6 +96,10 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['/merchant/product/' + product._id + '/edit']);
   }
 
+  displayAddress(address: string) {
+    return this.utilServ.displayAddress(address);
+  }
+  
   deleteProduct(product) {
     this.productServ.deleteProduct(product._id).subscribe(
       (res: any) => {

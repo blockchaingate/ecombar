@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { Product2Component } from './product2/product2.component';
+//import { Product2Component } from './product2/product2.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { Category2Component } from './category2/category2.component';
@@ -56,10 +56,12 @@ const routes: Routes = [
         path: 'apply-for-merchant',
         component: ApplyForMerchantComponent
       },
+      /*
       {
         path: 'product2',
         component: Product2Component
       },
+      */
       {
         path: 'checkout',
         component: CheckoutComponent

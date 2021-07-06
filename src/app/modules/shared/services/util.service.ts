@@ -151,6 +151,12 @@ export class UtilService {
         return bytes.toString('hex');
     }
     
+    displayAddress(address: string) {
+        if(!address || (address.length < 7)) {
+            return address;
+        }
+        return address.substring(0, 3) + '...' + address.substring(address.length - 3);
+    }
     fixedLengh(obj: any, length: number) {
         let str = obj.toString();
         const strLength = str.length;

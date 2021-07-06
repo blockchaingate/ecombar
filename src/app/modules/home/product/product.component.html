@@ -10,7 +10,7 @@
                         <!--
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Product</a></li>
                         -->
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/category/{{product.primaryCategoryId._id}}">{{product.primaryCategoryId.category | translateField}}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/category/{{product.primaryCategoryId?._id}}">{{product.primaryCategoryId?.category | translateField}}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{product && product.title | translateField}}</li>
                     </ol>
                 </nav>
@@ -44,7 +44,9 @@
                 <div class="col-md-7 mb-md-6 mb-lg-0">
                     <div class="mb-2">
                         <div class="border-bottom mb-3 pb-md-1 pb-3">
-                            <a href="/category/{{product.primaryCategoryId._id}}" class="font-size-12 text-gray-5 mb-2 d-inline-block">{{product.primaryCategoryId.category | translateField}}</a>
+                            <a href="/category/{{product.primaryCategoryId?._id}}" class="font-size-12 text-gray-5 mb-2 d-inline-block">
+                                {{product.primaryCategoryId?.category | translateField}}
+                            </a>
                             <h2 class="font-size-25 text-lh-1dot2">{{product && product.title | translateField}}</h2>
                             <div class="mb-2">
                                 <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="#">

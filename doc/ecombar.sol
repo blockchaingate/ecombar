@@ -55,35 +55,32 @@ contract Ecombar is Ownable {
     mapping(bytes30 => Shipping) shippingById;
     event CreateProduct(bytes30 _objectID);
     constructor(
-        address iddockSmartContractAddr, 
         address feeChargerSmartContractAddr, 
         uint32 _coinType, 
         uint8 taxrate) {
         //iddockSmartContractAddress = iddockSmartContractAddr;  
-        idDockInstance = IdDockInterface(iddockSmartContractAddr);
         feeChargerInstance = FeeChargerInterface(feeChargerSmartContractAddr);
         coinType = _coinType;
         taxRate = taxrate;
     }
  
-    function changeFeeChargerSmartContractAddr(address addr) {
+    function changeFeeChargerSmartContractAddr(address addr) public{
         feeChargerInstance = FeeChargerInterface(addr);
     }
 
-    function createProduct(bytes32 _hashData, uint price) public onlyOwner {
-        bytes30 id = idDockInstance.createID(0x0201, _hashData);
-        Product memory newProduct = Product(id, price);  
+    function createProduct(bytes30 objectId, uint price) public onlyOwner {
+        Product memory newProduct = Product(objectId, price);  
         products.push(newProduct);
-        productById[id] = newProduct;
+        productById[objectId] = newProduct;
     }
 
     function getProductById(bytes30 id) public view returns (Product memory) {
         return productById[id];
     }           
 
-    function createOrder(bytes32 _hashData, OrderItem[] memory items, uint itemsCount, uint fullfilmentFee) public {
+    function createOrder(bytes30 objectId, OrderItem[] memory items, uint itemsCount, uint fullfilmentFee) public {
 
-        bytes30 id = idDockInstance.createID(0x0202, _hashData);
+        //bytes30 id = idDockInstance.createID(0x0202, _hashData);
         uint total = fullfilmentFee; 
         for(uint i = 0; i < itemsCount; i++) {
             OrderItem memory item = items[i];
@@ -91,9 +88,9 @@ contract Ecombar is Ownable {
             Product memory itemProduct = productById[product_id];
             total += (itemProduct.price * item.quantity);
         }
-        Order memory order = Order(id, total);
+        Order memory order = Order(objectId, total);
         orders.push(order);
-        orderById[id] = order;
+        orderById[objectId] = order;
     }
 
     function isPaid(bytes30 id) public view returns (bool) {
@@ -115,11 +112,10 @@ contract Ecombar is Ownable {
     }
 
 
-    function createShipping(bytes32 _hashData, bytes30 order_id) public onlyOwner {
+    function createShipping(bytes30 objectId, bytes30 order_id) public onlyOwner {
         bool orderPaid = isPaid(order_id);
         require(orderPaid);
-        bytes30 id = idDockInstance.createID(0x0203, _hashData);
-        Shipping memory shipping = Shipping(id, order_id);
-        shippingById[id] = shipping;
+        Shipping memory shipping = Shipping(objectId, order_id);
+        shippingById[objectId] = shipping;
     }
 }

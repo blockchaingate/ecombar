@@ -10,6 +10,7 @@ import { Web3Service } from './web3.service';
 
 @Injectable({ providedIn: 'root' })
 export class KanbanService {
+    nonces = new Map();
     baseUrl = environment.endpoints.kanban;
     //post https://kanbanprod.fabcoinapi.com/walletBalances
     /*
@@ -154,12 +155,19 @@ export class KanbanService {
     
     async getTransactionCount(address: string) {
         //return this.getNonce(address);
-
+        let nonce = this.nonces.get('address');
+        if(nonce) {
+            nonce ++;
+            this.nonces.set(address, nonce);
+            return nonce;
+        }
         let path = 'kanban/getTransactionCount/' + address; 
         path = this.baseUrl + path;
         // console.log('nouse in here:', path);
         const res = await this.http.getRaw(path).toPromise() as TransactionAccountResponse;
-        return res.transactionCount;
+        nonce = res.transactionCount;
+        this.nonces.set(address, nonce);
+        return nonce;
 
     }
 

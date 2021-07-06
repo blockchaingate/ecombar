@@ -74,9 +74,6 @@ export class CoinService {
     signedMessage(originalMessage: string, keyPair: any) {
         // originalMessage = '000254cbd93f69af7373dcf5fc01372230d309684f95053c7c9cbe95cf4e4e2da731000000000000000000000000000000000000000000000000000009184e72a000000000000000000000000000a2a3720c00c2872397e6d98f41305066cbf0f8b3';
         // console.log('originalMessage=', originalMessage);
-
-        console.log('originalMessage==', originalMessage);
-        console.log('keyPair==', keyPair);
         
         let signature: Signature;
         const name = keyPair.name;
@@ -628,7 +625,6 @@ export class CoinService {
 
             const childNode = root.derivePath(path);
 
-            console.log('childNode.publicKey==', childNode.publicKey);
             const { address } = Btc.payments.p2pkh({
                 pubkey: childNode.publicKey,
                 network: environment.chains[name]['network']
