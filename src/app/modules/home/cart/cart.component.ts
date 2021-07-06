@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CartStoreService } from '../../shared/services/cart.store.service';
 import { OrderService } from '../../shared/services/order.service';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Router } from '@angular/router';
 import { TranslateService } from '../../shared/services/translate.service';
 import { CartItem } from '../../shared/models/cart-item';
@@ -9,6 +8,9 @@ import { groupBy } from '../../shared/utils/array-tool';
 import { UtilService } from '../../shared/services/util.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { IddockService } from '../../shared/services/iddock.service';
+import { DataService } from '../../shared/services/data.service';
+import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-cart',
@@ -29,16 +31,17 @@ export class CartComponent implements OnInit, OnDestroy {
   txid_link: string;
   wallets: any;
   wallet: any;
+  modalRef: BsModalRef;
   trans_code: string;
   errMsg = '';
 
   constructor(
-    private localSt: LocalStorage,
+    private modalService: BsModalService,
     private utilServ: UtilService,
-    private ngxSmartModalServ: NgxSmartModalService,
     private cartStoreServ: CartStoreService,
     private orderServ: OrderService,
     private router: Router,
+    private dataServ: DataService,
     private iddockServ: IddockService,
     private translateServ: TranslateService
   ) {
@@ -58,6 +61,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    /*
     this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
       if(!wallets || !wallets.items || (wallets.items.length == 0)) {
@@ -68,6 +72,15 @@ export class CartComponent implements OnInit, OnDestroy {
       console.log('this.wallets==', this.wallets);
       this.wallet = this.wallets.items[this.wallets.currentIndex];
     });  
+    */
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        if(wallet) {
+          this.wallet = wallet;
+        }
+        
+      }
+    );
 
     const storedCart = this.cartStoreServ.items;
     this.cartItems = storedCart ? storedCart : [];
@@ -85,20 +98,22 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   checkout() {
-    this.ngxSmartModalServ.getModal('passwordModal').open();
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    console.log('initialState====', initialState);
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
+    this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.checkoutDo(seed);
+    });
   }
 
-  onConfirmPassword(event) {
-      this.ngxSmartModalServ.getModal('passwordModal').close();
-      this.password = event;
-      this.checkoutDo();     
-  }  
 
 
-  async checkoutDo() {
-    const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
-
+  async checkoutDo(seed: Buffer) {
     const items: CartItem[] = [];
     const merchantIds = [];
     let currency = '';

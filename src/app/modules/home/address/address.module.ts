@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { AddressRoutingModule } from './address-routing.module';
 import { CommonModule } from '@angular/common';
 import { AddressComponent } from './address.component';
@@ -15,7 +16,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     CommonModule,
     FormsModule,
     SharedModule,
-    NgxSmartModalModule.forRoot()
+    NgxSmartModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: []
 })

@@ -6,6 +6,7 @@ import { CartProductComponent } from './components/cart-product/cart-product.com
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     CommonModule,
     SharedModule,
     FormsModule,
-    NgxSmartModalModule.forRoot()
+    NgxSmartModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     CartComponent

@@ -48,64 +48,8 @@ export class MerchantComponent implements OnInit {
   async ngOnInit() {
     //this.userState$ = this.store.select('user');
 
-    this.localSt.getItem('ecomwallets').subscribe(
-      (wallets: any) => {
-        console.log('wallets===', wallets);
-        if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-          this.router.navigate(['/wallet']);
-          return false;
-        }
 
-        const wallet = wallets.items[wallets.currentIndex];
-        console.log('wallet=', wallet);
-        this.dataServ.changeWallet(wallet);
-        const addresses = wallet.addresses;
-        const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
-        const walletAddress = walletAddressItem.address;
-        console.log('walletAddress==', walletAddress);
-        if(walletAddress) {
-          this.dataServ.changeWalletAddress(walletAddress);  
-          this.storeServ.getStoresByAddress(walletAddress).subscribe(
-            (ret: any) => {
-              console.log('ret for store==', ret);
-              if(ret && ret.ok && ret._body && ret._body.length > 0) {
-                const store = ret._body[ret._body.length - 1];
-                console.log('store in here==', store);
-                this.dataServ.changeStore(store);
-              }
-            });
 
-        } else {
-          this.router.navigate(['/wallet']);
-        }
-              
-      }
-    );
-    /*
-    console.log('ngiiiit');
-    this.store.select('user').subscribe((user: UserState) => {
-      this.role = user.role;
-      console.log('this.role=', this.role);
-      this.myPhotoUrl = user.myPhotoUrl;
-      this.displayName = user.displayName;
-      this.merchantId = user.merchantId;
-      this.merchantStatus = user.merchantStatus;
-  
-      console.log('this.merchantStatus=', this.merchantStatus);
-      if(this.merchantId && this.merchantStatus == 'pending') {
-        this.merchantServ.getMerchant(this.merchantId).subscribe(
-          (res: any) => {
-            console.log('res in gerMerchant=', res);
-            if(res.approved) {
-              this.merchantStatus = 'approved';
-              this.store.dispatch(updateMerchantStatus({newStatus: this.merchantStatus}));
-            }
-          }
-        );
-      }
-    
-    })
-    */
 
 
 

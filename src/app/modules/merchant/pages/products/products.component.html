@@ -14,14 +14,14 @@
   </li>
   <li class="table-row" *ngFor="let product of products">
     <div class="col col-4" data-label="Title">
-      <a target="_blank" href="/home/product/{{product._id}}">
+      <a target="_blank" href="/product/{{product._id}}">
         {{product.title | translateField}}
       </a>
       
     </div>
     <div class="col col-2" data-label="Price">{{product.price}}</div>
     <div class="col col-2" data-label="Currency">
-      <a target="_blank" href="/home/blockchain/detail/things/{{product.objectId}}">
+      <a target="_blank" href="/blockchain/detail/things/{{product.objectId}}">
         {{displayAddress(product.objectId)}}
       </a>
       

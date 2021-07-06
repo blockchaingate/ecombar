@@ -38,7 +38,3 @@
         </div>
     </form>
 </div>
-
-<ngx-smart-modal #passwordModal identifier="passwordModal">
-    <app-password-modal *ngIf="wallet" [pwdHash]="wallet.pwdHash" (onConfirmPassword)="onConfirmPassword($event)"></app-password-modal>
-</ngx-smart-modal>
