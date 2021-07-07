@@ -17,6 +17,18 @@ interface FeeChargerInterface {
             address _exchangilyRecipient,
             uint256 _exchangilyGet,
             Status _orderStatus);
+
+    function chargeFundsWithFeeWithSig(
+        bytes32 _orderID,
+        address _user,
+        uint32 _coinType,
+        uint256 _totalAmount,
+        bytes32 _msg,
+        uint8 v,
+        bytes32 r,
+        bytes32 s)
+        external 
+        returns (bool);             
 }
 
 contract Ecombar is Ownable {
@@ -44,8 +56,8 @@ contract Ecombar is Ownable {
     }
 
     //address iddockSmartContractAddress;
-    uint coinType;
-    uint taxRate;
+    uint32 coinType;
+    uint8 taxRate;
 
     Product[] public products;
     Order[] public orders;
@@ -78,19 +90,41 @@ contract Ecombar is Ownable {
         return productById[id];
     }           
 
-    function createOrder(bytes30 objectId, OrderItem[] memory items, uint itemsCount, uint fullfilmentFee) public {
+    function getOrderById(bytes30 id) public view returns (Order memory) {
+        return orderById[id];
+    }   
 
+    function createOrder(bytes30 objectId, bytes30[] memory productObjectIds, uint8[] memory quantities) public {
+        uint256 total = 0;
         //bytes30 id = idDockInstance.createID(0x0202, _hashData);
-        uint total = fullfilmentFee; 
-        for(uint i = 0; i < itemsCount; i++) {
-            OrderItem memory item = items[i];
-            bytes30 product_id = item.product_id;
+        for(uint i = 0; i < productObjectIds.length; i++) {
+            bytes30 product_id = productObjectIds[i];
             Product memory itemProduct = productById[product_id];
-            total += (itemProduct.price * item.quantity);
+            total += (itemProduct.price * quantities[i]);
         }
         Order memory order = Order(objectId, total);
         orders.push(order);
         orderById[objectId] = order;
+    }
+
+    function payOrder(bytes30 objectId, 
+        uint256 fullfilmentFee,
+        address _user,
+        bytes32 _msg,
+        uint8 v,
+        bytes32 r,
+        bytes32 s) public {
+        Order memory order = orderById[objectId];
+        uint256 total = order.total + fullfilmentFee;
+        feeChargerInstance.chargeFundsWithFeeWithSig(
+        bytes32(objectId),
+        _user,
+        coinType,
+        total,
+        _msg,
+        v,
+        r,
+        s);
     }
 
     function isPaid(bytes30 id) public view returns (bool) {

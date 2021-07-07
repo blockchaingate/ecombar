@@ -244,6 +244,7 @@ export class ProductComponent implements OnInit {
     }
     const cartItem: CartItem = {
         productId: product._id,
+        objectId: product.objectId,
         title: this.translateServ.transField(product.title),
         price: product.price,
         merchantId: product.merchantId,
@@ -259,6 +260,7 @@ export class ProductComponent implements OnInit {
 
     const item = {
       productId: this.product._id,
+      objectId: this.product.objectId,
       merchantId: this.product.merchantId,
       currency: this.product.currency,
       quantity: Number(this.quantity),

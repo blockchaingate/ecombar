@@ -73,31 +73,14 @@
 				"type": "bytes30"
 			},
 			{
-				"components": [
-					{
-						"internalType": "bytes30",
-						"name": "product_id",
-						"type": "bytes30"
-					},
-					{
-						"internalType": "uint256",
-						"name": "quantity",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct Ecombar.OrderItem[]",
-				"name": "items",
-				"type": "tuple[]"
+				"internalType": "bytes30[]",
+				"name": "productObjectIds",
+				"type": "bytes30[]"
 			},
 			{
-				"internalType": "uint256",
-				"name": "itemsCount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "fullfilmentFee",
-				"type": "uint256"
+				"internalType": "uint8[]",
+				"name": "quantities",
+				"type": "uint8[]"
 			}
 		],
 		"name": "createOrder",
@@ -149,6 +132,37 @@
 				"internalType": "contract FeeChargerInterface",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes30",
+				"name": "id",
+				"type": "bytes30"
+			}
+		],
+		"name": "getOrderById",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "bytes30",
+						"name": "id",
+						"type": "bytes30"
+					},
+					{
+						"internalType": "uint256",
+						"name": "total",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Ecombar.Order",
+				"name": "",
+				"type": "tuple"
 			}
 		],
 		"stateMutability": "view",
@@ -265,6 +279,49 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes30",
+				"name": "objectId",
+				"type": "bytes30"
+			},
+			{
+				"internalType": "uint256",
+				"name": "fullfilmentFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_msg",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint8",
+				"name": "v",
+				"type": "uint8"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "r",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "s",
+				"type": "bytes32"
+			}
+		],
+		"name": "payOrder",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

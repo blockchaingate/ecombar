@@ -7,6 +7,13 @@ import { UtilService } from '../../shared/services/util.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { IddockService } from '../../shared/services/iddock.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { DataService } from '../../shared/services/data.service';
+import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanSmartContractService } from '../../shared/services/kanban.smartcontract.service';
+import { Web3Service } from '../../shared/services/web3.service';
+import { CoinService } from '../../shared/services/coin.service';
+import { KanbanService } from '../../shared/services/kanban.service';
 
 @Component({
   selector: 'app-payment',
@@ -23,20 +30,30 @@ export class PaymentComponent implements OnInit{
     total: number;
     subtotal: number;
     selectedShippingService: string;
+    walletAddress: string;
     selectedPayment: string;
+    smartContractAddress: string;
+    feeChargerSmartContractAddress: string;
     shippingFee: number;
     noWallet: boolean;
     wallet: any;
+
+    modalRef: BsModalRef;
     wallets: any;
     password: string;
 
     constructor(
       private iddockServ: IddockService,
       private utilServ: UtilService,
-      private ngxSmartModalServ: NgxSmartModalService,    
+      private web3Serv: Web3Service,
+      private coinServ: CoinService,
+      private kanbanSmartContractServ: KanbanSmartContractService,   
+      private kanbanServ: KanbanService,
+      private modalService: BsModalService,
       private localSt: LocalStorage,      
       private router: Router,
       private route: ActivatedRoute, 
+      private dataServ: DataService,
       private userServ: UserService, 
       private orderServ: OrderService, 
       private addressServ: AddressService) {
@@ -65,6 +82,7 @@ export class PaymentComponent implements OnInit{
 
     ngOnInit() {
 
+      /*
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {
@@ -75,7 +93,25 @@ export class PaymentComponent implements OnInit{
         console.log('this.wallets==', this.wallets);
         this.wallet = this.wallets.items[this.wallets.currentIndex];
       });  
+      */
+      this.dataServ.currentWallet.subscribe(
+        (wallet: any) => {
+          this.wallet = wallet;
+        }
+      )
 
+      this.dataServ.currentStore.subscribe(
+        (store: any) => {
+          this.smartContractAddress = store.smartContractAddress;
+          this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;
+        }
+      );   
+      
+      this.dataServ.currentWalletAddress.subscribe(
+        (walletAddress: string) => {
+          this.walletAddress = walletAddress;
+        }
+      );
       this.discount = 0;
       this.shippingFee = 0;
       this.total = 0;
@@ -126,6 +162,17 @@ export class PaymentComponent implements OnInit{
     }   
 
     placeOrder() {
+
+      const initialState = {
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
+      this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+  
+      this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+        this.placeOrderDo(seed);
+      });      
+      /*
       if (!this.selectedShippingService) {
         return;
       }
@@ -134,17 +181,11 @@ export class PaymentComponent implements OnInit{
       }  
 
       this.ngxSmartModalServ.getModal('passwordModal').open();
-  
+      */
     }
-  
-    onConfirmPassword(event) {
-        this.ngxSmartModalServ.getModal('passwordModal').close();
-        this.password = event;
-        this.placeOrderDo();     
-    }  
-    
-    async placeOrderDo() {
-      const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
+
+    async placeOrderDo(seed: Buffer) {
+      //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
 
 
       const item = {
@@ -173,16 +214,132 @@ export class PaymentComponent implements OnInit{
       }; 
 
 
-      (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(res => {
+      console.log('go 1');
+      (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(async res => {
         if(res) {
+          console.log('ret for updateIdDock=', res);
           if(res.ok) {
+            const abi = {
+              "inputs": [
+                {
+                  "internalType": "bytes30",
+                  "name": "objectId",
+                  "type": "bytes30"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "fullfilmentFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_user",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "_msg",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint8",
+                  "name": "v",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "r",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "s",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "payOrder",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            };
+            const msg = '0xb02ed411f1f83bc41c68a44e4a6861995ae994c075d0061cfd2aec6a0efa0e10';
+            const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
+            const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+            const privateKey = keyPair.privateKeyBuffer.privateKey; 
+            const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);    
+            const args = [
+              '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
+              0,
+              this.utilServ.fabToExgAddress(this.walletAddress),
+              msg,
+              signature.v,
+              signature.r,
+              signature.s
+            ];
+            console.log('args==', args);
+            const abi2 = this.web3Serv.getGeneralFunctionABI(
+              {
+                "constant": true,
+                "inputs": [
+                  {
+                    "name": "_user",
+                    "type": "address"
+                  },
+                  {
+                    "name": "_msg",
+                    "type": "bytes32"
+                  },
+                  {
+                    "name": "v",
+                    "type": "uint8"
+                  },
+                  {
+                    "name": "r",
+                    "type": "bytes32"
+                  },
+                  {
+                    "name": "s",
+                    "type": "bytes32"
+                  }
+                ],
+                "name": "validateSignature",
+                "outputs": [
+                  {
+                    "name": "",
+                    "type": "bool"
+                  }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+              },
+              [ this.utilServ.fabToExgAddress(this.walletAddress),
+                msg,
+                signature.v,
+                signature.r,
+                signature.s]
+            );
+            console.log('arrrrguse=', [ this.utilServ.fabToExgAddress(this.walletAddress),
+              msg,
+              signature.v,
+              signature.r,
+              signature.s]);
+            console.log('this.feeChargerSmartContractAddress==', this.feeChargerSmartContractAddress);
+            this.kanbanServ.kanbanCall(this.feeChargerSmartContractAddress, abi2).subscribe(
+              (ret: any) => {
+                console.log('rettttfor fee =', ret);
+              }
+            );
+            const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
+            console.log('ret from payment=', ret);            
             this.orderServ.update(this.orderID, item).subscribe(
               (res: any) => {
                 if(res && res.ok) {
-                  this.router.navigate(['/place-order/' + this.orderID]);
+                  //this.router.navigate(['/place-order/' + this.orderID]);
                 }
               }
             );
+            
           } else {
   
           }

@@ -114,7 +114,6 @@ export class AddressComponent implements OnInit {
       encryptedSeed: this.wallet.encryptedSeed
     };          
     
-    console.log('initialState====', initialState);
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {

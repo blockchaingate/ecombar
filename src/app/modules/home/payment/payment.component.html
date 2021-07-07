@@ -86,7 +86,7 @@
                             </div>                        
                         </div>  
                     </div>
-
+<!--
                     <div class="py-3">
                         <div class="py-2 text-muted">
                             {{'Payment options' | translate}}
@@ -155,7 +155,7 @@
 
                         </div> 
                     </div>
-                    
+                -->                    
                     <div class="text-center">
                         <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="placeOrder()">
                             {{'Place order' | translate}}
@@ -242,7 +242,3 @@
    
 </div>
 
-
-<ngx-smart-modal #passwordModal identifier="passwordModal">
-    <app-password-modal *ngIf="wallet" [pwdHash]="wallet.pwdHash" (onConfirmPassword)="onConfirmPassword($event)"></app-password-modal>
-</ngx-smart-modal>
