@@ -140,7 +140,7 @@ export const environment = {
         NFT_Exchange: '0x2c8aa9e76fc3c92a799c6c68926bd24e53ff9abb',
         ProxyRegistry: '0x2e553ad1cd6ba24be952cc7273e4d869d19b1586',
         FABLOCK: '0xa7d4a4e23bf7dd7a1e03eda9eb7c28a016fd54aa',
-        IDDOCK: '0xc0f941945bd45fc295cfc63fc7df75e633e6fa00',
+        //IDDOCK: '0xc0f941945bd45fc295cfc63fc7df75e633e6fa00',
         FEE_CHARGER: '0x7c1251d4bcba989411d72361f14914aeab870aee',
         SEVEN_STAR_KEY_NODE: '',
         SEVEN_STAR_CUSTOMER_REFERRAL: '',

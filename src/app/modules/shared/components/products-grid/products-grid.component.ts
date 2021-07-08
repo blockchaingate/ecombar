@@ -9,13 +9,13 @@ import { environment } from '../../../../../environments/environment';
   styleUrls: ['./products-grid.component.scss', '../../../../../button.scss']
 })
 export class ProductsGridComponent {
-  iddockRoot: string;
+  //iddockRoot: string;
   @Input() products: any;
 
   constructor(
     private favoriteServ: FavoriteService,
     private cartStoreServ: CartStoreService) {
-    this.iddockRoot = environment.IDDOCK;
+    //this.iddockRoot = environment.IDDOCK;
   }
 
   addToCart(item: any) {

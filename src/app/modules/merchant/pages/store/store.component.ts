@@ -172,7 +172,6 @@ export class StoreComponent implements OnInit {
                     if (res && res.ok) {
                       //this.router.navigate(['/merchant/store']);
                       that.toastr.success('Store was created.');
-                      const store = res._body;
                       //this.smartContractAddress = store.smartContractAddress;
                     }
                   }
