@@ -12,6 +12,7 @@ import { environment } from '../../../../../environments/environment';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 
 @Component({
   selector: 'app-store',
@@ -41,7 +42,7 @@ export class StoreComponent implements OnInit {
     private route: ActivatedRoute,
     private coinServ: CoinService,
     private toastr: ToastrService,
-    private router: Router,
+    private spinner: NgxSpinnerService,
     private iddockServ: IddockService,
     private modalService: BsModalService,
     private kanbanSmartContract: KanbanSmartContractService,
@@ -146,49 +147,51 @@ export class StoreComponent implements OnInit {
     const resp = await this.kanbanSmartContract.deploySmartContract(seed, ABI, Bytecode, args);
 
     console.log('resp from deploy smart contract=', resp);
-    if (resp && resp.transactionHash) {
-      const txid = resp.transactionHash;
-      console.log('txid=', resp.transactionHash);
-      var that = this;
-      var myInterval = setInterval(function(){ 
-        that.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
-          async (receipt: any) => {
-            if(receipt && receipt.transactionReceipt) {
-              clearInterval(myInterval);
-              if(receipt.transactionReceipt.contractAddress) {
-                const smartContractAddress = receipt.transactionReceipt.contractAddress;
-                data.smartContractAddress = smartContractAddress;
-                that.smartContractAddress = smartContractAddress;
-                const { datahash, sign, txhex } = await that.iddockServ.signIdDock(seed, 'things', null, data, null);
-                const newData = {
-                  ...data,
-                  datahash, 
-                  sign,
-                  txhex
-                };
-                that.storeServ.create(newData).subscribe(
-                  (res: any) => {
-                    console.log();
-                    if (res && res.ok) {
-                      //this.router.navigate(['/merchant/store']);
-                      that.toastr.success('Store was created.');
-                      //this.smartContractAddress = store.smartContractAddress;
-                    }
+    if(resp && resp.ok) {
+      const body = resp._body;
+      if(body.status != '0x1') {
+        this.toastr.error('Failed to create smart contract');
+      }
+      console.log('body===', body);
+      const txid = body.transactionHash;
+      console.log('txid=', txid);
+      this.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
+        async (receipt: any) => {
+          if(receipt && receipt.transactionReceipt) {
+            if(receipt.transactionReceipt.contractAddress) {
+              const smartContractAddress = receipt.transactionReceipt.contractAddress;
+              data.smartContractAddress = smartContractAddress;
+              const { datahash, sign, txhex } = await this.iddockServ.signIdDock(seed, 'things', null, data, null);
+              const newData = {
+                ...data,
+                datahash, 
+                sign,
+                txhex
+              };
+              this.storeServ.create(newData).subscribe(
+                (res: any) => {
+                  console.log();
+                  if (res && res.ok) {
+                    //this.router.navigate(['/merchant/store']);
+                    this.smartContractAddress = smartContractAddress;
+                    this.toastr.success('Store was created.');
+                    this.spinner.hide();
+                    //this.smartContractAddress = store.smartContractAddress;
                   }
-                );   
+                }
+              );   
 
-              } else {
-                //this.spinner.hide();
-                that.toastr.error('Error with creating smart contract.', 'Ok');
-              }
+            } else {
+              //this.spinner.hide();
+              this.toastr.error('Error with creating smart contract.', 'Ok');
             }
           }
-        );
-       }, 1000);
-  } else {
-    //this.spinner.hide();
-    //this.toastr.error('Failed to create smart contract.', 'Ok');
-  }    
+        }
+      );
+    }
+
+
+  
 
     /*
         address iddockSmartContractAddr, 
@@ -253,6 +256,7 @@ export class StoreComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.spinner.show();
       this.addStoreDo(seed);
     });
 

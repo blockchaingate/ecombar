@@ -6,6 +6,7 @@ import { AddressComponent } from './address.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     CommonModule,
     FormsModule,
     SharedModule,
+    NgxSpinnerModule,
     NgxSmartModalModule.forRoot(),
     ModalModule.forRoot()
   ],

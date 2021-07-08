@@ -15,6 +15,8 @@ import { Web3Service } from '../../shared/services/web3.service';
 import { CoinService } from '../../shared/services/coin.service';
 import { KanbanService } from '../../shared/services/kanban.service';
 import BigNumber from 'bignumber.js';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-payment',
@@ -50,11 +52,13 @@ export class PaymentComponent implements OnInit{
       private coinServ: CoinService,
       private kanbanSmartContractServ: KanbanSmartContractService,   
       private kanbanServ: KanbanService,
+      private spinner: NgxSpinnerService,
       private modalService: BsModalService,
       private localSt: LocalStorage,      
       private router: Router,
       private route: ActivatedRoute, 
       private dataServ: DataService,
+      private toastr: ToastrService,
       private userServ: UserService, 
       private orderServ: OrderService, 
       private addressServ: AddressService) {
@@ -171,6 +175,7 @@ export class PaymentComponent implements OnInit{
       this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
   
       this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+        this.spinner.show();
         this.placeOrderDo(seed);
       });      
       /*
@@ -217,6 +222,7 @@ export class PaymentComponent implements OnInit{
       (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(async res => {
         if(res) {
           console.log('ret for updateIdDock=', res);
+          
           if(res.ok) {
             const abi = {
               "inputs": [
@@ -279,7 +285,7 @@ export class PaymentComponent implements OnInit{
               signature.s
             ];
             console.log('args==', args);
-            /*
+            
             const abi2 = this.web3Serv.getGeneralFunctionABI(
               {
                 "constant": true,
@@ -333,19 +339,21 @@ export class PaymentComponent implements OnInit{
                 console.log('rettttfor fee =', ret);
               }
             );
-            */
+            
             const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
             console.log('ret from payment=', ret);            
             this.orderServ.update(this.orderID, item).subscribe(
               (res: any) => {
                 if(res && res.ok) {
+                  this.spinner.hide();
                   //this.router.navigate(['/place-order/' + this.orderID]);
                 }
               }
             );
             
           } else {
-  
+            this.spinner.hide();
+            this.toastr.error(res._body);
           }
           
         }

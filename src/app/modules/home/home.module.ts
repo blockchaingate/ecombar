@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { HomeRoutingModule } from './home-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { HomeComponent } from './home.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.component';
@@ -47,6 +48,7 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     HomeRoutingModule,
     CommonModule,
     FormsModule,
+    NgxSpinnerModule,
     ReactiveFormsModule,
     SharedModule
   ],

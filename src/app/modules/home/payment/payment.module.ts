@@ -5,6 +5,8 @@ import { PaymentComponent } from './payment.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+
 @NgModule({
   declarations: [
     PaymentComponent
@@ -14,6 +16,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CommonModule,
     FormsModule,
     SharedModule,
+    NgxSpinnerModule,
     ModalModule.forRoot()
   ],
   providers: []

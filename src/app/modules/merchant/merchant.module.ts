@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MerchantRoutingModule } from './merchant-routing.module';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { MerchantComponent } from './merchant.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
@@ -90,6 +91,7 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     QRCodeModule,
     ModalModule.forRoot(),
     NgxSmartModalModule.forRoot(),
+    NgxSpinnerModule,
     ReactiveFormsModule,
     RichTextEditorModule
   ],

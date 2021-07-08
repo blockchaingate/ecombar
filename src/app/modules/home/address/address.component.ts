@@ -9,7 +9,7 @@ import { IddockService } from '../../shared/services/iddock.service';
 import { DataService } from '../../shared/services/data.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
-
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -36,7 +36,7 @@ export class AddressComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private iddockServ: IddockService,
-    private utilServ: UtilService,
+    private spinner: NgxSpinnerService,
     private dataServ: DataService,
     private localSt: LocalStorage,
     private router: Router,
@@ -117,6 +117,7 @@ export class AddressComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.spinner.show();
       this.updateOrderAddressDo(seed);
     });    
     //this.ngxSmartModalServ.getModal('passwordModal').open();
@@ -150,6 +151,7 @@ export class AddressComponent implements OnInit {
             (res: any) => {
               if (res && res.ok) {
                 //this.addAddress();
+                this.spinner.hide();
                 this.router.navigate(['/payment/' + this.orderID]);
               }
             }

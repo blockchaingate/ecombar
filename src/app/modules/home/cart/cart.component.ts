@@ -12,6 +12,7 @@ import { DataService } from '../../shared/services/data.service';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from '../../shared/services/kanban.smartcontract.service';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 
 @Component({
   selector: 'app-cart',
@@ -45,6 +46,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private cartStoreServ: CartStoreService,
     private orderServ: OrderService,
     private router: Router,
+    private spinner: NgxSpinnerService,
     private dataServ: DataService,
     private iddockServ: IddockService,
     private translateServ: TranslateService,
@@ -114,6 +116,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.spinner.show();
       this.checkoutDo(seed);
     });
   }
@@ -186,6 +189,7 @@ export class CartComponent implements OnInit, OnDestroy {
               if (res && res.ok) {
                 const body = res._body;
                 const orderID = body._id;
+                this.spinner.hide();
                 this.cartStoreServ.empty();
                 this.router.navigate(['/address/' + orderID]);
               }

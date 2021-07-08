@@ -428,11 +428,16 @@ export class ProductAddComponent implements OnInit {
             console.log('args===', args);
             const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
             console.log('rettt=', ret);
-            this.productServ.create(data).subscribe(
-              (res: any) => {
-                this.router.navigate(['/merchant/products']);
-              }
-            );
+            if(ret.ok && ret._body && ret._body.status == '0x1') {
+              this.productServ.create(data).subscribe(
+                (res: any) => {
+                  this.router.navigate(['/merchant/products']);
+                }
+              );
+            } else {
+              this.toastrServ.error('Failed to execute smart contract');
+            }
+
           } else {
             this.toastrServ.error('add to id dock error');
           }
