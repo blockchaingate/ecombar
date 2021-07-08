@@ -17,7 +17,7 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import BigNumber from 'bignumber.js/bignumber';
-
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 
 @Component({
   selector: 'app-admin-product-add',
@@ -89,8 +89,7 @@ export class ProductAddComponent implements OnInit {
     private iddockServ: IddockService,
     private modalService: BsModalService,
     //private ngxSmartModalServ: NgxSmartModalService,
-    private localSt: LocalStorage,
-    private userServ: UserService,
+    private spinner: NgxSpinnerService,
     private categoryServ: CategoryService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private brandServ: BrandService,
@@ -336,6 +335,7 @@ export class ProductAddComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.spinner.show();
       this.saveProductDo(seed);
     });
   }
@@ -431,14 +431,17 @@ export class ProductAddComponent implements OnInit {
             if(ret.ok && ret._body && ret._body.status == '0x1') {
               this.productServ.create(data).subscribe(
                 (res: any) => {
+                  this.spinner.hide();
                   this.router.navigate(['/merchant/products']);
                 }
               );
             } else {
+              this.spinner.hide();
               this.toastrServ.error('Failed to execute smart contract');
             }
 
           } else {
+            this.spinner.hide();
             this.toastrServ.error('add to id dock error');
           }
           
