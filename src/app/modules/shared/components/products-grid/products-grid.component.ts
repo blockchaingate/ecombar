@@ -22,6 +22,7 @@ export class ProductsGridComponent {
     console.log('item to be added=', item);
     const cartItem: CartItem = {
       productId: item._id,
+      objectId: item.objectId,
       title: item.title,
       price: item.price,
       merchantId: item.merchantId,
