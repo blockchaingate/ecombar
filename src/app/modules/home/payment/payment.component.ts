@@ -14,6 +14,7 @@ import { KanbanSmartContractService } from '../../shared/services/kanban.smartco
 import { Web3Service } from '../../shared/services/web3.service';
 import { CoinService } from '../../shared/services/coin.service';
 import { KanbanService } from '../../shared/services/kanban.service';
+import BigNumber from 'bignumber.js';
 
 @Component({
   selector: 'app-payment',
@@ -213,8 +214,6 @@ export class PaymentComponent implements OnInit{
         ...item
       }; 
 
-
-      console.log('go 1');
       (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(async res => {
         if(res) {
           console.log('ret for updateIdDock=', res);
@@ -266,10 +265,13 @@ export class PaymentComponent implements OnInit{
             const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
             const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
             const privateKey = keyPair.privateKeyBuffer.privateKey; 
-            const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);    
+            const fulfillmentFee = '0x' + (new BigNumber(this.shippingFee).multipliedBy(new BigNumber(1e18)).toString(16));
+            console.log('fulfillmentFee=', fulfillmentFee);
+            const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);  
+            console.log('this.shippingfee=', this.shippingFee);  
             const args = [
               '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
-              0,
+              fulfillmentFee,
               this.utilServ.fabToExgAddress(this.walletAddress),
               msg,
               signature.v,
@@ -277,6 +279,7 @@ export class PaymentComponent implements OnInit{
               signature.s
             ];
             console.log('args==', args);
+            /*
             const abi2 = this.web3Serv.getGeneralFunctionABI(
               {
                 "constant": true,
@@ -330,6 +333,7 @@ export class PaymentComponent implements OnInit{
                 console.log('rettttfor fee =', ret);
               }
             );
+            */
             const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
             console.log('ret from payment=', ret);            
             this.orderServ.update(this.orderID, item).subscribe(

@@ -1,5 +1,6 @@
 pragma solidity ^0.7.6;
 pragma abicoder v2;
+import "./SafeMath.sol";
 import "./ownable.sol";
 import "./enum-status.sol";
 interface IdDockInterface {
@@ -32,6 +33,7 @@ interface FeeChargerInterface {
 }
 
 contract Ecombar is Ownable {
+    using SafeMath for uint256;
     IdDockInterface public idDockInstance; 
     FeeChargerInterface public feeChargerInstance;
 
@@ -100,7 +102,10 @@ contract Ecombar is Ownable {
         for(uint i = 0; i < productObjectIds.length; i++) {
             bytes30 product_id = productObjectIds[i];
             Product memory itemProduct = productById[product_id];
-            total += (itemProduct.price * quantities[i]);
+            uint256 price = itemProduct.price;
+            uint256 quantity = quantities[i];
+            uint256 itemTotal = price.mul(quantity);
+            total = total.add(itemTotal);
         }
         Order memory order = Order(objectId, total);
         orders.push(order);
@@ -115,7 +120,7 @@ contract Ecombar is Ownable {
         bytes32 r,
         bytes32 s) public {
         Order memory order = orderById[objectId];
-        uint256 total = order.total + fullfilmentFee;
+        uint256 total = order.total.add(fullfilmentFee);
         feeChargerInstance.chargeFundsWithFeeWithSig(
         bytes32(objectId),
         _user,

@@ -157,8 +157,8 @@ export class StoreComponent implements OnInit {
               clearInterval(myInterval);
               if(receipt.transactionReceipt.contractAddress) {
                 const smartContractAddress = receipt.transactionReceipt.contractAddress;
-                console.log('smartContractAddress=', smartContractAddress);
                 data.smartContractAddress = smartContractAddress;
+                that.smartContractAddress = smartContractAddress;
                 const { datahash, sign, txhex } = await that.iddockServ.signIdDock(seed, 'things', null, data, null);
                 const newData = {
                   ...data,
@@ -168,9 +168,12 @@ export class StoreComponent implements OnInit {
                 };
                 that.storeServ.create(newData).subscribe(
                   (res: any) => {
+                    console.log();
                     if (res && res.ok) {
                       //this.router.navigate(['/merchant/store']);
                       that.toastr.success('Store was created.');
+                      const store = res._body;
+                      //this.smartContractAddress = store.smartContractAddress;
                     }
                   }
                 );   
