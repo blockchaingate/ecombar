@@ -19,7 +19,6 @@ export class ProductsGridComponent {
   }
 
   addToCart(item: any) {
-    console.log('item to be added=', item);
     const cartItem: CartItem = {
       productId: item._id,
       objectId: item.objectId,
