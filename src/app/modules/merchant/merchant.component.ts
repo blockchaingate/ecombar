@@ -94,22 +94,7 @@ export class MerchantComponent implements OnInit {
         title: 'Collections',
         link: 'collections',
         icon: 'collection'
-      },
-      {
-        title: 'Users',
-        link: 'users',
-        icon: 'user'
-      },
-      {
-        title: 'Merchant Applications',
-        link: 'merchant-applications',
-        icon: 'user'
-      },  
-      {
-        title: 'Products',
-        link: 'products',
-        icon: 'order'
-      },           
+      },   
       {
         title: 'Orders',
         link: 'orders',
@@ -119,12 +104,7 @@ export class MerchantComponent implements OnInit {
         title: 'Ships',
         link: 'ships',
         icon: 'order'
-      },      
-      {
-        title: 'Merchant information',
-        link: 'merchant-info',
-        icon: 'information'
-      }     
+      }    
     ];
 
 

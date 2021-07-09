@@ -24,7 +24,6 @@ interface FeeChargerInterface {
         address _user,
         uint32 _coinType,
         uint256 _totalAmount,
-        bytes32 _msg,
         uint8 v,
         bytes32 r,
         bytes32 s)
@@ -49,6 +48,8 @@ contract Ecombar is Ownable {
 
     struct Order {
         bytes30 id;
+        bytes30[] productObjectIds;
+        uint8[] memory quantities;
         uint256 total;
     }
 
@@ -83,6 +84,7 @@ contract Ecombar is Ownable {
     }
 
     function createProduct(bytes30 objectId, uint price) public onlyOwner {
+        require(price > 0);
         Product memory newProduct = Product(objectId, price);  
         products.push(newProduct);
         productById[objectId] = newProduct;
@@ -96,18 +98,10 @@ contract Ecombar is Ownable {
         return orderById[id];
     }   
 
-    function createOrder(bytes30 objectId, bytes30[] memory productObjectIds, uint8[] memory quantities) public {
-        uint256 total = 0;
-        //bytes30 id = idDockInstance.createID(0x0202, _hashData);
-        for(uint i = 0; i < productObjectIds.length; i++) {
-            bytes30 product_id = productObjectIds[i];
-            Product memory itemProduct = productById[product_id];
-            uint256 price = itemProduct.price;
-            uint256 quantity = quantities[i];
-            uint256 itemTotal = price.mul(quantity);
-            total = total.add(itemTotal);
-        }
-        Order memory order = Order(objectId, total);
+
+    function createOrder(bytes30 objectId, bytes30[] memory productObjectIds, uint8[] memory quantities, uint256 total) public {
+        require(total > 0);
+        Order memory order = Order(objectId, productObjectIds, quantities, total);
         orders.push(order);
         orderById[objectId] = order;
     }
@@ -115,7 +109,6 @@ contract Ecombar is Ownable {
     function payOrder(bytes30 objectId, 
         uint256 fullfilmentFee,
         address _user,
-        bytes32 _msg,
         uint8 v,
         bytes32 r,
         bytes32 s) public {
@@ -126,10 +119,28 @@ contract Ecombar is Ownable {
         _user,
         coinType,
         total,
-        _msg,
         v,
         r,
         s);
+    }
+
+    function getChargePayOrderParams(bytes30 objectId, 
+        uint256 fullfilmentFee,
+        address _user,
+        uint8 v,
+        bytes32 r,
+        bytes32 s) public view returns (bytes32, address, uint32, uint256, uint8, bytes32, bytes32){
+        Order memory order = orderById[objectId];
+        uint256 total = order.total.add(fullfilmentFee);
+        return (
+            bytes32(objectId),
+            _user,
+            coinType,
+            total,
+            v,
+            r,
+            s            
+        );
     }
 
     function isPaid(bytes30 id) public view returns (bool) {

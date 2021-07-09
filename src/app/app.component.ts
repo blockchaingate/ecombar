@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
         }
 
         const wallet = wallets.items[wallets.currentIndex];
-        console.log('wallet=', wallet);
         this.dataServ.changeWallet(wallet);
         const addresses = wallet.addresses;
         const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];

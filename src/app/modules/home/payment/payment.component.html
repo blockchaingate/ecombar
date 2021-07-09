@@ -156,11 +156,14 @@
                         </div> 
                     </div>
                 -->                    
-                    <div class="text-center">
+                    <div class="text-center" *ngIf="order.paymentStatus != 3">
                         <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="placeOrder()">
                             {{'Place order' | translate}}
                         </button>
                         
+                    </div>
+                    <div class="text-center" *ngIf="order.paymentStatus == 3">
+                        Your order was paid successfully with txid: {{order.charge_id}}
                     </div>
                 </div>
             </div>

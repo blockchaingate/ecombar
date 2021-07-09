@@ -81,6 +81,11 @@
 				"internalType": "uint8[]",
 				"name": "quantities",
 				"type": "uint8[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "total",
+				"type": "uint256"
 			}
 		],
 		"name": "createOrder",
@@ -141,6 +146,80 @@
 		"inputs": [
 			{
 				"internalType": "bytes30",
+				"name": "objectId",
+				"type": "bytes30"
+			},
+			{
+				"internalType": "uint256",
+				"name": "fullfilmentFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"internalType": "uint8",
+				"name": "v",
+				"type": "uint8"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "r",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "s",
+				"type": "bytes32"
+			}
+		],
+		"name": "getChargePayOrderParams",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes30",
 				"name": "id",
 				"type": "bytes30"
 			}
@@ -153,6 +232,16 @@
 						"internalType": "bytes30",
 						"name": "id",
 						"type": "bytes30"
+					},
+					{
+						"internalType": "bytes30[]",
+						"name": "productObjectIds",
+						"type": "bytes30[]"
+					},
+					{
+						"internalType": "uint8[]",
+						"name": "quantities",
+						"type": "uint8[]"
 					},
 					{
 						"internalType": "uint256",
@@ -297,11 +386,6 @@
 				"internalType": "address",
 				"name": "_user",
 				"type": "address"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_msg",
-				"type": "bytes32"
 			},
 			{
 				"internalType": "uint8",

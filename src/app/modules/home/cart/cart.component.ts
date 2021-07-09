@@ -13,6 +13,10 @@ import { PasswordModalComponent } from '../../shared/components/password-modal/p
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from '../../shared/services/kanban.smartcontract.service';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { ToastrService } from 'ngx-toastr';
+import { Web3Service } from '../../shared/services/web3.service';
+import { KanbanService } from '../../shared/services/kanban.service';
+import BigNumber from 'bignumber.js';
 
 @Component({
   selector: 'app-cart',
@@ -33,6 +37,7 @@ export class CartComponent implements OnInit, OnDestroy {
   password: string;
   payQrcode: string;
   txid_link: string;
+  total: number;
   wallets: any;
   wallet: any;
   modalRef: BsModalRef;
@@ -47,14 +52,18 @@ export class CartComponent implements OnInit, OnDestroy {
     private orderServ: OrderService,
     private router: Router,
     private spinner: NgxSpinnerService,
+    private toastr: ToastrService,
     private dataServ: DataService,
     private iddockServ: IddockService,
     private translateServ: TranslateService,
+    private web3Serv: Web3Service,
+    private kanbanServ: KanbanService,
     private kanbanSmartContractServ: KanbanSmartContractService
   ) {
   }
 
   calculateTotal(): void {
+    this.total = 0;
     this.Total = [];
 
     const grouped = groupBy(this.cartItems, (cI: CartItem) => cI.currency);
@@ -63,6 +72,7 @@ export class CartComponent implements OnInit, OnDestroy {
       let value = 0;
       const final = currencyGroup.map((v: CartItem) => value += v.price * v.quantity);
       this.Total.push({ currency: currencyGroup[0].currency, total: value.toFixed(2) });
+      this.total += Number(value.toFixed(2)); 
     });
   }
 
@@ -172,6 +182,11 @@ export class CartComponent implements OnInit, OnDestroy {
                 "internalType": "uint8[]",
                 "name": "quantities",
                 "type": "uint8[]"
+              },
+              {
+                "internalType": "uint256",
+                "name": "total",
+                "type": "uint256"
               }
             ],
             "name": "createOrder",
@@ -180,22 +195,44 @@ export class CartComponent implements OnInit, OnDestroy {
             "type": "function"
           };
 
-          const args = ['0x' + res._body._id.substring(0, 60), this.productObjectIds, this.quantities];
+          const args = [
+            '0x' + res._body._id.substring(0, 60), 
+            this.productObjectIds, 
+            this.quantities, 
+            new BigNumber(this.total).multipliedBy(1e18)];
+          console.log('args for crate Order=', args);
           const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
-          console.log('ret from eeee=', ret);
-          this.orderServ.create(orderData).subscribe(
-            (res: any) => {
-              console.log('ress from create order', res);
-              if (res && res.ok) {
-                const body = res._body;
-                const orderID = body._id;
+
+
+
+
+          if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+            this.orderServ.create(orderData).subscribe(
+              (res: any) => {
+                console.log('ress from create order', res);
+                if (res && res.ok) {
+                  const body = res._body;
+                  const orderID = body._id;
+                  this.spinner.hide();
+                  this.cartStoreServ.empty();
+                  this.router.navigate(['/address/' + orderID]);
+                }
+              },
+              err => { 
+                this.errMsg = err.message;
                 this.spinner.hide();
-                this.cartStoreServ.empty();
-                this.router.navigate(['/address/' + orderID]);
-              }
-            },
-            err => { this.errMsg = err.message; }
-          );          
+                this.toastr.error('error while creating order');              
+               }
+            );  
+          } else {
+            this.spinner.hide();
+            this.toastr.error('failed to create order in smart contract');               
+          }
+        
+        }
+        else {
+          this.spinner.hide();
+          this.toastr.error('error while saving to iddock');
         }
       }});
 

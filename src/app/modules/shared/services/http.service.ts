@@ -25,12 +25,10 @@ export class HttpService {
 
     get(path: string, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-        console.log('url for get==', url);
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {
@@ -98,7 +96,6 @@ export class HttpService {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {
@@ -192,7 +189,6 @@ export class HttpService {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {
@@ -277,7 +273,6 @@ export class HttpService {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {

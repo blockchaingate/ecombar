@@ -21,8 +21,8 @@ export class BannerService {
     return this.http.get('banners/admin', false);
   }
 
-  getMerchantBanners(merchantId: string) {
-    return this.http.get('banners/merchant/' + merchantId, false);
+  getMerchantBanners(walletAddress: string) {
+    return this.http.get('banners/merchant/' + walletAddress, false);
   }
 
   getBanner(id: string) {

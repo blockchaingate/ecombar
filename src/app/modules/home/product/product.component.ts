@@ -11,6 +11,9 @@ import { FavoriteService } from '../../shared/services/favorite.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StorageService } from '../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
+import { Web3Service } from '../../shared/services/web3.service';
+import { UtilService } from '../../shared/services/util.service';
+import { KanbanService } from '../../shared/services/kanban.service';
 
 @Component({
   selector: 'app-product',
@@ -38,10 +41,13 @@ export class ProductComponent implements OnInit {
     private cartStoreServ: CartStoreService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
+    private web3Serv: Web3Service,
     private productServ: ProductService,
     private favoriteServ: FavoriteService,
     private orderServ: OrderService,
     private commentServ: CommentService,
+    private utilServ: UtilService,
+    private kanbanServ: KanbanService,
     private router: Router,
     private storage: StorageService,
     private authServ: AuthService,
@@ -67,6 +73,7 @@ export class ProductComponent implements OnInit {
         if(res && res.ok) {
           this.relatedProducts = res._body;
           console.log('this.relatedProducts=', this.relatedProducts);
+
         }
       }
     );
@@ -124,6 +131,47 @@ export class ProductComponent implements OnInit {
           console.log('this.product=', this.product);
           console.log('this.colors=', this.colors);
           this.selectedImage = this.product.images[0];
+
+          const args2 = ['0x' + this.utilServ.ObjectId2SequenceId(this.product.objectId)];
+          console.log('args2 in getProductById=', args2);
+          const abi = this.web3Serv.getGeneralFunctionABI(
+          {
+            "inputs": [
+              {
+                "internalType": "bytes30",
+                "name": "id",
+                "type": "bytes30"
+              }
+            ],
+            "name": "getProductById",
+            "outputs": [
+              {
+                "components": [
+                  {
+                    "internalType": "bytes30",
+                    "name": "id",
+                    "type": "bytes30"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "internalType": "struct Ecombar.Product",
+                "name": "",
+                "type": "tuple"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          }, args2);
+
+          this.kanbanServ.kanbanCall(this.product.smartContractAddress, abi).subscribe(
+            (ret: any) => {
+              console.log('rettttfor fee getProduct=', ret);
+            }
+          );
         }
       }
     );

@@ -52,7 +52,7 @@ export class StoreComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.feeChargerSmartContractAddress = environment.addresses.smartContract.FEE_CHARGER;
+    //this.feeChargerSmartContractAddress = environment.addresses.smartContract.FEE_CHARGER;
 
     /*
     this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {

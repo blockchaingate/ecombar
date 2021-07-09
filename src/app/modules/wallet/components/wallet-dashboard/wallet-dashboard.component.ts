@@ -372,8 +372,6 @@ export class WalletDashboardComponent implements OnInit{
           const bytes = bs58.decode(addressInWallet);
           console.log('bytes=', bytes);
           addressInWallet = bytes.toString('hex');
-
-          console.log('addressInWallet=', addressInWallet);
       } else if (currentCoin.name === 'BCH') {
           const keyPairsCurrentCoin = this.coinServ.getKeyPairs('BCH', seed, 0, 0, 'b');
           let prefix = '6f';
@@ -672,10 +670,8 @@ export class WalletDashboardComponent implements OnInit{
     }
 
     onChange(index) {
-      console.log('index==', index);
       this.wallet = this.wallets.items[index];
       this.wallets.currentIndex = index;
-      console.log('this.wallet=', this.wallet);
 
       this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
         this.loadWallet();

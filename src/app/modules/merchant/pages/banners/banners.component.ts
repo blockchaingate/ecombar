@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-banners',
@@ -14,36 +14,21 @@ import { MerchantService } from '../../../shared/services/merchant.service';
 export class BannersComponent implements OnInit {
   banners: any;
   constructor(
-    private userServ: UserService,
-    private authServ: AuthService,
-    private merchantServ: MerchantService,
+    private dataServ: DataService,
     private router: Router,
     private bannerServ: BannerService) {
   }
 
   ngOnInit() {
-    const merchantId = this.merchantServ.id;
-
-    if (this.userServ.isSystemAdmin) {
-      this.getAdminBanners();
-    } else
-      if (merchantId) {
-        this.getMerchantBanners(merchantId);
-      }
-  }
-
-  getMerchantBanners(merchantId: string) {
-    this.bannerServ.getMerchantBanners(merchantId).subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          this.banners = res._body;
-        }
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        this.getMerchantBanners(walletAddress);
       }
     );
   }
 
-  getAdminBanners() {
-    this.bannerServ.getAdminBanners().subscribe(
+  getMerchantBanners(walletAddress: string) {
+    this.bannerServ.getMerchantBanners(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.banners = res._body;
@@ -53,7 +38,7 @@ export class BannersComponent implements OnInit {
   }
 
   editBanner(banner) {
-    this.router.navigate(['/admin/banner/' + banner._id + '/edit']);
+    this.router.navigate(['/merchant/banner/' + banner._id + '/edit']);
   }
 
   deleteBanner(banner) {

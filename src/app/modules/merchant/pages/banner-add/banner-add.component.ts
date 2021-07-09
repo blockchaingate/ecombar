@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-banner-add',
@@ -19,18 +17,22 @@ export class BannerAddComponent implements OnInit {
   subtitle: string;
   subtitleChinese: string;
   currentTab: string;
+  walletAddress: string;
   id: string;
 
   constructor(
-    private userServ: UserService,
-    private authServ: AuthService,
-    private merchantServ: MerchantService,
+    private dataServ: DataService,
     private route: ActivatedRoute,
     private router: Router,
     private bannerServ: BannerService) {
   }
 
   ngOnInit() {
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        this.walletAddress = walletAddress;
+      }
+    );
     this.images = [];
     this.currentTab = 'default';
 
@@ -42,11 +44,11 @@ export class BannerAddComponent implements OnInit {
           if (res && res.ok) {
             const banner = res._body;
 
-            this.title = banner.title.en;
-            this.subtitle = banner.subtitle.en;
+            this.title = banner.title[0].text;
+            this.subtitle = banner.subtitle[0].text;
             this.sequence = banner.sequence;
-            this.titleChinese = banner.title.sc;
-            this.subtitleChinese = banner.subtitle.sc;
+            this.titleChinese = banner.title[1].text;
+            this.subtitleChinese = banner.subtitle[1].text;
             if(banner.image) {
               this.images.push(banner.image);
             }
@@ -62,24 +64,41 @@ export class BannerAddComponent implements OnInit {
   }
 
   addBanner() {
+    const title = [
+      {
+        lan: 'en',
+        text: this.title
+      },
+      {
+        lan: 'sc',
+        text: this.titleChinese
+      }
+    ];
+
+    const subtitle = [
+      {
+        lan: 'en',
+        text: this.subtitle
+      },
+      {
+        lan: 'sc',
+        text: this.subtitleChinese
+      }
+    ];    
     const data = {
-      title: {
-        en: this.title,
-        sc: this.titleChinese
-      },
-      subtitle: {
-        en: this.subtitle,
-        sc: this.subtitleChinese
-      },
+      owner: this.walletAddress,
+      title: title,
+      subtitle: subtitle,
       image: (this.images && (this.images.length > 0)) ? this.images[0] : null,
       sequence: this.sequence ? this.sequence : 0
     };
+    console.log('data=', data);
     if (!this.id) {
 
       this.bannerServ.create(data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/banners']);
+            this.router.navigate(['/merchant/banners']);
           }
         }
       );
@@ -87,7 +106,7 @@ export class BannerAddComponent implements OnInit {
       this.bannerServ.update(this.id, data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/banners']);
+            this.router.navigate(['/merchant/banners']);
           }
         }
       );
