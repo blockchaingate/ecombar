@@ -270,7 +270,7 @@ export class PaymentComponent implements OnInit{
 
 
 
-
+      /*
       const abi2 = this.web3Serv.getGeneralFunctionABI(
         {
           "constant": true,
@@ -478,7 +478,7 @@ export class PaymentComponent implements OnInit{
           console.log('rettttfor fee getOrderById=', ret);
         }
       );
-
+      */
 
 
 
