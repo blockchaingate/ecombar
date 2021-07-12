@@ -17,12 +17,12 @@ export class MainLayoutService {
     return this.http.get('mainlayout/admin');
   }
 
-  getMerchantMainLayouts(merchantId: string) {
-    return this.http.get('mainlayout/merchant/' + merchantId);
+  getMerchantMainLayouts(walletAddress: string) {
+    return this.http.get('mainlayout/merchant/' + walletAddress);
   }  
  
-  deleteMainLayout(id) {
-    return this.http.get('mainlayout/Delete/' + id);
+  deleteMainLayout(data: any) {
+    return this.http.post('mainlayout/Delete', data);
   }  
 
   getMainLayout(id: string) {

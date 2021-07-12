@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionService } from '../../../shared/services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 import { MainLayoutService } from '../../../shared/services/mainlayout.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-main-layout-add',
@@ -14,20 +17,37 @@ import { StorageService } from '../../../shared/services/storage.service';
 })
 export class MainLayoutAddComponent implements OnInit {
     mainLayout: any;
+    wallet: any;
     id: string;
     collections: any;
+    modalRef: BsModalRef;
+    walletAddress: string;
     constructor(
       private storageServ: StorageService,
-      private userServ: UserService,
+      private dataServ: DataService,
       private merchantServ: MerchantService,
       private router: Router,
+      public kanbanServ: KanbanService,
       private route: ActivatedRoute,
+      private modalService: BsModalService,
       private mainLayoutServ: MainLayoutService,
       private collectionServ: CollectionService) {
     }    
     ngOnInit() {
+      this.collections = [];
       this.id = this.route.snapshot.paramMap.get('id');
 
+      this.dataServ.currentWalletAddress.subscribe(
+        (walletAddress: string) => {
+          this.walletAddress = walletAddress;
+        }
+      );
+
+      this.dataServ.currentWallet.subscribe(
+        (wallet: string) => {
+          this.wallet = wallet;
+        }
+      );     
       if (this.id) {
         this.mainLayoutServ.getMainLayout(this.id).subscribe(
           (res: any) => {
@@ -125,58 +145,84 @@ export class MainLayoutAddComponent implements OnInit {
       );
     }
 
-    addMainLayout() {
-      
-      /*
-      {
-        type: this.type,
-        sequence: this.sequence,
-        col: null,
-        cols: null
+    /*
+        type: String,
+    owner: String,
+    merchantId: ObjectId,
+    sequence: Number,
+    col: {
+        type: Schema.Types.ObjectId,
+        ref: 'ProductCollection',
+        default: null
+    },
+    cols: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'ProductCollection'
+        }        
+    ],
+    */
+
+
+    addMainLayoutDo(privateKey: any) {
+      const data = {
+        type: this.mainLayout.type,
+        sequence: this.mainLayout.sequence,
+        col: this.mainLayout.col,
+        cols: this.mainLayout.cols
       };
-
-      if(this.type == 'Single Collection') {
-        data.col = this.collection;
-      } else
-
-      */
-
-     const data = this.mainLayout;
-     if(data.type == 'Combo Collection') {
-      console.log('this.collections=', this.collections);
-      data.cols = this.collections.map(item => {
-        if(item.isChecked) {
-          return item._id;
-        }
+      //data.owner = this.walletAddress;
+      if(data.type == 'Combo Collection') {
+       data.cols = this.collections.map(item => {
+         if(item.isChecked) {
+           return item._id;
+         }
+       });
+       data.cols = data.cols.filter(function( element ) {
+         return element !== undefined;
       });
-      data.cols = data.cols.filter(function( element ) {
-        return element !== undefined;
-     });
-    }      
-      
-    if(!data.col || data.col.length == 0) {
-      delete data.col;
+     }      
+       
+     if(!data.col || data.col.length == 0) {
+       delete data.col;
+     }
+ 
+     const sig = this.kanbanServ.signJsonData(privateKey, data);
+     data['sig'] = sig.signature;     
+ 
+       if (!this.id) {
+   
+         this.mainLayoutServ.create(data).subscribe(
+           (res: any) => {
+             if (res && res.ok) {
+               this.router.navigate(['/merchant/main-layout']);
+             }
+           }
+         );
+       } else {
+         this.mainLayoutServ.update(this.id, data).subscribe(
+           (res: any) => {
+             if (res && res.ok) {
+               this.router.navigate(['/merchant/main-layout']);
+             }
+           }
+         );
+       }
     }
-      console.log('data=', data);
+
+    addMainLayout() {
+
+      const initialState = {
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
       
-      if (!this.id) {
-  
-        this.mainLayoutServ.create(data).subscribe(
-          (res: any) => {
-            if (res && res.ok) {
-              this.router.navigate(['/admin/main-layout']);
-            }
-          }
-        );
-      } else {
-        this.mainLayoutServ.update(this.id, data).subscribe(
-          (res: any) => {
-            if (res && res.ok) {
-              this.router.navigate(['/admin/main-layout']);
-            }
-          }
-        );
-      }
-      
+      this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+      this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+        this.addMainLayoutDo(privateKey);
+      });
     }
+
+
 }

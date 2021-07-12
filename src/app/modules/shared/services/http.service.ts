@@ -90,7 +90,7 @@ export class HttpService {
 
     post(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-        data.appId = environment.appid;
+        //data.appId = environment.appid;
 
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
@@ -184,7 +184,6 @@ export class HttpService {
 
     put(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-        data.appId = environment.appid;
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
