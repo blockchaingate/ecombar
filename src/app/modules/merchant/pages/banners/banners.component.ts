@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
@@ -22,12 +20,17 @@ export class BannersComponent implements OnInit {
   ngOnInit() {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
-        this.getMerchantBanners(walletAddress);
+        
+        if(walletAddress) {
+          this.getMerchantBanners(walletAddress);
+        }
+        
       }
     );
   }
 
   getMerchantBanners(walletAddress: string) {
+    console.log('go here');
     this.bannerServ.getMerchantBanners(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {

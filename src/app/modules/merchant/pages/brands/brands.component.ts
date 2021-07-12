@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../../shared/services/brand.service';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class BrandsComponent implements OnInit {
 
   constructor(
     private userServ: UserService,
-    private authServ: AuthService,
+    private dataServ: DataService,
     private merchantServ: MerchantService,
     private router: Router,
     private brandServ: BrandService) {
@@ -24,30 +24,26 @@ export class BrandsComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.getBrands();
-  }
-  getBrands() {
-    const merchantId = this.merchantServ.id;
-
-    if (this.userServ.isSystemAdmin) {
-      this.brandServ.getBrands().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.brands = res._body;
-          }
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        console.log('walletAddressvvvffff=', walletAddress);
+        if(walletAddress) {
+          this.getMerchantBrands(walletAddress);
         }
-      );
-    } else
-      if (merchantId) {
-        this.brandServ.getMerchantBrands(merchantId).subscribe(
-          (res: any) => {
-            if (res && res.ok) {
-              this.brands = res._body;
-            }
-          }
-        );
+        
       }
+    );
+
+  }
+  getMerchantBrands(walletAddress: string) {
+    this.brandServ.getMerchantBrands(walletAddress).subscribe(
+      (res: any) => {
+        console.log('resssss=', res);
+        if (res && res.ok) {
+          this.brands = res._body;
+        }
+      }
+    );
   }
 
   editBrand(brand) {

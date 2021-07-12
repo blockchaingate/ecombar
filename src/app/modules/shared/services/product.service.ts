@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   getProductsOwnedBy(address: string){
-    return this.http.get('products/ownedBy/' + address, true);
+    return this.http.get('products/ownedBy/' + address, false);
   }
   
   deleteProduct(id: string) {

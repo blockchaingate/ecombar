@@ -33,10 +33,6 @@ import { MerchantApplicationsComponent } from './pages/merchant-applications/mer
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { StoreComponent } from './pages/store/store.component';
 
-import { 
-  AuthGuardService as AuthGuard 
-} from '../shared/services/auth-guard.service';
-
 const routes: Routes = [
   {
     path: '', component: MerchantComponent,

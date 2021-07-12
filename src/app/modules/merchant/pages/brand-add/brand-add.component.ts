@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../../shared/services/brand.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-brand-add',
@@ -16,20 +14,23 @@ export class BrandAddComponent implements OnInit {
   name: string;
   nameChinese: string;
   currentTab: string;
+  walletAddress: string;
   id: string;
 
   constructor(
-    private userServ: UserService,
-    private authServ: AuthService,
-    private merchantServ: MerchantService,
+    private dataServ: DataService,
     private route: ActivatedRoute,
     private router: Router,
     private brandServ: BrandService) {
   }
 
   ngOnInit() {
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        this.walletAddress = walletAddress;
+      }
+    );    
     this.currentTab = 'default';
-    const merchantId = this.merchantServ.id;
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
@@ -38,9 +39,8 @@ export class BrandAddComponent implements OnInit {
           console.log('ressssss=', res);
           if (res && res.ok) {
             const brand = res._body;
-
-            this.name = brand.name.en;
-            this.nameChinese = brand.name.sc;
+            this.name = brand.name[0].text;
+            this.nameChinese = brand.name[1].text;
             this.sequence = brand.sequence;
             
           }
@@ -55,11 +55,20 @@ export class BrandAddComponent implements OnInit {
   }
 
   addBrand() {
-    const data = {
-      name: {
-        en: this.name,
-        sc: this.nameChinese
+
+    const name = [
+      {
+        lan: 'en',
+        text: this.name
       },
+      {
+        lan: 'sc',
+        text: this.nameChinese
+      }
+    ];      
+    const data = {
+      owner: this.walletAddress,
+      name: name,
       sequence: this.sequence ? this.sequence : 0
     };
     if (!this.id) {
@@ -67,7 +76,7 @@ export class BrandAddComponent implements OnInit {
       this.brandServ.create(data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/brands']);
+            this.router.navigate(['/merchant/brands']);
           }
         }
       );
@@ -75,7 +84,7 @@ export class BrandAddComponent implements OnInit {
       this.brandServ.update(this.id, data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/brands']);
+            this.router.navigate(['/merchant/brands']);
           }
         }
       );
