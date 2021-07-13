@@ -17,11 +17,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class MainLayoutAddComponent implements OnInit {
     mainLayout: any;
-    wallet: any;
     id: string;
     collections: any;
     modalRef: BsModalRef;
-    walletAddress: string;
+    wallet: any;
     constructor(
       private storageServ: StorageService,
       private dataServ: DataService,
@@ -36,12 +35,6 @@ export class MainLayoutAddComponent implements OnInit {
     ngOnInit() {
       this.collections = [];
       this.id = this.route.snapshot.paramMap.get('id');
-
-      this.dataServ.currentWalletAddress.subscribe(
-        (walletAddress: string) => {
-          this.walletAddress = walletAddress;
-        }
-      );
 
       this.dataServ.currentWallet.subscribe(
         (wallet: string) => {
@@ -97,14 +90,7 @@ export class MainLayoutAddComponent implements OnInit {
     }
 
     updateCollectionsChecked() {
-      
-      /*
-      for(let i=0;i<this.mainLayout.cols.length;i++) {
-        if(this.mainLayout.cols.indexOf(this.collections[i]._id) >= 0) {
-          this.collections[i].isChecked = true;
-        }
-      }
-      */
+
      for(let i = 0; i < this.collections.length; i++) {
        const collection = this.collections[i];
        if(this.mainLayout) {
@@ -144,25 +130,6 @@ export class MainLayoutAddComponent implements OnInit {
         }
       );
     }
-
-    /*
-        type: String,
-    owner: String,
-    merchantId: ObjectId,
-    sequence: Number,
-    col: {
-        type: Schema.Types.ObjectId,
-        ref: 'ProductCollection',
-        default: null
-    },
-    cols: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'ProductCollection'
-        }        
-    ],
-    */
-
 
     addMainLayoutDo(privateKey: any) {
       const data = {

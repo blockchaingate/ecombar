@@ -29,7 +29,7 @@ export class BrandService {
     return this.http.get('brands/' + id, false);
   }
 
-  deleteBrand(id: string) {
-    return this.http.get('brands/Delete/' + id);
+  deleteBrand(data: any) {
+    return this.http.post('brands/Delete', data);
   }
 }

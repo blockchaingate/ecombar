@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-banner-add',
@@ -10,6 +13,8 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
   styleUrls: ['./banner-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
 export class BannerAddComponent implements OnInit {
+  modalRef: BsModalRef;
+  wallet: any;    
   sequence: number;
   title: string;
   images: any;
@@ -17,22 +22,23 @@ export class BannerAddComponent implements OnInit {
   subtitle: string;
   subtitleChinese: string;
   currentTab: string;
-  walletAddress: string;
   id: string;
 
   constructor(
     private dataServ: DataService,
     private route: ActivatedRoute,
     private router: Router,
+    public kanbanServ: KanbanService,
+    private modalService: BsModalService,
     private bannerServ: BannerService) {
   }
 
   ngOnInit() {
-    this.dataServ.currentWalletAddress.subscribe(
-      (walletAddress: string) => {
-        this.walletAddress = walletAddress;
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
       }
-    );
+    ); 
     this.images = [];
     this.currentTab = 'default';
 
@@ -64,6 +70,21 @@ export class BannerAddComponent implements OnInit {
   }
 
   addBanner() {
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.addBannerDo(privateKey);
+    });
+  }
+
+
+  addBannerDo(privateKey: any) {
     const title = [
       {
         lan: 'en',
@@ -86,13 +107,14 @@ export class BannerAddComponent implements OnInit {
       }
     ];    
     const data = {
-      owner: this.walletAddress,
       title: title,
       subtitle: subtitle,
       image: (this.images && (this.images.length > 0)) ? this.images[0] : null,
       sequence: this.sequence ? this.sequence : 0
     };
-    console.log('data=', data);
+    
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;  
     if (!this.id) {
 
       this.bannerServ.create(data).subscribe(

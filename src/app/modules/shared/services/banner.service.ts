@@ -29,7 +29,7 @@ export class BannerService {
     return this.http.get('banners/' + id, false);
   }
 
-  deleteBanner(id: string) {
-    return this.http.get('banners/Delete/' + id);
+  deleteBanner(data: any) {
+    return this.http.post('banners/Delete', data);
   }
 }
