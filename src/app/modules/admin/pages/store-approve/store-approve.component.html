@@ -1,0 +1,15 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'Store appoval' | translate}}</h1>
+      <hr>
+
+      <div>
+        <label for="email"><b>Name:</b></label>
+        {{store?.name | translateField}}
+      </div>
+
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="approve()">{{('Approve') | translate}}</button>
+      </div>
+    </div>
+</form>

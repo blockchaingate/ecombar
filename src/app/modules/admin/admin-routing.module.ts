@@ -31,6 +31,8 @@ import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
+import { StoresComponent } from './pages/stores/stores.component';
+import { StoreApproveComponent } from './pages/store-approve/store-approve.component';
 
 import { 
   WalletGuardService as WalletGuard 
@@ -44,6 +46,12 @@ const routes: Routes = [
       {
         path: 'dashboard', component: DashboardComponent
       },
+      {
+        path: 'stores', component: StoresComponent
+      },  
+      {
+        path: 'store/:id/approve', component: StoreApproveComponent
+      },           
       {
         path: 'users', component: UsersComponent
       },

@@ -19,8 +19,6 @@ export class BrandAddComponent implements OnInit {
   id: string;
 
   constructor(
-    private userServ: UserService,
-    private authServ: AuthService,
     private merchantServ: MerchantService,
     private route: ActivatedRoute,
     private router: Router,

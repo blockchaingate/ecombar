@@ -40,6 +40,8 @@ import { CartModule } from '../home/cart/cart.module';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
+import { StoresComponent } from './pages/stores/stores.component';
+import { StoreApproveComponent } from './pages/store-approve/store-approve.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,9 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     CategoryAddComponent,
     BrandsComponent,
     BrandAddComponent,
-    RoleMenuPipe
+    RoleMenuPipe,
+    StoresComponent,
+    StoreApproveComponent
   ],
   imports: [
     AdminRoutingModule,

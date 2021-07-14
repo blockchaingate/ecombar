@@ -137,10 +137,10 @@ export const environment = {
     hpp_key: 'hpRS5R56OATG'
   },  
 addresses: {
+    exchangilyRecipient: '',
     ecombarOfficial: {
         ETH: '0x0dF198C80893c1373a11AdE9ad6454181aE18E73',
     },
-
     smartContract: {
         //NFT_Exchange: '0xd10c5f37c78058d82fb708cdac6c7278f3747721',
         //ProxyRegistry: '0x87f4ca4ee743c2521879f6f4d58ab3e0fc2c9bdf', 

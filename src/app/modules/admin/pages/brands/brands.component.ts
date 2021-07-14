@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../../shared/services/brand.service';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { Router } from '@angular/router';
 
@@ -16,7 +15,6 @@ export class BrandsComponent implements OnInit {
 
   constructor(
     private userServ: UserService,
-    private authServ: AuthService,
     private merchantServ: MerchantService,
     private router: Router,
     private brandServ: BrandService) {

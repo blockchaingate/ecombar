@@ -74,60 +74,53 @@ export class AdminComponent implements OnInit {
       {
         title: 'Dashboard',
         link: 'dashboard',
-        icon: 'dashboard',
-        roles: ['Admin', 'Seller', 'Customer']
+        icon: 'dashboard'
+      },    
+      {
+        title: 'Stores',
+        link: 'stores',
+        icon: 'store'
       },      
+      /*  
       {
         title: 'Categories',
         link: 'categories',
-        icon: 'category',
-        roles: ['Admin', 'Seller']
+        icon: 'category'
       },
       {
         title: 'Collections',
         link: 'collections',
-        icon: 'collection',
-        roles: ['Admin', 'Seller']
+        icon: 'collection'
       },
       {
         title: 'Users',
         link: 'users',
-        icon: 'user',
-        roles: ['Admin']
+        icon: 'user'
       },
       {
         title: 'Merchant Applications',
         link: 'merchant-applications',
-        icon: 'user',
-        roles: ['Admin']
+        icon: 'user'
       },  
       {
         title: 'Products',
         link: 'products',
-        icon: 'order',
-        roles: ['Seller']
+        icon: 'order'
       },           
       {
         title: 'Orders',
         link: 'orders',
-        icon: 'order',
-        roles: ['Admin', 'Seller', 'Customer']
+        icon: 'order'
       },    
       {
         title: 'Merchant information',
         link: 'merchant-info',
-        icon: 'information',
-        roles: ['Seller']
-      }    
+        icon: 'information'
+      }  
+      */  
     ];
 
 
-    /*
-    this.store.subscribe((res: any) => {
-      console.log('res in store=', res);
-    }
-    );
-    */
     const lang = this.storageServ.lang;
     if (!lang) {
       this.storageServ.get('_lang').subscribe(

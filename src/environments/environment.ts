@@ -133,6 +133,7 @@ export const environment = {
   },
 
   addresses: {
+    exchangilyRecipient: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       ecombarOfficial: {
         ETH: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       },
