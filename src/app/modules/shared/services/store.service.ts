@@ -14,6 +14,10 @@ export class StoreService {
     return this.http.delete('stores/' + id);
   }
 
+  getStores() {
+    return this.http.get('stores');
+  }
+
   getStore(id: string) {
     return this.http.get('stores/' + id);
   }

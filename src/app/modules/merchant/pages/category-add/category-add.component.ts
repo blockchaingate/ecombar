@@ -4,6 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-category-add',
@@ -12,6 +16,7 @@ import { MerchantService } from '../../../shared/services/merchant.service';
   styleUrls: ['./category-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
 export class CategoryAddComponent implements OnInit {
+  modalRef: BsModalRef;
   sequence: number;
   categories: any;
   images: any;
@@ -19,13 +24,17 @@ export class CategoryAddComponent implements OnInit {
   categoryChinese: string;
   parentId: string;
   currentTab: string;
+  wallet: any;
   id: string;
 
   constructor(
-    private userServ: UserService,
+    
     private merchantServ: MerchantService,
     private route: ActivatedRoute,
     private router: Router,
+    public kanbanServ: KanbanService,
+    private dataServ: DataService,
+    private modalService: BsModalService,
     private storageServ: StorageService,
     private categoryServ: CategoryService) {
   }
@@ -33,37 +42,32 @@ export class CategoryAddComponent implements OnInit {
   ngOnInit() {
     this.images = [];
     this.currentTab = 'default';
-    const merchantId = this.merchantServ.id;
 
-    this.storageServ.checkSystemAdmin().subscribe(
-      (ret) => {
-        if (ret) {
-          this.categoryServ.getAdminCategories().subscribe(
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
+
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.categoryServ.getMerchantCategories(walletAddress).subscribe(
             (res: any) => {
               if (res && res.ok) {
                 this.categories = res._body;
               }
             }
           );
-        } else if (merchantId) {
-          this.categoryServ.getMerchantCategories(merchantId).subscribe(
-            (res: any) => {
-              if (res && res.ok) {
-                this.categories = res._body;
-              }
-            }
-          );
-        }       
+        }
       }
     );
-
 
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.categoryServ.getCategory(this.id).subscribe(
         (res: any) => {
-          console.log('ressssss=', res);
           if (res && res.ok) {
             const category = res._body;
             console.log('cateogryyy=', category);
@@ -85,7 +89,22 @@ export class CategoryAddComponent implements OnInit {
     this.currentTab = tabName;
   }
 
-  addProduct() {
+
+  addCategory() {
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.addCategoryDo(privateKey);
+    });    
+  }
+
+  addCategoryDo(privateKey: any) {
+
     const data = {
       category: {
         en: this.category,
@@ -95,12 +114,16 @@ export class CategoryAddComponent implements OnInit {
       thumbnailUrl: (this.images && (this.images.length > 0)) ? this.images[0] : null,
       parentId: this.parentId
     };
+
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;  
+
     if (!this.id) {
 
       this.categoryServ.create(data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/categories']);
+            this.router.navigate(['/merchant/categories']);
           }
         }
       );
@@ -108,7 +131,7 @@ export class CategoryAddComponent implements OnInit {
       this.categoryServ.update(this.id, data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/categories']);
+            this.router.navigate(['/merchant/categories']);
           }
         }
       );

@@ -1,0 +1,97 @@
+<div class="nav-bar">
+    <nav class="nav-bar-main">
+        <div class="nav-bar-left">
+            <img src="/assets/images/logo/ecombar-logo.png">
+            <span class="logo-text">
+                {{'ecombar' | translate}}
+            </span>
+        </div>
+        <div class="search-container">
+            <div class="search-input">
+                <i class="material-icons" value="search" size=24 (click)="onSearch()">search</i>
+                <input type="text" class="search-input--input" [(ngModel)]="searchText" (keydown.enter)="onKeyDownEvent($event)">
+            </div>
+        </div>
+        <ul class="Navbar--items">
+            <li class="NavItem--isRoot">
+                <a class="NavItem--main" routerLink="/stores">
+                    {{'Home' | translate}}
+                </a>
+            </li> 
+            <li class="NavItem--isRoot">
+                <a class="NavItem--main" routerLink="/wallet">
+                    {{'Wallet' | translate}}
+                </a>
+            </li>            
+
+            <li class="NavItem--isRoot">
+                <a class="NavItem--main" routerLink="/merchant/store">
+                    {{'Create' | translate}}
+                </a>
+            </li>  
+
+            <li class="NavItem--isRoot">
+                <a class="NavItem--main">
+                    {{'Language' | translate}}
+                </a>
+                <ul class="NavDropdown--items">
+                  
+                    <li (click)="changeLanguage('en')">
+                        English
+                    </li>
+
+                    <li (click)="changeLanguage('sc')">
+                        中文
+                    </li>                    
+                </ul>
+            </li>            
+            
+            <li class="NavItem--isRoot" *ngIf="setting">
+                <a class="NavItem--main">
+                    <div class="img-container" style="height: 32px; width: 32px;">
+                        <img class="Image--image" *ngIf="setting.logo" src="{{setting.logo}}" style="object-fit: cover;">
+                    </div>
+                </a>
+                <ul class="NavDropdown--items">
+                  
+                    <li routerLink="/nft/account">
+                            {{'My Profile' | translate}}
+                    </li>
+
+                    <li>
+                        <a routerLink="/nft/admin/collections">
+                            {{'My Collections' | translate}}
+                        </a>
+                    </li>  
+                    <li>
+                        <a routerLink="/nft/admin/favorites">
+                            {{'My Favorites' | translate}}
+                        </a>
+                    </li>   
+                    <li>
+                        <a routerLink="/nft/account/settings">
+                            {{'Account Settings' | translate}}
+                        </a>
+                    </li> 
+                    <li (click)="logout()">
+                        {{'Logout' | translate}}
+                    </li>                                                                              
+                </ul>
+            </li>  
+            
+            <li class="NavItemreact__LiContainer-sc-1agh4ne-0 eUbTNn NavItem--isRoot" (click)="showAside = !showAside">
+                <div class="NavItem--main ">
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">
+                        account_balance_wallet
+                    </i>
+                </div>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+    <aside *ngIf="showAside">
+        <app-wallet-aside></app-wallet-aside>
+    </aside>
+

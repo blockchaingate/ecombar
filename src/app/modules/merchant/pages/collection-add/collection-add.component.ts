@@ -5,6 +5,10 @@ import { UserService } from '../../../shared/services/user.service';
 import { ProductService } from '../../../shared/services/product.service';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-collection-add',
@@ -14,18 +18,23 @@ import { MerchantService } from '../../../shared/services/merchant.service';
 })
 export class CollectionAddComponent implements OnInit {
   products: any;
+  modalRef: BsModalRef;
   productId: string;
   collectionProducts: any;
   sequence: number;
   name: string;
   nameChinese: string;
   currentTab: string;
+  wallet: any;
   id: string;
 
   constructor(
     private productServ: ProductService,
     private userServ: UserService,
     private authServ: AuthService,
+    public kanbanServ: KanbanService,
+    private dataServ: DataService,
+    private modalService: BsModalService,
     private merchantServ: MerchantService,
     private route: ActivatedRoute,
     private router: Router,
@@ -38,17 +47,27 @@ export class CollectionAddComponent implements OnInit {
     this.collectionProducts = [];
     this.productId = '';
     this.currentTab = 'default';
-    this.getProducts();
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
+
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.getMerchantProducts(walletAddress);
+        }
+      }
+    );
+
 
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log('this.id====', this.id);
     if (this.id) {
       this.collectionServ.getCollection(this.id).subscribe(
         (res: any) => {
-          console.log('ressssss=', res);
           if (res && res.ok) {
             const collection = res._body;
-            console.log('collection=', collection);
             this.name = collection.name.en;
             this.nameChinese = collection.name.sc;
             this.collectionProducts = collection.products;
@@ -60,8 +79,17 @@ export class CollectionAddComponent implements OnInit {
     }
   }
 
+  getMerchantProducts(walletAddress: string) {
+    this.productServ.getProductsOwnedBy(walletAddress).subscribe(
+      (res: any) => {
+        if (res) {
+          this.products = res;
+        }
+      }
+    );  
+  }
+
   addProduct() {
-    console.log('this.productId==', this.productId);
     for (let i = 0; i < this.products.length; i++) {
       const product = this.products[i];
       if (product._id == this.productId) {
@@ -77,37 +105,27 @@ export class CollectionAddComponent implements OnInit {
     );
   }
   
-  getProducts() {
-    const merchantId = this.merchantServ.id;
 
-    if (this.userServ.isSystemAdmin) {
-      this.productServ.getProducts().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.products = res._body;
-            console.log('this.products===', this.products);
-          }
-        }
-      );
-    } else
-      if (merchantId) {
-        this.productServ.getMerchantProducts(merchantId).subscribe(
-          (res: any) => {
-            if (res && res.ok) {
-              this.products = res._body;
-            }
-          }
-        );
-      }
-  }
 
   changeTab(tabName: string) {
     this.currentTab = tabName;
   }
 
   addCollection() {
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.addCollectionDo(privateKey);
+    });      
+  }
+
+  addCollectionDo(privateKey: any) {
     const products = [];
-    console.log('this.images2');
     if (this.collectionProducts) {
       for (let i = 0; i < this.collectionProducts.length; i++) {
         products.push(this.collectionProducts[i]._id);
@@ -121,12 +139,16 @@ export class CollectionAddComponent implements OnInit {
       sequence: this.sequence,
       products: products
     };
+
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;  
+
     if (!this.id) {
 
       this.collectionServ.create(data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/collections']);
+            this.router.navigate(['/merchant/collections']);
           }
         }
       );
@@ -134,7 +156,7 @@ export class CollectionAddComponent implements OnInit {
       this.collectionServ.update(this.id, data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/collections']);
+            this.router.navigate(['/merchant/collections']);
           }
         }
       );

@@ -1,0 +1,210 @@
+.nav-bar {
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(229, 232, 235);
+    box-shadow: rgb(47 63 78 / 25%) 0px 0px 8px 0px;
+    height: 72px;
+    position: sticky;
+    top: 0px;
+    z-index: 20;
+    transition: top 0.5s ease 0s;
+}
+
+.nav-bar .nav-bar-main {
+    display: flex;
+    height: 100%;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0px 8px;
+}
+
+.nav-bar-left {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    padding-right: 15px;    
+}
+
+.nav-bar-left > img {
+    height: 80%;
+    width: auto;
+}
+
+.logo-text {
+    font-size: 21px;
+    color: #333;
+    visibility: visible;
+    font-weight: 800;   
+}
+
+.search-container {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex: 1 0 0%;
+    -webkit-box-pack: center;
+    justify-content: center;    
+}
+
+.search-input {
+    margin-right: 8px;
+    position: relative;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 232, 235);
+    border-radius: 5px;
+    color: rgba(4, 17, 29, 0.75);
+    display: flex;
+    flex: 1 0 0%;
+    height: 45px;
+    max-width: 768px;
+    padding: 0px 10px;      
+}
+
+.search-input--input {
+    background-color: transparent;
+    color: rgba(4, 17, 29, 0.75);
+    border: none;
+    flex: 1 0 0%;
+    height: 100%;
+    margin-left: 16px;
+    outline: none;    
+}
+
+.Navbar--items {
+    display: none;
+    margin: 0px;
+}
+
+@media (min-width: 922px) {
+    .Navbar--items {
+        display: flex;
+    }
+}
+
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.NavItem--isRoot {
+    height: 72px;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 56px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.NavItem--main {
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgba(4, 17, 29, 0.75);
+    display: flex;
+    height: 100%;
+    padding: 0px 15px;
+    position: relative;
+    width: 100%;    
+}
+
+ul:not(.browser-default) li {
+    list-style-type: none;
+}
+
+.img-container {
+    border: 2px solid rgb(229, 232, 235);
+    border-radius: 16px;
+    width: 32px;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;       
+}
+
+.Image--image {
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 400ms ease 0s;
+    width: 100%;    
+}
+
+.NavDropdown--items {
+    box-shadow: rgb(47 63 78 / 25%) 0px 0px 8px 0px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 232, 235);
+    display: flex;
+    flex-direction: column;
+    right: 0px;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    transition-duration: 0.2s;
+    transition-property: opacity, visibility;
+    visibility: hidden;
+    width: 216px;
+    z-index: 1;
+}
+
+.NavItem--isRoot:hover .NavDropdown--items {
+    opacity: 1;
+    visibility: visible;
+    z-index: 9999;
+}
+
+.NavDropdown--items li {
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 56px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 16px;    
+    padding: 10px;
+}
+
+.NavDropdown--items li:hover {
+    box-shadow: rgb(14 14 14 / 25%) 0px 0px 8px 0px;
+    transition: all 0.1s ease 0s;
+}
+
+.NavDropdown--items li a {
+    color: rgba(4, 17, 29, 0.75);
+}
+.NavDropdown--items li:not(:last-child) {
+    border-bottom: 1px solid rgb(229, 232, 235);
+}
+
+.aside-container {
+    position: relative;  
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(76, 175, 80, 0.01);
+    z-index: 100;
+}
+
+aside {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    width: 420px;
+    height: calc(100% - 72px);
+    z-index: 20;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 232, 235);
+    filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px);
+    transition: transform 0.5s ease 0s, opacity 0.5s ease 0s;
+    visibility: visible;
+    opacity: 1;    
+}

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionService } from '../../../shared/services/collection.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-collections',
@@ -13,42 +16,36 @@ import { StorageService } from '../../../shared/services/storage.service';
 })
 export class CollectionsComponent implements OnInit {
   collections: any;
+  wallet: any;
+  modalRef: BsModalRef;
+
   constructor(
+    public kanbanServ: KanbanService,
+    private modalService: BsModalService,
+    private dataServ: DataService,
     private storageServ: StorageService,
-    private userServ: UserService,
     private merchantServ: MerchantService,
     private router: Router,
     private collectionServ: CollectionService) {
   }
 
   ngOnInit() {
-    const merchantId = this.merchantServ.id;
-
-    this.storageServ.checkSystemAdmin().subscribe(
-      (ret) => {
-        if (ret) {
-          this.getAdminCollections();
-        } else
-        if (merchantId) {
-          this.getMerchantCollections(merchantId);
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.getMerchantCollections(walletAddress);
         }
       }
     );
-
-  }
-
-  getMerchantCollections(merchantId: string) {
-    this.collectionServ.getMerchantCollections(merchantId).subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          this.collections = res._body;
-        }
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
       }
-    );
+    );  
   }
 
-  getAdminCollections() {
-    this.collectionServ.getAdminCollections().subscribe(
+  getMerchantCollections(walletAddress: string) {
+    this.collectionServ.getMerchantCollections(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.collections = res._body;
@@ -58,16 +55,36 @@ export class CollectionsComponent implements OnInit {
   }
 
   editCollection(collection) {
-    this.router.navigate(['/admin/collection/' + collection._id + '/edit']);
+    this.router.navigate(['/merchant/collection/' + collection._id + '/edit']);
   }
 
-  deleteCollection(collection) {
-    this.collectionServ.deleteCollection(collection._id).subscribe(
+  deleteCollection(collection_id: string) {
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.deleteCollectionDo(privateKey, collection_id);
+    });
+  }
+
+  deleteCollectionDo(privateKey: any, collection_id: string) {
+    const data = {
+      id: collection_id
+    };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;        
+    this.collectionServ.deleteCollection(data).subscribe(
       (res: any) => {
         if (res && res.ok) {
-          this.collections = this.collections.filter((item) => item._id != collection._id);
+          this.collections = this.collections.filter((item) => item._id != collection_id);
         }
       }
     );
   }
+
 }
