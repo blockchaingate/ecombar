@@ -29,6 +29,7 @@ export class StoreComponent implements OnInit {
   currentTab: string;
   feeChargerSmartContractAddress: string;
   smartContractAddress: string;
+  refAddress: string;
   walletAddress: string;
 
   coin: string;
@@ -41,8 +42,6 @@ export class StoreComponent implements OnInit {
   coins = ['DUSD', 'USDT'];
 
   constructor(
-    private localSt: LocalStorage,
-    private route: ActivatedRoute,
     private coinServ: CoinService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
@@ -108,6 +107,7 @@ export class StoreComponent implements OnInit {
 
           this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
           this.smartContractAddress = store.smartContractAddress; 
+          this.refAddress = store.refAddress;
           this.objectId = store.objectId;  
         }
       }
@@ -178,7 +178,8 @@ export class StoreComponent implements OnInit {
           sc: this.nameChinese
         },
         coin: this.coin,
-        taxRate: this.taxRate ? this.taxRate : 0
+        taxRate: this.taxRate ? this.taxRate : 0,
+        refAddress: this.refAddress
       };      
       const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
       let args2 = [

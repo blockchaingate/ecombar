@@ -2,12 +2,14 @@
     <ul class="responsive-table">
       <li class="table-header">
         <div class="col col-3">{{'Name' | translate}}</div>
-        <div class="col col-3">{{'feeCharger smart contract address' | translate}}</div>
+        <div class="col col-3">{{'Ref address' | translate}}</div>
+        <div class="col col-3">{{'status' | translate}}</div>
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let store of stores">
         <div class="col col-3" data-label="Name">{{store.name | translateField}}</div>
-        <div class="col col-3" data-label="Name">{{store.feeChargerSmartContractAddress}}</div>
+        <div class="col col-3" data-label="Name">{{store.refAddress}}</div>
+        <div class="col col-3" data-label="Name">{{store.status}}</div>
         <div class="col col-3 text-right" data-label="Operations">
   
           <div class="d-inline-block px-2">

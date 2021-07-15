@@ -60,6 +60,17 @@
         </div>       
       </div>
       
+      <div *ngIf="!refAddress">
+        <label for="email"><b>{{'Ref address' | translate}}</b></label>
+        <input type="text" placeholder="{{'ref address' | translate}}" [(ngModel)]="refAddress" name="refAddress" required>
+      </div>
+
+
+      <div *ngIf="refAddress">
+        <label for="email"><b>{{'Ref address' | translate}}:</b></label>
+        {{refAddress}}
+      </div> 
+
       <div *ngIf="currentTab=='Chinese'">
         <label for="email"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        

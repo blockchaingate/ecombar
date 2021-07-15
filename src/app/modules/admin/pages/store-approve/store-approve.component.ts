@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { StoreService } from '../../../shared/services/store.service';
 
 @Component({
@@ -8,13 +9,16 @@ import { StoreService } from '../../../shared/services/store.service';
   styleUrls: ['./store-approve.component.scss']
 })
 export class StoreApproveComponent implements OnInit {
-
+  coinpoolAddress: string;
   store: any;
   constructor(
     private route: ActivatedRoute,
+    private kanbanServ: KanbanService,
     private storeServ: StoreService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
+    console.log('coinpoolAddress==', this.coinpoolAddress);
     const id = this.route.snapshot.paramMap.get('id');
     console.log('id=', id);
     if (id) {

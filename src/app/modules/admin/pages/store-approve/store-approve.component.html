@@ -8,6 +8,10 @@
         {{store?.name | translateField}}
       </div>
 
+      <div>
+        <label for="email"><b>Ref address:</b></label>
+        {{store?.refAddress | translateField}}
+      </div>      
       <div class="text-right py-2">
         <button type="submit" class="btn signinbtn" (click)="approve()">{{('Approve') | translate}}</button>
       </div>
