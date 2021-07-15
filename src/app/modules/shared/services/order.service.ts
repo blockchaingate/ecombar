@@ -7,19 +7,19 @@ export class OrderService {
   constructor(private http: HttpService) { }
 
   create(data) {
-    return this.http.post('orders/create', data, true);
+    return this.http.post('orders/create', data, false);
   }
 
   update(orderID: string, data) {
-    return this.http.post('orders/update/' + orderID, data, true);
+    return this.http.post('orders/update/' + orderID, data, false);
   }
 
   updateShipping(orderID: string, data) {
-    return this.http.post('orders/updateShipping/' + orderID, data, true);
+    return this.http.post('orders/updateShipping/' + orderID, data, false);
   }
 
   get(orderID: string) {
-    return this.http.get('orders/' + orderID, true);
+    return this.http.get('orders/' + orderID, false);
   }
 
   updatePayment(order_id: string, paymentData: any) {
@@ -28,15 +28,15 @@ export class OrderService {
   }
 
   getMyOrders() {
-    return this.http.get('orders', true);
+    return this.http.get('orders', false);
   }
 
   getMyProducts() {
-    return this.http.get('orders/my-products', true);
+    return this.http.get('orders/my-products', false);
   }
 
   getAllOrders() {
-    return this.http.get('orders/all', true);
+    return this.http.get('orders/all', false);
   }
 
   gerMerchantOrders() {

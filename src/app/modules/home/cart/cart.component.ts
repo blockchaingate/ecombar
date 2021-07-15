@@ -17,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from '../../shared/services/web3.service';
 import { KanbanService } from '../../shared/services/kanban.service';
 import BigNumber from 'bignumber.js';
+import { CoinService } from '../../shared/services/coin.service';
 
 @Component({
   selector: 'app-cart',
@@ -56,7 +57,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private dataServ: DataService,
     private iddockServ: IddockService,
     private translateServ: TranslateService,
-    private web3Serv: Web3Service,
+    private coinServ: CoinService,
     private kanbanServ: KanbanService,
     private kanbanSmartContractServ: KanbanSmartContractService
   ) {
@@ -141,6 +142,9 @@ export class CartComponent implements OnInit, OnDestroy {
     let currency = '';
     let transAmount = 0;
 
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey;
+
     this.cartItems.forEach(item => {
       console.log('item=', item);
       this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
@@ -207,6 +211,10 @@ export class CartComponent implements OnInit, OnDestroy {
 
 
           if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+            console.log('go for creating order');
+
+            const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+            orderData['sig'] = sig.signature;               
             this.orderServ.create(orderData).subscribe(
               (res: any) => {
                 console.log('ress from create order', res);

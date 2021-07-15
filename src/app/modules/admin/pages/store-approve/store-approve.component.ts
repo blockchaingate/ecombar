@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { StoreService } from '../../../shared/services/store.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
 
 @Component({
   selector: 'app-store-approve',
@@ -10,23 +18,66 @@ import { StoreService } from '../../../shared/services/store.service';
 })
 export class StoreApproveComponent implements OnInit {
   coinpoolAddress: string;
+  isCoinPoolOwner: boolean;
+  modalRef: BsModalRef;
+  wallet: any;
   store: any;
   constructor(
     private route: ActivatedRoute,
     private kanbanServ: KanbanService,
+    private web3Serv: Web3Service,
+    private utilServ: UtilService,
+    private dataServ: DataService,
+    private spinner: NgxSpinnerService,
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private kanbanSmartContractServ: KanbanSmartContractService,
     private storeServ: StoreService) { }
 
-  async ngOnInit() {
-    this.coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
-    console.log('coinpoolAddress==', this.coinpoolAddress);
+  ngOnInit() {
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
+
+    this.isCoinPoolOwner = false;
     const id = this.route.snapshot.paramMap.get('id');
-    console.log('id=', id);
     if (id) {
       this.storeServ.getStore(id).subscribe(
-        (ret: any) => {
-          console.log('ret==', ret);
+        async (ret: any) => {
           if(ret && ret.ok) {
             this.store = ret._body;
+
+
+            this.coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
+            console.log('coinpoolAddress==', this.coinpoolAddress);
+            const abi = this.web3Serv.getGeneralFunctionABI(
+              {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                  {
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+              },[]
+            );
+            const ret2 = await this.kanbanServ.kanbanCallAsync(this.coinpoolAddress, abi);  
+            const coinpoolOwnerAddress = this.utilServ.exgToFabAddress('0x' + ret2.data.substring(ret2.data.length - 40)); 
+
+            this.dataServ.currentWalletAddress.subscribe(
+              (walletAddress: string) => {
+                if(walletAddress == coinpoolOwnerAddress) {
+                  this.isCoinPoolOwner = true;
+                }
+              }
+            );
           }
         }
       );
@@ -35,5 +86,97 @@ export class StoreApproveComponent implements OnInit {
 
   approve() {
 
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.spinner.show();
+      this.approveDo(seed);
+    });
+  }
+
+
+async approveDo(seed: Buffer) {
+  try {
+
+  
+  const randomString = this.utilServ.getRandomInteger();
+  console.log('randomString===', randomString);
+    const argsAddContract = [
+      this.store.feeChargerSmartContractAddress,
+      100,
+      randomString
+    ];
+    const abiAddContract = {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_contractAddr",
+          "type": "address"
+        },
+        {
+          "name": "_activatedAt",
+          "type": "uint256"
+        },
+        {
+          "name": "_accountType",
+          "type": "uint32"
+        }
+      ],
+      "name": "addContract",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+
+    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.coinpoolAddress, abiAddContract, argsAddContract);
+    
+
+    const argsToWhiteList = [
+      this.store.feeChargerSmartContractAddress
+    ];
+    const abiToWhiteList = {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_operator",
+          "type": "address"
+        }
+      ],
+      "name": "addToWhiteList",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+
+    const ret2 = await this.kanbanSmartContractServ.execSmartContract(seed, this.coinpoolAddress, abiToWhiteList, argsToWhiteList);
+    console.log('ret2=', ret2);    
+    this.spinner.hide();
+    if(ret2 && ret2.ok && ret2._body && ret2._body.status == '0x1') {
+      this.storeServ.update(this.store._id, {status: 1}).subscribe(
+        (ret: any) => {
+          if(ret && ret.ok) {
+            this.toastr.success('the store was approved.');
+          }
+        }
+      );
+      
+    } else {
+      this.toastr.success('Failed to approve the store.');
+    }
+  } catch(e) {
+    this.spinner.hide();
+  }
   }
 }

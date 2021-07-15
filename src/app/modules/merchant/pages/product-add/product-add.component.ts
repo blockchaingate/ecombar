@@ -18,6 +18,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import BigNumber from 'bignumber.js/bignumber';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
 
 @Component({
   selector: 'app-admin-product-add',
@@ -90,8 +92,10 @@ export class ProductAddComponent implements OnInit {
     private modalService: BsModalService,
     //private ngxSmartModalServ: NgxSmartModalService,
     private spinner: NgxSpinnerService,
+    private coinServ: CoinService,
     private categoryServ: CategoryService,
     private kanbanSmartContractServ: KanbanSmartContractService,
+    private kanbanServ: KanbanService,
     private brandServ: BrandService,
     private utilServ: UtilService,
     private productServ: ProductService) {
@@ -144,6 +148,7 @@ export class ProductAddComponent implements OnInit {
       (store: any) => {
         if(store) {
           this.smartContractAddress = store.smartContractAddress;
+          this.currency = store.coin;
         }
       }
     );
@@ -357,6 +362,9 @@ export class ProductAddComponent implements OnInit {
   async saveProductDo(seed: Buffer) {
     console.log('this.images=', this.images);
     //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey;
+
     const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
     const subtitleLan: TextLan = { name: 'subtitle', en: this.subtitle, sc: this.subtitleChinese };
     const featuresLan: TextLan = { name: 'features', en: this.features, sc: this.featuresChinese };
@@ -383,7 +391,6 @@ export class ProductAddComponent implements OnInit {
       features:featuresLan,      
       specs: specLan,
       price: parseInt(this.price), // in cents
-      currency: 'USD',
       keywords: this.keywords,
       contents: this.contents,
       primaryCategoryId: this.category ? this.category : null,
@@ -429,6 +436,8 @@ export class ProductAddComponent implements OnInit {
             const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
             console.log('rettt=', ret);
             if(ret.ok && ret._body && ret._body.status == '0x1') {
+              const sig = this.kanbanServ.signJsonData(privateKey, data);
+              data['sig'] = sig.signature;                 
               this.productServ.create(data).subscribe(
                 (res: any) => {
                   this.spinner.hide();
@@ -448,6 +457,8 @@ export class ProductAddComponent implements OnInit {
         }
       });      
     } else {
+      const sig = this.kanbanServ.signJsonData(privateKey, data);
+      data['sig'] = sig.signature;       
       this.productServ.update(this.id, data).subscribe(
         async (res: any) => {
           console.log('res=', res);
