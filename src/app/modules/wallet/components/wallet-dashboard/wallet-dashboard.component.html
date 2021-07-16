@@ -76,7 +76,14 @@
                                 </div> 
                             </div>                        
                             
-                    
+
+                            <div class="CreateCollection--actions m-1 py-3 text-center" *ngIf="gas==0">
+                                <div class="ActionButtonrContainer ActionButton--secondary">
+                                    <div class="ActionButton--content" (click)="getFreeGas()" style="min-width: 120px;">
+                                        {{'Get free Gas' | translate}}
+                                    </div>
+                                </div> 
+                            </div>                                 
                         </div>    
                     </div>
                     <div class="col col-4 text-black">

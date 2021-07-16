@@ -27,6 +27,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 import { WalletService } from 'src/app/modules/shared/services/wallet.service';
 import { LoginSettingModal } from '../../modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phrase.modal';
+import { GetFreeGasComponent } from '../../modals/get-free-gas/get-free-gas.component';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -113,14 +114,22 @@ export class WalletDashboardComponent implements OnInit{
       this.modalRef = this.modalServ.show(ReceiveComponent, {initialState});      
     }
     
-    /*
-    sendCoin() {
-      this.opType = 'sendCoin';
-      this.ngxSmartModalService.getModal('sendModal').close();
-      this.ngxSmartModalService.getModal('passwordModal').open();
-      
+    
+    getFreeGas() {
+      if(this.gas > 0) {
+        this.toastr.info(this.translateServ.instant("You cannot get free gas"));
+        return;
+      } 
+
+      const initialState = {
+        address: this.walletAddress
+      }
+      this.modalRef = this.modalServ.show(GetFreeGasComponent, {initialState});  
+  
+      this.modalRef.content.onClose.subscribe(result => {
+        this.gas = result;
+      });
     }
-    */
 
    async checkAmount(seed) {
     //this.sendCoinParams
