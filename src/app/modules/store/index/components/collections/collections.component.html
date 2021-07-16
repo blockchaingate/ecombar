@@ -1,0 +1,18 @@
+<div *ngIf="collection" class="container">
+    <div class="featured-products-container">
+        <div class="mb-8 position-relative">
+            <div
+                class="d-flex justify-content-between border-bottom border-color-1 flex-md-nowrap flex-wrap border-sm-bottom-0">
+                <h3 class="section-title section-title__full mb-0 pb-2 font-size-22">{{ collection.name | translateField}}</h3>
+            </div>
+            <div class="js-slick-carousel position-static u-slick u-slick--gutters-1 overflow-hidden u-slick-overflow-visble pt-3 pb-3"
+                data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10"
+                data-arrow-left-classes="fa fa-angle-left right-1" data-arrow-right-classes="fa fa-angle-right right-0"
+                data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
+                <div>
+                    <app-products-grid [products]="collection.products"></app-products-grid>
+                </div>
+            </div>
+        </div>
+
+</div>

@@ -1,0 +1,220 @@
+<div *ngIf="comments">
+    <div class="row mb-8">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <h3 class="font-size-18 mb-6">{{'Based on' |translate}} {{comments.length}} {{'reviews' | translate}}</h3>
+                <h2 class="font-size-30 font-weight-bold text-lh-1 mb-0">{{overall}}</h2>
+                <div class="text-lh-1">{{'overall' | translate}}</div>
+            </div>
+
+            <!-- Ratings -->
+            <ul class="list-unstyled">
+                <li class="py-1">
+                    <a class="row align-items-center mx-gutters-2 font-size-1" href="javascript:;">
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                            </div>
+                        </div>
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
+                                <div class="progress-bar" role="progressbar" 
+                                [ngStyle]="{width: ((comments.length > 0) ? (rating5 * 100 / comments.length) : 0) + '%'}"
+                                aria-valuenow="{{((comments.length > 0) ? (rating5 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="col-auto text-right">
+                            <span class="text-gray-90">{{rating5}}</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a class="row align-items-center mx-gutters-2 font-size-1" href="javascript:;">
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="far fa-star text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
+                                <div class="progress-bar" role="progressbar" 
+                                [ngStyle]="{width: ((comments.length > 0) ? (rating4 * 100 / comments.length) : 0) + '%'}"
+                                 aria-valuenow="{{(rating4 / comments.length) * 100}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="col-auto text-right">
+                            <span class="text-gray-90">{{rating4}}</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a class="row align-items-center mx-gutters-2 font-size-1" href="javascript:;">
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
+                                <div class="progress-bar" role="progressbar" 
+                                [ngStyle]="{width: ((comments.length > 0) ? (rating3 * 100 / comments.length) : 0) + '%'}"
+                                 aria-valuenow="{{((comments.length > 0) ? (rating3 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="col-auto text-right">
+                            <span class="text-gray-90">{{rating3}}</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a class="row align-items-center mx-gutters-2 font-size-1" href="javascript:;">
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
+                                <div class="progress-bar" role="progressbar" 
+                                [ngStyle]="{width: ((comments.length > 0) ? (rating3 * 100 / comments.length) : 0) + '%'}"
+                                 aria-valuenow="{{((comments.length > 0) ? (rating2 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="col-auto text-right">
+                            <span class="text-muted">{{rating2}}</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a class="row align-items-center mx-gutters-2 font-size-1" href="javascript:;">
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                                <small class="fas fa-star"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="col-auto mb-2 mb-md-0">
+                            <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
+                                <div class="progress-bar" role="progressbar" 
+                                [ngStyle]="{width: ((comments.length > 0) ? (rating1 * 100 / comments.length) : 0) + '%'}"
+                                 aria-valuenow="{{((comments.length > 0) ? (rating1 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="col-auto text-right">
+                            <span class="text-gray-90">{{rating1}}</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- End Ratings -->
+        </div>
+        <!--
+        <div class="col-md-6">
+            <h3 class="font-size-18 mb-5">Add a review</h3>
+            <form class="js-validate">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-4 col-lg-3">
+                        <label for="rating" class="form-label mb-0">Your Review</label>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <a href="#" class="d-block">
+                            <div class="text-warning text-ls-n2 font-size-16">
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                                <small class="far fa-star text-muted"></small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="js-form-message form-group mb-3 row">
+                    <div class="col-md-4 col-lg-3">
+                        <label for="descriptionTextarea" class="form-label">Your Review</label>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <textarea class="form-control" rows="3" id="descriptionTextarea"
+                        data-msg="Please enter your message."
+                        data-error-class="u-has-error"
+                        data-success-class="u-has-success"></textarea>
+                    </div>
+                </div>
+                <div class="js-form-message form-group mb-3 row">
+                    <div class="col-md-4 col-lg-3">
+                        <label for="inputName" class="form-label">Name <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <input type="text" class="form-control" name="name" id="inputName" aria-label="Alex Hecker" required
+                        data-msg="Please enter your name."
+                        data-error-class="u-has-error"
+                        data-success-class="u-has-success">
+                    </div>
+                </div>
+                <div class="js-form-message form-group mb-3 row">
+                    <div class="col-md-4 col-lg-3">
+                        <label for="emailAddress" class="form-label">Email <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <input type="email" class="form-control" name="emailAddress" id="emailAddress" aria-label="alexhecker@pixeel.com" required
+                        data-msg="Please enter a valid email address."
+                        data-error-class="u-has-error"
+                        data-success-class="u-has-success">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-md-4 offset-lg-3 col-auto">
+                        <button type="submit" class="btn btn-primary-dark btn-wide transition-3d-hover">Add Review</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    -->
+    </div>
+    <!-- Review -->
+    <div [ngClass]=" (i == comments.length - 1) ? 'pb-4' : 'border-bottom border-color-1 pb-4 mb-4'" 
+    *ngFor="let comment of comments; let i = index"
+    >
+        <!-- Review Rating -->
+        <div class="d-flex justify-content-between align-items-center text-secondary font-size-1 mb-2">
+            <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                <small class="fa-star" [ngClass]="(comment.rating < 1) ? 'far text-muted' : 'fas'"></small>
+                <small class="fa-star" [ngClass]="(comment.rating < 2) ? 'far text-muted' : 'fas'"></small>
+                <small class="fa-star" [ngClass]="(comment.rating < 3) ? 'far text-muted' : 'fas'"></small>
+                <small class="fa-star" [ngClass]="(comment.rating < 4) ? 'far text-muted' : 'fas'"></small>
+                <small class="fa-star" [ngClass]="(comment.rating < 5) ? 'far text-muted' : 'fas'"></small>
+            </div>
+        </div>
+        <!-- End Review Rating -->
+
+        <p class="text-gray-90" [innerHTML]="comment.comment"></p>
+
+        <!-- Reviewer -->
+        <div class="mb-2">
+            <strong>{{comment.authorId.email}}</strong>
+            <span class="font-size-13 text-gray-23">- {{comment.dt | date}}</span>
+        </div>
+        <!-- End Reviewer -->
+    </div>
+    <!-- End Review -->
+
+</div>

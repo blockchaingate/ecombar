@@ -1,0 +1,4 @@
+.collection-name{
+    text-transform: capitalize;
+    cursor: pointer;
+}

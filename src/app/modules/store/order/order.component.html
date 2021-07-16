@@ -1,0 +1,100 @@
+
+<div class="m-3 list-group" *ngIf="order">
+    <div class="list-group-item list-group-item-action active">
+        Order ID:{{id}}
+    </div>
+   
+    <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action active">
+            Merchant information
+        </div>
+        <div class="list-group-item list-group-item-action">
+            Name: {{order.merchantId.name}}
+        </div>
+        <div class="list-group-item list-group-item-action">
+            Phone: {{order.merchantId.phone}}
+        </div>  
+        <div class="list-group-item list-group-item-action">
+            Email: {{order.merchantId.email}}
+        </div>    
+        <div class="list-group-item list-group-item-action">
+            Login Email: {{order.merchantId.createMemberId.email}}
+        </div>         
+        
+    </div>
+
+    <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action active">
+            Items information
+        </div>
+        <div class="list-group-item list-group-item-action">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of order.items">
+                    <th scope="row">
+                        <img class="img-thumbnail" [src]="item.thumbnailUrl">
+                    </th>
+                    <td>{{item.title}}</td>
+                    <td>{{item.price}} {{item.currency}}</td>
+                    <td>{{item.quantity}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+              
+        </div>        
+    </div>       
+
+    <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action active">
+            Payment information
+        </div>
+        <div class="list-group-item list-group-item-action">
+            Payment Method: {{order.paymentMethod}}
+        </div>
+        <div class="list-group-item list-group-item-action">
+            payment Status: {{order.paymentStatus}}
+        </div>  
+        <div class="list-group-item list-group-item-action">
+            Charge ID: {{order.charge_id}}
+        </div>          
+    </div>   
+ 
+    <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action active">
+            Shipping information
+        </div>
+        <div class="list-group-item list-group-item-action">
+            Shipping Service: {{order.shippingServiceSelected}}
+        </div>
+        <div class="list-group-item list-group-item-action">
+            Receiver name: {{order.name}}
+        </div>  
+        <div class="list-group-item list-group-item-action">
+            Address: {{order.unit}} {{order.streetNumber}} {{order.streetName}} {{order.district}}
+            {{order.city}} {{order.zip}}, {{order.province}} {{order.country}}
+        </div>         
+    </div>     
+
+    <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action active">
+            Iddock information
+        </div>
+        <div class="list-group-item list-group-item-action">
+            Object ID: 
+            <a target="_blank" href="/blockchain/detail/things/{{order.objectId}}">
+                {{order.objectId}}
+            </a>
+        </div>        
+    </div>  
+    
+    
+  </div>

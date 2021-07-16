@@ -1,1 +1,6 @@
-<p>index works!</p>
+<div *ngFor="let store of stores">
+    <a href="/store/{{store._id}}">
+        {{store.name | translateField}}
+    </a>
+    
+</div>
