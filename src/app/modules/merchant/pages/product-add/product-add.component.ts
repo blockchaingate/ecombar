@@ -405,7 +405,7 @@ export class ProductAddComponent implements OnInit {
 
     if(!this.id) {
       (await this.iddockServ.addIdDock(seed, 'things', null, data, null)).subscribe( async res => {
-        console.log('ress=', res);
+        console.log('ress from addIdDock=', res);
         if(res) {
           if(res.ok) {
             console.log('res.body._id=', res._body._id);

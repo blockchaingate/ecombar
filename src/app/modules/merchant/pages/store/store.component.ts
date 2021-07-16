@@ -54,6 +54,20 @@ export class StoreComponent implements OnInit {
     private storeServ: StoreService) {
   }
 
+  initStore(store) {
+    this.id = store._id;
+    this.coin = store.coin;
+    this.taxRate = store.taxRate;
+    if(store.name) {
+      this.name = store.name.en;
+      this.nameChinese = store.name.sc;  
+    }
+
+    this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
+    this.smartContractAddress = store.smartContractAddress; 
+    this.refAddress = store.refAddress;
+    this.objectId = store.objectId;   
+  }
   ngOnInit() {
     //this.feeChargerSmartContractAddress = environment.addresses.smartContract.FEE_CHARGER;
 
@@ -97,18 +111,7 @@ export class StoreComponent implements OnInit {
       (store: any) => {
         console.log('store for subscribe=', store);
         if(store) {
-          this.id = store._id;
-          this.coin = store.coin;
-          this.taxRate = store.taxRate;
-          if(store.name) {
-            this.name = store.name.en;
-            this.nameChinese = store.name.sc;  
-          }
-
-          this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
-          this.smartContractAddress = store.smartContractAddress; 
-          this.refAddress = store.refAddress;
-          this.objectId = store.objectId;  
+          this.initStore(store);
         }
       }
     );
@@ -231,6 +234,7 @@ export class StoreComponent implements OnInit {
                               console.log();
                               if (res && res.ok) {
                                 //this.router.navigate(['/merchant/store']);
+                                this.initStore(res._body);
                                 this.smartContractAddress = smartContractAddress;
                                 this.toastr.success('Store was created.');
                                 this.spinner.hide();

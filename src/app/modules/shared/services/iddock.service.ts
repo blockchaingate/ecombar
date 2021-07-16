@@ -34,6 +34,7 @@ export class IddockService {
 
     const recordAddress = await this.kanbanServ.getRecordAddress();
     const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
+    console.log('nonce for getAddTxhex=', nonce);
     const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, recordAddress, nonce, 0, null);
     return txKanbanHex;
  

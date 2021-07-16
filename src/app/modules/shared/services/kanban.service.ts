@@ -160,14 +160,18 @@ export class KanbanService {
         if(nonce) {
             nonce ++;
             this.nonces.set(address, nonce);
+            console.log('address1===', address);
+            console.log('nonce1===', nonce);
             return nonce;
         }
         let path = 'kanban/getTransactionCount/' + address; 
         path = this.baseUrl + path;
-        // console.log('nouse in here:', path);
+        console.log('nonce in here:', path);
         const res = await this.http.getRaw(path).toPromise() as TransactionAccountResponse;
         nonce = res.transactionCount;
         this.nonces.set(address, nonce);
+        console.log('address2===', address);
+        console.log('nonce2===', nonce);
         return nonce;
 
     }
