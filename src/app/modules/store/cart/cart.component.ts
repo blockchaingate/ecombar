@@ -37,6 +37,7 @@ export class CartComponent implements OnInit, OnDestroy {
   noWallet: boolean;
   password: string;
   payQrcode: string;
+  storeId: string;
   txid_link: string;
   total: number;
   wallets: any;
@@ -101,22 +102,20 @@ export class CartComponent implements OnInit, OnDestroy {
 
     this.dataServ.currentStore.subscribe(
       (store: any) => {
-        this.smartContractAddress = store.smartContractAddress;
+        if(store) {
+          this.smartContractAddress = store.smartContractAddress;
+          this.storeId = store._id;
+
+          const storedCart = this.cartStoreServ.items;
+          this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
+          this.calculateTotal();
+        }
+
       }
     );
-    const storedCart = this.cartStoreServ.items;
-    this.cartItems = storedCart ? storedCart : [];
-    this.calculateTotal();
 
-    console.log("storedCart init!");
-    
-    this.cartItems.map((item,i)=>{
-      console.log("item: ", i );
-      
-      console.log(item.title);
-      
-    })
-    console.log("storedCart init end!");
+
+
   }
 
   checkout() {
@@ -149,9 +148,7 @@ export class CartComponent implements OnInit, OnDestroy {
       console.log('item=', item);
       this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
       this.quantities.push(item.quantity);
-      if(merchantIds.indexOf(item.merchantId) < 0) {
-        merchantIds.push(item.merchantId);
-      }
+
       currency = item.currency;
       transAmount += item.quantity * item.price;
       const titleTran = this.translateServ.transField(item.title);
@@ -223,7 +220,7 @@ export class CartComponent implements OnInit, OnDestroy {
                   const orderID = body._id;
                   this.spinner.hide();
                   this.cartStoreServ.empty();
-                  this.router.navigate(['/address/' + orderID]);
+                  this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
                 }
               },
               err => { 

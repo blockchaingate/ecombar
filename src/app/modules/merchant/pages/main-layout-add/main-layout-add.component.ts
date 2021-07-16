@@ -37,10 +37,25 @@ export class MainLayoutAddComponent implements OnInit {
       this.id = this.route.snapshot.paramMap.get('id');
 
       this.dataServ.currentWallet.subscribe(
-        (wallet: string) => {
+        (wallet: any) => {
           this.wallet = wallet;
+          
         }
       );     
+
+      this.dataServ.currentWalletAddress.subscribe(
+        (walletAddress: string) => {
+          this.collectionServ.getMerchantCollections(walletAddress).subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                this.collections = res._body;
+                console.log('this.collections=', this.collections);
+                this.updateCollectionsChecked();
+              }
+            }
+          );
+        }
+      );
       if (this.id) {
         this.mainLayoutServ.getMainLayout(this.id).subscribe(
           (res: any) => {
@@ -49,17 +64,6 @@ export class MainLayoutAddComponent implements OnInit {
               this.mainLayout = res._body;
               const merchantId = this.merchantServ.id;
 
-
-              this.storageServ.checkSystemAdmin().subscribe(
-                (ret) => {
-                  if (ret) {
-                    this.getAdminCollections();
-                  } else
-                  if (merchantId) {
-                    this.getMerchantCollections(merchantId);
-                  }
-                }
-              );
 
 
             }
@@ -73,17 +77,7 @@ export class MainLayoutAddComponent implements OnInit {
           col: '',
           cols: []
         }
-        const merchantId = this.merchantServ.id;
-        this.storageServ.checkSystemAdmin().subscribe(
-          (ret) => {
-            if (ret) {
-              this.getAdminCollections();
-            } else
-            if (merchantId) {
-              this.getMerchantCollections(merchantId);
-            }
-          }
-        );      
+    
       }
 
 
@@ -108,28 +102,7 @@ export class MainLayoutAddComponent implements OnInit {
       console.log('this.collections after updated=', this.collections);
       
     }
-    getMerchantCollections(merchantId: string) {
-      this.collectionServ.getMerchantCollections(merchantId).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.collections = res._body;
-            console.log('this.collections=', this.collections);
-            this.updateCollectionsChecked();
-          }
-        }
-      );
-    }
-  
-    getAdminCollections() {
-      this.collectionServ.getAdminCollections().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.collections = res._body;
-            this.updateCollectionsChecked();            
-          }
-        }
-      );
-    }
+
 
     addMainLayoutDo(privateKey: any) {
       const data = {

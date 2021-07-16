@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CollectionService } from '../../../../shared/services/collection.service';
 import {ActivatedRoute} from '@angular/router';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-collections',
@@ -13,9 +14,13 @@ export class CollectionsComponent implements OnInit {
   @Input() collection: any;
   errMsg = '';
 
-  constructor(private route: ActivatedRoute, private collectionServ: CollectionService) { }
+  constructor(
+    private dataServ: DataService,
+    private route: ActivatedRoute, 
+    private collectionServ: CollectionService) { }
 
   ngOnInit() {
+
     /*
     this.storeId = this.route.snapshot.paramMap.get('id');
     console.log('this.storeId=', this.storeId);

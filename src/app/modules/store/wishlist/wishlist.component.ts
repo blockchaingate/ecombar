@@ -29,7 +29,7 @@ export class WishlistComponent implements OnInit {
       objectId: item.objectId,
       title: item.title,
       price: item.price,
-      merchantId: item.merchantId,
+      storeId: '',
       currency: item.currency,
       thumbnailUrl: item.images ? item.images[0] : null,
       quantity: 1

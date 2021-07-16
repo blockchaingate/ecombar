@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../shared/services/product.service';
 import { MainLayoutService } from '../../shared/services/mainlayout.service';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-index',
@@ -12,13 +13,29 @@ export class IndexComponent implements OnInit{
   categories: any;
   mainLayouts: any;
   constructor(
+    private dataServ: DataService,
     private route: ActivatedRoute,
     private mainLayoutServ: MainLayoutService,
     private productServ: ProductService) {
 
   }
   ngOnInit() {
-    
+    this.dataServ.currentStoreOwner.subscribe(
+      (storeOwner: string) => {
+        if(storeOwner) {
+          this.mainLayoutServ.getMerchantMainLayouts(storeOwner).subscribe(
+            (ret: any) => {
+              console.log('ret444445555=', ret);
+              if(ret && ret.ok) {
+                this.mainLayouts = ret._body;
+              }
+            }
+          );
+        }
+
+      }
+    );
+
     /*
     this.productServ.getAdminHotCategories().subscribe(
       (res: any) => {

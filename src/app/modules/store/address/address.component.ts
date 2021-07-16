@@ -26,6 +26,7 @@ export class AddressComponent implements OnInit {
   country: string;
   order: any;
   id: string;
+  storeId: string;
   orderID: string;
   noWallet: boolean;
   password: string;
@@ -53,7 +54,12 @@ export class AddressComponent implements OnInit {
         if(wallet) {
           this.wallet = wallet;
         }
-        
+      }
+    );
+
+    this.dataServ.currentStoreId.subscribe(
+      (storeId: string) => {
+        this.storeId = storeId;
       }
     );
     /*
@@ -152,7 +158,7 @@ export class AddressComponent implements OnInit {
               if (res && res.ok) {
                 //this.addAddress();
                 this.spinner.hide();
-                this.router.navigate(['/payment/' + this.orderID]);
+                this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
               }
             }
           );

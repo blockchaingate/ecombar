@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from '../../shared/services/web3.service';
 import { UtilService } from '../../shared/services/util.service';
 import { KanbanService } from '../../shared/services/kanban.service';
+import { DataService } from '../../shared/services/data.service';
 
 @Component({
   selector: 'app-product',
@@ -29,6 +30,7 @@ export class ProductComponent implements OnInit {
   relatedProducts: any;
   favorite: any;
   token: any;
+  storeId: string;
   overall: number;
   rating5: number;
   rating4: number;
@@ -38,6 +40,7 @@ export class ProductComponent implements OnInit {
 
   selectedImage: string;
   constructor(
+    private dataServ: DataService,
     private cartStoreServ: CartStoreService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -57,6 +60,11 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataServ.currentStoreId.subscribe(
+      (storeId: string) => {
+        this.storeId = storeId;
+      }
+    );
 
     this.id = this.route.snapshot.paramMap.get('id');
 
@@ -295,7 +303,7 @@ export class ProductComponent implements OnInit {
         objectId: product.objectId,
         title: this.translateServ.transField(product.title),
         price: product.price,
-        merchantId: product.merchantId,
+        storeId: this.storeId,
         currency: product.currency,
         thumbnailUrl: product.images ? product.images[0] : null,
         quantity: Number(quantity)
@@ -309,7 +317,7 @@ export class ProductComponent implements OnInit {
     const item = {
       productId: this.product._id,
       objectId: this.product.objectId,
-      merchantId: this.product.merchantId,
+      storeId: this.storeId,
       currency: this.product.currency,
       quantity: Number(this.quantity),
       price: this.product.price,
