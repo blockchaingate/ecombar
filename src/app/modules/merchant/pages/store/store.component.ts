@@ -107,7 +107,7 @@ export class StoreComponent implements OnInit {
         this.walletAddress = walletAddress;
       }
     );
-    this.dataServ.currentStore.subscribe(
+    this.dataServ.currentMyStore.subscribe(
       (store: any) => {
         console.log('store for subscribe=', store);
         if(store) {

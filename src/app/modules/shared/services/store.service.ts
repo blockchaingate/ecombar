@@ -22,7 +22,9 @@ export class StoreService {
   }
 
   getStore(id: string) {
-    return this.http.get('stores/' + id);
+    const url = 'stores/' + id;
+    console.log('urllll=', url);
+    return this.http.get(url);
   }
 
   create(data:any) {

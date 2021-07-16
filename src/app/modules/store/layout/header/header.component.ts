@@ -1,12 +1,9 @@
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../../../shared/services/category.service';
-import { CartStoreService } from '../../../shared/services/cart.store.service';
 import { StorageService } from '../../../shared/services/storage.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
-import { selectMerchantId } from 'src/app/store/selectors/user.selector';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 declare var $: any;
 
@@ -21,109 +18,45 @@ export class HeaderComponent implements OnInit {
   user: any;
   merchantId: string;
   categoryId: string;
+  storeId: string;
   searchText: string;
   menu = false;
   _lang: string;
 
   constructor(
-    private store: Store<{ user: UserState }>,
-    private route: ActivatedRoute,
+    private dataServ: DataService,
     private router: Router,
-    private cd: ChangeDetectorRef,
     private translate: TranslateService, 
     private categoryServ: CategoryService, 
-    private storageServ: StorageService, 
-    private cartStoreServ: CartStoreService) {
+    private storageServ: StorageService) {
     this.setLan();
   }
 
   ngOnInit(): void {
-    this.categoryId = '';
-    this.store.select('user').subscribe(
-      (userState: UserState) => {
-        const role = userState.role;
-        if(role) {
-          this.user = true;
+    this.dataServ.currentStoreId.subscribe(
+      (storeId: string) => {
+        this.storeId = storeId;
+      }
+    );
+    this.dataServ.currentStoreOwner.subscribe(
+      (storeOwner: string) => {
+        console.log('storeOwner in here =', storeOwner);
+        if(storeOwner) {
+          this.categoryServ.getMerchantCategories(storeOwner).subscribe(
+            (ret: any) => {
+              console.log('ret for caaat=', ret);
+              if(ret && ret.ok) {
+                const allCategories = ret._body;
+                this.buildCategoryTree(allCategories);
+              }
+            }
+          );
         }
-        
-        this.initMenu();
-
-
-    
       }
     );
-
-    /*
-    this.storageServ.getUser().subscribe(
-      (user: any) => {
-        console.log('user=', user);
-        this.user = user;
-      }
-    );
-    */
-
-
-
-
-
-
-
-    console.log('this.cartStoreServ.items===', this.cartStoreServ.items);
-
-    this.cartStoreServ.items$.subscribe((res) => {
-      this.cartCount = 0;
-      console.log('this.images4');
-      if (!res || (res.length === 0)) {
-        console.log('yes');
-        res = this.cartStoreServ.items;
-      }
-
-      if (res) {
-        res.forEach(element => {
-          this.cartCount += element.quantity;
-        });
-      }
-
-    });
-
   }
 
 
-  initMenu() {
-    this.merchantId = '';
-    if(!this.merchantId) {
-      const currentURL= window.location.href; 
-      const storeIndex = currentURL.indexOf('store/');
-      if(storeIndex > 0) {
-        this.merchantId = currentURL.substring(storeIndex + 6);
-      }
-    }
-
-    
-    console.log();
-    if(!this.merchantId) {
-      this.categoryServ.getAdminCategories().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            const allCategories = res._body;
-            this.buildCategoryTree(allCategories);
-            this.cd.detectChanges();
-            $('.selectpicker').selectpicker('refresh');
-          }
-        }
-      );
-    } else {
-      this.categoryServ.getMerchantCategories(this.merchantId).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            const allCategories = res._body;
-            this.buildCategoryTree(allCategories);
-            this.cd.detectChanges();
-          }
-        }
-      );     
-    }
-  }
 
   arrayToTree(items) {
  

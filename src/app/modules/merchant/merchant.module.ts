@@ -25,7 +25,6 @@ import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
-import { CartComponent } from './pages/cart/cart.component';
 
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { CommentComponent } from './pages/comment/comment.component';
@@ -38,7 +37,6 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
-import { CartModule } from '../home/cart/cart.module';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
@@ -56,7 +54,6 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     ShipsComponent,
     StoreComponent,
     CommentComponent,
-    CartComponent,
     MainLayoutAddComponent,
     MainLayoutComponent,
     MerchantApplicationsComponent,
@@ -87,7 +84,6 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     CommonModule,
     SharedModule,
     FormsModule,
-    CartModule,
     QRCodeModule,
     ModalModule.forRoot(),
     NgxSmartModalModule.forRoot(),

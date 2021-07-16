@@ -25,7 +25,6 @@ import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.compo
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { CommentComponent } from './pages/comment/comment.component';
-import { CartComponent } from './pages/cart/cart.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
@@ -99,10 +98,7 @@ const routes: Routes = [
       },
       {
         path: 'profile', component: ProfileComponent
-      },
-      {
-        path: 'cart', component: CartComponent
-      },      
+      },     
       {
         path: 'comment/:productId', component: CommentComponent
       },      

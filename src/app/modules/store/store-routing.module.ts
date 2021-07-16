@@ -16,7 +16,7 @@ const routes: Routes = [
     component: StoreComponent,
     children: [
       {
-        path: ':id',
+        path: '',
         loadChildren: () => import('./index/index.module').then(m => m.IndexModule)
       },
       {

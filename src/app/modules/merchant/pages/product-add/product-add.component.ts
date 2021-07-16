@@ -144,7 +144,7 @@ export class ProductAddComponent implements OnInit {
       }
     );  
     
-    this.dataServ.currentStore.subscribe(
+    this.dataServ.currentMyStore.subscribe(
       (store: any) => {
         if(store) {
           this.smartContractAddress = store.smartContractAddress;

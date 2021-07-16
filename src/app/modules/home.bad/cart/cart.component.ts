@@ -99,7 +99,7 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.dataServ.currentStore.subscribe(
+    this.dataServ.currentMyStore.subscribe(
       (store: any) => {
         this.smartContractAddress = store.smartContractAddress;
       }

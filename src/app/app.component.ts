@@ -5,7 +5,7 @@ import { StorageService } from './modules/shared/services/storage.service';
 import { environment } from '../environments/environment';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { DataService } from './modules/shared/services/data.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 import { StoreService } from './modules/shared/services/store.service';
 
 @Component({
@@ -23,12 +23,14 @@ export class AppComponent implements OnInit {
     private storageServ: StorageService, 
     private dataServ: DataService,
     private storeServ: StoreService,
+    private route: ActivatedRoute,
     private translate: TranslateService) {
     appServ.id = environment.appid;
     // this.setLan();
   }
 
   ngOnInit() {
+
     this.localSt.getItem('ecomwallets').subscribe(
       (wallets: any) => {
         console.log('wallets===', wallets);
@@ -51,7 +53,7 @@ export class AppComponent implements OnInit {
               if(ret && ret.ok && ret._body && ret._body.length > 0) {
                 const store = ret._body[ret._body.length - 1];
                 console.log('store in here==', store);
-                this.dataServ.changeStore(store);
+                this.dataServ.changeMyStore(store);
               }
             });
 

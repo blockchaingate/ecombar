@@ -25,6 +25,7 @@ export class HttpService {
 
     get(path: string, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
+        console.log('url ==', url);
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
