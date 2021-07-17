@@ -34,6 +34,7 @@ import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -90,6 +91,7 @@ import { StoreApproveComponent } from './pages/store-approve/store-approve.compo
     ModalModule.forRoot(),
     NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
+    NgxSpinnerModule,
     RichTextEditorModule
   ],
   providers: []

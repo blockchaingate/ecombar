@@ -27,8 +27,8 @@ export class OrderService {
     return this.http.post(url, paymentData);  
   }
 
-  getMyOrders() {
-    return this.http.get('orders', false);
+  getMyOrders(address: string) {
+    return this.http.get('orders/ownedBy/' + address, false);
   }
 
   getMyProducts() {

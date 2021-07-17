@@ -39,7 +39,7 @@ export class StoreComponent implements OnInit {
   address: string;
   objectId: string;
 
-  coins = ['DUSD', 'USDT'];
+  coins = ['DUSD', 'USDT', 'FAB'];
 
   constructor(
     private coinServ: CoinService,
@@ -187,10 +187,11 @@ export class StoreComponent implements OnInit {
       const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
       let args2 = [
         coinpoolAddress,
-        environment.addresses.exchangilyRecipient,
+        environment.addresses.smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
+        this.utilServ.fabToExgAddress(this.refAddress),
         70,
-        '0x33'
+        '0x1'
       ];
   
       const resp2 = await this.kanbanSmartContract.deploySmartContract(seed, feeChargerABI, feeChargerBytecode, args2);

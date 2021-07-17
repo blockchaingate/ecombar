@@ -74,9 +74,9 @@ export class AccountComponent implements OnInit {
       {
         title: 'Dashboard',
         link: 'dashboard',
-        icon: 'dashboard',
-        roles: ['Admin', 'Seller', 'Customer']
+        icon: 'dashboard'
       },
+      /*
       {
         title: 'Banners',
         link: 'banners',
@@ -124,18 +124,17 @@ export class AccountComponent implements OnInit {
         link: 'products',
         icon: 'order',
         roles: ['Seller']
-      },           
+      },   
+      */        
       {
         title: 'Orders',
         link: 'orders',
-        icon: 'order',
-        roles: ['Admin', 'Seller', 'Customer']
+        icon: 'order'
       },
       {
         title: 'Ships',
         link: 'ships',
-        icon: 'order',
-        roles: ['Admin', 'Seller', 'Delivery', 'Customer']
+        icon: 'order'
       },      
       {
         title: 'Merchant information',

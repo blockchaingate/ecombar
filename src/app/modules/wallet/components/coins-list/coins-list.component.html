@@ -3,6 +3,7 @@
         <div class="col col-2">{{'Coin' | translate}}</div>
         <div class="col col-3">{{'Balance' | translate}}</div>
         <div class="col col-3">{{'Locked' | translate}}</div>
+        <div class="col col-3">{{'Rewards' | translate}}</div>
         <div class="col col-2">{{'Value(USD)' | translate}}</div>
         <div class="col col-2"></div>
     </li>
@@ -18,6 +19,12 @@
         <div class="col col-3" data-label="{{'Locked' | translate}}">
             <div class="text-black" *ngIf="coin.lockBalance && (coin.lockBalance > 0)">
                 {{coin.lockBalance}}
+            </div>
+        </div>
+
+        <div class="col col-3" data-label="{{'Rewards' | translate}}">
+            <div class="text-black" *ngIf="coin.rewards && (coin.rewards > 0)">
+                {{coin.rewards}}
             </div>
         </div>
 

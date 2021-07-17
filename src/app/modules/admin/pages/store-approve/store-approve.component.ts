@@ -10,6 +10,7 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-store-approve',
@@ -164,16 +165,43 @@ async approveDo(seed: Buffer) {
     console.log('ret2=', ret2);    
     this.spinner.hide();
     if(ret2 && ret2.ok && ret2._body && ret2._body.status == '0x1') {
-      this.storeServ.update(this.store._id, {status: 1}).subscribe(
-        (ret: any) => {
-          if(ret && ret.ok) {
-            this.toastr.success('the store was approved.');
+
+
+      const argsRegisterFeeCharger = [this.store.feeChargerSmartContractAddress];
+      const abiRegisterFeeCharger = {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_contractAddr",
+            "type": "address"
           }
-        }
-      );
+        ],
+        "name": "registerFeeCharger",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      };
+
+      const ret3 = await this.kanbanSmartContractServ.execSmartContract(seed, environment.addresses.smartContract.feeDistribution, abiRegisterFeeCharger, argsRegisterFeeCharger);
+
+      if(ret3 && ret3.ok && ret3._body && ret3._body.status == '0x1') {
+        this.storeServ.update(this.store._id, {status: 1}).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.toastr.success('the store was approved.');
+            }
+          }
+        );
+      } else {
+        this.toastr.error('Failed to registerFeeCharger.');
+        this.spinner.hide();
+      }
+
+
       
     } else {
-      this.toastr.success('Failed to approve the store.');
+      this.toastr.error('Failed to approve the store.');
     }
   } catch(e) {
     this.spinner.hide();

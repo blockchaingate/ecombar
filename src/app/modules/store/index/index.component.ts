@@ -3,6 +3,7 @@ import { ProductService } from '../../shared/services/product.service';
 import { MainLayoutService } from '../../shared/services/mainlayout.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
+import { Product } from '../../shared/models/product';
 
 @Component({
   selector: 'app-index',
@@ -12,6 +13,7 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 export class IndexComponent implements OnInit{
   categories: any;
   mainLayouts: any;
+  latestProducts: any;
   constructor(
     private dataServ: DataService,
     private route: ActivatedRoute,
@@ -30,6 +32,13 @@ export class IndexComponent implements OnInit{
                 this.mainLayouts = ret._body;
               }
             }
+          );
+
+          this.productServ.getProductsOwnedBy(storeOwner).subscribe(
+            (ret: any) => {
+              console.log('ret for latestProduct=', ret);
+              this.latestProducts = ret;
+            }            
           );
         }
 

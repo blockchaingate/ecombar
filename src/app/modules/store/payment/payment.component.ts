@@ -17,6 +17,7 @@ import { KanbanService } from '../../shared/services/kanban.service';
 import BigNumber from 'bignumber.js';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { ToastrService } from 'ngx-toastr';
+import { StarService } from '../../shared/services/star.service';
 
 @Component({
   selector: 'app-payment',
@@ -32,6 +33,7 @@ export class PaymentComponent implements OnInit{
     orderID: string;
     total: number;
     subtotal: number;
+    parents: string;
     selectedShippingService: string;
     walletAddress: string;
     selectedPayment: string;
@@ -52,6 +54,7 @@ export class PaymentComponent implements OnInit{
       private coinServ: CoinService,
       private kanbanSmartContractServ: KanbanSmartContractService,   
       private kanbanServ: KanbanService,
+      private starServ: StarService,
       private spinner: NgxSpinnerService,
       private modalService: BsModalService,
       private localSt: LocalStorage,      
@@ -115,6 +118,13 @@ export class PaymentComponent implements OnInit{
       this.dataServ.currentWalletAddress.subscribe(
         (walletAddress: string) => {
           this.walletAddress = walletAddress;
+          if(walletAddress) {
+            this.starServ.getParents(walletAddress).subscribe(
+              (parents: any) => {
+                this.parents = parents.map(item => this.utilServ.fabToExgAddress(item));
+              }
+            );
+          }
         }
       );
       this.discount = 0;
@@ -237,6 +247,11 @@ export class PaymentComponent implements OnInit{
             "internalType": "bytes32",
             "name": "s",
             "type": "bytes32"
+          },
+          {
+            "internalType": "address[]",
+            "name": "_rewardBeneficiary",
+            "type": "address[]"
           }
         ],
         "name": "payOrder",
@@ -259,7 +274,8 @@ export class PaymentComponent implements OnInit{
         this.utilServ.fabToExgAddress(this.walletAddress),
         signature.v,
         signature.r,
-        signature.s
+        signature.s,
+        this.parents
       ];
       console.log('args==', args);
       
@@ -321,7 +337,7 @@ export class PaymentComponent implements OnInit{
       console.log('this.feeChargerSmartContractAddress==', this.feeChargerSmartContractAddress);
       this.kanbanServ.kanbanCall(this.feeChargerSmartContractAddress, abi2).subscribe(
         (ret: any) => {
-          console.log('rettttfor fee =', ret);
+          console.log('rettttfor validateSignature =', ret);
         }
       );
 
@@ -484,13 +500,12 @@ export class PaymentComponent implements OnInit{
 
 
 
-
       
       const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
       console.log('ret from payment=', ret);    
 
       if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-        item.paymentStatus = 3;
+        item.paymentStatus = 2;
         const body = ret._body;
         console.log('body==', body);
         item.charge_id = body.transactionHash;    

@@ -20,41 +20,6 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
 
 
-    this.store.select('user').subscribe(
-      (userState: UserState) => {
-        const role = userState.role;
-        const merchantId = userState.merchantId;
-        if(role == 'Admin') {
-          this.orderServ.getAllOrders().subscribe(
-            (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
-            }
-          );
-        } else
-        if((role == 'Seller') && merchantId) {
-          this.orderServ.gerMerchantOrders().subscribe(
-            (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
-            }
-          );
-        } else
-        if(role == 'Customer') {
-          this.customerFlag = true;
-          this.orderServ.getMyOrders().subscribe(
-            (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
-            }
-          );          
-        }
-      }
-    );
-
 
 
   }

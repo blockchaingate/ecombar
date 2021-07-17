@@ -719,6 +719,16 @@ export class WalletDashboardComponent implements OnInit{
       this.router.navigate(['/wallet/import-wallet']);
     }
     
+    async getRewards(address: string) {
+      const abi = {};
+      const args = [address];
+      const abiData = this.web3Serv.getGeneralFunctionABI(
+        abi, args
+      );
+      const lockers = this.kanbanServ.kanbanCall(environment.addresses.smartContract.locker,abiData).toPromise();
+      
+    }
+
     loadWallet() {
       const addresses = this.wallet.addresses;
       this.addresses = addresses;
@@ -728,10 +738,10 @@ export class WalletDashboardComponent implements OnInit{
       this.refreshGas();
       this.refreshAssets();
       this.kanbanServ.getWalletBalances(addresses).subscribe(
-        (res: any) => {
-          console.log('res for getWalletBalances=', res);
+        async (res: any) => {
           if(res && res.success) {
             this.coins = res.data.filter(item => ((item.coin != 'CAD') && (item.coin != 'RMB')));
+            const rewards = await this.getRewards(this.kanbanAddress);
             console.log('this.coins=', this.coins);
             const exgCoin = this.coins.filter(item => item.coin == 'EXG')[0];
             const fabCoin = this.coins.filter(item => item.coin == 'FAB')[0];

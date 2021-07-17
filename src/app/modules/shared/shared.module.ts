@@ -18,6 +18,7 @@ import { CoinService } from './services/coin.service';
 import { AirdropService } from './services/airdrop.service';
 import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
+import { StarService } from './services/star.service';
 import { MainLayoutService } from './services/mainlayout.service';
 import { WalletGuardService } from './services/wallet-guard.service';
 import { KanbanService } from './services/kanban.service';
@@ -100,6 +101,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UtilService,
     IddockService,
     TextLanService,
+    StarService,
     StoreService,
     MainLayoutService,
     KanbanSmartContractService
@@ -124,6 +126,7 @@ export class SharedModule {
         IddockService,
         ShipService,
         TimerService,
+        StarService,
         WalletGuardService,
         UtilService,    
         TextLanService,

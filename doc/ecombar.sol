@@ -26,9 +26,17 @@ interface FeeChargerInterface {
         uint256 _totalAmount,
         uint8 v,
         bytes32 r,
-        bytes32 s)
+        bytes32 s,
+        address[] memory _rewardBeneficiary)
         external 
-        returns (bool);             
+        returns (bool); 
+
+    function requestRefundWithSig(bytes32 _orderID, address _user, uint8 v, bytes32 r, bytes32 s) 
+    external returns (bool);
+    function cancelRefundRequest(bytes32 _orderID, address _user, uint8 v, bytes32 r, bytes32 s) 
+    external returns (bool);
+    function refund(bytes32 _orderID, uint8 v, bytes32 r, bytes32 s) 
+    external returns (bool);
 }
 
 contract Ecombar is Ownable {
@@ -49,7 +57,7 @@ contract Ecombar is Ownable {
     struct Order {
         bytes30 id;
         bytes30[] productObjectIds;
-        uint8[] memory quantities;
+        uint8[] quantities;
         uint256 total;
     }
 
@@ -111,7 +119,8 @@ contract Ecombar is Ownable {
         address _user,
         uint8 v,
         bytes32 r,
-        bytes32 s) public {
+        bytes32 s,
+        address[] memory _rewardBeneficiary) public {
         Order memory order = orderById[objectId];
         uint256 total = order.total.add(fullfilmentFee);
         feeChargerInstance.chargeFundsWithFeeWithSig(
@@ -121,7 +130,23 @@ contract Ecombar is Ownable {
         total,
         v,
         r,
-        s);
+        s,
+        _rewardBeneficiary);
+    }
+
+    function requestRefundWithSig(bytes30 objectId, address _user, uint8 v, bytes32 r, bytes32 s) 
+    public returns (bool) {
+        return feeChargerInstance.requestRefundWithSig(bytes32(objectId), _user, v, r, s);
+    }
+
+    function cancelRefundRequest(bytes32 objectId, address _user, uint8 v, bytes32 r, bytes32 s) 
+    public returns (bool) {
+        return feeChargerInstance.cancelRefundRequest(bytes32(objectId), _user, v, r, s);
+    }
+
+    function refund(bytes32 objectId, uint8 v, bytes32 r, bytes32 s) 
+    public onlyOwner returns (bool) {
+        return feeChargerInstance.refund(bytes32(objectId), v, r, s);
     }
 
     function getChargePayOrderParams(bytes30 objectId, 

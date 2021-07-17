@@ -14,7 +14,7 @@ import { UtilService } from '../../../shared/services/util.service';
 export class ProductsComponent implements OnInit {
   products: any;
   walletAddress: string;
-
+  storeId: string;
   walletExgAddress: string;
   constructor(
     private router: Router,
@@ -25,6 +25,11 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataServ.currentMyStore.subscribe(
+      (store: any) => {
+        this.storeId = store._id;
+      }
+    )
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
