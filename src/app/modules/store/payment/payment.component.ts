@@ -260,13 +260,13 @@ export class PaymentComponent implements OnInit{
         "type": "function"
       };
       const msg = '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId) + '0000';
-      console.log('msg==', msg);
       const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey; 
+      const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);  
       const fulfillmentFee = '0x' + (new BigNumber(this.shippingFee).multipliedBy(new BigNumber(1e18)).toString(16));
       console.log('fulfillmentFee=', fulfillmentFee);
-      const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);  
+      
       console.log('this.shippingfee=', this.shippingFee);  
       const args = [
         '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),

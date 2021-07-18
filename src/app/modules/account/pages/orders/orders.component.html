@@ -24,12 +24,15 @@
             {{getStatus(order) | translate}}
           </div>
           <div *ngIf="order.paymentStatus == 2" >
-            <a (click)="requestReturn(order)">
-              Request for return
+            <a (click)="requestRefund(order)">
+              Request refund
             </a>
-            
           </div>
-
+          <div *ngIf="order.paymentStatus == 5" >
+            <a (click)="cancelRequestRefund(order)">
+              Cancel request refund
+            </a>
+          </div>
         </div>
         <div class="col col-2 text-right" data-label="Operations">
   

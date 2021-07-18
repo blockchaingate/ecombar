@@ -19,26 +19,22 @@
         <div class="col col-2" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
         <div class="col col-2" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
         <div class="col col-2" data-label="{{'Payment Method' | translate}}">{{order.paymentMethod}}</div>
-        <div class="col col-2" data-label="{{'Status' | translate}}">{{getStatus(order) | translate}}</div>
-        <div class="col col-2 text-right" data-label="Operations">
-  
-          <div class="d-inline-block px-2" *ngIf="customerFlag && (order.paymentStatus == 0)">
-            <a href="/merchant/payment/{{order._id}}">
-              <img src="/assets/svg/pay.svg">
-            </a>
+        <div class="col col-2" data-label="{{'Status' | translate}}">
+          <div>
+            {{getStatus(order) | translate}}
           </div>
+          <div *ngIf="order.paymentStatus == 5">
+            <a (click)="refund(order)"></a>
+          </div>
+        </div>
+        <div class="col col-2 text-right" data-label="Operations">
 
-          <div class="d-inline-block px-2" *ngIf="!customerFlag && (order.paymentStatus == 2)">
+          <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">
             <a href="/merchant/shipping/{{order._id}}">
               <img src="/assets/svg/shipping.svg">
             </a>
           </div>
 
-          <div class="d-inline-block px-2" *ngIf="customerFlag && (!order.paymentStatus || order.paymentStatus == 0)">
-            <a (click)="deleteOrder(order)">
-              <img src="/assets/svg/delete.svg">
-            </a>
-          </div>  
           
           
         </div>

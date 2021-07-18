@@ -4,6 +4,10 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -16,9 +20,14 @@ export class OrdersComponent implements OnInit {
   order: any;
   customerFlag: boolean;
   modalRef: BsModalRef;
+  walletAddress: string;
   wallet: any;
   constructor(
     public kanbanServ: KanbanService,
+    private utilServ: UtilService,
+    private web3Serv: Web3Service,
+    private coinServ: CoinService,
+    private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private dataServ: DataService,
     private orderServ: OrderService) {
@@ -33,6 +42,7 @@ export class OrdersComponent implements OnInit {
 
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
+        this.walletAddress = walletAddress;
         this.orderServ.getMyOrders(walletAddress).subscribe(
           (res: any) => {
               if(res && res.ok) {
@@ -77,6 +87,12 @@ export class OrdersComponent implements OnInit {
     } else 
     if(paymentStatus == 4) {
       status = 'payment frozened';
+    } else 
+    if(paymentStatus == 5) {
+      status = 'request refund';
+    } else 
+    if(paymentStatus == 6) {
+      status = 'refunded';
     }
     return status;
   }
@@ -89,8 +105,9 @@ export class OrdersComponent implements OnInit {
     );
   }
 
-  requestReturn(order) {
+  requestRefund(order: any) {
     this.order = order;
+
     const initialState = {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
@@ -99,12 +116,164 @@ export class OrdersComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-      this.requestReturnDo(seed);
+      this.requestRefundDo(seed);
     });
   }
   
-  requestReturnDo(seed: Buffer) {
-
+  async requestRefundDo(seed: Buffer) {
+    console.log('this.order=', this.order);
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "bytes30",
+          "name": "objectId",
+          "type": "bytes30"
+        },
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint8",
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "requestRefundWithSig",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    const msg = '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId) + '0000';
+    const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey; 
+    const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey); 
+    const args = [
+      '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
+      this.utilServ.fabToExgAddress(this.walletAddress),
+      signature.v,
+      signature.r,
+      signature.s
+    ];
+    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
+    if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      const data = {
+        paymentStatus: 5
+      };
+      this.orderServ.update(this.order._id, data).subscribe(
+        (ret: any) => {
+          console.log('ret for update payment=', ret);
+          if(ret && ret.ok) {
+            this.order.paymentStatus = 5;
+          }
+        }
+      );
+    }
   }
+
+
+  cancelRequestRefund(order: any) {
+    this.order = order;
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.cancelRequestRefundDo(seed);
+    });
+  }
+  
+  async cancelRequestRefundDo(seed: Buffer) {
+    console.log('this.order=', this.order);
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "objectId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint8",
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "cancelRefundRequest",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    const msg = '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId) + '0000';
+    const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey; 
+    const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey); 
+    const args = [
+      '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
+      this.utilServ.fabToExgAddress(this.walletAddress),
+      signature.v,
+      signature.r,
+      signature.s
+    ];
+    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
+    if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      const data = {
+        paymentStatus: 2
+      };
+      this.orderServ.update(this.order._id, data).subscribe(
+        (ret: any) => {
+          console.log('ret for update payment=', ret);
+          if(ret && ret.ok) {
+            this.order.paymentStatus = 2;
+          }
+        }
+      );
+    }
+  }
+
+
 
 }
