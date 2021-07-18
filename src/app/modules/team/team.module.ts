@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { WalletModule } from '../wallet/wallet.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -16,6 +17,7 @@ import { TeamIndexComponent } from './components/index/index.component';
     SharedModule,
     RouterModule,
     FormsModule, 
+    WalletModule,
     ReactiveFormsModule,
     ModalModule.forRoot()
   ]

@@ -17,6 +17,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 export class TeamIndexComponent implements OnInit {
   stores: any;
   wallet: any;
+  rewards: any;
   walletAddress: string;
   parentId: string;
   downlines: any;
@@ -70,6 +71,15 @@ export class TeamIndexComponent implements OnInit {
           this.starServ.isValidMember(walletAddress).subscribe(
             (ret: any) => {
               this.isValidMember = ret.isValid;
+            }
+          );
+
+          this.starServ.getLockers(walletAddress).subscribe(
+            (resp) => {
+              //console.log('resp for rewards=', resp);
+              if(resp && resp.ok) {
+                this.rewards = resp._body;
+              }
             }
           );
         }

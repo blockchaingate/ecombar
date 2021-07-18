@@ -22,7 +22,7 @@
                 {{getRefLink()}}
             </a>
         </div>
-        <div>My Team members</div>
+        <div class="pt-3">My Team members</div>
         <div class="d-flex">
             <div *ngFor="let address of downlines">
                 <a (click)="getDownlines(address)">
@@ -31,6 +31,8 @@
                 
             </div>
         </div>
+        <div class="pt-3">My Rewards</div>
+        <app-wallet-star-rewards [rewards]="rewards"></app-wallet-star-rewards>
     </div>
 
 

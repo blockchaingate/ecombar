@@ -71,7 +71,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         NgxBootstrapSwitchModule.forRoot()
     ],
     exports: [
-        NoWalletComponent
+        NoWalletComponent,
+        StarRewardsComponent,
     ]
 })
 export class WalletModule { }
