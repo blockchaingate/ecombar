@@ -42,6 +42,12 @@ export class StarService {
       return this.http.get(url, false);
    }
 
+   getLockers(fabAddress: string) {
+      const url = '7star-locker/ownedBy/' + fabAddress;
+      
+      return this.http.get(url, false);      
+   }
+
    createRef(data: any) {
       const url = '7star-ref/create';
       return this.http.post(url,data, false);

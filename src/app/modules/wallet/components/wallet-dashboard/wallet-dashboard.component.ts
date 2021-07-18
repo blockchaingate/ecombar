@@ -28,6 +28,7 @@ import { WalletService } from 'src/app/modules/shared/services/wallet.service';
 import { LoginSettingModal } from '../../modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phrase.modal';
 import { GetFreeGasComponent } from '../../modals/get-free-gas/get-free-gas.component';
+import { StarService } from 'src/app/modules/shared/services/star.service';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -41,6 +42,7 @@ export class WalletDashboardComponent implements OnInit{
   wallet: any;
   subtab: string;
   addresses: any;
+  rewards: any;
   withdrawAmount: number;
   currentCoinId: number;
   gasAmount: number;
@@ -82,6 +84,7 @@ export class WalletDashboardComponent implements OnInit{
       private walletServ: WalletService,
       private storageServ: StorageService,
       private coinServ: CoinService,
+      private starServ: StarService,
       public ngxSmartModalService: NgxSmartModalService,
       private kanbanServ: KanbanService,
       private route: ActivatedRoute,
@@ -333,7 +336,7 @@ export class WalletDashboardComponent implements OnInit{
 
 
 
-    withdraw(coinId) {
+    withdrawCoin(coinId) {
       this.currentCoinId = coinId;
       this.currentCoin = this.utilServ.getCoinNameByTypeId(this.currentCoinId);
       this.modalRef = this.modalServ.show(WithdrawComponent);
@@ -720,13 +723,14 @@ export class WalletDashboardComponent implements OnInit{
     }
     
     async getRewards(address: string) {
+      /*
       const abi = {};
       const args = [address];
       const abiData = this.web3Serv.getGeneralFunctionABI(
         abi, args
       );
       const lockers = this.kanbanServ.kanbanCall(environment.addresses.smartContract.locker,abiData).toPromise();
-      
+      */
     }
 
     loadWallet() {
@@ -737,6 +741,7 @@ export class WalletDashboardComponent implements OnInit{
       this.kanbanAddress = this.utilServ.fabToExgAddress(this.walletAddress);
       this.refreshGas();
       this.refreshAssets();
+      this.refreshRewards();
       this.kanbanServ.getWalletBalances(addresses).subscribe(
         async (res: any) => {
           if(res && res.success) {
@@ -849,6 +854,17 @@ export class WalletDashboardComponent implements OnInit{
             // console.log('errorrrr=', error);
         }
     );
+    }
+
+    refreshRewards() {
+      this.starServ.getLockers(this.utilServ.exgToFabAddress(this.kanbanAddress)).subscribe(
+        (resp) => {
+          console.log('resp for rewards=', resp);
+          if(resp && resp.ok) {
+            this.rewards = resp._body;
+          }
+        }
+      );
     }
 
     refreshGas() {
