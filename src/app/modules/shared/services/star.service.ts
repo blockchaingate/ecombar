@@ -42,6 +42,11 @@ export class StarService {
       return this.http.get(url, false);
    }
 
+   getRefCustomers(address) {
+      const url = '7star-ref/children/' + address;
+      return this.http.get(url, false);      
+   }
+
    getLockers(fabAddress: string) {
       const url = '7star-locker/ownedBy/' + fabAddress;
       

@@ -6,40 +6,67 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 
 @Component({
-  selector: 'app-stores-index',
+  selector: 'app-team-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css']
 })
-export class StoresIndexComponent implements OnInit {
+export class TeamIndexComponent implements OnInit {
   stores: any;
   wallet: any;
+  walletAddress: string;
   parentId: string;
+  downlines: any;
   modalRef: BsModalRef;
   isValidMember: boolean;
+  currentUrl: string;
 
   constructor(
     private dataServ: DataService,
     private starServ: StarService,
-    private storeageServ: StorageService,
     private toastr: ToastrService,
+    private storeageServ: StorageService,
+    private route: ActivatedRoute,
     public kanbanServ: KanbanService,
     private modalService: BsModalService,
     private storeServ: StoreService) { }
 
+  getDownlines(address: string) {
+    this.starServ.getRefCustomers(address).subscribe(
+      (ret: any) => {
+        console.log('ret for getRefCustomers=', ret);
+        this.downlines = ret.map(item => item.id);
+      }
+    );
+  }
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe(
+      (map: any) => {
+        if(map && map.params && map.params.ref) {
+          const refAddress = map.params.ref;
+          console.log('refAddress===', refAddress);
+          this.storeageServ.storeRef(refAddress);
+          
+        }
+        
+      }
+    );
+
     this.storeageServ.getStoreRef().subscribe(
       (refAddress: string) => {
         this.parentId = refAddress;
       }
     );
-
+    this.currentUrl = window.location.href;
     this.isValidMember = true;
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         if(walletAddress) {
+          this.walletAddress = walletAddress;
+          this.getDownlines(walletAddress);
           this.starServ.isValidMember(walletAddress).subscribe(
             (ret: any) => {
               this.isValidMember = ret.isValid;
@@ -85,6 +112,11 @@ export class StoresIndexComponent implements OnInit {
     );
 
    
+  }
+
+  getRefLink() {
+    let link = this.currentUrl + '?ref=' + this.walletAddress;
+    return link;
   }
 
   joinAsMemberDo(privateKey: any) {

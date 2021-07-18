@@ -6,7 +6,6 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { WalletService } from '../../services/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
 
 @Component({
     providers: [],
@@ -28,7 +27,6 @@ import { Router } from '@angular/router';
       private modalServ: BsModalService,
       private walletServ: WalletService,
       private toastr: ToastrService,
-      private router: Router,
       private translateServ: TranslateService) {}
 
     ngOnInit() {
