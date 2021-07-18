@@ -1,6 +1,12 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { environment } from 'src/environments/environment';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { ToastrService } from 'ngx-toastr';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-wallet-star-rewards',
@@ -10,10 +16,23 @@ import { environment } from 'src/environments/environment';
 })
 export class StarRewardsComponent implements OnInit{
     @Input() rewards: any;
+    wallet: any;
+    reward: any;
+    modalRef: BsModalRef;
 
-    constructor(private utilServ: UtilService) {}
+    constructor(
+      public kanbanServ: KanbanService,
+      private dataServ: DataService,
+      private kanbanSmartContractServ: KanbanSmartContractService,
+      private modalService: BsModalService,   
+      private toastr: ToastrService,   
+      private utilServ: UtilService) {}
     ngOnInit() {
-
+      this.dataServ.currentWallet.subscribe(
+        (wallet: string) => {
+          this.wallet = wallet;
+        }
+      ); 
     }
 
     showId(id: string) {
@@ -50,6 +69,8 @@ export class StarRewardsComponent implements OnInit{
       }
     }
     
+
+
     showDetail(reward: any) {
       this
       let detail ='';
@@ -64,5 +85,61 @@ export class StarRewardsComponent implements OnInit{
         }
       }
       return detail;
+    }
+
+    redeemable(reward) {
+      const timestamp = Math.floor(Date.now() / 1000);
+      //console.log();
+      if(reward.status == 1 && reward.releaseTime < timestamp) {
+        return true;
+      }
+      return false;
+    }
+
+    redeem(reward) {
+      this.reward = reward;
+      const initialState = {
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
+      
+      this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+  
+      this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+        this.redeemDo(seed);
+      });      
+    }
+
+    async redeemDo(seed: Buffer) {
+      const address = this.reward.address;
+      const abi = {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_ID",
+            "type": "bytes32"
+          },
+          {
+            "name": "_user",
+            "type": "address"
+          }
+        ],
+        "name": "releaseLocker",
+        "outputs": [
+          
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      };
+      const args = [this.reward.id, this.utilServ.fabToExgAddress(this.reward.user)];
+
+      console.log('args=', args);
+      const ret = await this.kanbanSmartContractServ.execSmartContract(seed, address, abi, args);
+      if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+        this.toastr.success('The reward was redeemed.');
+      } else {
+        this.toastr.error('Failed to redeem');
+      }
     }
 }

@@ -28,7 +28,16 @@
                                 </div>
                             </div>      
                             <div class="col col-2" data-label="{{'Status' | translate}}">
-                                {{showStatus(reward.status)}}
+                                <div>
+                                    {{showStatus(reward.status)}}
+                                </div>
+                                <div *ngIf="redeemable(reward)">
+                                    <a (click)="redeem(reward)">
+                                        Redeem
+                                    </a>
+                                    
+                                </div>
+
                             </div>                  
                     </li>
               </ul>                
