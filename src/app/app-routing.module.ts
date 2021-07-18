@@ -39,7 +39,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/nft',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ];
