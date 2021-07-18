@@ -1,15 +1,16 @@
 <div class="nav-bar">
     <nav class="nav-bar-main">
         <div class="nav-bar-left">
-            <img src="/assets/images/logo/ecombar-logo.png">
+            <img src="/assets/images/logo/collection-gala-2.png">
             <span class="logo-text">
-                {{'ecombar' | translate}}
+                {{'Collection Gala' | translate}}
             </span>
         </div>
         <div class="search-container">
             <div class="search-input">
                 <i class="material-icons" value="search" size=24 (click)="onSearch()">search</i>
-                <input type="text" class="search-input--input" [(ngModel)]="searchText" (keydown.enter)="onKeyDownEvent($event)">
+                <input type="text" class="search-input--input" [(ngModel)]="searchText"
+                    (keydown.enter)="onKeyDownEvent($event)">
             </div>
         </div>
         <ul class="Navbar--items">
@@ -17,13 +18,13 @@
                 <a class="NavItem--main" routerLink="/">
                     {{'Home' | translate}}
                 </a>
-            </li>   
-        
+            </li>
+
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" routerLink="/wallet">
                     {{'Wallet' | translate}}
                 </a>
-            </li>            
+            </li>
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" routerLink="/nft/assets">
                     {{'Explore' | translate}}
@@ -34,7 +35,7 @@
                 <a class="NavItem--main" routerLink="/nft/activities">
                     {{'Events' | translate}}
                 </a>
-            </li>  
+            </li>
             <!--   
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" href="/">
@@ -46,60 +47,62 @@
                 <a class="NavItem--main" routerLink="/nft/admin/collections">
                     {{'Create' | translate}}
                 </a>
-            </li>  
+            </li>
 
             <li class="NavItem--isRoot">
                 <a class="NavItem--main">
                     {{'Language' | translate}}
                 </a>
                 <ul class="NavDropdown--items">
-                  
+
                     <li (click)="changeLanguage('en')">
                         English
                     </li>
 
                     <li (click)="changeLanguage('sc')">
                         中文
-                    </li>                    
+                    </li>
                 </ul>
-            </li>            
-            
+            </li>
+
             <li class="NavItem--isRoot" *ngIf="setting">
                 <a class="NavItem--main">
                     <div class="img-container" style="height: 32px; width: 32px;">
-                        <img class="Image--image" *ngIf="setting.logo" src="{{setting.logo}}" style="object-fit: cover;">
+                        <img class="Image--image" *ngIf="setting.logo" src="{{setting.logo}}"
+                            style="object-fit: cover;">
                     </div>
                 </a>
                 <ul class="NavDropdown--items">
-                  
+
                     <li routerLink="/nft/account">
-                            {{'My Profile' | translate}}
+                        {{'My Profile' | translate}}
                     </li>
 
                     <li>
                         <a routerLink="/nft/admin/collections">
                             {{'My Collections' | translate}}
                         </a>
-                    </li>  
+                    </li>
                     <li>
                         <a routerLink="/nft/admin/favorites">
                             {{'My Favorites' | translate}}
                         </a>
-                    </li>   
+                    </li>
                     <li>
                         <a routerLink="/nft/account/settings">
                             {{'Account Settings' | translate}}
                         </a>
-                    </li> 
+                    </li>
                     <li (click)="logout()">
                         {{'Logout' | translate}}
-                    </li>                                                                              
+                    </li>
                 </ul>
-            </li>  
-            
+            </li>
+
             <li class="NavItemreact__LiContainer-sc-1agh4ne-0 eUbTNn NavItem--isRoot" (click)="showAside = !showAside">
                 <div class="NavItem--main ">
-                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet"
+                        value="account_balance_wallet" size="24">
                         account_balance_wallet
                     </i>
                 </div>
@@ -109,7 +112,6 @@
     </nav>
 </div>
 
-    <aside *ngIf="showAside">
-        <app-wallet-aside></app-wallet-aside>
-    </aside>
-
+<aside *ngIf="showAside">
+    <app-wallet-aside></app-wallet-aside>
+</aside>

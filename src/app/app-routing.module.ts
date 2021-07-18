@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./modules/home/home.module').then(m => m.HomeModule)
+      import('./modules/nft/nft.module').then(m => m.NftModule)
   },
   {
     path: 'admin',

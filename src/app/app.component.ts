@@ -11,7 +11,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'ecombar';
+  title = 'Collection Gala';
 
   constructor(
     private appServ: AppService, 
