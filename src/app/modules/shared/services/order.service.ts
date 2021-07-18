@@ -39,8 +39,8 @@ export class OrderService {
     return this.http.get('orders/all', false);
   }
 
-  gerMerchantOrders() {
-    return this.http.get('orders/merchant-orders/all', true);
+  gerMerchantOrders(address: string) {
+    return this.http.get('orders/merchant-orders/' + address, false);
   }
 
   delete(orderID: string) {

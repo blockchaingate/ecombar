@@ -35,6 +35,7 @@ export class CartComponent implements OnInit, OnDestroy {
   paidConfirmed: boolean;
   txid: string;
   noWallet: boolean;
+  storeOwner: string;
   password: string;
   payQrcode: string;
   storeId: string;
@@ -105,7 +106,7 @@ export class CartComponent implements OnInit, OnDestroy {
         if(store) {
           this.smartContractAddress = store.smartContractAddress;
           this.storeId = store._id;
-
+          this.storeOwner = store.owner;
           const storedCart = this.cartStoreServ.items;
           this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
           this.calculateTotal();
@@ -155,7 +156,7 @@ export class CartComponent implements OnInit, OnDestroy {
       item.title = titleTran ? titleTran : item.title;
       items.push(item);
     });
-    const orderData = { merchantIds, items, currency, transAmount };
+    const orderData = { store: this.storeId, storeOwner: this.storeOwner, items, currency, transAmount };
 
 
     (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {

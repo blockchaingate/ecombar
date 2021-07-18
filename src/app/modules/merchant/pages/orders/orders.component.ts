@@ -19,14 +19,20 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.dataServ.
-    this.orderServ.gerMerchantOrders().subscribe(
-      (res: any) => {
-          if(res && res.ok) {
-            this.orders = res._body;
-          }
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.orderServ.gerMerchantOrders(walletAddress).subscribe(
+            (res: any) => {
+                if(res && res.ok) {
+                  this.orders = res._body;
+                }
+            }
+          );
+        }
       }
     );
+
 
   }
 
