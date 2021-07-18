@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-wallet-star-rewards',
@@ -30,6 +30,26 @@ export class StarRewardsComponent implements OnInit{
       return thetime;
     }
 
+    getTxidUrl(txid: string) {
+      return environment.endpoints.website + 'explorer/tx-detail/' + txid; 
+    }
+    
+    showStatus(status: number) {
+      //0: refunded 1: valid   2:  request refund  3: redeemed
+      if(status == 0) {
+        return 'refunded';
+      }
+      if(status == 1) {
+        return 'valid';
+      }
+      if(status == 2) {
+        return 'request refund';
+      }
+      if(status == 3) {
+        return 'redeemed';
+      }
+    }
+    
     showDetail(reward: any) {
       this
       let detail ='';

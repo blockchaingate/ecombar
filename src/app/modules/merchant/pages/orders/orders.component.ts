@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class OrdersComponent implements OnInit {
     private utilServ: UtilService,
     private web3Serv: Web3Service,
     private coinServ: CoinService,
+    private toastr: ToastrService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private dataServ: DataService,
@@ -172,10 +174,13 @@ export class OrdersComponent implements OnInit {
         (ret: any) => {
           console.log('ret for update payment=', ret);
           if(ret && ret.ok) {
-            this.order.paymentStatus = 6;
+            this.order.paymentStatus = 5;
+            this.toastr.success('Refund was made successfully');
           }
         }
       );
+    } else {
+      this.toastr.error('Failed to approve refund');
     }
   }
 }

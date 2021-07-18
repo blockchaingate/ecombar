@@ -21,6 +21,7 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     ModalModule.forRoot(),
     NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
-    RichTextEditorModule
+    RichTextEditorModule,
+    NgxSpinnerModule
   ],
   providers: []
 })
