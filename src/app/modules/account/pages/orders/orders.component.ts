@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../shared/services/order.service';
-import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
 import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-orders',
@@ -12,13 +13,24 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 })
 export class OrdersComponent implements OnInit {
   orders: any;
+  order: any;
   customerFlag: boolean;
+  modalRef: BsModalRef;
+  wallet: any;
   constructor(
+    public kanbanServ: KanbanService,
+    private modalService: BsModalService,
     private dataServ: DataService,
     private orderServ: OrderService) {
   }
 
   ngOnInit() {
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
+
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         this.orderServ.getMyOrders(walletAddress).subscribe(
@@ -30,10 +42,6 @@ export class OrdersComponent implements OnInit {
         ); 
       }
     );
-
-
-
-
   }
 
   getItemsCount(order) {
@@ -80,4 +88,23 @@ export class OrdersComponent implements OnInit {
       }
     );
   }
+
+  requestReturn(order) {
+    this.order = order;
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.requestReturnDo(seed);
+    });
+  }
+  
+  requestReturnDo(seed: Buffer) {
+
+  }
+
 }
