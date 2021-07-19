@@ -15,6 +15,7 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { environment } from 'src/environments/environment';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
 
 @Component({
   selector: 'app-store',
@@ -51,6 +52,7 @@ export class StoreComponent implements OnInit {
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
     private dataServ: DataService,
+    private storeageServ: StorageService,
     private storeServ: StoreService) {
   }
 
@@ -69,33 +71,13 @@ export class StoreComponent implements OnInit {
     this.objectId = store.objectId;   
   }
   ngOnInit() {
-    //this.feeChargerSmartContractAddress = environment.addresses.smartContract.FEE_CHARGER;
-
-    /*
-    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
-
-      if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-        return;
-      }
-      const wallet = wallets.items[wallets.currentIndex];
-      this.wallet = wallet;
-      const addresses = wallet.addresses;
-      this.address = addresses.filter(item => item.name == 'FAB')[0].address;  
-      this.storeServ.getStoresByAddress(this.address).subscribe(
-        (ret: any) => {
-          console.log('ret for store==', ret);
-          if(ret && ret.ok && ret._body && ret._body.length > 0) {
-            const store = ret._body[ret._body.length - 1];
-            console.log('store==', store);
-            this.coin = store.coin;
-            this.taxRate = store.taxRate;
-            this.name = store.name.en;
-            this.nameChinese = store.name.sc;
-          }
+    this.storeageServ.getStoreRef().subscribe(
+      (refAddress: string) => {
+        if(refAddress) {
+          this.refAddress = refAddress;
         }
-      );    
-    });
-    */
+      }
+    );
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         this.wallet = wallet;
@@ -187,7 +169,7 @@ export class StoreComponent implements OnInit {
       const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
       let args2 = [
         coinpoolAddress,
-        environment.addresses.smartContract.feeDistribution,
+        environment.addresses.smartContract.contractList,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
         70,
@@ -274,7 +256,10 @@ export class StoreComponent implements OnInit {
   }
 
   addStore() {
-
+    if(this.refAddress == this.walletAddress) {
+      this.toastr.info('You cannot refer yourself.');
+      return;
+    }
     const initialState = {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed

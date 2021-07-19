@@ -145,6 +145,7 @@ addresses: {
     smartContract: {
         feeDistribution: '',
         locker: '',
+        contractList: '',
         //NFT_Exchange: '0xd10c5f37c78058d82fb708cdac6c7278f3747721',
         //ProxyRegistry: '0x87f4ca4ee743c2521879f6f4d58ab3e0fc2c9bdf', 
         NFT_Exchange: '0x3f33980e2767fa3683595afddeab163af46a5566',

@@ -332,6 +332,10 @@ export class ProductAddComponent implements OnInit {
 
   saveProduct() {
     //this.ngxSmartModalServ.getModal('passwordModal').open();
+    if(!this.price || !Number(this.price)) {
+      this.toastrServ.info('price should be filled properly');
+      return;
+    }
     const initialState = {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed

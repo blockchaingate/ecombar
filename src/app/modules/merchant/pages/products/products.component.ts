@@ -16,6 +16,7 @@ export class ProductsComponent implements OnInit {
   walletAddress: string;
   storeId: string;
   walletExgAddress: string;
+  store: any;
   constructor(
     private router: Router,
     private dataServ: DataService,
@@ -27,7 +28,11 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.dataServ.currentMyStore.subscribe(
       (store: any) => {
-        this.storeId = store._id;
+        if(store) {
+          this.store = store;
+          this.storeId = store._id;
+        }
+
       }
     )
     this.dataServ.currentWalletAddress.subscribe(

@@ -178,6 +178,7 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
+    
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       const data = {
         paymentStatus: 5
@@ -186,6 +187,7 @@ export class OrdersComponent implements OnInit {
         (ret: any) => {
           console.log('ret for update payment=', ret);
           if(ret && ret.ok) {
+            this.spinner.hide();
             this.order.paymentStatus = 5;
           }
         }

@@ -143,7 +143,7 @@ export class OrdersComponent implements OnInit {
           "type": "bytes32"
         }
       ],
-      "name": "refund",
+      "name": "refundWithSig",
       "outputs": [
         {
           "internalType": "bool",

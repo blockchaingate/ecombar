@@ -111,7 +111,10 @@ export class StarRewardsComponent implements OnInit{
     }
 
     async redeemDo(seed: Buffer) {
-      const address = this.reward.address;
+      console.log('this.reward=', this.reward);
+      let address = this.reward.address;
+      console.log('address==', address);
+      //address = '0x3a3bc5a481892291720de88c17e1b41ae6a6a3e1';
       const abi = {
         "constant": false,
         "inputs": [

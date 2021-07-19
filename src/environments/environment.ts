@@ -139,9 +139,10 @@ export const environment = {
         ETH: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       },
     smartContract: {
-        feeDistribution: '0x5bf7a6a52e27583b8be201bde457ec1c931fafcc',
+        feeDistribution: '0xb6ac5e2283125e79b181b08a59646e32abf37b1b',
         locker: '0x3a3bc5a481892291720de88c17e1b41ae6a6a3e1',
-        
+        contractList: '0x048c5f93f6c9576d597d25a1c49bba137941b56b',
+
         NFT_Exchange: '0x2c8aa9e76fc3c92a799c6c68926bd24e53ff9abb',
         ProxyRegistry: '0x2e553ad1cd6ba24be952cc7273e4d869d19b1586',
         FABLOCK: '0xa7d4a4e23bf7dd7a1e03eda9eb7c28a016fd54aa',

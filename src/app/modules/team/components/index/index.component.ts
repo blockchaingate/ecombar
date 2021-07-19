@@ -58,7 +58,9 @@ export class TeamIndexComponent implements OnInit {
 
     this.storeageServ.getStoreRef().subscribe(
       (refAddress: string) => {
-        this.parentId = refAddress;
+        if(refAddress) {
+          this.parentId = refAddress;
+        }
       }
     );
     this.currentUrl = window.location.href;
@@ -102,6 +104,10 @@ export class TeamIndexComponent implements OnInit {
   }
 
   joinAsMember() {
+    if(this.parentId == this.walletAddress) {
+      this.toastr.info('You cannot refer yourself.');
+      return;
+    }
     this.starServ.isValidMember(this.parentId).subscribe(
       (ret: any) => {
         if(ret && ret.isValid) {

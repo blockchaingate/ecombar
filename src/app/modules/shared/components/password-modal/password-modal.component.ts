@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from "rxjs";
 import { CoinService } from '../../services/coin.service';
+import { KanbanService } from '../../services/kanban.service';
 
 @Component({
   selector: 'app-password-modal',
@@ -25,6 +26,7 @@ export class PasswordModalComponent implements OnInit{
         private bsModalRef: BsModalRef,
         private toastr:ToastrService,
         private coinServ: CoinService,
+        private kanbanServ: KanbanService,
         private translateServ: TranslateService,
         public utilServ: UtilService) {
             
@@ -45,10 +47,30 @@ export class PasswordModalComponent implements OnInit{
         this.onClosePin.next(this.password);
         const seed = this.utilServ.aesDecryptSeed(this.encryptedSeed, this.password);
         const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-        const privateKey = keyPair.privateKeyBuffer.privateKey;
-        this.onCloseFabPrivateKey.next(privateKey);
-        this.onClose.next(seed);
-        this.bsModalRef.hide();
+        const address = keyPair.address;
+
+        this.kanbanServ.getKanbanBalance(this.utilServ.fabToExgAddress(address)).subscribe(
+            (resp: any) => {
+                // console.log('resp=', resp);
+                const fab = this.utilServ.stripHexPrefix(resp.balance.FAB);
+                const gas = this.utilServ.hexToDec(fab) / 1e18;
+                if(gas == 0) {
+                    this.toastr.error('No gas to make this transaction.');
+                    this.close();
+                } else {
+                    const privateKey = keyPair.privateKeyBuffer.privateKey;
+                    this.onCloseFabPrivateKey.next(privateKey);
+                    this.onClose.next(seed);
+                    this.bsModalRef.hide();
+                }
+  
+            },
+            error => {
+                // console.log('errorrrr=', error);
+            }
+        );
+
+
     }
 
     close() {

@@ -35,7 +35,7 @@ interface FeeChargerInterface {
     external returns (bool);
     function cancelRefundRequest(bytes32 _orderID, address _user, uint8 v, bytes32 r, bytes32 s) 
     external returns (bool);
-    function refund(bytes32 _orderID, uint8 v, bytes32 r, bytes32 s) 
+    function refundWithSig(bytes32 _orderID, uint8 v, bytes32 r, bytes32 s) 
     external returns (bool);
 }
 
@@ -144,9 +144,9 @@ contract Ecombar is Ownable {
         return feeChargerInstance.cancelRefundRequest(bytes32(objectId), _user, v, r, s);
     }
 
-    function refund(bytes32 objectId, uint8 v, bytes32 r, bytes32 s) 
+    function refundWithSig(bytes32 objectId, uint8 v, bytes32 r, bytes32 s) 
     public onlyOwner returns (bool) {
-        return feeChargerInstance.refund(bytes32(objectId), v, r, s);
+        return feeChargerInstance.refundWithSig(bytes32(objectId), v, r, s);
     }
 
     function getChargePayOrderParams(bytes30 objectId, 

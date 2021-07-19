@@ -17,6 +17,7 @@ export class StoresIndexComponent implements OnInit {
   stores: any;
   wallet: any;
   parentId: string;
+  walletAddress: string;
   modalRef: BsModalRef;
   isValidMember: boolean;
 
@@ -40,6 +41,7 @@ export class StoresIndexComponent implements OnInit {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         if(walletAddress) {
+          this.walletAddress = walletAddress;
           this.starServ.isValidMember(walletAddress).subscribe(
             (ret: any) => {
               this.isValidMember = ret.isValid;
@@ -91,7 +93,10 @@ export class StoresIndexComponent implements OnInit {
     const data = {
       parentId: this.parentId
     };
-
+    if(this.parentId == this.walletAddress) {
+      this.toastr.info('You cannot refer yourself.');
+      return;
+    }
     const sig = this.kanbanServ.signJsonData(privateKey, data);
     data['sig'] = sig.signature; 
     this.starServ.createRef(data).subscribe(
