@@ -28,6 +28,12 @@ export class DataService {
     this.storeIdSource.next(storeId);
   }  
 
+  private currencyBalanceSource = new BehaviorSubject(0);
+  currencyBalance = this.currencyBalanceSource.asObservable();
+  changeCurrencyBalance(balance: number) {
+    this.currencyBalanceSource.next(balance);
+  }  
+
   private storeOwnerSource = new BehaviorSubject('');
   currentStoreOwner = this.storeOwnerSource.asObservable();
   changeStoreOwner(owner: string) {

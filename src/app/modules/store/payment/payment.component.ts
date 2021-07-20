@@ -42,6 +42,7 @@ export class PaymentComponent implements OnInit{
     shippingFee: number;
     noWallet: boolean;
     wallet: any;
+    currency: string;
 
     modalRef: BsModalRef;
     wallets: any;
@@ -110,6 +111,7 @@ export class PaymentComponent implements OnInit{
 
       this.dataServ.currentStore.subscribe(
         (store: any) => {
+          this.currency = store.coin;
           this.smartContractAddress = store.smartContractAddress;
           this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;
         }
@@ -535,6 +537,19 @@ export class PaymentComponent implements OnInit{
                     this.order = res._body;
                     this.toastr.success('payment was made successfully');
                     this.spinner.hide();
+
+                    this.kanbanServ.getExchangeBalance(this.utilServ.fabToExgAddress(this.walletAddress)).subscribe(
+                      (resp: any) => {
+                          console.log('resp in here we go=', resp);
+                          const selected = resp.filter(item => item.coinType == this.coinServ.getCoinTypeIdByName(this.currency));
+                          if(selected && selected.length > 0) {
+                            const currencyBalance = this.utilServ.showAmount(selected[0].unlockedAmount, 18);
+                            this.dataServ.changeCurrencyBalance(Number(currencyBalance));
+                          }
+                      },
+                      error => {
+                      }
+                    );                    
                     //this.router.navigate(['/place-order/' + this.orderID]);
                   }
                 }

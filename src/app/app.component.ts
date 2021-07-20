@@ -7,6 +7,8 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { DataService } from './modules/shared/services/data.service';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 import { StoreService } from './modules/shared/services/store.service';
+import { KanbanService } from './modules/shared/services/kanban.service';
+import { UtilService } from './modules/shared/services/util.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,8 @@ export class AppComponent implements OnInit {
     private dataServ: DataService,
     private storeServ: StoreService,
     private route: ActivatedRoute,
+    private kanbanServ: KanbanService,
+    private utilServ: UtilService,
     private translate: TranslateService) {
     appServ.id = environment.appid;
     // this.setLan();
@@ -46,7 +50,8 @@ export class AppComponent implements OnInit {
         const walletAddress = walletAddressItem.address;
         console.log('walletAddress==', walletAddress);
         if(walletAddress) {
-          this.dataServ.changeWalletAddress(walletAddress);  
+          this.dataServ.changeWalletAddress(walletAddress); 
+
           this.storeServ.getStoresByAddress(walletAddress).subscribe(
             (ret: any) => {
               console.log('ret for store==', ret);

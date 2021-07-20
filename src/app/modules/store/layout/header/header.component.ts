@@ -20,7 +20,9 @@ export class HeaderComponent implements OnInit {
   merchantId: string;
   categoryId: string;
   storeId: string;
+  currencyBalance: number;
   searchText: string;
+  currency: string;
   menu = false;
   _lang: string;
 
@@ -36,8 +38,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataServ.currentStore.subscribe(
-      (storeId: string) => {
-        this.storeId = storeId;
+      (store: any) => {
+        if(store) {
+          this.storeId = store._id;
+          this.currency = store.coin;
+          console.log('store=====', store);
+        }
+
+      }
+    );
+
+    this.dataServ.currencyBalance.subscribe(
+      (currencyBalance: number) => {
+        this.currencyBalance = currencyBalance;
       }
     );
     this.dataServ.currentStoreOwner.subscribe(
@@ -75,6 +88,12 @@ export class HeaderComponent implements OnInit {
   }
 
 
+  getLogo(currency) {
+    if(currency) {
+      return 'https://www.exchangily.com/assets/coins/' + currency.toLowerCase() + '.png';
+    }
+    return '';
+  }
 
   arrayToTree(items) {
  

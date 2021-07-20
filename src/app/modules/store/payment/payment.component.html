@@ -41,7 +41,7 @@
                                             {{'We ship in 1-2 days' | translate}}
                                         </div>
                                         <div>
-                                            $10
+                                            10{{currency}}
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
                                         x{{item.quantity}}
                                     </div>
                                     <div class="col col-4 font-weight-bold">
-                                        ${{item.price * item.quantity}}
+                                        {{item.price * item.quantity}}{{currency}}
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
                             {{'Total' | translate}}
                         </div>
                         <div class="col col-6 text-right font-weight-bold">
-                            ${{total}}
+                            {{total}}{{currency}}
                         </div>                        
                     </div>
                 </div>
