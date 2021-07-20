@@ -1,29 +1,3 @@
-<!-- <div *ngIf="products" class="d-flex">
-    <div *ngFor="let item of products" class="m-2 item-container">
-        <div *ngIf="item.images">
-            <a href="/product/{{item._id}}">
-                <img class="media" src="{{item.images[0]}}">
-            </a>
-            
-        </div>
-        <div class="title text-left">
-            {{item.title | translateField}}
-        </div>
-        <div class="d-flex justify-content-between p-2">
-            <div class="price">
-                ${{item.price}}
-            </div>
-            <div>
-                Sales: 0
-            </div>
-        </div>  
-
-        <div>
-            <button class="btn" (click)="addToCart(item)">{{'Add to cart' | translate}}</button>
-        </div>        
-    </div>
-</div> -->
-
 <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible" *ngIf="products">
     <li  *ngFor="let item of products" class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
         <div class="product-item__outer h-100 w-100">
@@ -37,7 +11,7 @@
                     <div class="mb-4">
                         <div class="mb-2">
                             <a href="/product/{{item._id}}" class="font-size-12 text-gray-5">
-                                {{item.primaryCategoryId.category | translateField}}
+                                {{item.primaryCategoryId ? (item.primaryCategoryId.category | translateField) : ''}}
                             </a>
                         </div>
                         <h5 class="product-item__title">
@@ -59,9 +33,7 @@
                     </div>
                     <div class="product-item__footer">
                         <div class="border-top pt-2 flex-center-between flex-wrap">
-                            <!--
-                            <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                            -->
+
                             <a (click)="addFavorite(item)" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
                         </div>
                     </div>
