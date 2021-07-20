@@ -753,8 +753,9 @@ export class WalletDashboardComponent implements OnInit{
             this.fabBalance = fabCoin.balance;
             console.log('fabCoin==', fabCoin);
             this.currentCoin = exgCoin.coin;
+            console.log('exgCoin===', exgCoin);
             this.currentCoinAddress = this.getCurrentCoinAddress();
-            this.walletBalance = Number(exgCoin.balance) + Number(exgCoin.lockBalance);
+            this.walletBalance = Number(exgCoin.balance) + (Number(exgCoin.lockBalance) > 0 ? Number(exgCoin.lockBalance) : 0);
             this.walletValue = this.walletBalance * exgCoin.usdValue.USD;
           }
         }
