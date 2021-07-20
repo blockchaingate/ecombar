@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IddockService } from '../../../shared/services/iddock.service';
+import { IddockService } from '../../shared/services/iddock.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -34,12 +34,12 @@ export class DetailComponent implements OnInit {
     } 
     
     history(type: string, item: any) {
-      this.router.navigate(['/blockchain/history/' + type + '/' + this.id]);
+      this.router.navigate(['/iddock/history/' + type + '/' + this.id]);
     }
   
 
 
     update(type: string, item: any) {
-      this.router.navigate(['/blockchain/update-info/' + type + '/' + this.id]);
+      this.router.navigate(['/iddock/update-info/' + type + '/' + this.id]);
     }       
 }

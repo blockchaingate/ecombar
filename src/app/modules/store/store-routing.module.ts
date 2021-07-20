@@ -27,11 +27,7 @@ const routes: Routes = [
       {
         path: 'categor',
         loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
-      },
-      {
-        path: 'blockchain',
-        loadChildren: () => import('./blockchain/blockchain.module').then(m => m.BlockchainModule)
-      },      
+      },    
       {
         path: 'product',
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule)

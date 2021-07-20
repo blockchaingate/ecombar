@@ -40,7 +40,7 @@
         <tbody>
           <tr *ngFor="let item of people">
             <th scope="row">
-              <a href="/blockchain/detail/people/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+              <a href="/iddock/detail/people/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
                 {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
               </a>
               
@@ -55,7 +55,7 @@
   
           <tr *ngFor="let item of things">
             <th scope="row">
-              <a href="/blockchain/detail/things/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+              <a href="/iddock/detail/things/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
                 {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
               </a>
               
@@ -71,7 +71,7 @@
           
           <tr *ngFor="let item of organization">
             <th scope="row">
-              <a href="/blockchain/detail/organization/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+              <a href="/iddock/detail/organization/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
                 {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
               </a>
               

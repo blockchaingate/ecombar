@@ -21,7 +21,12 @@ const routes: Routes = [
     path: 'store/:storeId',
     loadChildren: () =>
       import('./modules/store/store.module').then(m => m.StoreModule)
-  },    
+  },   
+  {
+    path: 'iddock',
+    loadChildren: () =>
+      import('./modules/iddock/iddock.module').then(m => m.IddockModule)
+  },   
   {
     path: 'admin',
     loadChildren: () =>

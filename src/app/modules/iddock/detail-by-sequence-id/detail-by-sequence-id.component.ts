@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IddockService } from '../../../shared/services/iddock.service';
+import { IddockService } from '../../shared/services/iddock.service';
 import {ActivatedRoute} from '@angular/router';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-detail-by-sequence-id',
   templateUrl: './detail-by-sequence-id.component.html',

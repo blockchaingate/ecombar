@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { IddockService } from '../../../shared/services/iddock.service';
+import { IddockService } from '../../shared/services/iddock.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import { UtilService } from '../../../shared/services/util.service';
+import { UtilService } from '../../shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
@@ -130,11 +130,11 @@ export class UpdateInfoComponent implements OnInit {
   }  
 
   history(type: string, item: any) {
-    this.router.navigate(['/blockchain/history/' + type + '/' + this.id]);
+    this.router.navigate(['/iddock/history/' + type + '/' + this.id]);
   }
 
   detail(type: string, item: any) {
-    this.router.navigate(['/blockchain/detail/' + type + '/' + this.id]);
+    this.router.navigate(['/iddock/detail/' + type + '/' + this.id]);
   }
   async update() {
 

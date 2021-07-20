@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IddockService } from '../../shared/services/iddock.service';
-import { UtilService } from '../../shared/services/util.service';
+import { IddockService } from '../shared/services/iddock.service';
+import { UtilService } from '../shared/services/util.service';
 import { Router } from '@angular/router'
 
 @Component({
@@ -21,15 +21,15 @@ export class VerificationComponent implements OnInit {
   }
 
   update(type: string, item: any) {
-    this.router.navigate(['/blockchain/update-info/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
+    this.router.navigate(['/iddock/update-info/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
   }
 
   history(type: string, item: any) {
-    this.router.navigate(['/blockchain/history/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
+    this.router.navigate(['/iddock/history/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
   }
 
   owner(type: string, item: any) {
-    this.router.navigate(['/blockchain/owner/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
+    this.router.navigate(['/iddock/owner/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
   }
 
   search() {

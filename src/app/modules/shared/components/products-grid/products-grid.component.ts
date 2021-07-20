@@ -10,7 +10,7 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./products-grid.component.scss', '../../../../../button.scss']
 })
 export class ProductsGridComponent implements OnInit{
-  //iddockRoot: string;
+  iddockRoot: string;
   storeId: string;
   @Input() products: any;
 
@@ -18,7 +18,7 @@ export class ProductsGridComponent implements OnInit{
     private dataServ: DataService,
     private favoriteServ: FavoriteService,
     private cartStoreServ: CartStoreService) {
-    //this.iddockRoot = environment.IDDOCK;
+    this.iddockRoot = environment.IDDOCK;
   }
 
   ngOnInit() {

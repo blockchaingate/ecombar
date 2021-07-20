@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { IddockService } from '../../../shared/services/iddock.service';
+import { IddockService } from '../../shared/services/iddock.service';
 import {ActivatedRoute} from '@angular/router';
-import { UtilService } from '../../../shared/services/util.service';
+import { UtilService } from '../../shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { Router } from '@angular/router'
@@ -111,11 +111,11 @@ export class OwnerComponent implements OnInit {
   }
 
   updateItem(type: string, item: any) {
-    this.router.navigate(['/blockchain/update-info/' + type + '/' + this.id]);
+    this.router.navigate(['/iddock/update-info/' + type + '/' + this.id]);
   }
 
   history(type: string, item: any) {
-    this.router.navigate(['/blockchain/history/' + type + '/' + this.id]);
+    this.router.navigate(['/iddock/history/' + type + '/' + this.id]);
   }
 
   confirmPassword() {

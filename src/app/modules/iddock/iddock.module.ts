@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BlockchainRoutingModule } from './blockchain-routing.module';
+import { IddockRoutingModule } from './iddock-routing.module';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -22,7 +22,7 @@ import { DetailBySequenceIDComponent } from './detail-by-sequence-id/detail-by-s
     DetailBySequenceIDComponent
   ],
   imports: [
-    BlockchainRoutingModule,
+    IddockRoutingModule,
     CommonModule,
     SharedModule,
     FormsModule,
@@ -31,4 +31,4 @@ import { DetailBySequenceIDComponent } from './detail-by-sequence-id/detail-by-s
   ],
   providers: []
 })
-export class BlockchainModule { }
+export class IddockModule { }
