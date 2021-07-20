@@ -6,11 +6,15 @@ import { CreateWalletComponent } from './components/create-wallet/create-wallet.
 import { ImportWalletComponent } from './components/import-wallet/import-wallet.component';
 import { WalletDashboardComponent } from './components/wallet-dashboard/wallet-dashboard.component';
 import { WalletComponent } from './wallet.component';
+import { BindpayComponent } from './components/bindpay/bindpay.component';
 const routes: Routes = [
     {
         path: '',
         component: WalletComponent,
         children: [
+            {
+                path: 'bindpay', component: BindpayComponent
+            }, 
             {
                 path: 'dashboard', component: WalletDashboardComponent
             },   

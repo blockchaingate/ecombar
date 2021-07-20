@@ -1,0 +1,22 @@
+<div class="container py-3">
+    <div class="row">
+        <div class="col col-8">
+            <div *ngIf="name">
+                Name: {{name}}
+            </div>
+            <div *ngIf="to">
+                To: {{to}}
+            </div>
+            <div *ngIf="data">
+                Data: {{data}}
+            </div>
+        </div>
+        <div class="col col-4">
+            <div class="ActionButtonrContainer ">
+                <div class="ActionButton--content" (click)="submit()" style="min-width: 120px;">
+                    {{'Submit' | translate}}
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
