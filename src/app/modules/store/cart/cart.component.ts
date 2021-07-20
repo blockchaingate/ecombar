@@ -36,9 +36,9 @@ export class CartComponent implements OnInit, OnDestroy {
   txid: string;
   noWallet: boolean;
   storeOwner: string;
-  password: string;
   payQrcode: string;
   storeId: string;
+  currency: string;
   txid_link: string;
   total: number;
   wallets: any;
@@ -67,32 +67,17 @@ export class CartComponent implements OnInit, OnDestroy {
 
   calculateTotal(): void {
     this.total = 0;
-    this.Total = [];
 
-    const grouped = groupBy(this.cartItems, (cI: CartItem) => cI.currency);
-
-    grouped.forEach((currencyGroup: CartItem[]) => {
-      let value = 0;
-      const final = currencyGroup.map((v: CartItem) => value += v.price * v.quantity);
-      this.Total.push({ currency: currencyGroup[0].currency, total: value.toFixed(2) });
-      this.total += Number(value.toFixed(2)); 
+    this.cartItems.forEach(item => {
+      const value = item.price * item.quantity;
+      this.total += Number(value.toFixed(2));
     });
+
+
   }
 
   ngOnInit(): void {
 
-    /*
-    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
-
-      if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-        this.noWallet = true;
-        return;
-      }
-      this.wallets = wallets;
-      console.log('this.wallets==', this.wallets);
-      this.wallet = this.wallets.items[this.wallets.currentIndex];
-    });  
-    */
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         if(wallet) {
@@ -104,6 +89,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.dataServ.currentStore.subscribe(
       (store: any) => {
         if(store) {
+          this.currency = store.coin;
           this.smartContractAddress = store.smartContractAddress;
           this.storeId = store._id;
           this.storeOwner = store.owner;

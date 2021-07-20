@@ -8,6 +8,7 @@ import { log } from 'console';
 })
 export class CartProductComponent implements OnInit {
   @Input() product: any;
+  @Input() currency: string;
   @Output() productUpdated = new EventEmitter();
   ngOnInit() {
     console.log('product=', this.product);

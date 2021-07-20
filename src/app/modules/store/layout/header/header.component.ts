@@ -4,6 +4,7 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
+import { CartStoreService } from '../../../shared/services/cart.store.service';
 
 declare var $: any;
 
@@ -27,13 +28,14 @@ export class HeaderComponent implements OnInit {
     private dataServ: DataService,
     private router: Router,
     private translate: TranslateService, 
+    private cartStoreServ: CartStoreService,
     private categoryServ: CategoryService, 
     private storageServ: StorageService) {
     this.setLan();
   }
 
   ngOnInit(): void {
-    this.dataServ.currentStoreId.subscribe(
+    this.dataServ.currentStore.subscribe(
       (storeId: string) => {
         this.storeId = storeId;
       }
@@ -54,6 +56,22 @@ export class HeaderComponent implements OnInit {
         }
       }
     );
+
+    this.cartStoreServ.items$.subscribe((res) => {
+      this.cartCount = 0;
+      console.log('this.images4');
+      if (!res || (res.length === 0)) {
+        console.log('yes');
+        res = this.cartStoreServ.items;
+      }
+
+      if (res) {
+        res.forEach(element => {
+          this.cartCount += element.quantity;
+        });
+      }
+
+    });
   }
 
 
