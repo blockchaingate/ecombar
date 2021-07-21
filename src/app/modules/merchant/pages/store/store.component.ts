@@ -169,7 +169,7 @@ export class StoreComponent implements OnInit {
       const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
       let args2 = [
         coinpoolAddress,
-        environment.addresses.smartContract.contractList,
+        environment.addresses.smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
         70,

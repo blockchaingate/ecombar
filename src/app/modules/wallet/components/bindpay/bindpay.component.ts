@@ -6,6 +6,7 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 
 @Component({
   selector: 'app-wallet-bindpay',
@@ -25,6 +26,7 @@ export class BindpayComponent implements OnInit{
         private dataServ: DataService,
         private route: ActivatedRoute,
         private toastr: ToastrService,
+        private web3Serv: Web3Service,
         public kanbanServ: KanbanService,
         private modalService: BsModalService,) {}
     ngOnInit() {
@@ -38,6 +40,8 @@ export class BindpayComponent implements OnInit{
             this.name = params['name'];
             this.to = params['to'];
             this.data = params['data'];
+            const decoded = this.web3Serv.decodeData(['bytes32', 'uint32', 'uint256', 'address[]'], this.data.substring(10));
+            console.log('decoded=', decoded);
         });
     }
 

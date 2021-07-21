@@ -36,7 +36,10 @@ export const coin_list_for_ecombar: Coin[] = [
     { id: 2, name: 'USDT' },
     { id: 3, name: 'BTC' },
     { id: 4, name: 'ETH' },
-    { id: 5, name: 'FAB' }
+    { id: 5, name: 'FAB' },
+    { id: 5, name: 'EXG' },
+    { id: 5, name: 'DSC' },
+    { id: 5, name: 'BST' }
 ];
 
 export const price_list: Price[] = [

@@ -35,6 +35,8 @@ import { StoreApproveComponent } from './pages/store-approve/store-approve.compo
 import { ExchangeRateComponent } from './pages/exchange-rate/exchange-rate.component';
 import { FeeDistributionComponent } from './pages/fee-distribution/fee-distribution.component';
 import { ExchangeRateAddComponent } from './pages/exchange-rate-add/exchange-rate-add.component';
+import { FeeDistributionUpdateRewardCoinsComponent } from './pages/fee-distribution-update-reward-coins/fee-distribution-update-reward-coins.component';
+import { FeeDistributionUpdateRewardPercentagesComponent } from './pages/fee-distribution-update-reward-percentages/fee-distribution-update-reward-percentages.component';
 
 import { 
   WalletGuardService as WalletGuard 
@@ -65,6 +67,12 @@ const routes: Routes = [
       },
       {
         path: 'fee-distribution', component: FeeDistributionComponent
+      },
+      {
+        path: 'fee-distribution/update-reward-coins', component: FeeDistributionUpdateRewardCoinsComponent
+      },
+      {
+        path: 'fee-distribution/update-reward-percentages', component: FeeDistributionUpdateRewardPercentagesComponent
       },
       {
         path: 'address', component: AddressComponent

@@ -1,0 +1,30 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'Update reward coins' | translate}} {{coinName}}</h1>
+      <hr>
+
+        <label for="email"><b>Coin 1(for example EXG)</b></label>
+        <input type="text" placeholder="Enter coin name" [(ngModel)]="coin1" name="coin1" required>
+
+        <label for="email"><b>Percentage of coin 1(for example 0)</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage1" name="percentage1" required>
+
+        <label for="email"><b>Coin 2(for example DSC)</b></label>
+        <input type="text" placeholder="Enter coin name" [(ngModel)]="coin2" name="coin2" required>
+
+        <label for="email"><b>Percentage of coin 2(for example 30)</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage2" name="percentage2" required>
+
+        <label for="email"><b>Coin 3(for example BST)</b></label>
+        <input type="text" placeholder="Enter coin name" [(ngModel)]="coin3" name="coin3" required>
+
+        <label for="email"><b>Percentage of coin 3(for example 70)</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage3" name="percentage3" required>
+
+
+
+        <div class="text-right py-2" *ngIf="owner == walletAddress">
+            <button type="submit" class="btn signinbtn" (click)="confirm()">{{('Confirm') | translate}}</button>
+          </div>
+    </div>
+</form>
