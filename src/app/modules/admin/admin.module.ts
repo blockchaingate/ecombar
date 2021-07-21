@@ -41,6 +41,9 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
 import { StoresComponent } from './pages/stores/stores.component';
 import { StoreApproveComponent } from './pages/store-approve/store-approve.component';
+import { ExchangeRateComponent } from './pages/exchange-rate/exchange-rate.component';
+import { FeeDistributionComponent } from './pages/fee-distribution/fee-distribution.component';
+import { ExchangeRateAddComponent } from './pages/exchange-rate-add/exchange-rate-add.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +83,10 @@ import { StoreApproveComponent } from './pages/store-approve/store-approve.compo
     BrandAddComponent,
     RoleMenuPipe,
     StoresComponent,
-    StoreApproveComponent
+    StoreApproveComponent,
+    ExchangeRateComponent,
+    FeeDistributionComponent,
+    ExchangeRateAddComponent
   ],
   imports: [
     AdminRoutingModule,

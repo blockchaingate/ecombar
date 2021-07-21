@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../shared/services/user.service';
 import { MerchantService } from '../shared/services/merchant.service';
 import { StorageService } from '../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,7 +8,7 @@ import { UserState } from '../../store/states/user.state';
 import { logout, updateMerchantStatus } from '../../store/actions/user.actions';
 
 @Component({
-  providers: [UserService],
+  providers: [],
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
@@ -20,11 +19,7 @@ export class AdminComponent implements OnInit {
   //displayName: string;
   merchantId: string;
 
-  /*
-  myPhotoUrlSelect: Observable<string>;
-  displayNameSelect: Observable<string>;
-  roleSelect: Observable<string>;
-  */
+
 
   role: string;
   myPhotoUrl: string;
@@ -37,7 +32,6 @@ export class AdminComponent implements OnInit {
     private router: Router, 
     private translateServ: TranslateService, 
     private merchantServ: MerchantService,
-    private userServ: UserService, 
     private storageServ: StorageService
   ) { }
 
@@ -81,17 +75,18 @@ export class AdminComponent implements OnInit {
         link: 'stores',
         icon: 'store'
       },      
-      /*  
+        
       {
-        title: 'Categories',
-        link: 'categories',
+        title: 'Exchange rate',
+        link: 'exchange-rate',
         icon: 'category'
       },
       {
-        title: 'Collections',
-        link: 'collections',
+        title: 'Fee distribution',
+        link: 'fee-distribution',
         icon: 'collection'
       },
+      /*
       {
         title: 'Users',
         link: 'users',

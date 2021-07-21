@@ -130,7 +130,6 @@ export interface Ticker {
 export interface Coin {
     id: number;
     name: string;
-    icon: string;
 }
 
 export interface Signature {

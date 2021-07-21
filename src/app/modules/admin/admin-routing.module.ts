@@ -32,6 +32,9 @@ import { MerchantApplicationsComponent } from './pages/merchant-applications/mer
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { StoresComponent } from './pages/stores/stores.component';
 import { StoreApproveComponent } from './pages/store-approve/store-approve.component';
+import { ExchangeRateComponent } from './pages/exchange-rate/exchange-rate.component';
+import { FeeDistributionComponent } from './pages/fee-distribution/fee-distribution.component';
+import { ExchangeRateAddComponent } from './pages/exchange-rate-add/exchange-rate-add.component';
 
 import { 
   WalletGuardService as WalletGuard 
@@ -53,6 +56,15 @@ const routes: Routes = [
       },           
       {
         path: 'users', component: UsersComponent
+      },
+      {
+        path: 'exchange-rate', component: ExchangeRateComponent
+      },
+      {
+        path: 'exchange-rate/:coinName/edit', component: ExchangeRateAddComponent
+      },
+      {
+        path: 'fee-distribution', component: FeeDistributionComponent
       },
       {
         path: 'address', component: AddressComponent
