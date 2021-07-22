@@ -9,6 +9,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-orders',
@@ -28,6 +29,7 @@ export class OrdersComponent implements OnInit {
     private utilServ: UtilService,
     private web3Serv: Web3Service,
     private coinServ: CoinService,
+    private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
@@ -185,14 +187,18 @@ export class OrdersComponent implements OnInit {
       };
       this.orderServ.update(this.order._id, data).subscribe(
         (ret: any) => {
-          console.log('ret for update payment=', ret);
+          this.spinner.hide();
           if(ret && ret.ok) {
-            this.spinner.hide();
+            this.toastr.success('Request refund was made successfully');
             this.order.paymentStatus = 5;
           }
         }
       );
+    } else {
+      this.toastr.error('Failed to request refund');
+      this.spinner.hide();
     }
+
   }
 
 
@@ -213,7 +219,6 @@ export class OrdersComponent implements OnInit {
   }
   
   async cancelRequestRefundDo(seed: Buffer) {
-    console.log('this.order=', this.order);
     const abi = {
       "inputs": [
         {
@@ -242,7 +247,7 @@ export class OrdersComponent implements OnInit {
           "type": "bytes32"
         }
       ],
-      "name": "cancelRefundRequest",
+      "name": "cancelRefundRequestWithSig",
       "outputs": [
         {
           "internalType": "bool",
@@ -266,19 +271,24 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    this.spinner.hide();
+    
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       const data = {
         paymentStatus: 2
       };
       this.orderServ.update(this.order._id, data).subscribe(
         (ret: any) => {
+          this.spinner.hide();
           console.log('ret for update payment=', ret);
           if(ret && ret.ok) {
+            this.toastr.success('Cancel request refund was made successfully');
             this.order.paymentStatus = 2;
           }
         }
       );
+    } else {
+      this.toastr.error('Failed to cancel request refund');
+      this.spinner.hide();
     }
   }
 

@@ -30,6 +30,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { CommonModule } from '@angular/common';
 import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 @NgModule({
     declarations: [
@@ -67,6 +68,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         FormsModule, 
         ReactiveFormsModule,
         CommonModule,
+        NgxSpinnerModule,
         ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
         NgxSmartModalModule.forRoot(),

@@ -4,9 +4,8 @@
     <ul class="responsive-table">
       <li class="table-header">
         <div class="col col-2">{{'Id' | translate}}</div>
-        <div class="col col-2">{{'Date Created' | translate}}</div>
-        <div class="col col-2">{{'Total' | translate}}</div>
-        <div class="col col-2">{{'Payment Method' | translate}}</div>
+        <div class="col col-3">{{'Date Created' | translate}}</div>
+        <div class="col col-3">{{'Total' | translate}}</div>
         <div class="col col-2">{{'Status' | translate}}</div>
         <div class="col col-2"></div>
       </li>
@@ -16,9 +15,8 @@
             {{trimText(order._id)}}
           </a>
         </div>
-        <div class="col col-2" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
-        <div class="col col-2" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
-        <div class="col col-2" data-label="{{'Payment Method' | translate}}">{{order.paymentMethod}}</div>
+        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
+        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
         <div class="col col-2" data-label="{{'Status' | translate}}">
           <div>
             {{getStatus(order) | translate}}

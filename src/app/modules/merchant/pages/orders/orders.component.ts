@@ -9,7 +9,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 
 @Component({
   selector: 'app-admin-orders',
@@ -28,6 +28,7 @@ export class OrdersComponent implements OnInit {
     private web3Serv: Web3Service,
     private coinServ: CoinService,
     private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private dataServ: DataService,
@@ -114,6 +115,7 @@ export class OrdersComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.spinner.show();
       this.refundDo(seed);
     });
   }
@@ -168,18 +170,19 @@ export class OrdersComponent implements OnInit {
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       const data = {
-        paymentStatus: 5
+        paymentStatus: 6
       };
       this.orderServ.update(this.order._id, data).subscribe(
         (ret: any) => {
-          console.log('ret for update payment=', ret);
+          this.spinner.hide();
           if(ret && ret.ok) {
-            this.order.paymentStatus = 5;
+            this.order.paymentStatus = 6;
             this.toastr.success('Refund was made successfully');
           }
         }
       );
     } else {
+      this.spinner.hide();
       this.toastr.error('Failed to approve refund');
     }
   }
