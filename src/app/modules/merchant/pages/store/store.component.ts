@@ -26,6 +26,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 export class StoreComponent implements OnInit {
   taxRate: number;
   name: string;
+  images: any;
   nameChinese: string;
   currentTab: string;
   feeChargerSmartContractAddress: string;
@@ -64,13 +65,16 @@ export class StoreComponent implements OnInit {
       this.name = store.name.en;
       this.nameChinese = store.name.sc;  
     }
-
+    if(store.image) {
+      this.images = [store.image];
+    }
     this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
     this.smartContractAddress = store.smartContractAddress; 
     this.refAddress = store.refAddress;
     this.objectId = store.objectId;   
   }
   ngOnInit() {
+    this.images = [];
     this.storeageServ.getStoreRef().subscribe(
       (refAddress: string) => {
         if(refAddress) {
@@ -134,6 +138,9 @@ export class StoreComponent implements OnInit {
           sc: this.nameChinese
         }
       };
+      if(this.images && this.images.length > 0) {
+        data.image = this.images[0];
+      }
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey;
       
@@ -166,6 +173,9 @@ export class StoreComponent implements OnInit {
         taxRate: this.taxRate ? this.taxRate : 0,
         refAddress: this.refAddress
       };      
+      if(this.images && this.images.length > 0) {
+        data.image = this.images[0];
+      }
       const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
       let args2 = [
         coinpoolAddress,

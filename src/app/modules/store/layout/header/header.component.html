@@ -34,6 +34,19 @@
                                 </li>
 
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
+                                    <!-- Account Sidebar Toggle Button -->
+                                    <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
+                                        data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
+                                        <i class="ec ec-user mr-1"></i> <a [routerLink]="['/account']">{{('My account') | translate}}</a>
+                                        <!-- <span
+                                                                                        class="text-primary-darken-5">or</span><a
+                                                                                        routerLink="/auth/signin">Sign
+                                                                                        in</a> -->
+                                    </a>
+                                    <!-- End Account Sidebar Toggle Button -->
+                                </li>
+
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
                                     <select class="select-css" [(ngModel)]="_lang" (change)="onChange($event.target.value)">
                                                     <option class="selectitem" selected="_lang==='en'" value="en">English</option>
                                                     <option class="selectitem" selected="_lang==='sc'" value="sc">中文</option>

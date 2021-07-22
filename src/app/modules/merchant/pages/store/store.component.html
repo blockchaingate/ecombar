@@ -20,6 +20,10 @@
         <label for="email"><b>{{'Fee Charger Smart Contract Address' | translate}}</b></label>
         <input type="text" placeholder="{{'Enter smart contract address' | translate}}" [(ngModel)]="feeChargerSmartContractAddress" name="smartContractAddress" required>
        -->
+       <div>
+        <label for="email"><b>Image</b></label>
+        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        </div>
 
         <div *ngIf="!(id)">
           <div>
@@ -68,7 +72,9 @@
         <div *ngIf="id">
           <label for="email"><b>{{'Ref address' | translate}}:</b></label>
           {{refAddress}}
-        </div>         
+        </div>     
+        
+
       </div>
       
 

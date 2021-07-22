@@ -7,6 +7,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stores-index',
@@ -26,6 +27,7 @@ export class StoresIndexComponent implements OnInit {
     private starServ: StarService,
     private storeageServ: StorageService,
     private toastr: ToastrService,
+    private router: Router,
     public kanbanServ: KanbanService,
     private modalService: BsModalService,
     private storeServ: StoreService) { }
@@ -106,5 +108,9 @@ export class StoresIndexComponent implements OnInit {
         }
       }
     );    
+  }
+
+  gotoStore(store) {
+    this.router.navigate(['/store/' + store._id]);
   }
 }
