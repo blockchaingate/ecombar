@@ -85,34 +85,7 @@ export class AdminComponent implements OnInit {
         title: 'Fee distribution',
         link: 'fee-distribution',
         icon: 'collection'
-      },
-      /*
-      {
-        title: 'Users',
-        link: 'users',
-        icon: 'user'
-      },
-      {
-        title: 'Merchant Applications',
-        link: 'merchant-applications',
-        icon: 'user'
-      },  
-      {
-        title: 'Products',
-        link: 'products',
-        icon: 'order'
-      },           
-      {
-        title: 'Orders',
-        link: 'orders',
-        icon: 'order'
-      },    
-      {
-        title: 'Merchant information',
-        link: 'merchant-info',
-        icon: 'information'
-      }  
-      */  
+      } 
     ];
 
 

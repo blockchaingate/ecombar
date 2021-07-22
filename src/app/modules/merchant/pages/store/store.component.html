@@ -39,16 +39,16 @@
           <label for="email"><b>{{'Coin' | translate}}:</b></label>
           {{coin}}
         </div>
+<!--
         <div *ngIf="!(id)">
           <label for="email"><b>{{'Tax rate' | translate}}</b></label>
           <input type="text" placeholder="{{'Tax rate' | translate}}" [(ngModel)]="taxRate" name="taxRate" required>
         </div>
-
-
         <div *ngIf="id">
           <label for="email"><b>{{'Tax rate' | translate}}:</b></label>
           {{taxRate}}
         </div> 
+        -->
         <div *ngIf="feeChargerSmartContractAddress">
           <label for="email"><b>{{'FeeCharger Smart contract address' | translate}}:</b></label>
           {{feeChargerSmartContractAddress}}

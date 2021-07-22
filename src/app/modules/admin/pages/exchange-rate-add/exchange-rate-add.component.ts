@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
 
 @Component({
   selector: 'app-exchange-rate-add',
@@ -29,6 +30,7 @@ export class ExchangeRateAddComponent implements OnInit {
   constructor(
     private dataServ: DataService,
     private coinServ: CoinService,
+    private spinner: NgxSpinnerService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
     private kanbanSmartContractServ: KanbanSmartContractService,
@@ -58,6 +60,13 @@ export class ExchangeRateAddComponent implements OnInit {
       this.coinName = params.get('coinName');   
       this.coinId = this.coinServ.getCoinTypeIdByName(this.coinName);
     });
+
+    this.route.queryParamMap.subscribe(
+      (map: any) => {
+        const params = map.params;
+        this.rate = params.rate;
+      }
+    );
   }
 
   checkOwner() {
@@ -97,6 +106,7 @@ export class ExchangeRateAddComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.spinner.show();
       this.addRateDo(seed);
     });
   }
@@ -125,6 +135,7 @@ export class ExchangeRateAddComponent implements OnInit {
     };
     const args = [this.coinId, this.rate * 1e8];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       this.toastr.success('exchange rate was updated successfully');
       this.router.navigate(['/admin/exchange-rate']);

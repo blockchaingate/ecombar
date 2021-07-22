@@ -61,7 +61,9 @@ export class ExchangeRateComponent implements OnInit {
     return rate;
   }
 
-  editExchangeRate(coinName) {
-    this.router.navigate(['/admin/exchange-rate/' + coinName + '/edit']);
+  editExchangeRate(coin) {
+    this.router.navigate(['/admin/exchange-rate/' + coin.name + '/edit'],{ queryParams: {
+      rate: coin.rate,
+    }});
   }
 }

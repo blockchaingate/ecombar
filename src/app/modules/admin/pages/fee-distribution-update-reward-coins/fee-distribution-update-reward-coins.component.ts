@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
 
 @Component({
   selector: 'app-fee-distribution-update-reward-coins',
@@ -35,6 +36,7 @@ export class FeeDistributionUpdateRewardCoinsComponent implements OnInit {
     private coinServ: CoinService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
+    private spinner: NgxSpinnerService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private toastr: ToastrService,
@@ -65,7 +67,7 @@ export class FeeDistributionUpdateRewardCoinsComponent implements OnInit {
         this.percentage2 = params.percentage2;
         this.percentage3 = params.percentage3;
       }
-    )
+    );
   }
 
   checkOwner() {
@@ -107,6 +109,7 @@ export class FeeDistributionUpdateRewardCoinsComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.spinner.show();
       this.updateDo(seed);
     });
   }
@@ -144,6 +147,7 @@ export class FeeDistributionUpdateRewardCoinsComponent implements OnInit {
     ]];
     console.log('args for updateTokensAndPercents==', args);
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       this.toastr.success('reward coins was updated successfully');
       this.router.navigate(['/admin/fee-distribution']);

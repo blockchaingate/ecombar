@@ -10,8 +10,24 @@
 
       <div>
         <label for="email"><b>Ref address:</b></label>
-        {{store?.refAddress | translateField}}
-      </div>      
+        {{store?.refAddress}}
+      </div>   
+      
+      <div>
+        <label for="email"><b>Coin:</b></label>
+        {{store?.coin}}
+      </div>     
+      
+      <div>
+        <label for="email"><b>Smart contract address:</b></label>
+        {{store?.smartContractAddress}}
+      </div>   
+
+      <div>
+        <label for="email"><b>feeCharger Smart contract address:</b></label>
+        {{store?.feeChargerSmartContractAddress}}
+      </div>   
+
       <div class="text-right py-2" *ngIf="isCoinPoolOwner">
         <button type="submit" class="btn signinbtn" (click)="approve()">{{('Approve') | translate}}</button>
       </div>

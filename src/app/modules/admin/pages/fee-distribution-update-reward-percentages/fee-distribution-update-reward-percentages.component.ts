@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
@@ -10,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
 
 @Component({
   selector: 'app-fee-distribution-update-reward-percentages',
@@ -36,7 +36,7 @@ export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
   
   constructor(
     private dataServ: DataService,
-    private coinServ: CoinService,
+    private spinner: NgxSpinnerService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
     private kanbanSmartContractServ: KanbanSmartContractService,
@@ -116,6 +116,7 @@ export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.spinner.show();
       this.updateDo(seed);
     });
   }
@@ -153,6 +154,7 @@ export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
     ]];
     console.log('args for updateTokensAndPercents==', args);
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       this.toastr.success('reward percentages was updated successfully');
       this.router.navigate(['/admin/fee-distribution']);
