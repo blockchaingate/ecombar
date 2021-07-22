@@ -24,7 +24,6 @@ import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
-
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { CommentComponent } from './pages/comment/comment.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
