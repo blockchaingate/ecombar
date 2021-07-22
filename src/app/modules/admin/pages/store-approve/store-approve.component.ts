@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
@@ -25,6 +25,7 @@ export class StoreApproveComponent implements OnInit {
   store: any;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private kanbanServ: KanbanService,
     private web3Serv: Web3Service,
     private utilServ: UtilService,
@@ -163,7 +164,7 @@ async approveDo(seed: Buffer) {
 
     const ret2 = await this.kanbanSmartContractServ.execSmartContract(seed, this.coinpoolAddress, abiToWhiteList, argsToWhiteList);
     console.log('ret2=', ret2);    
-    this.spinner.hide();
+    
     if(ret2 && ret2.ok && ret2._body && ret2._body.status == '0x1') {
 
 
@@ -184,12 +185,14 @@ async approveDo(seed: Buffer) {
       };
 
       const ret3 = await this.kanbanSmartContractServ.execSmartContract(seed, environment.addresses.smartContract.feeDistribution, abiRegisterFeeCharger, argsRegisterFeeCharger);
-
+      
       if(ret3 && ret3.ok && ret3._body && ret3._body.status == '0x1') {
         this.storeServ.update(this.store._id, {status: 1}).subscribe(
           (ret: any) => {
+            this.spinner.hide();
             if(ret && ret.ok) {
               this.toastr.success('the store was approved.');
+              this.router.navigate(['/admin/stores']);
             }
           }
         );

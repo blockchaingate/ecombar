@@ -141,7 +141,7 @@ export const environment = {
     smartContract: {
         feeDistribution: '0xeeac7c77710d3dbfcc4fe9ae4af260c8d01955ff',
         locker: '0xc9042097dAC6db6f79408bef99092e40D66D4BB6',
-        exchangeRate: '0x340b322cc2c6c1bf53505aaeede3d6fe24c737c1',
+        exchangeRate: '0x6e6a2a79ebea4dfa66cb752c372917e6f5d38895',
         
         NFT_Exchange: '0x2c8aa9e76fc3c92a799c6c68926bd24e53ff9abb',
         ProxyRegistry: '0x2e553ad1cd6ba24be952cc7273e4d869d19b1586',

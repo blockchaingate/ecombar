@@ -189,6 +189,7 @@ export class StoreComponent implements OnInit {
               if(receipt.transactionReceipt.contractAddress) {
                 const feeChargerSmartContractAddress = receipt.transactionReceipt.contractAddress;
                 data.feeChargerSmartContractAddress = feeChargerSmartContractAddress;
+                this.taxRate = 0;
                 let args = [
                   feeChargerSmartContractAddress, 
                   this.coinServ.getCoinTypeIdByName(this.coin), 

@@ -1,5 +1,5 @@
 <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible" *ngIf="products">
-    <li  *ngFor="let item of products" class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+    <li  *ngFor="let item of products" class="col-wd-3 col-md-4 pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
         <div class="product-item__outer h-100 w-100">
             <div class="product-item__inner p-md-3 row no-gutters">
                 <div class="col col-lg-auto product-media-left">
@@ -18,9 +18,11 @@
                             <a [routerLink]="['/store/' + storeId + '/product/' + item._id]" class="text-blue font-weight-bold">
                             {{item.title | translateField}}
                             </a>
+                            <!--
                             <a href="{{iddockRoot}}/detail/things/{{item.objectId}}" *ngIf="item.objectId">
                                 <img src="/assets/iddock.ico">
                             </a>
+                            -->
                         </h5>
                     </div>
                     <div class="flex-center-between mb-3">

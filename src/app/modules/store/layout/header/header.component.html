@@ -19,24 +19,12 @@
                                     <a href="#" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
                                                                                 {{"Track Your Order"|translate}}</a>
                                 </li>
-                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg u-header-topbar__nav-item-no-border u-header-topbar__nav-item-border-single">
-                                    <div class="d-flex align-items-center" *ngIf="currency">
-                                        <!-- Language -->
-                                        <div class="position-relative">
-                                            <span class="d-inline-block d-sm-none text-regular">{{currency}}</span>
-                                            <span class="d-none d-sm-inline-flex align-items-center text-regular">
-                                                    <img src="{{getLogo(currency)}}" class="img-logo">
-                                                    {{currencyBalance}}{{currency}}</span>
-
-                                        </div>
-                                        <!-- End Language -->
-                                    </div>
-                                </li>
-                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
+                                <li *ngIf="currency" class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
                                     <!-- Account Sidebar Toggle Button -->
                                     <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
                                         data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
-                                        <i class="ec ec-user mr-1"></i> <a [routerLink]="[user ? '/admin' : '/auth/signin']">{{(user ? 'My account' : 'Login') | translate}}</a>
+                                        <img src="{{getLogo(currency)}}" class="img-logo">&nbsp;
+                                        <a>{{currencyBalance}}{{currency}}</a>
                                         <!-- <span
                                                                                         class="text-primary-darken-5">or</span><a
                                                                                         routerLink="/auth/signin">Sign
