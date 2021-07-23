@@ -16,7 +16,7 @@ import { UtilService } from './modules/shared/services/util.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Collection Gala';
+  title = 'ecombar';
 
   constructor(
     private appServ: AppService, 

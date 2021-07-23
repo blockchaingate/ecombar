@@ -151,7 +151,6 @@ addresses: {
         NFT_Exchange: '0x3f33980e2767fa3683595afddeab163af46a5566',
         ProxyRegistry: '0x640677e09c8f063d4a0a3a5a03a7bb7d4b3c13f7',                   
         FABLOCK: '0x04baa04d9550c49831427c6abe16def2c579af4a',
-        FEE_CHARGER: '0x6ced34107a815b7539397c2e3ac109d04f0e0949',
         EXG: '0xa3e26671a38978e8204b8a37f1c2897042783b00',
         USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
         DUSD: '0x46e0021c17d30a2db972ee5719cdc7e829ed9930',

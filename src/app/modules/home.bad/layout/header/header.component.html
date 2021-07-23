@@ -5,7 +5,7 @@
 
         </div>
         <div>
-            Collection Gala
+            eComBar
         </div>
 
 
@@ -47,38 +47,29 @@
                 <div class="container">
                     <div class="d-flex align-items-center">
                         <div class="topbar-left">
-                            <a href="#" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to
-                                Collection Gala" | translate}}</a>
+                            <a href="#" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to Ecombar" | translate}}</a>
                         </div>
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
                                     <a href="#" class="u-header-topbar__nav-link">
                                         <i class="ec ec-map-pointer mr-1"></i>{{"Store Locator"|translate}}</a>
                                 </li>
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
                                     <a href="#" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
-                                        {{"Track Your Order"|translate}}</a>
+                                                                                {{"Track Your Order"|translate}}</a>
                                 </li>
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg u-header-topbar__nav-item-no-border u-header-topbar__nav-item-border-single">
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg u-header-topbar__nav-item-no-border u-header-topbar__nav-item-border-single">
                                     <div class="d-flex align-items-center">
                                         <!-- Language -->
                                         <div class="position-relative">
-                                            <a id="languageDropdownInvoker"
-                                                class="dropdown-nav-link dropdown-toggle d-flex align-items-center u-header-topbar__nav-link font-weight-normal"
-                                                href="javascript:;" role="button" aria-controls="languageDropdown"
-                                                aria-haspopup="true" aria-expanded="false" data-unfold-event="hover"
-                                                data-unfold-target="#languageDropdown" data-unfold-type="css-animation"
-                                                data-unfold-duration="300" data-unfold-delay="300"
-                                                data-unfold-hide-on-scroll="true" data-unfold-animation-in="slideInUp"
+                                            <a id="languageDropdownInvoker" class="dropdown-nav-link dropdown-toggle d-flex align-items-center u-header-topbar__nav-link font-weight-normal" href="javascript:;" role="button" aria-controls="languageDropdown" aria-haspopup="true" aria-expanded="false"
+                                                data-unfold-event="hover" data-unfold-target="#languageDropdown" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-delay="300" data-unfold-hide-on-scroll="true" data-unfold-animation-in="slideInUp"
                                                 data-unfold-animation-out="fadeOut">
                                                 <span class="d-inline-block d-sm-none">US</span>
                                                 <span class="d-none d-sm-inline-flex align-items-center">
-                                                    <i class="ec ec-dollar mr-1"></i>
-                                                    {{"US Dollar"|translate}}</span>
+                                                        <i class="ec ec-dollar mr-1"></i>
+                                                        {{"US Dollar"|translate}}</span>
                                             </a>
                                             <!--
                                             <div id="languageDropdown" class="dropdown-menu dropdown-unfold" aria-labelledby="languageDropdownInvoker">
@@ -91,18 +82,11 @@
                                         <!-- End Language -->
                                     </div>
                                 </li>
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
                                     <!-- Account Sidebar Toggle Button -->
-                                    <a id="sidebarNavToggler" href="javascript:;" role="button"
-                                        class="u-header-topbar__nav-link" aria-controls="sidebarContent"
-                                        aria-haspopup="true" aria-expanded="false" data-unfold-event="click"
-                                        data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
-                                        data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight"
-                                        data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
-                                        <i class="ec ec-user mr-1"></i> <a
-                                            [routerLink]="[user ? '/admin' : '/auth/signin']">{{(user ? 'My account' :
-                                            'Login') | translate}}</a>
+                                    <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
+                                        data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
+                                        <i class="ec ec-user mr-1"></i> <a [routerLink]="[user ? '/admin' : '/auth/signin']">{{(user ? 'My account' : 'Login') | translate}}</a>
                                         <!-- <span
                                                                                         class="text-primary-darken-5">or</span><a
                                                                                         routerLink="/auth/signin">Sign
@@ -111,13 +95,11 @@
                                     <!-- End Account Sidebar Toggle Button -->
                                 </li>
 
-                                <li
-                                    class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
-                                    <select class="select-css" [(ngModel)]="_lang"
-                                        (change)="onChange($event.target.value)">
-                                        <option class="selectitem" selected="_lang==='en'" value="en">English</option>
-                                        <option class="selectitem" selected="_lang==='sc'" value="sc">中文</option>
-                                    </select>
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
+                                    <select class="select-css" [(ngModel)]="_lang" (change)="onChange($event.target.value)">
+                                                    <option class="selectitem" selected="_lang==='en'" value="en">English</option>
+                                                    <option class="selectitem" selected="_lang==='sc'" value="sc">中文</option>
+                                                </select>
                                 </li>
                             </ul>
                         </div>
@@ -133,30 +115,30 @@
                         <!-- Logo-offcanvas-menu -->
                         <div class="col-auto">
                             <!-- Nav -->
-                            <nav
-                                class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
+                            <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                                 <!-- Logo -->
-                                <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center"
-                                    routerLink="/" aria-label="Electro">
-                                    <img class="main-logo" src="/assets/images/logo/collection-gala-2.png" />
-                                    <div class="logo-text">Collection Gala</div>
+                                <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center" routerLink="/" aria-label="Electro">
+                                    <img class="main-logo" src="/assets/images/logo/ecombar-logo.png" />
+                                    <div class="logo-text">ECOMBAR</div>
+
+
+
                                 </a>
                                 <!-- End Logo -->
 
                                 <!-- Fullscreen Toggle Button -->
-                                <button id="sidebarHeaderInvokerMenu" type="button"
-                                    class="navbar-toggler d-block btn u-hamburger mr-3 mr-xl-0" (click)="openMenu()">
-                                    <span id="hamburgerTriggerMenu" class="u-hamburger__box">
-                                        <span class="u-hamburger__inner"></span>
-                                    </span>
-                                </button>
+                                <button id="sidebarHeaderInvokerMenu" type="button" class="navbar-toggler d-block btn u-hamburger mr-3 mr-xl-0" (click)="openMenu()">
+                                                                        <span id="hamburgerTriggerMenu"
+                                                                                class="u-hamburger__box">
+                                                                                <span class="u-hamburger__inner"></span>
+                                                                        </span>
+                                                                </button>
                                 <!-- End Fullscreen Toggle Button -->
                             </nav>
                             <!-- End Nav -->
 
                             <!-- ========== HEADER SIDEBAR ========== -->
-                            <aside id="sidebarHeader1" class="u-sidebar u-sidebar--left"
-                                aria-labelledby="sidebarHeaderInvokerMenu" *ngIf='menu'>
+                            <aside id="sidebarHeader1" class="u-sidebar u-sidebar--left" aria-labelledby="sidebarHeaderInvokerMenu" *ngIf='menu'>
 
                                 <div class="u-sidebar__scroller">
                                     <div class="u-sidebar__container">
@@ -164,20 +146,16 @@
                                             <!-- Toggle Button -->
                                             <div class="position-absolute top-0 right-0 z-index-2 pt-4 pr-7">
                                                 <button type="button" class="close ml-auto" (click)="closeMenu()">
-                                                    <span aria-hidden="true">
-                                                        <i class="ec ec-close-remove text-gray-90 font-size-20"></i>
-                                                    </span>
+                                                        <span aria-hidden="true"><i class="ec ec-close-remove text-gray-90 font-size-20"></i></span>
                                                 </button>
                                             </div>
                                             <!-- End Toggle Button -->
 
                                             <!-- Content -->
                                             <div class="js-scrollbar u-sidebar__body">
-                                                <div id="headerSidebarContent"
-                                                    class="u-sidebar__content u-header-sidebar__content">
+                                                <div id="headerSidebarContent" class="u-sidebar__content u-header-sidebar__content">
                                                     <!-- Logo -->
-                                                    <a class="d-flex ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical"
-                                                        routerLink="/" aria-label="Electro">
+                                                    <a class="d-flex ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical" routerLink="/" aria-label="Electro">
                                                         <img src="/assets/images/logo/ecombar-logo.png" />
                                                     </a>
                                                     <!-- End Logo -->
@@ -200,23 +178,16 @@
                             <form class="js-focus-state" (ngSubmit)="onSearch()">
                                 <label class="sr-only" for="searchproduct">{{'Search'|translate}}</label>
                                 <div class="input-group">
-                                    <input type="text" name="searchText" [(ngModel)]="searchText"
-                                        class="form-control py-2 pl-5 font-size-15 border-right-0 height-42 border-width-0 rounded-left-pill border-primary"
-                                        name="email" id="searchproduct-item"
-                                        placeholder="{{'Search for Products'|translate}}"
-                                        aria-label="Search for Products" aria-describedby="searchProduct1" required>
+                                    <input type="text" name="searchText" [(ngModel)]="searchText" class="form-control py-2 pl-5 font-size-15 border-right-0 height-42 border-width-0 rounded-left-pill border-primary" name="email" id="searchproduct-item" placeholder="{{'Search for Products'|translate}}" aria-label="Search for Products"
+                                        aria-describedby="searchProduct1" required>
                                     <div class="input-group-append" *ngIf="categories">
                                         <!-- Select -->
-                                        <select [(ngModel)]="categoryId" name="categoryId"
-                                            class="js-select selectpicker dropdown-select custom-search-categories-select bg-white"
-                                            data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
+                                        <select [(ngModel)]="categoryId" name="categoryId" class="js-select selectpicker dropdown-select custom-search-categories-select bg-white" data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
                                             <option value="" selected>{{"All Categories"|translate}}</option>
-                                            <option *ngFor="let category of categories" value="{{category._id}}">
-                                                {{category.category | translateField}}</option>
+                                            <option *ngFor="let category of categories" value="{{category._id}}">{{category.category | translateField}}</option>
                                         </select>
                                         <!-- End Select -->
-                                        <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill"
-                                            type="submit" id="searchProduct1" routerLinkActive="router-link-active">
+                                        <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill" type="submit" id="searchProduct1" routerLinkActive="router-link-active">
                                             <span class="ec ec-search font-size-20"></span>
                                         </button>
                                     </div>
@@ -230,26 +201,17 @@
                                 <ul class="d-flex list-unstyled mb-0 align-items-center">
                                     <!-- Search -->
                                     <li class="col d-xl-none px-2 px-sm-3 position-static">
-                                        <a id="searchClassicInvoker"
-                                            class="font-size-22 text-gray-90 text-lh-1 btn-text-secondary"
-                                            href="javascript:;" role="button" data-toggle="tooltip" data-placement="top"
-                                            title="Search" aria-controls="searchClassic" aria-haspopup="true"
-                                            aria-expanded="false" data-unfold-target="#searchClassic"
-                                            data-unfold-type="css-animation" data-unfold-duration="300"
-                                            data-unfold-delay="300" data-unfold-hide-on-scroll="true"
-                                            data-unfold-animation-in="slideInUp" data-unfold-animation-out="fadeOut">
+                                        <a id="searchClassicInvoker" class="font-size-22 text-gray-90 text-lh-1 btn-text-secondary" href="javascript:;" role="button" data-toggle="tooltip" data-placement="top" title="Search" aria-controls="searchClassic" aria-haspopup="true" aria-expanded="false"
+                                            data-unfold-target="#searchClassic" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-delay="300" data-unfold-hide-on-scroll="true" data-unfold-animation-in="slideInUp" data-unfold-animation-out="fadeOut">
                                             <span class="ec ec-search"></span>
                                         </a>
 
                                         <!-- Input -->
-                                        <div id="searchClassic"
-                                            class="dropdown-menu dropdown-unfold dropdown-menu-right left-0 mx-2"
-                                            aria-labelledby="searchClassicInvoker">
+                                        <div id="searchClassic" class="dropdown-menu dropdown-unfold dropdown-menu-right left-0 mx-2" aria-labelledby="searchClassicInvoker">
                                             <form class="js-focus-state input-group px-3">
                                                 <input class="form-control" type="search" placeholder="Search Product">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-primary px-3" type="button"><i
-                                                            class="font-size-18 ec ec-search"></i></button>
+                                                    <button class="btn btn-primary px-3" type="button"><i class="font-size-18 ec ec-search"></i></button>
                                                 </div>
                                             </form>
                                         </div>
@@ -263,20 +225,16 @@
                                     </li>
                                     -->
                                     <li class="col d-none d-xl-block">
-                                        <a routerLink="/wishlist" class="text-gray-90" data-toggle="tooltip"
-                                            data-placement="top" title="Favorites"><i
-                                                class="font-size-22 ec ec-favorites"></i></a>
+                                        <a routerLink="/wishlist" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Favorites"><i
+                                                                                                class="font-size-22 ec ec-favorites"></i></a>
                                     </li>
                                     <!-- <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html"
                                             class="text-gray-90" data-toggle="tooltip" data-placement="top"
                                             title="My Account"><i class="font-size-22 ec ec-user"></i></a></li> -->
                                     <li class="col pr-xl-0 px-2 px-sm-3">
-                                        <a [routerLink]="['/cart']" class="text-gray-90 position-relative d-flex "
-                                            data-toggle="tooltip" data-placement="top" title="Cart">
+                                        <a [routerLink]="['/cart']" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="Cart">
                                             <i class="font-size-22 ec ec-shopping-bag"></i>
-                                            <span
-                                                class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white">
-                                                {{cartCount}}</span>
+                                            <span class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white"> {{cartCount}}</span>
                                             <!-- <div class="px-3 mx-3 cursor-pointer" [routerLink]="['/cart']">
                                                                                                         <span [attr.badge]="cartCount">
                                                                                                             {{'Cart' | translate}}
@@ -301,21 +259,18 @@
                 <div class="container">
                     <div class="min-height-45">
                         <!-- Nav -->
-                        <nav
-                            class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--wide u-header__navbar--no-space">
+                        <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--wide u-header__navbar--no-space">
                             <!-- Navigation -->
                             <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
                                 <ul class="navbar-nav u-header__navbar-nav">
                                     <li class="nav-item hs-has-mega-menu u-header__nav-item">
                                         <a class="nav-link u-header__nav-link " href="/">{{'Home'|translate}}</a>
                                     </li>
-                                    <li *ngFor="let category of categories"
-                                        class="nav-item hs-has-mega-menu u-header__nav-item">
-                                        <a class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                            href="/category/{{category._id}}">{{category.category | translateField}}</a>
+                                    <li *ngFor="let category of categories" class="nav-item hs-has-mega-menu u-header__nav-item">
+                                        <a class="nav-link u-header__nav-link u-header__nav-link-toggle" href="/category/{{category._id}}">{{category.category | translateField}}</a>
                                         <div class="hs-mega-menu w-100 u-header__sub-menu"
-                                            aria-labelledby="smartphonesMegaMenu">
-                                            <app-sub-categories [category]="category"></app-sub-categories>
+aria-labelledby="smartphonesMegaMenu">
+                                        <app-sub-categories [category]="category"></app-sub-categories>
                                         </div>
                                     </li>
                                     <!-- Smart Phones -->
