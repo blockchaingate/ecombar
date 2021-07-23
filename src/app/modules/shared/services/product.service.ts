@@ -7,11 +7,11 @@ export class ProductService {
   constructor(private http: HttpService) { }
 
   create(data: Product) {
-    return this.http.post('products/Create', data, true);
+    return this.http.post('products/Create', data, false);
   }
 
   update(id: string, data: Product) {
-    return this.http.put('products/Update/' + id, data, true);
+    return this.http.put('products/Update/' + id, data, false);
   }
 
   getProduct(id: string) {
@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   getProductsOwnedBy(address: string){
-    return this.http.get('products/ownedBy/' + address, true);
+    return this.http.get('products/ownedBy/' + address, false);
   }
   
   deleteProduct(id: string) {

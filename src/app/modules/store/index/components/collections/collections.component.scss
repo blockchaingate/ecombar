@@ -1,0 +1,22 @@
+.featured-products-container div.title-line {
+    position: relative;
+    height: 1px;
+    z-index: -999;
+    background-color: #dde9e8;
+    top: 23px;
+}
+
+.featured-products-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.featured-products-container div span {
+    font-size: 30px;
+    z-index: 999;
+    overflow: hidden;
+}
+
+.section-title {
+    text-transform: capitalize;
+}

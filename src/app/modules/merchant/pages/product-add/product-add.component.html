@@ -203,11 +203,11 @@
                 <div class="container">  
                   <div class="py-2">
                     <label for="psw"><b>Price</b></label>
-                    <div>
+                    <div class="d-flex align-items-center">
                       <div class="d-inline-block px-2">
-                        <input type="text" placeholder="Enter price" [(ngModel)]="price" name="price" required>
+                        <input type="text"  placeholder="Enter price" [(ngModel)]="price" name="price" required>
                       </div>
-                      USD
+                      {{currency}}
                     </div>
 
                   </div>

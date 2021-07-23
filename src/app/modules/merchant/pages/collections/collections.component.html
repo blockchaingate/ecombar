@@ -1,7 +1,7 @@
 
 <div class="container">
     <div class="text-right my-2">
-      <button class="btn" routerLink="/admin/collection/add" routerLinkActive="active">{{'New' | translate}}</button>
+      <button class="btn" routerLink="/merchant/collection/add" routerLinkActive="active">{{'New' | translate}}</button>
     </div>
   
     <ul class="responsive-table">
@@ -22,7 +22,7 @@
           </div>
     
           <div class="d-inline-block px-2">
-            <a (click)="deleteCollection(collection)">
+            <a (click)="deleteCollection(collection._id)">
               <img src="/assets/svg/delete.svg">
             </a>
           </div> 

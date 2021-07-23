@@ -17,7 +17,9 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import BigNumber from 'bignumber.js/bignumber';
-
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
 
 @Component({
   selector: 'app-admin-product-add',
@@ -89,10 +91,11 @@ export class ProductAddComponent implements OnInit {
     private iddockServ: IddockService,
     private modalService: BsModalService,
     //private ngxSmartModalServ: NgxSmartModalService,
-    private localSt: LocalStorage,
-    private userServ: UserService,
+    private spinner: NgxSpinnerService,
+    private coinServ: CoinService,
     private categoryServ: CategoryService,
     private kanbanSmartContractServ: KanbanSmartContractService,
+    private kanbanServ: KanbanService,
     private brandServ: BrandService,
     private utilServ: UtilService,
     private productServ: ProductService) {
@@ -141,10 +144,11 @@ export class ProductAddComponent implements OnInit {
       }
     );  
     
-    this.dataServ.currentStore.subscribe(
+    this.dataServ.currentMyStore.subscribe(
       (store: any) => {
         if(store) {
           this.smartContractAddress = store.smartContractAddress;
+          this.currency = store.coin;
         }
       }
     );
@@ -328,6 +332,10 @@ export class ProductAddComponent implements OnInit {
 
   saveProduct() {
     //this.ngxSmartModalServ.getModal('passwordModal').open();
+    if(!this.price || !Number(this.price)) {
+      this.toastrServ.info('price should be filled properly');
+      return;
+    }
     const initialState = {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
@@ -336,6 +344,7 @@ export class ProductAddComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.spinner.show();
       this.saveProductDo(seed);
     });
   }
@@ -357,6 +366,9 @@ export class ProductAddComponent implements OnInit {
   async saveProductDo(seed: Buffer) {
     console.log('this.images=', this.images);
     //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey;
+
     const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
     const subtitleLan: TextLan = { name: 'subtitle', en: this.subtitle, sc: this.subtitleChinese };
     const featuresLan: TextLan = { name: 'features', en: this.features, sc: this.featuresChinese };
@@ -383,7 +395,6 @@ export class ProductAddComponent implements OnInit {
       features:featuresLan,      
       specs: specLan,
       price: parseInt(this.price), // in cents
-      currency: 'USD',
       keywords: this.keywords,
       contents: this.contents,
       primaryCategoryId: this.category ? this.category : null,
@@ -398,7 +409,7 @@ export class ProductAddComponent implements OnInit {
 
     if(!this.id) {
       (await this.iddockServ.addIdDock(seed, 'things', null, data, null)).subscribe( async res => {
-        console.log('ress=', res);
+        console.log('ress from addIdDock=', res);
         if(res) {
           if(res.ok) {
             console.log('res.body._id=', res._body._id);
@@ -428,18 +439,30 @@ export class ProductAddComponent implements OnInit {
             console.log('args===', args);
             const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
             console.log('rettt=', ret);
-            this.productServ.create(data).subscribe(
-              (res: any) => {
-                this.router.navigate(['/merchant/products']);
-              }
-            );
+            if(ret.ok && ret._body && ret._body.status == '0x1') {
+              const sig = this.kanbanServ.signJsonData(privateKey, data);
+              data['sig'] = sig.signature;                 
+              this.productServ.create(data).subscribe(
+                (res: any) => {
+                  this.spinner.hide();
+                  this.router.navigate(['/merchant/products']);
+                }
+              );
+            } else {
+              this.spinner.hide();
+              this.toastrServ.error('Failed to execute smart contract');
+            }
+
           } else {
+            this.spinner.hide();
             this.toastrServ.error('add to id dock error');
           }
           
         }
       });      
     } else {
+      const sig = this.kanbanServ.signJsonData(privateKey, data);
+      data['sig'] = sig.signature;       
       this.productServ.update(this.id, data).subscribe(
         async (res: any) => {
           console.log('res=', res);

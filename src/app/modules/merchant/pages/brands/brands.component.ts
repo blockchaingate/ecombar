@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../../shared/services/brand.service';
 import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 import { Router } from '@angular/router';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 @Component({
   selector: 'app-admin-brands',
@@ -13,54 +15,75 @@ import { Router } from '@angular/router';
 })
 export class BrandsComponent implements OnInit {
   brands: any;
-
+  wallet: any;
+  modalRef: BsModalRef;
   constructor(
-    private userServ: UserService,
-    private authServ: AuthService,
-    private merchantServ: MerchantService,
+    public kanbanServ: KanbanService,
+    private modalService: BsModalService,
+    private dataServ: DataService,
     private router: Router,
     private brandServ: BrandService) {
 
   }
 
   ngOnInit() {
-
-    this.getBrands();
-  }
-  getBrands() {
-    const merchantId = this.merchantServ.id;
-
-    if (this.userServ.isSystemAdmin) {
-      this.brandServ.getBrands().subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.brands = res._body;
-          }
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        console.log('walletAddressvvvffff=', walletAddress);
+        if(walletAddress) {
+          this.getMerchantBrands(walletAddress);
         }
-      );
-    } else
-      if (merchantId) {
-        this.brandServ.getMerchantBrands(merchantId).subscribe(
-          (res: any) => {
-            if (res && res.ok) {
-              this.brands = res._body;
-            }
-          }
-        );
+        
       }
+    );
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
   }
-
-  editBrand(brand) {
-    this.router.navigate(['/admin/brand/' + brand._id + '/edit']);
-  }
-
-  deleteBrand(product) {
-    this.brandServ.deleteBrand(product._id).subscribe(
+  getMerchantBrands(walletAddress: string) {
+    this.brandServ.getMerchantBrands(walletAddress).subscribe(
       (res: any) => {
+        console.log('resssss=', res);
         if (res && res.ok) {
-          this.brands = this.brands.filter((item) => item._id != product._id);
+          this.brands = res._body;
         }
       }
     );
   }
+
+  editBrand(brand_id: string) {
+    this.router.navigate(['/merchant/brand/' + brand_id + '/edit']);
+  }
+
+  deleteBrand(brand_id) {
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.deleteBrandDo(privateKey, brand_id);
+    });
+  }
+
+  deleteBrandDo(privateKey: any, brand_id: string) {
+    const data = {
+      id: brand_id
+    };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;        
+    this.brandServ.deleteBrand(data).subscribe(
+      (res: any) => {
+        if (res && res.ok) {
+          this.brands = this.brands.filter((item) => item._id != brand_id);
+        }
+      }
+    );
+  }
+
 }

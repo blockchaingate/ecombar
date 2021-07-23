@@ -3,10 +3,28 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () =>
-      import('./modules/nft/nft.module').then(m => m.NftModule)
+    path: '', loadChildren: () => import('./modules/stores/stores.module').then(m => m.StoresModule)
   },
+  {
+    path: 'stores',
+    loadChildren: () =>
+      import('./modules/stores/stores.module').then(m => m.StoresModule)
+  },  
+  {
+    path: 'team',
+    loadChildren: () =>
+      import('./modules/team/team.module').then(m => m.TeamModule)
+  },  
+  {
+    path: 'store/:storeId',
+    loadChildren: () =>
+      import('./modules/store/store.module').then(m => m.StoreModule)
+  },   
+  {
+    path: 'iddock',
+    loadChildren: () =>
+      import('./modules/iddock/iddock.module').then(m => m.IddockModule)
+  },   
   {
     path: 'admin',
     loadChildren: () =>
@@ -38,9 +56,7 @@ const routes: Routes = [
       import('./modules/nft/nft.module').then(m => m.NftModule)
   },
   {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
+    path: '', redirectTo: '/home', pathMatch: 'full'
   }
 ];
 

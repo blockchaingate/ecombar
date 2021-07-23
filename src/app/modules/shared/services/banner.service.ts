@@ -21,15 +21,15 @@ export class BannerService {
     return this.http.get('banners/admin', false);
   }
 
-  getMerchantBanners(merchantId: string) {
-    return this.http.get('banners/merchant/' + merchantId, false);
+  getMerchantBanners(walletAddress: string) {
+    return this.http.get('banners/merchant/' + walletAddress, false);
   }
 
   getBanner(id: string) {
     return this.http.get('banners/' + id, false);
   }
 
-  deleteBanner(id: string) {
-    return this.http.get('banners/Delete/' + id);
+  deleteBanner(data: any) {
+    return this.http.post('banners/Delete', data);
   }
 }

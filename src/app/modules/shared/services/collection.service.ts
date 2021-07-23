@@ -26,15 +26,15 @@ export class CollectionService {
     return this.http.get('product-collections/admin');
   }
 
-  getMerchantCollections(merchantId: string) {
-    return this.http.get('product-collections/merchant/' + merchantId);
+  getMerchantCollections(walletAddress: string) {
+    return this.http.get('product-collections/merchant/' + walletAddress);
   }
 
   getCollection(id: string) {
     return this.http.get('product-collections/' + id);
   }
 
-  deleteCollection(id) {
-    return this.http.get('product-collections/Delete/' + id);
+  deleteCollection(data: any) {
+    return this.http.post('product-collections/Delete', data);
   }
 }

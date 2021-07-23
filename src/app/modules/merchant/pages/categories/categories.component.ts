@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+
 
 @Component({
   selector: 'app-admin-categories',
@@ -13,34 +17,36 @@ import { StorageService } from '../../../shared/services/storage.service';
 })
 export class CategoriesComponent implements OnInit {
   categories: any;
+  wallet: any;
+  modalRef: BsModalRef;
   constructor(
-    private merchantServ: MerchantService,
+    private modalService: BsModalService,
     private router: Router,
-    private storageServ: StorageService,
+    private dataServ: DataService,
+    public kanbanServ: KanbanService,
     private categoryServ: CategoryService) {
   }
 
   ngOnInit() {
+
+
     this.categories = [];
-    const merchantId = this.merchantServ.id;
-
-
-    this.storageServ.checkSystemAdmin().subscribe(
-      (ret) => {
-        if (ret) {
-          this.getAdminCategories();
-        } else
-        if (merchantId) {
-          //this.getAdminCategories();
-          this.getMerchantCategories(merchantId);
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.getMerchantCategories(walletAddress);
         }
       }
     );
-
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    );      
   }
 
-  getMerchantCategories(merchantId: string) {
-    this.categoryServ.getMerchantCategories(merchantId).subscribe(
+  getMerchantCategories(walletAddress: string) {
+    this.categoryServ.getMerchantCategories(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.categories = this.categories.concat(res._body);
@@ -49,30 +55,34 @@ export class CategoriesComponent implements OnInit {
     );
   }
 
-  getAdminCategories() {
-    this.categoryServ.getAdminCategories().subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          const categories = res._body;
-          const adminCategories = categories.map(item => {
-            item.admin = true;
-            return item;
-          });
-          this.categories = this.categories.concat(adminCategories);
-        }
-      }
-    );
-  }
-
   editCategory(category) {
-    this.router.navigate(['/admin/category/' + category._id + '/edit']);
+    this.router.navigate(['/merchant/category/' + category._id + '/edit']);
   }
 
-  deleteCategory(category) {
-    this.categoryServ.deleteCategory(category._id).subscribe(
+  deleteCategory(category_id) {
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.deleteCategoryDo(privateKey, category_id);
+    });
+  }
+
+  deleteCategoryDo(privateKey: any, category_id: string) {
+    const data = {
+      id: category_id
+    };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;        
+    this.categoryServ.deleteCategory(data).subscribe(
       (res: any) => {
         if (res && res.ok) {
-          this.categories = this.categories.filter((item) => item._id != category._id);
+          this.categories = this.categories.filter((item) => item._id != category_id);
         }
       }
     );

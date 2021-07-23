@@ -32,7 +32,7 @@ export class KanbanSmartContractService {
         return this.web3Serv.getGeneralFunctionABI(abi, args);
     }
 
-    async getExecSmartContractHex(seed: Buffer, smartContractAddress: string, abi: any, args: any) {
+    async getExecSmartContractHexWithData(seed: Buffer, smartContractAddress: string, kanbanData: any) {
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       let gasPrice = environment.chains.KANBAN.gasPrice;
       let gasLimit = 8000000;
@@ -40,7 +40,7 @@ export class KanbanSmartContractService {
   
       let kanbanValue = 0;
   
-      const kanbanData = this.formExecKanbanSmartContractABI(abi, args);
+      
       const txObject = {
           nonce: nonce,
           to: smartContractAddress,
@@ -75,10 +75,22 @@ export class KanbanSmartContractService {
       txhex = '0x' + serializedTx.toString('hex');     
       return txhex; 
     }
+
+    async getExecSmartContractHex(seed: Buffer, smartContractAddress: string, abi: any, args: any) {
+      const kanbanData = this.formExecKanbanSmartContractABI(abi, args);
+      return this.getExecSmartContractHexWithData(seed, smartContractAddress, kanbanData);
+    }
     
     async execSmartContract(seed: Buffer, smartContractAddress: string, abi: any, args: any) {
 
       const txhex = await this.getExecSmartContractHex(seed, smartContractAddress, abi, args);
+        const res = await this.kanbanServ.sendRawSignedTransactionPromise(txhex);
+        return res;
+    }
+
+    async execSmartContractWithData(seed: Buffer, smartContractAddress: string, data: any) {
+
+      const txhex = await this.getExecSmartContractHexWithData(seed, smartContractAddress, data);
         const res = await this.kanbanServ.sendRawSignedTransactionPromise(txhex);
         return res;
     }

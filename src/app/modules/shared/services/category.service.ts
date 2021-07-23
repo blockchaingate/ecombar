@@ -28,15 +28,15 @@ export class CategoryService {
   }
   
 
-  getMerchantCategories(merchantId: string) {
-    return this.http.get('product-categories/merchant/' + merchantId, false);
+  getMerchantCategories(walletAddress: string) {
+    return this.http.get('product-categories/merchant/' + walletAddress, false);
   }
 
   getCategory(id: string) {
     return this.http.get('product-categories/' + id, false);
   }
 
-  deleteCategory(id: string) {
-    return this.http.delete('product-categories/delete/' + id);
+  deleteCategory(data: any) {
+    return this.http.post('product-categories/Delete', data);
   }
 }

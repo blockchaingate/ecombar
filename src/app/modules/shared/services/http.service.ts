@@ -25,12 +25,11 @@ export class HttpService {
 
     get(path: string, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-        console.log('url for get==', url);
+        console.log('url ==', url);
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {
@@ -92,13 +91,12 @@ export class HttpService {
 
     post(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-        data.appId = environment.appid;
+        //data.appId = environment.appid;
 
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {
@@ -187,12 +185,10 @@ export class HttpService {
 
     put(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-        data.appId = environment.appid;
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {
@@ -277,7 +273,6 @@ export class HttpService {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        console.log('token=', token);
                         if(!token) {
                             observer.error('Token not exists');
                         } else {
@@ -391,6 +386,7 @@ export class HttpService {
     */
     // fullUrl: http://...  or https://...
     getRaw(fullUrl: string, options?:any): Observable<any> {
+        console.log('fullUrl =', fullUrl);
         return this.http.get(fullUrl, options);
     }
 

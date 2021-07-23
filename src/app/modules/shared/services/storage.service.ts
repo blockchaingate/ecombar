@@ -93,6 +93,14 @@ export class StorageService {
         this.storage.delete('_token').subscribe(ret => { });
     }
 
+    storeRef(refAddress: string) {
+        this.storage.set('customer_ref', refAddress).subscribe(ret => { });
+    }
+
+    getStoreRef() {
+        return this.storage.get('customer_ref');
+    }
+    
     set user(newUser: User) {
         this._user = newUser;
         this.storage.set('_user', newUser).subscribe(ret => { });

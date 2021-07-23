@@ -1,5 +1,6 @@
 pragma solidity ^0.7.6;
 pragma abicoder v2;
+import "./SafeMath.sol";
 import "./ownable.sol";
 import "./enum-status.sol";
 interface IdDockInterface {
@@ -17,9 +18,29 @@ interface FeeChargerInterface {
             address _exchangilyRecipient,
             uint256 _exchangilyGet,
             Status _orderStatus);
+
+    function chargeFundsWithFeeWithSig(
+        bytes32 _orderID,
+        address _user,
+        uint32 _coinType,
+        uint256 _totalAmount,
+        uint8 v,
+        bytes32 r,
+        bytes32 s,
+        address[] memory _rewardBeneficiary)
+        external 
+        returns (bool); 
+
+    function requestRefundWithSig(bytes32 _orderID, address _user, uint8 v, bytes32 r, bytes32 s) 
+    external returns (bool);
+    function cancelRefundRequestWithSig(bytes32 _orderID, address _user, uint8 v, bytes32 r, bytes32 s) 
+    external returns (bool);
+    function refundWithSig(bytes32 _orderID, uint8 v, bytes32 r, bytes32 s) 
+    external returns (bool);
 }
 
 contract Ecombar is Ownable {
+    using SafeMath for uint256;
     IdDockInterface public idDockInstance; 
     FeeChargerInterface public feeChargerInstance;
 
@@ -35,6 +56,8 @@ contract Ecombar is Ownable {
 
     struct Order {
         bytes30 id;
+        bytes30[] productObjectIds;
+        uint8[] quantities;
         uint256 total;
     }
 
@@ -44,8 +67,8 @@ contract Ecombar is Ownable {
     }
 
     //address iddockSmartContractAddress;
-    uint coinType;
-    uint taxRate;
+    uint32 coinType;
+    uint8 taxRate;
 
     Product[] public products;
     Order[] public orders;
@@ -69,6 +92,7 @@ contract Ecombar is Ownable {
     }
 
     function createProduct(bytes30 objectId, uint price) public onlyOwner {
+        require(price > 0);
         Product memory newProduct = Product(objectId, price);  
         products.push(newProduct);
         productById[objectId] = newProduct;
@@ -78,19 +102,70 @@ contract Ecombar is Ownable {
         return productById[id];
     }           
 
-    function createOrder(bytes30 objectId, OrderItem[] memory items, uint itemsCount, uint fullfilmentFee) public {
+    function getOrderById(bytes30 id) public view returns (Order memory) {
+        return orderById[id];
+    }   
 
-        //bytes30 id = idDockInstance.createID(0x0202, _hashData);
-        uint total = fullfilmentFee; 
-        for(uint i = 0; i < itemsCount; i++) {
-            OrderItem memory item = items[i];
-            bytes30 product_id = item.product_id;
-            Product memory itemProduct = productById[product_id];
-            total += (itemProduct.price * item.quantity);
-        }
-        Order memory order = Order(objectId, total);
+
+    function createOrder(bytes30 objectId, bytes30[] memory productObjectIds, uint8[] memory quantities, uint256 total) public {
+        require(total > 0);
+        Order memory order = Order(objectId, productObjectIds, quantities, total);
         orders.push(order);
         orderById[objectId] = order;
+    }
+
+    function payOrder(bytes30 objectId, 
+        uint256 fullfilmentFee,
+        address _user,
+        uint8 v,
+        bytes32 r,
+        bytes32 s,
+        address[] memory _rewardBeneficiary) public {
+        Order memory order = orderById[objectId];
+        uint256 total = order.total.add(fullfilmentFee);
+        feeChargerInstance.chargeFundsWithFeeWithSig(
+        bytes32(objectId),
+        _user,
+        coinType,
+        total,
+        v,
+        r,
+        s,
+        _rewardBeneficiary);
+    }
+
+    function requestRefundWithSig(bytes30 objectId, address _user, uint8 v, bytes32 r, bytes32 s) 
+    public returns (bool) {
+        return feeChargerInstance.requestRefundWithSig(bytes32(objectId), _user, v, r, s);
+    }
+
+    function cancelRefundRequestWithSig(bytes32 objectId, address _user, uint8 v, bytes32 r, bytes32 s) 
+    public returns (bool) {
+        return feeChargerInstance.cancelRefundRequestWithSig(bytes32(objectId), _user, v, r, s);
+    }
+
+    function refundWithSig(bytes32 objectId, uint8 v, bytes32 r, bytes32 s) 
+    public onlyOwner returns (bool) {
+        return feeChargerInstance.refundWithSig(bytes32(objectId), v, r, s);
+    }
+
+    function getChargePayOrderParams(bytes30 objectId, 
+        uint256 fullfilmentFee,
+        address _user,
+        uint8 v,
+        bytes32 r,
+        bytes32 s) public view returns (bytes32, address, uint32, uint256, uint8, bytes32, bytes32){
+        Order memory order = orderById[objectId];
+        uint256 total = order.total.add(fullfilmentFee);
+        return (
+            bytes32(objectId),
+            _user,
+            coinType,
+            total,
+            v,
+            r,
+            s            
+        );
     }
 
     function isPaid(bytes30 id) public view returns (bool) {

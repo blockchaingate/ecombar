@@ -15,11 +15,38 @@ export class DataService {
     this.walletAddressSource.next(address);
   }  
 
+  
   private storeSource = new BehaviorSubject({});
   currentStore = this.storeSource.asObservable();
   changeStore(store: any) {
     this.storeSource.next(store);
   }  
+  
+  private storeIdSource = new BehaviorSubject('');
+  currentStoreId = this.storeIdSource.asObservable();
+  changeStoreId(storeId: string) {
+    this.storeIdSource.next(storeId);
+  }  
+
+  private currencyBalanceSource = new BehaviorSubject(0);
+  currencyBalance = this.currencyBalanceSource.asObservable();
+  changeCurrencyBalance(balance: number) {
+    this.currencyBalanceSource.next(balance);
+  }  
+
+  private storeOwnerSource = new BehaviorSubject('');
+  currentStoreOwner = this.storeOwnerSource.asObservable();
+  changeStoreOwner(owner: string) {
+    this.storeOwnerSource.next(owner);
+  }  
+  
+  private myStoreSource = new BehaviorSubject({});
+  currentMyStore = this.myStoreSource.asObservable();
+  changeMyStore(store: any) {
+    this.myStoreSource.next(store);
+  }  
+
+
 
   constructor() { }
 

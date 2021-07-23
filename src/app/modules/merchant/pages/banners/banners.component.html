@@ -1,7 +1,7 @@
 
 <div class="container">
     <div class="text-right">
-      <button class="btn" routerLink="/admin/banner/add" routerLinkActive="active">{{'New' | translate}}</button>
+      <button class="btn" routerLink="/merchant/banner/add" routerLinkActive="active">{{'New' | translate}}</button>
   </div>
   
     <ul class="responsive-table">
@@ -22,7 +22,7 @@
           </div>
     
           <div class="d-inline-block px-2">
-            <a (click)="deleteBanner(banner)">
+            <a (click)="deleteBanner(banner._id)">
               <img src="/assets/svg/delete.svg">
             </a>
           </div>        

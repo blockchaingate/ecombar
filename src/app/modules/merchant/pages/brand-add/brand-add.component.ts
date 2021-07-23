@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../../shared/services/brand.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-brand-add',
@@ -12,6 +13,8 @@ import { AuthService } from '../../../shared/services/auth.service';
   styleUrls: ['./brand-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
 export class BrandAddComponent implements OnInit {
+  modalRef: BsModalRef;
+  wallet: any;  
   sequence: number;
   name: string;
   nameChinese: string;
@@ -19,28 +22,32 @@ export class BrandAddComponent implements OnInit {
   id: string;
 
   constructor(
-    private userServ: UserService,
-    private authServ: AuthService,
-    private merchantServ: MerchantService,
     private route: ActivatedRoute,
     private router: Router,
+    public kanbanServ: KanbanService,
+    private dataServ: DataService,
+    private modalService: BsModalService,
     private brandServ: BrandService) {
   }
 
   ngOnInit() {
+ 
     this.currentTab = 'default';
-    const merchantId = this.merchantServ.id;
-
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.brandServ.getBrand(this.id).subscribe(
         (res: any) => {
-          console.log('ressssss=', res);
+          console.log('ressssss for brand=', res);
           if (res && res.ok) {
             const brand = res._body;
-
-            this.name = brand.name.en;
-            this.nameChinese = brand.name.sc;
+            console.log('brand=', brand);
+            this.name = brand.name[0].text;
+            this.nameChinese = brand.name[1].text;
             this.sequence = brand.sequence;
             
           }
@@ -55,19 +62,44 @@ export class BrandAddComponent implements OnInit {
   }
 
   addBrand() {
-    const data = {
-      name: {
-        en: this.name,
-        sc: this.nameChinese
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.addBrandDo(privateKey);
+    });
+  }
+
+  addBrandDo(privateKey: any) {
+
+    const name = [
+      {
+        lan: 'en',
+        text: this.name
       },
+      {
+        lan: 'sc',
+        text: this.nameChinese
+      }
+    ];      
+    const data = {
+      name: name,
       sequence: this.sequence ? this.sequence : 0
     };
+    
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;   
     if (!this.id) {
 
       this.brandServ.create(data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/brands']);
+            this.router.navigate(['/merchant/brands']);
           }
         }
       );
@@ -75,7 +107,7 @@ export class BrandAddComponent implements OnInit {
       this.brandServ.update(this.id, data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/brands']);
+            this.router.navigate(['/merchant/brands']);
           }
         }
       );

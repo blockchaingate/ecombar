@@ -6,6 +6,10 @@ import { OrderService } from '../../../shared/services/order.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
 import { selectMerchantId } from 'src/app/store/selectors/user.selector';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 
 @Component({
   selector: 'app-admin-shipping',
@@ -17,17 +21,22 @@ export class ShippingComponent implements OnInit{
     provider: string;
     trackingNumber: string;
     status: number;
+    modalRef: BsModalRef;
     orderID: string;
     allItemsFlag: boolean;
     providers: any;
+    wallet: any;
     items: any;
     item: any;
     itemsAdded: any;
     quantity: number;
 
     constructor(
+      public kanbanServ: KanbanService,
+      private modalService: BsModalService,
       private merchantServ: MerchantService,
       private store: Store<{ user: UserState }>,
+      private dataServ: DataService,
       private route: ActivatedRoute, 
       private shipServ: ShipService,
       private orderServ: OrderService,
@@ -36,6 +45,12 @@ export class ShippingComponent implements OnInit{
     }
 
     ngOnInit() {
+      this.dataServ.currentWallet.subscribe(
+        (wallet: string) => {
+          this.wallet = wallet;
+        }
+      ); 
+
       this.allItemsFlag = true;
       this.items = [];
       this.itemsAdded = [];
@@ -76,6 +91,19 @@ export class ShippingComponent implements OnInit{
     }
 
     update() {
+      const initialState = {
+        pwdHash: this.wallet.pwdHash,
+        encryptedSeed: this.wallet.encryptedSeed
+      };          
+      
+      this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+  
+      this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+        this.updateDo(privateKey);
+      });
+    }
+
+    updateDo(privateKey: any) {
       let items = [];
       if(!this.allItemsFlag) {
         items = this.itemsAdded;
@@ -87,6 +115,9 @@ export class ShippingComponent implements OnInit{
         items: items
       }
 
+      const sig = this.kanbanServ.signJsonData(privateKey, data);
+      data['sig'] = sig.signature; 
+      
       this.shipServ.createShip(data).subscribe(
         (res: any) => {
           if(res && res.ok) {

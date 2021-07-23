@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../shared/services/order.service';
-import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 
 @Component({
   selector: 'app-admin-orders',
@@ -11,50 +19,43 @@ import { UserState } from '../../../../store/states/user.state';
 })
 export class OrdersComponent implements OnInit {
   orders: any;
-  customerFlag: boolean;
+  order: any;
+  wallet: any;
+  modalRef: BsModalRef;
   constructor(
-    private store: Store<{ user: UserState }>,
+    public kanbanServ: KanbanService,
+    private utilServ: UtilService,
+    private web3Serv: Web3Service,
+    private coinServ: CoinService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
+    private kanbanSmartContractServ: KanbanSmartContractService,
+    private modalService: BsModalService,
+    private dataServ: DataService,
     private orderServ: OrderService) {
   }
 
   ngOnInit() {
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
 
 
-    this.store.select('user').subscribe(
-      (userState: UserState) => {
-        const role = userState.role;
-        const merchantId = userState.merchantId;
-        if(role == 'Admin') {
-          this.orderServ.getAllOrders().subscribe(
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.orderServ.gerMerchantOrders(walletAddress).subscribe(
             (res: any) => {
                 if(res && res.ok) {
                   this.orders = res._body;
                 }
             }
           );
-        } else
-        if((role == 'Seller') && merchantId) {
-          this.orderServ.gerMerchantOrders().subscribe(
-            (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
-            }
-          );
-        } else
-        if(role == 'Customer') {
-          this.customerFlag = true;
-          this.orderServ.getMyOrders().subscribe(
-            (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
-            }
-          );          
         }
       }
     );
-
 
 
   }
@@ -92,15 +93,97 @@ export class OrdersComponent implements OnInit {
     } else 
     if(paymentStatus == 4) {
       status = 'payment frozened';
+    } else 
+    if(paymentStatus == 5) {
+      status = 'request refund';
+    } else 
+    if(paymentStatus == 6) {
+      status = 'refunded';
     }
     return status;
   }
 
-  deleteOrder(order) {
-    this.orderServ.delete(order._id).subscribe(
-      (res: any) => {
-        
-      }
-    );
+
+  refund(order: any) {
+    this.order = order;
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+      this.spinner.show();
+      this.refundDo(seed);
+    });
+  }
+  
+  async refundDo(seed: Buffer) {
+    console.log('this.order=', this.order);
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "objectId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint8",
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "refundWithSig",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    const msg = '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId) + '0000';
+    const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey; 
+    const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey); 
+    const args = [
+      '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
+      signature.v,
+      signature.r,
+      signature.s
+    ];
+    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
+    if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      const data = {
+        paymentStatus: 6
+      };
+      this.orderServ.update(this.order._id, data).subscribe(
+        (ret: any) => {
+          this.spinner.hide();
+          if(ret && ret.ok) {
+            this.order.paymentStatus = 6;
+            this.toastr.success('Refund was made successfully');
+          }
+        }
+      );
+    } else {
+      this.spinner.hide();
+      this.toastr.error('Failed to approve refund');
+    }
   }
 }

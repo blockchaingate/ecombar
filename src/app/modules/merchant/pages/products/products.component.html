@@ -1,5 +1,5 @@
-<div class="px-2">
-  <div class="text-right my-3">
+<div class="px-2" *ngIf="store">
+  <div class="text-right my-3" *ngIf="store.status == 1">
     <button class="btn" (click)="addNew()">{{'New' | translate}}</button>
 </div>
 
@@ -14,14 +14,14 @@
   </li>
   <li class="table-row" *ngFor="let product of products">
     <div class="col col-4" data-label="Title">
-      <a target="_blank" href="/home/product/{{product._id}}">
+      <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
         {{product.title | translateField}}
       </a>
       
     </div>
     <div class="col col-2" data-label="Price">{{product.price}}</div>
     <div class="col col-2" data-label="Currency">
-      <a target="_blank" href="/home/blockchain/detail/things/{{product.objectId}}">
+      <a target="_blank" href="/iddock/detail/things/{{product.objectId}}">
         {{displayAddress(product.objectId)}}
       </a>
       

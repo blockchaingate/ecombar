@@ -66,7 +66,6 @@ export class ImportWalletComponent implements OnInit {
       const mnemonic = this.seedPhrase;
       const wallet = this.walletServ.generateWallet(pwd, name, mnemonic);
 
-      console.log('wallet=', wallet);
       if (!wallet) {
         alert(this.translate.instant('Error occured, please try again.'));
       } else {

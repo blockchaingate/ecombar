@@ -1,0 +1,43 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'Update reward percentages' | translate}}</h1>
+      <hr>
+
+        <label for="email"><b>Percentage of customer</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage1" name="percentage1" required>
+
+        <label for="email"><b>Percentage of merchant</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage2" name="percentage2" required>
+
+        <label for="email"><b>Percentage of merchant's referral</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage3" name="percentage3" required>
+
+        <label for="email"><b>Percentage of level 1</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage4" name="percentage4" required>
+
+        <label for="email"><b>Percentage of level 2</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage5" name="percentage5" required>
+
+        <label for="email"><b>Percentage of level 3</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage6" name="percentage6" required>
+
+        <label for="email"><b>Percentage of level 4</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage7" name="percentage7" required>
+
+        <label for="email"><b>Percentage of level 5</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage8" name="percentage8" required>
+
+        <label for="email"><b>Percentage of level 6</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage9" name="percentage9" required>
+
+        <label for="email"><b>Percentage of level 7</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage10" name="percentage10" required>
+
+        <label for="email"><b>Percentage of level 8</b></label>
+        <input type="text" placeholder="Enter percentage" [(ngModel)]="percentage11" name="percentage11" required>
+       
+        <div class="text-right py-2" *ngIf="owner == walletAddress">
+            <button type="submit" class="btn signinbtn" (click)="update()">{{('Update') | translate}}</button>
+          </div>
+    </div>
+</form>

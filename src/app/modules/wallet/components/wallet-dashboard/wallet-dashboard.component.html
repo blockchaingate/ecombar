@@ -12,6 +12,10 @@
         <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'assets' ? 'current-tab' : 'text-black'" (click)="changeTab('assets')">
             {{'My Assets' | translate}}
         </div>
+
+        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'rewards' ? 'current-tab' : 'text-black'" (click)="changeTab('rewards')">
+            {{'7star rewards' | translate}}
+        </div>        
   </div>
     
   <div *ngIf="currentTab == 'wallet'">
@@ -76,7 +80,14 @@
                                 </div> 
                             </div>                        
                             
-                    
+
+                            <div class="CreateCollection--actions m-1 py-3 text-center" *ngIf="gas==0">
+                                <div class="ActionButtonrContainer ActionButton--secondary">
+                                    <div class="ActionButton--content" (click)="getFreeGas()" style="min-width: 120px;">
+                                        {{'Get free Gas' | translate}}
+                                    </div>
+                                </div> 
+                            </div>                                 
                         </div>    
                     </div>
                     <div class="col col-4 text-black">
@@ -144,49 +155,10 @@
   </div>
 
   <div *ngIf="currentTab == 'assets'">
-    <div class="card-section my-3">
-        <div class="card">
-            <div class="container">
-
-                <ul class="responsive-table">
-                    <li class="table-header">
-                      <div class="col col-2">{{'Coin' | translate}}</div>
-                      <div class="col col-2">{{'Balance' | translate}}</div>
-                      <div class="col col-2">{{'Locked' | translate}}</div>
-                      <div class="col col-2"></div>
-                    </li>
-                        <li class="table-row" *ngFor="let coin of assets">
-                            
-                                <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">{{utilServ.getCoinNameByTypeId(coin.coinType)}}</div>
-                                <div class="col col-2" data-label="{{'Balance' | translate}}">
-                                    <div *ngIf="coin.unlockedAmount && (coin.unlockedAmount >= 0)" class="text-black">
-                                        {{utilServ.toNumber(utilServ.showAmount(coin.unlockedAmount, 18))}}
-                                    </div>
-                                </div>
-
-                                <div class="col col-2" data-label="{{'Locked' | translate}}">
-                                    <div class="text-black" *ngIf="coin.lockedAmount && (coin.lockedAmount > 0)">
-                                        {{utilServ.toNumber(utilServ.showAmount(coin.lockedAmount, 18))}}
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col col-2 text-right" data-label="{{'Operations' | translate}}">
-                        
-                                <div class="d-inline-block px-2">
-                                    <a (click)="withdraw(coin.coinType)">
-                                    <img src="/assets/svg/withdraw.svg">
-                                    </a>
-                                </div>
-                            
-                                </div>
-                            
-
-                        </li>
-                  </ul>                
-            </div>
-        </div>
-    </div>       
+    <app-wallet-assets-list [assets]="assets" (withdraw)="withdrawCoin($event)"></app-wallet-assets-list>
   </div>
+
+  <div *ngIf="currentTab == 'rewards'">
+    <app-wallet-star-rewards [rewards]="rewards"></app-wallet-star-rewards>
+  </div>  
 </div>

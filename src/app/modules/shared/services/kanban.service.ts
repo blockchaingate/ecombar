@@ -84,9 +84,10 @@ export class KanbanService {
     signJsonData(privateKey: any, data: any) {
 
         var queryString = Object.keys(data).filter((k) => (data[k] != null) && (data[k] != undefined))
-        .map(key => key + '=' + data[key]).sort().join('&');
+        .map(key => key + '=' + (typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]))).sort().join('&');
 
-        const test = this.web3Serv.signMessageTest(queryString, privateKey);
+        console.log('queryString===', queryString);
+        //const test = this.web3Serv.signMessageTest(queryString, privateKey);
         const signature = this.web3Serv.signKanbanMessageWithPrivateKey(queryString, privateKey);
         //console.log('signature here=', signature);
         return signature;  
@@ -117,14 +118,14 @@ export class KanbanService {
     }
 
     async sendRawSignedTransactionPromise(txhex: string) {
+        const url = environment.endpoints.blockchaingate + 'kanban/sendRawTransaction' ;
+        //const url = this.baseUrl + 'kanban/sendRawTransaction';
         const data = {
-            signedTransactionData: txhex
+            signedTransactionData: txhex,
         };
-        let resp = {
-            transactionHash: null
-        };
+        let resp;
         try {
-            resp = await this.http.postRaw(this.baseUrl + 'kanban/sendRawTransaction', data).toPromise();
+            resp = await this.http.postRaw(url, data).toPromise();
         } catch (e) {
         }
 
@@ -159,14 +160,18 @@ export class KanbanService {
         if(nonce) {
             nonce ++;
             this.nonces.set(address, nonce);
+            console.log('address1===', address);
+            console.log('nonce1===', nonce);
             return nonce;
         }
         let path = 'kanban/getTransactionCount/' + address; 
         path = this.baseUrl + path;
-        // console.log('nouse in here:', path);
+        console.log('nonce in here:', path);
         const res = await this.http.getRaw(path).toPromise() as TransactionAccountResponse;
         nonce = res.transactionCount;
         this.nonces.set(address, nonce);
+        console.log('address2===', address);
+        console.log('nonce2===', nonce);
         return nonce;
 
     }

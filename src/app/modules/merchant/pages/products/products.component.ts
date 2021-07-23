@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { UserService } from '../../../shared/services/user.service';
-import {TranslateService} from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
-import { ToastrService } from 'ngx-toastr';
-import { DataService } from 'src/app/modules/shared/services/data.service';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { DataService } from '../../../shared/services/data.service';
+import { UtilService } from '../../../shared/services/util.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -18,30 +14,42 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 export class ProductsComponent implements OnInit {
   products: any;
   walletAddress: string;
-
+  storeId: string;
   walletExgAddress: string;
+  store: any;
   constructor(
-    private store: Store<{ user: UserState }>,
-    private toastr: ToastrService,
     private router: Router,
     private dataServ: DataService,
     private utilServ: UtilService,
-    private translateServ: TranslateService,
     private productServ: ProductService) {
 
   }
 
   ngOnInit() {
+    this.dataServ.currentMyStore.subscribe(
+      (store: any) => {
+        if(store) {
+          this.store = store;
+          this.storeId = store._id;
+        }
+
+      }
+    )
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
-        this.productServ.getProductsOwnedBy(walletAddress).subscribe(
-          (res: any) => {
-            if (res) {
-              this.products = res;
+        console.log('walletAddress=', walletAddress);
+        if(walletAddress) {
+          this.productServ.getProductsOwnedBy(walletAddress).subscribe(
+            (res: any) => {
+              console.log('ressss=', res);
+              if (res) {
+                this.products = res;
+              }
             }
-          }
-        );        
+          );  
+        }
+      
       }
     );      
     /*

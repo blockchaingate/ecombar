@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-banner-add',
@@ -12,6 +13,8 @@ import { AuthService } from '../../../shared/services/auth.service';
   styleUrls: ['./banner-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
 export class BannerAddComponent implements OnInit {
+  modalRef: BsModalRef;
+  wallet: any;    
   sequence: number;
   title: string;
   images: any;
@@ -22,15 +25,20 @@ export class BannerAddComponent implements OnInit {
   id: string;
 
   constructor(
-    private userServ: UserService,
-    private authServ: AuthService,
-    private merchantServ: MerchantService,
+    private dataServ: DataService,
     private route: ActivatedRoute,
     private router: Router,
+    public kanbanServ: KanbanService,
+    private modalService: BsModalService,
     private bannerServ: BannerService) {
   }
 
   ngOnInit() {
+    this.dataServ.currentWallet.subscribe(
+      (wallet: string) => {
+        this.wallet = wallet;
+      }
+    ); 
     this.images = [];
     this.currentTab = 'default';
 
@@ -42,11 +50,11 @@ export class BannerAddComponent implements OnInit {
           if (res && res.ok) {
             const banner = res._body;
 
-            this.title = banner.title.en;
-            this.subtitle = banner.subtitle.en;
+            this.title = banner.title[0].text;
+            this.subtitle = banner.subtitle[0].text;
             this.sequence = banner.sequence;
-            this.titleChinese = banner.title.sc;
-            this.subtitleChinese = banner.subtitle.sc;
+            this.titleChinese = banner.title[1].text;
+            this.subtitleChinese = banner.subtitle[1].text;
             if(banner.image) {
               this.images.push(banner.image);
             }
@@ -62,24 +70,57 @@ export class BannerAddComponent implements OnInit {
   }
 
   addBanner() {
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.addBannerDo(privateKey);
+    });
+  }
+
+
+  addBannerDo(privateKey: any) {
+    const title = [
+      {
+        lan: 'en',
+        text: this.title
+      },
+      {
+        lan: 'sc',
+        text: this.titleChinese
+      }
+    ];
+
+    const subtitle = [
+      {
+        lan: 'en',
+        text: this.subtitle
+      },
+      {
+        lan: 'sc',
+        text: this.subtitleChinese
+      }
+    ];    
     const data = {
-      title: {
-        en: this.title,
-        sc: this.titleChinese
-      },
-      subtitle: {
-        en: this.subtitle,
-        sc: this.subtitleChinese
-      },
+      title: title,
+      subtitle: subtitle,
       image: (this.images && (this.images.length > 0)) ? this.images[0] : null,
       sequence: this.sequence ? this.sequence : 0
     };
+    
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;  
     if (!this.id) {
 
       this.bannerServ.create(data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/banners']);
+            this.router.navigate(['/merchant/banners']);
           }
         }
       );
@@ -87,7 +128,7 @@ export class BannerAddComponent implements OnInit {
       this.bannerServ.update(this.id, data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/admin/banners']);
+            this.router.navigate(['/merchant/banners']);
           }
         }
       );

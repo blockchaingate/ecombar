@@ -74,76 +74,18 @@ export class AccountComponent implements OnInit {
       {
         title: 'Dashboard',
         link: 'dashboard',
-        icon: 'dashboard',
-        roles: ['Admin', 'Seller', 'Customer']
-      },
-      {
-        title: 'Banners',
-        link: 'banners',
-        icon: 'banner',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Brands',
-        link: 'brands',
-        icon: 'brand',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Main Layout',
-        link: 'main-layout',
-        icon: 'category',
-        roles: ['Admin', 'Seller']
-      },        
-      {
-        title: 'Categories',
-        link: 'categories',
-        icon: 'category',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Collections',
-        link: 'collections',
-        icon: 'collection',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Users',
-        link: 'users',
-        icon: 'user',
-        roles: ['Admin']
-      },
-      {
-        title: 'Merchant Applications',
-        link: 'merchant-applications',
-        icon: 'user',
-        roles: ['Admin']
-      },  
-      {
-        title: 'Products',
-        link: 'products',
-        icon: 'order',
-        roles: ['Seller']
-      },           
+        icon: 'dashboard'
+      },     
       {
         title: 'Orders',
         link: 'orders',
-        icon: 'order',
-        roles: ['Admin', 'Seller', 'Customer']
+        icon: 'order'
       },
       {
         title: 'Ships',
         link: 'ships',
-        icon: 'order',
-        roles: ['Admin', 'Seller', 'Delivery', 'Customer']
-      },      
-      {
-        title: 'Merchant information',
-        link: 'merchant-info',
-        icon: 'information',
-        roles: ['Seller']
+        icon: 'order'
       },
-
       {
         title: 'Address',
         link: 'address',

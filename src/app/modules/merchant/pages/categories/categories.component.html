@@ -1,7 +1,7 @@
 
 <div class="container">
   <div class="text-right">
-    <button class="btn" routerLink="/admin/category/add" routerLinkActive="active">{{'New' | translate}}</button>
+    <button class="btn" routerLink="/merchant/category/add" routerLinkActive="active">{{'New' | translate}}</button>
 </div>
 
   <ul class="responsive-table">
@@ -23,7 +23,7 @@
         </div>
   
         <div class="d-inline-block px-2">
-          <a (click)="deleteCategory(category)">
+          <a (click)="deleteCategory(category._id)">
             <img src="/assets/svg/delete.svg">
           </a>
         </div>        

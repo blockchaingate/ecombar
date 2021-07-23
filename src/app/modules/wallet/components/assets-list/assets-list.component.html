@@ -1,0 +1,47 @@
+<div class="card-section my-3">
+    <div class="card">
+        <div class="container">
+
+            <ul class="responsive-table">
+                <li class="table-header">
+                  <div class="col col-2">{{'Coin' | translate}}</div>
+                  <div class="col col-2">{{'Balance' | translate}}</div>
+                  <div class="col col-2">{{'Locked' | translate}}</div>
+                  
+                  <div class="col col-2"></div>
+                </li>
+                    <li class="table-row" *ngFor="let coin of assets">
+                        
+                            <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">
+                                {{getCoinNameByTypeId(coin.coinType)}}
+                            </div>
+                            <div class="col col-2" data-label="{{'Balance' | translate}}">
+                                <div *ngIf="coin.unlockedAmount && (coin.unlockedAmount >= 0)" class="text-black">
+                                    {{showAmount(coin.unlockedAmount)}}
+                                </div>
+                            </div>
+
+                            <div class="col col-2" data-label="{{'Locked' | translate}}">
+                                <div class="text-black" *ngIf="coin.lockedAmount && (coin.lockedAmount > 0)">
+                                    {{showAmount(coin.lockedAmount)}}
+                                </div>
+                            </div>
+
+
+
+                            <div class="col col-2 text-right" data-label="{{'Operations' | translate}}">
+                    
+                            <div class="d-inline-block px-2">
+                                <a (click)="withdrawDo(coin.coinType)">
+                                <img src="/assets/svg/withdraw.svg">
+                                </a>
+                            </div>
+                        
+                            </div>
+                        
+
+                    </li>
+              </ul>                
+        </div>
+    </div>
+</div>   

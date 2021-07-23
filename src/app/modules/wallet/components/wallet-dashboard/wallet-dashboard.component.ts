@@ -27,6 +27,8 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 import { WalletService } from 'src/app/modules/shared/services/wallet.service';
 import { LoginSettingModal } from '../../modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phrase.modal';
+import { GetFreeGasComponent } from '../../modals/get-free-gas/get-free-gas.component';
+import { StarService } from 'src/app/modules/shared/services/star.service';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -40,6 +42,7 @@ export class WalletDashboardComponent implements OnInit{
   wallet: any;
   subtab: string;
   addresses: any;
+  rewards: any;
   withdrawAmount: number;
   currentCoinId: number;
   gasAmount: number;
@@ -81,6 +84,7 @@ export class WalletDashboardComponent implements OnInit{
       private walletServ: WalletService,
       private storageServ: StorageService,
       private coinServ: CoinService,
+      private starServ: StarService,
       public ngxSmartModalService: NgxSmartModalService,
       private kanbanServ: KanbanService,
       private route: ActivatedRoute,
@@ -113,14 +117,22 @@ export class WalletDashboardComponent implements OnInit{
       this.modalRef = this.modalServ.show(ReceiveComponent, {initialState});      
     }
     
-    /*
-    sendCoin() {
-      this.opType = 'sendCoin';
-      this.ngxSmartModalService.getModal('sendModal').close();
-      this.ngxSmartModalService.getModal('passwordModal').open();
-      
+    
+    getFreeGas() {
+      if(this.gas > 0) {
+        this.toastr.info(this.translateServ.instant("You cannot get free gas"));
+        return;
+      } 
+
+      const initialState = {
+        address: this.walletAddress
+      }
+      this.modalRef = this.modalServ.show(GetFreeGasComponent, {initialState});  
+  
+      this.modalRef.content.onClose.subscribe(result => {
+        this.gas = result;
+      });
     }
-    */
 
    async checkAmount(seed) {
     //this.sendCoinParams
@@ -324,7 +336,7 @@ export class WalletDashboardComponent implements OnInit{
 
 
 
-    withdraw(coinId) {
+    withdrawCoin(coinId) {
       this.currentCoinId = coinId;
       this.currentCoin = this.utilServ.getCoinNameByTypeId(this.currentCoinId);
       this.modalRef = this.modalServ.show(WithdrawComponent);
@@ -372,8 +384,6 @@ export class WalletDashboardComponent implements OnInit{
           const bytes = bs58.decode(addressInWallet);
           console.log('bytes=', bytes);
           addressInWallet = bytes.toString('hex');
-
-          console.log('addressInWallet=', addressInWallet);
       } else if (currentCoin.name === 'BCH') {
           const keyPairsCurrentCoin = this.coinServ.getKeyPairs('BCH', seed, 0, 0, 'b');
           let prefix = '6f';
@@ -672,10 +682,8 @@ export class WalletDashboardComponent implements OnInit{
     }
 
     onChange(index) {
-      console.log('index==', index);
       this.wallet = this.wallets.items[index];
       this.wallets.currentIndex = index;
-      console.log('this.wallet=', this.wallet);
 
       this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
         this.loadWallet();
@@ -714,6 +722,17 @@ export class WalletDashboardComponent implements OnInit{
       this.router.navigate(['/wallet/import-wallet']);
     }
     
+    async getRewards(address: string) {
+      /*
+      const abi = {};
+      const args = [address];
+      const abiData = this.web3Serv.getGeneralFunctionABI(
+        abi, args
+      );
+      const lockers = this.kanbanServ.kanbanCall(environment.addresses.smartContract.locker,abiData).toPromise();
+      */
+    }
+
     loadWallet() {
       const addresses = this.wallet.addresses;
       this.addresses = addresses;
@@ -722,19 +741,21 @@ export class WalletDashboardComponent implements OnInit{
       this.kanbanAddress = this.utilServ.fabToExgAddress(this.walletAddress);
       this.refreshGas();
       this.refreshAssets();
+      this.refreshRewards();
       this.kanbanServ.getWalletBalances(addresses).subscribe(
-        (res: any) => {
-          console.log('res for getWalletBalances=', res);
+        async (res: any) => {
           if(res && res.success) {
             this.coins = res.data.filter(item => ((item.coin != 'CAD') && (item.coin != 'RMB')));
+            const rewards = await this.getRewards(this.kanbanAddress);
             console.log('this.coins=', this.coins);
             const exgCoin = this.coins.filter(item => item.coin == 'EXG')[0];
             const fabCoin = this.coins.filter(item => item.coin == 'FAB')[0];
             this.fabBalance = fabCoin.balance;
             console.log('fabCoin==', fabCoin);
             this.currentCoin = exgCoin.coin;
+            console.log('exgCoin===', exgCoin);
             this.currentCoinAddress = this.getCurrentCoinAddress();
-            this.walletBalance = Number(exgCoin.balance) + Number(exgCoin.lockBalance);
+            this.walletBalance = Number(exgCoin.balance) + (Number(exgCoin.lockBalance) > 0 ? Number(exgCoin.lockBalance) : 0);
             this.walletValue = this.walletBalance * exgCoin.usdValue.USD;
           }
         }
@@ -834,6 +855,17 @@ export class WalletDashboardComponent implements OnInit{
             // console.log('errorrrr=', error);
         }
     );
+    }
+
+    refreshRewards() {
+      this.starServ.getLockers(this.utilServ.exgToFabAddress(this.kanbanAddress)).subscribe(
+        (resp) => {
+          console.log('resp for rewards=', resp);
+          if(resp && resp.ok) {
+            this.rewards = resp._body;
+          }
+        }
+      );
     }
 
     refreshGas() {

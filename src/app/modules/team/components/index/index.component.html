@@ -1,0 +1,42 @@
+<div *ngIf="!isValidMember" class="text-center py-3">
+    <div class="input-group input-group-pill my-3">
+        <input type="text" class="form-control border-1 height-40" 
+        placeholder="{{'ref address' | translate}}" 
+        [(ngModel)]="parentId" name="parentId" required>
+    </div>
+
+    <div class="CreateCollection--actions">
+        <div class="ActionButtonrContainer">
+            <div class="ActionButton--content" (click)="joinAsMember()" style="min-width: 120px;">
+                {{'Join as a customer' | translate}}
+            </div>
+        </div> 
+    </div>    
+</div>
+
+<div *ngIf="isValidMember">
+    <div class="container">
+        <div class="py-3">
+            My ref link:
+            <a href="{{getRefLink()}}">
+                {{getRefLink()}}
+            </a>
+            <qrcode [qrdata]="walletAddress" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+        <div class="pt-3">My Team members</div>
+        <div class="d-flex flex-wrap">
+            <div *ngFor="let address of downlines" class="px-3">
+                <a (click)="getDownlines(address)">
+                    {{address}}
+                </a>
+                
+            </div>
+        </div>
+        <div class="pt-3">My Rewards</div>
+        <app-wallet-star-rewards [rewards]="rewards"></app-wallet-star-rewards>
+    </div>
+
+
+</div>
+
+

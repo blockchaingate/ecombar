@@ -99,6 +99,12 @@ export class Web3Service {
     return abi;
   }
   
+  decodeData(typeArray, hexString) {
+    const web3 = this.getWeb3Provider();
+    const data = web3.eth.abi.decodeParameters(typeArray, hexString);
+    return data;
+  };
+
   getCreateIDABI(typeId: number, hashData: string) {
     const func: any = {
       "constant": false,

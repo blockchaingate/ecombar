@@ -2,35 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { UsersComponent } from './pages/users/users.component';
-import { MerchantsComponent } from './pages/merchants/merchants.component';
-import { ProductsComponent } from './pages/products/products.component';
-import { ProductAddComponent } from './pages/product-add/product-add.component';
-import { CategoriesComponent } from './pages/categories/categories.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { CategoryAddComponent } from './pages/category-add/category-add.component';
-import { CollectionsComponent } from './pages/collections/collections.component';
-import { AddressComponent } from './pages/address/address.component';
-import { OrdersComponent } from './pages/orders/orders.component';
-import { ShipsComponent } from './pages/ships/ships.component';
-
-import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
-import { UserAddComponent } from './pages/user-add/user-add.component';
-import { BannersComponent } from './pages/banners/banners.component';
-import { BrandsComponent } from './pages/brands/brands.component';
-import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
-import { BrandAddComponent } from './pages/brand-add/brand-add.component';
-import { BannerAddComponent } from './pages/banner-add/banner-add.component';
-import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
-import { UploadMediaComponent } from './components/upload-media/upload-media.component';
-import { ShippingComponent } from './pages/shipping/shipping.component';
-import { CommentComponent } from './pages/comment/comment.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { FavoriteComponent } from './pages/favorite/favorite.component';
-import { MyProductsComponent } from './pages/my-products/my-products.component';
-import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
-import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
-import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
+import { StoresComponent } from './pages/stores/stores.component';
+import { StoreApproveComponent } from './pages/store-approve/store-approve.component';
+import { ExchangeRateComponent } from './pages/exchange-rate/exchange-rate.component';
+import { FeeDistributionComponent } from './pages/fee-distribution/fee-distribution.component';
+import { ExchangeRateAddComponent } from './pages/exchange-rate-add/exchange-rate-add.component';
+import { FeeDistributionUpdateRewardCoinsComponent } from './pages/fee-distribution-update-reward-coins/fee-distribution-update-reward-coins.component';
+import { FeeDistributionUpdateRewardPercentagesComponent } from './pages/fee-distribution-update-reward-percentages/fee-distribution-update-reward-percentages.component';
 
 import { 
   WalletGuardService as WalletGuard 
@@ -45,106 +23,25 @@ const routes: Routes = [
         path: 'dashboard', component: DashboardComponent
       },
       {
-        path: 'users', component: UsersComponent
-      },
-      {
-        path: 'address', component: AddressComponent
-      },
-      {
-        path: 'favorite', component: FavoriteComponent
-      },      
-      {
-        path: 'products', component: ProductsComponent
-      },
-      {
-        path: 'my-products', component: MyProductsComponent
+        path: 'stores', component: StoresComponent
       },  
       {
-        path: 'main-layout', component: MainLayoutComponent
-      },    
+        path: 'store/:id/approve', component: StoreApproveComponent
+      },           
       {
-        path: 'main-layout/add', component: MainLayoutAddComponent
-      },   
-      {
-        path: 'main-layout/:id/edit', component: MainLayoutAddComponent
-      },                 
-      {
-        path: 'my-comments', component: MyCommentsComponent
-      },  
-      {
-        path: 'merchant-applications', component: MerchantApplicationsComponent
-      },      
-      {
-        path: 'orders', component: OrdersComponent
-      }, 
-      {
-        path: 'shipping/:orderID', component: ShippingComponent
-      },   
-      {
-        path: 'ships', component: ShipsComponent
-      },                    
-      {
-        path: 'product/add', component: ProductAddComponent
+        path: 'exchange-rate', component: ExchangeRateComponent
       },
       {
-        path: 'merchant-info', component: MerchantInfoComponent
+        path: 'exchange-rate/:coinName/edit', component: ExchangeRateAddComponent
       },
       {
-        path: 'profile', component: ProfileComponent
+        path: 'fee-distribution', component: FeeDistributionComponent
       },
       {
-        path: 'cart', component: CartComponent
-      },      
-      {
-        path: 'comment/:productId', component: CommentComponent
-      },      
-      {
-        path: 'product/:id/edit', component: ProductAddComponent
+        path: 'fee-distribution/update-reward-coins', component: FeeDistributionUpdateRewardCoinsComponent
       },
       {
-        path: 'categories', component: CategoriesComponent
-      },
-      {
-        path: 'category/add', component: CategoryAddComponent
-      },
-      {
-        path: 'category/:id/edit', component: CategoryAddComponent
-      },
-      {
-        path: 'brands', component: BrandsComponent
-      },
-      {
-        path: 'brand/add', component: BrandAddComponent
-      },
-      {
-        path: 'brand/:id/edit', component: BrandAddComponent
-      },      
-      {
-        path: 'banners', component: BannersComponent
-      },
-      {
-        path: 'banner/add', component: BannerAddComponent
-      },
-      {
-        path: 'banner/:id/edit', component: BannerAddComponent
-      },
-      {
-        path: 'collections', component: CollectionsComponent
-      },
-      {
-        path: 'collection/add', component: CollectionAddComponent
-      },
-      {
-        path: 'collection/:id/edit', component: CollectionAddComponent
-      },
-      {
-        path: 'user/:id/edit', component: UserAddComponent
-      },
-      {
-        path: 'merchants', component: MerchantsComponent
-      },
-      {
-        path: 'upload', component: UploadMediaComponent
+        path: 'fee-distribution/update-reward-percentages', component: FeeDistributionUpdateRewardPercentagesComponent
       },
       {
         path: '', redirectTo: 'dashboard'

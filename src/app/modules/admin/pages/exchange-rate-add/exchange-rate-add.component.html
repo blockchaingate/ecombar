@@ -1,0 +1,12 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'Set exchange rat for' | translate}} {{coinName}}</h1>
+      <hr>
+
+        <label for="email"><b>Rate</b></label>
+        <input type="text" placeholder="Enter rate" [(ngModel)]="rate" name="rate" required>
+        <div class="text-right py-2" *ngIf="owner == walletAddress">
+            <button type="submit" class="btn signinbtn" (click)="confirm()">{{('Confirm') | translate}}</button>
+          </div>
+    </div>
+</form>

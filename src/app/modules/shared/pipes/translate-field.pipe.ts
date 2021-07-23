@@ -11,6 +11,13 @@ export class TranslateFieldPipe extends TranslatePipe implements PipeTransform {
             return '';
         }
         const lang = this.translateServ.getDefaultLang();
+        if(Array.isArray(fieldName)) {
+            const field = fieldName.filter(item => item.lan == lang);
+            if(field && field.length > 0) {
+                return field[0].text;
+            }
+        }
+
         return fieldName[lang];
     }
 }

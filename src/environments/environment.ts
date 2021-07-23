@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   appid: '5f80c3b09577e8dc2f8db596',
   cat_typ: 'ecombar',
-  IDDOCK: 'http://localhost:4201',
+  IDDOCK: '/iddock',
   PUBLIC_KEY: '8aff99f9727143fccd28e62df14e4e67305faa70d19b4cb0b9d4cde18ea3cd23c8e58bda3c26e10813aaa6020f3d07a3d9f83a9062cfe662a600949325378b99',
 //  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
 //  EX_WEBSITE: 'http://localhost:4200/',
@@ -133,14 +133,20 @@ export const environment = {
   },
 
   addresses: {
+
+    //exchangilyRecipient: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       ecombarOfficial: {
         ETH: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       },
     smartContract: {
+        feeDistribution: '0xeeac7c77710d3dbfcc4fe9ae4af260c8d01955ff',
+        locker: '0xc9042097dAC6db6f79408bef99092e40D66D4BB6',
+        exchangeRate: '0x6e6a2a79ebea4dfa66cb752c372917e6f5d38895',
+        
         NFT_Exchange: '0x2c8aa9e76fc3c92a799c6c68926bd24e53ff9abb',
         ProxyRegistry: '0x2e553ad1cd6ba24be952cc7273e4d869d19b1586',
         FABLOCK: '0xa7d4a4e23bf7dd7a1e03eda9eb7c28a016fd54aa',
-        IDDOCK: '0xc0f941945bd45fc295cfc63fc7df75e633e6fa00',
+        //IDDOCK: '0xc0f941945bd45fc295cfc63fc7df75e633e6fa00',
         FEE_CHARGER: '0x7c1251d4bcba989411d72361f14914aeab870aee',
         SEVEN_STAR_KEY_NODE: '',
         SEVEN_STAR_CUSTOMER_REFERRAL: '',

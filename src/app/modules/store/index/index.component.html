@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <main id="content" role="main">
+        <app-slide-show></app-slide-show>
+        <app-info-bar></app-info-bar>
+        <div *ngFor="let item of mainLayouts">
+            <div *ngIf="item.type == 'Single Collection'">
+                <app-collections [collection]="item.col"></app-collections>
+            </div>
+            <div *ngIf="item.type == 'Combo Collection'">
+                <app-collections2 [collections]="item.cols"></app-collections2>
+            </div>    
+        </div>
+        <app-top-categories [categories]="categories"></app-top-categories>
+        <app-products-grid [products]="latestProducts"></app-products-grid>
+    </main>
+</div>

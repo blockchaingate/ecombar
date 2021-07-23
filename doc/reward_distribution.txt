@@ -1,0 +1,31 @@
+After user pay amount USDT/DUSD, we need to pay to the merchant for (percentageA * amount), 
+and pay back (1-percentageA) * amount as locked tokens 
+in the form of one of (100% token/percentageB tokenA, (1-percentageB) tokenB/ percentageC tokenA, percentageD tokenB, (1-percentageC-percentageD) tokenC).
+(the exchange rate if base on our exchange);
+
+let amountToBeRewarded = (1-percentageA) * amount;
+
+send user percentageE*amountToBeRewarded for locked tokens
+
+send merchant's referral percentageF*amountToBeRewarded for locked tokens
+
+send user's top referral level1 percentageG*amountToBeRewarded for locked tokens
+
+send user's top referral level2 percentageH*amountToBeRewarded for locked tokens
+
+send user's top referral level3 percentageI*amountToBeRewarded for locked tokens
+
+send user's top referral level4 percentageJ*amountToBeRewarded for locked tokens
+
+send user's top referral level5 percentageK*amountToBeRewarded for locked tokens
+
+send user's top referral level6 percentageL*amountToBeRewarded for locked tokens
+
+send user's top referral level7 percentageM*amountToBeRewarded for locked tokens
+
+send user's top referral level8 percentageN*amountToBeRewarded for locked tokens
+
+
+percentageE + percentageF + percentageG + percentageH 
++ percentageI + percentageJ + percentageK + percentageL 
++ percentageM + percentageN < 1;

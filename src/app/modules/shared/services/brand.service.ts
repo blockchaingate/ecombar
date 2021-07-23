@@ -21,15 +21,15 @@ export class BrandService {
     return this.http.get('brands/admin', false);
   }
 
-  getMerchantBrands(merchantId: string) {
-    return this.http.get('brands/merchant/' + merchantId, false);
+  getMerchantBrands(walletAddress: string) {
+    return this.http.get('brands/merchant/' + walletAddress, false);
   }
 
   getBrand(id: string) {
     return this.http.get('brands/' + id, false);
   }
 
-  deleteBrand(id: string) {
-    return this.http.get('brands/Delete/' + id);
+  deleteBrand(data: any) {
+    return this.http.post('brands/Delete', data);
   }
 }

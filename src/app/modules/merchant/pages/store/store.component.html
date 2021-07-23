@@ -16,32 +16,69 @@
         <label for="email"><b>Name</b></label>
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
+        <!--
         <label for="email"><b>{{'Fee Charger Smart Contract Address' | translate}}</b></label>
         <input type="text" placeholder="{{'Enter smart contract address' | translate}}" [(ngModel)]="feeChargerSmartContractAddress" name="smartContractAddress" required>
-       
-        <div>
-          <label for="email"><b>Coin</b></label>
+       -->
+       <div>
+        <label for="email"><b>Image</b></label>
+        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
         </div>
-        <div>
-          <select [(ngModel)]="coin" name="coin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-            <option value="">Select Coin:</option>
-            <option *ngFor="let coin of coins" value="{{coin}}">
-              {{coin}}
-            </option>
-          </select>          
+
+        <div *ngIf="!(id)">
+          <div>
+            <label for="email"><b>Coin</b></label>
+          </div>
+          <div>
+            <select [(ngModel)]="coin" name="coin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="">Select Coin:</option>
+              <option *ngFor="let coin of coins" value="{{coin}}">
+                {{coin}}
+              </option>
+            </select>  
+          </div>         
+        
         </div>
-        <div>
+        <div *ngIf="id">
+          <label for="email"><b>{{'Coin' | translate}}:</b></label>
+          {{coin}}
+        </div>
+<!--
+        <div *ngIf="!(id)">
           <label for="email"><b>{{'Tax rate' | translate}}</b></label>
           <input type="text" placeholder="{{'Tax rate' | translate}}" [(ngModel)]="taxRate" name="taxRate" required>
-     
         </div>
+        <div *ngIf="id">
+          <label for="email"><b>{{'Tax rate' | translate}}:</b></label>
+          {{taxRate}}
+        </div> 
+        -->
+        <div *ngIf="feeChargerSmartContractAddress">
+          <label for="email"><b>{{'FeeCharger Smart contract address' | translate}}:</b></label>
+          {{feeChargerSmartContractAddress}}
+        </div> 
+
         <div *ngIf="smartContractAddress">
           <label for="email"><b>{{'Smart contract address' | translate}}:</b></label>
           {{smartContractAddress}}
-     
-        </div>       
+        </div>   
+        
+        <div *ngIf="!(id)">
+          <label for="email"><b>{{'Ref address' | translate}}</b></label>
+          <input type="text" placeholder="{{'ref address' | translate}}" [(ngModel)]="refAddress" name="refAddress" required>
+        </div>
+  
+  
+        <div *ngIf="id">
+          <label for="email"><b>{{'Ref address' | translate}}:</b></label>
+          {{refAddress}}
+        </div>     
+        
+
       </div>
       
+
+
       <div *ngIf="currentTab=='Chinese'">
         <label for="email"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        

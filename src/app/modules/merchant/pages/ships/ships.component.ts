@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
 import { Role } from '../../../../config/role';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-ships',
@@ -26,53 +27,26 @@ export class ShipsComponent implements OnInit{
 
     constructor(
         private modalService: BsModalService,
-        private store: Store<{ user: UserState }>,
+        private dataServ: DataService,
         private shipServ: ShipService) {
     }    
     ngOnInit() {
         this.canAddDetails = true;
-        this.store.select('user').subscribe(
-            (userState: UserState) => {
-                const role = userState.role;
-                if(role == Role.Seller) {
-                    this.shipServ.getSellerShips().subscribe(
+        this.dataServ.currentWalletAddress.subscribe(
+            (walletAddress: string) => {
+                if(walletAddress) {
+                    this.shipServ.getMerchantShips(walletAddress).subscribe(
                         (res: any) => {
                             if(res && res.ok) {
                                 this.ships = res._body;
                             }
                         }
-                    );
-                } else
-                if(role == Role.Delivery) {
-                    this.shipServ.getDeliveryShips().subscribe(
-                        (res: any) => {
-                            if(res && res.ok) {
-                                this.ships = res._body;
-                            }
-                        }
-                    );                   
-                } else
-                if(role == Role.Customer) {
-                    this.canAddDetails = false;
-                    this.shipServ.getCustomerShips().subscribe(
-                        (res: any) => {
-                            if(res && res.ok) {
-                                this.ships = res._body;
-                            }
-                        }
-                    );                      
-                } else 
-                if(role == Role.Admin) {
-                    this.shipServ.getAdminShips().subscribe(
-                        (res: any) => {
-                            if(res && res.ok) {
-                                this.ships = res._body;
-                            }
-                        }
-                    );                        
+                    );  
                 }
+
             }
         );
+
     }
 
     openModal(ship: any, template: TemplateRef<any>) {

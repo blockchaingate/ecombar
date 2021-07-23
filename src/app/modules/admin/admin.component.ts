@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../shared/services/user.service';
 import { MerchantService } from '../shared/services/merchant.service';
 import { StorageService } from '../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,7 +8,7 @@ import { UserState } from '../../store/states/user.state';
 import { logout, updateMerchantStatus } from '../../store/actions/user.actions';
 
 @Component({
-  providers: [UserService],
+  providers: [],
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
@@ -20,11 +19,7 @@ export class AdminComponent implements OnInit {
   //displayName: string;
   merchantId: string;
 
-  /*
-  myPhotoUrlSelect: Observable<string>;
-  displayNameSelect: Observable<string>;
-  roleSelect: Observable<string>;
-  */
+
 
   role: string;
   myPhotoUrl: string;
@@ -37,7 +32,6 @@ export class AdminComponent implements OnInit {
     private router: Router, 
     private translateServ: TranslateService, 
     private merchantServ: MerchantService,
-    private userServ: UserService, 
     private storageServ: StorageService
   ) { }
 
@@ -74,60 +68,27 @@ export class AdminComponent implements OnInit {
       {
         title: 'Dashboard',
         link: 'dashboard',
-        icon: 'dashboard',
-        roles: ['Admin', 'Seller', 'Customer']
-      },      
-      {
-        title: 'Categories',
-        link: 'categories',
-        icon: 'category',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Collections',
-        link: 'collections',
-        icon: 'collection',
-        roles: ['Admin', 'Seller']
-      },
-      {
-        title: 'Users',
-        link: 'users',
-        icon: 'user',
-        roles: ['Admin']
-      },
-      {
-        title: 'Merchant Applications',
-        link: 'merchant-applications',
-        icon: 'user',
-        roles: ['Admin']
-      },  
-      {
-        title: 'Products',
-        link: 'products',
-        icon: 'order',
-        roles: ['Seller']
-      },           
-      {
-        title: 'Orders',
-        link: 'orders',
-        icon: 'order',
-        roles: ['Admin', 'Seller', 'Customer']
+        icon: 'dashboard'
       },    
       {
-        title: 'Merchant information',
-        link: 'merchant-info',
-        icon: 'information',
-        roles: ['Seller']
-      }    
+        title: 'Stores',
+        link: 'stores',
+        icon: 'store'
+      },      
+        
+      {
+        title: 'Exchange rate',
+        link: 'exchange-rate',
+        icon: 'category'
+      },
+      {
+        title: 'Fee distribution',
+        link: 'fee-distribution',
+        icon: 'collection'
+      } 
     ];
 
 
-    /*
-    this.store.subscribe((res: any) => {
-      console.log('res in store=', res);
-    }
-    );
-    */
     const lang = this.storageServ.lang;
     if (!lang) {
       this.storageServ.get('_lang').subscribe(
