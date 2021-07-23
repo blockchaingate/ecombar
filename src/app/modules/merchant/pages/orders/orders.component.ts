@@ -172,7 +172,7 @@ export class OrdersComponent implements OnInit {
       const data = {
         paymentStatus: 6
       };
-      this.orderServ.update(this.order._id, data).subscribe(
+      this.orderServ.update2(this.order._id, data).subscribe(
         (ret: any) => {
           this.spinner.hide();
           if(ret && ret.ok) {

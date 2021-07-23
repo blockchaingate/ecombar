@@ -199,7 +199,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
             const sig = this.kanbanServ.signJsonData(privateKey, orderData);
             orderData['sig'] = sig.signature;               
-            this.orderServ.create(orderData).subscribe(
+            this.orderServ.create2(orderData).subscribe(
               (res: any) => {
                 console.log('ress from create order', res);
                 if (res && res.ok) {

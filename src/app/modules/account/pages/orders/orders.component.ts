@@ -46,14 +46,17 @@ export class OrdersComponent implements OnInit {
 
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
-        this.walletAddress = walletAddress;
-        this.orderServ.getMyOrders(walletAddress).subscribe(
-          (res: any) => {
-              if(res && res.ok) {
-                this.orders = res._body;
-              }
-          }
-        ); 
+        if(walletAddress) {
+          this.walletAddress = walletAddress;
+          this.orderServ.getMyOrders(walletAddress).subscribe(
+            (res: any) => {
+                if(res && res.ok) {
+                  this.orders = res._body;
+                }
+            }
+          ); 
+        }
+
       }
     );
   }
@@ -185,7 +188,7 @@ export class OrdersComponent implements OnInit {
       const data = {
         paymentStatus: 5
       };
-      this.orderServ.update(this.order._id, data).subscribe(
+      this.orderServ.update2(this.order._id, data).subscribe(
         (ret: any) => {
           this.spinner.hide();
           if(ret && ret.ok) {
@@ -276,7 +279,7 @@ export class OrdersComponent implements OnInit {
       const data = {
         paymentStatus: 2
       };
-      this.orderServ.update(this.order._id, data).subscribe(
+      this.orderServ.update2(this.order._id, data).subscribe(
         (ret: any) => {
           this.spinner.hide();
           console.log('ret for update payment=', ret);

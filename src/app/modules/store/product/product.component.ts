@@ -334,7 +334,7 @@ export class ProductComponent implements OnInit {
       transAmount: this.product.price * Number(this.quantity)
     };
 
-    this.orderServ.create(orderData).subscribe(
+    this.orderServ.create2(orderData).subscribe(
       (res: any) => {
         console.log('ress from create order', res);
         if (res && res.ok) {

@@ -153,7 +153,8 @@ export class AddressComponent implements OnInit {
     (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(res => {
       if(res) {
         if(res.ok) {
-          this.orderServ.update(this.orderID, updatedOrder).subscribe(
+          
+          this.orderServ.update2(this.orderID, updatedOrder).subscribe(
             (res: any) => {
               if (res && res.ok) {
                 //this.addAddress();
