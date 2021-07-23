@@ -29,6 +29,7 @@ export class KanbanSmartContractService {
     }
 
     formExecKanbanSmartContractABI(abi, args) {
+      console.log('abi ====', this.web3Serv.getGeneralFunctionABI(abi, args));
         return this.web3Serv.getGeneralFunctionABI(abi, args);
     }
 

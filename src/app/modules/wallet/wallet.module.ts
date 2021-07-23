@@ -23,6 +23,7 @@ import { GetFreeGasComponent } from './modals/get-free-gas/get-free-gas.componen
 import { CoinsListComponent } from './components/coins-list/coins-list.component';
 import { AssetsListComponent } from './components/assets-list/assets-list.component';
 import { BindpayComponent } from './components/bindpay/bindpay.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -41,6 +42,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         WalletComponent,
         BindpayComponent,
         CoinsListComponent,
+        OrderHistoryComponent,
         CreateWalletComponent,
         ImportWalletComponent,   
         TransactionHistoryComponent,  

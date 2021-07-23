@@ -1,4 +1,10 @@
-<div class="container py-3">
+<div class="container">
+    <div class="d-flex">
+        <div class="px-3" (click)="changeTab('pay')">Pay</div>
+        <div class="px-3" (click)="changeTab('history')">Transaction History</div>
+    </div>
+</div>
+<div class="container py-3" *ngIf="tab == 'pay'">
     <div class="row">
         <div class="col col-8">
             <div *ngIf="name">
@@ -19,4 +25,8 @@
             </div> 
         </div>
     </div>
+</div>
+
+<div *ngIf="tab == 'history'">
+    <app-order-history [transactionHistories]="transactionHistories"></app-order-history>
 </div>

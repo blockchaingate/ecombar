@@ -70,6 +70,8 @@ export class WalletDashboardComponent implements OnInit{
   walletBalance: number;
   assets: any;
   walletValue: number;
+  transactionHistories: any;
+  merchantTransactionHistories: any;
   gas: any;
   currentTab: string;
   
@@ -679,6 +681,24 @@ export class WalletDashboardComponent implements OnInit{
 
     changeTab(tabName: string) {
       this.currentTab = tabName;
+      if(tabName == 'history') {
+        this.starServ.getTransactionHisotryForCustomer(this.walletAddress).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.transactionHistories = ret._body;
+            }
+          }
+        );
+      } else
+      if(tabName == 'historyMerchant') {
+        this.starServ.getTransactionHisotryForMerchant(this.walletAddress).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.merchantTransactionHistories = ret._body;
+            }
+          }
+        );        
+      }
     }
 
     onChange(index) {
