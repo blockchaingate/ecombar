@@ -183,8 +183,11 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      this.toastr.success('Request refund was made successfully');
+      this.order.paymentStatus = 5;
+      /*
       const data = {
         paymentStatus: 5
       };
@@ -197,9 +200,10 @@ export class OrdersComponent implements OnInit {
           }
         }
       );
+      */
     } else {
       this.toastr.error('Failed to request refund');
-      this.spinner.hide();
+      
     }
 
   }
@@ -274,8 +278,9 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      /*
       const data = {
         paymentStatus: 2
       };
@@ -289,9 +294,12 @@ export class OrdersComponent implements OnInit {
           }
         }
       );
+      */
+      this.toastr.success('Cancel request refund was made successfully');
+      this.order.paymentStatus = 2;
     } else {
       this.toastr.error('Failed to cancel request refund');
-      this.spinner.hide();
+      
     }
   }
 

@@ -142,6 +142,9 @@ export class UtilService {
     }
 
     sequenceId2ObjectId(sequenceId: string) {
+        if(sequenceId.indexOf('0x') == 0) {
+            sequenceId = sequenceId.substring(2);
+        }
         const buf = Buffer.from(sequenceId, 'hex');
         return bs58.encode(buf);
     }
