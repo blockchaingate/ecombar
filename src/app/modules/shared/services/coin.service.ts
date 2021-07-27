@@ -344,10 +344,10 @@ export class CoinService {
 
             address = mycoin.receiveAdds[index].address;
             // console.log('address in getFabTransactionHex=' + address);
-            const fabUtxos = await this.apiServ.getFabUtxos(address);
+            let fabUtxos = await this.apiServ.getFabUtxos(address);
 
-            console.log('fabUtxos==', fabUtxos);
             if (fabUtxos && fabUtxos.length) {
+                fabUtxos = fabUtxos.sort((a,b) => b.value - a.value);
                 // console.log('fabUtxos=', fabUtxos);
                 // console.log('fabUtxos.length=', fabUtxos.length);
                 for (let i = 0; i < fabUtxos.length; i++) {
