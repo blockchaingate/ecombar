@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BannerService } from '../../../shared/services/banner.service';
+import { SmallBannerService } from '../../../shared/services/small-banner.service';
 import { Router } from '@angular/router';
 import { DataService } from '../../../shared/services/data.service';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
@@ -7,12 +7,12 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from '../../../shared/services/kanban.service';
 
 @Component({
-  selector: 'app-admin-banners',
+  selector: 'app-admin-small-banners',
   providers: [],
-  templateUrl: './banners.component.html',
-  styleUrls: ['./banners.component.scss', '../../../../../table.scss']
+  templateUrl: './small-banners.component.html',
+  styleUrls: ['./small-banners.component.scss', '../../../../../table.scss']
 })
-export class BannersComponent implements OnInit {
+export class SmallBannersComponent implements OnInit {
   banners: any;
   wallet: any;
   modalRef: BsModalRef;
@@ -22,7 +22,7 @@ export class BannersComponent implements OnInit {
     private modalService: BsModalService,
     private dataServ: DataService,
     private router: Router,
-    private bannerServ: BannerService) {
+    private bannerServ: SmallBannerService) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class BannersComponent implements OnInit {
       }
     );
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 
@@ -52,7 +52,7 @@ export class BannersComponent implements OnInit {
   }
 
   editBanner(banner) {
-    this.router.navigate(['/merchant/banner/' + banner._id + '/edit']);
+    this.router.navigate(['/merchant/small-banner/' + banner._id + '/edit']);
   }
 
   deleteBanner(banner_id) {

@@ -16,12 +16,16 @@ import { CollectionAddComponent } from './pages/collection-add/collection-add.co
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
 import { BannersComponent } from './pages/banners/banners.component';
+import { BannerAddComponent } from './pages/banner-add/banner-add.component';
+import { SmallBannersComponent } from './pages/small-banners/small-banners.component';
+import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-add.component';
+
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { BannerAddComponent } from './pages/banner-add/banner-add.component';
+
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
@@ -66,7 +70,8 @@ import { RoleMenuPipe } from './pipes/role-menu.pipe';
     CollectionAddComponent,
     UserAddComponent,
     AddressComponent,
-    
+    SmallBannersComponent,
+    SmallBannerAddComponent,
     ShippingComponent,
     MerchantsComponent,
     ProductsComponent,

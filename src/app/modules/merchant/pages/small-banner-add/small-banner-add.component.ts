@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BannerService } from '../../../shared/services/banner.service';
+import { SmallBannerService } from '../../../shared/services/small-banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../shared/services/data.service';
 import { KanbanService } from '../../../shared/services/kanban.service';
@@ -7,17 +7,18 @@ import { PasswordModalComponent } from '../../../shared/components/password-moda
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-admin-banner-add',
+  selector: 'app-admin-small-banner-add',
   providers: [],
-  templateUrl: './banner-add.component.html',
-  styleUrls: ['./banner-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  templateUrl: './small-banner-add.component.html',
+  styleUrls: ['./small-banner-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
 })
-export class BannerAddComponent implements OnInit {
+export class SmallBannerAddComponent implements OnInit {
   modalRef: BsModalRef;
   wallet: any;    
   sequence: number;
   title: string;
   images: any;
+  clickLink: string;
   titleChinese: string;
   subtitle: string;
   subtitleChinese: string;
@@ -30,12 +31,12 @@ export class BannerAddComponent implements OnInit {
     private router: Router,
     public kanbanServ: KanbanService,
     private modalService: BsModalService,
-    private bannerServ: BannerService) {
+    private bannerServ: SmallBannerService) {
   }
 
   ngOnInit() {
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 
@@ -53,6 +54,7 @@ export class BannerAddComponent implements OnInit {
             this.title = banner.title[0].text;
             this.subtitle = banner.subtitle[0].text;
             this.sequence = banner.sequence;
+            this.clickLink = banner.clickLink;
             this.titleChinese = banner.title[1].text;
             this.subtitleChinese = banner.subtitle[1].text;
             if(banner.image) {
@@ -109,6 +111,7 @@ export class BannerAddComponent implements OnInit {
     const data = {
       title: title,
       subtitle: subtitle,
+      clickLink: this.clickLink,
       image: (this.images && (this.images.length > 0)) ? this.images[0] : null,
       sequence: this.sequence ? this.sequence : 0
     };
@@ -120,7 +123,7 @@ export class BannerAddComponent implements OnInit {
       this.bannerServ.create(data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/merchant/banners']);
+            this.router.navigate(['/merchant/small-banners']);
           }
         }
       );
@@ -128,7 +131,7 @@ export class BannerAddComponent implements OnInit {
       this.bannerServ.update(this.id, data).subscribe(
         (res: any) => {
           if (res && res.ok) {
-            this.router.navigate(['/merchant/banners']);
+            this.router.navigate(['/merchant/small-banners']);
           }
         }
       );

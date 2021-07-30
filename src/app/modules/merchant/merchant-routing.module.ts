@@ -21,6 +21,8 @@ import { BrandsComponent } from './pages/brands/brands.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
+import { SmallBannersComponent } from './pages/small-banners/small-banners.component';
+import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { ShippingComponent } from './pages/shipping/shipping.component';
@@ -122,6 +124,15 @@ const routes: Routes = [
       },
       {
         path: 'banner/:id/edit', component: BannerAddComponent
+      },
+      {
+        path: 'small-banners', component: SmallBannersComponent
+      },
+      {
+        path: 'small-banner/add', component: SmallBannerAddComponent
+      },
+      {
+        path: 'small-banner/:id/edit', component: SmallBannerAddComponent
       },
       {
         path: 'collections', component: CollectionsComponent

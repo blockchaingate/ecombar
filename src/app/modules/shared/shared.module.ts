@@ -15,6 +15,8 @@ import { TimerService } from './services/timer.service';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
+import { BannerService } from './services/banner.service';
+import { SmallBannerService } from './services/small-banner.service';
 import { AirdropService } from './services/airdrop.service';
 import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
@@ -96,6 +98,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ShipService,
     KanbanService,
     TimerService,
+    BannerService,
+    SmallBannerService,
     AirdropService,
     WalletGuardService,
     UtilService,

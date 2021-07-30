@@ -1,6 +1,7 @@
 <div class="container-fluid">
     <main id="content" role="main">
         <app-slide-show></app-slide-show>
+        <app-small-banners></app-small-banners>
         <app-info-bar></app-info-bar>
         <div *ngFor="let item of mainLayouts">
             <div *ngIf="item.type == 'Single Collection'">
