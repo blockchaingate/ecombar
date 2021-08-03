@@ -21,6 +21,7 @@ import { AirdropService } from './services/airdrop.service';
 import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
 import { StarService } from './services/star.service';
+import { FeatureService } from './services/feature.service';
 import { MainLayoutService } from './services/mainlayout.service';
 import { WalletGuardService } from './services/wallet-guard.service';
 import { KanbanService } from './services/kanban.service';
@@ -106,6 +107,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     IddockService,
     TextLanService,
     StarService,
+    FeatureService,
     StoreService,
     MainLayoutService,
     KanbanSmartContractService

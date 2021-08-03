@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { InfoBarComponent } from './info-bar.component';
+import { FeatureListComponent } from './feature-list.component';
 
-describe('InfoBarComponent', () => {
-  let component: InfoBarComponent;
-  let fixture: ComponentFixture<InfoBarComponent>;
+describe('FeatureListComponent', () => {
+  let component: FeatureListComponent;
+  let fixture: ComponentFixture<FeatureListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoBarComponent ]
+      declarations: [ FeatureListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InfoBarComponent);
+    fixture = TestBed.createComponent(FeatureListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

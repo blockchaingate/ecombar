@@ -1,0 +1,46 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'New Feature' | translate}}</h1>
+      <hr>
+      
+      <div class="d-flex align-items-center navigate-bar my-3">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+          English
+        </div>
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Chinese')">
+          中文
+        </div>
+      </div>
+
+      <div *ngIf="currentTab=='default'">
+        <label for="email"><b>Title</b></label>
+        <input type="text" placeholder="{{'Enter title' | translate}}" [(ngModel)]="title" name="title" required>
+        <label for="email"><b>Subtitle</b></label>
+        <input type="text" placeholder="{{'Enter subtitle' | translate}}" [(ngModel)]="subtitle" name="subtitle"> 
+   
+        <i class="text-primary ec font-size-46" [ngClass]="icon"></i>
+        <select [(ngModel)]="icon" name="icon" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option value="">Select Icon:</option>
+            <option *ngFor="let ic of icons" value="{{ic}}">{{ic}}
+            </option>
+          </select>        
+
+        <!--
+        <label for="email"><b>{{'Icon' | translate}}</b></label>
+        <input type="text" placeholder="{{'Enter icon' | translate}}" [(ngModel)]="icon" name="icon">
+        -->
+      </div>
+      
+      <div *ngIf="currentTab=='Chinese'">
+        <label for="email"><b>标题</b></label>
+        <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">        
+
+        <label for="email"><b>副标题</b></label>
+        <input type="text" placeholder="输入副标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">           
+      </div>
+
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="addFeature()">{{(id?'Update':'Add') | translate}}</button>
+      </div>
+    </div>
+</form>

@@ -6,7 +6,7 @@ import { SlideShowComponent } from './components/slide-show/slide-show.component
 import { CollectionsComponent } from './components/collections/collections.component';
 import { Collections2Component } from './components/collections2/collections2.component';
 import { TopCategoriesComponent } from './components/top-categories/top-categories.component';
-import { InfoBarComponent } from './components/info-bar/info-bar.component';
+import { FeatureListComponent } from './components/feature-list/feature-list.component';
 import { SmallBannersComponent } from './components/small-banners/small-banners.component';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -16,7 +16,7 @@ import { SharedModule } from '../../shared/shared.module';
     SlideShowComponent,
     CollectionsComponent,
     Collections2Component,
-    InfoBarComponent,
+    FeatureListComponent,
     SmallBannersComponent,
     TopCategoriesComponent
   ],

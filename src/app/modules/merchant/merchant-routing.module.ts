@@ -33,6 +33,8 @@ import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { StoreComponent } from './pages/store/store.component';
+import { FeaturesComponent } from './pages/features/features.component';
+import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
 
 const routes: Routes = [
   {
@@ -133,6 +135,15 @@ const routes: Routes = [
       },
       {
         path: 'small-banner/:id/edit', component: SmallBannerAddComponent
+      },
+      {
+        path: 'features', component: FeaturesComponent
+      },
+      {
+        path: 'feature/add', component: FeatureAddComponent
+      },
+      {
+        path: 'feature/:id/edit', component: FeatureAddComponent
       },
       {
         path: 'collections', component: CollectionsComponent

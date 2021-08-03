@@ -1,0 +1,34 @@
+
+<div class="container">
+    <div class="text-right">
+      <button class="btn" routerLink="/merchant/feature/add" routerLinkActive="active">{{'New' | translate}}</button>
+  </div>
+  
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">{{'Icon' | translate}}</div>
+        <div class="col col-3">{{'Title' | translate}}</div>
+        <div class="col col-3">{{'Sub Title' | translate}}</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let feature of features">
+        <div class="col col-3" data-label="Icon">{{feature.icon}}</div>
+        <div class="col col-3" data-label="Title">{{feature.title  | translateField}}</div>
+        <div class="col col-3" data-label="Sub Title">{{feature.subtitle  | translateField}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+  
+          <div class="d-inline-block px-2">
+            <a (click)="editFeature(feature)">
+              <img src="/assets/svg/edit.svg">
+            </a>
+          </div>
+    
+          <div class="d-inline-block px-2">
+            <a (click)="deleteFeature(feature._id)">
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div>        
+        </div>
+      </li>
+    </ul>
+  </div>
