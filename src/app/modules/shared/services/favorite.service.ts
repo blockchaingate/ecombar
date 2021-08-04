@@ -10,10 +10,10 @@ export class FavoriteService {
     return this.http.post('favorite/Create', data, false);
   }  
 
-  isMyFavorite(productId) {
+  isMyFavorite(productId: string, walletAddress: string) {
 
-    const url = 'favorite/isMyFavorite/' + productId;
-    console.log('url=', url);
+    const url = 'favorite/isMyFavorite/' + productId + '/' + walletAddress;
+    console.log('url in isMyFavorite=', url);
     return this.http.get(url, false);
   }
 
@@ -23,5 +23,9 @@ export class FavoriteService {
 
   getMine(storeId: string, owner: string) {
     return this.http.get('favorite/mine/' + storeId + '/' + owner, false);
+  }
+
+  getMinForAllStores(owner: string) {
+    return this.http.get('favorite/mine/all/' + owner, false);
   }
 }

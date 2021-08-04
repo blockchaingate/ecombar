@@ -73,7 +73,13 @@
                             </div>
                         </div>
                         <div class="flex-horizontal-center flex-wrap mb-4">
-                            <a (click)="addToFavorite(id)" class="text-gray-6 font-size-13 mr-2"><i class="ec ec-favorites mr-1 font-size-15"></i> {{'Wishlist' | translate}}</a>
+                            <a (click)="toggleFavorite(id)" class="text-gray-6 font-size-13 mr-2">
+                                <i class="ec ec-favorites mr-1 font-size-15" [ngClass]="isFavorited ? 'favorited' : ''"></i> 
+                                <span [ngClass]="isFavorited ? 'favorited' : ''">
+                                    {{'Wishlist' | translate}}
+                                </span>
+                                
+                            </a>
                             <!--
                             <a href="#" class="text-gray-6 font-size-13 ml-2"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
                             -->

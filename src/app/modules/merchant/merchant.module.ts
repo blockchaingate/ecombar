@@ -34,7 +34,6 @@ import { MerchantApplicationsComponent } from './pages/merchant-applications/mer
 import { CommentComponent } from './pages/comment/comment.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
-import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { StoreComponent } from './pages/store/store.component';
 import { CommonModule } from '@angular/common';
@@ -52,7 +51,6 @@ import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
     MerchantComponent,
 
     MyCommentsComponent,
-    FavoriteComponent,
 
     UploadMediaComponent,
     DashboardComponent,

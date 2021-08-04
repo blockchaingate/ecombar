@@ -33,6 +33,7 @@ export class ProductComponent implements OnInit {
   colors: any;
   relatedProducts: any;
   favorite: any;
+  isFavorited: boolean;
   token: any;
   storeId: string;
   overall: number;
@@ -66,6 +67,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         this.wallet = wallet;
@@ -76,10 +78,23 @@ export class ProductComponent implements OnInit {
         this.storeId = storeId;
       }
     );
+    
+    this.isFavorited = false;
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.favoriteServ.isMyFavorite(this.id, walletAddress).subscribe(
+            (ret: any) => {
+              if(ret && ret.ok) {
+                this.isFavorited = ret._body;
+              }
+            }
+          );
+        }
+      }
+    );
 
-    this.id = this.route.snapshot.paramMap.get('id');
-
-
+    
     this.overall = 0;
     this.rating1 = 0;
     this.rating2 = 0;
@@ -195,36 +210,6 @@ export class ProductComponent implements OnInit {
       }
     );
 
-    this.token = this.storage.token;
-    if(this.token) {
-      this.authServ.isAuthenticated(this.token).subscribe(
-        (ret) => {
-          if(!ret) {
-            this.token = null;
-          } else {
-            this.initForUser();
-          }
-        }
-      );
-    } else {
-      this.storage.get('_token').subscribe(
-        (token: string) => {
-          if(token) {
-            this.authServ.isAuthenticated(token).subscribe(
-              (ret) => {
-                if(!ret) {
-                  this.token = null;
-                }  else {
-                  this.token = token;
-                  this.initForUser();
-                }               
-              }
-            );
-          }
-        });      
-    }  
-
-
   }
 
 
@@ -248,6 +233,7 @@ export class ProductComponent implements OnInit {
     this.quantity ++;
   }
 
+  /*
   initForUser() {
     console.log('initForUser start');
     this.favoriteServ.isMyFavorite(this.id).subscribe(
@@ -262,12 +248,13 @@ export class ProductComponent implements OnInit {
       }
     );
   }
-
+  */
   mouseEnter(image) {
       this.selectedImage = image;
   }
 
-  addToFavorite(id) {
+
+  toggleFavorite(id) {
     this.parentId = id;
     const initialState = {
       pwdHash: this.wallet.pwdHash,
@@ -277,11 +264,29 @@ export class ProductComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
-      this.addToFavoriteDo(privateKey);
+      if(this.isFavorited) {
+        this.removeFromFavoriteDo(privateKey);
+      } else {
+        this.addToFavoriteDo(privateKey);
+      }
+      
     });
+  }
 
+  removeFromFavoriteDo(privateKey: any) {
+    const data = {
+      parentId: this.parentId
+    };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;   
 
-
+    this.favoriteServ.deleteFavorite(data).subscribe(
+      (res: any) => {
+        if(res&&res.ok) {
+          this.isFavorited = false;
+        }
+      }
+    );
   }
 
   addToFavoriteDo(privateKey: any) {
@@ -296,13 +301,14 @@ export class ProductComponent implements OnInit {
         if(res && res.ok) {
           this.toastr.success('add to favorite successfully', '');
           this.favorite = res._body;
+          this.isFavorited = true;
         }
       }
     );
   }
 
   onAddToFavorite(event) {
-    this.addToFavorite(event);
+    this.toggleFavorite(event);
   }
 
   onAddToCart(event) {
