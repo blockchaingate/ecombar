@@ -171,7 +171,11 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearch() {
-    this.router.navigate(['/search', { text: this.searchText, categoryId: this.categoryId, merchantId: this.merchantId??'' }]);
+    const query = { text: this.searchText};
+    if(this.categoryId) {
+      query['categoryId'] = this.categoryId;
+    }
+    this.router.navigate(['/store/' + this.storeId + '/search', query]);
   }
 
   setLan() {
