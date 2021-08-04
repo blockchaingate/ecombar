@@ -6,6 +6,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { RelatedProductsComponent } from './related-products/related-products.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     ProductRoutingModule,
     CommonModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    ModalModule.forRoot()
   ],
   providers: []
 })

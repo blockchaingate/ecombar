@@ -15,6 +15,8 @@ import { Web3Service } from '../../shared/services/web3.service';
 import { UtilService } from '../../shared/services/util.service';
 import { KanbanService } from '../../shared/services/kanban.service';
 import { DataService } from '../../shared/services/data.service';
+import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-product',
@@ -22,9 +24,11 @@ import { DataService } from '../../shared/services/data.service';
   styleUrls: ['./product.component.scss', '../../../../button.scss']
 })
 export class ProductComponent implements OnInit {
+  modalRef: BsModalRef;
   product: any;
   comments: any;
   id: string;
+  parentId: string;
   quantity: number;
   colors: any;
   relatedProducts: any;
@@ -37,6 +41,7 @@ export class ProductComponent implements OnInit {
   rating3: number;
   rating2: number;
   rating1: number;
+  wallet: any;
 
   selectedImage: string;
   constructor(
@@ -52,6 +57,7 @@ export class ProductComponent implements OnInit {
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
     private router: Router,
+    private modalService: BsModalService,
     private storage: StorageService,
     private authServ: AuthService,
     private translateServ: TranslateService    
@@ -60,6 +66,11 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );
     this.dataServ.currentStoreId.subscribe(
       (storeId: string) => {
         this.storeId = storeId;
@@ -257,10 +268,29 @@ export class ProductComponent implements OnInit {
   }
 
   addToFavorite(id) {
+    this.parentId = id;
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
     
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      this.addToFavoriteDo(privateKey);
+    });
+
+
+
+  }
+
+  addToFavoriteDo(privateKey: any) {
     const data = {
-      parentId: id   
+      parentId: this.parentId,
+      store: this.storeId   
     };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature; 
     this.favoriteServ.create(data).subscribe(
       (res) => {
         if(res && res.ok) {

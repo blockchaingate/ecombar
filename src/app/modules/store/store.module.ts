@@ -3,6 +3,7 @@ import { StoreRoutingModule } from './store-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { StoreComponent } from './store.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.component';
@@ -49,6 +50,7 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     CommonModule,
     FormsModule,
     NgxSpinnerModule,
+    ModalModule.forRoot(),
     ReactiveFormsModule,
     SharedModule
   ],
