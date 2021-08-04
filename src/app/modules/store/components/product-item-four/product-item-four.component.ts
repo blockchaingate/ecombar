@@ -10,6 +10,7 @@ import { StorageService } from '../../../shared/services/storage.service';
 export class ProductItemFourComponent implements OnInit {
   lang: string;
   @Input() product: any;
+  @Input() storeId: string;
   constructor(private storageServ: StorageService) {
 
   }  

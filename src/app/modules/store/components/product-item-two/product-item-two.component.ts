@@ -8,11 +8,13 @@ import { StorageService } from '../../../shared/services/storage.service';
 
 export class ProductItemTwoComponent implements OnInit {
   lang: string;
+  @Input() storeId: string;
+  @Input() product: any;
   constructor(private storageServ: StorageService) {
 
   }
-    @Input() product: any;
-    ngOnInit() {
+  
+  ngOnInit() {
       this.lang = this.storageServ.lang;
       if (!this.lang) {
         this.storageServ.get('_lang').subscribe(
@@ -24,5 +26,5 @@ export class ProductItemTwoComponent implements OnInit {
           }
         );
       }
-    }
+  }
 }

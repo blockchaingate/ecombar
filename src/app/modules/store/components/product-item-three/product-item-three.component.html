@@ -2,15 +2,15 @@
     <div class="product-item__inner remove-prodcut-hover py-4 row">
         <div class="product-item__header col-6 col-md-4">
             <div class="mb-2">
-                <a href="/product/{{product._id}}" class="d-block text-center">
+                <a href="/store/{{storeId}}/product/{{product._id}}" class="d-block text-center">
                     <img class="img-fluid" [src]="product.images ? product.images[0] : '../../assets/img/212X200/img9.jpg'" alt="Image Description">
                 </a>
             </div>
         </div>
         <div class="product-item__body col-6 col-md-5">
             <div class="pr-lg-10">
-                <div class="mb-2"><a href="/product/{{product._id}}" class="font-size-12 text-gray-5">{{product.title | translateField}}</a></div>
-                <h5 class="mb-2 product-item__title"><a href="/product/{{product._id}}" class="text-blue font-weight-bold"><p [innerHTML]="product.description | translateField"></p></a></h5>
+                <div class="mb-2"><a href="/store/{{storeId}}/product/{{product._id}}" class="font-size-12 text-gray-5">{{product.title | translateField}}</a></div>
+                <h5 class="mb-2 product-item__title"><a href="/store/{{storeId}}/product/{{product._id}}" class="text-blue font-weight-bold"><p [innerHTML]="product.description | translateField"></p></a></h5>
                 <div class="prodcut-price mb-2 d-md-none">
                     <div class="text-gray-100">${{product.price}}</div>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <div class="prodcut-add-cart">
-                    <a href="/product/{{product._id}}" class="btn btn-sm btn-block btn-primary-dark btn-wide transition-3d-hover">Add to cart</a>
+                    <a href="/store/{{storeId}}/product/{{product._id}}" class="btn btn-sm btn-block btn-primary-dark btn-wide transition-3d-hover">Add to cart</a>
                 </div>
             </div>
             <div class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">

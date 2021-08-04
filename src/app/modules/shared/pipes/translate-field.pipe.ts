@@ -17,7 +17,7 @@ export class TranslateFieldPipe extends TranslatePipe implements PipeTransform {
                 return field[0].text;
             }
         } else 
-        if(fieldName[lang]) {
+        if(fieldName[lang] != undefined) {
             return fieldName[lang];
         }
         return fieldName;
