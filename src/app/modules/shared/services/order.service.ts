@@ -31,8 +31,8 @@ export class OrderService {
     return this.http.get('orders/ownedBy/' + address, false);
   }
 
-  getMyProducts() {
-    return this.http.get('orders/my-products', false);
+  getMyProducts(address: string) {
+    return this.http.get('orders/my-products/' + address, false);
   }
 
   getAllOrders() {

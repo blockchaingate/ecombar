@@ -5,10 +5,11 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { MerchantService } from '../../../shared/services/merchant.service';
 import { Router } from '@angular/router';
 import { OrderService } from '../../../shared/services/order.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-my-products',
-  providers: [ProductService, UserService],
+  providers: [],
   templateUrl: './my-products.component.html',
   styleUrls: ['./my-products.component.scss']
 })
@@ -18,6 +19,7 @@ export class MyProductsComponent implements OnInit {
   constructor(
     private userServ: UserService,
     private authServ: AuthService,
+    private dataServ: DataService,
     private merchantServ: MerchantService,
     private router: Router,
     private orderServ: OrderService,
@@ -30,13 +32,21 @@ export class MyProductsComponent implements OnInit {
     this.getProducts();
   }
   getProducts() {
-    this.orderServ.getMyProducts().subscribe(
-      (res: any) => {
-        if(res && res.ok) {
-          this.products = res._body;
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.orderServ.getMyProducts(walletAddress).subscribe(
+            (res: any) => {
+              console.log('retdfff====', res);
+              if(res && res.ok) {
+                this.products = res._body;
+              }
+            }
+          );
         }
       }
     );
+
   }
 
   addComment(product) {
