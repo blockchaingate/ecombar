@@ -22,6 +22,8 @@ import { CompareComponent } from './compare/compare.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { OrderComponent } from './order/order.component';
 import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categories.component';
+import { TrackOrderComponent } from './track-order/track-order.component';
+import { StoreLocatorComponent } from './store-locator/store-locator.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -42,7 +44,9 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     OrderComponent,
     ProductListWholeComponent,
     WishlistComponent,
-    SubCategoriesComponent
+    SubCategoriesComponent,
+    TrackOrderComponent,
+    StoreLocatorComponent
   ],
   imports: [
     // QRCodeModule,
