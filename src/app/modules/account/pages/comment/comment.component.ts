@@ -20,6 +20,7 @@ export class CommentComponent implements OnInit{
     comment: string;
     modalRef: BsModalRef;
     productId: string;
+    orderId: string;
     commentId: string;
     wallet: any;
     
@@ -40,12 +41,13 @@ export class CommentComponent implements OnInit{
         }
       );
       this.productId = this.route.snapshot.paramMap.get('productId');
+      this.orderId = this.route.snapshot.paramMap.get('orderId');
       this.rating = 0;
       this.comment = '';
       this.dataServ.currentWalletAddress.subscribe(
         (walletAddress: string) => {
           if(walletAddress) {
-            this.commentServ.getMyCommentFor(walletAddress, this.productId).subscribe(
+            this.commentServ.getMyCommentFor(walletAddress, this.orderId, this.productId).subscribe(
               (res: any) => {
                 console.log('resssss=', res);
                 if(res && res.ok) {
@@ -83,6 +85,7 @@ export class CommentComponent implements OnInit{
     updateDo(privateKey: any) {
       const data = {
         parentId: this.productId,
+        order: this.orderId,
         comment: this.comment,
         rating: this.rating   
       };

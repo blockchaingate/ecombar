@@ -18,8 +18,8 @@ export class CommentService {
     return this.http.post('comment/update/' + id, data);
   }
 
-  getMyCommentFor(walletAddress: string, productId: string) {
-    return this.http.get('comment/myCommentFor/' + walletAddress + '/' + productId);
+  getMyCommentFor(walletAddress: string, orderId: string, productId: string) {
+    return this.http.get('comment/myCommentFor/' + walletAddress + '/' + orderId + '/' + productId);
   }
 
   getComments(productId: string) {

@@ -50,7 +50,7 @@ const routes: Routes = [
         path: 'profile', component: ProfileComponent
       },     
       {
-        path: 'comment/:productId', component: CommentComponent
+        path: 'comment/:orderId/:productId', component: CommentComponent
       },
       {
         path: 'upload', component: UploadMediaComponent
