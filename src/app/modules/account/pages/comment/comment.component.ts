@@ -89,7 +89,6 @@ export class CommentComponent implements OnInit{
       const sig = this.kanbanServ.signJsonData(privateKey, data);
       data['sig'] = sig.signature;  
       
-      console.log('(this.commentId==', this.commentId);
       if(this.commentId) {
         this.commentServ.update(this.commentId, data).subscribe(
           (res) => {
