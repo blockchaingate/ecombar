@@ -39,15 +39,14 @@
                     <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <div class="prodcut-add-cart">
-                    <a href="/store/{{storeId}}/product/{{product._id}}" class="btn btn-sm btn-block btn-primary-dark btn-wide transition-3d-hover">Add to cart</a>
+                    <a (click)="addToCart()" class="btn btn-sm btn-block btn-primary-dark btn-wide transition-3d-hover">Add to cart</a>
                 </div>
             </div>
-            <div class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">
-                <!--
-                <a href="../shop/compare.html" class="text-gray-6 font-size-13 mx-wd-3"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                -->                
+            <!--
+            <div class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">            
                 <a href="../shop/wishlist.html" class="text-gray-6 font-size-13 mx-wd-3"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
             </div>
+            -->
         </div>
     </div>
 </div>

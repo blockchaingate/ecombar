@@ -22,12 +22,13 @@
                     <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <div class="d-none d-xl-block prodcut-add-cart">
-                    <a href="/store/{{storeId}}/product/{{product._id}}" class="btn-add-cart btn-primary transition-3d-hover">
+                    <a (click)="addToCart()" class="btn-add-cart btn-primary transition-3d-hover">
                         <i class="ec ec-add-to-cart"></i>
                     </a>
                 </div>
             </div>
         </div>
+        <!--
         <div class="product-item__footer">
             <div class="border-top pt-2 flex-center-between flex-wrap">
                 <a href="../shop/wishlist.html" class="text-gray-6 font-size-13">
@@ -36,5 +37,6 @@
                 </a>
             </div>
         </div>
+        -->
     </div>
 </div>

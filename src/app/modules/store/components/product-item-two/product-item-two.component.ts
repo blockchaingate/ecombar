@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { StorageService } from '../../../shared/services/storage.service';
 @Component({
   selector: 'app-product-item-two',
@@ -10,6 +10,8 @@ export class ProductItemTwoComponent implements OnInit {
   lang: string;
   @Input() storeId: string;
   @Input() product: any;
+  @Output() addToCartEvent = new EventEmitter<string>();
+
   constructor(private storageServ: StorageService) {
 
   }
@@ -27,4 +29,9 @@ export class ProductItemTwoComponent implements OnInit {
         );
       }
   }
+
+  addToCart() {
+    this.addToCartEvent.emit(this.product._id);
+  }
+  
 }

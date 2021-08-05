@@ -43,12 +43,14 @@
                     <div class="text-gray-100">${{product.price}}</div>
                 </div>
                 <div class="prodcut-add-cart">
-                    <a href="/store/{{storeId}}/product/{{product._id}}" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                    <a (click)="addToCart()" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                 </div>
             </div>
+            <!--
             <div class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
                 <a href="../shop/wishlist.html" class="text-gray-6 font-size-13 mx-wd-3"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
             </div>
+            -->
         </div>
     </div>
 </div>
