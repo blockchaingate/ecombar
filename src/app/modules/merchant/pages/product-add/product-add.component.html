@@ -62,8 +62,9 @@
               <div class="card">
                 <div class="container">
                   <div class="form-field">
-                    <label for="specification">Contents</label>
-
+                    <label for="specification">Quantity</label>
+                    <input type="text" placeholder="Enter product quantity" [(ngModel)]="quantity" name="quantity" required>
+                    <!--s
                     <div>
                       <div *ngFor="let content of contents">
                         <div class="d-flex align-items-center justify-content-between py-2">
@@ -77,6 +78,7 @@
                         
                       </div>
                     </div>
+                  
                     <div class="d-flex">
                       <div class="w-50 px-2">
                         <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="contentName" name="contentName">
@@ -86,7 +88,7 @@
                         <input type="number"  style="display:table-cell; width:100%"  placeholder="Enter Quantity" [(ngModel)]="contentQuantity" name="contentQuantity">
                       </div>                      
                     </div>
-
+-->
                     <div class="pt-2">
                       <button class="btn" (click)="addContent()">{{'Add' | translate}}</button>
                     </div>
@@ -256,6 +258,7 @@
                     <label for="psw"><b>Category</b></label>
                   </div>
     
+                  <!--
                   <div *ngIf="categories">
                     <select [(ngModel)]="category" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                       <option value="">Select Category:</option>
@@ -267,7 +270,23 @@
                       </option>
                     </select>
                   </div>
+                -->
 
+                <div class="btn-group" dropdown>
+                  <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                          aria-controls="dropdown-animated">
+                    {{selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate)}} <span class="caret"></span>
+                  </button>
+                  <div  *ngIf="categories && categories.length > 0">
+                    <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
+                    role="menu" aria-labelledby="button-animated">
+                  <li role="menuitem" *ngFor="let cat of categories">
+                    <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{cat.category | translateField}}</a>
+                  </li>
+                </ul>
+                  </div>
+        
+                </div>
 
 
 

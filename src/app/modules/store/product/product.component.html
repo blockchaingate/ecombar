@@ -69,7 +69,12 @@
                                 <!--
                                 <a href="#" class="max-width-150 ml-n2 mb-2 mb-md-0 d-block"><img class="img-fluid" src="../../assets/img/200X60/img1.png" alt="Image Description"></a>
                                 -->
-                                <div class="ml-md-3 text-gray-9 font-size-14">{{'Availability' | translate}}: <span class="text-green font-weight-bold">{{getProductQuantity()}} {{'in stock' | translate}}</span></div>
+                                <div class="ml-md-3 text-gray-9 font-size-14">{{'Availability' | translate}}: <span class="text-green font-weight-bold">
+                                    <span *ngIf="!product.active">{{'Out of stock' | translate}}</span>
+                                    <span *ngIf="product.active">
+                                        {{product.quantity}} {{'in stock' | translate}}
+                                    </span>
+                                </span></div>
                             </div>
                         </div>
                         <div class="flex-horizontal-center flex-wrap mb-4">

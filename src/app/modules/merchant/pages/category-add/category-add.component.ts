@@ -19,10 +19,10 @@ export class CategoryAddComponent implements OnInit {
   modalRef: BsModalRef;
   sequence: number;
   categories: any;
+  selectedCategory: any;
   images: any;
   category: string;
   categoryChinese: string;
-  parentId: string;
   currentTab: string;
   wallet: any;
   id: string;
@@ -74,7 +74,8 @@ export class CategoryAddComponent implements OnInit {
             this.category = category.category.en;
             this.categoryChinese = category.category.sc;
             this.sequence = category.sequence;
-            this.parentId = category.parentId;
+            this.selectedCategory = category.parentId;
+            //this.parentId = category.parentId;
             if(category.thumbnailUrl) {
               this.images.push(category.thumbnailUrl);
             }
@@ -90,6 +91,9 @@ export class CategoryAddComponent implements OnInit {
   }
 
 
+  changeSelectedCategory(cat: any) {
+    this.selectedCategory = cat;
+  }
   addCategory() {
     const initialState = {
       pwdHash: this.wallet.pwdHash,
@@ -112,7 +116,7 @@ export class CategoryAddComponent implements OnInit {
       },
       sequence: this.sequence,
       thumbnailUrl: (this.images && (this.images.length > 0)) ? this.images[0] : null,
-      parentId: this.parentId
+      parentId: this.selectedCategory ? this.selectedCategory._id : null
     };
 
     const sig = this.kanbanServ.signJsonData(privateKey, data);

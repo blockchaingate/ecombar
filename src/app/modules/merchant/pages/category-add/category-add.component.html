@@ -19,26 +19,30 @@
         <label for="email"><b>{{'Sequence' | translate}}</b></label>
         <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
   
+        <!--
         <div class="custom-select" style="width:200px;" *ngIf="categories">
           <select [(ngModel)]="parentId" name="parentId">
             <option value="0">{{'Select Category' | translate}}:</option>
             <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category | translateField}}</option>
           </select>
         </div> 
-
+        -->
 
 
         <div class="btn-group" dropdown>
           <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
                   aria-controls="dropdown-animated">
-            Button dropdown <span class="caret"></span>
+            {{selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate)}} <span class="caret"></span>
           </button>
-          <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
-              role="menu" aria-labelledby="button-animated">
-            <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
-            </li>
-          </ul>
+          <div  *ngIf="categories && categories.length > 0">
+            <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
+            role="menu" aria-labelledby="button-animated">
+          <li role="menuitem" *ngFor="let cat of categories | excludeCategories : id">
+            <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{cat.category | translateField}}</a>
+          </li>
+        </ul>
+          </div>
+
         </div>
 
 

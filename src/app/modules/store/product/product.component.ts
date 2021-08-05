@@ -212,7 +212,7 @@ export class ProductComponent implements OnInit {
 
   }
 
-
+  /*
   getProductQuantity() {
     let quantity = 0;
     const contents = this.product.contents;
@@ -221,7 +221,7 @@ export class ProductComponent implements OnInit {
     }
     return quantity;
   }
-  
+  */
   decQuantity() {
     if(this.quantity > 1) {
       this.quantity --;

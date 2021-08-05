@@ -37,8 +37,10 @@ export class ProductAddComponent implements OnInit {
 
   smartContractAddress: string;
   wallets: any;
+  quantity: number;
   wallet: any;
   features: any;
+  selectedCategory: any;
   feature: string;
   walletAddress: string;
   featureChinese: string;
@@ -140,6 +142,15 @@ export class ProductAddComponent implements OnInit {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
+        if(walletAddress) {
+          this.categoryServ.getMerchantCategories(walletAddress).subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                this.categories = res._body;
+              }
+            }
+          );
+        }
       }
     );  
     
@@ -237,6 +248,10 @@ export class ProductAddComponent implements OnInit {
               this.contents = product.contents;
             }
 
+            if(product.primaryCategoryId) {
+              this.selectedCategory = product.primaryCategoryId;
+            }
+            this.quantity = product.quantity;
             this.currency = product.currency;
             this.price = product.price;
             this.brand = product.brand;
@@ -258,6 +273,10 @@ export class ProductAddComponent implements OnInit {
 
   changeTab(tabName: string) {
     this.currentTab = tabName;
+  }
+
+  changeSelectedCategory(cat: any) {
+    this.selectedCategory = cat;
   }
 
   setActive(a: boolean) {
@@ -393,10 +412,11 @@ export class ProductAddComponent implements OnInit {
       description: descLan,
       features:featuresLan,      
       specs: specLan,
+      quantity: this.quantity,
       price: parseInt(this.price), // in cents
       keywords: this.keywords,
       contents: this.contents,
-      primaryCategoryId: this.category ? this.category : null,
+      primaryCategoryId: this.selectedCategory ? this.selectedCategory._id : null,
       active: this.active,
       images: this.images,
       colors: this.colors,
@@ -469,6 +489,7 @@ export class ProductAddComponent implements OnInit {
             (await this.iddockServ.updateIdDock(seed, this.product.objectId, 'things', null, data, null)).subscribe(res => {
               if(res) {
                 if(res.ok) {
+                  this.spinner.hide();
                   this.router.navigate(['/merchant/products']);
                 }
               }

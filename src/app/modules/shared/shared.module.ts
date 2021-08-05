@@ -27,6 +27,7 @@ import { WalletGuardService } from './services/wallet-guard.service';
 import { KanbanService } from './services/kanban.service';
 import { KanbanSmartContractService } from './services/kanban.smartcontract.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
+import { ExcludeCategoriesPipe } from './pipes/exclude-categories.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     ExcludeProductsPipe,
     TranslateFieldPipe,
+    ExcludeCategoriesPipe,
     ProductsGridComponent,
     StarRatingComponent,
     NftHeaderComponent,
@@ -74,6 +76,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   exports: [
     ExcludeProductsPipe,
     TranslateFieldPipe,
+    ExcludeCategoriesPipe,
     ProductsGridComponent,
     StarRatingComponent,
     PasswordModalComponent,
