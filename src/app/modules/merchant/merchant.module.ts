@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MerchantRoutingModule } from './merchant-routing.module';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { MerchantComponent } from './merchant.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
@@ -40,7 +41,6 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
 import { FeaturesComponent } from './pages/features/features.component';
@@ -87,13 +87,13 @@ import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
     FeatureAddComponent
   ],
   imports: [
+    BsDropdownModule.forRoot(),
     MerchantRoutingModule,
     CommonModule,
     SharedModule,
     FormsModule,
     QRCodeModule,
     ModalModule.forRoot(),
-    NgxSmartModalModule.forRoot(),
     NgxSpinnerModule,
     ReactiveFormsModule,
     RichTextEditorModule

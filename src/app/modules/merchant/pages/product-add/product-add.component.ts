@@ -8,7 +8,6 @@ import { currencies } from '../../../../../environments/currencies';
 import { TextLan } from '../../../shared/models/textlan';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-//import { NgxSmartModalService } from 'ngx-smart-modal';
 import { UtilService } from '../../../shared/services/util.service';
 import { IddockService } from '../../../shared/services/iddock.service';
 import { ToastrService } from 'ngx-toastr';

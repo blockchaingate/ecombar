@@ -6,7 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UtilService } from '../../shared/services/util.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { IddockService } from '../../shared/services/iddock.service';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { DataService } from '../../shared/services/data.service';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';

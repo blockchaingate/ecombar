@@ -40,7 +40,6 @@ import { StoresHeaderComponent } from './components/stores-header/stores-header.
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -63,7 +62,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     CommonModule,
     RouterModule,
-    NgxSmartModalModule.forRoot(),
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {

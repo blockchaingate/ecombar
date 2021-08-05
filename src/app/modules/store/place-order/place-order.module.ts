@@ -6,7 +6,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxPayPalModule } from 'ngx-paypal';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     FormsModule,
     QRCodeModule,
     SharedModule,
-    NgxPayPalModule,
-    NgxSmartModalModule.forRoot()
+    NgxPayPalModule
   ],
   providers: []
 })

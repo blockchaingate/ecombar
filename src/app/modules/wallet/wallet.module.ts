@@ -27,7 +27,6 @@ import { OrderHistoryComponent } from './components/order-history/order-history.
 import { QRCodeModule } from 'angularx-qrcode';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { CommonModule } from '@angular/common';
 import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -73,7 +72,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         NgxSpinnerModule,
         ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
-        NgxSmartModalModule.forRoot(),
         NgxBootstrapSwitchModule.forRoot()
     ],
     exports: [

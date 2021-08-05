@@ -174,23 +174,3 @@
     
    
 </div>
-
-
-<!--
-<ngx-smart-modal #passwordModal identifier="passwordModal">
-    <h1 class="text-center">{{'Password' | translate}}</h1>
-    <div>
-        <input type="password" placeholder="{{'Password' | translate}}" [(ngModel)]="password" name="password" required>
-    </div>
-    <div class="text-center">
-        <button class="btn" (click)="confirmPassword()">
-            {{'Confirm' | translate}}
-        </button>
-    </div>
-</ngx-smart-modal>
--->
-
-<ngx-smart-modal #passwordModal identifier="passwordModal">
-    <app-password-modal *ngIf="wallet" [pwdHash]="wallet.pwdHash" (onConfirmPassword)="onConfirmPassword($event)"></app-password-modal>
-</ngx-smart-modal>
-
