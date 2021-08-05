@@ -3,22 +3,21 @@
   
     <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-2">{{'Id' | translate}}</div>
-        <div class="col col-2">{{'Date Created' | translate}}</div>
-        <div class="col col-2">{{'Total' | translate}}</div>
-        <div class="col col-2">{{'Status' | translate}}</div>
-        <div class="col col-2"></div>
+        <div class="col col-3">{{'Id' | translate}}</div>
+        <div class="col col-3">{{'Date Created' | translate}}</div>
+        <div class="col col-3">{{'Total' | translate}}</div>
+        <div class="col col-3">{{'Status' | translate}}</div>
       </li>
       <li class="table-row" *ngFor="let order of orders">
-        <div class="col col-2" data-label="{{'Id' | translate}}">
+        <div class="col col-3" data-label="{{'Id' | translate}}">
           <a target="_blank" href="/order/{{order._id}}">
             {{trimText(order._id)}}
           </a>
         </div>
-        <div class="col col-2" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
-        <div class="col col-2" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
+        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
+        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
 
-        <div class="col col-2" data-label="{{'Status' | translate}}">
+        <div class="col col-3" data-label="{{'Status' | translate}}">
           <div>
             {{getStatus(order) | translate}}
           </div>
@@ -32,28 +31,6 @@
               Cancel request refund
             </a>
           </div>
-        </div>
-        <div class="col col-2 text-right" data-label="Operations">
-  
-          <div class="d-inline-block px-2" *ngIf="customerFlag && (order.paymentStatus == 0)">
-            <a href="/place-order/{{order._id}}">
-              <img src="/assets/svg/pay.svg">
-            </a>
-          </div>
-
-          <div class="d-inline-block px-2" *ngIf="!customerFlag && (order.paymentStatus == 2)">
-            <a href="/merchant/shipping/{{order._id}}">
-              <img src="/assets/svg/shipping.svg">
-            </a>
-          </div>
-
-          <div class="d-inline-block px-2" *ngIf="customerFlag && (!order.paymentStatus || order.paymentStatus == 0)">
-            <a (click)="deleteOrder(order)">
-              <img src="/assets/svg/delete.svg">
-            </a>
-          </div>  
-          
-          
         </div>
       </li>
     </ul>

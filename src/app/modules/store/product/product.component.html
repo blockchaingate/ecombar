@@ -109,16 +109,14 @@
                                 <!-- <del class="font-size-20 ml-2 text-gray-6">$2,299.00</del> -->
                             </div>
                         </div>
-                        <div class="border-top border-bottom py-3 mb-4">
+                        <div class="border-top border-bottom py-3 mb-4" *ngIf="colors && colors.length > 0">
                             <div class="d-flex align-items-center">
                                 <h6 class="font-size-14 mb-0">{{'Color' | translate}}</h6>
-                                <!-- Select -->
                                 <select class="js-select selectpicker dropdown-select ml-3"
                                     data-style="btn-sm bg-white font-weight-normal py-2 border">
                                     <option selected value="">{{'Choose color' | translate}}</option>
                                     <option *ngFor="let color of colors" value="{{color}}">{{color}}</option>
                                 </select>
-                                <!-- End Select -->
                             </div>
                         </div>
                         <div class="d-md-flex align-items-end mb-3">

@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   merchantId: string;
   categoryId: string;
   storeId: string;
+  wallet: any;
   currencyBalance: number;
   searchText: string;
   currency: string;
@@ -48,6 +49,15 @@ export class HeaderComponent implements OnInit {
       }
     );
 
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        if(wallet) {
+          console.log('wallethhhh===', wallet);
+          this.wallet = wallet;
+        }
+        
+      }
+    );
     this.dataServ.currencyBalance.subscribe(
       (currencyBalance: number) => {
         this.currencyBalance = currencyBalance;
