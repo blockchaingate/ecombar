@@ -29,6 +29,7 @@ export class ProductComponent implements OnInit {
   comments: any;
   id: string;
   parentId: string;
+  currency: string;
   quantity: number;
   colors: any;
   relatedProducts: any;
@@ -73,9 +74,10 @@ export class ProductComponent implements OnInit {
         this.wallet = wallet;
       }
     );
-    this.dataServ.currentStoreId.subscribe(
-      (storeId: string) => {
-        this.storeId = storeId;
+    this.dataServ.currentStore.subscribe(
+      (store: any) => {
+        this.storeId = store._id;
+        this.currency = store.coin;
       }
     );
     
