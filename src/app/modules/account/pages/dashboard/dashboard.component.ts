@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit{
       }
     );   
     
-    this.orderServ.getMyProducts().subscribe(
+    this.orderServ.getMyProducts(this.walletAddress).subscribe(
       (res: any) => {
         if(res && res.ok) {
           const products = res._body;

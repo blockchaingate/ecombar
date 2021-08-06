@@ -26,9 +26,6 @@ import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-a
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { ShippingComponent } from './pages/shipping/shipping.component';
-import { CommentComponent } from './pages/comment/comment.component';
-import { MyProductsComponent } from './pages/my-products/my-products.component';
-import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { StoreComponent } from './pages/store/store.component';
@@ -52,9 +49,6 @@ const routes: Routes = [
         path: 'products', component: ProductsComponent
       },
       {
-        path: 'my-products', component: MyProductsComponent
-      },  
-      {
         path: 'main-layout', component: MainLayoutComponent
       },    
       {
@@ -63,9 +57,6 @@ const routes: Routes = [
       {
         path: 'main-layout/:id/edit', component: MainLayoutAddComponent
       },                 
-      {
-        path: 'my-comments', component: MyCommentsComponent
-      },  
       {
         path: 'merchant-applications', component: MerchantApplicationsComponent
       },      
@@ -87,9 +78,7 @@ const routes: Routes = [
       {
         path: 'profile', component: ProfileComponent
       },     
-      {
-        path: 'comment/:productId', component: CommentComponent
-      },      
+     
       {
         path: 'product/:id/edit', component: ProductAddComponent
       },

@@ -8,7 +8,6 @@ import { UsersComponent } from './pages/users/users.component';
 import { MerchantsComponent } from './pages/merchants/merchants.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
-import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { BrandsComponent } from './pages/brands/brands.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
@@ -32,10 +31,8 @@ import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
 
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
-import { CommentComponent } from './pages/comment/comment.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
-import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { StoreComponent } from './pages/store/store.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
@@ -49,20 +46,14 @@ import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
 @NgModule({
   declarations: [
     MerchantComponent,
-
-    MyCommentsComponent,
-
     UploadMediaComponent,
     DashboardComponent,
     UsersComponent,
     ShipsComponent,
     StoreComponent,
-    CommentComponent,
     MainLayoutAddComponent,
     MainLayoutComponent,
     MerchantApplicationsComponent,
-    
-    MyProductsComponent,
     BannersComponent,
     OrdersComponent,
     ProfileComponent,
