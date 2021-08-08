@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { StarService } from 'src/app/modules/shared/services/star.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
 
 @Component({
   selector: 'app-wallet-bindpay',
@@ -21,14 +22,18 @@ export class BindpayComponent implements OnInit{
     wallet: any;
     name: string;
     to: string;
+    walletAddress: string;
+    tab: string;
     data: string;
     args: any;
+    transactionHistories: any;
     parents: string[];
 
     constructor(    
         private kanbanSmartContractServ: KanbanSmartContractService,
         private dataServ: DataService,
         private route: ActivatedRoute,
+        private spinner: NgxSpinnerService,
         private toastr: ToastrService,
         private starServ: StarService,
         private web3Serv: Web3Service,
@@ -36,6 +41,7 @@ export class BindpayComponent implements OnInit{
         public kanbanServ: KanbanService,
         private modalService: BsModalService,) {}
     ngOnInit() {
+        this.tab =  'pay';
         this.parents = [];
         this.dataServ.currentWallet.subscribe(
             (wallet: string) => {
@@ -54,6 +60,7 @@ export class BindpayComponent implements OnInit{
         this.dataServ.currentWalletAddress.subscribe(
             (walletAddress: string) => {
                 if(walletAddress) {
+                  this.walletAddress = walletAddress;
                     this.starServ.getParents(walletAddress).subscribe(
                         (ret: any) => {
                             console.log('ret for getParents=', ret);
@@ -66,6 +73,21 @@ export class BindpayComponent implements OnInit{
         
     }
 
+    changeTab(tab: string) {
+      this.tab = tab;
+      if(tab == "history") {
+        this.starServ.getTransactionHisotryForCustomer(this.walletAddress).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.transactionHistories = ret._body;
+            }
+          }
+        );
+      }
+    }
+
+
+
     submit() {
         const initialState = {
             pwdHash: this.wallet.pwdHash,
@@ -75,6 +97,7 @@ export class BindpayComponent implements OnInit{
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
       
         this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
+            this.spinner.show();
             this.submitDo(seed);
         });        
     }
@@ -121,8 +144,8 @@ export class BindpayComponent implements OnInit{
             this.args[3]
         ];
 
-        console.log('argsss=', args);
         const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
+        this.spinner.hide();
         if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
             this.toastr.success('the transaction was procssed successfully');
         } else {

@@ -74,6 +74,7 @@ export class StoresIndexComponent implements OnInit {
         if(ret && ret.isValid) {
           const initialState = {
             pwdHash: this.wallet.pwdHash,
+            gas: 0,
             encryptedSeed: this.wallet.encryptedSeed
           };          
           

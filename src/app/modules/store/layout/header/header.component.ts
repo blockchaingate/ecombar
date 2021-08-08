@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   merchantId: string;
   categoryId: string;
   storeId: string;
+  wallet: any;
   currencyBalance: number;
   searchText: string;
   currency: string;
@@ -48,6 +49,15 @@ export class HeaderComponent implements OnInit {
       }
     );
 
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        if(wallet) {
+          console.log('wallethhhh===', wallet);
+          this.wallet = wallet;
+        }
+        
+      }
+    );
     this.dataServ.currencyBalance.subscribe(
       (currencyBalance: number) => {
         this.currencyBalance = currencyBalance;
@@ -171,7 +181,11 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearch() {
-    this.router.navigate(['/search', { text: this.searchText, categoryId: this.categoryId, merchantId: this.merchantId??'' }]);
+    const query = { text: this.searchText};
+    if(this.categoryId) {
+      query['categoryId'] = this.categoryId;
+    }
+    this.router.navigate(['/store/' + this.storeId + '/search', query]);
   }
 
   setLan() {

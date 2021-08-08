@@ -6,12 +6,12 @@ export class OrderService {
 
   constructor(private http: HttpService) { }
 
-  create(data) {
-    return this.http.post('orders/create', data, false);
+  create2(data) {
+    return this.http.post('orders/create2', data, false);
   }
 
-  update(orderID: string, data) {
-    return this.http.post('orders/update/' + orderID, data, false);
+  update2(orderID: string, data) {
+    return this.http.post('orders/update2/' + orderID, data, false);
   }
 
   updateShipping(orderID: string, data) {
@@ -19,7 +19,7 @@ export class OrderService {
   }
 
   get(orderID: string) {
-    return this.http.get('orders/' + orderID, false);
+    return this.http.get('orders/public/' + orderID, false);
   }
 
   updatePayment(order_id: string, paymentData: any) {
@@ -31,8 +31,8 @@ export class OrderService {
     return this.http.get('orders/ownedBy/' + address, false);
   }
 
-  getMyProducts() {
-    return this.http.get('orders/my-products', false);
+  getMyProducts(address: string) {
+    return this.http.get('orders/my-products/' + address, false);
   }
 
   getAllOrders() {

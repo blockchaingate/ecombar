@@ -168,11 +168,13 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      /*
       const data = {
         paymentStatus: 6
       };
-      this.orderServ.update(this.order._id, data).subscribe(
+      this.orderServ.update2(this.order._id, data).subscribe(
         (ret: any) => {
           this.spinner.hide();
           if(ret && ret.ok) {
@@ -181,8 +183,11 @@ export class OrdersComponent implements OnInit {
           }
         }
       );
+      */
+      this.order.paymentStatus = 6;
+      this.toastr.success('Refund was made successfully');
     } else {
-      this.spinner.hide();
+      
       this.toastr.error('Failed to approve refund');
     }
   }

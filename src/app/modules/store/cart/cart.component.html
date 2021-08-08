@@ -19,9 +19,12 @@
     </div>
     <!-- End breadcrumb -->
 
-    <div class="container" *ngIf="cartItems && (cartItems.length > 0)">
-        <div class="mb-4">
-            <h1 class="text-center">{{'Cart'|translate}}</h1>
+    <div class="container">
+        <div class="mb-4 d-flex justify-content-center">
+            <h1 class="text-center mr-3">{{'Cart'|translate}}</h1>
+            <button class="btn btn-link" (click)="clear()">
+                Clear
+            </button>   
         </div>
 
         <div class="mb-10 cart-table">
@@ -84,7 +87,9 @@
                             </tr>
                         </tbody>
                     </table>
-                    <a><button type="button" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-md-none" (click)="checkout()">Proceed to checkout</button></a>
+                    <a>
+                        <button type="button" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-md-none" (click)="checkout()">Proceed to checkout</button>
+                    </a>
                 </div>
             </div>
         </div>

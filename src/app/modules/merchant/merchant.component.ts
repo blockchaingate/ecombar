@@ -46,14 +46,6 @@ export class MerchantComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    //this.userState$ = this.store.select('user');
-
-
-
-
-
-
-
     this.menuItems = [
       {
         title: 'Dashboard',
@@ -66,6 +58,11 @@ export class MerchantComponent implements OnInit {
         icon: 'store'
       },  
       {
+        title: 'Categories',
+        link: 'categories',
+        icon: 'category'
+      },
+      {
         title: 'Products',
         link: 'products',
         icon: 'product'
@@ -73,6 +70,16 @@ export class MerchantComponent implements OnInit {
       {
         title: 'Banners',
         link: 'banners',
+        icon: 'banner'
+      },
+      {
+        title: 'Small Banners',
+        link: 'small-banners',
+        icon: 'banner'
+      },
+      {
+        title: 'Features',
+        link: 'features',
         icon: 'banner'
       },
       {
@@ -85,11 +92,6 @@ export class MerchantComponent implements OnInit {
         link: 'main-layout',
         icon: 'category'
       },        
-      {
-        title: 'Categories',
-        link: 'categories',
-        icon: 'category'
-      },
       {
         title: 'Collections',
         link: 'collections',

@@ -18,7 +18,6 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
@@ -51,7 +50,6 @@ import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
     FormsModule,
     QRCodeModule,
     ModalModule.forRoot(),
-    NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
     RichTextEditorModule,
     NgxSpinnerModule

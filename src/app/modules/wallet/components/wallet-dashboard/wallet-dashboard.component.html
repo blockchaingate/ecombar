@@ -15,7 +15,13 @@
 
         <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'rewards' ? 'current-tab' : 'text-black'" (click)="changeTab('rewards')">
             {{'7star rewards' | translate}}
-        </div>        
+        </div>     
+        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'history' ? 'current-tab' : 'text-black'" (click)="changeTab('history')">
+            {{'Order history for customer' | translate}}
+        </div>   
+        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'historyMerchant' ? 'current-tab' : 'text-black'" (click)="changeTab('historyMerchant')">
+            {{'Order history for merchant' | translate}}
+        </div>      
   </div>
     
   <div *ngIf="currentTab == 'wallet'">
@@ -161,4 +167,12 @@
   <div *ngIf="currentTab == 'rewards'">
     <app-wallet-star-rewards [rewards]="rewards"></app-wallet-star-rewards>
   </div>  
+
+  <div *ngIf="currentTab == 'history'">
+    <app-order-history [transactionHistories]="transactionHistories"></app-order-history>
+  </div> 
+
+  <div *ngIf="currentTab == 'historyMerchant'">
+    <app-order-history [transactionHistories]="merchantTransactionHistories"></app-order-history>
+  </div> 
 </div>

@@ -12,11 +12,11 @@
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                    <a href="#" class="u-header-topbar__nav-link">
+                                    <a href="/store/{{storeId}}/store-locator" class="u-header-topbar__nav-link">
                                         <i class="ec ec-map-pointer mr-1"></i>{{"Store Locator"|translate}}</a>
                                 </li>
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
-                                    <a href="#" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
+                                    <a href="/store/{{storeId}}/track-order" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
                                                                                 {{"Track Your Order"|translate}}</a>
                                 </li>
                                 <li *ngIf="currency" class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
@@ -24,7 +24,7 @@
                                     <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
                                         data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
                                         <img src="{{getLogo(currency)}}" class="img-logo">&nbsp;
-                                        <a>{{currencyBalance}}{{currency}}</a>
+                                        <a href="/wallet">{{wallet.name}}({{currencyBalance}}{{currency}})</a>
                                         <!-- <span
                                                                                         class="text-primary-darken-5">or</span><a
                                                                                         routerLink="/auth/signin">Sign
@@ -78,12 +78,14 @@
                                 <!-- End Logo -->
 
                                 <!-- Fullscreen Toggle Button -->
+                                <!--
                                 <button id="sidebarHeaderInvokerMenu" type="button" class="navbar-toggler d-block btn u-hamburger mr-3 mr-xl-0" (click)="openMenu()">
                                                                         <span id="hamburgerTriggerMenu"
                                                                                 class="u-hamburger__box">
                                                                                 <span class="u-hamburger__inner"></span>
                                                                         </span>
                                                                 </button>
+                                                                -->
                                 <!-- End Fullscreen Toggle Button -->
                             </nav>
                             <!-- End Nav -->
@@ -176,7 +178,7 @@
                                     </li>
                                     -->
                                     <li class="col d-none d-xl-block">
-                                        <a routerLink="/wishlist" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Favorites"><i
+                                        <a routerLink="/store/{{storeId}}/wishlist" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Favorites"><i
                                                                                                 class="font-size-22 ec ec-favorites"></i></a>
                                     </li>
                                     <!-- <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html"

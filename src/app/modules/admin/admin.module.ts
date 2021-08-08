@@ -9,7 +9,6 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
 import { StoresComponent } from './pages/stores/stores.component';
@@ -41,7 +40,6 @@ import { FeeDistributionUpdateRewardPercentagesComponent } from './pages/fee-dis
     FormsModule,
     QRCodeModule,
     ModalModule.forRoot(),
-    NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
     NgxSpinnerModule,
     RichTextEditorModule

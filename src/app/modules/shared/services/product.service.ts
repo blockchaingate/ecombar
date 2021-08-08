@@ -47,9 +47,9 @@ export class ProductService {
     return this.http.get('products/category/' + category_id, false);
   }
 
-  search(searchText, categoryId, merchantId) {
+  search(searchText, categoryId, owner) {
     const data = {
-      searchText, categoryId, merchantId
+      searchText, categoryId, owner
     };
     return this.http.post('products/search', data, false);
   }

@@ -7,21 +7,25 @@ export class FavoriteService {
   }
 
   create(data) {
-    return this.http.post('favorite/Create', data);
+    return this.http.post('favorite/Create', data, false);
   }  
 
-  isMyFavorite(productId) {
+  isMyFavorite(productId: string, walletAddress: string) {
 
-    const url = 'favorite/isMyFavorite/' + productId;
-    console.log('url=', url);
-    return this.http.get(url);
+    const url = 'favorite/isMyFavorite/' + productId + '/' + walletAddress;
+    console.log('url in isMyFavorite=', url);
+    return this.http.get(url, false);
   }
 
-  deleteFavorite(id) {
-    return this.http.get('favorite/Delete/' + id);
+  deleteFavorite(data) {
+    return this.http.post('favorite/Delete', data, false);
   }  
 
-  getMine() {
-    return this.http.get('favorite/mine');
+  getMine(storeId: string, owner: string) {
+    return this.http.get('favorite/mine/' + storeId + '/' + owner, false);
+  }
+
+  getMinForAllStores(owner: string) {
+    return this.http.get('favorite/mine/all/' + owner, false);
   }
 }

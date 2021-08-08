@@ -6,7 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from '../../shared/services/util.service';
 import { CoinService } from '../../shared/services/coin.service';
@@ -58,8 +57,7 @@ export class PlaceOrderComponent implements OnInit {
     private coinServ: CoinService,
     private kanbanServ: KanbanService,
     private orderServ: OrderService,
-    private apiServ: ApiService,
-    public ngxSmartModalService: NgxSmartModalService) {
+    private apiServ: ApiService) {
 
   }
 
@@ -240,11 +238,12 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   pay() {
-    this.ngxSmartModalService.getModal('passwordModal').open();
+    //this.ngxSmartModalService.getModal('passwordModal').open();
   }
 
   
   onConfirmPassword(event) {
+    /*
     this.ngxSmartModalService.getModal('passwordModal').close();
     this.password = event;
     const pinHash = this.utilServ.SHA256(this.password).toString();
@@ -252,7 +251,8 @@ export class PlaceOrderComponent implements OnInit {
         this.warnPwdErr();
         return;
     }
-    this.payOrderDo();    
+    this.payOrderDo();  
+    */  
   }
 
   async payOrderDo() {

@@ -39,21 +39,24 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 
 
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
-        this.walletAddress = walletAddress;
-        this.orderServ.getMyOrders(walletAddress).subscribe(
-          (res: any) => {
-              if(res && res.ok) {
-                this.orders = res._body;
-              }
-          }
-        ); 
+        if(walletAddress) {
+          this.walletAddress = walletAddress;
+          this.orderServ.getMyOrders(walletAddress).subscribe(
+            (res: any) => {
+                if(res && res.ok) {
+                  this.orders = res._body;
+                }
+            }
+          ); 
+        }
+
       }
     );
   }
@@ -180,12 +183,15 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      this.toastr.success('Request refund was made successfully');
+      this.order.paymentStatus = 5;
+      /*
       const data = {
         paymentStatus: 5
       };
-      this.orderServ.update(this.order._id, data).subscribe(
+      this.orderServ.update2(this.order._id, data).subscribe(
         (ret: any) => {
           this.spinner.hide();
           if(ret && ret.ok) {
@@ -194,9 +200,10 @@ export class OrdersComponent implements OnInit {
           }
         }
       );
+      */
     } else {
       this.toastr.error('Failed to request refund');
-      this.spinner.hide();
+      
     }
 
   }
@@ -271,12 +278,13 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    
+    this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      /*
       const data = {
         paymentStatus: 2
       };
-      this.orderServ.update(this.order._id, data).subscribe(
+      this.orderServ.update2(this.order._id, data).subscribe(
         (ret: any) => {
           this.spinner.hide();
           console.log('ret for update payment=', ret);
@@ -286,9 +294,12 @@ export class OrdersComponent implements OnInit {
           }
         }
       );
+      */
+      this.toastr.success('Cancel request refund was made successfully');
+      this.order.paymentStatus = 2;
     } else {
       this.toastr.error('Failed to cancel request refund');
-      this.spinner.hide();
+      
     }
   }
 

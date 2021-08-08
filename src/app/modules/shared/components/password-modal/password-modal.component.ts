@@ -19,6 +19,7 @@ export class PasswordModalComponent implements OnInit{
     pwdHash: string;
     encryptedSeed: any;
     password: string;
+    gas: number = 0.001;
     fabPrivateKey: any;
     seed: Buffer;
 
@@ -54,7 +55,7 @@ export class PasswordModalComponent implements OnInit{
                 // console.log('resp=', resp);
                 const fab = this.utilServ.stripHexPrefix(resp.balance.FAB);
                 const gas = this.utilServ.hexToDec(fab) / 1e18;
-                if(gas == 0) {
+                if(gas < this.gas) {
                     this.toastr.error('No gas to make this transaction.');
                     this.close();
                 } else {

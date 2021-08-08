@@ -15,6 +15,8 @@ import { Web3Service } from '../../shared/services/web3.service';
 import { UtilService } from '../../shared/services/util.service';
 import { KanbanService } from '../../shared/services/kanban.service';
 import { DataService } from '../../shared/services/data.service';
+import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-product',
@@ -22,13 +24,17 @@ import { DataService } from '../../shared/services/data.service';
   styleUrls: ['./product.component.scss', '../../../../button.scss']
 })
 export class ProductComponent implements OnInit {
+  modalRef: BsModalRef;
   product: any;
   comments: any;
   id: string;
+  parentId: string;
+  currency: string;
   quantity: number;
   colors: any;
   relatedProducts: any;
   favorite: any;
+  isFavorited: boolean;
   token: any;
   storeId: string;
   overall: number;
@@ -37,6 +43,7 @@ export class ProductComponent implements OnInit {
   rating3: number;
   rating2: number;
   rating1: number;
+  wallet: any;
 
   selectedImage: string;
   constructor(
@@ -52,6 +59,7 @@ export class ProductComponent implements OnInit {
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
     private router: Router,
+    private modalService: BsModalService,
     private storage: StorageService,
     private authServ: AuthService,
     private translateServ: TranslateService    
@@ -60,15 +68,35 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataServ.currentStoreId.subscribe(
-      (storeId: string) => {
-        this.storeId = storeId;
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );
+    this.dataServ.currentStore.subscribe(
+      (store: any) => {
+        this.storeId = store._id;
+        this.currency = store.coin;
+      }
+    );
+    
+    this.isFavorited = false;
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.favoriteServ.isMyFavorite(this.id, walletAddress).subscribe(
+            (ret: any) => {
+              if(ret && ret.ok) {
+                this.isFavorited = ret._body;
+              }
+            }
+          );
+        }
       }
     );
 
-    this.id = this.route.snapshot.paramMap.get('id');
-
-
+    
     this.overall = 0;
     this.rating1 = 0;
     this.rating2 = 0;
@@ -184,39 +212,9 @@ export class ProductComponent implements OnInit {
       }
     );
 
-    this.token = this.storage.token;
-    if(this.token) {
-      this.authServ.isAuthenticated(this.token).subscribe(
-        (ret) => {
-          if(!ret) {
-            this.token = null;
-          } else {
-            this.initForUser();
-          }
-        }
-      );
-    } else {
-      this.storage.get('_token').subscribe(
-        (token: string) => {
-          if(token) {
-            this.authServ.isAuthenticated(token).subscribe(
-              (ret) => {
-                if(!ret) {
-                  this.token = null;
-                }  else {
-                  this.token = token;
-                  this.initForUser();
-                }               
-              }
-            );
-          }
-        });      
-    }  
-
-
   }
 
-
+  /*
   getProductQuantity() {
     let quantity = 0;
     const contents = this.product.contents;
@@ -225,7 +223,7 @@ export class ProductComponent implements OnInit {
     }
     return quantity;
   }
-  
+  */
   decQuantity() {
     if(this.quantity > 1) {
       this.quantity --;
@@ -237,6 +235,7 @@ export class ProductComponent implements OnInit {
     this.quantity ++;
   }
 
+  /*
   initForUser() {
     console.log('initForUser start');
     this.favoriteServ.isMyFavorite(this.id).subscribe(
@@ -251,28 +250,67 @@ export class ProductComponent implements OnInit {
       }
     );
   }
-
+  */
   mouseEnter(image) {
       this.selectedImage = image;
   }
 
-  addToFavorite(id) {
+
+  toggleFavorite(id) {
+    this.parentId = id;
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
     
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+      if(this.isFavorited) {
+        this.removeFromFavoriteDo(privateKey);
+      } else {
+        this.addToFavoriteDo(privateKey);
+      }
+      
+    });
+  }
+
+  removeFromFavoriteDo(privateKey: any) {
     const data = {
-      parentId: id   
+      parentId: this.parentId
     };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;   
+
+    this.favoriteServ.deleteFavorite(data).subscribe(
+      (res: any) => {
+        if(res&&res.ok) {
+          this.isFavorited = false;
+        }
+      }
+    );
+  }
+
+  addToFavoriteDo(privateKey: any) {
+    const data = {
+      parentId: this.parentId,
+      store: this.storeId   
+    };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature; 
     this.favoriteServ.create(data).subscribe(
       (res) => {
         if(res && res.ok) {
           this.toastr.success('add to favorite successfully', '');
           this.favorite = res._body;
+          this.isFavorited = true;
         }
       }
     );
   }
 
   onAddToFavorite(event) {
-    this.addToFavorite(event);
+    this.toggleFavorite(event);
   }
 
   onAddToCart(event) {
@@ -334,7 +372,7 @@ export class ProductComponent implements OnInit {
       transAmount: this.product.price * Number(this.quantity)
     };
 
-    this.orderServ.create(orderData).subscribe(
+    this.orderServ.create2(orderData).subscribe(
       (res: any) => {
         console.log('ress from create order', res);
         if (res && res.ok) {

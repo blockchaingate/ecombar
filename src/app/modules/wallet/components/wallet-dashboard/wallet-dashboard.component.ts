@@ -4,7 +4,6 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from '../../../shared/services/util.service';
 import { KanbanService } from '../../../shared/services/kanban.service';
 import { CoinService } from '../../../shared/services/coin.service';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import BigNumber from 'bignumber.js/bignumber';
@@ -70,6 +69,8 @@ export class WalletDashboardComponent implements OnInit{
   walletBalance: number;
   assets: any;
   walletValue: number;
+  transactionHistories: any;
+  merchantTransactionHistories: any;
   gas: any;
   currentTab: string;
   
@@ -85,7 +86,6 @@ export class WalletDashboardComponent implements OnInit{
       private storageServ: StorageService,
       private coinServ: CoinService,
       private starServ: StarService,
-      public ngxSmartModalService: NgxSmartModalService,
       private kanbanServ: KanbanService,
       private route: ActivatedRoute,
       private router: Router) {
@@ -360,14 +360,14 @@ export class WalletDashboardComponent implements OnInit{
 
     withdrawConfirm() {
       this.opType = 'withdraw';
-      this.ngxSmartModalService.getModal('withdrawModal').close();
-      this.ngxSmartModalService.getModal('passwordModal').open(); 
+      //this.ngxSmartModalService.getModal('withdrawModal').close();
+      //this.ngxSmartModalService.getModal('passwordModal').open(); 
     }
 
     addGasConfirm() {
       this.opType = 'addGas';
-      this.ngxSmartModalService.getModal('addGasModal').close();
-      this.ngxSmartModalService.getModal('passwordModal').open(); 
+      //this.ngxSmartModalService.getModal('addGasModal').close();
+      //this.ngxSmartModalService.getModal('passwordModal').open(); 
 
     }
 
@@ -679,6 +679,24 @@ export class WalletDashboardComponent implements OnInit{
 
     changeTab(tabName: string) {
       this.currentTab = tabName;
+      if(tabName == 'history') {
+        this.starServ.getTransactionHisotryForCustomer(this.walletAddress).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.transactionHistories = ret._body;
+            }
+          }
+        );
+      } else
+      if(tabName == 'historyMerchant') {
+        this.starServ.getTransactionHisotryForMerchant(this.walletAddress).subscribe(
+          (ret: any) => {
+            if(ret && ret.ok) {
+              this.merchantTransactionHistories = ret._body;
+            }
+          }
+        );        
+      }
     }
 
     onChange(index) {

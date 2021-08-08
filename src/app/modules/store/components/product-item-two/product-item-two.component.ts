@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { StorageService } from '../../../shared/services/storage.service';
 @Component({
   selector: 'app-product-item-two',
@@ -8,11 +8,15 @@ import { StorageService } from '../../../shared/services/storage.service';
 
 export class ProductItemTwoComponent implements OnInit {
   lang: string;
+  @Input() storeId: string;
+  @Input() product: any;
+  @Output() addToCartEvent = new EventEmitter<string>();
+
   constructor(private storageServ: StorageService) {
 
   }
-    @Input() product: any;
-    ngOnInit() {
+  
+  ngOnInit() {
       this.lang = this.storageServ.lang;
       if (!this.lang) {
         this.storageServ.get('_lang').subscribe(
@@ -24,5 +28,10 @@ export class ProductItemTwoComponent implements OnInit {
           }
         );
       }
-    }
+  }
+
+  addToCart() {
+    this.addToCartEvent.emit(this.product._id);
+  }
+  
 }

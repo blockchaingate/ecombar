@@ -58,7 +58,7 @@ import { TranslateService } from '@ngx-translate/core';
     }
     
     onSearch() {
-      console.log('on Search');
+      console.log('on Search1111');
       console.log('searchText=', this.searchText);
     }
 

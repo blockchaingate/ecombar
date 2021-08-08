@@ -9,6 +9,8 @@ import { SearchComponent } from './search/search.component';
 import { OrderComponent } from './order/order.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
 import { CompareComponent } from './compare/compare.component';
+import { TrackOrderComponent } from './track-order/track-order.component';
+import { StoreLocatorComponent } from './store-locator/store-locator.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,14 @@ const routes: Routes = [
       {
         path: 'apply-for-merchant',
         component: ApplyForMerchantComponent
+      },
+      {
+        path: 'track-order',
+        component: TrackOrderComponent
+      },
+      {
+        path: 'store-locator',
+        component: StoreLocatorComponent
       },
       /*
       {

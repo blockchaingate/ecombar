@@ -1,7 +1,8 @@
 <div class="container-fluid">
     <main id="content" role="main">
         <app-slide-show></app-slide-show>
-        <app-info-bar></app-info-bar>
+        <app-small-banners></app-small-banners>
+        <app-feature-list></app-feature-list>
         <div *ngFor="let item of mainLayouts">
             <div *ngIf="item.type == 'Single Collection'">
                 <app-collections [collection]="item.col"></app-collections>

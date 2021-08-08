@@ -15,15 +15,19 @@ import { TimerService } from './services/timer.service';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
+import { BannerService } from './services/banner.service';
+import { SmallBannerService } from './services/small-banner.service';
 import { AirdropService } from './services/airdrop.service';
 import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
 import { StarService } from './services/star.service';
+import { FeatureService } from './services/feature.service';
 import { MainLayoutService } from './services/mainlayout.service';
 import { WalletGuardService } from './services/wallet-guard.service';
 import { KanbanService } from './services/kanban.service';
 import { KanbanSmartContractService } from './services/kanban.smartcontract.service';
 import { ExcludeProductsPipe } from './pipes/exclude-products.pipe';
+import { ExcludeCategoriesPipe } from './pipes/exclude-categories.pipe';
 import { TranslateFieldPipe } from './pipes/translate-field.pipe';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -37,7 +41,6 @@ import { StoresHeaderComponent } from './components/stores-header/stores-header.
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -47,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     ExcludeProductsPipe,
     TranslateFieldPipe,
+    ExcludeCategoriesPipe,
     ProductsGridComponent,
     StarRatingComponent,
     NftHeaderComponent,
@@ -60,7 +64,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     CommonModule,
     RouterModule,
-    NgxSmartModalModule.forRoot(),
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {
@@ -73,6 +76,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   exports: [
     ExcludeProductsPipe,
     TranslateFieldPipe,
+    ExcludeCategoriesPipe,
     ProductsGridComponent,
     StarRatingComponent,
     PasswordModalComponent,
@@ -96,12 +100,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     ShipService,
     KanbanService,
     TimerService,
+    BannerService,
+    SmallBannerService,
     AirdropService,
     WalletGuardService,
     UtilService,
     IddockService,
     TextLanService,
     StarService,
+    FeatureService,
     StoreService,
     MainLayoutService,
     KanbanSmartContractService

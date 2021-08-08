@@ -6,7 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UtilService } from '../../shared/services/util.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { IddockService } from '../../shared/services/iddock.service';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { DataService } from '../../shared/services/data.service';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -531,7 +530,7 @@ export class PaymentComponent implements OnInit{
         (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(async res => {
           if(res) {
             if(res.ok) {
-              this.orderServ.update(this.orderID, item).subscribe(
+              this.orderServ.update2(this.orderID, item).subscribe(
                 (res: any) => {
                   if(res && res.ok) {
                     this.order = res._body;

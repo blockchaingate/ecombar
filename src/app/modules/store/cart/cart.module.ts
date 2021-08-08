@@ -5,7 +5,6 @@ import { CartComponent } from './cart.component';
 import { CartProductComponent } from './components/cart-product/cart-product.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 
@@ -20,7 +19,6 @@ import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
     SharedModule,
     FormsModule,
     NgxSpinnerModule,
-    NgxSmartModalModule.forRoot(),
     ModalModule.forRoot()
   ],
   exports: [

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/modules/shared/services/data.service';
+import { DataService } from '../../../shared/services/data.service';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { KanbanService } from '../../../shared/services/kanban.service';
 
 @Component({
   selector: 'app-admin-banners',
-  providers: [BannerService],
+  providers: [],
   templateUrl: './banners.component.html',
   styleUrls: ['./banners.component.scss', '../../../../../table.scss']
 })

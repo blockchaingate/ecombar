@@ -3,6 +3,7 @@ import { StoreRoutingModule } from './store-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { StoreComponent } from './store.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.component';
@@ -21,6 +22,8 @@ import { CompareComponent } from './compare/compare.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { OrderComponent } from './order/order.component';
 import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categories.component';
+import { TrackOrderComponent } from './track-order/track-order.component';
+import { StoreLocatorComponent } from './store-locator/store-locator.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -41,7 +44,9 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     OrderComponent,
     ProductListWholeComponent,
     WishlistComponent,
-    SubCategoriesComponent
+    SubCategoriesComponent,
+    TrackOrderComponent,
+    StoreLocatorComponent
   ],
   imports: [
     // QRCodeModule,
@@ -49,6 +54,7 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     CommonModule,
     FormsModule,
     NgxSpinnerModule,
+    ModalModule.forRoot(),
     ReactiveFormsModule,
     SharedModule
   ],

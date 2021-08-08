@@ -21,16 +21,16 @@ import { BrandsComponent } from './pages/brands/brands.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { BrandAddComponent } from './pages/brand-add/brand-add.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
+import { SmallBannersComponent } from './pages/small-banners/small-banners.component';
+import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { ShippingComponent } from './pages/shipping/shipping.component';
-import { CommentComponent } from './pages/comment/comment.component';
-import { FavoriteComponent } from './pages/favorite/favorite.component';
-import { MyProductsComponent } from './pages/my-products/my-products.component';
-import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { StoreComponent } from './pages/store/store.component';
+import { FeaturesComponent } from './pages/features/features.component';
+import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
 
 const routes: Routes = [
   {
@@ -44,16 +44,10 @@ const routes: Routes = [
       },
       {
         path: 'address', component: AddressComponent
-      },
-      {
-        path: 'favorite', component: FavoriteComponent
-      },      
+      },   
       {
         path: 'products', component: ProductsComponent
       },
-      {
-        path: 'my-products', component: MyProductsComponent
-      },  
       {
         path: 'main-layout', component: MainLayoutComponent
       },    
@@ -63,9 +57,6 @@ const routes: Routes = [
       {
         path: 'main-layout/:id/edit', component: MainLayoutAddComponent
       },                 
-      {
-        path: 'my-comments', component: MyCommentsComponent
-      },  
       {
         path: 'merchant-applications', component: MerchantApplicationsComponent
       },      
@@ -87,9 +78,7 @@ const routes: Routes = [
       {
         path: 'profile', component: ProfileComponent
       },     
-      {
-        path: 'comment/:productId', component: CommentComponent
-      },      
+     
       {
         path: 'product/:id/edit', component: ProductAddComponent
       },
@@ -122,6 +111,24 @@ const routes: Routes = [
       },
       {
         path: 'banner/:id/edit', component: BannerAddComponent
+      },
+      {
+        path: 'small-banners', component: SmallBannersComponent
+      },
+      {
+        path: 'small-banner/add', component: SmallBannerAddComponent
+      },
+      {
+        path: 'small-banner/:id/edit', component: SmallBannerAddComponent
+      },
+      {
+        path: 'features', component: FeaturesComponent
+      },
+      {
+        path: 'feature/add', component: FeatureAddComponent
+      },
+      {
+        path: 'feature/:id/edit', component: FeatureAddComponent
       },
       {
         path: 'collections', component: CollectionsComponent

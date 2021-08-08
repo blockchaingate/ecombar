@@ -514,7 +514,7 @@ export class PaymentComponent implements OnInit{
         (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(async res => {
           if(res) {
             if(res.ok) {
-              this.orderServ.update(this.orderID, item).subscribe(
+              this.orderServ.update2(this.orderID, item).subscribe(
                 (res: any) => {
                   if(res && res.ok) {
                     this.order = res._body;
