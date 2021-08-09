@@ -39,10 +39,6 @@ const routes: Routes = [
         loadChildren: () => import('./community/community.module').then(m => m.CommunityModule)
       },
       {
-        path: 'store',
-        loadChildren: () => import('./store/store.module').then(m => m.StoreModule)
-      },   
-      {
         path: 'category/:id',
         component: Category2Component
       },  

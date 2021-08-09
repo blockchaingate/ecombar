@@ -13,6 +13,7 @@ import { CartStoreService } from '../../../shared/services/cart.store.service';
 export class ProductListComponent implements OnInit {
     @Input() mode: string;
     @Input() products: any;
+    @Input() currency: string;
     storeId: string;
     
     constructor(

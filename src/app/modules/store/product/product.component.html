@@ -10,7 +10,7 @@
                         <!--
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Product</a></li>
                         -->
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/category/{{product.primaryCategoryId?._id}}">{{product.primaryCategoryId?.category | translateField}}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{product.primaryCategoryId?._id}}">{{product.primaryCategoryId?.category | translateField}}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{product && product.title | translateField}}</li>
                     </ol>
                 </nav>
@@ -44,12 +44,12 @@
                 <div class="col-md-7 mb-md-6 mb-lg-0">
                     <div class="mb-2">
                         <div class="border-bottom mb-3 pb-md-1 pb-3">
-                            <a href="/category/{{product.primaryCategoryId?._id}}" class="font-size-12 text-gray-5 mb-2 d-inline-block">
+                            <a href="/store/{{storeId}}/category/{{product.primaryCategoryId?._id}}" class="font-size-12 text-gray-5 mb-2 d-inline-block">
                                 {{product.primaryCategoryId?.category | translateField}}
                             </a>
                             <h2 class="font-size-25 text-lh-1dot2">{{product && product.title | translateField}}</h2>
                             <div class="mb-2">
-                                <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="#">
+                                <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="/store/{{storeId}}/product/{{id}}/#product-tabs">
                                     <div class="text-warning mr-2">
                                         <small class="fa-star" 
                                         [ngClass]="overall >= 1 ? 'fas' : 'far text-muted'"></small>
@@ -420,7 +420,7 @@
 
                     
                     </div>
-                    <div class="tab-pane fade" id="Jpills-four-example1" role="tabpanel" aria-labelledby="Jpills-four-example1-tab">
+                    <div class="tab-pane fade" id="product-tabs" role="tabpanel" aria-labelledby="product-tabs">
                         <app-comments 
                         [overall]="overall" 
                         [comments]="comments"

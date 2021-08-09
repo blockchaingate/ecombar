@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 @Component({
   selector: 'app-product-list-whole',
   templateUrl: './product-list-whole.component.html',
@@ -8,12 +9,14 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ProductListWholeComponent implements OnInit {
     @Input() products: any;
     @Input() title: any;
+    currency: string;
     mode: any;
     pageNum: number;
     pageSize: number;
     pageCount: number;
     totalProductsCount: number;
 
+    constructor(private dataServ: DataService) {}
     ngOnInit() {
         this.pageCount = 1;
         this.pageNum = 1;
@@ -25,6 +28,15 @@ export class ProductListWholeComponent implements OnInit {
           this.pageCount = Math.ceil(this.products.length / this.pageSize);
           this.totalProductsCount = this.products.length;   
         }
+
+        this.dataServ.currentStore.subscribe(
+          (store: any) => {
+            if(store) {
+              this.currency = store.coin;
+            }
+            
+          }
+        );
      
     }
 

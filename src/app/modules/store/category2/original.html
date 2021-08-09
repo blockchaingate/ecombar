@@ -36,19 +36,19 @@
                                 <ul id="sidebarNav1" class="list-unstyled dropdown-list">
                                     <!-- Menu List -->
                                     <li *ngFor="let category of categories">
-                                        <a class="dropdown-item" href="/category/{{category._id}}">{{category.category | translateField}}<span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span></a>
+                                        <a class="dropdown-item" href="/store/{{storeId}}/category/{{category._id}}">{{category.category | translateField}}<span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span></a>
                                     </li>
                                     <!-- End Menu List -->
                                 </ul>
                             </div>
                         </li>
                         <li>
-                            <a class="dropdown-current" [ngClass]="id==category._id ? 'active' : ''" href="/category/{{category._id}}">{{category.category | translateField}} <span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span></a>
+                            <a class="dropdown-current" [ngClass]="id==category._id ? 'active' : ''" href="/store/{{storeId}}/category/{{category._id}}">{{category.category | translateField}} <span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span></a>
 
                             <ul class="list-unstyled dropdown-list" *ngIf="categoryChildren">
                                 <!-- Menu List -->
                                 <li *ngFor="let category of categoryChildren">
-                                    <a class="dropdown-item" [ngClass]="id==category._id ? 'active' : ''" href="/category/{{category._id}}">
+                                    <a class="dropdown-item" [ngClass]="id==category._id ? 'active' : ''" href="/store/{{storeId}}/category/{{category._id}}">
                                         {{category.category | translateField}}
                                         <span class="text-gray-25 font-size-12 font-weight-normal"> ({{category.count}})</span>
                                     </a>
