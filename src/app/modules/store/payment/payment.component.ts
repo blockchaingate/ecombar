@@ -140,7 +140,6 @@ export class PaymentComponent implements OnInit{
             console.log('this.order=', this.order);
             this.selectPayment(this.order.paymentMethod);
             this.selectShippingService(this.order.shippingServiceSelected);
-            this.calculateTotal();
           }
         }
       );

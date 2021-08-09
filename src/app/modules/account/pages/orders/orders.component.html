@@ -10,7 +10,7 @@
       </li>
       <li class="table-row" *ngFor="let order of orders">
         <div class="col col-3" data-label="{{'Id' | translate}}">
-          <a target="_blank" href="/order/{{order._id}}">
+          <a target="_blank" href="/store/{{order.store._id}}/track-order/{{order._id}}">
             {{trimText(order._id)}}
           </a>
         </div>

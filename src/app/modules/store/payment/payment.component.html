@@ -86,76 +86,7 @@
                             </div>                        
                         </div>  
                     </div>
-<!--
-                    <div class="py-3">
-                        <div class="py-2 text-muted">
-                            {{'Payment options' | translate}}
-                        </div>
-                        <div class="Payment-method">
-                           <div class="border p-3 mb-2"  [ngClass]="selectedPayment=='creditcard' ? 'selected' : ''" (click)="selectPayment('creditcard')">
-                               <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-start">
-                                        <img src="/assets/svg/creditcard.svg">
-                                        <div class="px-3">
-                                            <div class="font-weight-bold">
-                                                {{'Credit card' | translate}}
-                                            </div>
-                                            <div class="text-muted">
-                                                {{'Pay with Visa, Mastercard' | translate}}
-                                            </div>
-                                        </div>
-                                    </div>  
-                                    <div>
-                                        <img src="/assets/svg/visa.svg">
-                                        <img src="/assets/svg/mastercard.svg">
-                                    </div>
-                               </div>
-                             
-                           </div>
-
-                           <div class="border p-3 my-2" [ngClass]="selectedPayment=='paypal' ? 'selected' : ''" (click)="selectPayment('paypal')">
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-start">
-                                        <img src="/assets/svg/paypal.svg">
-                                        <div class="px-3">
-                                            <div class="font-weight-bold">
-                                                {{'Paypal' | translate}}
-                                            </div>
-                                            <div class="text-muted">
-                                                {{'Simple, more secure way to pay' | translate}}
-                                            </div>
-                                        </div>
-                                    </div>  
-                                    <div>
-                                        <img src="/assets/svg/paypal2.svg">
-                                    </div>
-                                </div>
-                            
-                            </div>                           
-
-                            <div class="border p-3 my-2" [ngClass]="selectedPayment=='usdt' ? 'selected' : ''" (click)="selectPayment('usdt')">
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-start">
-                                        <img src="/assets/svg/usdt.svg">
-                                        <div class="px-3">
-                                            <div class="font-weight-bold">
-                                                USDT
-                                            </div>
-                                            <div class="text-muted">
-                                                {{'Pay USDT with kbpay' | translate}}
-                                            </div>
-                                        </div>
-                                    </div>  
-                                    <div>
-                                        <img src="/assets/svg/usdt2.svg">
-                                    </div>
-                                </div>
-                            
-                            </div>  
-
-                        </div> 
-                    </div>
-                -->                    
+               
                     <div class="text-center" *ngIf="order.paymentStatus != 2">
                         <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="placeOrder()">
                             {{'Place order' | translate}}

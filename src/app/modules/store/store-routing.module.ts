@@ -55,6 +55,10 @@ const routes: Routes = [
         component: TrackOrderComponent
       },
       {
+        path: 'track-order/:id',
+        component: TrackOrderComponent
+      },
+      {
         path: 'store-locator',
         component: StoreLocatorComponent
       },

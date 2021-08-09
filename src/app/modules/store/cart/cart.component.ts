@@ -38,6 +38,7 @@ export class CartComponent implements OnInit, OnDestroy {
   storeOwner: string;
   payQrcode: string;
   storeId: string;
+  store: any;
   currency: string;
   txid_link: string;
   total: number;
@@ -125,7 +126,7 @@ export class CartComponent implements OnInit, OnDestroy {
     const merchantIds = [];
     this.productObjectIds = [];
     this.quantities = [];
-    let currency = '';
+    
     let transAmount = 0;
 
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
@@ -136,12 +137,12 @@ export class CartComponent implements OnInit, OnDestroy {
       this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
       this.quantities.push(item.quantity);
 
-      currency = item.currency;
       transAmount += item.quantity * item.price;
       const titleTran = this.translateServ.transField(item.title);
       item.title = titleTran ? titleTran : item.title;
       items.push(item);
     });
+    let currency = this.currency;
     const orderData = { store: this.storeId, storeOwner: this.storeOwner, items, currency, transAmount };
 
 
