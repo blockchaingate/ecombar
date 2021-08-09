@@ -6,11 +6,25 @@
 
 
       <div>
-        <label for="email"><b>Display Name</b></label>
-        <input type="text" placeholder="Enter display name" [(ngModel)]="displayName" name="displayName" required>
+
+        <label for="email"><b>Phone Number</b></label>
+        <input type="text" placeholder="Enter phone number" [(ngModel)]="phone" name="phone">
   
-        <label for="email"><b>Avatar</b></label>
-        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        <label for="email"><b>Address</b></label>
+        <input type="text" placeholder="Enter address" [(ngModel)]="address" name="address">
+
+        <label for="email"><b>Facebook</b></label>
+        <input type="text" placeholder="Enter facebook link" [(ngModel)]="facebook" name="facebook">
+ 
+        <label for="email"><b>Google</b></label>
+        <input type="text" placeholder="Enter google link" [(ngModel)]="google" name="google">
+                      
+        <label for="email"><b>Twitter</b></label>
+        <input type="text" placeholder="Enter twitter link" [(ngModel)]="twitter" name="twitter">
+
+        <label for="email"><b>Github</b></label>
+        <input type="text" placeholder="Enter github link" [(ngModel)]="github" name="github">        
+
 
       </div>
 

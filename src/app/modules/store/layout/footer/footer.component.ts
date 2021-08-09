@@ -10,13 +10,18 @@ export class FooterComponent implements OnInit {
   storeId: string;
   categories1: any;
   categories2: any;
+  store: any;
   constructor(private dataServ: DataService) {}
   ngOnInit() {
-    this.dataServ.currentStoreId.subscribe(
-      (storeId: string) => {
-        this.storeId = storeId;
+    this.dataServ.currentStore.subscribe(
+      (store: any) => {
+        if(store) {
+          this.storeId = store._id;
+          this.store = store;
+        }
       }
     );
+
     this.categories1 = [];
     this.categories2 = [];
     this.dataServ.currentStoreCategories.subscribe(

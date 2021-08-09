@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 import Config from '../../../../../config/config.json';
 
 @Component({
@@ -7,11 +8,17 @@ import Config from '../../../../../config/config.json';
   styleUrls: ['./menu-mobile.component.css']
 })
 export class MenuMobileComponent implements OnInit {
+  storeId: string;
   cryptoEnabled = Config['Enable-Crypto'];
   
-  constructor() { }
+  constructor(private dataServ: DataService) { }
 
   ngOnInit() {
+    this.dataServ.currentStoreId.subscribe(
+      (storeId: string) => {
+        this.storeId = storeId;
+      }
+    );
   }
 
 }
