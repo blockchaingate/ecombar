@@ -72,6 +72,7 @@ export class HeaderComponent implements OnInit {
               console.log('ret for caaat=', ret);
               if(ret && ret.ok) {
                 const allCategories = ret._body;
+                this.dataServ.changeStoreCategories(allCategories);
                 this.buildCategoryTree(allCategories);
               }
             }

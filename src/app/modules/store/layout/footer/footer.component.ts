@@ -8,11 +8,28 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 })
 export class FooterComponent implements OnInit {
   storeId: string;
+  categories1: any;
+  categories2: any;
   constructor(private dataServ: DataService) {}
   ngOnInit() {
     this.dataServ.currentStoreId.subscribe(
       (storeId: string) => {
         this.storeId = storeId;
+      }
+    );
+    this.categories1 = [];
+    this.categories2 = [];
+    this.dataServ.currentStoreCategories.subscribe(
+      (categories: any) => {
+        const allCategories = categories.filter(item => !item.parentId);
+        for(let i = 0; i < allCategories.length; i++) {
+          const category = allCategories[i];
+          if(i % 2 == 0) {
+            this.categories1.push(category);
+          } else {
+            this.categories2.push(category);
+          }
+        }
       }
     );
   }

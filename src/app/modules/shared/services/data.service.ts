@@ -40,6 +40,12 @@ export class DataService {
     this.storeOwnerSource.next(owner);
   }  
   
+  private storeCategoriesSource = new BehaviorSubject([]);
+  currentStoreCategories = this.storeCategoriesSource.asObservable();
+  changeStoreCategories(categories: any) {
+    this.storeCategoriesSource.next(categories);
+  }  
+
   private myStoreSource = new BehaviorSubject({});
   currentMyStore = this.myStoreSource.asObservable();
   changeMyStore(store: any) {

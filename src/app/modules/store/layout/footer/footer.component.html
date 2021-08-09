@@ -244,22 +244,24 @@
                         <div class="col-12 col-md mb-4 mb-md-0">
                             <h6 class="mb-3 font-weight-bold">{{"Find it Fast"|translate}}</h6>
                             <!-- List Group -->
-                            <ul class="list-group list-group-flush list-group-borderless mb-0 list-group-transparent">
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Laptops & Computers</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Cameras & Photography</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Smart Phones & Tablets</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Video Games & Consoles</a></li>
+                            <ul class="list-group list-group-flush list-group-borderless mb-0 list-group-transparent" *ngIf="categories1">
+                                <li *ngFor="let item of categories1">
+                                    <a class="list-group-item list-group-item-action" href="/store/{{storeId}}/category/{{item._id}}">
+                                        {{item.category | translateField}}
+                                    </a>
+                                </li>                     
                             </ul>
                             <!-- End List Group -->
                         </div>
 
                         <div class="col-12 col-md mb-4 mb-md-0">
                             <!-- List Group -->
-                            <ul class="list-group list-group-flush list-group-borderless mb-0 list-group-transparent mt-md-6">
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Printers & Ink</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Software</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Office Supplies</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="../shop/product-categories-5-column-sidebar.html">Computer Components</a></li>
+                            <ul class="list-group list-group-flush list-group-borderless mb-0 list-group-transparent mt-md-6" *ngIf="categories2">
+                                <li *ngFor="let item of categories2">
+                                    <a class="list-group-item list-group-item-action" href="/store/{{storeId}}/category/{{item._id}}">
+                                        {{item.category | translateField}}
+                                    </a>
+                                </li>                            
                             </ul>
                             <!-- End List Group -->
                         </div>
@@ -273,7 +275,7 @@
                                 <li><a class="list-group-item list-group-item-action" href="/store/{{storeId}}/wishlist">{{"Wish List"|translate}}</a></li>
                                 <li><a class="list-group-item list-group-item-action" href="/store/{{storeId}}/customer-service">{{"Customer Service"|translate}}</a></li>
                                 <li><a class="list-group-item list-group-item-action" href="/store/{{storeId}}/returns">{{"Returns / Exchange"|translate}}</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="/store/{{storeId}}/blockchain-service">{{"Blockchain Service"|translate}}</a></li>
+                                <li><a class="list-group-item list-group-item-action" href="/iddock">{{"Blockchain Service"|translate}}</a></li>
                                 <li><a class="list-group-item list-group-item-action" href="/store/{{storeId}}/faq">{{"FAQs"|translate}}</a></li>
                             </ul>
                             <!-- End List Group -->
@@ -290,6 +292,7 @@
             <div class="flex-center-between d-block d-md-flex">
                 <div class="mb-3 mb-md-0">© <a href="#" class="font-weight-bold text-gray-90">ECOMBAR</a> - FA Enterprise Systems Inc. {{"All Rights Reserved"|translate}}</div>
                 <div class="text-md-right">
+                    <!--
                     <span class="d-inline-block bg-white border rounded p-1">
                         <img class="max-width-5" src="/assets/img/100x60/img1.jpg" alt="Image Description">
                     </span>
@@ -305,6 +308,7 @@
                     <span class="d-inline-block bg-white border rounded p-1">
                         <img class="max-width-5" src="/assets/img/100x60/img5.jpg" alt="Image Description">
                     </span>
+                    -->
                 </div>
             </div>
         </div>

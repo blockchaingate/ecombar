@@ -13,7 +13,6 @@ import { TrackOrderComponent } from './track-order/track-order.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { CustomerServiceComponent } from './customer-service/customer-service.component';
 import { ReturnsComponent } from './returns/returns.component';
-import { BlockchainServiceComponent } from './blockchain-service/blockchain-service.component';
 import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
@@ -91,10 +90,6 @@ const routes: Routes = [
       {
         path: 'returns',
         component: ReturnsComponent
-      },  
-      {
-        path: 'blockchain-service',
-        component: BlockchainServiceComponent
       },  
       {
         path: 'faq',

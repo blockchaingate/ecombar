@@ -225,7 +225,7 @@
                                         <a class="nav-link u-header__nav-link u-header__nav-link-toggle" href="/store/{{storeId}}/category/{{category._id}}">{{category.category | translateField}}</a>
                                         <div class="hs-mega-menu w-100 u-header__sub-menu"
 aria-labelledby="smartphonesMegaMenu">
-                                        <app-sub-categories [category]="category"></app-sub-categories>
+                                        <app-sub-categories [storeId]="storeId" [category]="category"></app-sub-categories>
                                         </div>
                                     </li>
 
