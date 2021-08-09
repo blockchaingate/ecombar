@@ -147,7 +147,7 @@ export class MerchantComponent implements OnInit {
   }
 
   profile(): void {
-    this.router.navigate(['/admin/profile']);
+    this.router.navigate(['/merchant/profile']);
   }
 
   toggleShowNavMenu(): void {
