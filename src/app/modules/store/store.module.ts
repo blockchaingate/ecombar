@@ -24,6 +24,10 @@ import { OrderComponent } from './order/order.component';
 import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categories.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
+import { CustomerServiceComponent } from './customer-service/customer-service.component';
+import { ReturnsComponent } from './returns/returns.component';
+import { BlockchainServiceComponent } from './blockchain-service/blockchain-service.component';
+import { FaqComponent } from './faq/faq.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -46,7 +50,11 @@ import { StoreLocatorComponent } from './store-locator/store-locator.component';
     WishlistComponent,
     SubCategoriesComponent,
     TrackOrderComponent,
-    StoreLocatorComponent
+    StoreLocatorComponent,
+    CustomerServiceComponent,
+    ReturnsComponent,
+    BlockchainServiceComponent,
+    FaqComponent
   ],
   imports: [
     // QRCodeModule,
