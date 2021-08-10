@@ -90,29 +90,7 @@
                     </ul>
                 </ng-container>
             </ng-container>
-
-            <!--
-            <li class="sidenav__list-item" (click)="toggle('menu1')"
-            [attr.aria-expanded]="(extendedMenu == 'menu1')" aria-controls="collapseBasic">Menu1
-            </li>
-            <ul [collapse]="(extendedMenu != 'menu1')" [isAnimated]="true">
-                <li class="sidenav__list-item">Some content 1</li>
-            </ul>
-
-
-            <li class="sidenav__list-item" (click)="toggle('menu2')"
-            [attr.aria-expanded]="(extendedMenu == 'menu2')" aria-controls="collapseBasic">Menu2
-            </li>
-            <ul [collapse]="(extendedMenu != 'menu2')" [isAnimated]="true">
-                <li class="sidenav__list-item">Some content 2</li>
-            </ul>
--->
-
-            <!--
-            <li *ngFor="let item of menuItems" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
-                <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
-            </li>
-            -->
+\
             <li class="sidenav__list-item" (click)="changeLang()">
                 <img src="/assets/svg/language.svg">&nbsp;&nbsp; English / 中文
             </li>
