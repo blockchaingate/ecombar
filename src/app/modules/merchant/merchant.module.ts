@@ -42,6 +42,12 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
 import { FeaturesComponent } from './pages/features/features.component';
 import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
+import { CustomerServiceComponent } from './pages/customer-service/customer-service.component';
+import { ReturnsPolicyComponent } from './pages/returns-policy/returns-policy.component';
+import { FaqComponent } from './pages/faq/faq.component';
+
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+
 
 @NgModule({
   declarations: [
@@ -75,7 +81,10 @@ import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
     BrandAddComponent,
     RoleMenuPipe,
     FeaturesComponent,
-    FeatureAddComponent
+    FeatureAddComponent,
+    CustomerServiceComponent,
+    ReturnsPolicyComponent,
+    FaqComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -87,7 +96,8 @@ import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
     ModalModule.forRoot(),
     NgxSpinnerModule,
     ReactiveFormsModule,
-    RichTextEditorModule
+    RichTextEditorModule,
+    CollapseModule.forRoot()
   ],
   providers: []
 })

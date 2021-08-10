@@ -12,12 +12,14 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { StoreService } from '../shared/services/store.service';
 
 @Component({
-  providers: [UserService],
+  providers: [],
   selector: 'app-merchant',
   templateUrl: './merchant.component.html',
   styleUrls: ['./merchant.component.scss']
 })
 export class MerchantComponent implements OnInit {
+  extendedMenu: string;
+  isCollapsed = false;
   showNavMenu = false;
   dropDownActive = false;
   //displayName: string;
@@ -36,7 +38,6 @@ export class MerchantComponent implements OnInit {
 
   menuItems: any;
   constructor(
-    private store: Store<{ user: UserState }>,
     private router: Router, 
     private translateServ: TranslateService, 
     private localSt: LocalStorage,
@@ -45,7 +46,110 @@ export class MerchantComponent implements OnInit {
     private storageServ: StorageService
   ) { }
 
+  toggle(menu: string) {
+    if(this.extendedMenu == menu) {
+      this.extendedMenu = '';
+    } else {
+      this.extendedMenu = menu;
+    }
+  }
   async ngOnInit() {
+    this.menuItems = [
+      {
+        title: 'Dashboard',
+        link: 'dashboard',
+        icon: 'dashboard'
+      },
+      {
+        title: 'Catelog',
+        icon: 'dashboard',
+        items: [
+          {
+            title: 'Store',
+            link: 'store',
+            icon: 'store'
+          },  
+          {
+            title: 'Categories',
+            link: 'categories',
+            icon: 'category'
+          },    
+          {
+            title: 'Products',
+            link: 'products',
+            icon: 'product'
+          },
+          {
+            title: 'Brands',
+            link: 'brands',
+            icon: 'brand'
+          },
+          {
+            title: 'Orders',
+            link: 'orders',
+            icon: 'order'
+          },
+          {
+            title: 'Ships',
+            link: 'ships',
+            icon: 'order'
+          }     
+        ]
+      },
+      {
+        title: 'Main Page',
+        icon: 'dashboard',
+        items: [
+          {
+            title: 'Banners',
+            link: 'banners',
+            icon: 'banner'
+          },
+          {
+            title: 'Small Banners',
+            link: 'small-banners',
+            icon: 'banner'
+          },    
+          {
+            title: 'Features',
+            link: 'features',
+            icon: 'banner'
+          },
+          {
+            title: 'Main Layout',
+            link: 'main-layout',
+            icon: 'category'
+          },        
+          {
+            title: 'Collections',
+            link: 'collections',
+            icon: 'collection'
+          },  
+        ]
+      },
+      {
+        title: 'Content',
+        icon: 'dashboard',
+        items: [
+          {
+            title: 'Customer Service',
+            link: 'customer-service',
+            icon: 'order'
+          },
+          {
+            title: 'Returns policy',
+            link: 'returns-policy',
+            icon: 'order'
+          },
+          {
+            title: 'Faq',
+            link: 'faq',
+            icon: 'order'
+          } 
+        ]        
+      }
+    ];
+    /*
     this.menuItems = [
       {
         title: 'Dashboard',
@@ -106,9 +210,25 @@ export class MerchantComponent implements OnInit {
         title: 'Ships',
         link: 'ships',
         icon: 'order'
-      }    
-    ];
+      },
 
+      {
+        title: 'Customer Service',
+        link: 'customer-service',
+        icon: 'order'
+      },
+      {
+        title: 'Returns policy',
+        link: 'returns-policy',
+        icon: 'order'
+      },
+      {
+        title: 'Faq',
+        link: 'faq',
+        icon: 'order'
+      }             
+    ];
+    */
 
     /*
     this.store.subscribe((res: any) => {
@@ -142,7 +262,7 @@ export class MerchantComponent implements OnInit {
   }
 
   logout(): void {
-    this.store.dispatch(logout());
+    //this.store.dispatch(logout());
     this.router.navigate(['/auth/signin']);
   }
 
