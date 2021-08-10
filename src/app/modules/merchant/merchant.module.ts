@@ -47,6 +47,7 @@ import { ReturnsPolicyComponent } from './pages/returns-policy/returns-policy.co
 import { FaqComponent } from './pages/faq/faq.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BlogAddComponent } from './pages/blog-add/blog-add.component';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     FeatureAddComponent,
     CustomerServiceComponent,
     ReturnsPolicyComponent,
-    FaqComponent
+    FaqComponent,
+    BlogAddComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
