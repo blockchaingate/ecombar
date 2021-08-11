@@ -27,6 +27,7 @@ import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { CustomerServiceComponent } from './customer-service/customer-service.component';
 import { ReturnsComponent } from './returns/returns.component';
 import { FaqComponent } from './faq/faq.component';
+import { BlogComponent } from './blog/blog.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -52,7 +53,8 @@ import { FaqComponent } from './faq/faq.component';
     StoreLocatorComponent,
     CustomerServiceComponent,
     ReturnsComponent,
-    FaqComponent
+    FaqComponent,
+    BlogComponent
   ],
   imports: [
     // QRCodeModule,

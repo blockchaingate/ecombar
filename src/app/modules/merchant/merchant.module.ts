@@ -45,6 +45,7 @@ import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
 import { CustomerServiceComponent } from './pages/customer-service/customer-service.component';
 import { ReturnsPolicyComponent } from './pages/returns-policy/returns-policy.component';
 import { FaqComponent } from './pages/faq/faq.component';
+import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BlogAddComponent } from './pages/blog-add/blog-add.component';
@@ -101,6 +102,6 @@ import { BlogAddComponent } from './pages/blog-add/blog-add.component';
     RichTextEditorModule,
     CollapseModule.forRoot()
   ],
-  providers: []
+  providers: [ToolbarService, LinkService, ImageService, HtmlEditorService]
 })
 export class MerchantModule { }

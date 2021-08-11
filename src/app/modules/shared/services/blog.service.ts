@@ -17,8 +17,8 @@ export class BlogService {
     return this.http.get('blogs', false);
   }
 
-  getBlogBySlug(slug: string) {
-    return this.http.get('blogs/slug/' + slug, false);
+  getBlogBySlug(walletAddress: string, slug: string) {
+    return this.http.get('blogs/ownedBy/' + walletAddress + '/slug/' + slug, false);
   }
   
   getMerchantBlogs(walletAddress: string) {

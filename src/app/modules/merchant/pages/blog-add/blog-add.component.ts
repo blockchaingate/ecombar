@@ -35,7 +35,8 @@ export class BlogAddComponent implements OnInit {
   }
 
   ngOnInit() {
- 
+    this.content = '';
+    this.contentChinese = '';
     this.currentTab = 'default';
     this.dataServ.currentWallet.subscribe(
       (wallet: string) => {
@@ -43,22 +44,34 @@ export class BlogAddComponent implements OnInit {
       }
     ); 
 
-    this.blogServ.getBlogBySlug(this.slug).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            const blog = res._body;
-            if(blog) {
-              console.log('blog=', blog);
-              this.title = blog.title[0].text;
-              this.titleChinese = blog.name[1].text;
-              this.content = blog.content[0].text;
-              this.contentChinese = blog.content[1].text; 
-            }
-          
-          }
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.blogServ.getBlogBySlug(walletAddress, this.slug).subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                const blog = res._body;
+                if(blog) {
+                  console.log('blog=', blog);
+                  if(blog.title) {
+                    this.title = blog.title[0].text;
+                    this.titleChinese = blog.title[1].text;
+                  }
+                  if(blog.content) {
+                    this.content = blog.content[0].text;
+                    this.contentChinese = blog.content[1].text; 
+                  }
 
+                }
+              
+              }
+    
+            }
+        );
         }
+      }
     );
+
   }
 
   changeTab(tabName: string) {
