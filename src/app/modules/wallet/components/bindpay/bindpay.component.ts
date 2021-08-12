@@ -53,7 +53,7 @@ export class BindpayComponent implements OnInit{
             this.name = params['name'];
             this.to = params['to'];
             this.data = params['data'];
-            this.args = this.web3Serv.decodeData(['bytes32', 'uint32', 'uint256', 'address[]'], this.data.substring(10));
+            this.args = this.web3Serv.decodeData(['bytes32', 'uint32', 'uint256','uint256', 'address[]'], this.data.substring(10));
             console.log('decoded=', this.args);
         });
 
@@ -119,6 +119,10 @@ export class BindpayComponent implements OnInit{
                 "type": "uint256"
               },
               {
+                "name": "_tax",
+                "type": "uint256"
+              },
+              {
                 "name": "_rewardBeneficiary",
                 "type": "address[]"
               }
@@ -135,13 +139,14 @@ export class BindpayComponent implements OnInit{
             "type": "function"
           };
 
-        this.args[3] = this.parents;
+        this.args[4] = this.parents;
         
         const args = [
             this.args[0],
             this.args[1],
             this.args[2],
-            this.args[3]
+            this.args[3],
+            this.args[4]
         ];
 
         const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
