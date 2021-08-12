@@ -32,6 +32,10 @@ import { StoreComponent } from './pages/store/store.component';
 import { FeaturesComponent } from './pages/features/features.component';
 import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
 
+import { CustomerServiceComponent } from './pages/customer-service/customer-service.component';
+import { ReturnsPolicyComponent } from './pages/returns-policy/returns-policy.component';
+import { FaqComponent } from './pages/faq/faq.component';
+
 const routes: Routes = [
   {
     path: '', component: MerchantComponent,
@@ -145,6 +149,15 @@ const routes: Routes = [
       {
         path: 'merchants', component: MerchantsComponent
       },
+      {
+        path: 'customer-service', component: CustomerServiceComponent
+      },
+      {
+        path: 'returns-policy', component: ReturnsPolicyComponent
+      },
+      {
+        path: 'faq', component: FaqComponent
+      },    
       {
         path: 'upload', component: UploadMediaComponent
       },

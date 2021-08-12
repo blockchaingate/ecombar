@@ -21,6 +21,7 @@ import { AirdropService } from './services/airdrop.service';
 import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
 import { StarService } from './services/star.service';
+import { BlogService } from './services/blog.service';
 import { FeatureService } from './services/feature.service';
 import { MainLayoutService } from './services/mainlayout.service';
 import { WalletGuardService } from './services/wallet-guard.service';
@@ -110,6 +111,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StarService,
     FeatureService,
     StoreService,
+    BlogService,
     MainLayoutService,
     KanbanSmartContractService
   ]
@@ -128,7 +130,8 @@ export class SharedModule {
         CommentService,
         CoinService,
         ApiService,
-        Web3Service,     
+        Web3Service,   
+        BlogService,  
         KanbanService,
         IddockService,
         ShipService,

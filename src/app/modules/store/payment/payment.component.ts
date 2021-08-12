@@ -29,6 +29,8 @@ export class PaymentComponent implements OnInit{
     id: string;
     order: any;
     discount: number;
+    tax: number;
+    taxRate: number;
     orderID: string;
     total: number;
     subtotal: number;
@@ -82,9 +84,10 @@ export class PaymentComponent implements OnInit{
       }
       
       this.subtotal = Number(this.subtotal.toFixed(2));
+      this.tax = this.subtotal * this.taxRate / 100;
       this.total = this.subtotal;
       this.total += this.shippingFee;
-
+      this.total += this.tax;
       this.total = Number(this.total.toFixed(2));
     }
 
@@ -112,7 +115,23 @@ export class PaymentComponent implements OnInit{
         (store: any) => {
           this.currency = store.coin;
           this.smartContractAddress = store.smartContractAddress;
+          this.taxRate = store.taxRate;
           this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;
+
+          this.orderServ.get(this.orderID).subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                this.order = res._body;
+                console.log('this.order=', this.order);
+                this.selectPayment(this.order.paymentMethod);
+                let shippingServiceSelected = 'express';
+                if(this.order.shippingServiceSelected) {
+                  shippingServiceSelected = this.order.shippingServiceSelected;
+                }
+                this.selectShippingService(shippingServiceSelected);
+              }
+            }
+          );
         }
       );   
       
@@ -133,17 +152,7 @@ export class PaymentComponent implements OnInit{
       this.total = 0;
       this.subtotal = 0;
       this.orderID = this.route.snapshot.paramMap.get('orderID');
-      this.orderServ.get(this.orderID).subscribe(
-        (res: any) => {
-          if(res && res.ok) {
-            this.order = res._body;
-            console.log('this.order=', this.order);
-            this.selectPayment(this.order.paymentMethod);
-            this.selectShippingService(this.order.shippingServiceSelected);
-            this.calculateTotal();
-          }
-        }
-      );
+
 
     }
 

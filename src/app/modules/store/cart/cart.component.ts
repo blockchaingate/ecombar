@@ -38,9 +38,12 @@ export class CartComponent implements OnInit, OnDestroy {
   storeOwner: string;
   payQrcode: string;
   storeId: string;
+  store: any;
   currency: string;
   txid_link: string;
   total: number;
+  tax: number;
+  taxRate: number;
   wallets: any;
   wallet: any;
   modalRef: BsModalRef;
@@ -68,12 +71,13 @@ export class CartComponent implements OnInit, OnDestroy {
   calculateTotal(): void {
     this.total = 0;
 
-    this.cartItems.forEach(item => {
+    for(let i = 0; i < this.cartItems.length; i++) {
+      const item = this.cartItems[i];
       const value = item.price * item.quantity;
       this.total += Number(value.toFixed(2));
-    });
+    }
 
-
+    this.tax = this.total * this.taxRate / 100;
   }
 
   ngOnInit(): void {
@@ -92,6 +96,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.currency = store.coin;
           this.smartContractAddress = store.smartContractAddress;
           this.storeId = store._id;
+          this.taxRate = store.taxRate;
           this.storeOwner = store.owner;
           const storedCart = this.cartStoreServ.items;
           this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
@@ -125,7 +130,7 @@ export class CartComponent implements OnInit, OnDestroy {
     const merchantIds = [];
     this.productObjectIds = [];
     this.quantities = [];
-    let currency = '';
+    
     let transAmount = 0;
 
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
@@ -136,12 +141,12 @@ export class CartComponent implements OnInit, OnDestroy {
       this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
       this.quantities.push(item.quantity);
 
-      currency = item.currency;
       transAmount += item.quantity * item.price;
       const titleTran = this.translateServ.transField(item.title);
       item.title = titleTran ? titleTran : item.title;
       items.push(item);
     });
+    let currency = this.currency;
     const orderData = { store: this.storeId, storeOwner: this.storeOwner, items, currency, transAmount };
 
 
@@ -175,6 +180,11 @@ export class CartComponent implements OnInit, OnDestroy {
                 "internalType": "uint256",
                 "name": "total",
                 "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tax",
+                "type": "uint256"
               }
             ],
             "name": "createOrder",
@@ -187,7 +197,8 @@ export class CartComponent implements OnInit, OnDestroy {
             '0x' + res._body._id.substring(0, 60), 
             this.productObjectIds, 
             this.quantities, 
-            new BigNumber(this.total).multipliedBy(1e18)];
+            new BigNumber(this.total).multipliedBy(1e18), 
+            new BigNumber(this.tax).multipliedBy(1e18)];
           console.log('args for crate Order=', args);
           const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
 

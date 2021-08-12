@@ -10,6 +10,7 @@ export class ProductItemTwoComponent implements OnInit {
   lang: string;
   @Input() storeId: string;
   @Input() product: any;
+  @Input() currency: string;
   @Output() addToCartEvent = new EventEmitter<string>();
 
   constructor(private storageServ: StorageService) {

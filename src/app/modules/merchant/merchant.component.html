@@ -71,9 +71,26 @@
         </div>
 
         <ul class="sidenav__list">
-            <li *ngFor="let item of menuItems" class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
-                <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
-            </li>
+
+            <ng-container *ngFor="let item of menuItems">
+                <ng-container *ngIf="item.link">
+                    <li class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
+                        <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
+                    </li>                    
+                </ng-container>
+                <ng-container *ngIf="!item.link">
+                    <li class="sidenav__list-item" (click)="toggle(item.title)"
+                    [attr.aria-expanded]="(extendedMenu == item.title)" aria-controls="collapseBasic">
+                    <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
+                    </li>
+                    <ul [collapse]="(extendedMenu != item.title)" [isAnimated]="true">
+                        <li class="sidenav__list-item" *ngFor="let subitem of item.items" routerLink="{{subitem.link}}" routerLinkActive="active">
+                            <img *ngIf="subitem.icon" src="/assets/svg/{{subitem.icon}}.svg">&nbsp;&nbsp; {{subitem.title | translate}}
+                        </li>
+                    </ul>
+                </ng-container>
+            </ng-container>
+\
             <li class="sidenav__list-item" (click)="changeLang()">
                 <img src="/assets/svg/language.svg">&nbsp;&nbsp; English / 中文
             </li>

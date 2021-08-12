@@ -4,13 +4,13 @@
         <div class="row">
             <div class="col-md-3" *ngFor="let subcategory of category.children">
                 <span class="u-header__sub-menu-title">
-                        <a class="subcategory" href="/category/{{subcategory._id}}">                        
+                        <a class="subcategory" href="/store/{{storeId}}/category/{{subcategory._id}}">                        
                         {{subcategory.category | translateField}}
                         </a>
                 </span>
                 <ul class="u-header__sub-menu-nav-group mb-3">
                     <li *ngFor="let subsubcategory of subcategory.children">
-                        <a href="/category/{{subsubcategory._id}}"
+                        <a href="/store/{{storeId}}/category/{{subsubcategory._id}}"
                             class="nav-link u-header__sub-menu-nav-link">
                             {{subsubcategory.category | translateField}}
                         </a>
@@ -166,7 +166,7 @@
     </div>
     <div class="col-md-4">
         <a href="#" class="d-block">
-            <img class="img-fluid" src="../../assets/img/1024X1024/img1.jpg"
+            <img class="img-fluid" [src]="category.thumbnailUrl ? category.thumbnailUrl : '../../assets/img/1024X1024/img1.jpg'"
                 alt="Image Description">
         </a>
     </div>

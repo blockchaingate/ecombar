@@ -11,10 +11,12 @@
                         </div>
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
+                                <!--
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
                                     <a href="/store/{{storeId}}/store-locator" class="u-header-topbar__nav-link">
                                         <i class="ec ec-map-pointer mr-1"></i>{{"Store Locator"|translate}}</a>
                                 </li>
+                                -->
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
                                     <a href="/store/{{storeId}}/track-order" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
                                                                                 {{"Track Your Order"|translate}}</a>
@@ -223,7 +225,7 @@
                                         <a class="nav-link u-header__nav-link u-header__nav-link-toggle" href="/store/{{storeId}}/category/{{category._id}}">{{category.category | translateField}}</a>
                                         <div class="hs-mega-menu w-100 u-header__sub-menu"
 aria-labelledby="smartphonesMegaMenu">
-                                        <app-sub-categories [category]="category"></app-sub-categories>
+                                        <app-sub-categories [storeId]="storeId" [category]="category"></app-sub-categories>
                                         </div>
                                     </li>
 

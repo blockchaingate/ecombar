@@ -9,6 +9,10 @@ import { DetailBySequenceIDComponent } from './detail-by-sequence-id/detail-by-s
 
 const routes: Routes = [
   {
+    path: '',
+    component: VerificationComponent
+  },
+  {
     path: 'verification',
     component: VerificationComponent
   },
