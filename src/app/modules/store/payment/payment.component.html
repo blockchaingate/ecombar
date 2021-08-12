@@ -150,6 +150,14 @@
                         </div>                        
                     </div>  
 
+                    <div class="row py-2">
+                        <div class="col col-6">
+                            {{'Tax' | translate}}
+                        </div>
+                        <div class="col col-6 text-right">
+                            {{tax + currency}}
+                        </div>                        
+                    </div>  
                     <div class="row py-2" *ngIf="discount">
                         <div class="col col-6">
                             {{'Discount' | translate}}
