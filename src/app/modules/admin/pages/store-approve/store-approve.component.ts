@@ -52,6 +52,7 @@ export class StoreApproveComponent implements OnInit {
             this.store = ret._body;
 
 
+            /*
             this.proxyAddress = environment.addresses.smartContract.sevenStarProxy;
             console.log('proxyAddress==', this.proxyAddress);
             const abi = this.web3Serv.getGeneralFunctionABI(
@@ -85,6 +86,7 @@ export class StoreApproveComponent implements OnInit {
                 }
               }
             );
+            */
           }
         }
       );
