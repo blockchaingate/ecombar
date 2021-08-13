@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit{
     private storeServ: StoreService,
     private dataServ: DataService,
     private toastr: ToastrService,
+    private router: Router,
     public kanbanServ: KanbanService,
     private modalService: BsModalService) {
   }
@@ -78,7 +79,10 @@ export class ProfileComponent implements OnInit{
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
     };          
-    
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {

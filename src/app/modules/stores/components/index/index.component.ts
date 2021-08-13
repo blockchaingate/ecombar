@@ -33,6 +33,7 @@ export class StoresIndexComponent implements OnInit {
     private storeServ: StoreService) { }
 
   ngOnInit(): void {
+    console.log('stores here we go');
     this.storeageServ.getStoreRef().subscribe(
       (refAddress: string) => {
         this.parentId = refAddress;

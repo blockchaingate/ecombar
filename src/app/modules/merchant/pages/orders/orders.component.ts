@@ -10,6 +10,7 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-orders',
@@ -24,6 +25,7 @@ export class OrdersComponent implements OnInit {
   modalRef: BsModalRef;
   constructor(
     public kanbanServ: KanbanService,
+    private router: Router,
     private utilServ: UtilService,
     private web3Serv: Web3Service,
     private coinServ: CoinService,
@@ -111,7 +113,10 @@ export class OrdersComponent implements OnInit {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
     };          
-    
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {

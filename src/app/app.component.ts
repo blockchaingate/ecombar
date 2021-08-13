@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
       (wallets: any) => {
         console.log('wallets===', wallets);
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-          this.router.navigate(['/wallet']);
+          //this.router.navigate(['/wallet']);
           return false;
         }
 
@@ -62,8 +62,6 @@ export class AppComponent implements OnInit {
               }
             });
 
-        } else {
-          this.router.navigate(['/wallet']);
         }
               
       }

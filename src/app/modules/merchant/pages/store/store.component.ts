@@ -52,6 +52,7 @@ export class StoreComponent implements OnInit {
     private kanbanSmartContract: KanbanSmartContractService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
+    private router: Router,
     private dataServ: DataService,
     private storeageServ: StorageService,
     private storeServ: StoreService) {
@@ -275,7 +276,10 @@ export class StoreComponent implements OnInit {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
     };          
-    
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
