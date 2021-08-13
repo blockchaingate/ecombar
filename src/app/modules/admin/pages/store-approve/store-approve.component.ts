@@ -43,7 +43,7 @@ export class StoreApproveComponent implements OnInit {
       }
     ); 
 
-    this.isCoinPoolOwner = false;
+    this.isCoinPoolOwner = true;
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.storeServ.getStore(id).subscribe(
