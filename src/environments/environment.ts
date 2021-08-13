@@ -139,9 +139,12 @@ export const environment = {
         ETH: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       },
     smartContract: {
+
         feeDistribution: '0xc97b44755c4f21094e42e6edc69126ca11a5c0a7',
         locker: '0xc9042097dAC6db6f79408bef99092e40D66D4BB6',
         exchangeRate: '0x6e6a2a79ebea4dfa66cb752c372917e6f5d38895',
+        sevenStarProxy: '0x708fbf96ad0eb56372ebb32f34be8cdda52fd3f1',
+
         
         NFT_Exchange: '0x2c8aa9e76fc3c92a799c6c68926bd24e53ff9abb',
         ProxyRegistry: '0x2e553ad1cd6ba24be952cc7273e4d869d19b1586',

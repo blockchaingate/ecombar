@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./store-approve.component.scss']
 })
 export class StoreApproveComponent implements OnInit {
-  coinpoolAddress: string;
+  proxyAddress: string;
   isCoinPoolOwner: boolean;
   modalRef: BsModalRef;
   wallet: any;
@@ -52,8 +52,8 @@ export class StoreApproveComponent implements OnInit {
             this.store = ret._body;
 
 
-            this.coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
-            console.log('coinpoolAddress==', this.coinpoolAddress);
+            this.proxyAddress = environment.addresses.smartContract.sevenStarProxy;
+            console.log('proxyAddress==', this.proxyAddress);
             const abi = this.web3Serv.getGeneralFunctionABI(
               {
                 "constant": true,
@@ -70,7 +70,7 @@ export class StoreApproveComponent implements OnInit {
                 "type": "function"
               },[]
             );
-            const ret2 = await this.kanbanServ.kanbanCallAsync(this.coinpoolAddress, abi);  
+            const ret2 = await this.kanbanServ.kanbanCallAsync(this.proxyAddress, abi);  
             const coinpoolOwnerAddress = this.utilServ.exgToFabAddress('0x' + ret2.data.substring(ret2.data.length - 40)); 
 
             this.dataServ.currentWalletAddress.subscribe(
@@ -108,66 +108,27 @@ export class StoreApproveComponent implements OnInit {
 async approveDo(seed: Buffer) {
   try {
 
-  
-  const randomString = this.utilServ.getRandomInteger();
-  console.log('randomString===', randomString);
     const argsAddContract = [
-      this.store.feeChargerSmartContractAddress,
-      100,
-      randomString
+      this.store.feeChargerSmartContractAddress
     ];
     const abiAddContract = {
       "constant": false,
       "inputs": [
         {
-          "name": "_contractAddr",
-          "type": "address"
-        },
-        {
-          "name": "_activatedAt",
-          "type": "uint256"
-        },
-        {
-          "name": "_accountType",
-          "type": "uint32"
-        }
-      ],
-      "name": "addContract",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    };
-
-    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.coinpoolAddress, abiAddContract, argsAddContract);
-    
-
-    const argsToWhiteList = [
-      this.store.feeChargerSmartContractAddress
-    ];
-    const abiToWhiteList = {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_operator",
+          "name": "_merchantContract",
           "type": "address"
         }
       ],
-      "name": "addToWhiteList",
+      "name": "registerMerchant",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
     };
 
-    const ret2 = await this.kanbanSmartContractServ.execSmartContract(seed, this.coinpoolAddress, abiToWhiteList, argsToWhiteList);
-    console.log('ret2=', ret2);    
+    const ret2 = await this.kanbanSmartContractServ.execSmartContract(seed, this.proxyAddress, abiAddContract, argsAddContract);
     
+
     if(ret2 && ret2.ok && ret2._body && ret2._body.status == '0x1') {
 
 

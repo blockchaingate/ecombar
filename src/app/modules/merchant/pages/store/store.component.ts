@@ -177,9 +177,10 @@ export class StoreComponent implements OnInit {
       if(this.images && this.images.length > 0) {
         data.image = this.images[0];
       }
-      const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
+      //const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
+      const proxyAddress = environment.addresses.smartContract.sevenStarProxy;
       let args2 = [
-        coinpoolAddress,
+        proxyAddress,
         environment.addresses.smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
