@@ -71,12 +71,17 @@ export class StoreApproveComponent implements OnInit {
               },[]
             );
             const ret2 = await this.kanbanServ.kanbanCallAsync(this.proxyAddress, abi);  
-            const coinpoolOwnerAddress = this.utilServ.exgToFabAddress('0x' + ret2.data.substring(ret2.data.length - 40)); 
+            const proxyOwnerAddress = this.utilServ.exgToFabAddress('0x' + ret2.data.substring(ret2.data.length - 40)); 
 
             this.dataServ.currentWalletAddress.subscribe(
-              (walletAddress: string) => {
-                if(walletAddress == coinpoolOwnerAddress) {
-                  this.isCoinPoolOwner = true;
+              async (walletAddress: string) => {
+                if(walletAddress == proxyOwnerAddress) {
+
+                  const ret3 = await this.kanbanServ.kanbanCallAsync(this.proxyAddress, abi);  
+                  const feeDistributionOwnerAddress = this.utilServ.exgToFabAddress('0x' + ret3.data.substring(ret2.data.length - 40)); 
+                  if(feeDistributionOwnerAddress == walletAddress) {
+                    this.isCoinPoolOwner = true;
+                  }
                 }
               }
             );

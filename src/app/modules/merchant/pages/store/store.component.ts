@@ -273,6 +273,10 @@ export class StoreComponent implements OnInit {
       this.toastr.info('You cannot refer yourself.');
       return;
     }
+    if(!this.refAddress) {
+      this.toastr.info('Your ref address in emplty.');
+      return;      
+    }
     const initialState = {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
