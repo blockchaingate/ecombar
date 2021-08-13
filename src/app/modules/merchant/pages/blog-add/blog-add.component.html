@@ -1,0 +1,57 @@
+
+    <div class="container">
+      <h1>{{slug}}</h1>
+      <hr>
+      
+      <div class="d-flex align-items-center navigate-bar my-3">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+          English
+        </div>
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Chinese')">
+          中文
+        </div>
+      </div>
+
+      <ejs-richtexteditor id='defaultRTE'>
+        <ng-template #valueTemplate>
+        <p>The Rich Text Editor component is WYSIWYG ("what you see is what you get") editor that provides the best user experience to create and update the content.
+        Users can format their content using standard toolbar commands.</p>
+        <p><b>Key features:</b></p>
+        <ul><li><p>Provides &lt;IFRAME&gt; and &lt;DIV&gt; modes.</p></li>
+        <li><p>Capable of handling markdown editing.</p></li>
+        <li><p>Contains a modular library to load the necessary functionality on demand.</p></li>
+        <li><p>Provides a fully customizable toolbar.</p></li>
+        <li><p>Provides HTML view to edit the source directly for developers.</p></li>
+        <li><p>Supports third-party library integration.</p></li>
+        <li><p>Allows preview of modified content before saving it.</p></li>
+        <li><p>Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
+        <li><p>Contains undo/redo manager. </p></li>
+        <li><p>Creates bulleted and numbered lists.</p></li>
+        </ul>
+        </ng-template>
+        </ejs-richtexteditor>
+
+      <div *ngIf="currentTab=='default'">
+        <label for="email"><b>Title</b></label>
+        <input type="text" placeholder="Enter title" [(ngModel)]="title" name="title" required>
+        <div class="form-field">
+          <label for="detail">Cotent</label>
+          <ejs-richtexteditor [(ngModel)]='content' placeholder="Enter content" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+        </div>  
+      </div>
+      
+      <div *ngIf="currentTab=='Chinese'">
+        <label for="email"><b>标题</b></label>
+        <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">        
+    
+        <div class="form-field">
+          <label for="detail">内容</label>
+          <ejs-richtexteditor [(ngModel)]='contentChinese' placeholder="输入内容" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+        </div>  
+
+      </div>
+
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="addBlog()">{{(id?'Update':'Add') | translate}}</button>
+      </div>
+    </div>

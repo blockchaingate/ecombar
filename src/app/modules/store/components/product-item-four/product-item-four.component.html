@@ -7,7 +7,7 @@
                 </a>
             </div>
         </div>
-        <div class="product-item__body col-6 col-md-7">
+        <div class="product-item__body col-6 col-md-6">
             <div class="pr-lg-10">
                 <div class="mb-2"><a href="/store/{{storeId}}/product/{{product._id}}" class="font-size-12 text-gray-5">{{product.title | translateField}}</a></div>
                 <h5 class="mb-2 product-item__title">
@@ -37,13 +37,15 @@
                 </div>
             </div>
         </div>
-        <div class="product-item__footer col-md-3 d-md-block">
+        <div class="product-item__footer col-md-4 d-md-block">
             <div class="mb-2 flex-center-between">
                 <div class="prodcut-price">
-                    <div class="text-gray-100">${{product.price}}</div>
+                    <div class="text-gray-100">{{product.price}} {{currency}}</div>
                 </div>
                 <div class="prodcut-add-cart">
-                    <a (click)="addToCart()" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                    <a (click)="addToCart()" class="btn-add-cart btn-primary transition-3d-hover">
+                        <i class="ec ec-add-to-cart"></i>
+                    </a>
                 </div>
             </div>
             <!--

@@ -11,6 +11,9 @@ import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-mercha
 import { CompareComponent } from './compare/compare.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
+import { CustomerServiceComponent } from './customer-service/customer-service.component';
+import { ReturnsComponent } from './returns/returns.component';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   {
@@ -39,10 +42,6 @@ const routes: Routes = [
         loadChildren: () => import('./community/community.module').then(m => m.CommunityModule)
       },
       {
-        path: 'store',
-        loadChildren: () => import('./store/store.module').then(m => m.StoreModule)
-      },   
-      {
         path: 'category/:id',
         component: Category2Component
       },  
@@ -56,6 +55,10 @@ const routes: Routes = [
       },
       {
         path: 'track-order',
+        component: TrackOrderComponent
+      },
+      {
+        path: 'track-order/:id',
         component: TrackOrderComponent
       },
       {
@@ -79,7 +82,19 @@ const routes: Routes = [
       {
         path: 'search',
         component: SearchComponent
+      },   
+      {
+        path: 'customer-service',
+        component: CustomerServiceComponent
       },     
+      {
+        path: 'returns',
+        component: ReturnsComponent
+      },  
+      {
+        path: 'faq',
+        component: FaqComponent
+      },       
       {
         path: 'payment',
         loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)

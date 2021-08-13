@@ -11,6 +11,7 @@ export class ProductItemThreeComponent implements OnInit {
   lang: string;
   @Input() product: any;
   @Input() storeId: string;
+  @Input() currency: string;
   @Output() addToCartEvent = new EventEmitter<string>();
   constructor(private storageServ: StorageService) {
 

@@ -24,6 +24,7 @@ interface FeeChargerInterface {
         address _user,
         uint32 _coinType,
         uint256 _totalAmount,
+        uint256 _tax,
         uint8 v,
         bytes32 r,
         bytes32 s,
@@ -59,6 +60,7 @@ contract Ecombar is Ownable {
         bytes30[] productObjectIds;
         uint8[] quantities;
         uint256 total;
+        uint256 tax;
     }
 
     struct Shipping {
@@ -107,9 +109,9 @@ contract Ecombar is Ownable {
     }   
 
 
-    function createOrder(bytes30 objectId, bytes30[] memory productObjectIds, uint8[] memory quantities, uint256 total) public {
+    function createOrder(bytes30 objectId, bytes30[] memory productObjectIds, uint8[] memory quantities, uint256 total, uint256 tax) public {
         require(total > 0);
-        Order memory order = Order(objectId, productObjectIds, quantities, total);
+        Order memory order = Order(objectId, productObjectIds, quantities, total, tax);
         orders.push(order);
         orderById[objectId] = order;
     }
@@ -123,11 +125,13 @@ contract Ecombar is Ownable {
         address[] memory _rewardBeneficiary) public {
         Order memory order = orderById[objectId];
         uint256 total = order.total.add(fullfilmentFee);
+        uint256 tax = order.tax;
         feeChargerInstance.chargeFundsWithFeeWithSig(
         bytes32(objectId),
         _user,
         coinType,
         total,
+        tax,
         v,
         r,
         s,

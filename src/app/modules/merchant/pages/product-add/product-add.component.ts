@@ -6,7 +6,7 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { BrandService } from '../../../shared/services/brand.service';
 import { currencies } from '../../../../../environments/currencies';
 import { TextLan } from '../../../shared/models/textlan';
-import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
+import {  ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from '../../../shared/services/util.service';
 import { IddockService } from '../../../shared/services/iddock.service';
@@ -22,7 +22,7 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
 
 @Component({
   selector: 'app-admin-product-add',
-  providers: [ProductService, CategoryService, ToolbarService, LinkService, ImageService, HtmlEditorService],
+  providers: [ProductService, CategoryService],
   templateUrl: './product-add.component.html',
   styleUrls: [
     './product-add.component.scss',

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../shared/services/category.service';
 import { ProductService } from '../../shared/services/product.service';
 import {ActivatedRoute, Router, ParamMap} from '@angular/router';
+import { DataService } from '../../shared/services/data.service';
 
 @Component({
   selector: 'app-category2',
@@ -17,6 +18,7 @@ export class Category2Component implements OnInit {
   brands: any;
   colors: any;
   title: any;
+  storeId: string;
   prices = [
     {
       name: 'Under $25',
@@ -52,13 +54,18 @@ export class Category2Component implements OnInit {
   categoryChildren: any;
   id: string;
   constructor(
+    private dataServ: DataService,
     private router: Router, 
     private route:ActivatedRoute, 
     private productServ: ProductService,
     private categoryServ: CategoryService) { }
 
   ngOnInit() {
-
+    this.dataServ.currentStoreId.subscribe(
+      (storeId: string) => {
+        this.storeId = storeId;
+      }
+    );
     this.products = [];
     this.route.paramMap.subscribe((params: ParamMap) =>  {
       this.id = params.get('id');    
@@ -109,7 +116,7 @@ export class Category2Component implements OnInit {
 
 
   navigateTo(category) {
-    this.router.navigate(['/category/' + category._id]);
+    this.router.navigate(['/store' + this.storeId + '/category/' + category._id]);
   }
 
   filter() {

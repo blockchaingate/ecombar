@@ -9,6 +9,7 @@ declare var $: any;
   styleUrls: ['./sub-categories.component.scss']
 })
 export class SubCategoriesComponent implements OnInit {
+    @Input() storeId: string;
     @Input() category: any;
     ngOnInit() {
 
