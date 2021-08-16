@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   merchantId: string;
   categoryId: string;
   storeId: string;
+  store: any;
   wallet: any;
   currencyBalance: number;
   searchText: string;
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit {
     this.dataServ.currentStore.subscribe(
       (store: any) => {
         if(store) {
+          this.store = store;
           this.storeId = store._id;
           this.currency = store.coin;
           console.log('store=====', store);

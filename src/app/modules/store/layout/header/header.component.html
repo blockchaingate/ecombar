@@ -7,7 +7,7 @@
                 <div class="container">
                     <div class="d-flex align-items-center">
                         <div class="topbar-left">
-                            <a href="#" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to Ecombar" | translate}}</a>
+                            <a href="#" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to " | translate}} {{store.name | translateField}}</a>
                         </div>
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
@@ -71,8 +71,8 @@
                             <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                                 <!-- Logo -->
                                 <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center" routerLink="/" aria-label="Electro">
-                                    <img class="main-logo" src="/assets/images/logo/ecombar-logo.png" />
-                                    <div class="logo-text">ECOMBAR</div>
+                                    <img class="main-logo" src="{{store.image ? store.image : '/assets/images/logo/ecombar-logo.png'}}" />
+                                    <div class="logo-text">{{store.name | translateField}}</div>
 
 
 
