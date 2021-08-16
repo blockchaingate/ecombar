@@ -146,7 +146,7 @@ addresses: {
         feeDistribution: '0x7cf9f60b568d3e78c13b91f895394b433abd37eb',
         locker: '0x08283086b2192666128b7a6eaf66df2dfd3f1b6b',
         exchangeRate: '0xc790135e17490400a46bebff9efcc77dac39bdcf',
-        sevenStarProxy: '',
+        sevenStarProxy: '0x541ce3f716a3d6b64b0da9f51e7fe8ad52294f28',
         
         
         NFT_Exchange: '0x3f33980e2767fa3683595afddeab163af46a5566',
