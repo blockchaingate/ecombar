@@ -6,7 +6,7 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{'Home' | translate}}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}">{{'Home' | translate}}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1" *ngIf="currentCatorory._id != category._id" (click)="navigateTo(category)">
                             {{category.category | translateField}}
                         </li>
