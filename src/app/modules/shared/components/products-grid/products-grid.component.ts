@@ -12,6 +12,7 @@ import { DataService } from '../../services/data.service';
 export class ProductsGridComponent implements OnInit{
   iddockRoot: string;
   storeId: string;
+  currency: string;
   @Input() products: any;
 
   constructor(
@@ -22,10 +23,11 @@ export class ProductsGridComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.dataServ.currentStoreId.subscribe(
-      (storeId: string) => {
-        console.log('storeId=', storeId);
-        this.storeId = storeId;
+    this.dataServ.currentStore.subscribe(
+      (store: any) => {
+        console.log('store=', store);
+        this.storeId = store._id;
+        this.currency = store.coin;
       }
     );
   }

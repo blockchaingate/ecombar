@@ -43,7 +43,7 @@ export class StoreApproveComponent implements OnInit {
       }
     ); 
 
-    this.isCoinPoolOwner = true;
+    this.isCoinPoolOwner = false;
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.storeServ.getStore(id).subscribe(
@@ -52,7 +52,7 @@ export class StoreApproveComponent implements OnInit {
             this.store = ret._body;
 
 
-            /*
+            
             this.proxyAddress = environment.addresses.smartContract.sevenStarProxy;
             console.log('proxyAddress==', this.proxyAddress);
             const abi = this.web3Serv.getGeneralFunctionABI(
@@ -86,7 +86,7 @@ export class StoreApproveComponent implements OnInit {
                 }
               }
             );
-            */
+            
           }
         }
       );
@@ -164,6 +164,8 @@ async approveDo(seed: Buffer) {
             if(ret && ret.ok) {
               this.toastr.success('the store was approved.');
               this.router.navigate(['/admin/stores']);
+            } else {
+              this.toastr.error('Failed to save the store.');
             }
           }
         );
@@ -175,7 +177,7 @@ async approveDo(seed: Buffer) {
 
       
     } else {
-      this.toastr.error('Failed to approve the store.');
+      this.toastr.error('Failed to registerMerchant.');
     }
   } catch(e) {
     this.spinner.hide();
