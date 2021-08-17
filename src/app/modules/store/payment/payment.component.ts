@@ -93,18 +93,7 @@ export class PaymentComponent implements OnInit{
 
     ngOnInit() {
 
-      /*
-      this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
-
-        if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-          this.noWallet = true;
-          return;
-        }
-        this.wallets = wallets;
-        console.log('this.wallets==', this.wallets);
-        this.wallet = this.wallets.items[this.wallets.currentIndex];
-      });  
-      */
+      this.orderID = this.route.snapshot.paramMap.get('orderID');
       this.dataServ.currentWallet.subscribe(
         (wallet: any) => {
           this.wallet = wallet;
@@ -151,7 +140,7 @@ export class PaymentComponent implements OnInit{
       this.shippingFee = 0;
       this.total = 0;
       this.subtotal = 0;
-      this.orderID = this.route.snapshot.paramMap.get('orderID');
+      
 
 
     }
