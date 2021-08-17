@@ -34,7 +34,7 @@ import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.
 
 import { 
   WalletGuardService as WalletGuard 
-} from '../shared/services/wallet-guard.service';
+} from 'src/app/modules/shared/services/wallet-guard.service';
 
 const routes: Routes = [
   {

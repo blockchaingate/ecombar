@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpService } from './http.service';
 import { HttpHeaders } from '@angular/common/http';
-import { KanbanGetBanalceResponse, KanbanNonceResponse, DepositStatusResp, TransactionAccountResponse } from '../../../interfaces/kanban.interface';
+import { KanbanGetBanalceResponse, KanbanNonceResponse, DepositStatusResp, TransactionAccountResponse } from 'src/app/interfaces/kanban.interface';
 import { from } from 'rxjs';
 import { UtilService } from './util.service';
 import { Web3Service } from './web3.service';

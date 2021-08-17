@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MerchantService } from '../../../shared/services/merchant.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 
 @Component({
   selector: 'app-admin-merchant-applications',

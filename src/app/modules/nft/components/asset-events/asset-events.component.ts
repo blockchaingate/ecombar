@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { CoinService } from 'src/app/modules/shared//services/coin.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 
 @Component({
     providers: [],

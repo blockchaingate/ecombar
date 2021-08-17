@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../shared/services/user.service';
-import { MerchantService } from '../shared/services/merchant.service';
-import { StorageService } from '../shared/services/storage.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/states/user.state';

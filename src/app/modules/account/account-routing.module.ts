@@ -34,7 +34,7 @@ import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.
 
 import { 
   AuthGuardService as AuthGuard 
-} from '../shared/services/auth-guard.service';
+} from 'src/app/modules/shared/services/auth-guard.service';
 
 const routes: Routes = [
   {

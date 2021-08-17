@@ -1,0 +1,62 @@
+.container {
+    // padding-top: 120px;
+}
+
+.img-thumbnail {
+    width: 50px;
+    height: auto; 
+    border: 2px solid #a2a6ac;
+}
+
+.img-thumbnail-selected {
+    border-color: #e77600;
+}
+
+.selected-img {
+    flex: 50%;
+}
+
+.product-title {
+    font-size: 20px;
+}
+
+.product-price {
+    color:#B12704!important;
+}
+
+.about {
+    font-size: 16px!important;
+    line-height: 24px!important;    
+}
+
+.a-icon {
+    background-image: url(https://m.media-amazon.com/images/G/01/AUIClients/AmazonUIIcon-sprite_2x-59b95eac1db4a9d78e1e0c0b657cf66277a106ae._V2_.png);
+}
+
+.a-icon-dropdown {
+    width: 10px;
+    height: 8px;
+    background-position: -7px -102px;
+}
+
+.p-border {
+    border: 1px solid #e5e5e5;
+}
+
+.img-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#sliderThumb{
+    display: flex;
+}
+
+.btn-primary-dark{
+    cursor: pointer;
+}
+
+.btn-primary-dark:hover{
+    color:#fff !important;
+}

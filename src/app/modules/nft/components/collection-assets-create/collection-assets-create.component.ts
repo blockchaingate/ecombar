@@ -5,12 +5,12 @@ import { NftAssetService } from '../../services/nft-asset.service';
 import { NftCollectionService } from '../../services/nft-collection.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
-import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared//services/kanban.smartcontract.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
+import { KanbanService } from 'src/app/modules/shared//services/kanban.service';
+import { CoinService } from 'src/app/modules/shared//services/coin.service';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 

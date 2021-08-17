@@ -1,0 +1,248 @@
+<div class="container" *ngIf="order">
+    <div class="pb-2">
+        {{'ObjectId' | translate}}: 
+        <a target="_blank" href="/blockchain/detail/things/{{order.objectId}}">
+            {{order.objectId}}
+        </a>
+    </div>
+    <div class="row">
+        <div class="col col-8 px-2">
+            <div class="card w-100">
+                <div class="p-3">
+                    <div class="py-3">
+                        <div class="py-2 text-muted d-flex align-items-center justify-content-between">
+                            <div>
+                                {{'Shipping information' | translate}}
+                            </div>
+                            
+                            <button class="btn" (click)="change()">{{'Change' | translate}}</button>
+                        </div>
+                        <div class="font-weight-bold">
+                            {{order.name}} {{order.streetNumber}} {{order.streetName}} {{order.city}} {{order.province}}, {{order.zip}} {{order.country}}
+                        </div>
+                    </div>
+
+
+                    <div class="py-3 ">
+                        <div class="py-2 text-muted">
+                            {{'Shipping services' | translate}}
+                        </div>
+                        <div class="row Shipping-method">
+                            <div class="col col-4 border-top border-bottom  p-3 col-md-offset-1" [ngClass]="selectedShippingService=='express' ? 'selected' : ''" (click)="selectShippingService('express')">
+
+
+                                <div class="d-flex align-items-start">
+                                    <img src="/assets/svg/delivery2.svg">
+                                    <div class="px-3">
+                                        <div class="font-weight-bold">
+                                            {{'Express delivery' | translate}}
+                                        </div>
+                                        <div class="text-muted">
+                                            {{'We ship in 1-2 days' | translate}}
+                                        </div>
+                                        <div>
+                                            $10
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </div>
+    
+                            <div class="col col-4 border p-3"  [ngClass]="selectedShippingService=='standard' ? 'selected' : ''" (click)="selectShippingService('standard')">
+    
+                                <div class="d-flex align-items-start">
+                                    <img src="/assets/svg/delivery.svg">
+                                    <div class="px-3">
+                                        <div class="font-weight-bold">
+                                            {{'Standard delivery' | translate}}
+                                        </div>
+                                        <div class="text-muted">
+                                            {{'We ship in 3-7 day' | translate}}
+                                        </div>
+                                        <div>
+                                            {{'Free' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            
+                            <div class="col col-4 border-top border-bottom p-3" [ngClass]="selectedShippingService=='pickup' ? 'selected' : ''" (click)="selectShippingService('pickup')">
+    
+                                <div class="d-flex align-items-start">
+                                    <img src="/assets/svg/pickup.svg">
+                                    <div class="px-3">
+                                        <div class="font-weight-bold">
+                                            {{'Pickup from store' | translate}}
+                                        </div>
+                                        <div class="text-muted">
+                                            {{'Today' | translate}}
+                                        </div>
+                                        <div>
+                                            {{'Free' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </div>                        
+                        </div>  
+                    </div>
+
+                    <div class="py-3">
+                        <div class="py-2 text-muted">
+                            {{'Payment options' | translate}}
+                        </div>
+                        <div class="Payment-method">
+                           <div class="border p-3 mb-2"  [ngClass]="selectedPayment=='creditcard' ? 'selected' : ''" (click)="selectPayment('creditcard')">
+                               <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-start">
+                                        <img src="/assets/svg/creditcard.svg">
+                                        <div class="px-3">
+                                            <div class="font-weight-bold">
+                                                {{'Credit card' | translate}}
+                                            </div>
+                                            <div class="text-muted">
+                                                {{'Pay with Visa, Mastercard' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div>
+                                        <img src="/assets/svg/visa.svg">
+                                        <img src="/assets/svg/mastercard.svg">
+                                    </div>
+                               </div>
+                             
+                           </div>
+
+                           <div class="border p-3 my-2" [ngClass]="selectedPayment=='paypal' ? 'selected' : ''" (click)="selectPayment('paypal')">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-start">
+                                        <img src="/assets/svg/paypal.svg">
+                                        <div class="px-3">
+                                            <div class="font-weight-bold">
+                                                {{'Paypal' | translate}}
+                                            </div>
+                                            <div class="text-muted">
+                                                {{'Simple, more secure way to pay' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div>
+                                        <img src="/assets/svg/paypal2.svg">
+                                    </div>
+                                </div>
+                            
+                            </div>                           
+
+                            <div class="border p-3 my-2" [ngClass]="selectedPayment=='usdt' ? 'selected' : ''" (click)="selectPayment('usdt')">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-start">
+                                        <img src="/assets/svg/usdt.svg">
+                                        <div class="px-3">
+                                            <div class="font-weight-bold">
+                                                USDT
+                                            </div>
+                                            <div class="text-muted">
+                                                {{'Pay USDT with kbpay' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div>
+                                        <img src="/assets/svg/usdt2.svg">
+                                    </div>
+                                </div>
+                            
+                            </div>  
+
+                        </div> 
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="placeOrder()">
+                            {{'Place order' | translate}}
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-4 px-2">
+            <div class="card w-100 p-3">
+                <div class="p-3 border-bottom">
+                    <div class="text-muted py-3">
+                        {{'Your order' | translate}}
+                    </div>
+                    <div *ngFor="let item of order.items" class="py-2">
+                        <div class="row">
+                            <div class="col col-4">
+                                <img class="img-thumbnail" [src]="item.thumbnailUrl">
+                            </div>
+                            
+                            <div class="col col-8">
+                                <div class="font-weight-bold">
+                                    {{item.title}}
+                                </div>
+                                <div class="row">
+                                    <div class="col col-4">
+                                        ${{item.price}}
+                                    </div>
+                                    <div class="col col-4">
+                                        x{{item.quantity}}
+                                    </div>
+                                    <div class="col col-4 font-weight-bold">
+                                        ${{item.price * item.quantity}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="row py-2">
+                        <div class="col col-6">
+                            {{'Subtotal' | translate}}
+                        </div>
+                        <div class="col col-6 text-right">
+                            ${{subtotal}}
+                        </div>                        
+                    </div>
+
+                    <div class="row py-2">
+                        <div class="col col-6">
+                            {{'Shipping' | translate}}
+                        </div>
+                        <div class="col col-6 text-right">
+                            {{(shippingFee == '0' ? 'Free' : ('$' + shippingFee)) | translate}}
+                        </div>                        
+                    </div>  
+
+                    <div class="row py-2" *ngIf="discount">
+                        <div class="col col-6">
+                            {{'Discount' | translate}}
+                        </div>
+                        <div class="col col-6 text-right">
+                           {{discount}}%
+                        </div>                        
+                    </div>  
+
+                    <div class="row py-2">
+                        <div class="col col-6 font-weight-bold">
+                            {{'Total' | translate}}
+                        </div>
+                        <div class="col col-6 text-right font-weight-bold">
+                            ${{total}}
+                        </div>                        
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+    </div>
+    
+   
+</div>
+
+
+<ngx-smart-modal #passwordModal identifier="passwordModal">
+    <app-password-modal *ngIf="wallet" [pwdHash]="wallet.pwdHash" (onConfirmPassword)="onConfirmPassword($event)"></app-password-modal>
+</ngx-smart-modal>

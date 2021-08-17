@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'src/environments/environment';
 import {Balance,  EthTransactionRes
     , FabTransactionResponse, CoinsPrice, BtcUtxo, KEthBalance, FabUtxo, EthTransactionStatusRes, GasPrice,
-    FabTokenBalance, FabTransactionJson, BtcTransactionResponse, BtcTransaction} from '../../../interfaces/balance.interface';
+    FabTokenBalance, FabTransactionJson, BtcTransactionResponse, BtcTransaction} from 'src/app/interfaces/balance.interface';
 import { HttpClient} from '@angular/common/http';
 import { UtilService } from './util.service';
 import TronWeb from 'tronweb';

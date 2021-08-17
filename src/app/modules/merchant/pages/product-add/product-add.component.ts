@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../../shared/services/product.service';
-import { UserService } from '../../../shared/services/user.service';
-import { CategoryService } from '../../../shared/services/category.service';
-import { BrandService } from '../../../shared/services/brand.service';
-import { currencies } from '../../../../../environments/currencies';
-import { TextLan } from '../../../shared/models/textlan';
+import { ProductService } from 'src/app/modules/shared/services/product.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { CategoryService } from 'src/app/modules/shared/services/category.service';
+import { BrandService } from 'src/app/modules/shared/services/brand.service';
+import { currencies } from 'src/environments/currencies';
+import { TextLan } from 'src/app/modules/shared/models/textlan';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 //import { NgxSmartModalService } from 'ngx-smart-modal';
-import { UtilService } from '../../../shared/services/util.service';
-import { IddockService } from '../../../shared/services/iddock.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { ToastrService } from 'ngx-toastr';
-import { DataService } from 'src/app/modules/shared/services/data.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { DataService } from 'src/app/modules/shared//services/data.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared//services/kanban.smartcontract.service';
 import BigNumber from 'bignumber.js/bignumber';
 
 
@@ -25,9 +25,9 @@ import BigNumber from 'bignumber.js/bignumber';
   templateUrl: './product-add.component.html',
   styleUrls: [
     './product-add.component.scss',
-    '../../../../../select.scss',
-    '../../../../../card.scss',
-    '../../../../../button.scss'
+    
+    
+    
   ]
 })
 export class ProductAddComponent implements OnInit {

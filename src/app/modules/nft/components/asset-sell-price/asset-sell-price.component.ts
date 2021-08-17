@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 
 @Component({
     providers: [],

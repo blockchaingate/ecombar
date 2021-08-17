@@ -2,7 +2,7 @@ import { Component, Input,Output,EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-star-rating',
   templateUrl: './star-rating.component.html',
-  styleUrls: ['./star-rating.component.scss', '../../../../../button.scss']
+  styleUrls: ['./star-rating.component.scss']
 })
 export class StarRatingComponent {
   @Input() readonly: boolean;

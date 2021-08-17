@@ -1,6 +1,6 @@
 
 import { Component, OnInit, ViewChild, EventEmitter, Input, ElementRef, Output } from '@angular/core';
-import { UploadService, DocType } from '../../../shared/services/upload.service';
+import { UploadService, DocType } from 'src/app/modules/shared/services/upload.service';
 
 @Component({
   selector: 'app-admin-upload-media',
@@ -8,7 +8,7 @@ import { UploadService, DocType } from '../../../shared/services/upload.service'
   templateUrl: './upload-media.component.html',
   styleUrls: [
     './upload-media.component.scss',
-    '../../../../../button.scss'
+    
   ]
 })
 export class UploadMediaComponent implements OnInit {

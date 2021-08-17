@@ -1,0 +1,8 @@
+export const themeEvn = {
+    themeList: [
+        "Default",
+        "MadEarn",
+        "NFT"
+    ],
+    defaultTheme: "MadEarn"
+}

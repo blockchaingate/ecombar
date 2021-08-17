@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../../shared/services/product.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
+import { ProductService } from 'src/app/modules/shared/services/product.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 import { Router } from '@angular/router';
-import { OrderService } from '../../../shared/services/order.service';
+import { OrderService } from 'src/app/modules/shared/services/order.service';
 
 @Component({
   selector: 'app-admin-my-products',

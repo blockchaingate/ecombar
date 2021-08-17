@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { BannerService } from '../../../shared/services/banner.service';
+import { BannerService } from 'src/app/modules/shared/services/banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
 
 @Component({
   selector: 'app-admin-banner-add',
   providers: [BannerService],
   templateUrl: './banner-add.component.html',
-  styleUrls: ['./banner-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  styleUrls: ['./banner-add.component.scss']
 })
 export class BannerAddComponent implements OnInit {
   sequence: number;

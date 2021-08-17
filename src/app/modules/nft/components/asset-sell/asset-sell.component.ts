@@ -6,15 +6,15 @@ import { NftAssetService } from '../../services/nft-asset.service';
 import { NftOrder } from '../../models/nft-order';
 import { NftPortService } from '../../services/nft-port.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 import { NftOrderService } from '../../services/nft-order.service';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
-import { Web3Service } from 'src/app/modules/shared/services/web3.service';
-import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { environment } from '../../../../../environments/environment';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
+import { CoinService } from 'src/app/modules/shared//services/coin.service';
+import { Web3Service } from 'src/app/modules/shared//services/web3.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared//services/kanban.smartcontract.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     providers: [],

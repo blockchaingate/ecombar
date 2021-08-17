@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Web3Service } from '../../shared/services/web3.service';
-import { KanbanService } from '../../shared/services/kanban.service';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 @Injectable({ providedIn: 'root' })
 export class NftAssetService {

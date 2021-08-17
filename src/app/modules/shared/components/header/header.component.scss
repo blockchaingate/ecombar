@@ -1,7 +1,7 @@
 .nav-bar {
     background-color: rgb(255, 255, 255);
-    border-bottom: 1px solid rgb(229, 232, 235);
-    box-shadow: rgb(47 63 78 / 25%) 0px 0px 8px 0px;
+    // border-bottom: 1px solid rgb(229, 232, 235);
+    // box-shadow: rgb(47 63 78 / 25%) 0px 0px 8px 0px;
     height: 72px;
     position: sticky;
     top: 0px;
@@ -207,4 +207,10 @@ aside {
     transition: transform 0.5s ease 0s, opacity 0.5s ease 0s;
     visibility: visible;
     opacity: 1;    
+}
+
+
+//added by jack
+.search-container{
+    display: none;
 }

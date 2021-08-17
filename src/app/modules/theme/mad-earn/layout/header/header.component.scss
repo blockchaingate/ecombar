@@ -1,0 +1,94 @@
+.header-container #nav-belt {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    padding-left: .5125rem;
+    padding-right: .5125rem;
+}
+
+.img-responsive {
+    height: 24px;
+    width: 40px;
+}
+
+.header-container #nav-belt a {
+    padding-left: 10px;
+    font-size: 1.25rem;
+}
+
+.header-container {
+    color: white;
+}
+
+img,
+svg {
+    vertical-align: middle;
+}
+
+.search-bar {
+    flex: 1;
+}
+
+.flex-box {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#search-text {
+    width: 100%;
+}
+
+// .main-logo {
+//     max-width: 50px;
+//     height: auto;
+// }
+
+.logo-text {
+    font-size: 21px;
+    color: #333;
+    visibility: visible;
+    font-weight: 800;
+}
+
+#sidebarHeader1 {
+    opacity: 1 !important;
+}
+
+.u-header-topbar__nav-link a {
+    color: #334141;
+}
+
+.select-css {
+    background-color: transparent;
+    font-size: small;
+    border: 0px;
+    outline: 0px;
+}
+
+
+#navBar ul{
+    list-style: none;
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchShow{
+    display: none;
+}
+
+
+.searchShow{
+    display: block;
+    
+}
+
+#searchproduct-item{
+    border: 1px solid #333333;
+}

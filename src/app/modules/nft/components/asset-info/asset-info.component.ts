@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 import { NftOrder } from '../../models/nft-order';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';

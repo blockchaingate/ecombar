@@ -1,0 +1,369 @@
+
+html {
+    line-height: 1.15;
+    /* 1 */
+    -ms-text-size-adjust: 100%;
+    /* 2 */
+    -webkit-text-size-adjust: 100%;
+    /* 2 */
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: sans-serif;
+    /* 1 */
+    font-size: 100%;
+    /* 1 */
+    line-height: 1.15;
+    /* 1 */
+    margin: 0;
+    /* 2 */
+}
+
+/**
+   * Show the overflow in IE.
+   * 1. Show the overflow in Edge.
+   */
+button,
+input {
+    /* 1 */
+    overflow: visible;
+}
+
+/**
+   * Remove the inheritance of text transform in Edge, Firefox, and IE.
+   * 1. Remove the inheritance of text transform in Firefox.
+   */
+button,
+select {
+    /* 1 */
+    text-transform: none;
+}
+
+/**
+   * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+   *    controls in Android 4.
+   * 2. Correct the inability to style clickable types in iOS and Safari.
+   */
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+    /* 2 */
+}
+
+/**
+   * Remove the inner border and padding in Firefox.
+   */
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+}
+
+/**
+   * Restore the focus styles unset by the previous rule.
+   */
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText;
+}
+/*=====  End of Choices  ======*/
+* {
+    box-sizing: border-box;
+}
+
+input,
+button {
+    font-family: "Poppins", sans-serif;
+}
+
+.home-main {
+    min-height: 100vh;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    background-size: cover;
+    background-position: center center;
+    padding: 15px;
+    margin-top: -30px;
+
+    .logo {
+        padding-bottom: 10px;
+
+        img{
+            max-width: 200px;
+        }
+    }
+
+    .desc{
+        padding-bottom: 30px;
+        font-size: 20px;
+        color: #777;
+        font-style: italic;
+        text-shadow: 1px 1px 1px #fff;
+    }
+}
+
+.home-main form {
+    width: 100%;
+    max-width: 940px;
+}
+
+.home-main form .inner-form {
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.home-main form .inner-form .input-field {
+    height: 68px;
+}
+
+.home-main form .inner-form .input-field input {
+    height: 100%;
+    background: #fff;
+    border: 0;
+    display: block;
+    width: 100%;
+    padding: 10px 32px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #e5e5e5;
+}
+
+.home-main form .inner-form .input-field input.placeholder {
+    color: #9a9a9a;
+    font-size: 20px;
+}
+
+.home-main form .inner-form .input-field input:-moz-placeholder {
+    color: #9a9a9a;
+    font-size: 20px;
+}
+
+.home-main form .inner-form .input-field input::-webkit-input-placeholder {
+    color: #9a9a9a;
+    font-size: 20px;
+}
+
+.home-main form .inner-form .input-field input:hover,
+.home-main form .inner-form .input-field input:focus {
+    box-shadow: none;
+    outline: 0;
+}
+
+.home-main form .inner-form .input-field.first-wrap {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.home-main form .inner-form .input-field.first-wrap input {
+    border-right: 0;
+}
+
+.home-main form .inner-form .input-field.second-wrap {
+    min-width: 260px;
+}
+
+.home-main form .inner-form .input-field.second-wrap .choices__inner {
+    background: #fff;
+    border-radius: 0;
+    border: 1px solid #e5e5e5;
+    height: 100%;
+    color: #333;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.home-main form .inner-form .input-field.second-wrap .choices__inner .choices__list.choices__list--single {
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
+}
+
+.home-main
+    form
+    .inner-form
+    .input-field.second-wrap
+    .choices__inner
+    .choices__item.choices__item--selectable.choices__placeholder {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
+    opacity: 1;
+    color: #333;
+    font-size: 20px;
+}
+
+.home-main form .inner-form .input-field.second-wrap .choices__inner .choices__list--single .choices__item {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
+}
+
+.home-main form .inner-form .input-field.second-wrap .choices__list.choices__list--dropdown {
+    border: 0;
+    background: #fff;
+}
+
+.home-main form .inner-form .input-field.second-wrap .choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background: #fff;
+    color: #333;
+}
+
+.home-main form .inner-form .input-field.second-wrap .choices__list--dropdown .choices__item {
+    color: #333;
+}
+
+.home-main form .inner-form .input-field.second-wrap .choices__list--dropdown {
+    margin-top: 0;
+}
+
+.home-main form .inner-form .input-field.third-wrap {
+    width: 164px;
+}
+
+.home-main form .inner-form .input-field.third-wrap .btn-search {
+    height: 100%;
+    width: 100%;
+    white-space: nowrap;
+    font-size: 20px;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    background: #4272d7;
+    transition: all 0.2s ease-out, color 0.2s ease-out;
+    font-weight: 300;
+}
+
+.home-main form .inner-form .input-field.third-wrap .btn-search:hover {
+    background: #2d62d3;
+}
+
+.home-main form .inner-form .input-field.third-wrap .btn-search:focus {
+    outline: 0;
+    box-shadow: none;
+}
+
+.home-main form .inner-form .choices[data-type*="select-one"] .choices__inner {
+    padding-bottom: 0;
+}
+
+.home-main form .inner-form .choices[data-type*="select-one"]:after {
+    border: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    transform: translateY(-50%);
+    opacity: 1;
+    right: 15px;
+    top: 50%;
+    background-size: 18px 18px;
+    background-position: right center;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg fill='%23999' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3e%3cpath d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+}
+
+.home-main form .inner-form .choices[data-type*="select-one"].is-open:after {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg fill='%23999' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3e%3cpath d='M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z'/%3e%3c/svg%3e");
+}
+
+@media screen and (max-width: 992px) {
+    .home-main form .inner-form .input-field {
+        height: 60px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .home-main form .inner-form {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+    .home-main form .inner-form .input-field {
+        margin-bottom: 20px;
+    }
+    .home-main form .inner-form .input-field input {
+        padding: 10px 15px;
+    }
+    .home-main form .inner-form .input-field.first-wrap {
+        width: 100%;
+    }
+    .home-main form .inner-form .input-field.first-wrap .choices__inner {
+        padding: 10px 15px;
+    }
+    .home-main form .inner-form .input-field.second-wrap {
+        width: 100%;
+    }
+    .home-main form .inner-form .input-field.second-wrap input {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .home-main form .inner-form .input-field.third-wrap {
+        margin-bottom: 0;
+        width: 100%;
+    }
+}
+
+.selectCategory {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e5e5e5;
+    border-right: 0;
+    padding: 10px 32px;
+    font-size: 16px;
+    color: #333;
+    font-family: "Poppins", sans-serif;
+    min-height: 68px;
+    overflow: hidden;
+}
+
+.add-info{
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 20px;
+    text-shadow: 1px 1px 1px #fff;
+    transition: all 0.3s ease-out;
+    border-radius: 10px;
+    a{
+        text-decoration: none;
+    }
+}
+
+.add-info:hover{
+    font-size: 22px;
+    background-color: #fff;
+    border: 3px solid #007bff;
+    
+}

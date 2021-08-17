@@ -1,9 +1,14 @@
 .title {
+    // color: rgb(14, 14, 14);
+    // font-weight: 600;
+    // font-size: 24px;
+    // line-height: 110%;
     color: rgb(14, 14, 14);
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 110%;
-    margin: 1.46rem 0 1.168rem;    
+    font-size: 65px;
+    font-weight: 300;
+    max-width: 80vw;
+    text-transform: uppercase;
+    margin: 1.46rem 0 1.168rem;
 }
 
 .GettingStarted--step-container {
@@ -11,31 +16,29 @@
     justify-content: space-around;
     margin: 40px 0px 20px;
     width: 100%;
-    display: flex;
+    // display: flex;
 }
-
 
 .GettingStarted--step-container .GettingStarted--step {
     max-width: 100%;
     padding: 0px 20px;
-    margin-bottom: 40px;
+    margin-bottom: 5px;
     margin-right: 20px;
     margin-left: 20px;
     -webkit-box-pack: start;
     justify-content: flex-start;
-    -webkit-box-align: center;
-    align-items: center;
+    -webkit-box-align: start;
+    align-items: start;
     flex-direction: column;
     display: flex;
 }
 
 @media (min-width: 600px) {
     .GettingStarted--step-container .GettingStarted--step {
-        max-width: 240px;
+        // max-width: 240px;
         padding: 0px;
     }
 }
-
 
 .image-container {
     -webkit-box-align: center;
@@ -48,19 +51,70 @@
     overflow: hidden;
     position: relative;
     border-radius: inherit;
-    height: 40px;
-    width: 40px;   
+
+    text-align: left;
+    margin-right: auto;
 }
 
 .subtitle {
     font-size: 16px;
     font-weight: 600;
     color: rgb(53, 56, 64);
-    margin-bottom: 4px;   
+    margin-bottom: 4px;
 }
 
 .content {
     color: rgb(138, 147, 155);
-    font-size: 16px;    
+    font-size: 16px;
     margin-top: 4px;
+}
+
+//by jack
+
+.imgCon {
+    padding: 10px;
+    background-color: #bdc0e7;
+    border-radius: 100%;
+
+    img {
+        filter: brightness(0.2) invert(1);
+        height: 40px;
+        width: 40px;
+    }
+}
+
+.deckImg {
+    background: linear-gradient(to right, #222222 0%, #222222 70%, white 70%, white 100%);
+
+    text-align: right;
+
+    .imgBlock {
+    }
+
+    img {
+        z-index: 99;
+        width: 80%;
+
+        position: relative;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+}
+
+
+@media (max-width:767px){
+    .title {
+        font-size: 45px;
+        text-align: center;
+    }
+    
+}
+
+
+@media (max-width:450px){
+    .title {
+        font-size: 30px;
+    }
+    
 }

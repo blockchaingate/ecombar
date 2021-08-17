@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-// import { UploadService } from '../../../services/upload.service';
-import { UploadService, DocType } from '../../../../shared/services/upload.service';
+// import { UploadService } from 'src/app/services/upload.service';
+import { UploadService, DocType } from 'src/app/modules/shared/services/upload.service';
 
 @Component({
     providers: [{

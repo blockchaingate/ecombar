@@ -4,12 +4,12 @@ import { NftAssetService } from '../../services/nft-asset.service';
 import { NftCollectionService } from '../../services/nft-collection.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { NftEventService } from '../../services/nft-event.service';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 import { NftOrder } from '../../models/nft-order';
 import { NftUnlockableContentComponent } from '../../modals/unlockable-content/unlockable-content.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
+import { KanbanService } from 'src/app/modules/shared//services/kanban.service';
 
 @Component({
     providers: [],

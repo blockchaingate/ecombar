@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
-import { FavoriteService } from '../../../shared/services/favorite.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
+import { FavoriteService } from 'src/app/modules/shared/services/favorite.service';
 
 @Component({
   selector: 'app-admin-favorite',

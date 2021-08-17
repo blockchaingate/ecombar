@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { StorageService } from '../../../shared/services/storage.service';
-import { BrandService } from '../../../shared/services/brand.service';
-import { CategoryService } from '../../../shared/services/category.service';
-import { ProductService } from '../../../shared/services/product.service';
-import { CollectionService } from '../../../shared/services/collection.service';
-import { CartStoreService } from '../../../shared/services/cart.store.service';
-import { FavoriteService } from '../../../shared/services/favorite.service';
-import { OrderService } from '../../../shared/services/order.service';
-import { CommentService } from '../../../shared/services/comment.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { BrandService } from 'src/app/modules/shared/services/brand.service';
+import { CategoryService } from 'src/app/modules/shared/services/category.service';
+import { ProductService } from 'src/app/modules/shared/services/product.service';
+import { CollectionService } from 'src/app/modules/shared/services/collection.service';
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
+import { FavoriteService } from 'src/app/modules/shared/services/favorite.service';
+import { OrderService } from 'src/app/modules/shared/services/order.service';
+import { CommentService } from 'src/app/modules/shared/services/comment.service';
 import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
+import { UserState } from 'src/app/store/states/user.state';
 
 @Component({
   selector: 'app-admin-dashboard',

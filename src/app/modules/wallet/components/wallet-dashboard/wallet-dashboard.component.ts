@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { UtilService } from '../../../shared/services/util.service';
-import { KanbanService } from '../../../shared/services/kanban.service';
-import { CoinService } from '../../../shared/services/coin.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import BigNumber from 'bignumber.js/bignumber';
-import { Signature } from '../../../../interfaces/kanban.interface';
-import { Web3Service } from '../../../shared/services/web3.service';
-import { environment } from '../../../../../environments/environment';
+import { Signature } from 'src/app/interfaces/kanban.interface';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { environment } from 'src/environments/environment';
 import * as bs58 from 'bs58';
 import * as createHash from 'create-hash';
 import { ReceiveComponent } from '../../modals/receive/receive.component';
@@ -18,13 +18,13 @@ import { SendComponent } from '../../modals/send/send.component';
 import { AddGasComponent } from '../../modals/add-gas/add-gas.component';
 import { DepositComponent } from '../../modals/deposit/deposit.component';
 import { WithdrawComponent } from '../../modals/withdraw/withdraw.component';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { MyCoin } from '../../../../models/mycoin';
-import { TransactionItem } from '../../../../models/transaction-item';
-import { TimerService } from '../../../shared/services/timer.service';
-import { StorageService } from 'src/app/modules/shared/services/storage.service';
-import { WalletService } from 'src/app/modules/shared/services/wallet.service';
+import { MyCoin } from 'src/app/models/mycoin';
+import { TransactionItem } from 'src/app/models/transaction-item';
+import { TimerService } from 'src/app/modules/shared/services/timer.service';
+import { StorageService } from 'src/app/modules/shared//services/storage.service';
+import { WalletService } from 'src/app/modules/shared//services/wallet.service';
 import { LoginSettingModal } from '../../modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phrase.modal';
 
@@ -32,7 +32,7 @@ import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phr
   selector: 'app-admin-wallet-dashboard',
   providers: [],
   templateUrl: './wallet-dashboard.component.html',
-  styleUrls: ['./wallet-dashboard.component.scss',  '../../../../../table.scss',  '../../../../../select.scss',  '../../../../../button.scss']
+  styleUrls: ['./wallet-dashboard.component.scss',  ]
 })
 export class WalletDashboardComponent implements OnInit{
   coins: any;

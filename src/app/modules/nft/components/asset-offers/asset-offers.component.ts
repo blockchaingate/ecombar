@@ -1,17 +1,17 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NftMakeOfferComponent } from '../../modals/make-offer/make-offer.component';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
+import { CoinService } from 'src/app/modules/shared//services/coin.service';
 import { NftOrder } from '../../models/nft-order';
 import { NftPortService } from '../../services/nft-port.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { NftOrderService } from '../../services/nft-order.service';
-import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { environment } from '../../../../../environments/environment';
+import { KanbanSmartContractService } from 'src/app/modules/shared//services/kanban.smartcontract.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     providers: [],

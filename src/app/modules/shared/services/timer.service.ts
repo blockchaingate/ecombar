@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { timer, BehaviorSubject } from 'rxjs';
 import { KanbanService } from './kanban.service';
-import { TransactionItem } from '../../../models/transaction-item';
+import { TransactionItem } from 'src/app/models/transaction-item';
 import { ApiService } from './api.service';
 
 @Injectable()

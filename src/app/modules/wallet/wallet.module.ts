@@ -20,7 +20,7 @@ import { TransactionHistoryComponent } from './components/transaction-history/tr
 import { ShowSeedPhraseModal } from './modals/show-seed-phrase/show-seed-phrase.modal';
 import { CoinsListComponent } from './components/coins-list/coins-list.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { CommonModule } from '@angular/common';

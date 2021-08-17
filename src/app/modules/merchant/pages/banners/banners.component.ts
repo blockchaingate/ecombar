@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { BannerService } from '../../../shared/services/banner.service';
+import { BannerService } from 'src/app/modules/shared/services/banner.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 
 @Component({
   selector: 'app-admin-banners',
   providers: [BannerService],
   templateUrl: './banners.component.html',
-  styleUrls: ['./banners.component.scss', '../../../../../table.scss']
+  styleUrls: ['./banners.component.scss', ]
 })
 export class BannersComponent implements OnInit {
   banners: any;

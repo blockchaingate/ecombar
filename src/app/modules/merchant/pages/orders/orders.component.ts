@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../../shared/services/order.service';
+import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
+import { UserState } from 'src/app/store/states/user.state';
 
 @Component({
   selector: 'app-admin-orders',
   providers: [OrderService],
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss', '../../../../../table.scss']
+  styleUrls: ['./orders.component.scss', ]
 })
 export class OrdersComponent implements OnInit {
   orders: any;

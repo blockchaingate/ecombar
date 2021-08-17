@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NftFavoriteService } from '../../services/nft-favorite.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
+import { KanbanService } from 'src/app/modules/shared//services/kanban.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 
 @Component({
     providers: [],

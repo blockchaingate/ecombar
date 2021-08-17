@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import * as bs58 from 'bs58';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'src/environments/environment';
 import * as createHash from 'create-hash';
 import BigNumber from 'bignumber.js/bignumber';
-import { coin_list } from '../../../../environments/coins';
-import { MyCoin } from '../../../models/mycoin';
+import { coin_list } from 'src/environments/coins';
+import { MyCoin } from 'src/app/models/mycoin';
 import * as ecies from 'eth-ecies';
 
 @Injectable({ providedIn: 'root' })

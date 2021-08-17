@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../../shared/services/product.service';
-import { UserService } from '../../../shared/services/user.service';
+import { ProductService } from 'src/app/modules/shared/services/product.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
 import {TranslateService} from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
+import { UserState } from 'src/app/store/states/user.state';
 import { ToastrService } from 'ngx-toastr';
-import { DataService } from 'src/app/modules/shared/services/data.service';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { DataService } from 'src/app/modules/shared//services/data.service';
+import { UtilService } from 'src/app/modules/shared//services/util.service';
 
 @Component({
   selector: 'app-admin-products',

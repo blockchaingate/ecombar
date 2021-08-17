@@ -4,6 +4,8 @@ import { AppService } from './modules/shared/services/app.service';
 import { StorageService } from './modules/shared/services/storage.service';
 import { environment } from '../environments/environment';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { ThemeService } from './services/theme.service';
+import { themeEvn } from 'src/environments/themeEnv';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +14,10 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 })
 export class AppComponent implements OnInit {
   title = 'ecombar';
+  themeList = themeEvn.themeList;
 
   constructor(
+    private theme: ThemeService,
     private appServ: AppService, 
     private localSt: LocalStorage,
     private storageServ: StorageService, 
@@ -61,5 +65,12 @@ export class AppComponent implements OnInit {
     this.translate.use(lang);
     this.storageServ.lang = lang;
   }
+
+  changeTheme(theme: string){
+    // console.log("change theme: " + theme);
+    
+    this.theme.changeMessage(theme);
+  }
+  
 
 }

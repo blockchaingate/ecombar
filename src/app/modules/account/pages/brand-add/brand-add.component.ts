@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { BrandService } from '../../../shared/services/brand.service';
+import { BrandService } from 'src/app/modules/shared/services/brand.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
 
 @Component({
   selector: 'app-admin-brand-add',
   providers: [],
   templateUrl: './brand-add.component.html',
-  styleUrls: ['./brand-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  styleUrls: ['./brand-add.component.scss']
 })
 export class BrandAddComponent implements OnInit {
   sequence: number;

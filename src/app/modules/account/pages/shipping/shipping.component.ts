@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { ShipService } from '../../../shared/services/ship.service';
-import { OrderService } from '../../../shared/services/order.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { ShipService } from 'src/app/modules/shared/services/ship.service';
+import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { Store } from '@ngrx/store';
-import { UserState } from '../../../../store/states/user.state';
+import { UserState } from 'src/app/store/states/user.state';
 import { selectMerchantId } from 'src/app/store/selectors/user.selector';
 
 @Component({

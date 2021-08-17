@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { BrandService } from '../../../shared/services/brand.service';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
+import { BrandService } from 'src/app/modules/shared/services/brand.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-brands',
   providers: [BrandService, UserService],
   templateUrl: './brands.component.html',
-  styleUrls: ['./brands.component.scss', '../../../../../table.scss']
+  styleUrls: ['./brands.component.scss', ]
 })
 export class BrandsComponent implements OnInit {
   brands: any;

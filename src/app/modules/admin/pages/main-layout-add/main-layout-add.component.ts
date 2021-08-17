@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CollectionService } from '../../../shared/services/collection.service';
+import { CollectionService } from 'src/app/modules/shared/services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { MainLayoutService } from '../../../shared/services/mainlayout.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { StorageService } from '../../../shared/services/storage.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { MainLayoutService } from 'src/app/modules/shared/services/mainlayout.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
 
 @Component({
   selector: 'app-admin-main-layout-add',
   providers: [CollectionService],
   templateUrl: './main-layout-add.component.html',
-  styleUrls: ['./main-layout-add.component.scss', '../../../../../table.scss']
+  styleUrls: ['./main-layout-add.component.scss', ]
 })
 export class MainLayoutAddComponent implements OnInit {
     mainLayout: any;

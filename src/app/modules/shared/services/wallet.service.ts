@@ -3,7 +3,7 @@ import { HttpService } from './http.service';
 import { CoinService } from './coin.service';
 import { UtilService } from './util.service';
 import { User } from '../models/user';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'src/environments/environment';
 import * as bip39 from 'bip39';
 import * as BIP32 from 'node_modules/bip32';
 import * as Btc from 'bitcoinjs-lib';
@@ -12,7 +12,7 @@ import * as bitcoinMessage from 'bitcoinjs-message';
 import * as hdkey from 'ethereumjs-wallet/hdkey';
 import * as bchaddr from 'bchaddrjs';
 import * as wif from 'wif';
-import { Wallet } from '../../../models/wallet';
+import { Wallet } from 'src/app/models/wallet';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Injectable({ providedIn: 'root' })

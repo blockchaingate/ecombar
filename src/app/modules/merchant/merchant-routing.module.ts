@@ -35,7 +35,7 @@ import { StoreComponent } from './pages/store/store.component';
 
 import { 
   AuthGuardService as AuthGuard 
-} from '../shared/services/auth-guard.service';
+} from 'src/app/modules/shared/services/auth-guard.service';
 
 const routes: Routes = [
   {

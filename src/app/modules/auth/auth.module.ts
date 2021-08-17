@@ -6,7 +6,7 @@ import { SigninComponent } from './pages/signin/signin.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { PwdRecoverComponent} from './pages/recover/pwd-recover.component';
 import { ActivationComponent } from './pages/activation/activation.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
