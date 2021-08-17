@@ -146,8 +146,9 @@ addresses: {
         feeDistribution: '0x7cf9f60b568d3e78c13b91f895394b433abd37eb',
         locker: '0x08283086b2192666128b7a6eaf66df2dfd3f1b6b',
         exchangeRate: '0xc790135e17490400a46bebff9efcc77dac39bdcf',
-        //NFT_Exchange: '0xd10c5f37c78058d82fb708cdac6c7278f3747721',
-        //ProxyRegistry: '0x87f4ca4ee743c2521879f6f4d58ab3e0fc2c9bdf', 
+        sevenStarProxy: '0x541ce3f716a3d6b64b0da9f51e7fe8ad52294f28',
+        
+        
         NFT_Exchange: '0x3f33980e2767fa3683595afddeab163af46a5566',
         ProxyRegistry: '0x640677e09c8f063d4a0a3a5a03a7bb7d4b3c13f7',                   
         FABLOCK: '0x04baa04d9550c49831427c6abe16def2c579af4a',

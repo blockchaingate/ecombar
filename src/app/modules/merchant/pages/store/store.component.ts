@@ -52,6 +52,7 @@ export class StoreComponent implements OnInit {
     private kanbanSmartContract: KanbanSmartContractService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
+    private router: Router,
     private dataServ: DataService,
     private storeageServ: StorageService,
     private storeServ: StoreService) {
@@ -176,9 +177,10 @@ export class StoreComponent implements OnInit {
       if(this.images && this.images.length > 0) {
         data.image = this.images[0];
       }
-      const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
+      //const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
+      const proxyAddress = environment.addresses.smartContract.sevenStarProxy;
       let args2 = [
-        coinpoolAddress,
+        proxyAddress,
         environment.addresses.smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
@@ -271,11 +273,18 @@ export class StoreComponent implements OnInit {
       this.toastr.info('You cannot refer yourself.');
       return;
     }
+    if(!this.refAddress) {
+      this.toastr.info('Your ref address in emplty.');
+      return;      
+    }
     const initialState = {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
     };          
-    
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {

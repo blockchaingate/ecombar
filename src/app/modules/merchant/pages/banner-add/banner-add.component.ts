@@ -75,7 +75,10 @@ export class BannerAddComponent implements OnInit {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
     };          
-    
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {

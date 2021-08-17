@@ -7,7 +7,7 @@
                 <div class="container">
                     <div class="d-flex align-items-center">
                         <div class="topbar-left">
-                            <a href="#" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to Ecombar" | translate}}</a>
+                            <a href="/store/{{storeId}}" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to " | translate}} {{store.name | translateField}}</a>
                         </div>
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
@@ -70,9 +70,9 @@
                             <!-- Nav -->
                             <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                                 <!-- Logo -->
-                                <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center" routerLink="/" aria-label="Electro">
-                                    <img class="main-logo" src="/assets/images/logo/ecombar-logo.png" />
-                                    <div class="logo-text">ECOMBAR</div>
+                                <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center" routerLink="/store/{{storeId}}" aria-label="Electro">
+                                    <img class="main-logo" src="{{store.image ? store.image : '/assets/images/logo/ecombar-logo.png'}}" />
+                                    <div class="logo-text">{{store.name | translateField}}</div>
 
 
 
@@ -219,7 +219,7 @@
                             <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
                                 <ul class="navbar-nav u-header__navbar-nav">
                                     <li class="nav-item hs-has-mega-menu u-header__nav-item">
-                                        <a class="nav-link u-header__nav-link " href="/">{{'Home'|translate}}</a>
+                                        <a class="nav-link u-header__nav-link " href="/store/{{storeId}}">{{'Home'|translate}}</a>
                                     </li>
                                     <li *ngFor="let category of categories" class="nav-item hs-has-mega-menu u-header__nav-item">
                                         <a class="nav-link u-header__nav-link u-header__nav-link-toggle" href="/store/{{storeId}}/category/{{category._id}}">{{category.category | translateField}}</a>

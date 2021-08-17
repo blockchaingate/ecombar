@@ -6,6 +6,7 @@ import { DataService } from '../../shared/services/data.service';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from '../../shared/services/kanban.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
@@ -20,6 +21,7 @@ export class WishlistComponent implements OnInit {
   wallet: any;
   constructor(
     private dataServ: DataService,
+    private router: Router,
     private kanbanServ: KanbanService,
     private modalService: BsModalService,
     private cartStoreServ: CartStoreService, 
@@ -74,7 +76,10 @@ export class WishlistComponent implements OnInit {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
     };          
-    
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
