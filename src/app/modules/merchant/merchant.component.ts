@@ -97,7 +97,7 @@ export class MerchantComponent implements OnInit {
         ]
       },
       {
-        title: 'Main Page',
+        title: 'Home Page',
         icon: 'dashboard',
         items: [
           {
@@ -108,6 +108,11 @@ export class MerchantComponent implements OnInit {
           {
             title: 'Small Banners',
             link: 'small-banners',
+            icon: 'banner'
+          },  
+          {
+            title: 'Top Category Banners',
+            link: 'top-category-banners',
             icon: 'banner'
           },    
           {

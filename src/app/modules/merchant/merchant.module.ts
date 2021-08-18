@@ -19,7 +19,8 @@ import { BannersComponent } from './pages/banners/banners.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { SmallBannersComponent } from './pages/small-banners/small-banners.component';
 import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-add.component';
-
+import { TopCategoryBannersComponent } from './pages/top-category-banners/top-category-banners.component';
+import { TopCategoryBannerAddComponent } from './pages/top-category-banner-add/top-category-banner-add.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -71,6 +72,8 @@ import { BlogAddComponent } from './pages/blog-add/blog-add.component';
     AddressComponent,
     SmallBannersComponent,
     SmallBannerAddComponent,
+    TopCategoryBannersComponent,
+    TopCategoryBannerAddComponent,
     ShippingComponent,
     MerchantsComponent,
     ProductsComponent,

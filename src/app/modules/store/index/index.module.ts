@@ -6,6 +6,7 @@ import { SlideShowComponent } from './components/slide-show/slide-show.component
 import { CollectionsComponent } from './components/collections/collections.component';
 import { Collections2Component } from './components/collections2/collections2.component';
 import { TopCategoriesComponent } from './components/top-categories/top-categories.component';
+import { TopCategoryBannersComponent } from './components/top-category-banners/top-category-banners.component';
 import { FeatureListComponent } from './components/feature-list/feature-list.component';
 import { SmallBannersComponent } from './components/small-banners/small-banners.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -18,7 +19,8 @@ import { SharedModule } from '../../shared/shared.module';
     Collections2Component,
     FeatureListComponent,
     SmallBannersComponent,
-    TopCategoriesComponent
+    TopCategoriesComponent,
+    TopCategoryBannersComponent
   ],
   imports: [
     IndexRoutingModule,
@@ -28,7 +30,8 @@ import { SharedModule } from '../../shared/shared.module';
   exports: [
     CollectionsComponent,
     Collections2Component,
-    TopCategoriesComponent
+    TopCategoriesComponent,
+    TopCategoryBannersComponent
   ],
   providers: []
 })

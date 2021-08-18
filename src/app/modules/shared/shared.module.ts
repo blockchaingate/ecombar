@@ -17,6 +17,7 @@ import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
 import { BannerService } from './services/banner.service';
 import { SmallBannerService } from './services/small-banner.service';
+import { TopCategoryBannerService } from './services/top-category-banner.service';
 import { AirdropService } from './services/airdrop.service';
 import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
@@ -112,6 +113,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FeatureService,
     StoreService,
     BlogService,
+    TopCategoryBannerService,
     MainLayoutService,
     KanbanSmartContractService
   ]
@@ -139,6 +141,7 @@ export class SharedModule {
         StarService,
         WalletGuardService,
         UtilService,    
+        TopCategoryBannerService,
         TextLanService,
         StoreService,            
         MainLayoutService,
