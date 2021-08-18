@@ -13,6 +13,7 @@ import { CollectionsComponent } from './pages/collections/collections.component'
 import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ShipsComponent } from './pages/ships/ships.component';
+import { NewslettersComponent } from './pages/newsletters/newsletters.component';
 import { TopCategoryBannersComponent } from './pages/top-category-banners/top-category-banners.component';
 import { TopCategoryBannerAddComponent } from './pages/top-category-banner-add/top-category-banner-add.component';
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
@@ -67,6 +68,9 @@ const routes: Routes = [
       },      
       {
         path: 'orders', component: OrdersComponent
+      }, 
+      {
+        path: 'newsletters', component: NewslettersComponent
       }, 
       {
         path: 'shipping/:orderID', component: ShippingComponent

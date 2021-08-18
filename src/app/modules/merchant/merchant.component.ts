@@ -93,7 +93,12 @@ export class MerchantComponent implements OnInit {
             title: 'Ships',
             link: 'ships',
             icon: 'order'
-          }     
+          },
+          {
+            title: 'Newsletters',
+            link: 'newsletters',
+            icon: 'order'
+          }      
         ]
       },
       {

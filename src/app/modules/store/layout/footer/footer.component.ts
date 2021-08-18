@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
+import { NewsletterService } from 'src/app/modules/shared/services/newsletter.service';
 
 @Component({
   selector: 'app-footer',
@@ -8,15 +10,21 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 })
 export class FooterComponent implements OnInit {
   storeId: string;
+  storeOwner: string;
+  email: string;
   categories1: any;
   categories2: any;
   store: any;
-  constructor(private dataServ: DataService) {}
+  constructor(
+    private toastr: ToastrService,
+    private newsletterServ: NewsletterService,
+    private dataServ: DataService) {}
   ngOnInit() {
     this.dataServ.currentStore.subscribe(
       (store: any) => {
         if(store) {
           this.storeId = store._id;
+          this.storeOwner = store.owner;
           this.store = store;
         }
       }
@@ -39,4 +47,23 @@ export class FooterComponent implements OnInit {
     );
   }
 
+  subscribe() {
+    const data = {
+      email: this.email,
+      store: this.storeId,
+      storeOwner: this.storeOwner
+    }
+    this.newsletterServ.create(data).subscribe(
+      (ret: any) => {
+        if(ret) {
+          if(ret.ok) {
+            this.toastr.success("You subscribe to our newletter successfully.");
+            this.email = '';
+          } else {
+            this.toastr.error(ret.error);
+          }
+        }
+      }
+    );
+  }
 }

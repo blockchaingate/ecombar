@@ -1,0 +1,17 @@
+
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-3">{{'Email' | translate}}</div>
+        <div class="col col-3"></div>
+      </li>
+      <li class="table-row" *ngFor="let newsletter of newsletters">
+        <div class="col col-3" data-label="Email">{{newsletter.email}}</div>
+        <div class="col col-3 text-right" data-label="Operations">
+          <div class="d-inline-block px-2">
+            <a (click)="deleteNewsletter(newsletter._id)">
+              <img src="/assets/svg/delete.svg">
+            </a>
+          </div>        
+        </div>
+      </li>
+    </ul>

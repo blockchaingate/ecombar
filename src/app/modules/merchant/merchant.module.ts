@@ -23,6 +23,7 @@ import { TopCategoryBannersComponent } from './pages/top-category-banners/top-ca
 import { TopCategoryBannerAddComponent } from './pages/top-category-banner-add/top-category-banner-add.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ShipsComponent } from './pages/ships/ships.component';
+import { NewslettersComponent } from './pages/newsletters/newsletters.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -86,6 +87,7 @@ import { BlogAddComponent } from './pages/blog-add/blog-add.component';
     BrandAddComponent,
     RoleMenuPipe,
     FeaturesComponent,
+    NewslettersComponent,
     FeatureAddComponent,
     CustomerServiceComponent,
     ReturnsPolicyComponent,

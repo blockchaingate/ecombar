@@ -15,6 +15,7 @@ import { TimerService } from './services/timer.service';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { CoinService } from './services/coin.service';
+import { NewsletterService } from './services/newsletter.service';
 import { BannerService } from './services/banner.service';
 import { SmallBannerService } from './services/small-banner.service';
 import { TopCategoryBannerService } from './services/top-category-banner.service';
@@ -112,6 +113,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StarService,
     FeatureService,
     StoreService,
+    NewsletterService,
     BlogService,
     TopCategoryBannerService,
     MainLayoutService,
@@ -141,6 +143,7 @@ export class SharedModule {
         StarService,
         WalletGuardService,
         UtilService,    
+        NewsletterService,
         TopCategoryBannerService,
         TextLanService,
         StoreService,            

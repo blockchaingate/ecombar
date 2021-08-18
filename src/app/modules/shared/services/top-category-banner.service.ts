@@ -6,11 +6,11 @@ export class TopCategoryBannerService {
   constructor(private http: HttpService) { }
 
   create(data) {
-    return this.http.post('top-category-banners/Create', data);
+    return this.http.post('top-category-banners/Create', data, false);
   }
 
   update(id: string, data) {
-    return this.http.post('top-category-banners/Update/' + id, data);
+    return this.http.post('top-category-banners/Update/' + id, data, false);
   }
 
   getBanners() {
@@ -30,6 +30,6 @@ export class TopCategoryBannerService {
   }
 
   deleteBanner(data: any) {
-    return this.http.post('top-category-banners/Delete', data);
+    return this.http.post('top-category-banners/Delete', data, false);
   }
 }
