@@ -52,6 +52,14 @@ export class IndexComponent implements OnInit{
               }
             }
           );
+
+          this.productServ.getMerchantHotCategories(storeOwner).subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                this.categories = res._body;
+              }
+            }
+          );
         }
 
       }
