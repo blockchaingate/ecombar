@@ -174,9 +174,9 @@
                     <form class="js-validate js-form-message">
                         <label class="sr-only" for="subscribeSrEmail">Email address</label>
                         <div class="input-group input-group-pill">
-                            <input type="email" class="form-control border-0 height-40" name="email" id="subscribeSrEmail" placeholder="{{'Email address'|translate}}" aria-label="Email address" aria-describedby="subscribeButton" required data-msg="Please enter a valid email address.">
+                            <input type="email" class="form-control border-0 height-40" [(ngModel)]="email" name="email" id="subscribeSrEmail" placeholder="{{'Email address'|translate}}" aria-label="Email address" aria-describedby="subscribeButton" required data-msg="Please enter a valid email address.">
                             <div class="input-group-append">
-                                <button type="submit" class="btn btn-dark btn-sm-wide height-40 py-2" id="subscribeButton">{{"Subscribe"|translate}}</button>
+                                <button type="submit" class="btn btn-dark btn-sm-wide height-40 py-2" id="subscribeButton" (click)="subscribe()">{{"Subscribe"|translate}}</button>
                             </div>
                         </div>
                     </form>

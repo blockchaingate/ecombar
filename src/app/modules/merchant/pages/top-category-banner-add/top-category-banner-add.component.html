@@ -1,0 +1,37 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'New Banner' | translate}}</h1>
+      <hr>
+      
+
+      <div *ngIf="currentTab=='default'">
+        <!--
+        <label for="email"><b>Title</b></label>
+        <input type="text" placeholder="{{'Enter title' | translate}}" [(ngModel)]="title" name="title" required>
+        <label for="email"><b>Subtitle</b></label>
+        <input type="text" placeholder="{{'Enter subtitle' | translate}}" [(ngModel)]="subtitle" name="subtitle">  
+        -->
+        <label for="image"><b>{{'Image' | translate}}</b></label>
+        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        <label for="email"><b>{{'Link' | translate}}</b></label>
+        <input type="text" placeholder="{{'Enter link' | translate}}" [(ngModel)]="clickLink" name="clickLink">
+
+        <label for="email"><b>{{'Sequence' | translate}}</b></label>
+        <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence">
+
+      </div>
+      
+      <!--
+      <div *ngIf="currentTab=='Chinese'">
+        <label for="email"><b>标题</b></label>
+        <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">        
+
+        <label for="email"><b>副标题</b></label>
+        <input type="text" placeholder="输入副标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">           
+      </div>
+-->
+      <div class="text-right py-2">
+        <button type="submit" class="btn signinbtn" (click)="addBanner()">{{(id?'Update':'Add') | translate}}</button>
+      </div>
+    </div>
+</form>
