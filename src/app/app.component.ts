@@ -1,14 +1,16 @@
 import { Component, OnInit, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AppService } from './modules/shared/services/app.service';
-import { StorageService } from './modules/shared/services/storage.service';
+import { AppService } from 'src/app/modules/shared/services/app.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { environment } from '../environments/environment';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { DataService } from './modules/shared/services/data.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
-import { StoreService } from './modules/shared/services/store.service';
-import { KanbanService } from './modules/shared/services/kanban.service';
-import { UtilService } from './modules/shared/services/util.service';
+import { StoreService } from 'src/app/modules/shared/services/store.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { ThemeService } from './services/theme.service';
+import { themeEvn } from 'src/environments/themeEnv';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +19,11 @@ import { UtilService } from './modules/shared/services/util.service';
 })
 export class AppComponent implements OnInit {
   title = 'ecombar';
+  themeList = themeEvn.themeList;
+  themeSwitch = themeEvn.themeSwitch;
 
   constructor(
+    private theme: ThemeService,
     private appServ: AppService, 
     private localSt: LocalStorage,
     private router: Router,
@@ -102,6 +107,12 @@ export class AppComponent implements OnInit {
     this.translate.setDefaultLang(lang);
     this.translate.use(lang);
     this.storageServ.lang = lang;
+  }
+
+  changeTheme(theme: string){
+    // console.log("change theme: " + theme);
+    
+    this.theme.changeMessage(theme);
   }
 
 }

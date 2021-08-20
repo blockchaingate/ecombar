@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { UtilService } from '../../shared/services/util.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Pipe({name: 'assetsSearch'})
 export class AssetsSearchPipe implements PipeTransform {

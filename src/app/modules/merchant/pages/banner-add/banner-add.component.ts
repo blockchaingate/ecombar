@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { BannerService } from '../../../shared/services/banner.service';
+import { BannerService } from 'src/app/modules/shared/services/banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DataService } from '../../../shared/services/data.service';
-import { KanbanService } from '../../../shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-banner-add',
   providers: [],
   templateUrl: './banner-add.component.html',
-  styleUrls: ['./banner-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  
 })
 export class BannerAddComponent implements OnInit {
   modalRef: BsModalRef;

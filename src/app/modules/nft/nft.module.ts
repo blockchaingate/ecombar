@@ -81,7 +81,7 @@ import { NftSettingService } from './services/nft-setting.service';
 import { NftFavoriteService } from './services/nft-favorite.service';
 import { NftPortService } from './services/nft-port.service';
 // import { UploadService } from './services/upload.service';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { NftActivitiesPageComponent } from './components/activities-page/activities-page.component';

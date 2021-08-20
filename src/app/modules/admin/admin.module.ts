@@ -5,7 +5,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';

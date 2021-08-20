@@ -1,0 +1,6 @@
+<div *ngIf="blog">
+    <h3 class="text-center">
+        {{blog.title | translateField}}
+    </h3>
+    <div [innerHTML]="blog.content | translateField"></div>
+</div>

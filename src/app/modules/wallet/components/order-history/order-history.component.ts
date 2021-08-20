@@ -3,7 +3,7 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
 

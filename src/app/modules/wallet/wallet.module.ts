@@ -25,7 +25,7 @@ import { AssetsListComponent } from './components/assets-list/assets-list.compon
 import { BindpayComponent } from './components/bindpay/bindpay.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';

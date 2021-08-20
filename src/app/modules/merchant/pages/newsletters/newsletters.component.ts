@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsletterService } from '../../../shared/services/newsletter.service';
+import { NewsletterService } from 'src/app/modules/shared/services/newsletter.service';
 import { Router } from '@angular/router';
-import { DataService } from '../../../shared/services/data.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { KanbanService } from '../../../shared/services/kanban.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 @Component({
   selector: 'app-admin-newsletters',

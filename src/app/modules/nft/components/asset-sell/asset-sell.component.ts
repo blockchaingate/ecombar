@@ -10,7 +10,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NftOrderService } from '../../services/nft-order.service';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';

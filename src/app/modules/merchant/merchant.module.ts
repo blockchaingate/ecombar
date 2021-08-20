@@ -37,7 +37,7 @@ import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
 import { StoreComponent } from './pages/store/store.component';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { QRCodeModule } from 'angularx-qrcode';

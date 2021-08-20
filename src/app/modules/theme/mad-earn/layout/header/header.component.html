@@ -1,0 +1,184 @@
+
+
+
+<div class="header-container">
+    <header id="header" class="u-header u-header-left-aligned-nav">
+        <div class="u-header__section">
+            <!-- Topbar -->
+            <div class="u-header-topbar py-2 d-none d-xl-block  border-bottom-0">
+                <div class="container">
+                    <div class="d-flex align-items-center">
+                        <div class="topbar-left">
+                            <!-- <a href="#" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to Ecombar" | translate}}</a> -->
+                            
+                        </div>
+                        <div class="topbar-right ml-auto">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item" *ngIf="isSearch">
+                                    <form class="js-focus-state" (ngSubmit)="onSearch()">
+                                        <label class="sr-only" for="searchproduct">{{'Search'|translate}}</label>
+                                        <div class="input-group">
+                                            <input type="text" name="searchText" [(ngModel)]="searchText" class="form-control py-2 pl-5 font-size-15 border-right-0 height-42  rounded-left-pill" name="email" id="searchproduct-item" placeholder="{{'Search for Products'|translate}}" aria-label="Search for Products"
+                                                aria-describedby="searchProduct1" required>
+                                            <div class="input-group-append" *ngIf="categories">
+                                                <!-- Select -->
+                                                <select [(ngModel)]="categoryId" name="categoryId" class="js-select selectpicker dropdown-select custom-search-categories-select bg-white" data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
+                                                    <option value="" selected>{{"All Categories"|translate}}</option>
+                                                    <option *ngFor="let category of categories" value="{{category._id}}">{{category.category | translateField}}</option>
+                                                </select>
+                                                <!-- End Select -->
+                                                <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill" type="submit" id="searchProduct1" routerLinkActive="router-link-active">
+                                                    <span class="ec ec-search font-size-20"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item " (click)="toogleSearch()">
+                                    <div  class="u-header-topbar__nav-link">
+                                        <i class="ec ec-search mr-1"></i>Search</div>
+                                </li>
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item  full-bg">
+                                    <!-- Account Sidebar Toggle Button -->
+                                    <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
+                                        data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
+                                        <i class="ec ec-user mr-1"></i> <a [routerLink]="[user ? '/admin' : '/auth/signin']">{{(user ? 'My account' : 'Login') | translate}}</a>
+                                        <!-- <span
+                                                                                        class="text-primary-darken-5">or</span><a
+                                                                                        routerLink="/auth/signin">Sign
+                                                                                        in</a> -->
+                                    </a>
+                                    <!-- End Account Sidebar Toggle Button -->
+                                </li>
+
+                                <li class="list-inline-item mr-0 u-header-topbar__nav-item  full-bg">
+                                    <select class="select-css" [(ngModel)]="_lang" (change)="onChange($event.target.value)">
+                                                    <option class="selectitem" selected="_lang==='en'" value="en">English</option>
+                                                    <option class="selectitem" selected="_lang==='sc'" value="sc">中文</option>
+                                                </select>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Topbar -->
+
+            <!-- Logo-Search-header-icons -->
+            <div class="py-2 ">
+                <div class="container my-0dot5 my-xl-0">
+                    <div class="row align-items-center">
+                        <!-- Logo-offcanvas-menu -->
+                        <div class="col-md-2">
+                            <!-- Nav -->
+                            <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
+                                <!-- Logo -->
+                                <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center" routerLink="/" aria-label="Electro">
+                                    <img class="main-logo" src="/assets/madearn/logo/MadEarn.png" />
+
+
+
+                                </a>
+                                <!-- End Logo -->
+                            </nav>
+                            <!-- End Nav -->
+
+                        </div>
+                        <!-- End Logo-offcanvas-menu -->
+                        <div class="col-md-8 d-none d-xl-block">
+                            <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--wide u-header__navbar--no-space">
+                                <!-- Navigation -->
+                                <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
+                                    <ul class=" u-header__navbar-nav">
+                                        <li class="nav-item hs-has-mega-menu u-header__nav-item">
+                                            <a class="nav-link u-header__nav-link " [routerLink]="['/store/' + storeId]"  >{{'Home'|translate}}</a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link u-header__nav-link " href="/">Categories</a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link u-header__nav-link " href="/">About Us</a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link u-header__nav-link " href="/">Contact Us</a>
+                                        </li>
+                                        <!-- <li *ngFor="let category of categories" class="nav-item hs-has-mega-menu u-header__nav-item">
+                                            <a class="nav-link u-header__nav-link u-header__nav-link-toggle" href="/category/{{category._id}}">{{category.category | translateField}}</a>
+                                            <div class="hs-mega-menu w-100 u-header__sub-menu"
+    aria-labelledby="smartphonesMegaMenu">
+                                            <app-sub-categories [category]="category"></app-sub-categories>
+                                            </div>
+                                        </li> -->
+                                       
+                                    </ul>
+                                </div>
+                                <!-- End Navigation -->
+                            </nav>
+                        </div>
+                        <!-- End Search Bar -->
+                        <!-- Header Icons -->
+                        <div class="col-md-2 text-right text-xl-left pl-0 pl-xl-3 position-static">
+                            <div class="d-inline-flex">
+                                <ul class="d-flex list-unstyled mb-0 align-items-center">
+                                    <!-- Search -->
+                                    <li class="col d-xl-none px-2 px-sm-3 position-static">
+                                        <a id="searchClassicInvoker" class="font-size-22 text-gray-90 text-lh-1 btn-text-secondary" href="javascript:;" role="button" data-toggle="tooltip" data-placement="top" title="Search" aria-controls="searchClassic" aria-haspopup="true" aria-expanded="false"
+                                            data-unfold-target="#searchClassic" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-delay="300" data-unfold-hide-on-scroll="true" data-unfold-animation-in="slideInUp" data-unfold-animation-out="fadeOut">
+                                            <span class="ec ec-search"></span>
+                                        </a>
+
+                                        <!-- Input -->
+                                        <div id="searchClassic" class="dropdown-menu dropdown-unfold dropdown-menu-right left-0 mx-2" aria-labelledby="searchClassicInvoker">
+                                            <form class="js-focus-state input-group px-3">
+                                                <input class="form-control" type="search" placeholder="Search Product">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary px-3" type="button"><i class="font-size-18 ec ec-search"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- End Input -->
+                                    </li>
+                                    <!-- End Search -->
+
+                                    <!--
+                                    <li class="col d-none d-xl-block"><a href="./compare" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Compare"><i
+                                                                                                class="font-size-22 ec ec-compare"></i></a>
+                                    </li>
+                                    -->
+                                    <li class="col d-none d-xl-block">
+                                        <a routerLink="/wishlist" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Favorites"><i
+                                                                                                class="font-size-22 ec ec-favorites"></i></a>
+                                    </li>
+                                    <!-- <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html"
+                                            class="text-gray-90" data-toggle="tooltip" data-placement="top"
+                                            title="My Account"><i class="font-size-22 ec ec-user"></i></a></li> -->
+                                    <li class="col pr-xl-0 px-2 px-sm-3">
+                                        <a [routerLink]="['/store/' + storeId + '/cart']" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="Cart">
+                                            <i class="font-size-22 ec ec-shopping-bag"></i>
+                                            <span class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white"> {{cartCount}}</span>
+                                            <!-- <div class="px-3 mx-3 cursor-pointer" [routerLink]="['/cart']">
+                                                                                                        <span [attr.badge]="cartCount">
+                                                                                                            {{'Cart' | translate}}
+                                                                                                        </span>
+                                                                                                    </div> -->
+
+                                            <!-- <span
+                                                                                                class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">$1785.00</span> -->
+                                        </a>
+                                    </li>
+                                    <li class="col d-none d-xl-block">
+                                      
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Header Icons -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Logo-Search-header-icons -->
+
+            
+        </div>
+    </header>
+</div>

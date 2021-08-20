@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '../../../shared/services/translate.service';
-import { User } from '../../../shared/models/user';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { AppService } from '../../../shared/services/app.service';
-import { AuthService } from '../../../shared/services/auth.service';
-import { StorageService } from '../../../shared/services/storage.service';
-import { UserService } from '../../../shared/services/user.service';
+import { TranslateService } from 'src/app/modules/shared/services/translate.service';
+import { User } from 'src/app/modules/shared/models/user';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { AppService } from 'src/app/modules/shared/services/app.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
   selector: 'app-activation',
   templateUrl: './activation.component.html',
-  styleUrls: ['./activation.component.scss', '../../../../../button.scss']
+  styleUrls: []
 })
 export class ActivationComponent implements OnInit {
   email: string;

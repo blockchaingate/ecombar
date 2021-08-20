@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../../shared/services/category.service';
+import { CategoryService } from 'src/app/modules/shared/services/category.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { StorageService } from '../../../shared/services/storage.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-category-add',
   providers: [CategoryService],
   templateUrl: './category-add.component.html',
-  styleUrls: ['./category-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  
 })
 export class CategoryAddComponent implements OnInit {
   modalRef: BsModalRef;

@@ -1,0 +1,58 @@
+<div class="product-item__outer w-100">
+    <div class="product-item__inner remove-prodcut-hover py-4 row">
+        <div class="product-item__header col-6 col-md-2">
+            <div class="mb-2">
+                <a href="/store/{{storeId}}/product/{{product._id}}" class="d-block text-center">
+                    <img class="img-fluid" [src]="product.images ? product.images[0] : '../../assets/img/212X200/img9.jpg'" alt="Image Description">
+                </a>
+            </div>
+        </div>
+        <div class="product-item__body col-6 col-md-6">
+            <div class="pr-lg-10">
+                <div class="mb-2"><a href="/store/{{storeId}}/product/{{product._id}}" class="font-size-12 text-gray-5">{{product.title | translateField}}</a></div>
+                <h5 class="mb-2 product-item__title">
+                    <a href="/store/{{storeId}}/product/{{product._id}}" class="text-blue font-weight-bold">
+                        <p [innerHTML]="product.description | translateField"></p>
+                </a></h5>
+                <div class="prodcut-price d-md-none">
+                    <div class="text-gray-100">${{product.price}}</div>
+                </div>
+                <ul class="font-size-12 p-0 text-gray-110 mb-4 d-none d-md-block">
+                    <li class="line-clamp-1 mb-1 list-bullet" *ngFor="let feature of product.features[lang]">
+                        {{feature}}
+                    </li>
+                    
+                </ul>
+                <div class="mb-3 d-none d-md-block">
+                    <a class="d-inline-flex align-items-center small font-size-14" href="#">
+                        <div class="text-warning mr-2">
+                            <small class="fas fa-star"></small>
+                            <small class="fas fa-star"></small>
+                            <small class="fas fa-star"></small>
+                            <small class="fas fa-star"></small>
+                            <small class="far fa-star text-muted"></small>
+                        </div>
+                        <span class="text-secondary">(40)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="product-item__footer col-md-4 d-md-block">
+            <div class="mb-2 flex-center-between">
+                <div class="prodcut-price">
+                    <div class="text-gray-100">{{product.price}} {{currency}}</div>
+                </div>
+                <div class="prodcut-add-cart">
+                    <a (click)="addToCart()" class="btn-add-cart btn-primary transition-3d-hover">
+                        <i class="ec ec-add-to-cart"></i>
+                    </a>
+                </div>
+            </div>
+            <!--
+            <div class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
+                <a href="../shop/wishlist.html" class="text-gray-6 font-size-13 mx-wd-3"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+            </div>
+            -->
+        </div>
+    </div>
+</div>

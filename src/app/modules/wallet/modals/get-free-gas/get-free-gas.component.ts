@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { AirdropService } from '../../../shared/services/airdrop.service';
+import { AirdropService } from 'src/app/modules/shared/services/airdrop.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

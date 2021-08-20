@@ -1,7 +1,7 @@
 import { Component, ViewChild} from '@angular/core';
 import {  ModalDirective } from 'ngx-bootstrap/modal';
 import { TransactionItem } from '../../../../models/transaction-item';
-import {UtilService} from '../../../shared/services/util.service';
+import {UtilService} from 'src/app/modules/shared/services/util.service';
 import {environment} from '../../../../../environments/environment';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 

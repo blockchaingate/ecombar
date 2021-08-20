@@ -1,0 +1,108 @@
+<div class="owner" *ngIf="data">
+
+    <div class="container">
+  
+      <div class="row justify-content-center py-2">
+        <div class="col-md-8 col-sm-12">
+          My Wallet: {{walletAddress}}
+        </div>
+  
+        <div *ngIf="saveSuccess">
+          <alert type="success">
+            Updated successfully.
+          </alert>
+          
+        </div>
+  
+        <div *ngIf="saveErr">
+          <alert type="danger">
+            Error: {{saveErr}}
+          </alert>
+          
+        </div>      
+      </div>
+  
+      <div class="row justify-content-center">
+  
+        <div class="col-md-8 col-sm-12">
+  
+          <h1>ID MODIFICATION</h1>
+  
+          <div class="note">Note: All Histories Are Traceable</div>
+        </div>
+      </div>
+  
+    
+  
+      <div class="container lower-form" *ngIf="data">
+  
+        <div class="container lower-form">
+          <div class="row justify-content-center py-3" *ngIf="type == 'organization' || type == 'things'">
+
+            <div class="col-md-8 col-sm-12">
+              <div class="pb-2">
+                ID: {{id}}
+                <button class="btn" type="button" (click)="updateItem(type, data)">Update</button>
+                <button class="btn" type="button" (click)="history(type, data)">History</button>             
+              </div>
+            </div>
+
+            <div class="col-md-8 col-sm-12" *ngIf="data.previousOwner">
+              <div class="pb-2">
+                Previous owner:
+              </div>
+              <div>
+                {{data.previousOwner}}
+              </div>
+            </div>
+
+            <div class="col-md-8 col-sm-12">
+              <div class="pb-2">
+                Current owner:
+              </div>
+              <div>
+                {{data.owner}}
+              </div>
+            </div>
+
+            <div class="col-md-8 col-sm-12">
+                <div class="pb-2">
+                  New owner:
+                </div>
+                <div>
+                  <input type="text" class="form-control" placeholder="New owner" aria-label="New owner" [(ngModel)]="newOwner">
+                </div>
+            </div>        
+            
+            <div class="col-md-8 col-sm-12 py-3">
+              <button type="button" class="btn btn-primary update-btn" [disabled]="data.owner !== walletAddress" (click)="openModal(template)">CHANGE OWNER</button>
+            </div>              
+          </div>         
+
+
+        
+      </div>
+  
+    </div>
+  
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Password</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="py-2">
+          <input type="text" class="form-control" placeholder="Please enter password" type="password" aria-label="Password" [(ngModel)]="password">
+        </div>
+          
+        <div class="py-2">
+          <button class="btn btn-primary" type="button" (click)="confirmPassword()">Confirm</button>
+        </div>
+          
+        <alert type="danger" *ngIf="passwordWrong">
+          Password is wrong.
+        </alert>
+      </div>
+    </ng-template>

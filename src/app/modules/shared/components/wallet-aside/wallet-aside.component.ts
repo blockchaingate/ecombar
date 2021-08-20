@@ -6,7 +6,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { environment } from 'src/environments/environment';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';

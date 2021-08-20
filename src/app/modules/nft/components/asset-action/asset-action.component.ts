@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { NftOrder } from '../../models/nft-order';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { NftOrderService } from '../../services/nft-order.service';
 import { NftPortService } from '../../services/nft-port.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { KanbanSmartContractService } from '../../../shared/services/kanban.smartcontract.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { environment } from '../../../../../environments/environment';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { ToastrService } from 'ngx-toastr';

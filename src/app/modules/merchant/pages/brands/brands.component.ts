@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BrandService } from '../../../shared/services/brand.service';
-import { UserService } from '../../../shared/services/user.service';
+import { BrandService } from 'src/app/modules/shared/services/brand.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { Router } from '@angular/router';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
