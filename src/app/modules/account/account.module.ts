@@ -15,7 +15,7 @@ import { CommentComponent } from './pages/comment/comment.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { QRCodeModule } from 'angularx-qrcode';

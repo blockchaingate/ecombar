@@ -1,1 +1,6 @@
+<div *ngIf="themeSwitch">
+    <button (click)="changeTheme(themeList[0])">{{themeList[0]}}</button>
+    <button (click)="changeTheme(themeList[1])">{{themeList[1]}}</button>
+    <!-- <button (click)="changeTheme(themeList[2])">{{themeList[2]}}</button> -->
+</div>
 <router-outlet></router-outlet>

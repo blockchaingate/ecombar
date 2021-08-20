@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Web3Service } from '../../shared/services/web3.service';
-import { KanbanService } from '../../shared/services/kanban.service';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { NftOrder } from '../models/nft-order';
-import { UtilService } from '../../shared/services/util.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { Observable } from 'rxjs';
 //const Network = opensea.Network;
 const nullAddress = '0x0000000000000000000000000000000000000000';

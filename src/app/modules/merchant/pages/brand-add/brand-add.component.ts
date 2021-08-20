@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { BrandService } from '../../../shared/services/brand.service';
+import { BrandService } from 'src/app/modules/shared/services/brand.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-brand-add',
   providers: [],
   templateUrl: './brand-add.component.html',
-  styleUrls: ['./brand-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  
 })
 export class BrandAddComponent implements OnInit {
   modalRef: BsModalRef;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IddockService } from '../../shared/services/iddock.service';
+import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import {ActivatedRoute} from '@angular/router';
 import { environment } from '../../../../environments/environment';
 @Component({

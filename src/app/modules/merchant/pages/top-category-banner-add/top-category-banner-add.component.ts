@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TopCategoryBannerService } from '../../../shared/services/top-category-banner.service';
+import { TopCategoryBannerService } from 'src/app/modules/shared/services/top-category-banner.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DataService } from '../../../shared/services/data.service';
-import { KanbanService } from '../../../shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-top-category-banner-add',
   providers: [],
   templateUrl: './top-category-banner-add.component.html',
-  styleUrls: ['./top-category-banner-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  
 })
 export class TopCategoryBannerAddComponent implements OnInit {
   modalRef: BsModalRef;

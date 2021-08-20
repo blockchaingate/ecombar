@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { CollectionService } from '../../../shared/services/collection.service';
+import { CollectionService } from 'src/app/modules/shared/services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { ProductService } from '../../../shared/services/product.service';
-import { AuthService } from '../../../shared/services/auth.service';
-import { MerchantService } from '../../../shared/services/merchant.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { ProductService } from 'src/app/modules/shared/services/product.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-collection-add',
   providers: [CollectionService],
   templateUrl: './collection-add.component.html',
-  styleUrls: ['./collection-add.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  
 })
 export class CollectionAddComponent implements OnInit {
   products: any;

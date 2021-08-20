@@ -1,0 +1,55 @@
+// .main-container {
+//     position: relative;
+// }
+// .sticky {
+//     position: fixed;
+//     top: 0;
+//     z-index: 2;
+//     width: 100%;
+// }
+
+::ng-deep{
+
+    .btn-primary-dark {
+        background-color: #10a0a0;
+        border-color: #10a0a0;
+    }
+
+    .btn-primary-dark:hover {
+        background-color: #333e48;
+        border-color: #333e48;
+        color: #fff !important;
+    }
+
+
+    .btn-primary-dark-w {
+        color: #333e48;
+        background-color: #10a0a0;
+        border-color: #10a0a0;
+    }
+
+    .btn-primary-dark-w:hover {
+        background-color: #333e48;
+        border-color: #333e48;
+        color: #fff !important;
+    }
+
+    .nav-classic .nav-link.active {
+        color: #10a0a0;
+        border-bottom-color: #10a0a0;
+    }
+
+    .nav-tab .nav-link.active::after {
+        content: ' ';
+        height: 4px;
+        width: 10px;
+        display: block;
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        border-radius: 0 0 10px 10px;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        background-color: #10a0a0;
+    }
+}

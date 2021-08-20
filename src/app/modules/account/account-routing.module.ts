@@ -16,7 +16,7 @@ import { MyCommentsComponent } from './pages/my-comments/my-comments.component';
 
 import { 
   AuthGuardService as AuthGuard 
-} from '../shared/services/auth-guard.service';
+} from 'src/app/modules/shared/services/auth-guard.service';
 
 const routes: Routes = [
   {

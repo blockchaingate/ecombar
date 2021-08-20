@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
+import { AuthService } from 'src/app/modules/shared/services/auth.service';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
-import { CommentService } from '../../../shared/services/comment.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { CommentService } from 'src/app/modules/shared/services/comment.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { KanbanService } from '../../../shared/services/kanban.service';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({

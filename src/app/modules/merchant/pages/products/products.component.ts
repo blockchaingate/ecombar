@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../../shared/services/product.service';
-import { UserService } from '../../../shared/services/user.service';
+import { ProductService } from 'src/app/modules/shared/services/product.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
 import { Router } from '@angular/router';
-import { DataService } from '../../../shared/services/data.service';
-import { UtilService } from '../../../shared/services/util.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
   selector: 'app-admin-products',

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../shared/services/user.service';
+import { UserService } from 'src/app/modules/shared/services/user.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { UtilService } from '../../../shared/services/util.service';
-import { CoinService } from '../../../shared/services/coin.service';
-import { Web3Service } from '../../../shared/services/web3.service';
-import { IddockService } from '../../../shared/services/iddock.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
+import { Web3Service } from 'src/app/modules/shared/services/web3.service';
+import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
 import { updateWalletExgAddress } from '../../../../store/actions/user.actions';

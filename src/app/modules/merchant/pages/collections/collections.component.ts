@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CollectionService } from '../../../shared/services/collection.service';
+import { CollectionService } from 'src/app/modules/shared/services/collection.service';
 import { Router } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { StorageService } from '../../../shared/services/storage.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';

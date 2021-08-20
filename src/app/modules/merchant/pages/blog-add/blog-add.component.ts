@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BlogService } from '../../../shared/services/blog.service';
+import { BlogService } from 'src/app/modules/shared/services/blog.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
@@ -11,7 +11,7 @@ import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSett
 @Component({
   selector: 'app-blog-add',
   templateUrl: './blog-add.component.html',
-  styleUrls: ['./blog-add.component.css', '../../../../../select.scss', '../../../../../button.scss']
+  
 })
 export class BlogAddComponent implements OnInit {
   @Input() slug: string;

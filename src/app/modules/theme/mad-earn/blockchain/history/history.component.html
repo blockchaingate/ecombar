@@ -1,0 +1,27 @@
+<div class="history-container" *ngIf="data">
+
+  <div>
+    ID: {{id}}
+
+    <button class="btn" type="button" (click)="update(type, data)">Update</button>
+    <button class="btn" type="button" (click)="detail(type, data)">History</button>          
+  </div>  
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Sequence ID</th>
+            <th scope="col">Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+            <th scope="row">
+              <a href="/blockchain/detail-by-sequence-id/{{type}}/{{item._id}}">
+                {{item._id}}
+              </a>
+            </th>
+            <td>{{item.dateCreated}}</td>
+          </tr>  
+        </tbody>
+    </table> 
+</div>

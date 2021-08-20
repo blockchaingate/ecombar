@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { StoreService } from '../../../shared/services/store.service';
+import { StoreService } from 'src/app/modules/shared/services/store.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
-import { IddockService } from '../../../shared/services/iddock.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
+import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ABI, Bytecode } from '../../../../config/ecombar';
@@ -21,7 +21,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
   selector: 'app-store',
   providers: [],
   templateUrl: './store.component.html',
-  styleUrls: ['./store.component.scss', '../../../../../select.scss', '../../../../../button.scss']
+  
 })
 export class StoreComponent implements OnInit {
   taxRate: number;

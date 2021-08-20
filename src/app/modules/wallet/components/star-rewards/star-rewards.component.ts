@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { environment } from 'src/environments/environment';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';

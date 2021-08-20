@@ -3,7 +3,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 import { NftCollectionService } from '../../services/nft-collection.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { ABI, Bytecode } from '../../../../config/erc721';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";

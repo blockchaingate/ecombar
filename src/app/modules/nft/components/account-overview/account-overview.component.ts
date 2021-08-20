@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NftSettingService } from '../../services/nft-setting.service';
-import { UploadService, DocType } from '../../../shared/services/upload.service';
+import { UploadService, DocType } from 'src/app/modules/shared/services/upload.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { ToastrService } from 'ngx-toastr';
 

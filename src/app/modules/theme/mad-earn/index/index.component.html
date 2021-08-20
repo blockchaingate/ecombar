@@ -1,0 +1,52 @@
+<div class="container-fluid banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 introText">
+                <h2>ABOUT US</h2>
+                <div>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius modjior tem incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamyl quinol exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duisau irure dolor in reprehenderit in voluptate velit esse cillum dolore euhti fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="/assets/madearn/img/intro-right.png" >
+            </div>
+        </div>
+    </div></div>
+    <div class="container imageRow">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="/assets/madearn/img/home-img-1.jpg" >
+            </div>
+            <div class="col-md-6">
+                <img src="/assets/madearn/img/home-img-2.jpg" >
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="container productRow">
+        <h3 class="h3">Featured Product </h3>
+        <div class="row">
+            <div class="col-md-3 col-sm-6"  *ngFor="let number of [0,1,2,3]">
+                <app-product-card></app-product-card>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container productRow">
+        <h3 class="h3">New Product </h3>
+        <div class="row">
+            <div class="col-md-3 col-sm-6"  *ngFor="let number of [0,1,2,3]">
+                <app-product-card></app-product-card>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container productRow">
+        <h3 class="h3">latest Products</h3>
+        <div class="row">
+            <app-ProductRow [products]="latestProducts"></app-ProductRow>
+            
+        </div>
+    </div>
+    

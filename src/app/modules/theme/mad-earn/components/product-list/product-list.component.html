@@ -1,0 +1,30 @@
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade pt-2" [ngClass]="mode=='mode1' ? 'show active' : ''">
+        <ul class="row list-unstyled products-group no-gutters">
+            <li class="col-6 col-md-3 col-wd-2gdot4 product-item" *ngFor="let product of products">
+                <app-product-item-one [currency]="currency" [storeId]="storeId" [product]="product" (addToCartEvent)="onAddToCartEvent($event)"></app-product-item-one>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-pane fade pt-2" [ngClass]="mode=='mode2' ? 'show active' : ''">
+        <ul class="row list-unstyled products-group no-gutters">
+            <li class="col-6 col-md-3 col-wd-2gdot4 product-item" *ngFor="let product of products">
+                <app-product-item-two [currency]="currency" [storeId]="storeId" [product]="product" (addToCartEvent)="onAddToCartEvent($event)"></app-product-item-two>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-pane fade pt-2" [ngClass]="mode=='mode3' ? 'show active' : ''">
+        <ul class="d-block list-unstyled products-group prodcut-list-view">
+            <li class="product-item remove-divider" *ngFor="let product of products">
+                <app-product-item-three [currency]="currency" [storeId]="storeId" [product]="product" (addToCartEvent)="onAddToCartEvent($event)"></app-product-item-three>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-pane fade pt-2" [ngClass]="mode=='mode4' ? 'show active' : ''">
+        <ul class="d-block list-unstyled products-group prodcut-list-view-small">
+            <li class="product-item remove-divider" *ngFor="let product of products">
+                <app-product-item-four [currency]="currency" [storeId]="storeId" [product]="product" (addToCartEvent)="onAddToCartEvent($event)"></app-product-item-four>
+            </li>
+        </ul>
+    </div>
+</div>

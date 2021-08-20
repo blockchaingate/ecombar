@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { MyCoin } from '../../../../models/mycoin';
-import { CoinService } from '../../../shared/services/coin.service';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
 
 @Component({
     selector: 'app-send',

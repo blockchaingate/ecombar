@@ -1,0 +1,28 @@
+.banner {
+    background-color: #fcf6f6;
+    min-height: 100px;
+}
+
+h3.h3 {
+    text-align: center;
+    margin: 1em;
+    text-transform: capitalize;
+    font-size: 1.7em;
+}
+
+.introText{
+    align-content: center;
+    display: inline-grid;
+    // padding: 0 20px;
+}
+
+.imageRow img{
+    margin-top: 50px;
+    max-width: 100%;
+}
+
+
+.productRow{
+    margin-top: 50px;
+    margin-bottom : 50px
+}

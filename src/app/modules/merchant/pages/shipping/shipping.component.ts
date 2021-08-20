@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MerchantService } from '../../../shared/services/merchant.service';
-import { ShipService } from '../../../shared/services/ship.service';
-import { OrderService } from '../../../shared/services/order.service';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { ShipService } from 'src/app/modules/shared/services/ship.service';
+import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
 import { selectMerchantId } from 'src/app/store/selectors/user.selector';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 
 @Component({
   selector: 'app-admin-shipping',

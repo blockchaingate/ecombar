@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IddockService } from '../shared/services/iddock.service';
-import { UtilService } from '../shared/services/util.service';
+import { IddockService } from 'src/app/modules/shared/services/iddock.service';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { Router } from '@angular/router'
 
 @Component({

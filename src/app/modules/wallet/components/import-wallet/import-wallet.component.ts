@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WalletService } from '../../../shared/services/wallet.service';
+import { WalletService } from 'src/app/modules/shared/services/wallet.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import {TranslateService} from '@ngx-translate/core';
 

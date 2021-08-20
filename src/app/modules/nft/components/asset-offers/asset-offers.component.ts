@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NftMakeOfferComponent } from '../../modals/make-offer/make-offer.component';
-import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { NftOrder } from '../../models/nft-order';
