@@ -414,7 +414,7 @@ export class ProductAddComponent implements OnInit {
       features:featuresLan,      
       specs: specLan,
       quantity: this.quantity,
-      price: parseInt(this.price), // in cents
+      price: Number(this.price), 
       keywords: this.keywords,
       contents: this.contents,
       primaryCategoryId: this.selectedCategory ? this.selectedCategory._id : null,
