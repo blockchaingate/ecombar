@@ -37,7 +37,7 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit() {
     //this.userState$ = this.store.select('user');
-    console.log('ngiiiit');
+    console.log('ngiiiit admin modules');
     this.store.select('user').subscribe((user: UserState) => {
       this.role = user.role;
       console.log('this.role=', this.role);
