@@ -10,26 +10,38 @@
             <h1>{{"Address"|translate}}</h1>
             <hr>
             <div class="address-detail">
-           <label for="email"><b>{{"Unit" | translate}}</b></label>
-            <input type="text" placeholder="{{'Enter suite'|translate}}" [(ngModel)]="suite" name="suite">
-            <label for="email"><b>{{"Street Number" | translate}}</b></label>
-            <input type="text" placeholder="{{'Enter street number'|translate}}" [(ngModel)]="streetNumber" name="streetNumber">
-            <label for="email"><b>{{"Street" | translate}}</b></label>
-            <input type="text" placeholder="{{'Enter street'|translate}}" [(ngModel)]="street" name="street">
-            <label for="email"><b>{{"District"|translate}}</b></label>
-            <input type="text" placeholder="{{'Enter district'|translate}}" [(ngModel)]="district" name="district">
-
-            <label for="email"><b>{{"City"|translate}}</b></label>
-            <input type="text" placeholder="{{'Enter city'|translate}}" [(ngModel)]="city" name="city">
-
-            <label for="email"><b>{{"State/Province"|translate}}</b></label>
-            <input type="text" placeholder="{{'Enter state/province'|translate}}" [(ngModel)]="province" name="province">
-
-            <label for="email"><b>{{"Postcode"|translate}}</b></label>
-            <input type="text" placeholder="{{'Enter postcode'|translate}}" [(ngModel)]="postcode" name="postcode">
-
-            <label for="email"><b>{{"Country"|translate}}</b></label>
-            <input type="text" placeholder="{{'Enter country'|translate}}" [(ngModel)]="country" name="country">
+                <div>
+                    <label for="email"><b>{{"Unit" | translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter suite'|translate}}" [(ngModel)]="suite" name="suite">
+                </div>
+                <div>
+                    <label for="email"><b>{{"Street Number" | translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter street number'|translate}}" [(ngModel)]="streetNumber" name="streetNumber">        
+                </div>
+                <div>
+                    <label for="email"><b>{{"Street" | translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter street'|translate}}" [(ngModel)]="street" name="street">
+                </div>
+                <div>
+                    <label for="email"><b>{{"District"|translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter district'|translate}}" [(ngModel)]="district" name="district">
+                </div>
+                <div>
+                    <label for="email"><b>{{"City"|translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter city'|translate}}" [(ngModel)]="city" name="city">
+                </div>
+                <div>
+                    <label for="email"><b>{{"State/Province"|translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter state/province'|translate}}" [(ngModel)]="province" name="province">        
+                </div>
+                <div>
+                    <label for="email"><b>{{"Postcode"|translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter postcode'|translate}}" [(ngModel)]="postcode" name="postcode">        
+                </div>
+                <div>
+                    <label for="email"><b>{{"Country"|translate}}</b></label>
+                    <input type="text" placeholder="{{'Enter country'|translate}}" [(ngModel)]="country" name="country">        
+                </div>
         </div>
             <div class="d-flex justify-content-between py-2">
                 <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">{{"Cancel"|translate}}</button>
