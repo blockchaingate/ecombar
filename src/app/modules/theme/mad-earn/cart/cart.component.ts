@@ -201,8 +201,9 @@ export class CartComponent implements OnInit, OnDestroy {
             '0x' + res._body._id.substring(0, 60), 
             this.productObjectIds, 
             this.quantities, 
-            new BigNumber(this.total).multipliedBy(1e18), 
-            new BigNumber(this.tax).multipliedBy(1e18)];
+            new BigNumber(this.total).shiftedBy(18).toFixed(), 
+            new BigNumber(this.tax).shiftedBy(18).toFixed()
+          ];
           console.log('args for crate Order=', args);
           const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
 
