@@ -18,8 +18,8 @@
     background-color: #fed700;
 }
 
-.Shipping-method>.selected,
-.Payment-method>.selected
+.Shipping-method .selected,
+.Payment-method .selected
 {
-    background-color: #fed700;
+    background-color: #fed700!important;
 }

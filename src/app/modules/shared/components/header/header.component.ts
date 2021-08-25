@@ -8,7 +8,7 @@ import { WalletService } from '../../services/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-
+import { VersionType } from '../../../../config/version'; 
 @Component({
     providers: [],
     selector: 'app-nft-header',
@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
     wallet: any;
     wallets: any;
     currentWalletIndex: number;
-
+    verionType = VersionType;
     constructor(
       private localSt: LocalStorage, 
       private modalServ: BsModalService,

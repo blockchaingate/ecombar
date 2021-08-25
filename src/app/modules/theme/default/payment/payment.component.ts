@@ -22,7 +22,7 @@ import { StarService } from 'src/app/modules/shared/services/star.service';
   selector: 'app-payment',
   providers: [UserService],
   templateUrl: './payment.component.html',
-  
+  styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit{
 
@@ -84,11 +84,10 @@ export class PaymentComponent implements OnInit{
       }
       
       this.subtotal = Number(this.subtotal.toFixed(2));
-      this.tax = this.subtotal * this.taxRate / 100;
-      this.total = this.subtotal;
-      this.total += this.shippingFee;
-      this.total += this.tax;
-      this.total = Number(this.total.toFixed(2));
+      this.tax = new BigNumber(this.subtotal).multipliedBy(new BigNumber(this.taxRate).dividedBy(new BigNumber(100))).toNumber();
+
+      this.total = new BigNumber(this.subtotal).plus(new BigNumber(this.shippingFee)).plus(new BigNumber(this.tax)).toNumber();
+      ;
     }
 
     ngOnInit() {

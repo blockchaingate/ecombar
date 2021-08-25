@@ -28,7 +28,8 @@
                             {{'Shipping services' | translate}}
                         </div>
                         <div class="row Shipping-method">
-                            <div class="col col-4 border-top border-bottom  p-3 col-md-offset-1" [ngClass]="selectedShippingService=='express' ? 'selected' : ''" (click)="selectShippingService('express')">
+
+                            <div class="col col-4 border-top border-bottom  p-3 col-md-offset-1 selected" [ngClass]="selectedShippingService=='express' ? 'selected' : ''" (click)="selectShippingService('express')">
 
 
                                 <div class="d-flex align-items-start">

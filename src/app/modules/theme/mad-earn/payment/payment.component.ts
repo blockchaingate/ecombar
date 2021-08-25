@@ -22,7 +22,7 @@ import { StarService } from 'src/app/modules/shared/services/star.service';
   selector: 'app-payment',
   providers: [UserService],
   templateUrl: './payment.component.html',
-  
+  styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit{
 
