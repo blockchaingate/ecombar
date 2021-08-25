@@ -1,30 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/modules/shared/services/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivateComponent as ParentActivateComponent} from '../../active/activate.component';
 @Component({
   selector: 'app-activate',
   templateUrl: './activate.component.html',
   styleUrls: ['./activate.component.scss']
 })
-export class ActivateComponent implements OnInit {
-  products: any;
-  activated: boolean;
+export class ActivateComponent extends  ParentActivateComponent{
 
-  constructor(private route: ActivatedRoute, private userServ: UserService) { }
-
-  ngOnInit() {
-    this.activated = false;
-    //:userId/:activationCode/:appId
-    const userId = this.route.snapshot.paramMap.get('userId');
-    const activationCode = this.route.snapshot.paramMap.get('activationCode');
-    this.userServ.activateUser(userId, activationCode).subscribe(
-      (res: any) => {
-        console.log('resssss=', res);
-        if (res.ok || res._id) {
-          this.activated = true;
-          console.log('your account was activated successfully');
-        }
-      }
-    );
-  }
 }
