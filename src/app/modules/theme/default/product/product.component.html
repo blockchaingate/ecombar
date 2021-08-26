@@ -12,6 +12,7 @@
                         -->
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{product.primaryCategoryId?._id}}">{{product.primaryCategoryId?.category | translateField}}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{product && product.title | translateField}}</li>
+
                     </ol>
                 </nav>
             </div>
@@ -48,6 +49,9 @@
                                 {{product.primaryCategoryId?.category | translateField}}
                             </a>
                             <h2 class="font-size-25 text-lh-1dot2">{{product && product.title | translateField}}</h2>
+                            <p *ngIf="product.subtitle">
+                                {{product.subtitle | translateField}}
+                            </p>
                             <div class="mb-2">
                                 <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="/store/{{storeId}}/product/{{id}}/#product-tabs">
                                     <div class="text-warning mr-2">
@@ -90,7 +94,7 @@
                             -->
                         </div>
                         <div class="mb-2">
-                            {{'Detail' | translate}}:
+                            {{'Content' | translate}}:
                             <!-- <ul class="font-size-14 pl-3 ml-1 text-gray-110">
                                 <li>4.5 inch HD Touch Screen (1280 x 720)</li>
                                 <li>Android 4.4 KitKat OS</li>
@@ -98,7 +102,7 @@
                                 <li>20 MP Electro and 28 megapixel CMOS rear camera</li>
                             </ul> -->
                         </div>
-                        <p  [innerHTML]="product && product.description | translateField">
+                        <p  [innerHTML]="product && product.briefIntroduction | translateField">
                        </p>
                        <!--
                         <p><strong>SKU</strong>: 2222FW511948218</p>
@@ -165,8 +169,12 @@
                         <a class="nav-link" id="Jpills-three-example1-tab" data-toggle="pill" href="#Jpills-three-example1" role="tab" aria-controls="Jpills-three-example1" aria-selected="false">{{'Specification' | translate}}</a>
                     </li>
                     <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                        <a class="nav-link" id="Jpills-one-example1-tab" data-toggle="pill" href="#Jpills-one-example1" role="tab" aria-controls="Jpills-one-example1" aria-selected="false">{{'Features' | translate}}</a>
+                    </li>                    
+                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
                         <a class="nav-link" id="Jpills-four-example1-tab" data-toggle="pill" href="#Jpills-four-example1" role="tab" aria-controls="Jpills-four-example1" aria-selected="false">{{'Reviews' | translate}}</a>
                     </li>
+
                 </ul>
             </div>
             <!-- Tab Content -->
@@ -266,43 +274,6 @@
                 -->
                     <div class="tab-pane fade  active show" id="Jpills-two-example1" role="tabpanel" aria-labelledby="Jpills-two-example1-tab">
                         <div [innerHtml]="product.description | translateField"></div>
-                        <!--
-                        <h3 class="font-size-24 mb-3">Perfectly Done</h3>
-                        <p>Praesent ornare, ex a interdum consectetur, lectus diam sodales elit, vitae egestas est enim ornare nisl. Nullam in lectus nec sem semper viverra. In lobortis egestas massa. Nam nec massa nisi. Suspendisse potenti. Quisque suscipit vulputate dui quis volutpat. Ut id elit facilisis, feugiat est in, tempus lacus. Ut ultrices dictum metus, a ultricies ex vulputate ac. Ut id cursus tellus, non tempor quam. Morbi porta diam nisi, id finibus nunc tincidunt eu.</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="pt-lg-8 pt-xl-10">
-                                    <h3 class="font-size-24 mb-3">Wireless</h3>
-                                    <p class="mb-6">Fusce vitae nibh mi. Integer posuere, libero et ullamcorper facilisis, enim eros tincidunt orci, eget vestibulum sapien nisi ut leo. Cras finibus vel est ut mollis. Donec luctus condimentum ante et euismod.</p>
-                                    <h3 class="font-size-24 mb-3">Fresh Design</h3>
-                                    <p class="mb-6">Integer bibendum aliquet ipsum, in ultrices enim sodales sed. Quisque ut urna vitae lacus laoreet malesuada eu at massa. Pellentesque nibh augue, pellentesque nec dictum vel, pretium a arcu. Duis eu urna suscipit, lobortis elit quis, ullamcorper massa.</p>
-                                    <h3 class="font-size-24 mb-3">Fabolous Sound</h3>
-                                    <p class="mb-6">Cras rutrum, nibh a sodales accumsan, elit sapien ultrices sapien, eget semper lectus ex congue elit. Nullam dui elit, fermentum a varius at, iaculis non dolor. In hac habitasse platea dictumst.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <img class="img-fluid mr-n4 mr-lg-n10" src="../../assets/img/580X580/img1.jpg" alt="Image Description">
-                            </div>
-                            <div class="col-md-6 text-left">
-                                <img class="img-fluid ml-n4 ml-lg-n10" src="../../assets/img/580X580/img2.jpg" alt="Image Description">
-                            </div>
-                            <div class="col-md-6 align-self-center">
-                                <div class="pt-lg-8 pt-xl-10 text-right">
-                                    <h3 class="font-size-24 mb-3">Inteligent Bass</h3>
-                                    <p class="mb-6">Fusce vitae nibh mi. Integer posuere, libero et ullamcorper facilisis, enim eros tincidunt orci, eget vestibulum sapien nisi ut leo. Cras finibus vel est ut mollis. Donec luctus condimentum ante et euismod.</p>
-                                    <h3 class="font-size-24 mb-3">Battery Life</h3>
-                                    <p class="mb-6">Integer bibendum aliquet ipsum, in ultrices enim sodales sed. Quisque ut urna vitae lacus laoreet malesuada eu at massa. Pellentesque nibh augue, pellentesque nec dictum vel, pretium a arcu. Duis eu urna suscipit, lobortis elit quis, ullamcorper massa.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <ul class="nav flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>SKU:</strong> <span class="sku">222FW511948218</span></li>
-                            <li class="nav-item text-gray-111 mx-3 flex-shrink-0 flex-xl-shrink-1">/</li>
-                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>Category:</strong> <a href="#" class="text-blue">Headphones</a></li>
-                            <li class="nav-item text-gray-111 mx-3 flex-shrink-0 flex-xl-shrink-1">/</li>
-                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>Tags:</strong> <a href="#" class="text-blue">Fast</a>, <a href="#" class="text-blue">Gaming</a>, <a href="#" class="text-blue">Strong</a></li>
-                        </ul>
-                    -->
                     
                     </div>
                     <div class="tab-pane fade" id="Jpills-three-example1" role="tabpanel" aria-labelledby="Jpills-three-example1-tab">
@@ -314,113 +285,19 @@
                                             <th class="px-4 px-xl-5 border-top-0">{{spec.name}}</th>
                                             <td class="border-top-0">{{spec.value}}</td>
                                         </tr>
-                                        <!--
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Dimensions</th>
-                                            <td>90 x 60 x 90 cm</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Size</th>
-                                            <td>One Size Fits all</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">color</th>
-                                            <td>Black with Red, White with Gold</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Guarantee</th>
-                                            <td>5 years</td>
-                                        </tr>
-                                        -->
                                     </tbody>
                                 </table>
                             </div>
-                            <!--
-                            <h3 class="font-size-18 mb-4">Technical Specifications</h3>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <tbody>
-                                        <tr>
-                                            <th class="px-4 px-xl-5 border-top-0">Brand</th>
-                                            <td class="border-top-0">Apple</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Item Height</th>
-                                            <td>18 Millimeters</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Item Width</th>
-                                            <td>31.4 Centimeters</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Screen Size</th>
-                                            <td>13 Inches</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Item Weight</th>
-                                            <td>1.6 Kg</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Product Dimensions</th>
-                                            <td>21.9 x 31.4 x 1.8 cm</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Item model number</th>
-                                            <td>MF841HN/A</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Processor Brand</th>
-                                            <td>Intel</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Processor Type</th>
-                                            <td>Core i5</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Processor Speed</th>
-                                            <td>2.9 GHz</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">RAM Size</th>
-                                            <td>8 GB</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Hard Drive Size</th>
-                                            <td>512 GB</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Hard Disk Technology</th>
-                                            <td>Solid State Drive</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Graphics Coprocessor</th>
-                                            <td>Intel Integrated Graphics</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Graphics Card Description</th>
-                                            <td>Integrated Graphics Card</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Hardware Platform</th>
-                                            <td>Mac</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Operating System</th>
-                                            <td>Mac OS</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="px-4 px-xl-5">Average Battery Life (in hours)</th>
-                                            <td>9</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        -->
                         </div>
-
-                    
                     </div>
-                    <div class="tab-pane fade" id="product-tabs" role="tabpanel" aria-labelledby="product-tabs">
+                    <div class="tab-pane fade" id="Jpills-one-example1" role="tabpanel" aria-labelledby="Jpills-one-example1-tab">
+                        <ul>
+                            <li *ngFor="let feature of product.features.en">
+                                {{feature}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="Jpills-four-example1" role="tabpanel" aria-labelledby="product-tabs">
                         <app-comments 
                         [overall]="overall" 
                         [comments]="comments"
