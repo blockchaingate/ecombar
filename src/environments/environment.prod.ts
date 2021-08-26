@@ -143,7 +143,7 @@ addresses: {
         ETH: '0x0dF198C80893c1373a11AdE9ad6454181aE18E73',
     },
     smartContract: {
-        feeDistribution: '0x7cf9f60b568d3e78c13b91f895394b433abd37eb',
+        feeDistribution: '0x92606d95965514a4238cec3a473651f28015f0d9',
         locker: '0x08283086b2192666128b7a6eaf66df2dfd3f1b6b',
         exchangeRate: '0xc790135e17490400a46bebff9efcc77dac39bdcf',
         sevenStarProxy: '0x541ce3f716a3d6b64b0da9f51e7fe8ad52294f28',
