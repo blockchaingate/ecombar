@@ -25,25 +25,31 @@
                 </a>
             </li>      
 
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot" *ngIf="verionType == 'madearn'">
+                <a class="NavItem--main" routerLink="/merchant">
+                    {{'Merchant' | translate}}
+                </a>
+            </li>
+
+            <li class="NavItem--isRoot" *ngIf="verionType == 'madearn'">
+                <a class="NavItem--main" routerLink="/account">
+                    {{'Account' | translate}}
+                </a>
+            </li>  
+
+            <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">
                 <a class="NavItem--main" routerLink="/nft/assets">
                     {{'Explore' | translate}}
                 </a>
             </li>
 
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">
                 <a class="NavItem--main" routerLink="/nft/activities">
                     {{'Events' | translate}}
                 </a>
             </li>  
-            <!--   
-            <li class="NavItem--isRoot">
-                <a class="NavItem--main" href="/">
-                    Rankings
-                </a>
-            </li>   
-        -->
-            <li class="NavItem--isRoot">
+
+            <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">
                 <a class="NavItem--main" routerLink="/nft/admin/collections">
                     {{'Create' | translate}}
                 </a>
