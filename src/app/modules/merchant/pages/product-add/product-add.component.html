@@ -370,9 +370,83 @@
         <div class="py-2">
           <label for="name"><b>描述</b></label>
           <ejs-richtexteditor [(ngModel)]='descriptionChinese' placeholder="请输入描述" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
-   
         </div>
        
+
+        <div class="py-2">
+          <div class="card">
+            <div class="container">
+              <div class="form-field">
+                <label for="specification">规格</label>
+
+                <div>
+                  <div *ngFor="let spec of specsChinese">
+                    <div class="d-flex align-items-center justify-content-between py-2">
+                      <div>
+                        {{spec.name}}: {{spec.value}}
+                      </div>
+                      <div (click)="removeSpecChinese(spec)">
+                        <img src="/assets/svg/delete.svg">
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <div class="w-50 px-2">
+                    <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="specNameChinese" name="specNameChinese">
+                  </div>
+
+                  <div class="w-50  px-2">
+                    <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Value" [(ngModel)]="specValueChinese" name="specValueChinese">
+                  </div>                      
+                </div>
+
+                <div class="pt-2">
+                  <button class="btn" (click)="addSpecChinese()">{{'Add' | translate}}</button>
+                </div>
+              </div>                  
+            </div>
+          </div>
+        </div>
+
+        <div class="py-2">
+          <div class="card">
+            <div class="container">
+              <div class="form-field">
+                <label for="specification">特征</label>
+
+                <div>
+                  <div *ngFor="let feature of featuresChinese">
+                    <div class="d-flex align-items-center justify-content-between py-2">
+                      <div>
+                        {{feature}}
+                      </div>
+                      <div (click)="removeFeatureChinese(feature)">
+                        
+                        <img src="/assets/svg/delete.svg">
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div>
+                  <div class=" px-2">
+                    <input type="text" style="display:table-cell; width:100%" placeholder="Enter Feature" [(ngModel)]="featureChinese" name="featureChinese">
+                  </div>
+                 
+                </div>
+
+                <div class="pt-2">
+                  <button class="btn" (click)="addFeatureChinese()">{{'Add' | translate}}</button>
+                </div>
+              </div>                  
+            </div>
+          </div>
+        </div>
+
+
+
      </div>
 
     </div>
