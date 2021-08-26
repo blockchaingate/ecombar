@@ -140,7 +140,7 @@ export const environment = {
       },
     smartContract: {
 
-        feeDistribution: '0xc97b44755c4f21094e42e6edc69126ca11a5c0a7',
+        feeDistribution: '0x292bf85e60fab1fab15ef9799fba61b128951840',
         locker: '0xc9042097dAC6db6f79408bef99092e40D66D4BB6',
         exchangeRate: '0x6e6a2a79ebea4dfa66cb752c372917e6f5d38895',
         sevenStarProxy: '0x708fbf96ad0eb56372ebb32f34be8cdda52fd3f1',

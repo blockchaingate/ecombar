@@ -413,7 +413,6 @@ export class ProductAddComponent implements OnInit {
   }
 
   async saveProductDo(seed: Buffer) {
-    console.log('this.images=', this.images);
     //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
     const privateKey = keyPair.privateKeyBuffer.privateKey;
