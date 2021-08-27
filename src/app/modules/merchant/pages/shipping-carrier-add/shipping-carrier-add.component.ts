@@ -19,6 +19,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     flatRate: number;
     name: string;
     nameChinese: string;
+    desc: string;
+    descChinese: string;
     currentTab: string;
     id: string;
   
@@ -47,9 +49,14 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
             if (res && res.ok) {
               const shippingCarrier = res._body;
               console.log('shippingCarrier=', shippingCarrier);
-              this.name = shippingCarrier.name[0].text;
+
               this.flatRate = shippingCarrier.flatRate;
+              this.name = shippingCarrier.name[0].text;
               this.nameChinese = shippingCarrier.name[1].text;
+
+              this.desc = shippingCarrier.desc[0].text;
+              this.descChinese = shippingCarrier.desc[1].text;
+
               this.sequence = shippingCarrier.sequence;
               
             }
@@ -91,9 +98,21 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
           lan: 'sc',
           text: this.nameChinese
         }
-      ];      
+      ]; 
+      
+      const desc = [
+        {
+          lan: 'en',
+          text: this.desc
+        },
+        {
+          lan: 'sc',
+          text: this.descChinese
+        }
+      ];   
       const data = {
         name: name,
+        desc: desc,
         flatRate: this.flatRate,
         sequence: this.sequence ? this.sequence : 0
       };

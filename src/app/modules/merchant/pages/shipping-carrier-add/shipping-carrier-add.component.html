@@ -16,6 +16,10 @@
         <label for="email"><b>Name</b></label>
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
+        <label for="email"><b>Description</b></label>
+        <input type="text" placeholder="Enter description" [(ngModel)]="desc" name="desc" required>
+
+
         <label for="email"><b>{{'Flat Rate' | translate}}</b></label>
         <input type="text" placeholder="{{'Enter flat rate' | translate}}" [(ngModel)]="flatRate" name="flatRate" required>
 
@@ -27,7 +31,9 @@
       <div *ngIf="currentTab=='Chinese'">
         <label for="email"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
-    
+        <label for="email"><b>描述</b></label>
+        <input type="text" placeholder="输入描述" [(ngModel)]="descChinese" name="descChinese">        
+        
       </div>
 
       <div class="text-right py-2">
