@@ -10,7 +10,7 @@ export const environment = {
   endpoints: {
     prod: 'https://api.blockchaingate.com/v2/',
     blockchaingate: 'https://api.blockchaingate.com/v2/',
-    website: 'http://ecombar.com/',
+    website: 'https://exchangily.com/',
     kanban: 'https://kanbanprod.fabcoinapi.com/',
     BTC: {
       exchangily: 'https://btcprod.fabcoinapi.com/'
