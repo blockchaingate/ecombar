@@ -90,6 +90,11 @@ export class MerchantComponent implements OnInit {
             icon: 'order'
           },
           {
+            title: 'Shipping Carriers',
+            link: 'shipping-carriers',
+            icon: 'order'
+          },
+          {
             title: 'Ships',
             link: 'ships',
             icon: 'order'

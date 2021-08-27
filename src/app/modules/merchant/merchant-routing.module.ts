@@ -37,6 +37,8 @@ import { FeatureAddComponent } from './pages/feature-add/feature-add.component';
 import { CustomerServiceComponent } from './pages/customer-service/customer-service.component';
 import { ReturnsPolicyComponent } from './pages/returns-policy/returns-policy.component';
 import { FaqComponent } from './pages/faq/faq.component';
+import { ShippingCarriersComponent } from './pages/shipping-carriers/shipping-carriers.component';
+import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shipping-carrier-add.component';
 
 const routes: Routes = [
   {
@@ -169,6 +171,15 @@ const routes: Routes = [
       {
         path: 'faq', component: FaqComponent
       },    
+      {
+        path: 'shipping-carriers', component: ShippingCarriersComponent
+      },
+      {
+        path: 'shipping-carrier/add', component: ShippingCarrierAddComponent
+      },
+      {
+        path: 'shipping-carrier/:id/edit', component: ShippingCarrierAddComponent
+      },
       {
         path: 'upload', component: UploadMediaComponent
       },
