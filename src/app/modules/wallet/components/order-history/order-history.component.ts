@@ -15,6 +15,8 @@ import { ToastrService } from 'ngx-toastr';
 export class OrderHistoryComponent implements OnInit {
     @Input() transactionHistories: any;
     @Input() wallet: any;
+    @Input() type: string;
+    
     walletAddress: string;
     modalRef: BsModalRef;
     op: string;

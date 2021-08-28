@@ -33,7 +33,7 @@
                                 </div>
 
                                 <div *ngIf="item.status == 1">
-                                    <div *ngIf="walletAddress == item.from">
+                                    <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
                                         <a (click)="requestRefund(item)">
                                             request refund
                                         </a>                                     
@@ -41,12 +41,12 @@
                                 </div>
 
                                 <div *ngIf="item.status == 2">
-                                    <div *ngIf="walletAddress == item.from">
+                                    <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
                                         <a (click)="cancelRequestRefund(item)">
                                             cancel request refund
                                         </a>  
                                     </div>
-                                    <div *ngIf="walletAddress == item.merchantRecipient">
+                                    <div *ngIf="(type == 'merchant') && (walletAddress == item.merchantRecipient)">
                                         <a (click)="refund(item)">
                                             approve refund
                                         </a>                                          
