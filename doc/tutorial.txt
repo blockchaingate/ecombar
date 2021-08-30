@@ -66,3 +66,8 @@ _coinType: bytes32(步骤3中提供)
 _totalAmount: amount * 1e18
 _tax: tax* 1e18
 _rewardBeneficiary: []
+
+9.
+获取支付情况
+orderId is the orderId provided for abi, 0x prefixed
+https://api.blockchaingate.com/v2/7star-charge-fund/orderId/0x8d30a0d1f6bbc32fec357fb6a1e16ff2561f956a2000000000000000000b0000
