@@ -1,0 +1,68 @@
+1. 
+到https://exchangily.com/issue去生成token， 如果没有钱包，先新建或导入钱包，注意
+发行量/10的代币小数次方=token的代币总额，例如发行量为1000000000000000，代币小数位数为3
+则代币总额为	1000000000000。 生成token前，钱包余额必须大于1000fab。
+
+2. 把生成的token的具体信息（项目名称，代币符号， 发行量， 代币小数位数，智能合约地址）发给我们。
+
+3. 待我们把该token添加到后台后，我们会给你提供一个coinType.
+
+4. 到https://madearn.com/wallet/dashboard导入钱包
+
+5. 到https://madearn.com/merchant/store生成商店及相关的智能合约
+
+6. 等待我们审核。
+
+7. 审核成功后，可以直接与商店的FeeCharger Smart contract address进行交互
+
+8. 生成支付码
+
+支付码格式为：
+{"name":{"en":"ddddddd"},"to":"0x1529218a8d5279555b09a47251c9cfb33ee61935","data":"0x360853bd66657761666177667761667277610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000a688906bd8b0000000000000000000000000000000000000000000000000000015a63bbc199c000000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000"}
+其中
+to为商店的FeeCharger Smart contract address
+data是abi编码的data
+
+abi:
+{
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_orderID",
+          "type": "bytes32"
+        },
+        {
+          "name": "_coinType",
+          "type": "uint32"
+        },
+        {
+          "name": "_totalAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "_tax",
+          "type": "uint256"
+        },
+        {
+          "name": "_rewardBeneficiary",
+          "type": "address[]"
+        }
+      ],
+      "name": "chargeFundsWithFee",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+
+其中    
+_orderID: bytes32（必须保证唯一）
+_coinType: bytes32(步骤3中提供)
+_totalAmount: amount * 1e18
+_tax: tax* 1e18
+_rewardBeneficiary: []

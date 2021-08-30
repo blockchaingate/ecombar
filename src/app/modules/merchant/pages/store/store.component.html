@@ -16,10 +16,14 @@
         <label for="email"><b>Name</b></label>
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
-        <!--
-        <label for="email"><b>{{'Fee Charger Smart Contract Address' | translate}}</b></label>
-        <input type="text" placeholder="{{'Enter smart contract address' | translate}}" [(ngModel)]="feeChargerSmartContractAddress" name="smartContractAddress" required>
-       -->
+        <div  *ngIf="!(id)">
+          <label for="email"><b>{{'Give away Rate' | translate}}(%)</b></label>
+          <input type="text" placeholder="{{'Give away Rate' | translate}}" [(ngModel)]="giveAwayRate" name="giveAwayRate" required>  
+        </div>
+        <div *ngIf="id">
+          <label for="email"><b>{{'Give away Rate' | translate}}(%):</b></label>
+          {{giveAwayRate}}
+        </div>
        <div>
         <label for="email"><b>Image</b></label>
         <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
@@ -35,8 +39,8 @@
               <option *ngFor="let coin of coins" value="{{coin}}">
                 {{coin}}
               </option>
-            </select>  
-          </div>         
+            </select>
+          </div>
         
         </div>
         <div *ngIf="id">

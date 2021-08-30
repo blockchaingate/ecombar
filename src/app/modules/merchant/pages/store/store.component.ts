@@ -16,6 +16,7 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { environment } from 'src/environments/environment';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-store',
@@ -29,6 +30,7 @@ export class StoreComponent implements OnInit {
   images: any;
   nameChinese: string;
   currentTab: string;
+  giveAwayRate: number;
   feeChargerSmartContractAddress: string;
   smartContractAddress: string;
   refAddress: string;
@@ -72,6 +74,7 @@ export class StoreComponent implements OnInit {
     this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
     this.smartContractAddress = store.smartContractAddress; 
     this.refAddress = store.refAddress;
+    this.giveAwayRate = store.giveAwayRate;
     this.objectId = store.objectId;   
   }
   ngOnInit() {
@@ -171,6 +174,7 @@ export class StoreComponent implements OnInit {
           sc: this.nameChinese
         },
         coin: this.coin,
+        giveAwayRate: this.giveAwayRate,
         taxRate: this.taxRate ? this.taxRate : 0,
         refAddress: this.refAddress
       };      
@@ -184,7 +188,7 @@ export class StoreComponent implements OnInit {
         environment.addresses.smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
-        70,
+        100-this.giveAwayRate,
         '0x1'
       ];
   
@@ -274,8 +278,12 @@ export class StoreComponent implements OnInit {
       return;
     }
     if(!this.refAddress) {
-      this.toastr.info('Your ref address in emplty.');
+      this.toastr.info('Your ref address is empty.');
       return;      
+    }
+    if(this.giveAwayRate < 3 || this.giveAwayRate >= 100) {
+      this.toastr.info('Give away rate is incorrect. it must be between 3 and 100.');
+      return;         
     }
     const initialState = {
       pwdHash: this.wallet.pwdHash,

@@ -17,7 +17,17 @@
         <label for="email"><b>Coin:</b></label>
         {{store?.coin}}
       </div>     
-      
+ 
+      <div>
+        <label for="email"><b>Give away rate:</b></label>
+        {{store?.giveAwayRate ? store?.giveAwayRate : '30'}}%
+      </div>          
+
+      <div>
+        <label for="email"><b>Tax rate:</b></label>
+        {{store?.taxRate}}%
+      </div>   
+
       <div>
         <label for="email"><b>Smart contract address:</b></label>
         {{store?.smartContractAddress}}
