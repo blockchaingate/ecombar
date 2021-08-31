@@ -301,4 +301,54 @@ export class StoreComponent implements OnInit {
     });
 
   }
+
+  deleteStore() {
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+      this.spinner.show();
+      this.deleteStoreDo(privateKey);
+    });
+  }
+
+  deleteStoreDo(privateKey: any) {
+    const data = {
+      id: this.id
+    };
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature;  
+
+    this.storeServ.deleteStore(data).subscribe(
+      (res: any) => {
+        if (res && res.ok) {
+          //this.router.navigate(['/merchant/store']);
+
+          this.id = '';
+          this.coin = '';
+          this.taxRate = 0;
+          this.name = '';
+          this.nameChinese = '';  
+          this.images = [];
+          this.feeChargerSmartContractAddress = '';     
+          this.smartContractAddress = ''; 
+          this.refAddress = '';
+          this.giveAwayRate = 0;
+          this.objectId = '';   
+
+
+          this.toastr.success('Store was deleted.');
+          this.spinner.hide();
+          //this.smartContractAddress = store.smartContractAddress;
+        }
+      }
+    );  
+  }
 }

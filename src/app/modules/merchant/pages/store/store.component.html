@@ -86,6 +86,9 @@
       </div>
 
       <div class="text-right py-2">
+
+        <button type="submit" class="btn signinbtn mr-3" (click)="deleteStore()" *ngIf="id">{{('Delete') | translate}}</button>
+
         <button type="submit" class="btn signinbtn" (click)="addStore()">{{(id?'Update':'Add') | translate}}</button>
       </div>
     </div>

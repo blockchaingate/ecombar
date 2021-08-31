@@ -82,13 +82,21 @@ contract Ecombar is Ownable {
     constructor(
         address feeChargerSmartContractAddr, 
         uint32 _coinType, 
-        uint8 taxrate) {
+        uint8 _taxrate) {
         //iddockSmartContractAddress = iddockSmartContractAddr;  
         feeChargerInstance = FeeChargerInterface(feeChargerSmartContractAddr);
         coinType = _coinType;
-        taxRate = taxrate;
+        taxRate = _taxrate;
     }
  
+    function changeCoinType(uint32 _coinType) public{
+        coinType = _coinType;
+    }
+
+    function changeTaxRate(uint8 _taxrate) public{
+        taxRate = _taxrate;
+    }
+
     function changeFeeChargerSmartContractAddr(address addr) public{
         feeChargerInstance = FeeChargerInterface(addr);
     }
