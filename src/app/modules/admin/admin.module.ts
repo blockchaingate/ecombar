@@ -18,6 +18,7 @@ import { FeeDistributionComponent } from './pages/fee-distribution/fee-distribut
 import { ExchangeRateAddComponent } from './pages/exchange-rate-add/exchange-rate-add.component';
 import { FeeDistributionUpdateRewardCoinsComponent } from './pages/fee-distribution-update-reward-coins/fee-distribution-update-reward-coins.component';
 import { FeeDistributionUpdateRewardPercentagesComponent } from './pages/fee-distribution-update-reward-percentages/fee-distribution-update-reward-percentages.component';
+import { FeeDistributionUpdatePaymentFeeRateComponent } from './pages/fee-distribution-update-payment-fee-rate/fee-distribution-update-payment-fee-rate.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FeeDistributionUpdateRewardPercentagesComponent } from './pages/fee-dis
     FeeDistributionComponent,
     ExchangeRateAddComponent,
     FeeDistributionUpdateRewardCoinsComponent,
-    FeeDistributionUpdateRewardPercentagesComponent
+    FeeDistributionUpdateRewardPercentagesComponent,
+    FeeDistributionUpdatePaymentFeeRateComponent
   ],
   imports: [
     AdminRoutingModule,
