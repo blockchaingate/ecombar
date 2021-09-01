@@ -80,6 +80,11 @@ export class StarService {
       return this.http.get(url, false);
    }
 
+   getAgents(address: string) {
+      const url = '7star-agent/smartContractAdd/' + address;
+      return this.http.get(url, false);
+   }
+
    savePayment(address: string, txid: string) {
       const data = {
          address,
