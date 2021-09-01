@@ -33,6 +33,8 @@ export class FeeDistributionComponent implements OnInit {
   rewardPercentage10: number;
   rewardPercentage11: number;
 
+  paymentFeeRate: number;
+
   constructor(
     private utilServ: UtilService,
     private web3Serv: Web3Service,
@@ -45,6 +47,35 @@ export class FeeDistributionComponent implements OnInit {
     this.to = environment.addresses.smartContract.feeDistribution;
     this.getRewardTokens();
     this.getRewardPercentages();
+    this.getPaymentFeeRate();
+  }
+
+  getPaymentFeeRate() {
+    const abi = {
+      "constant": true,
+      "inputs": [
+        
+      ],
+      "name": "getPaymentFeeRate",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    };
+    const abiData = this.web3Serv.getGeneralFunctionABI(abi, []);
+    this.kanbanServ.kanbanCall(this.to, abiData).subscribe(
+      (ret: any) => {
+        const data = ret.data;
+        console.log('data for getPaymentFeeRate=', data);
+        const decoded = this.web3Serv.decodeData(['uint256'],data);
+        console.log('decoded=', decoded);
+        this.paymentFeeRate = decoded[0];
+      });
   }
 
   getRewardTokens() {
@@ -186,6 +217,13 @@ export class FeeDistributionComponent implements OnInit {
       coin1: this.coin1, percentage1: this.percentage1,
       coin2: this.coin2, percentage2: this.percentage2,
       coin3: this.coin3, percentage3: this.percentage3
+    }});
+  }
+
+  updatePaymentFeeRate() {
+    this.router.navigate(['/admin/fee-distribution/update-payment-fee-rate'],
+    { queryParams: {
+      paymentFeeRate: this.paymentFeeRate
     }});
   }
 
