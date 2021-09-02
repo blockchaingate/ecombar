@@ -65,6 +65,12 @@ export class StarService {
       return this.http.get(url, false);      
    }
 
+   getRewardsByOrderId(orderId: string) {
+      const url = '7star-locker/orderId/' + orderId;
+      
+      return this.http.get(url, false);      
+   }
+
    createRef(data: any) {
       const url = '7star-ref/create';
       return this.http.post(url,data, false);

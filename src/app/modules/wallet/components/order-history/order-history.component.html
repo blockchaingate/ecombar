@@ -13,7 +13,15 @@
                 </li>
                     <li class="table-row" *ngFor="let item of transactionHistories">         
                             <div class="col col-2 text-black" data-label="{{'ID' | translate}}">
-                                {{showId(item.id)}}
+                                <div>
+                                    {{showId(item.id)}}
+                                </div>
+                                <div>
+                                    <a (click)="showRewards(item.id)">
+                                        {{'Rewards' | translate}}
+                                    </a>
+                                    
+                                </div>
                             </div>
                             <div class="col col-2" data-label="{{'From' | translate}}">
                                 {{item.from}}

@@ -4,8 +4,10 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
+import { OrderRewardsComponent } from './rewards/rewards.component';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
+import { StarService } from 'src/app/modules/shared/services/star.service';
 
 @Component({
     selector: 'app-order-history',
@@ -23,6 +25,7 @@ export class OrderHistoryComponent implements OnInit {
     order: any;
     constructor(
         private dataServ: DataService,
+        private starServ: StarService,
         private kanbanSmartContractServ: KanbanSmartContractService,
         private spinner: NgxSpinnerService,
         private toastr: ToastrService,
@@ -45,6 +48,27 @@ export class OrderHistoryComponent implements OnInit {
         );
     }
 
+    showRewards(orderId: string) {
+      this.starServ.getRewardsByOrderId(orderId).subscribe(
+        (ret: any) => {
+          if(ret && ret.ok) {
+            const rewards = ret._body;
+
+            const modalOptions = {
+              initialState: {
+              rewards: rewards
+              },
+              class: 'modal-lg'
+              };
+       
+            
+            this.modalRef = this.modalService.show(OrderRewardsComponent, modalOptions);
+          }
+        }
+      );
+
+
+    }
     showDate(date) {
         return date.toString();
       }
