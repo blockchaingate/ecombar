@@ -169,10 +169,10 @@
   </div>  
 
   <div *ngIf="currentTab == 'history'">
-    <app-order-history [transactionHistories]="transactionHistories"></app-order-history>
+    <app-order-history [transactionHistories]="transactionHistories" [type]="'customer'"></app-order-history>
   </div> 
 
   <div *ngIf="currentTab == 'historyMerchant'">
-    <app-order-history [transactionHistories]="merchantTransactionHistories"></app-order-history>
+    <app-order-history [transactionHistories]="merchantTransactionHistories" [type]="'merchant'"></app-order-history>
   </div> 
 </div>

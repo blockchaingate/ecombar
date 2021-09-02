@@ -13,8 +13,8 @@ export class StoreService {
     return this.http.get('stores/ownedBy/' + address);
   }
 
-  deleteStore(id: string) {
-    return this.http.delete('stores/' + id);
+  deleteStore(data: any) {
+    return this.http.post('stores/Delete', data, false);
   }
 
   getStores() {
@@ -28,10 +28,10 @@ export class StoreService {
   }
 
   create(data:any) {
-    return this.http.post('stores/Create', data);
+    return this.http.post('stores/Create', data, false);
   }
 
   update(id: string, data: any) {
-    return this.http.post('stores/Update/' + id, data);
+    return this.http.post('stores/Update/' + id, data, false);
   }
 }

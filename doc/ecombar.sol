@@ -19,7 +19,7 @@ interface FeeChargerInterface {
             uint256 _exchangilyGet,
             Status _orderStatus);
 
-    function chargeFundsWithFeeWithSig(
+    function chargeFundsWithFeeWithSig (
         bytes32 _orderID,
         address _user,
         uint32 _coinType,
@@ -28,6 +28,7 @@ interface FeeChargerInterface {
         uint8 v,
         bytes32 r,
         bytes32 s,
+        address[] memory  _regionalAgents,
         address[] memory _rewardBeneficiary)
         external 
         returns (bool); 
@@ -82,13 +83,21 @@ contract Ecombar is Ownable {
     constructor(
         address feeChargerSmartContractAddr, 
         uint32 _coinType, 
-        uint8 taxrate) {
+        uint8 _taxrate) {
         //iddockSmartContractAddress = iddockSmartContractAddr;  
         feeChargerInstance = FeeChargerInterface(feeChargerSmartContractAddr);
         coinType = _coinType;
-        taxRate = taxrate;
+        taxRate = _taxrate;
     }
  
+    function changeCoinType(uint32 _coinType) public{
+        coinType = _coinType;
+    }
+
+    function changeTaxRate(uint8 _taxrate) public{
+        taxRate = _taxrate;
+    }
+
     function changeFeeChargerSmartContractAddr(address addr) public{
         feeChargerInstance = FeeChargerInterface(addr);
     }
@@ -122,6 +131,7 @@ contract Ecombar is Ownable {
         uint8 v,
         bytes32 r,
         bytes32 s,
+        address[] memory _regionalAgents,
         address[] memory _rewardBeneficiary) public {
         Order memory order = orderById[objectId];
         uint256 total = order.total.add(fullfilmentFee);
@@ -135,6 +145,7 @@ contract Ecombar is Ownable {
         v,
         r,
         s,
+        _regionalAgents,
         _rewardBeneficiary);
     }
 

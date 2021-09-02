@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
@@ -12,36 +13,25 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
 
 @Component({
-  selector: 'app-fee-distribution-update-reward-percentages',
-  templateUrl: './fee-distribution-update-reward-percentages.component.html',
-  styleUrls: ['./fee-distribution-update-reward-percentages.component.css']
+  selector: 'app-fee-distribution-update-payment-fee-rate',
+  templateUrl: './fee-distribution-update-payment-fee-rate.component.html',
+  styleUrls: ['./fee-distribution-update-payment-fee-rate.component.css']
 })
-export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
+export class FeeDistributionUpdatePaymentFeeRateComponent implements OnInit {
+
   modalRef: BsModalRef;
   to: string;
   walletAddress: string;
   owner: string;
   wallet: any;
-  percentage1: number;
-  percentage2: number;
-  percentage3: number;  
-  percentage4: number;  
-  percentage5: number;  
-  percentage6: number;  
-  percentage7: number;  
-  percentage8: number;  
-  percentage9: number;  
-  percentage10: number;  
-  percentage11: number; 
-  percentage12: number;  
-  percentage13: number;  
-  percentage14: number;  
-
+  paymentFeeRate: number;
+  
   constructor(
     private dataServ: DataService,
-    private spinner: NgxSpinnerService,
+    private coinServ: CoinService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
+    private spinner: NgxSpinnerService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private toastr: ToastrService,
@@ -55,6 +45,7 @@ export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
+        console.log('this.walletAddress=', this.walletAddress);
       }
     ); 
     this.dataServ.currentWallet.subscribe(
@@ -65,22 +56,9 @@ export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
     this.route.queryParamMap.subscribe(
       (map: any) => {
         const params = map.params;
-        this.percentage1 = params.percentage1;
-        this.percentage2 = params.percentage2;
-        this.percentage3 = params.percentage3;
-        this.percentage4 = params.percentage4;
-        this.percentage5 = params.percentage5;
-        this.percentage6 = params.percentage6;
-        this.percentage7 = params.percentage7;
-        this.percentage8 = params.percentage8;
-        this.percentage9 = params.percentage9;
-        this.percentage10 = params.percentage10;
-        this.percentage11 = params.percentage11;
-        this.percentage12 = params.percentage12;
-        this.percentage13 = params.percentage13;
-        this.percentage14 = params.percentage14;
+        this.paymentFeeRate = params.paymentFeeRate;
       }
-    )
+    );
   }
 
   checkOwner() {
@@ -136,15 +114,11 @@ export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
       "constant": false,
       "inputs": [
         {
-          "name": "_percents",
-          "type": "uint256[14]"
-        },
-        {
-          "name": "_decimal",
+          "name": "_paymentFeeRate",
           "type": "uint256"
         }
       ],
-      "name": "updateRewardPercent",
+      "name": "updatePaymentFeeRate",
       "outputs": [
         
       ],
@@ -152,30 +126,16 @@ export class FeeDistributionUpdateRewardPercentagesComponent implements OnInit {
       "stateMutability": "nonpayable",
       "type": "function"
     };
-    const args = [[
-      this.percentage1,
-      this.percentage2,
-      this.percentage3,
-      this.percentage4,
-      this.percentage5,
-      this.percentage6,
-      this.percentage7,
-      this.percentage8,
-      this.percentage9,
-      this.percentage10,
-      this.percentage11,
-      this.percentage12,
-      this.percentage13,
-      this.percentage14
-    ], 10000];
-    console.log('args for updateRewardPercent==', args);
+    const args = [this.paymentFeeRate];
+    console.log('args for updateTokensAndPercents==', args);
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
     this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-      this.toastr.success('reward percentages was updated successfully');
+      this.toastr.success('Payment fee rate was updated successfully');
       this.router.navigate(['/admin/fee-distribution']);
     } else {
-      this.toastr.error('Error while updating reward coin');
+      this.toastr.error('Error while updating payment fee rate');
     }
   }
+
 }

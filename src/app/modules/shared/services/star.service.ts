@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Injectable()
 export class StarService {
@@ -65,6 +66,12 @@ export class StarService {
       return this.http.get(url, false);      
    }
 
+   getRewardsByOrderId(orderId: string) {
+      const url = '7star-locker/orderId/' + orderId;
+      
+      return this.http.get(url, false);      
+   }
+
    createRef(data: any) {
       const url = '7star-ref/create';
       return this.http.post(url,data, false);
@@ -77,6 +84,11 @@ export class StarService {
 
    getParents(address: string) {
       const url = '7star-ref/parents/' + address;
+      return this.http.get(url, false);
+   }
+
+   getAgents(address: string) {
+      const url = '7star-agent/smartContractAdd/' + address;
       return this.http.get(url, false);
    }
 

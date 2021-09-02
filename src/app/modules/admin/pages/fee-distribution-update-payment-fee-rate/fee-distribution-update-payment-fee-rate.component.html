@@ -1,0 +1,14 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>{{'Update payment fee rate' | translate}}</h1>
+      <hr>
+
+        <label for="email"><b>Payment fee rate</b></label>
+        <input type="text" placeholder="Enter payment fee rate" [(ngModel)]="paymentFeeRate" name="v" required>
+
+
+        <div class="text-right py-2" *ngIf="owner == walletAddress">
+            <button type="submit" class="btn signinbtn" (click)="update()">{{('Update') | translate}}</button>
+          </div>
+    </div>
+</form>

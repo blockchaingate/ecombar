@@ -1,0 +1,48 @@
+
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Rewards' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="card-section my-3">
+        <div class="card">
+            <div class="container">
+    
+                <ul class="responsive-table">
+                    <li class="table-header">
+                      <div class="col col-4">{{'Details' | translate}}</div>
+                      <div class="col col-2">{{'Release time' | translate}}</div>
+                      <div class="col col-2">{{'Txids' | translate}}</div>
+                      <div class="col col-2">{{'Status' | translate}}</div>
+                    </li>
+                        <li class="table-row" *ngFor="let reward of rewards">         
+                                <div class="col col-4" data-label="{{'Details' | translate}}">
+                                    {{showDetail(reward) }}
+                                </div>
+                                <div class="col col-2" data-label="{{'Release time' | translate}}">
+                                    {{showReleaseTime(reward) }}
+                                </div>    
+                                <div class="col col-2" data-label="{{'Txids' | translate}}">
+                                    <div *ngFor="let txid of reward.txids">
+                                      <a target="_blank" href="{{getTxidUrl(txid)}}">
+                                        {{showId(txid)}}
+                                      </a>
+                                    </div>
+                                </div>      
+                                <div class="col col-2" data-label="{{'Status' | translate}}">
+                                    <div>
+                                        {{showStatus(reward.status) | translate}}
+                                    </div>
+    
+                                </div>                  
+                        </li>
+                  </ul>                
+            </div>
+        </div>
+    </div>       
+
+
+</div>

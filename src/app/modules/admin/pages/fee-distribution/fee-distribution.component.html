@@ -10,14 +10,31 @@
                   <div class="col col-3" data-label="Title">{{coin.name}}</div>
                   <div class="col col-3" data-label="Sequance">{{coin.percentage}}</div>
                 </li>
-              </ul>    
-              <div class="CreateCollection--actions">
+            </ul>    
+            <div class="CreateCollection--actions pb-3">
                 <div class="ActionButtonrContainer">
                     <div class="ActionButton--content" (click)="updateRewardCoins()" style="min-width: 120px;">
                         {{'Update' | translate}}
                     </div>
                 </div> 
-            </div>        
+            </div>      
+            
+            
+            <ul class="responsive-table">
+              <li class="table-row">
+                <div class="col col-3" data-label="Payment fee rate">paymentFee Rate</div>
+                <div class="col col-3" data-label="Sequance">{{paymentFeeRate}}</div>
+              </li>
+            </ul>    
+            <div class="CreateCollection--actions">
+                <div class="ActionButtonrContainer">
+                    <div class="ActionButton--content" (click)="updatePaymentFeeRate()" style="min-width: 120px;">
+                        {{'Update' | translate}}
+                    </div>
+                </div> 
+            </div>  
+            
+
         </div>
         <div class="col col-6">
             <ul class="responsive-table">

@@ -32,6 +32,11 @@ export class FeeDistributionComponent implements OnInit {
   rewardPercentage9: number;
   rewardPercentage10: number;
   rewardPercentage11: number;
+  rewardPercentage12: number;
+  rewardPercentage13: number;
+  rewardPercentage14: number;
+
+  paymentFeeRate: number;
 
   constructor(
     private utilServ: UtilService,
@@ -45,6 +50,35 @@ export class FeeDistributionComponent implements OnInit {
     this.to = environment.addresses.smartContract.feeDistribution;
     this.getRewardTokens();
     this.getRewardPercentages();
+    this.getPaymentFeeRate();
+  }
+
+  getPaymentFeeRate() {
+    const abi = {
+      "constant": true,
+      "inputs": [
+        
+      ],
+      "name": "getPaymentFeeRate",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    };
+    const abiData = this.web3Serv.getGeneralFunctionABI(abi, []);
+    this.kanbanServ.kanbanCall(this.to, abiData).subscribe(
+      (ret: any) => {
+        const data = ret.data;
+        console.log('data for getPaymentFeeRate=', data);
+        const decoded = this.web3Serv.decodeData(['uint256'],data);
+        console.log('decoded=', decoded);
+        this.paymentFeeRate = decoded[0];
+      });
   }
 
   getRewardTokens() {
@@ -110,8 +144,11 @@ export class FeeDistributionComponent implements OnInit {
     } else 
     if(i == 2) {
       name = "merchant's referral"
+    } else 
+    if(i >= 3 && i < 6) {
+      name = "agent lv " + (i - 2);
     } else {
-      name = "lv " + (i - 2)
+      name = "lv " + (i - 5)
     }
     return name;
   }
@@ -135,7 +172,7 @@ export class FeeDistributionComponent implements OnInit {
     this.kanbanServ.kanbanCall(this.to, abiData).subscribe(
       (ret: any) => {
         const data = ret.data;
-        const decoded = this.web3Serv.decodeData(['uint256[11]'],data)[0];
+        const decoded = this.web3Serv.decodeData(['uint256[14]'],data)[0];
         console.log('decoded for getRewardPercent=', decoded);
         for(let i = 0; i < decoded.length; i++) {
           if(i == 0) {
@@ -170,6 +207,15 @@ export class FeeDistributionComponent implements OnInit {
           } else
           if(i == 10) { 
             this.rewardPercentage11 = decoded[i];
+          } else
+          if(i == 11) { 
+            this.rewardPercentage12 = decoded[i];
+          } else
+          if(i == 12) { 
+            this.rewardPercentage13 = decoded[i];
+          } else
+          if(i == 13) { 
+            this.rewardPercentage14 = decoded[i];
           }
           const item = {
             name: this.getRewardName(i),
@@ -189,6 +235,13 @@ export class FeeDistributionComponent implements OnInit {
     }});
   }
 
+  updatePaymentFeeRate() {
+    this.router.navigate(['/admin/fee-distribution/update-payment-fee-rate'],
+    { queryParams: {
+      paymentFeeRate: this.paymentFeeRate
+    }});
+  }
+
   updateRewardPercentages() {
     this.router.navigate(['/admin/fee-distribution/update-reward-percentages'],
     { queryParams: {
@@ -202,7 +255,10 @@ export class FeeDistributionComponent implements OnInit {
       percentage8: this.rewardPercentage8,
       percentage9: this.rewardPercentage9,
       percentage10: this.rewardPercentage10,
-      percentage11: this.rewardPercentage11
+      percentage11: this.rewardPercentage11,
+      percentage12: this.rewardPercentage12,
+      percentage13: this.rewardPercentage13,
+      percentage14: this.rewardPercentage14
     }});
   }
 }

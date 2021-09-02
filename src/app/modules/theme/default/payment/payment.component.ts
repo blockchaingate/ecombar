@@ -34,7 +34,8 @@ export class PaymentComponent implements OnInit{
     orderID: string;
     total: number;
     subtotal: number;
-    parents: string;
+    parents: string[];
+    agents: string[];
     selectedShippingService: string;
     walletAddress: string;
     selectedPayment: string;
@@ -91,7 +92,8 @@ export class PaymentComponent implements OnInit{
     }
 
     ngOnInit() {
-
+      this.parents = [];
+      this.agents = [];
       this.orderID = this.route.snapshot.paramMap.get('orderID');
       this.dataServ.currentWallet.subscribe(
         (wallet: any) => {
@@ -135,6 +137,17 @@ export class PaymentComponent implements OnInit{
           }
         }
       );
+
+      this.starServ.getAgents(this.feeChargerSmartContractAddress).subscribe(
+        (ret: any) => {
+          if(ret && ret.ok) {
+            const agents = ret._body;
+            this.agents = agents.map(item => this.utilServ.fabToExgAddress(item));
+          }
+          
+        }
+      );
+      
       this.discount = 0;
       this.shippingFee = 0;
       this.total = 0;
@@ -247,6 +260,10 @@ export class PaymentComponent implements OnInit{
             "type": "bytes32"
           },
           {
+            "name": "_regionalAgents",
+            "type": "address[]"
+          },          
+          {
             "internalType": "address[]",
             "name": "_rewardBeneficiary",
             "type": "address[]"
@@ -266,6 +283,8 @@ export class PaymentComponent implements OnInit{
       console.log('fulfillmentFee=', fulfillmentFee);
       
       console.log('this.shippingfee=', this.shippingFee);  
+      this.parents = [];
+      this.agents = [];
       const args = [
         '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
         fulfillmentFee,
@@ -273,6 +292,7 @@ export class PaymentComponent implements OnInit{
         signature.v,
         signature.r,
         signature.s,
+        this.agents,
         this.parents
       ];
       console.log('args==', args);

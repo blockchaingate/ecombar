@@ -52,7 +52,8 @@ import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@s
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BlogAddComponent } from './pages/blog-add/blog-add.component';
 
-
+import { ShippingCarriersComponent } from './pages/shipping-carriers/shipping-carriers.component';
+import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shipping-carrier-add.component';
 @NgModule({
   declarations: [
     MerchantComponent,
@@ -92,7 +93,9 @@ import { BlogAddComponent } from './pages/blog-add/blog-add.component';
     CustomerServiceComponent,
     ReturnsPolicyComponent,
     FaqComponent,
-    BlogAddComponent
+    BlogAddComponent,
+    ShippingCarriersComponent,
+    ShippingCarrierAddComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),

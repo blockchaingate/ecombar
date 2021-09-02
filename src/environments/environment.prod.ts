@@ -10,7 +10,7 @@ export const environment = {
   endpoints: {
     prod: 'https://api.blockchaingate.com/v2/',
     blockchaingate: 'https://api.blockchaingate.com/v2/',
-    website: 'http://ecombar.com/',
+    website: 'https://exchangily.com/',
     kanban: 'https://kanbanprod.fabcoinapi.com/',
     BTC: {
       exchangily: 'https://btcprod.fabcoinapi.com/'
@@ -143,7 +143,7 @@ addresses: {
         ETH: '0x0dF198C80893c1373a11AdE9ad6454181aE18E73',
     },
     smartContract: {
-        feeDistribution: '0x7cf9f60b568d3e78c13b91f895394b433abd37eb',
+        feeDistribution: '0xf3b46ef452099ec2b6f81644b6da75c91c5e116a',
         locker: '0x08283086b2192666128b7a6eaf66df2dfd3f1b6b',
         exchangeRate: '0xc790135e17490400a46bebff9efcc77dac39bdcf',
         sevenStarProxy: '0x541ce3f716a3d6b64b0da9f51e7fe8ad52294f28',

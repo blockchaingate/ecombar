@@ -46,6 +46,8 @@ export class ProductAddComponent implements OnInit {
   title: string;
   subtitle: string;
   price: string;
+  specNameChinese: string;
+  specValueChinese: string;
   product: any;
   keywords: any;
   keyword: string;
@@ -327,6 +329,25 @@ export class ProductAddComponent implements OnInit {
     this.specs = this.specs.filter(item => item.name != spec.name && item.value != spec.value);
   }  
 
+
+
+  addSpecChinese() {
+    if(!this.specNameChinese || !this.specValueChinese) {
+      return;
+    }
+    this.specsChinese.push(
+      {name: this.specNameChinese,value:this.specValueChinese}
+    );
+    this.specNameChinese = '';
+    this.specValueChinese = '';
+  }
+
+  removeSpecChinese(spec) {
+    this.specsChinese = this.specsChinese.filter(item => item.name != spec.name && item.value != spec.value);
+  }  
+
+
+
   addContent() {
     if(!this.contentName || !this.contentQuantity) {
       return;
@@ -344,6 +365,10 @@ export class ProductAddComponent implements OnInit {
 
   removeFeature(feature) {
     this.features = this.features.filter(item => item != feature);
+  }
+
+  removeFeatureChinese(featureChinese) {
+    this.featuresChinese = this.featuresChinese.filter(item => item != featureChinese);
   }
 
   saveProduct() {
@@ -382,8 +407,12 @@ export class ProductAddComponent implements OnInit {
     this.feature = '';
   }
   
+  addFeatureChinese() {
+    this.featuresChinese.push(this.featureChinese);
+    this.featureChinese = '';
+  }
+
   async saveProductDo(seed: Buffer) {
-    console.log('this.images=', this.images);
     //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
     const privateKey = keyPair.privateKeyBuffer.privateKey;

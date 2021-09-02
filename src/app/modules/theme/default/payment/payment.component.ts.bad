@@ -213,7 +213,7 @@ export class PaymentComponent implements OnInit{
       }
 
 
-
+      /*
       const abi = {
         "constant": false,
         "inputs": [
@@ -233,6 +233,10 @@ export class PaymentComponent implements OnInit{
             "name": "_tax",
             "type": "uint256"
           },
+          {
+            "name": "_regionalAgents",
+            "type": "address[]"
+          },  
           {
             "name": "_rewardBeneficiary",
             "type": "address[]"
@@ -263,13 +267,14 @@ export class PaymentComponent implements OnInit{
         131072,
         "10000000000000000",
         "1000000000000000",
-        this.parents
+        [],
+        []
       ];
       console.log('args==', args);
+      */
 
 
-
-      /*
+      
       const abi = {
         "constant": false,
         "inputs": [
@@ -306,6 +311,10 @@ export class PaymentComponent implements OnInit{
             "type": "bytes32"
           },
           {
+            "name": "_regionalAgents",
+            "type": "address[]"
+          },   
+          {
             "name": "_rewardBeneficiary",
             "type": "address[]"
           }
@@ -339,10 +348,11 @@ export class PaymentComponent implements OnInit{
         signature.v,
         signature.r,
         signature.s,
-        this.parents
+        [],
+        []
       ];
       console.log('args==', args);
-      */
+      
 
 
 
