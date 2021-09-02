@@ -24,6 +24,10 @@ export class StoresComponent implements OnInit {
     );
   }
 
+  showAddress(address: string) {
+    return address.substring(0,3) + '...' + address.substring(address.length - 3);
+  }
+  
   approved(store_id: string) {
     this.router.navigate(['/admin/store/' + store_id + '/approve']);
   }

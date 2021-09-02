@@ -4,37 +4,37 @@
       <hr>
 
       <div>
-        <label for="email"><b>Name:</b></label>
+        <label for="email"><b>{{'Name' | translate}}:</b></label>
         {{store?.name | translateField}}
       </div>
 
       <div>
-        <label for="email"><b>Ref address:</b></label>
+        <label for="email"><b>{{'Ref address' | translate}}:</b></label>
         {{store?.refAddress}}
       </div>   
       
       <div>
-        <label for="email"><b>Coin:</b></label>
+        <label for="email"><b>{{'Coin' | translate}}:</b></label>
         {{store?.coin}}
       </div>     
  
       <div>
-        <label for="email"><b>Give away rate:</b></label>
-        {{store?.giveAwayRate ? store?.giveAwayRate : '30'}}%
+        <label for="email"><b>{{'Give away rate' | translate}}:</b></label>
+        {{store?.giveAwayRate}}%
       </div>          
 
       <div>
-        <label for="email"><b>Tax rate:</b></label>
+        <label for="email"><b>{{'Tax rate' | translate}}:</b></label>
         {{store?.taxRate}}%
       </div>   
 
       <div>
-        <label for="email"><b>Smart contract address:</b></label>
+        <label for="email"><b>{{'Smart contract address' | translate}}:</b></label>
         {{store?.smartContractAddress}}
       </div>   
 
       <div>
-        <label for="email"><b>feeCharger Smart contract address:</b></label>
+        <label for="email"><b>{{'FeeCharger Smart contract address' | translate}}:</b></label>
         {{store?.feeChargerSmartContractAddress}}
       </div>   
 
