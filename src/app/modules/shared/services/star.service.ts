@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Injectable()
 export class StarService {

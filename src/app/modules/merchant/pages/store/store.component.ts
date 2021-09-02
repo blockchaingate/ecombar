@@ -178,6 +178,11 @@ export class StoreComponent implements OnInit {
         taxRate: this.taxRate ? this.taxRate : 0,
         refAddress: this.refAddress
       };      
+      if(!this.coin) {
+        this.toastr.error('Coin not selected', 'Ok');
+        this.spinner.hide();
+        return;
+      }
       if(this.images && this.images.length > 0) {
         data.image = this.images[0];
       }
