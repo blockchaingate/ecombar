@@ -21,7 +21,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: []
+  styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
   modalRef: BsModalRef;

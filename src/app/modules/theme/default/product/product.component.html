@@ -35,7 +35,7 @@
                     <div *ngIf="product && product.images" id="sliderThumb" class="js-slick-carousel u-slick u-slick--slider-syncing u-slick--slider-syncing-size u-slick--gutters-1 u-slick--transform-off"
                         >
                         <div  style="cursor: pointer;" *ngFor="let image of product.images">
-                            <img class="img-fluid" [src]="image" (mouseenter) ="mouseEnter(image)" class="img-thumbnail"  [ngClass]="image == selectedImage ? 'img-thumbnail-selected' : ''" alt="Image Description">
+                            <img [src]="image" (mouseenter) ="mouseEnter(image)" class="img-thumbnail"  [ngClass]="image == selectedImage ? 'img-thumbnail-selected' : ''" alt="Image111 Description">
                         </div>
                     </div>
 
