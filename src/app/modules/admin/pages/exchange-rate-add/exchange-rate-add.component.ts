@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+import BigNumber from 'bignumber.js';
 
 @Component({
   selector: 'app-exchange-rate-add',
@@ -136,7 +137,8 @@ export class ExchangeRateAddComponent implements OnInit {
       "stateMutability": "nonpayable",
       "type": "function"
     };
-    const args = [this.coinId, this.rate * 1e8];
+    const rateBig = new BigNumber(this.rate).shiftedBy(8).toFixed();
+    const args = [this.coinId, rateBig];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
     this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
