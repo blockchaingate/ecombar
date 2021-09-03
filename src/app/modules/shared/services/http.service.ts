@@ -25,13 +25,13 @@ export class HttpService {
 
     get(path: string, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints.blockchaingate + path;
-        console.log('url ==', url);
+        //console.log('url ==', url);
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
                         if(!token) {
-                            observer.error('Token not exists');
+                            observer.error('url=' + url + ',Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export class HttpService {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
                         if(!token) {
-                            observer.error('Token not exists');
+                            observer.error('url=' + url + ',Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
@@ -156,31 +156,7 @@ export class HttpService {
 
         });
         return ret;
-        /*
-        let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-        if (jwtAuth === true) {
-            if(!this.storage || !this.storage.token) {
-                const ret = new Observable((observer) => {
-                    observer.error('Token not exists');
-                });
-                return ret;
-            }
-            httpHeaders = new HttpHeaders({
-                'Content-Type': 'application/json',
-                'x-access-token': this.storage.token
-            });
-        }
-        const options: OPTIONS = {
-            headers: httpHeaders
-        };
-        data.appId = environment.appid;
-        const url = environment.endpoints.blockchaingate + path;
-        console.log('url=', url);
-        console.log('data=', data);
-        return this.http.post(url, data, options);
-        */
+
     }
 
     put(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
@@ -190,7 +166,7 @@ export class HttpService {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
                         if(!token) {
-                            observer.error('Token not exists');
+                            observer.error('url=' + url + ',Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
@@ -240,31 +216,13 @@ export class HttpService {
                         observer.next(res);
                     },
                     err => { 
-                      observer.error(err)
-                      //this.errMsg = 'Invalid email or password';
+                      observer.error(err);
                     }
                 );                           
             }
 
         });
         return ret;
-        /*
-        let httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-        if (jwtAuth === true) {
-            httpHeaders = new HttpHeaders({
-                'Content-Type': 'application/json',
-                'x-access-token': this.storage.token
-            });
-        }
-        const options: OPTIONS = {
-            headers: httpHeaders
-        };
-        data.appId = this.storage.appId;
-        const url = environment.endpoints.blockchaingate + path;
-        return this.http.put(url, data, options);
-        */
     }
 
     delete(path: string, jwtAuth = false, pubkey = true): Observable<any> {
@@ -274,7 +232,7 @@ export class HttpService {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
                         if(!token) {
-                            observer.error('Token not exists');
+                            observer.error('url=' + url + ',Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
                                 'Content-Type': 'application/json',
