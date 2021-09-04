@@ -4,6 +4,7 @@ import { UserService } from 'src/app/modules/shared/services/user.service';
 import { AuthService } from 'src/app/modules/shared/services/auth.service';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService, ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 import { CommentService } from 'src/app/modules/shared/services/comment.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 
 @Component({
@@ -16,23 +17,28 @@ export class MyCommentsComponent implements OnInit{
     comments: any;
     public insertImageSettings :ImageSettingsModel = { allowedTypes: ['.jpeg', '.jpg', '.png'], display: 'inline', width: 'auto', height: 'auto', saveFormat: 'Blob', saveUrl: null, path: null,}
     constructor(
-      private userServ: UserService,
-      private authServ: AuthService,
+      private dataServ: DataService,
       private commentServ: CommentService,
       private route: ActivatedRoute,
       private router: Router) {
     }
 
     ngOnInit() {
-
-      this.commentServ.getMyComments().subscribe(
-        (res: any) => {
-          console.log('resssss=', res);
-          if(res && res.ok) {
-             this.comments = res._body; 
+      this.dataServ.currentWalletAddress.subscribe(
+        (walletAddress: string) => {
+          if(walletAddress) {
+            this.commentServ.getMyComments(walletAddress).subscribe(
+              (res: any) => {
+                console.log('resssss=', res);
+                if(res && res.ok) {
+                   this.comments = res._body; 
+                }
+              }
+            );
           }
         }
       );
+
     }
 
     deleteComment(comment) {

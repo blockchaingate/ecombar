@@ -653,7 +653,6 @@ export class CoinService {
                 addr = address;
                 buffer = wallet.getPrivateKey();
                 priKey = wallet.getPrivateKey();
-                console.log('priKey for eth=', priKey);
                 priKeyDisp = buffer.toString('hex');
 
         } else if(name == 'TRX') {

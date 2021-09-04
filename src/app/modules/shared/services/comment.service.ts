@@ -26,7 +26,7 @@ export class CommentService {
     return this.http.get('comment/commentFor/' + productId, false);
   }
 
-  getMyComments() {
-    return this.http.get('comment/myComments');
+  getMyComments(walletAddress: string) {
+    return this.http.get('comment/myComments/' + walletAddress);
   }
 }

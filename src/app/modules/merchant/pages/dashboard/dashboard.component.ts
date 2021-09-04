@@ -13,6 +13,7 @@ import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { CommentService } from 'src/app/modules/shared/services/comment.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -35,14 +36,10 @@ export class DashboardComponent implements OnInit{
 
   constructor(
     private brandServ: BrandService,
-    private orderServ: OrderService,
-    private favoriteServ: FavoriteService,
-    private cartStoreServ: CartStoreService,
     private collectionServ: CollectionService,
     private productServ: ProductService,
     private categoryServ: CategoryService,
-    private commentServ: CommentService,
-    private store: Store<{ user: UserState }>) {
+    private dataServ: DataService) {
   }
 
   ngOnInit() {
@@ -57,17 +54,23 @@ export class DashboardComponent implements OnInit{
     this.my_products_count = 0;
     this.my_comments_count = 0;
 
-
-    this.getMerchantSummaries('');
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          this.getMerchantSummaries(walletAddress);
+        }
+      }
+    );
+    
 
 
   }
 
 
 
-  getMerchantSummaries(merchantId: string) {
+  getMerchantSummaries(walletAddress: string) {
 
-    this.brandServ.getMerchantBrands(merchantId).subscribe(
+    this.brandServ.getMerchantBrands(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.brands_count = res._body.length;
@@ -75,7 +78,7 @@ export class DashboardComponent implements OnInit{
       }
     );
 
-    this.categoryServ.getMerchantCategories(merchantId).subscribe(
+    this.categoryServ.getMerchantCategories(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.categories_count = res._body.length;
@@ -83,7 +86,7 @@ export class DashboardComponent implements OnInit{
       }
     );   
     
-    this.productServ.getMerchantProducts(merchantId).subscribe(
+    this.productServ.getProductsOwnedBy(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.products_count = res._body.length;
@@ -91,7 +94,7 @@ export class DashboardComponent implements OnInit{
       }
     );  
     
-    this.collectionServ.getMerchantCollections(merchantId).subscribe(
+    this.collectionServ.getMerchantCollections(walletAddress).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.collections_count = res._body.length;

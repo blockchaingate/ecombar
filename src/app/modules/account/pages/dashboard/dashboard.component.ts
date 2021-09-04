@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit{
       }
     );    
 
-    this.commentServ.getMyComments().subscribe(
+    this.commentServ.getMyComments(this.walletAddress).subscribe(
       (res: any) => {
         console.log('resssss=', res);
         if(res && res.ok) {

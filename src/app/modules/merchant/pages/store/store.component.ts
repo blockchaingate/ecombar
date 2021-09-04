@@ -286,8 +286,8 @@ export class StoreComponent implements OnInit {
       this.toastr.info('Your ref address is empty.');
       return;      
     }
-    if(this.giveAwayRate < 3 || this.giveAwayRate >= 100) {
-      this.toastr.info('Give away rate is incorrect. it must be between 3 and 100.');
+    if((this.giveAwayRate < 3) || (this.giveAwayRate >= 100) || !Number.isInteger(Number(this.giveAwayRate))) {
+      this.toastr.info('Give away rate is incorrect. it must be a integer between 3 and 100.');
       return;         
     }
     const initialState = {
