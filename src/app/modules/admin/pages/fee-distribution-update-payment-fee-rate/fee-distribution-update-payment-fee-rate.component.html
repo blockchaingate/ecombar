@@ -1,4 +1,4 @@
-<form style="border:1px solid #ccc">
+<div style="border:1px solid #ccc">
     <div class="container">
       <h1>{{'Update payment fee rate' | translate}}</h1>
       <hr>
@@ -8,7 +8,7 @@
 
 
         <div class="text-right py-2" *ngIf="owner == walletAddress">
-            <button type="submit" class="btn signinbtn" (click)="update()">{{('Update') | translate}}</button>
+            <button class="btn signinbtn" (click)="update()">{{('Update') | translate}}</button>
           </div>
     </div>
-</form>
+  </div>

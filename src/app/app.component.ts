@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
           //this.router.navigate(['/wallet']);
           return false;
         }
-
+        this.dataServ.changeWallets(wallets);
         const wallet = wallets.items[wallets.currentIndex];
         this.dataServ.changeWallet(wallet);
         const addresses = wallet.addresses;

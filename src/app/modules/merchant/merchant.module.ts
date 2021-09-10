@@ -27,7 +27,6 @@ import { NewslettersComponent } from './pages/newsletters/newsletters.component'
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';

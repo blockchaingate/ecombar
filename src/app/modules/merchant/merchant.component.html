@@ -7,12 +7,18 @@
         <div class="header__avatar" (click)="toggleDropDownActive()">
             <div class="d-inline-block">
                 <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
-                <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/default_avatar.jpeg">
+                <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/crypto-wallet.png">
             </div>
 
             <div class="d-inline-block">
                 <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
                     <ul class="dropdown__list">
+                        
+                        <li class="dropdown__list-item" *ngFor="let item of wallets.items" (click)="changeWallet(item)">
+                            <span class="dropdown__icon"><i class="fas fa-wallet"></i></span>
+                            <span class="dropdown__title">{{item.name}}</span>
+                        </li>  
+                        <!--
                         <li class="dropdown__list-item" (click)="profile()">
                             <span class="dropdown__icon"><i class="far fa-user"></i></span>
                             <span class="dropdown__title">{{'my profile' | translate}}</span>
@@ -21,6 +27,7 @@
                             <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
                             <span class="dropdown__title">{{'log out' | translate}}</span>
                         </li>
+                        -->
                     </ul>
                 </div>
             </div>
