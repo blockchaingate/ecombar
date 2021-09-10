@@ -7,6 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/states/user.state';
 import { logout, updateMerchantStatus } from '../../store/actions/user.actions';
+import { DataService } from 'src/app/modules/shared/services/data.service';
+import { StoreService } from 'src/app/modules/shared/services/store.service';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component({
   providers: [UserService],
@@ -19,7 +22,8 @@ export class AccountComponent implements OnInit {
   dropDownActive = false;
   //displayName: string;
   merchantId: string;
-
+  wallets: any;
+  wallet: any;
   /*
   myPhotoUrlSelect: Observable<string>;
   displayNameSelect: Observable<string>;
@@ -36,35 +40,26 @@ export class AccountComponent implements OnInit {
     private store: Store<{ user: UserState }>,
     private router: Router, 
     private translateServ: TranslateService, 
-    private merchantServ: MerchantService,
-    private userServ: UserService, 
-    private storageServ: StorageService
+    private dataServ: DataService,
+    private storeServ: StoreService,
+    private storageServ: StorageService,
+    private localSt: LocalStorage
   ) { }
 
   async ngOnInit() {
     //this.userState$ = this.store.select('user');
-    console.log('ngiiiit');
-    this.store.select('user').subscribe((user: UserState) => {
-      this.role = user.role;
-      console.log('this.role=', this.role);
-      this.myPhotoUrl = user.myPhotoUrl;
-      this.displayName = user.displayName;
-      this.merchantId = user.merchantId;
-      this.merchantStatus = user.merchantStatus;
-  
-      console.log('this.merchantStatus=', this.merchantStatus);
-      if(this.merchantId && this.merchantStatus == 'pending') {
-        this.merchantServ.getMerchant(this.merchantId).subscribe(
-          (res: any) => {
-            console.log('res in gerMerchant=', res);
-            if(res.approved) {
-              this.merchantStatus = 'approved';
-              this.store.dispatch(updateMerchantStatus({newStatus: this.merchantStatus}));
-            }
-          }
-        );
+    this.dataServ.currentWallets.subscribe(
+      (wallets: any) => {
+        this.wallets = wallets;
+        console.log('wallets=', wallets);
       }
-    })
+    )
+
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );
 
 
 
@@ -143,6 +138,32 @@ export class AccountComponent implements OnInit {
 
 
   }
+
+  changeWallet(index: number, wallet: any) {
+    this.wallets.currentIndex = index;
+    this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+    });  
+    this.dataServ.changeWallet(wallet);
+    const addresses = wallet.addresses;
+    const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
+    const walletAddress = walletAddressItem.address;
+    console.log('walletAddress==', walletAddress);
+    if(walletAddress) {
+      this.dataServ.changeWalletAddress(walletAddress); 
+
+      this.storeServ.getStoresByAddress(walletAddress).subscribe(
+        (ret: any) => {
+          console.log('ret for store==', ret);
+          if(ret && ret.ok && ret._body && ret._body.length > 0) {
+            const store = ret._body[ret._body.length - 1];
+            console.log('store in here==', store);
+            this.dataServ.changeMyStore(store);
+          }
+        });
+
+    }
+  }
+
 
   changeLang() {
     let lang = this.translateServ.getDefaultLang();

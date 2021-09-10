@@ -4,6 +4,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component({
   providers: [],
@@ -16,6 +17,7 @@ export class MerchantComponent implements OnInit {
   isCollapsed = false;
   showNavMenu = false;
   wallets: any;
+  wallet: any;
   dropDownActive = false;
   //displayName: string;
   merchantId: string;
@@ -37,7 +39,8 @@ export class MerchantComponent implements OnInit {
     private translateServ: TranslateService, 
     private dataServ: DataService,
     private storeServ: StoreService,
-    private storageServ: StorageService
+    private storageServ: StorageService,
+    private localSt: LocalStorage
   ) { }
 
   toggle(menu: string) {
@@ -48,7 +51,10 @@ export class MerchantComponent implements OnInit {
     }
   }
 
-  changeWallet(wallet: any) {
+  changeWallet(index: number, wallet: any) {
+    this.wallets.currentIndex = index;
+    this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+    });  
     this.dataServ.changeWallet(wallet);
     const addresses = wallet.addresses;
     const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
@@ -77,6 +83,12 @@ export class MerchantComponent implements OnInit {
         console.log('wallets=', wallets);
       }
     )
+
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );
     this.menuItems = [
       {
         title: 'Dashboard',
