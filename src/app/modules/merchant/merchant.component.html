@@ -39,11 +39,13 @@
                 -->
                 {{ (role | translate) }}
             </div>
-            <div *ngIf="role == 'Customer'" class="text-center">
+            <div class="d-flex justify-content-around">
                 <a href="/" class="text-success">
                     {{'Go shopping' | translate}}
                 </a>
-                
+                <a href="/wallet" class="text-success">
+                    {{'Wallet' | translate}}
+                </a>                
             </div>
             <div class="text-center text-secondary" 
             *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">

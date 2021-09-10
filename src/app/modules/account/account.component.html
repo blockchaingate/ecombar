@@ -33,17 +33,13 @@
             <div class="text-center text-dark">
                 {{displayName}}
             </div>
-            <div class="pt-2 text-center text-success">
-                <!--
-                <div>Current role: {{ (roleSelect | async) }}</div>
-                -->
-                {{ (role | translate) }}
-            </div>
-            <div *ngIf="role == 'Customer'" class="text-center">
+            <div class="d-flex justify-content-around">
                 <a href="/" class="text-success">
                     {{'Go shopping' | translate}}
                 </a>
-                
+                <a href="/wallet" class="text-success">
+                    {{'Wallet' | translate}}
+                </a>                
             </div>
             <div class="text-center text-secondary" 
             *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
