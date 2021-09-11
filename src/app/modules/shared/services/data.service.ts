@@ -3,6 +3,12 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class DataService {
 
+  private walletsSource = new BehaviorSubject({});
+  currentWallets = this.walletsSource.asObservable();
+  changeWallets(wallets: any) {
+    this.walletsSource.next(wallets);
+  }  
+
   private walletSource = new BehaviorSubject({});
   currentWallet = this.walletSource.asObservable();
   changeWallet(wallet: any) {

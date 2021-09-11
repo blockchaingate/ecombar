@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/modules/shared/services/user.service';
-import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Store } from '@ngrx/store';
-import { UserState } from '../../store/states/user.state';
-import { logout, updateMerchantStatus } from '../../store/actions/user.actions';
 import { DataService } from 'src/app/modules/shared/services/data.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component({
   providers: [],
@@ -21,6 +16,8 @@ export class MerchantComponent implements OnInit {
   extendedMenu: string;
   isCollapsed = false;
   showNavMenu = false;
+  wallets: any;
+  wallet: any;
   dropDownActive = false;
   //displayName: string;
   merchantId: string;
@@ -40,10 +37,10 @@ export class MerchantComponent implements OnInit {
   constructor(
     private router: Router, 
     private translateServ: TranslateService, 
-    private localSt: LocalStorage,
-    private storeServ: StoreService, 
     private dataServ: DataService,
-    private storageServ: StorageService
+    private storeServ: StoreService,
+    private storageServ: StorageService,
+    private localSt: LocalStorage
   ) { }
 
   toggle(menu: string) {
@@ -53,7 +50,45 @@ export class MerchantComponent implements OnInit {
       this.extendedMenu = menu;
     }
   }
+
+  changeWallet(index: number, wallet: any) {
+    this.wallets.currentIndex = index;
+    this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+    });  
+    this.dataServ.changeWallet(wallet);
+    const addresses = wallet.addresses;
+    const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
+    const walletAddress = walletAddressItem.address;
+    console.log('walletAddress==', walletAddress);
+    if(walletAddress) {
+      this.dataServ.changeWalletAddress(walletAddress); 
+
+      this.storeServ.getStoresByAddress(walletAddress).subscribe(
+        (ret: any) => {
+          console.log('ret for store==', ret);
+          if(ret && ret.ok && ret._body && ret._body.length > 0) {
+            const store = ret._body[ret._body.length - 1];
+            console.log('store in here==', store);
+            this.dataServ.changeMyStore(store);
+          }
+        });
+
+    }
+  }
+
   async ngOnInit() {
+    this.dataServ.currentWallets.subscribe(
+      (wallets: any) => {
+        this.wallets = wallets;
+        console.log('wallets=', wallets);
+      }
+    )
+
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );
     this.menuItems = [
       {
         title: 'Dashboard',

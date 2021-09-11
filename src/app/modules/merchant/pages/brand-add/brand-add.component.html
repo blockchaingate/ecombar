@@ -1,4 +1,4 @@
-<form style="border:1px solid #ccc">
+<div style="border:1px solid #ccc">
     <div class="container">
       <h1>{{'New Brand' | translate}}</h1>
       <hr>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="text-right py-2">
-        <button type="submit" class="btn signinbtn" (click)="addBrand()">{{(id?'Update':'Add') | translate}}</button>
+        <button class="btn signinbtn" (click)="addBrand()">{{(id?'Update':'Add') | translate}}</button>
       </div>
     </div>
-</form>
+  </div>

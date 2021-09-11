@@ -4,27 +4,43 @@
         <div class="header__search">
             <input class="header__input" placeholder="{{'Search' | translate}}..." />
         </div>
-        <div class="header__avatar" (click)="toggleDropDownActive()">
-            <div class="d-inline-block">
-                <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
-                <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/default_avatar.jpeg">
-            </div>
-
-            <div class="d-inline-block">
-                <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
-                    <ul class="dropdown__list">
-                        <li class="dropdown__list-item" (click)="profile()">
-                            <span class="dropdown__icon"><i class="far fa-user"></i></span>
-                            <span class="dropdown__title">{{'my profile' | translate}}</span>
-                        </li>
-                        <li class="dropdown__list-item" (click)="logout()">
-                            <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
-                            <span class="dropdown__title">{{'log out' | translate}}</span>
-                        </li>
-                    </ul>
-                </div>
+        <div class="d-flex align-items-center">
+            {{wallet.name}}
+            <div class="header__avatar" (click)="toggleDropDownActive()">
+    
+                    
+                    <div class="d-inline-block">
+                        <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+                        <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/crypto-wallet.png">
+                    </div>
+    
+                    <div class="d-inline-block">
+                        <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
+                            <ul class="dropdown__list">
+                                
+                                <li class="dropdown__list-item" *ngFor="let item of wallets.items; let i=index" (click)="changeWallet(i, item)">
+                                    <span class="dropdown__icon"><i class="fas fa-wallet"></i></span>
+                                    <span class="dropdown__title">{{item.name}}</span>
+                                </li>  
+                                <!--
+                                <li class="dropdown__list-item" (click)="profile()">
+                                    <span class="dropdown__icon"><i class="far fa-user"></i></span>
+                                    <span class="dropdown__title">{{'my profile' | translate}}</span>
+                                </li>
+                                <li class="dropdown__list-item" (click)="logout()">
+                                    <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
+                                    <span class="dropdown__title">{{'log out' | translate}}</span>
+                                </li>
+                                -->
+                            </ul>
+                        </div>
+                    </div>
+    
+    
+    
             </div>
         </div>
+
     </header>
 
     <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''">
@@ -33,17 +49,13 @@
             <div class="text-center text-dark">
                 {{displayName}}
             </div>
-            <div class="pt-2 text-center text-success">
-                <!--
-                <div>Current role: {{ (roleSelect | async) }}</div>
-                -->
-                {{ (role | translate) }}
-            </div>
-            <div *ngIf="role == 'Customer'" class="text-center">
+            <div class="d-flex justify-content-around">
                 <a href="/" class="text-success">
                     {{'Go shopping' | translate}}
                 </a>
-                
+                <a href="/wallet" class="text-success">
+                    {{'Wallet' | translate}}
+                </a>                
             </div>
             <div class="text-center text-secondary" 
             *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
