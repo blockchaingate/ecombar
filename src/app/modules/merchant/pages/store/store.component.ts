@@ -314,6 +314,18 @@ export class StoreComponent implements OnInit {
       this.toastr.info('Your ref address is empty.');
       return;      
     }
+    let refAddressHex = '';
+    try {
+      refAddressHex = this.utilServ.fabToExgAddress(this.refAddress);
+
+    } catch(e) {
+
+    }
+    if(!refAddressHex || (refAddressHex.length != 42)) {
+      this.toastr.error('Your referral address is not in correct format.');
+      return;        
+    }
+
     if((this.giveAwayRate < 3) || (this.giveAwayRate >= 100) || !Number.isInteger(Number(this.giveAwayRate))) {
       this.toastr.info('Give away rate is incorrect. it must be a integer between 3 and 100.');
       return;         
