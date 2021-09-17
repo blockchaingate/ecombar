@@ -25,6 +25,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   
 })
 export class StoreComponent implements OnInit {
+  store: any;
   taxRate: number;
   name: string;
   images: any;
@@ -51,7 +52,7 @@ export class StoreComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private iddockServ: IddockService,
     private modalService: BsModalService,
-    private kanbanSmartContract: KanbanSmartContractService,
+    private kanbanSmartContractServ: KanbanSmartContractService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
     private router: Router,
@@ -61,6 +62,7 @@ export class StoreComponent implements OnInit {
   }
 
   initStore(store) {
+    this.store = store;
     this.id = store._id;
     this.coin = store.coin;
     this.taxRate = store.taxRate;
@@ -140,7 +142,8 @@ export class StoreComponent implements OnInit {
         name: {
           en: this.name,
           sc: this.nameChinese
-        }
+        },
+        coin: this.coin
       };
       if(this.images && this.images.length > 0) {
         data.image = this.images[0];
@@ -148,6 +151,31 @@ export class StoreComponent implements OnInit {
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey;
       
+      if(this.coin != this.store.coin) {
+        const abi = {
+          "inputs": [
+            {
+              "internalType": "uint32",
+              "name": "_coinType",
+              "type": "uint32"
+            }
+          ],
+          "name": "changeCoinType",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        };
+        const args = [this.coinServ.getCoinTypeIdByName(this.coin)];
+        const ret2 = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
+    
+
+        if(!(ret2 && ret2.ok && ret2._body && ret2._body.status == '0x1')) {
+          this.toastr.error('error while changing coin');
+          this.spinner.hide();
+          return;
+        }
+      }
+
       const sig = this.kanbanServ.signJsonData(privateKey, data);
       data['sig'] = sig.signature;  
 
@@ -197,14 +225,14 @@ export class StoreComponent implements OnInit {
         '0x1'
       ];
   
-      const resp2 = await this.kanbanSmartContract.deploySmartContract(seed, feeChargerABI, feeChargerBytecode, args2);
+      const resp2 = await this.kanbanSmartContractServ.deploySmartContract(seed, feeChargerABI, feeChargerBytecode, args2);
   
   
       if(resp2 && resp2.ok && resp2._body && resp2._body.status == '0x1') {
         const body = resp2._body;
   
         const txid = body.transactionHash;
-        this.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
+        this.kanbanSmartContractServ.getTransactionReceipt(txid).subscribe(
           async (receipt: any) => {
             if(receipt && receipt.transactionReceipt) {
               if(receipt.transactionReceipt.contractAddress) {
@@ -215,13 +243,13 @@ export class StoreComponent implements OnInit {
                   feeChargerSmartContractAddress, 
                   this.coinServ.getCoinTypeIdByName(this.coin), 
                   this.taxRate];
-                const resp = await this.kanbanSmartContract.deploySmartContract(seed, ABI, Bytecode, args);
+                const resp = await this.kanbanSmartContractServ.deploySmartContract(seed, ABI, Bytecode, args);
             
                 if(resp && resp.ok && resp._body && resp._body.status == '0x1') {
                   const body = resp._body;
             
                   const txid = body.transactionHash;
-                  this.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
+                  this.kanbanSmartContractServ.getTransactionReceipt(txid).subscribe(
                     async (receipt: any) => {
                       if(receipt && receipt.transactionReceipt) {
                         if(receipt.transactionReceipt.contractAddress) {
