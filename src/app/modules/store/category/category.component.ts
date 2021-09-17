@@ -5,11 +5,9 @@ import {ActivatedRoute, Router, ParamMap} from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
-  selector: 'app-category2',
-  templateUrl: './category2.component.html',
-  styleUrls: ['./category2.component.css']
+  template:''
 })
-export class Category2Component implements OnInit {
+export class CategoryComponent implements OnInit {
   maxItems = 2;
   categories: any;
   category: any;

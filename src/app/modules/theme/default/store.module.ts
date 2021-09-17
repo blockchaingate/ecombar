@@ -9,7 +9,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
-import { Category2Component } from './category2/category2.component';
+import { Category2Component } from './category/category2.component';
 import { SearchComponent } from './search/search.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductListWholeComponent } from './components/product-list-whole/product-list-whole.component';

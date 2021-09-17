@@ -4,7 +4,7 @@ import { StoreComponent } from './store.component';
 //import { Product2Component } from './product2/product2.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
-import { Category2Component } from './category2/category2.component';
+import { Category2Component } from './category/category2.component';
 import { SearchComponent } from './search/search.component';
 import { OrderComponent } from './order/order.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
@@ -29,10 +29,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../auth/auth.module').then(m => m.AuthModule)
       },
-      {
-        path: 'categor',
-        loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
-      },    
+      // {
+      //   path: 'categor',
+      //   loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
+      // },    
       {
         path: 'product',
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
