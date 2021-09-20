@@ -78,9 +78,18 @@ export abstract class AddressComponent implements OnInit {
         if(res && res.ok) {
           this.order = res._body;
           console.log('this.order====', this.order);
+          this.suite = this.order.unit;
+          this.streetNumber = this.order.streetNumber;
+          this.street = this.order.streetName;
+          this.district = this.order.district;
+          this.city = this.order.city;
+          this.province = this.order.province;
+          this.postcode = this.order.zip;
+          this.country = this.order.country;
         }
       }
     );
+    /*
     this.userServ.getMe().subscribe(
       (res: any) => {
         console.log('resme==', res);
@@ -110,6 +119,7 @@ export abstract class AddressComponent implements OnInit {
 
       }
     );
+    */
   }
 
   updateOrderAddress() {
@@ -138,6 +148,7 @@ export abstract class AddressComponent implements OnInit {
       streetNumber: this.streetNumber,
       streetName: this.street,
       city: this.city,
+      district: this.district,
       province: this.province,
       zip: this.postcode,
       country: this.country

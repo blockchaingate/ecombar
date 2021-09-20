@@ -18,6 +18,7 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { StarService } from 'src/app/modules/shared/services/star.service';
 
+
 @Component({
   providers: [UserService],
   template:''
@@ -43,6 +44,7 @@ export class PaymentComponent implements OnInit{
     noWallet: boolean;
     wallet: any;
     currency: string;
+    storeId: string;
 
     modalRef: BsModalRef;
     wallets: any;
@@ -99,6 +101,11 @@ export class PaymentComponent implements OnInit{
         }
       )
 
+      this.dataServ.currentStoreId.subscribe(
+        (storeId: string) => {
+          this.storeId = storeId;
+        }
+      );
       this.dataServ.currentStore.subscribe(
         (store: any) => {
           this.currency = store.coin;
@@ -156,7 +163,7 @@ export class PaymentComponent implements OnInit{
     }
 
     change() {
-      this.router.navigate(['/address/' + this.orderID]);
+      this.router.navigate(['/store/' + this.storeId + '/address/' + this.orderID]);
     }
     
     selectShippingService(service: string) {
