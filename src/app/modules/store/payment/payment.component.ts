@@ -18,7 +18,14 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { StarService } from 'src/app/modules/shared/services/star.service';
 
-
+interface ShippingCarrier {
+  _id: string;
+  image: string;
+  name: any; 
+  desc: any;
+  flatRate: number
+  
+}
 @Component({
   providers: [UserService],
   template:''
@@ -49,6 +56,30 @@ export class PaymentComponent implements OnInit{
     modalRef: BsModalRef;
     wallets: any;
     password: string;
+    shippingCarriers: ShippingCarrier[] = [
+      {
+        _id: '1',
+        image: '/assets/svg/delivery2.svg',
+        name: 'Express delivery',
+        desc: 'We ship in 1-2 days',
+        flatRate: 10
+      },
+      {
+        _id: '2',
+        image: '/assets/svg/v.svg',
+        name: 'Standard delivery',
+        desc: 'We ship in 3-7 day',
+        flatRate: 0
+      },
+      {
+        _id: '3',
+        image: '/assets/svg/pickup.svg',
+        name: 'Pickup from store',
+        desc: 'Today',
+        flatRate: 0
+      },
+    ];
+
 
     constructor(
       private iddockServ: IddockService,

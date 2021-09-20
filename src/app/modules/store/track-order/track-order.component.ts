@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { OrderService } from 'src/app/modules/shared/services/order.service';
+import { DataService } from 'src/app/modules/shared/services/data.service';
 
 @Component({
   template:''
@@ -8,6 +9,7 @@ import { OrderService } from 'src/app/modules/shared/services/order.service';
 export class TrackOrderComponent implements OnInit {
   orderId: string;
   order: any;
+  storeId: string;
   selectedPayment: string;
   selectedShippingService: string;
   shippingFee: number;
@@ -17,6 +19,8 @@ export class TrackOrderComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
+    private dataServ: DataService,
     private orderServ: OrderService) { }
 
   ngOnInit(): void {
@@ -26,6 +30,11 @@ export class TrackOrderComponent implements OnInit {
         this.onSearch();
       }
     });
+    this.dataServ.currentStoreId.subscribe(
+      (storeId: string) => {
+        this.storeId = storeId;
+      }
+    );
   }
 
   onSearch() {
@@ -39,6 +48,10 @@ export class TrackOrderComponent implements OnInit {
         }
       }
     );
+  }
+
+  change() {
+    this.router.navigate(['/store/' + this.storeId + '/address/' + this.orderId]);
   }
 
   selectPayment(payment: string) {
