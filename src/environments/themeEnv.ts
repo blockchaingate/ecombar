@@ -4,6 +4,6 @@ export const themeEvn = {
         "MadEarn",
         // "NFT"
     ],
-    defaultTheme: "MadEarn",
-    themeSwitch:true
+    defaultTheme: "Default",
+    themeSwitch:false
 }
