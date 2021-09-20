@@ -11,7 +11,12 @@
                     
                     <div class="d-inline-block">
                         <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+                        <i *ngIf="!(myPhotoUrl)" class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">
+                            account_balance_wallet
+                        </i>
+                        <!--
                         <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/crypto-wallet.png">
+                        -->
                     </div>
     
                     <div class="d-inline-block">
