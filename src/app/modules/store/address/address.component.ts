@@ -9,6 +9,10 @@ import { DataService } from '../../shared/services/data.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { KanbanService } from '../../shared/services/kanban.service';
+import { CoinService } from '../../shared/services/coin.service';
+import { ToastrService } from 'ngx-toastr';
+import { compilerOperationSigningSerializationLocktime } from '@bitauth/libauth';
 
 @Component({
     template: ''
@@ -17,6 +21,8 @@ export abstract class AddressComponent implements OnInit {
   suite: string;
   streetNumber: string;
   street: string;
+  name: string;
+  buyerPhone: string;
   district: string;
   city: string;
   province: string;
@@ -30,6 +36,7 @@ export abstract class AddressComponent implements OnInit {
   password: string;
   wallets: any;
   wallet: any;
+  addresses: any;
   modalRef: BsModalRef;
 
   constructor(
@@ -37,10 +44,11 @@ export abstract class AddressComponent implements OnInit {
     private iddockServ: IddockService,
     private spinner: NgxSpinnerService,
     private dataServ: DataService,
-    private localSt: LocalStorage,
+    private coinServ: CoinService,
     private router: Router,
+    private kanbanServ: KanbanService,
     private route: ActivatedRoute,
-    private userServ: UserService,
+    private toastr: ToastrService,
     private orderServ: OrderService,
     private addressServ: AddressService) {
 
@@ -54,6 +62,8 @@ export abstract class AddressComponent implements OnInit {
         }
       }
     );
+
+
 
     this.dataServ.currentStoreId.subscribe(
       (storeId: string) => {
@@ -73,22 +83,64 @@ export abstract class AddressComponent implements OnInit {
     });  
     */
     this.orderID = this.route.snapshot.paramMap.get('orderID');
-    this.orderServ.get(this.orderID).subscribe(
-      (res: any) => {
-        if(res && res.ok) {
-          this.order = res._body;
-          console.log('this.order====', this.order);
-          this.suite = this.order.unit;
-          this.streetNumber = this.order.streetNumber;
-          this.street = this.order.streetName;
-          this.district = this.order.district;
-          this.city = this.order.city;
-          this.province = this.order.province;
-          this.postcode = this.order.zip;
-          this.country = this.order.country;
+
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: string) => {
+        if(walletAddress) {
+          console.log('walletAddress111====', walletAddress);
+          this.addressServ.getAddresses(walletAddress).subscribe(
+            (ret: any) => {
+              if(ret && ret.ok) {
+                this.addresses = ret._body;
+
+                this.orderServ.get(this.orderID).subscribe(
+                  (res: any) => {
+                    if(res && res.ok) {
+                      this.order = res._body;
+                      console.log('this.order====', this.order);
+                      this.suite = this.order.unit;
+                      this.streetNumber = this.order.streetNumber;
+                      this.street = this.order.streetName;
+                      this.name = this.order.name;
+                      this.buyerPhone = this.order.buyerPhone;
+                      this.district = this.order.district;
+                      this.city = this.order.city;
+                      this.province = this.order.province;
+                      this.postcode = this.order.zip;
+                      this.country = this.order.country;
+
+                      const selectedAddresses = this.addresses.filter(
+                        (item: any) => {
+                          return item.name == this.name &&
+                          item.buyerPhone == this.buyerPhone &&
+                          item.suite == this.suite &&
+                          item.streetNumber == this.streetNumber &&
+                          item.street == this.street &&
+                          item.district == this.district &&
+                          item.city == this.city &&
+                          item.province == this.province &&
+                          item.postcode == this.postcode &&
+                          item.country == this.country
+                        }
+                      );
+
+                      if(selectedAddresses && selectedAddresses.length > 0) {
+                        this.id = selectedAddresses[0]._id;
+                      }
+                    }
+                  }
+                );
+
+              }
+
+            }
+          );
         }
       }
-    );
+    ); 
+
+
+
     /*
     this.userServ.getMe().subscribe(
       (res: any) => {
@@ -141,9 +193,27 @@ export abstract class AddressComponent implements OnInit {
 
   }
 
+  selectAddress(address: any) {
+    console.log('address==', address);
+    this.id = address._id;
+    this.suite = address.suite;
+    this.streetNumber = address.streetNumber;
+    this.street = address.street;
+    this.name = address.name;
+    this.buyerPhone = address.buyerPhone;
+    this.district = address.district;
+    this.city = address.city;
+    this.province = address.province;
+    this.postcode = address.postcode;
+    this.country = address.country;
+  }
 
   async updateOrderAddressDo(seed: Buffer) {
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey;
     const updatedOrder = {
+      name: this.name,
+      buyerPhone: this.buyerPhone,
       unit: this.suite,
       streetNumber: this.streetNumber,
       streetName: this.street,
@@ -165,20 +235,25 @@ export abstract class AddressComponent implements OnInit {
     (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(res => {
       if(res) {
         if(res.ok) {
-          
+          const sig = this.kanbanServ.signJsonData(privateKey, updatedOrder);
+          updatedOrder['sig'] = sig.signature;           
           this.orderServ.update2(this.orderID, updatedOrder).subscribe(
             (res: any) => {
               if (res && res.ok) {
-                //this.addAddress();
+                this.addAddress(privateKey);
                 this.spinner.hide();
-                this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
+                
               }
             }
           );
         } else {
-
+          this.toastr.info('updated iddock failed, please try again');
+          this.spinner.hide();
         }
         
+      } else {
+        this.toastr.info('updated iddock failed, please try again');
+        this.spinner.hide();
       }
     });
 
@@ -190,9 +265,11 @@ export abstract class AddressComponent implements OnInit {
     this.updateOrderAddress();
   }
   
-  addAddress() {
+  addAddress(privateKey: any) {
 
     const address = {
+      name: this.name,
+      buyerPhone: this.buyerPhone,
       suite: this.suite,
       streetNumber: this.streetNumber,
       street: this.street,
@@ -203,13 +280,14 @@ export abstract class AddressComponent implements OnInit {
       country: this.country
     };
 
-
+    const sig = this.kanbanServ.signJsonData(privateKey, address);
+    address['sig'] = sig.signature;  
     if (this.id) {
       this.addressServ.updateAddress(this.id, address).subscribe(
         (res: any) => {
           console.log('res for updateAddress', address);
           if (res && res.ok) {
-            this.router.navigate(['/payment/' + this.orderID]);
+            this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
           }
         }
       );
@@ -217,6 +295,8 @@ export abstract class AddressComponent implements OnInit {
       this.addressServ.addAddress(address).subscribe(
         (res: any) => {
           if (res && res.ok) {
+            this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
+            /*
             const _body = res._body;
             const addressId = _body._id;
             const body = {
@@ -230,6 +310,7 @@ export abstract class AddressComponent implements OnInit {
                 }
               }
             );
+            */
           }
           console.log('res for addAddress', address);
         }
