@@ -1,23 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/modules/shared/services/user.service';
-import { AddressService } from 'src/app/modules/shared/services/address.service';
-import { OrderService } from 'src/app/modules/shared/services/order.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { IddockService } from 'src/app/modules/shared/services/iddock.service';
-import { DataService } from 'src/app/modules/shared/services/data.service';
-import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { Web3Service } from 'src/app/modules/shared/services/web3.service';
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import BigNumber from 'bignumber.js';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
-import { ToastrService } from 'ngx-toastr';
-import { StarService } from 'src/app/modules/shared/services/star.service';
-
 import {PaymentComponent as ParentPaymentComponent} from 'src/app/modules/store/payment/payment.component';
 
 @Component({
