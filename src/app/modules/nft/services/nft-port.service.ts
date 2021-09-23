@@ -37,6 +37,29 @@ export class NftPortService {
     return order;
   }
 
+  createBuyOrderERC1155(taker: string, sellOrder: NftOrder) {
+    console.log('1==');
+    console.log('sellOrder=', sellOrder);
+    const order = sellOrder.clone();
+    console.log('2==');
+    order.tokenId = sellOrder.tokenId;
+    order.maker = taker;
+    order.side = 0;
+    order.taker = sellOrder.maker;
+    console.log('amount=', sellOrder.amount);
+    order.calldata = this.getSafeTransferFromAbi(nullAddress, taker, sellOrder.tokenId, sellOrder.amount);
+    console.log('3==');
+    order.replacementPattern = '0x00000000'
+      + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+      + '0000000000000000000000000000000000000000000000000000000000000000'
+      + '0000000000000000000000000000000000000000000000000000000000000000'
+      + '0000000000000000000000000000000000000000000000000000000000000000'
+      + '0000000000000000000000000000000000000000000000000000000000000000';
+
+    order.feeRecipient = null;
+    return order;
+  }
+
   createSellOrder(maker: string, buyOrder: NftOrder) {
     const order = buyOrder.clone();
     order.tokenId = buyOrder.tokenId;
@@ -510,6 +533,45 @@ export class NftPortService {
     return this.web3Serv.getGeneralFunctionABI(abi, args);
   }
 
+  getSafeTransferFromAbi(from: string, to: string, tokenId: string, amount: number) {
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    const args = [from, to, tokenId, amount, '0x0'];
+
+    return this.web3Serv.getGeneralFunctionABI(abi, args);
+  }
+
   getUserAuthenticatedAbi(address: string) {
     const abi = {
       "constant": true,
@@ -603,6 +665,66 @@ export class NftPortService {
     0, salt);
 
     order.tokenId = tokenId;
+    return order;
+
+  }
+
+
+  createOrderERC1155(
+    maker: string, 
+    taker: string,
+    smartContractAddress: string, 
+    tokenId: string, 
+    coinType: number,
+    price: number,
+    quantity: number,
+    makerRelayerFee: number,
+    side: number) { //side = 1, sell;  side == 0 buy
+    const makerProtocolFee = 250;
+    const exchange = environment.addresses.smartContract.NFT_Exchange;
+
+    let feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    if(side == 0) {
+      feeRecipient = '0x0000000000000000000000000000000000000000';
+    }
+    const feeMethod = 0;
+    // const side = 1;
+    const saleKind = 0;
+    const howToCall = 0;
+    /*
+    const callData = '0x23b872dd' // - function signature for transfer, based on what function you use
+    + '000000000000000000000000d46d7e8d5a9f482aeeb0918bef6a10445159f297'
+    + '0000000000000000000000000000000000000000000000000000000000000000'
+    + tokenId;
+    */
+   let callData = this.getSafeTransferFromAbi(maker, nullAddress, tokenId, quantity);
+   console.log('callData==', callData);
+    let replacementPattern = '0x00000000'
+    + '0000000000000000000000000000000000000000000000000000000000000000'
+    + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+    + '0000000000000000000000000000000000000000000000000000000000000000'
+    + '0000000000000000000000000000000000000000000000000000000000000000'
+    + '0000000000000000000000000000000000000000000000000000000000000000';
+
+    if(side == 0) {
+      callData = this.getSafeTransferFromAbi(nullAddress, maker, tokenId, quantity);
+      replacementPattern = '0x00000000'
+        + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+        + '0000000000000000000000000000000000000000000000000000000000000000'
+        + '0000000000000000000000000000000000000000000000000000000000000000'
+        + '0000000000000000000000000000000000000000000000000000000000000000'
+        + '0000000000000000000000000000000000000000000000000000000000000000';
+    }
+
+    const listingTime = Math.round(Date.now() / 1000);
+    const salt = this.utilServ.getRandomInteger();
+    const order = new NftOrder(exchange, maker, taker, makerRelayerFee, 
+    0, makerProtocolFee, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
+    callData, replacementPattern, null, null, coinType, price, 0, listingTime, 
+    0, salt);
+
+    order.tokenId = tokenId;
+    order.amount = quantity;
     return order;
 
   }

@@ -10,6 +10,7 @@ import { NftUnlockableContentComponent } from '../../modals/unlockable-content/u
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
+import BigNumber from 'bignumber.js/bignumber';
 
 @Component({
     providers: [],
@@ -23,8 +24,10 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
     sales: any;
     listings: any;
     offers: any;
+    balance: number;
     collection: any;
     address: string;
+    contractType: string;
     wallet: any;
     events: any;
     sellOrder: any;
@@ -46,6 +49,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
     }
 
     ngOnInit() {
+      this.balance = 0;
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {
@@ -55,24 +59,28 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
         this.wallet = wallet;
         const addresses = wallet.addresses;
         this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+
+        this.route.paramMap.subscribe((params: ParamMap) =>  {
+          const smartContractAddress = params.get('smartContractAddress');   
+          const tokenId = params.get('tokenId'); 
+          this.smartContractAddress = smartContractAddress;
+          this.tokenId = tokenId;
+  
+          
+  
+          this.collectionServ.getBySmartContractAddress(smartContractAddress).subscribe(
+            (res: any) => {
+              if(res && res.ok) {
+                this.collection = res._body;
+                this.contractType = this.collection.type;
+                this.loadAsset();
+              }
+            }          
+          );
+        });  
       });  
 
-      this.route.paramMap.subscribe((params: ParamMap) =>  {
-        const smartContractAddress = params.get('smartContractAddress');   
-        const tokenId = params.get('tokenId'); 
-        this.smartContractAddress = smartContractAddress;
-        this.tokenId = tokenId;
-
-        this.loadAsset();
-
-        this.collectionServ.getBySmartContractAddress(smartContractAddress).subscribe(
-          (res: any) => {
-            if(res && res.ok) {
-              this.collection = res._body;
-            }
-          }          
-        );
-      });           
+         
     }
 
     reveal() {
@@ -153,37 +161,61 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
           }
       });  
 
-      this.assetServ.getOwner(this.smartContractAddress, this.tokenId).subscribe(
+
+      this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
         (res: any) => {
-          this.owner = res.data;
-          this.owner = this.utilServ.exgToFabAddress(this.owner.replace('0x000000000000000000000000', '0x'));
+          if(res && res.ok) {
+            this.asset = res._body;
+            console.log('this.asset=', this.asset);
+            if(this.asset) {
+              if(this.asset.orders && this.asset.orders.length > 0) {
+                const sellOrders = this.asset.orders.filter(item => item.side == 1);              
+                //const activeSellOrders = sellOrders.filter(item => !item.txid && (item.maker == this.utilServ.fabToExgAddress(this.owner)));
+                const activeSellOrders = sellOrders.filter(item => !item.txid);
+                this.listings = sellOrders;
+                this.offers = this.asset.orders.filter(item => item.side == 0);   
 
-          this.assetServ.getBySmartContractTokenId(this.smartContractAddress, this.tokenId).subscribe(
-            (res: any) => {
-              if(res && res.ok) {
-                this.asset = res._body;
-    
-                if(this.asset) {
-                  if(this.asset.orders && this.asset.orders.length > 0) {
-                    const sellOrders = this.asset.orders.filter(item => item.side == 1);              
-                    const activeSellOrders = sellOrders.filter(item => !item.txid && (item.maker == this.utilServ.fabToExgAddress(this.owner)));
-                    this.listings = sellOrders;
-                    this.offers = this.asset.orders.filter(item => item.side == 0);   
+                if(activeSellOrders && activeSellOrders.length > 0) {
+                  this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
+                  console.log('this.sellOrder====', this.sellOrder);
+                }
+              }  
+              
+              
 
-                    if(activeSellOrders && activeSellOrders.length > 0) {
-                      this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
-                    }
-                    // { txid: null }
-                  }        
-                } 
-    
-    
+
+              if(this.collection.type == 'ERC1155') {
+                console.log('this.address==', this.address);
+                this.assetServ.getBalanceOf(this.utilServ.fabToExgAddress(this.address), this.smartContractAddress, this.tokenId).subscribe(
+                  (res: any) => {
+                    console.log('res in getBalanceOf=', res);
+                    this.balance = new BigNumber(res.data).shiftedBy(-18).toNumber();
+                    console.log('balance=', this.balance);
+                  }
+                );
+              } else {
+                this.assetServ.getOwner(this.smartContractAddress, this.tokenId).subscribe(
+                  (res: any) => {
+                    console.log('res in getOwner=', res);
+                    this.owner = res.data;
+                    this.owner = this.utilServ.exgToFabAddress(this.owner.replace('0x000000000000000000000000', '0x'));
+          
+                  }
+                );
               }
-            }
-          );
 
+
+
+            } 
+
+
+          }
         }
       );
+
+
+
+
 
 
 

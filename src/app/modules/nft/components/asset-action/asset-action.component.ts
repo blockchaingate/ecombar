@@ -22,10 +22,12 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
     styleUrls: ['./asset-action.component.scss']
   })
   export class NftAssetActionComponent implements OnInit {
+    @Input() balance: number;
     @Input() asset: any;
     @Input() address: string;
     @Input() owner: string;
     @Input() wallet: any;
+    @Input() contractType: string;
     
     
     @Output() refresh = new EventEmitter();
@@ -52,6 +54,9 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
       this.isOwner = false;
       if(this.owner && this.address) {
         this.isOwner = this.owner == this.address;
+      } else
+      if(this.balance) {
+        this.isOwner = true;
       }
                
     }
@@ -174,9 +179,18 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
     }
 
     async buyDo(seed: Buffer) {
-      const buyorder: NftOrder = this.nftPortServ.createBuyOrder(
-        this.utilServ.fabToExgAddress(this.address), this.sellOrder);
+      let buyorder: NftOrder;
+      console.log('go for buye');
+      if(this.contractType == 'ERC1155') {
+        buyorder = this.nftPortServ.createBuyOrderERC1155(
+          this.utilServ.fabToExgAddress(this.address), this.sellOrder);
+      } else {
+        buyorder = this.nftPortServ.createBuyOrder(
+          this.utilServ.fabToExgAddress(this.address), this.sellOrder);
+      }
 
+      console.log('hehre');
+      console.log('buyorder=', buyorder);
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey;
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(buyorder, privateKey);

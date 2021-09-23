@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js/bignumber';
 export class NftOrder {
     id: string;
     tokenId: string;
+    amount: number;
     hash: string;
     txhex: string;
     hashForSignature: string;
@@ -235,6 +236,7 @@ export class NftOrder {
       order.id = json._id;
       order.hash = json.hash;
       order.tokenId = json.tokenId;
+      order.amount = json.amount;
       order.hashForSignature = json.hashForSignature;
       return order;
     }
