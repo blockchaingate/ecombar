@@ -224,7 +224,10 @@ export class PaymentComponent implements OnInit{
     }   
 
     placeOrder() {
-
+      if(!this.parents || this.parents.length == 0) {
+        this.toastr.info('Cannot get your referral addresses, please refresh the page and try again.');
+        return;
+      } 
       const initialState = {
         pwdHash: this.wallet.pwdHash,
         encryptedSeed: this.wallet.encryptedSeed
@@ -583,6 +586,9 @@ export class PaymentComponent implements OnInit{
         (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(async res => {
           if(res) {
             if(res.ok) {
+              const sig = this.kanbanServ.signJsonData(privateKey, item);
+              item['sig'] = sig.signature;  
+
               this.orderServ.update2(this.orderID, item).subscribe(
                 (res: any) => {
                   if(res && res.ok) {
