@@ -26,6 +26,7 @@ import { TranslateService } from '@ngx-translate/core';
     modalRef: BsModalRef;
     slug: string;
     collection: any;
+    supply: number;
     media: string;
     name: string;
     address: string;
@@ -73,7 +74,7 @@ import { TranslateService } from '@ngx-translate/core';
     }
 
     async ngOnInit() {
-
+      this.supply = 1;
       await this.translateServ.get('Add Properties').toPromise().then();
       this.propertiesModal = {
         type: 'properties',
