@@ -208,6 +208,9 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
       console.log('buyorder=', buyorder.toString());
       
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
+      
+
+
       /*
       this.nftPortServ.ordersCanMatch(buyorder, this.sellOrder).subscribe(
         (ret:any) => {
@@ -215,6 +218,8 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
         }
       );
       */
+
+
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
         seed, environment.addresses.smartContract.NFT_Exchange, 
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);

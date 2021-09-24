@@ -5,6 +5,8 @@ import { KanbanService } from '../../shared/services/kanban.service';
 import { NftOrder } from '../models/nft-order';
 import { UtilService } from '../../shared/services/util.service';
 import { Observable } from 'rxjs';
+import BigNumber from 'bignumber.js/bignumber';
+
 //const Network = opensea.Network;
 const nullAddress = '0x0000000000000000000000000000000000000000';
 const nullBytes = '0x00';
@@ -48,9 +50,12 @@ export class NftPortService {
     order.taker = sellOrder.maker;
     console.log('amount=', sellOrder.amount);
     order.calldata = this.getSafeTransferFromAbi(nullAddress, taker, sellOrder.tokenId, sellOrder.amount);
+    console.log('order.calldata11111==',order.calldata);
     console.log('3==');
     order.replacementPattern = '0x00000000'
       + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+      + '0000000000000000000000000000000000000000000000000000000000000000'
+      + '0000000000000000000000000000000000000000000000000000000000000000'
       + '0000000000000000000000000000000000000000000000000000000000000000'
       + '0000000000000000000000000000000000000000000000000000000000000000'
       + '0000000000000000000000000000000000000000000000000000000000000000'
@@ -405,6 +410,10 @@ export class NftPortService {
   }
 
   atomicMatch(sell: NftOrder, buy: NftOrder, metadata) {
+    console.log('buy.getCalldata()==', buy.getCalldata());
+    console.log('sell.getCalldata()==', sell.getCalldata());
+    console.log('buy.getReplacementPattern()==', buy.getReplacementPattern());
+    console.log('sell.getReplacementPattern()==', sell.getReplacementPattern());
     const args = [
       [
         buy.getExchange(), buy.getMaker(), buy.getTaker(), 
@@ -443,6 +452,7 @@ export class NftPortService {
       ]
     ];
 
+    console.log('args for atomicMatch=', args);
     const abi = {
       "constant": false,
       "inputs": [
@@ -567,9 +577,10 @@ export class NftPortService {
       "stateMutability": "nonpayable",
       "type": "function"
     };
-    const args = [from, to, tokenId, amount, '0x0'];
+    const args = [from, to, tokenId, new BigNumber(amount).shiftedBy(18), '0x0'];
 
-    return this.web3Serv.getGeneralFunctionABI(abi, args);
+    const abiData = this.web3Serv.getGeneralFunctionABI(abi, args);
+    return abiData;
   }
 
   getUserAuthenticatedAbi(address: string) {
@@ -704,12 +715,16 @@ export class NftPortService {
     + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     + '0000000000000000000000000000000000000000000000000000000000000000'
     + '0000000000000000000000000000000000000000000000000000000000000000'
+    + '0000000000000000000000000000000000000000000000000000000000000000'
+    + '0000000000000000000000000000000000000000000000000000000000000000'
     + '0000000000000000000000000000000000000000000000000000000000000000';
 
     if(side == 0) {
       callData = this.getSafeTransferFromAbi(nullAddress, maker, tokenId, quantity);
       replacementPattern = '0x00000000'
         + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+        + '0000000000000000000000000000000000000000000000000000000000000000'
+        + '0000000000000000000000000000000000000000000000000000000000000000'
         + '0000000000000000000000000000000000000000000000000000000000000000'
         + '0000000000000000000000000000000000000000000000000000000000000000'
         + '0000000000000000000000000000000000000000000000000000000000000000'
