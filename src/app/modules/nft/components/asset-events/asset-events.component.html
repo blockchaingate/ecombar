@@ -4,6 +4,7 @@
         <div class="Row--isHeader" role="row">
             <div class="Row--cell Row--cellIsSpaced EventHistory--event-col">{{'Event' | translate}}</div>
             <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">{{'Price' | translate}}</div>
+            <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">{{'Quantity' | translate}}</div>
             <div class="Row--cell Row--cellIsSpaced ">{{'From' | translate}}</div>
             <div class="Row--cell Row--cellIsSpaced ">{{'To' | translate}}</div>
             <div class="Row--cell Row--cellIsSpaced ">{{'Date' | translate}}</div>
@@ -21,6 +22,9 @@
                 </div>
                 <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">
                     {{event.price}} {{getCoinName(event.coinType)}}
+                </div>
+                <div class="Row--cell Row--cellIsSpaced EventHistory--price-col">
+                    {{event.quantity}}
                 </div>
                 <div class="Row--cell Row--cellIsSpaced ">
                     <a routerLink="/nft/accounts/{{event.from}}">

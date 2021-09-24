@@ -410,6 +410,10 @@ export class NftPortService {
     console.log('sell.getCalldata()==', sell.getCalldata());
     console.log('buy.getReplacementPattern()==', buy.getReplacementPattern());
     console.log('sell.getReplacementPattern()==', sell.getReplacementPattern());
+    let total = buy.getBasePrice();
+    if(buy.amount) {
+      total = new BigNumber(total).multipliedBy(new BigNumber(buy.amount)).toNumber().toString();
+    }
     const args = [
       [
         buy.getExchange(), buy.getMaker(), buy.getTaker(), 
@@ -419,10 +423,10 @@ export class NftPortService {
       ],
       [
         buy.getMakerRelayerFee(), buy.getTakerRelayerFee(), buy.getMakerProtocolFee(), 
-        buy.getTakerProtocolFee(), buy.getCoinType(), buy.getBasePrice(), buy.getExtra(), 
+        buy.getTakerProtocolFee(), buy.getCoinType(), total, buy.getExtra(), 
         buy.getListingTime(), buy.getExpirationTime(), buy.getSalt(), 
         sell.getMakerRelayerFee(), sell.getTakerRelayerFee(), sell.getMakerProtocolFee(), 
-        sell.getTakerProtocolFee(), sell.getCoinType(), sell.getBasePrice(), sell.getExtra(), 
+        sell.getTakerProtocolFee(), sell.getCoinType(), total, sell.getExtra(), 
         sell.getListingTime(), sell.getExpirationTime(), sell.getSalt()
       ],
       [
@@ -731,7 +735,7 @@ export class NftPortService {
     const salt = this.utilServ.getRandomInteger();
     const order = new NftOrder(exchange, maker, taker, makerRelayerFee, 
     0, makerProtocolFee, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
-    callData, replacementPattern, null, null, coinType, new BigNumber(price).multipliedBy(new BigNumber(quantity)).toNumber(), 0, listingTime, 
+    callData, replacementPattern, null, null, coinType, price, 0, listingTime, 
     0, salt);
 
     order.tokenId = tokenId;
