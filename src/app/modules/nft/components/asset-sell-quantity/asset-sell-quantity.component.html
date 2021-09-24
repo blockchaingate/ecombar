@@ -1,28 +1,12 @@
 <div class="row AssetSell">
     <div class="col col-6" *ngIf="!noText">
-        <div class="header"> {{'Price' | translate}} </div>
-        <div class="desc">{{'Will be on sale until you transfer this item or cancel it.' | translate}} </div>
+        <div class="header"> {{'Quantity' | translate}} </div>
+        <div class="desc">{{'The quantity you sell for this token.' | translate}} </div>
     </div>
     <div class="col" [ngClass]="noText ? 'col-12' : 'col-6'">
         <div class="Input--main">
-            <div class="Input--label Input--left-label">
-                <div class="PaymentTokenInput--selector" aria-expanded="false" (click)="showPopup = !showPopup">
-                    <div class="PaymentTokenInput--selected-token">
-                        <span class=""><span><small>{{selectedCoin}}</small></span></span>
-                        <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV PaymentTokenInput--selector-icon material-icons" title="Open Dropdown" value="expand_more" size="24">expand_more</i>
-                    </div>
-                </div>
-
-                <div *ngIf="showPopup" style="z-index: 9999; position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(4px, 51px, 0px);">
-                    <div class="Popper">
-                        <ul>
-                            <li *ngFor="let coin of acceptableCoins" (click)="select(coin)">{{coin}}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="Input--prefix"></div>
-            <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="{{'Price' | translate}}" spellcheck="false" type="number" 
+            <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="{{'Quantity' | translate}}" spellcheck="false" type="number" 
             [(ngModel)]="quantity" (ngModelChange)="emitEntity()">
         </div>
     </div>

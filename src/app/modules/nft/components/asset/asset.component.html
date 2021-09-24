@@ -1,11 +1,13 @@
 
 <div *ngIf="asset">
-    <app-nft-asset-action *ngIf="owner && address && asset && wallet"
+    <app-nft-asset-action *ngIf="address && asset && wallet"
     [wallet]="wallet"
     [asset]="asset" 
     [owner]="owner"
+    [balance]="balance"
     [sellOrder]="sellOrder"
     [address]="address"
+    [contractType]="contractType"
     (refresh)="loadAsset()"
     ></app-nft-asset-action>
     <div class="row">

@@ -1,7 +1,7 @@
 <div class="asset-sell-subheader">{{'Listing' | translate}}</div>
 <div class="asset-sell-review-copy" *ngIf="coin && quantity"
 ><span>{{'Your item will be listed for' | translate}}
-    <b>{{quantity}}</b>
+    <b>{{getTotal()}}</b>
     <span class="margin-left-small"> <span title="{{coin}}"> {{coin}}</span></span>
 </span>.</div>
 <div data-testid="PostListing">

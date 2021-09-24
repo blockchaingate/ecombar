@@ -13,6 +13,8 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { randomBytes } from 'crypto';
+import BigNumber from 'bignumber.js/bignumber';
 
 @Component({
     providers: [],
@@ -26,6 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
     modalRef: BsModalRef;
     slug: string;
     collection: any;
+    supply: number;
     media: string;
     name: string;
     address: string;
@@ -73,7 +76,7 @@ import { TranslateService } from '@ngx-translate/core';
     }
 
     async ngOnInit() {
-
+      this.supply = 1;
       await this.translateServ.get('Add Properties').toPromise().then();
       this.propertiesModal = {
         type: 'properties',
@@ -126,7 +129,54 @@ import { TranslateService } from '@ngx-translate/core';
 
     async mineAssetDo(seed: Buffer, smartContractAddress: string) {
       this.spinner.show();
-      const abi = {
+      let abi;;
+
+      let args;
+      const tokenId = '0x' + randomBytes(32).toString('hex');
+      console.log('tokenId==', tokenId);
+      if(this.collection.type == 'ERC1155') {
+        abi = {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_initialOwner",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_initialSupply",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "_uri",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_data",
+              "type": "bytes"
+            }
+          ],
+          "name": "create",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        };
+        args = [this.utilServ.fabToExgAddress(this.address), tokenId, new BigNumber(this.supply).shiftedBy(18), '', '0x0'];
+      } else {
+        abi  = {
           "constant": false,
           "inputs": [
             {
@@ -139,9 +189,9 @@ import { TranslateService } from '@ngx-translate/core';
           "payable": false,
           "stateMutability": "nonpayable",
           "type": "function"
-      };
-
-      const args = [this.utilServ.fabToExgAddress(this.address)];
+        };
+        args = [this.utilServ.fabToExgAddress(this.address)];
+      }
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(seed, smartContractAddress, abi, args);
 
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
@@ -155,12 +205,17 @@ import { TranslateService } from '@ngx-translate/core';
         properties: this.properties,
         levels: this.levels,
         stats: this.stats,
+        quantity: this.supply,
         smartContractAddress: this.collection.smartContractAddress,
         txhex: txhex,
         creator: this.address,
-        unlockableContent: this.unlockableContent
+        unlockableContent: this.unlockableContent,
+        tokenId: null
         //unlockableContent: this.unlockableContent ? this.utilServ.encrypt(publicKey, this.unlockableContent) : '',
         //unlockableContent: this.unlockableContent ? this.utilServ.encrypt(environment.PUBLIC_KEY, this.unlockableContent) : ''
+      }
+      if(this.collection.type == 'ERC1155') {
+        asset.tokenId = tokenId;
       }
 
       this.assetServ.create(asset).subscribe(

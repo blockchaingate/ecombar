@@ -52,6 +52,7 @@
     </app-form-trait>
     <app-levels-list [levels]="stats"></app-levels-list>
     
+    <app-textbox *ngIf="collection && (collection.type == 'ERC1155')" [title]="'Supply' | translate" [(ngModel)]="supply"></app-textbox>
     
     <app-textarea-switch [(ngModel)]="unlockableContent"></app-textarea-switch>
     

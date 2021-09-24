@@ -38,7 +38,7 @@ const routes: Routes = [
       import('./modules/nft/nft.module').then(m => m.NftModule)
   },
   {
-    path: '', redirectTo: '/home', pathMatch: 'full'
+    path: '', redirectTo: '/nft', pathMatch: 'full'
   }
 ];
 

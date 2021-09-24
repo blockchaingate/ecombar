@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import BigNumber from 'bignumber.js/bignumber';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
   export class NftAssetSellSummaryListingComponent implements OnInit {
     @Output() postListing = new EventEmitter();
     @Input() coin: string;
+    @Input() price: number;
     @Input() quantity: number;    
     constructor(
       
@@ -22,6 +24,12 @@ import { Router } from '@angular/router';
             
     }
 
+    getTotal() {
+      if(this.price && this.quantity) {
+        return new BigNumber(this.price).multipliedBy(new BigNumber(this.quantity)).toNumber();
+      }
+      return '';
+    }
     postListingDo() {
       this.postListing.emit();
     }
