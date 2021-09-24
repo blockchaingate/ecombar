@@ -411,15 +411,10 @@ export class NftPortService {
   }
 
   atomicMatch(sell: NftOrder, buy: NftOrder, metadata) {
-    console.log('buy.getCalldata()==', buy.getCalldata());
-    console.log('sell.getCalldata()==', sell.getCalldata());
-    console.log('buy.getReplacementPattern()==', buy.getReplacementPattern());
-    console.log('sell.getReplacementPattern()==', sell.getReplacementPattern());
     let total = buy.getBasePrice();
     if(buy.amount) {
       total = new BigNumber(total).multipliedBy(new BigNumber(buy.amount)).toFixed();
     }
-    console.log('total=', total);
     const args = [
       [
         buy.getExchange(), buy.getMaker(), buy.getTaker(), 

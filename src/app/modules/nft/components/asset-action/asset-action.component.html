@@ -1,29 +1,51 @@
 
-<div class="OrderManagerreact__DivContainer-rw3i3h-0 eyduij">
-    <div class="OrderManager--cta-container">
-        <div *ngIf="isOwner || (balance > 0)">
-            <div *ngIf="!sellOrder" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="sell()" data-testid="ActionButton" role="button" tabindex="0">
-                <div class="ActionButton--content " style="min-width: 120px;">{{'Sell' | translate}}</div>
-            </div>  
-            <div *ngIf="sellOrder">
-                <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--tertiary ActionButton--light ActionButton--iconOnly OrderManager--second-button" (click)="cancelListing()" data-testid="ActionButton" role="button" tabindex="0" type="tertiary">
-                    <div class="ActionButton--content ">{{'Cancel Listing' | translate}}</div>
-                </div>
-                <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light " data-testid="ActionButton" role="button" tabindex="0" (click)="priceChange()">
-                    <div class="ActionButton--content " style="min-width: 120px;">{{'Price Change' | translate}}</div>
-                </div>                
+<div class="d-flex justify-content-between">
+    <div *ngIf="sellOrder" class="pt-2 pl-2">
+
+        <div>
+            Seller:{{getSeller()}}
+        </div>
+
+        <div class="d-flex">
+            <div class="pr-2">
+                Amount:{{sellOrder.amount ? sellOrder.amount : 1}}
+            </div>
+            <div class="pr-2">
+                Price:{{sellOrder.basePrice}}
+            </div>
+            <div>
+                Total:{{getSellOrderTotal()}}
             </div>
         </div>
-        <div *ngIf="sellOrder" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="buy()" data-testid="ActionButton" role="button" tabindex="0">
-            <div class="ActionButton--content " style="min-width: 120px;">{{'Buy' | translate}}</div>
-        </div>  
 
-        <!--
-        <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="validate()" data-testid="ActionButton" role="button" tabindex="0">
-            <div class="ActionButton--content " style="min-width: 120px;">Validate</div>
-        </div> 
-        -->        
+    </div>
+    <div class="OrderManagerreact__DivContainer-rw3i3h-0 eyduij">
+        <div class="OrderManager--cta-container">
+            <div *ngIf="isOwner || (balance > 0)">
+                <div *ngIf="!sellOrder" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="sell()" data-testid="ActionButton" role="button" tabindex="0">
+                    <div class="ActionButton--content " style="min-width: 120px;">{{'Sell' | translate}}</div>
+                </div>  
+            </div>
+            <div *ngIf="sellOrder">
+                <div *ngIf="isSellOrderOwner()">
+                    <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--tertiary ActionButton--light ActionButton--iconOnly OrderManager--second-button" (click)="cancelListing()" data-testid="ActionButton" role="button" tabindex="0" type="tertiary">
+                        <div class="ActionButton--content ">{{'Cancel Listing' | translate}}</div>
+                    </div>
+                    <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light " data-testid="ActionButton" role="button" tabindex="0" (click)="priceChange()">
+                        <div class="ActionButton--content " style="min-width: 120px;">{{'Price Change' | translate}}</div>
+                    </div>                
+                </div>
+    
+                <div *ngIf="!isSellOrderOwner()" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="buy()" data-testid="ActionButton" role="button" tabindex="0">
+                    <div class="ActionButton--content " style="min-width: 120px;">{{'Buy' | translate}}</div>
+                </div> 
+     
+            </div>
+    
+          
+        </div>
     </div>
 </div>
+
 
 <ngx-bootstrap-spinner></ngx-bootstrap-spinner>
