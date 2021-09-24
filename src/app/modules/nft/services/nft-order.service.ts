@@ -38,9 +38,9 @@ export class NftOrderService {
     return this.http.get(url);      
   }
 
-  atomicMatch(owner: string, makerOrderId: string, takerOrder: any, txhex: string) {
+  atomicMatch(owner: string, makerOrderId: string, takerOrder: any, txhex: string, balances) {
     const data = {
-      owner, makerOrderId, takerOrder, txhex
+      owner, makerOrderId, takerOrder, txhex, balances
     };
 
     const url = environment.endpoints.blockchaingate + 'nft-order/atomicMatch';

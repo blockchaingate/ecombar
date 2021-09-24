@@ -40,18 +40,14 @@ export class NftPortService {
   }
 
   createBuyOrderERC1155(taker: string, sellOrder: NftOrder) {
-    console.log('1==');
-    console.log('sellOrder=', sellOrder);
+
     const order = sellOrder.clone();
-    console.log('2==');
     order.tokenId = sellOrder.tokenId;
     order.maker = taker;
     order.side = 0;
     order.taker = sellOrder.maker;
-    console.log('amount=', sellOrder.amount);
     order.calldata = this.getSafeTransferFromAbi(nullAddress, taker, sellOrder.tokenId, sellOrder.amount);
-    console.log('order.calldata11111==',order.calldata);
-    console.log('3==');
+
     order.replacementPattern = '0x00000000'
       + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
       + '0000000000000000000000000000000000000000000000000000000000000000'
@@ -735,7 +731,7 @@ export class NftPortService {
     const salt = this.utilServ.getRandomInteger();
     const order = new NftOrder(exchange, maker, taker, makerRelayerFee, 
     0, makerProtocolFee, 0, feeRecipient, feeMethod, side, saleKind, smartContractAddress, howToCall,
-    callData, replacementPattern, null, null, coinType, price, 0, listingTime, 
+    callData, replacementPattern, null, null, coinType, new BigNumber(price).multipliedBy(new BigNumber(quantity)).toNumber(), 0, listingTime, 
     0, salt);
 
     order.tokenId = tokenId;

@@ -28,7 +28,7 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
     @Input() owner: string;
     @Input() wallet: any;
     @Input() contractType: string;
-    
+    @Input() balances: any;
     
     @Output() refresh = new EventEmitter();
     @Input() sellOrder: NftOrder;
@@ -208,24 +208,59 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
       console.log('buyorder=', buyorder.toString());
       
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.sellOrder, buyorder, metadata);
-      
 
-
-      /*
-      this.nftPortServ.ordersCanMatch(buyorder, this.sellOrder).subscribe(
-        (ret:any) => {
-          console.log('ret for can match=', ret);
-        }
-      );
-      */
 
 
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
         seed, environment.addresses.smartContract.NFT_Exchange, 
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
       
+      const balances = this.balances;
       
-      this.nftOrderServ.atomicMatch(this.owner, this.sellOrder.id, buyorder, txhex).subscribe(
+      if(this.contractType == 'ERC1155') {
+        
+        const buyerAddress = this.utilServ.exgToFabAddress(buyorder.maker);
+        const sellerAddress = this.utilServ.exgToFabAddress(buyorder.taker);
+        console.log('buyerAddress==', buyerAddress);
+        console.log('sellerAddress==', sellerAddress);
+        const quantity = this.sellOrder.amount;
+        console.log('quantity==', quantity);
+        let buyerItemExisted = false;
+        for(let i = 0; i < balances.length; i++) {
+          const balance = balances[i];
+          if(balance.owner == sellerAddress) {
+            balance.quantity -= quantity;
+            if(balance.quantity == 0) {
+              balances.splice(i, 1);
+              i --;
+              continue;
+            } else 
+            if(balance.quantity < 0) {
+              this.toastr.error('not enough balance for seller.');
+              return;
+            }
+          } else 
+          if(balance.owner == buyerAddress) {
+            balance.quantity += quantity;
+            buyerItemExisted = true;
+          }
+        }
+  
+        if(!buyerItemExisted) {
+          balances.push(
+            {
+              owner: buyerAddress,
+              quantity: quantity
+            }
+          );
+        }
+
+        console.log('balances=', balances);
+      }
+
+
+
+      this.nftOrderServ.atomicMatch(this.owner, this.sellOrder.id, buyorder, txhex, balances).subscribe(
         (res: any) => {
           console.log('res from atomicMatch=', res);
           this.spinner.hide();

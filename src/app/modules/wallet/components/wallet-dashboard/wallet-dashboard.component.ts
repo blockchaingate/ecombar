@@ -27,6 +27,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 import { WalletService } from 'src/app/modules/shared/services/wallet.service';
 import { LoginSettingModal } from '../../modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phrase.modal';
+import { NftAssetService } from 'src/app/modules/nft/services/nft-asset.service';
 
 @Component({
   selector: 'app-admin-wallet-dashboard',
@@ -40,6 +41,7 @@ export class WalletDashboardComponent implements OnInit{
   wallet: any;
   subtab: string;
   addresses: any;
+  nftAssets: any;
   withdrawAmount: number;
   currentCoinId: number;
   gasAmount: number;
@@ -82,6 +84,7 @@ export class WalletDashboardComponent implements OnInit{
       private storageServ: StorageService,
       private coinServ: CoinService,
       public ngxSmartModalService: NgxSmartModalService,
+      private nftAssetServ: NftAssetService,
       private kanbanServ: KanbanService,
       private route: ActivatedRoute,
       private router: Router) {
@@ -714,11 +717,39 @@ export class WalletDashboardComponent implements OnInit{
       this.router.navigate(['/wallet/import-wallet']);
     }
     
+    getNftAssetBalance(asset) {
+      if(!asset.balances || asset.balances.length == 0) {
+        return 1;
+      }
+      console.log('asset.balances===', asset.balances);
+      console.log('this.walletAddress', this.walletAddress);
+      const myBalance = asset.balances.filter(item => item.owner == this.walletAddress);
+      if(myBalance && myBalance.length > 0) {
+        return myBalance[0].quantity;
+      }
+      return 0;
+    }
+
+    sellNftAsset(asset) {
+      this.router.navigate(['/nft/assets/' + asset.smartContractAddress + '/' + asset.tokenId + '/sell']);
+    }
+
+    sendNftAsset(asset) {
+
+    }
+
     loadWallet() {
       const addresses = this.wallet.addresses;
       this.addresses = addresses;
       const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
       this.walletAddress = walletAddressItem.address;
+      this.nftAssetServ.getAllByOwner(this.walletAddress).subscribe(
+        (ret: any) => {
+          if(ret && ret.ok) {
+            this.nftAssets = ret._body;
+          }
+        }
+      );
       this.kanbanAddress = this.utilServ.fabToExgAddress(this.walletAddress);
       this.refreshGas();
       this.refreshAssets();

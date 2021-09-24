@@ -206,6 +206,12 @@ import BigNumber from 'bignumber.js/bignumber';
         levels: this.levels,
         stats: this.stats,
         quantity: this.supply,
+        balances: [
+          {
+              owner: this.address,
+              quantity: this.supply
+          }
+        ],
         smartContractAddress: this.collection.smartContractAddress,
         txhex: txhex,
         creator: this.address,

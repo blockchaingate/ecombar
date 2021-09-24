@@ -25,6 +25,7 @@ import BigNumber from 'bignumber.js/bignumber';
     listings: any;
     offers: any;
     balance: number;
+    balances: any;
     collection: any;
     address: string;
     contractType: string;
@@ -168,6 +169,7 @@ import BigNumber from 'bignumber.js/bignumber';
             this.asset = res._body;
             console.log('this.asset=', this.asset);
             if(this.asset) {
+              this.balances = this.asset.balances;
               if(this.asset.orders && this.asset.orders.length > 0) {
                 const sellOrders = this.asset.orders.filter(item => item.side == 1);              
                 //const activeSellOrders = sellOrders.filter(item => !item.txid && (item.maker == this.utilServ.fabToExgAddress(this.owner)));
