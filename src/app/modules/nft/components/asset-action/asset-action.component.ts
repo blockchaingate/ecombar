@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { ToastrService } from 'ngx-toastr';
 import { NftCancelListingComponent } from '../../modals/cancel-listing/cancel-listing.component';
 import { NftPriceChangeComponent } from '../../modals/price-change/price-change.component';
+import BigNumber from 'bignumber.js';
 
 @Component({
     providers: [],
@@ -91,16 +92,33 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
       const price = this.newPriceEntity.quantity;
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
-      const order: NftOrder = this.nftPortServ.createOrder(
-        addressHex, 
-        null,
-        this.asset.smartContractAddress, 
-        this.asset.tokenId,
-        coinType, 
-        price,
-        makerRelayerFee,
-        1);
+      let order: NftOrder;
 
+      if(this.contractType == 'ERC1155') {
+        order = this.nftPortServ.createOrderERC1155(
+          addressHex, 
+          null,
+          this.asset.smartContractAddress, 
+          this.asset.tokenId,
+          coinType, 
+          price,
+          this.sellOrder.amount,
+          makerRelayerFee,
+          1);
+      } else {
+        order = this.nftPortServ.createOrder(
+          addressHex, 
+          null,
+          this.asset.smartContractAddress, 
+          this.asset.tokenId,
+          coinType, 
+          price,
+          makerRelayerFee,
+          1);
+      }
+
+
+      
 
 
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
@@ -176,6 +194,24 @@ import { NftPriceChangeComponent } from '../../modals/price-change/price-change.
         }
       );
 
+    }
+
+    isSellOrderOwner() {
+      const seller = this.utilServ.exgToFabAddress(this.sellOrder.maker) ;
+      return seller == this.address;
+    }
+
+    getSellOrderTotal() {
+      let total = this.sellOrder.basePrice.toString();
+      if(this.sellOrder.amount) {
+        total = new BigNumber(total).multipliedBy(new BigNumber(this.sellOrder.amount)).toString();
+      }
+      total = total + ' ' + this.utilServ.getCoinNameByTypeId(this.sellOrder.coinType);
+      return total;
+    }
+    getSeller() {
+      const seller = this.utilServ.exgToFabAddress(this.sellOrder.maker) ;
+      return seller;
     }
 
     async buyDo(seed: Buffer) {

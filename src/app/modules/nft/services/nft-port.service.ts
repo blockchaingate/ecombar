@@ -45,6 +45,7 @@ export class NftPortService {
     order.tokenId = sellOrder.tokenId;
     order.maker = taker;
     order.side = 0;
+    order.amount = sellOrder.amount;
     order.taker = sellOrder.maker;
     order.calldata = this.getSafeTransferFromAbi(nullAddress, taker, sellOrder.tokenId, sellOrder.amount);
 
@@ -331,6 +332,10 @@ export class NftPortService {
   }
 
   hashToSign(order: NftOrder) {
+    let total = order.getBasePrice();
+    if(order.amount) {
+      total = new BigNumber(total).multipliedBy(order.amount).toFixed()
+    }
     const args = [
       [
         order.getExchange(), order.getMaker(), order.getTaker(),  
@@ -338,7 +343,7 @@ export class NftPortService {
       ],
       [
         order.getMakerRelayerFee(), order.getTakerRelayerFee(), order.getMakerProtocolFee(), 
-        order.getTakerProtocolFee(), order.getCoinType(), order.getBasePrice(), order.getExtra(), 
+        order.getTakerProtocolFee(), order.getCoinType(), total, order.getExtra(), 
         order.getListingTime(), order.getExpirationTime(), order.getSalt()
       ],
       order.getFeeMethod(),
@@ -406,13 +411,9 @@ export class NftPortService {
   }
 
   atomicMatch(sell: NftOrder, buy: NftOrder, metadata) {
-    console.log('buy.getCalldata()==', buy.getCalldata());
-    console.log('sell.getCalldata()==', sell.getCalldata());
-    console.log('buy.getReplacementPattern()==', buy.getReplacementPattern());
-    console.log('sell.getReplacementPattern()==', sell.getReplacementPattern());
     let total = buy.getBasePrice();
     if(buy.amount) {
-      total = new BigNumber(total).multipliedBy(new BigNumber(buy.amount)).toNumber().toString();
+      total = new BigNumber(total).multipliedBy(new BigNumber(buy.amount)).toFixed();
     }
     const args = [
       [
