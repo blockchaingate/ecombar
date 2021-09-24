@@ -175,10 +175,18 @@ import BigNumber from 'bignumber.js/bignumber';
                 //const activeSellOrders = sellOrders.filter(item => !item.txid && (item.maker == this.utilServ.fabToExgAddress(this.owner)));
                 const activeSellOrders = sellOrders.filter(item => !item.txid);
                 this.listings = sellOrders;
-                this.offers = this.asset.orders.filter(item => item.side == 0);   
 
+                this.offers = this.asset.orders.filter(item => item.side == 0);   
+                console.log('listings=', this.listings);
                 if(activeSellOrders && activeSellOrders.length > 0) {
-                  this.sellOrder = NftOrder.from(activeSellOrders[activeSellOrders.length - 1]);
+                  let lowestPriceSellOrder = activeSellOrders[0];
+                  for(let i=1; i<activeSellOrders.length; i++) {
+                    const item = activeSellOrders[i];
+                    if(activeSellOrders.basePrice > item.basePrice) {
+                      lowestPriceSellOrder = item;
+                    }
+                  }
+                  this.sellOrder = NftOrder.from(lowestPriceSellOrder);
                   console.log('this.sellOrder====', this.sellOrder);
                 }
               }  

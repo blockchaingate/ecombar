@@ -9,18 +9,18 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
   export class NftAssetListingComponent implements OnInit {
     @Input() listings: any;
     @Input() address: string;
-    @Input() owner: string;
 
-    isOwner: boolean;
+
     constructor(private utilServ: UtilService) {}
     ngOnInit() {
-      this.isOwner = false;
-      if(this.owner && this.address) {
-        this.isOwner = this.owner == this.address;
-      }    
+  
       
     }
 
+    isOwner(listing) {
+      const seller = this.utilServ.exgToFabAddress(listing.maker);
+      return seller == this.address;
+    }
 
     addressDisplay(address: string) {
       return this.utilServ.addressDisplay(address);
