@@ -67,7 +67,11 @@ import { NftOrderService } from '../../services/nft-order.service';
     takeAction(event) {
       console.log('event in takeAction=', event);
       this.action = event.action;
+      //this.actionOrder = NftOrder.from(event.order);
       this.actionOrder = event.order;
+      console.log('this.actionOrder===', this.actionOrder);
+      this.actionOrder = NftOrder.from(event.order);
+      console.log('this.actionOrder2===', this.actionOrder);
       this.newPriceEntity = event.newPriceEntity;
       this.takeActionDo();
     }
@@ -437,7 +441,8 @@ import { NftOrderService } from '../../services/nft-order.service';
 
 
     cancelListingDo(seed: Buffer) {
-      this.nftOrderServ.cancel(this.actionOrder.id).subscribe(
+      console.log('this.actionOrder=', this.actionOrder);
+      this.nftOrderServ.cancel(this.actionOrder.id ? this.actionOrder.id : this.actionOrder._id ).subscribe(
         (res: any) => {
           if(res && res.ok) {
             const body = res._body;

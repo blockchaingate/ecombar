@@ -233,7 +233,7 @@ export class NftOrder {
         json.r,
         json.s,
         json.v);
-      order.id = json._id;
+      order.id = json._id ? json._id : json.id;
       order.hash = json.hash;
       order.tokenId = json.tokenId;
       order.amount = json.amount;

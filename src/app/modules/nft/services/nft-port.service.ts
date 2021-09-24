@@ -41,7 +41,7 @@ export class NftPortService {
 
   createBuyOrderERC1155(taker: string, sellOrder: NftOrder) {
 
-    const order = sellOrder.clone();
+    const order = NftOrder.from(sellOrder);
     order.tokenId = sellOrder.tokenId;
     order.maker = taker;
     order.side = 0;

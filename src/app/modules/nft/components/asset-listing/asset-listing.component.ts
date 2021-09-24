@@ -9,7 +9,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
   export class NftAssetListingComponent implements OnInit {
     @Input() listings: any;
     @Input() address: string;
-
+    @Output() onAction = new EventEmitter();
 
     constructor(private utilServ: UtilService) {}
     ngOnInit() {
@@ -28,5 +28,14 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 
     displayCoinName(coinType: number) {
       return this.utilServ.getCoinNameByTypeId(coinType);
+    }
+
+    buy(listing) {
+      console.log('buy it');
+      this.onAction.emit({action:'buy', order: listing});
+    }
+
+    cancel(listing) {
+      this.onAction.emit({action:'cancel', order: listing});
     }
   }
