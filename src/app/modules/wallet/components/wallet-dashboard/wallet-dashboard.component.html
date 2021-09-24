@@ -10,7 +10,10 @@
             {{'My Wallet' | translate}}
         </div>
         <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'assets' ? 'current-tab' : 'text-black'" (click)="changeTab('assets')">
-            {{'My Assets' | translate}}
+            {{'Exchangily Assets' | translate}}
+        </div>
+        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'nft-assets' ? 'current-tab' : 'text-black'" (click)="changeTab('nft-assets')">
+            {{'Nft Assets' | translate}}
         </div>
   </div>
     
@@ -188,5 +191,70 @@
             </div>
         </div>
     </div>       
+  </div>
+
+  <div *ngIf="currentTab == 'nft-assets'">
+    <div class="card-section my-3">
+        <div class="card">
+            <div class="container">
+
+                <ul class="responsive-table">
+                    <li class="table-header">
+                      <div class="col col-3">{{'Collection' | translate}}</div>
+                      <div class="col col-4">{{'Asset' | translate}}</div>
+                      <div class="col col-2">{{'Balance' | translate}}</div>
+                      <div class="col col-3"></div>
+                    </li>
+                    <li class="table-row" *ngFor="let asset of nftAssets">
+                      <div class="col col-3 text-black" data-label="{{'Collection' | translate}}">
+                          <div class="d-flex">
+                              <div>
+                                <div>
+                                    {{asset.collection?.name}}
+                                  </div>
+                                  <div>
+                                      ({{asset.collection?.type ? asset.collection?.type : 'ERC721'}})
+                                  </div>
+                              </div>
+                              <div class="ml-2">
+                                <img *ngIf="asset.collection?.image" class="img-avatar" [src]="asset.collection?.image">
+                              </div>
+                          </div>
+
+
+                        
+                      </div>
+                      <div class="col col-4" data-label="{{'Asset' | translate}}">
+                        {{asset.name}}
+                        <img *ngIf="asset?.media" class="img-avatar" [src]="asset.media">
+                      </div>
+                      <div class="col col-2" data-label="{{'Balance' | translate}}">
+                        {{getNftAssetBalance(asset)}}
+                      </div>
+                      <div class="col col-3" data-label="{{'Operations' | translate}}">
+                          <div class="d-flex">
+                            <div class="m-1 py-3 text-center">
+                                <div class="ActionButtonrContainer " (click)="sellNftAsset(asset)">
+                                    <div class="ActionButton--content"  style="min-width: 40px;">
+                                        {{'Sell' | translate}}
+                                    </div>
+                                </div> 
+                            </div>  
+
+
+                            <div class="m-1 py-3 text-center">
+                                <div class="ActionButtonrContainer ActionButton--secondary" (click)="sendNftAsset(asset)">
+                                    <div class="ActionButton--content"  style="min-width: 40px;">
+                                        {{'Send' | translate}}
+                                    </div>
+                                </div> 
+                            </div>  
+                          </div> 
+                      </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
   </div>
 </div>
