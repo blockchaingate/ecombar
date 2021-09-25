@@ -268,7 +268,7 @@ export class NftOrder {
         listingTime: this.getListingTime(),
         expirationTime: this.getExpirationTime(),
         salt: this.getSalt(),
-
+        amount: this.amount,
         r: this.getR(),
         s: this.getS(),
         v: this.getV()

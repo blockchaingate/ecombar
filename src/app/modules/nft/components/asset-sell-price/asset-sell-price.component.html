@@ -23,9 +23,21 @@
             </div>
             <div class="Input--prefix"></div>
             <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="{{'Price' | translate}}" spellcheck="false" type="number" 
-            [(ngModel)]="quantity" (ngModelChange)="emitEntity()">
+            [(ngModel)]="price" (ngModelChange)="emitEntity()">
         </div>
+
+        <!--
+        <div class="Input--main my-3">
+            <div class="Input--label Input--left-label">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;
+            </div>
+            <div class="Input--prefix"></div>
+            <input autocapitalize="off" autocomplete="off" autocorrect="off" class="browser-default Input--input " data-testid="Input" inputmode="decimal" placeholder="{{'Quantity' | translate}}" spellcheck="false" type="number" 
+            [(ngModel)]="quantity" (ngModelChange)="emitEntity()">
+        </div>   
+        -->     
     </div>
+
 </div>
 
 <!--

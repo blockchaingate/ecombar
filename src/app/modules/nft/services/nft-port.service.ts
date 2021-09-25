@@ -80,6 +80,31 @@ export class NftPortService {
     return order;
   }
 
+  createSellOrderERC1155(maker: string, buyOrder: NftOrder) {
+    console.log('before createSellOrderERC1155=');
+    console.log('maker==', maker);
+    const order = buyOrder.clone();
+    order.tokenId = buyOrder.tokenId;
+    order.maker = maker;
+    order.side = 1;
+    order.amount = buyOrder.amount;
+    order.taker = null;
+
+    order.calldata = this.getSafeTransferFromAbi(maker, nullAddress, buyOrder.tokenId, buyOrder.amount);
+
+    order.replacementPattern = '0x00000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000';
+
+    order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    return order;
+  }
+
   isProxyAuthenticated(address: string) {
     const kanbanAddress = this.utilServ.fabToExgAddress(address);
     const abi = this.getUserAuthenticatedAbi(kanbanAddress);
@@ -336,6 +361,7 @@ export class NftPortService {
     if(order.amount) {
       total = new BigNumber(total).multipliedBy(order.amount).toFixed()
     }
+    console.log('total for hashToSign=', total)
     const args = [
       [
         order.getExchange(), order.getMaker(), order.getTaker(),  

@@ -10,7 +10,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
   export class NftAssetSellPriceComponent implements OnInit {
     selectedCoin: string;
     showPopup: boolean;
-    quantity: number;
+    price: number;
     @Input() noText: boolean;
     @Output() updateEntity = new EventEmitter<any>();
 
@@ -29,7 +29,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
       this.updateEntity.emit(
         {
           coin: this.selectedCoin,
-          quantity: this.quantity
+          price: this.price
         }
       );
     }

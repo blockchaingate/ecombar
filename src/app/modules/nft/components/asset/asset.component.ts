@@ -18,6 +18,7 @@ import { KanbanSmartContractService } from '../../../shared/services/kanban.smar
 import { environment } from '../../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { NftOrderService } from '../../services/nft-order.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     providers: [],
@@ -53,6 +54,8 @@ import { NftOrderService } from '../../services/nft-order.service';
       private eventServ: NftEventService,
       private utilServ: UtilService,
       private coinServ: CoinService,
+      private translateServ: TranslateService,
+      private orderServ: NftOrderService,
       private spinner: NgxSpinnerService,
       private nftOrderServ: NftOrderService,
       private kanbanServ: KanbanService,
@@ -65,13 +68,11 @@ import { NftOrderService } from '../../services/nft-order.service';
     }
 
     takeAction(event) {
-      console.log('event in takeAction=', event);
       this.action = event.action;
-      //this.actionOrder = NftOrder.from(event.order);
       this.actionOrder = event.order;
-      console.log('this.actionOrder===', this.actionOrder);
-      this.actionOrder = NftOrder.from(event.order);
-      console.log('this.actionOrder2===', this.actionOrder);
+      if(this.actionOrder) {
+        this.actionOrder = NftOrder.from(event.order);
+      }
       this.newPriceEntity = event.newPriceEntity;
       this.takeActionDo();
     }
@@ -278,8 +279,13 @@ import { NftOrderService } from '../../services/nft-order.service';
         } else
         if(this.action == 'change') {
           this.priceChangeDo(seed);
+        } else
+        if(this.action == 'makeOffer') {
+          this.makeOfferDo(seed);
+        } else
+        if(this.action == 'acceptOffer') {
+          this.acceptOfferDo(seed);
         }
-        
       });
 
     }
@@ -316,7 +322,7 @@ import { NftOrderService } from '../../services/nft-order.service';
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(this.actionOrder, buyorder, metadata);
 
 
-
+      console.log('atomicMathAbiArgs in buyDo===', atomicMathAbiArgs);
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
         seed, environment.addresses.smartContract.NFT_Exchange, 
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
@@ -385,7 +391,7 @@ import { NftOrderService } from '../../services/nft-order.service';
     async priceChangeDo(seed: Buffer) {
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey;      
-      const makerRelayerFee = 250;
+      const makerRelayerFee = 0;
       const coinType = this.coinServ.getCoinTypeIdByName(this.newPriceEntity.coin);
       const price = this.newPriceEntity.quantity;
       const addressHex = this.utilServ.fabToExgAddress(this.address);
@@ -454,5 +460,121 @@ import { NftOrderService } from '../../services/nft-order.service';
         }
       );
     }   
+
+
+    async makeOfferDo(seed: Buffer) {
+      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const privateKey = keyPair.privateKeyBuffer.privateKey;      
+      const makerRelayerFee = 0;
+      const coinType = this.coinServ.getCoinTypeIdByName(this.newPriceEntity.coin);
+      const price = this.newPriceEntity.price;
+      const quantity = this.newPriceEntity.quantity;
+      console.log('price=', price);
+      console.log('quantity=', quantity);
+      const addressHex = this.utilServ.fabToExgAddress(this.address);
+
+      let order: NftOrder;
+      if(this.contractType == 'ERC1155') {
+        order = this.nftPortServ.createOrderERC1155(
+          addressHex,
+          null, 
+          this.asset.smartContractAddress, 
+          this.asset.tokenId,
+          coinType, 
+          price,
+          quantity,
+          makerRelayerFee,
+          0);
+      } else {
+        order = this.nftPortServ.createOrder(
+          addressHex,
+          null, 
+          this.asset.smartContractAddress, 
+          this.asset.tokenId,
+          coinType, 
+          price,
+          makerRelayerFee,
+          0);
+      }
+
+
+      const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
+      order.hash = hash;
+      order.hashForSignature = hashForSignature;
+      order.r = signature.r;
+      order.s = signature.s;
+      order.v = signature.v;
+
+      this.orderServ.create(order).subscribe(
+        (res: any) => {
+          if(res && res.ok) {
+            this.spinner.hide();
+            this.toastr.success(this.translateServ.instant('Make offer successfully'));
+            
+          }
+        }
+      );
+    }
+
+
+
+    async acceptOfferDo(seed: Buffer) {
+      console.log('this.actionOrder=', this.actionOrder);
+      const sellerAddress = this.utilServ.fabToExgAddress(this.address);
+      const buyorder = this.actionOrder;
+      let sellorder: NftOrder
+      if(buyorder.amount) {
+        sellorder = this.nftPortServ.createSellOrderERC1155(
+          sellerAddress, buyorder);
+      } else {
+        sellorder = this.nftPortServ.createSellOrder(
+          sellerAddress, buyorder);
+      }
+
+
+      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const privateKey = keyPair.privateKeyBuffer.privateKey;
+      const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(sellorder, privateKey);
+      sellorder.hash = hash;
+      sellorder.hashForSignature = hashForSignature;
+      sellorder.r = signature.r;
+      sellorder.s = signature.s;
+      sellorder.v = signature.v;
+
+      sellorder.salt = this.utilServ.getRandomInteger();
+
+      const metadata = null;
+      console.log('sellOrder=', sellorder.toString());
+      console.log('buyorder=', buyorder.toString());
+      const atomicMathAbiArgs = this.nftPortServ.atomicMatch(sellorder, buyorder, metadata);
+
+      //console.log('atomicMathAbiArgs in acceptOfferDo===', atomicMathAbiArgs);
+
+      /*
+      this.nftPortServ.ordersCanMatch(buyorder, sellorder).subscribe(
+        (ret: any) => {
+          console.log('ret for can match=', ret);
+        }
+      );
+      */
+     
+      const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
+        seed, environment.addresses.smartContract.NFT_Exchange, 
+        atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
+      
+      this.orderServ.atomicMatch(this.owner, buyorder.id, sellorder, txhex, []).subscribe(
+        (res: any) => {
+          console.log('res from atomicMatch=', res);
+          this.spinner.hide();
+          if(res && res.ok) {
+            this.toastr.info('Post the transaction successfully');
+          }else {
+            this.toastr.error('Error while posting the transaction');
+          }
+        }
+      );        
+    }
+
+
 
   }
