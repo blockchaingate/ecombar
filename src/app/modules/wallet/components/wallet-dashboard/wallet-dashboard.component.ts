@@ -759,7 +759,7 @@ export class WalletDashboardComponent implements OnInit{
 
     async sendNftAssetDo(seed, contractType, asset, to, amount) {
       const from = this.utilServ.fabToExgAddress(this.walletAddress);
-      to = this.utilServ.fabToExgAddress(to);
+      const toHex = this.utilServ.fabToExgAddress(to);
       const smartContractAddress = asset.smartContractAddress;
       const tokenId = asset.tokenId;
       let abi;
@@ -799,33 +799,13 @@ export class WalletDashboardComponent implements OnInit{
           "stateMutability": "nonpayable",
           "type": "function"
         };
-        args = [from, to, tokenId, amount, '0x0'];
+        args = [from, toHex, tokenId, amount, '0x0'];
         console.log('args==', args);
         console.log('smartContractAddress=', smartContractAddress);
         ret = await this.kanbanSmartContractServ.execSmartContract(seed, smartContractAddress, abi, args);
         console.log('ret2 from transfer erc1155==', ret);
       } else {
-        abi = {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "to",
-              "type": "address"
-            },
-            {
-              "name": "tokenId",
-              "type": "uint256"
-            }
-          ],
-          "name": "approve",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        };
-        args = [to, tokenId];
-        ret = await this.kanbanSmartContractServ.execSmartContract(seed, smartContractAddress, abi, args);
-        if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+
           abi = {
             "constant": false,
             "inputs": [
@@ -848,20 +828,22 @@ export class WalletDashboardComponent implements OnInit{
             "stateMutability": "nonpayable",
             "type": "function"
           };
-          args = [from, to, tokenId];
-          ret = await this.kanbanSmartContractServ.execSmartContract(seed, smartContractAddress, abi, args);
-          if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-            this.toastr.success('transfer was made successfully.');
-          } else {
-            this.toastr.error('transfer failed.');
-          }
-        } else {
-          this.toastr.error('transfer failed.');
-        }
-        
+          args = [from, toHex, tokenId];
+          const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(seed, smartContractAddress, abi, args);
+          const body = {
+            txhex,
+            owner: to
+          };
 
-
-        console.log('ret2==', ret);
+          this.nftAssetServ.updateWithHex(asset._id, body).subscribe(
+            (ret: any) => {
+              console.log('ret for updated===', ret);
+              if(ret && ret.ok) {
+                this.toastr.success('asset ' + asset.name + ' was sent successfully');
+              }
+            }
+          );
+          
       }
     }
 

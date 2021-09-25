@@ -42,6 +42,10 @@ export class NftAssetService {
     return this.http.get(url);    
   }
 
+  updateWithHex(id, body) {
+    const url = environment.endpoints.blockchaingate  + 'nft-asset/' + id + '/update/txhex';
+    return this.http.post(url, body);
+  }
   transfer(smartContractAddress: string, tokenId: string, newOwner: string, txhex: string) {
     const url = environment.endpoints.blockchaingate  + 'nft-asset/smartContractAddressTokenId/' 
     + smartContractAddress + '/' + tokenId + '/transfer';
