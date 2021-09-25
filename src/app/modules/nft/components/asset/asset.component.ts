@@ -367,7 +367,6 @@ import { TranslateService } from '@ngx-translate/core';
           );
         }
 
-        console.log('balances=', balances);
       }
 
 
@@ -547,21 +546,59 @@ import { TranslateService } from '@ngx-translate/core';
       console.log('buyorder=', buyorder.toString());
       const atomicMathAbiArgs = this.nftPortServ.atomicMatch(sellorder, buyorder, metadata);
 
-      //console.log('atomicMathAbiArgs in acceptOfferDo===', atomicMathAbiArgs);
 
-      /*
-      this.nftPortServ.ordersCanMatch(buyorder, sellorder).subscribe(
-        (ret: any) => {
-          console.log('ret for can match=', ret);
+      
+      const balances = this.balances;
+      
+      console.log('old balances=', balances);
+      if(this.contractType == 'ERC1155') {
+        
+        const buyerAddress = this.utilServ.exgToFabAddress(buyorder.maker);
+        const sellerAddress = this.utilServ.exgToFabAddress(buyorder.taker);
+        console.log('buyerAddress==', buyerAddress);
+        console.log('sellerAddress==', sellerAddress);
+        const quantity = this.actionOrder.amount;
+        console.log('quantity==', quantity);
+        let buyerItemExisted = false;
+        for(let i = 0; i < balances.length; i++) {
+          const balance = balances[i];
+          if(balance.owner == sellerAddress) {
+            balance.quantity -= quantity;
+            if(balance.quantity == 0) {
+              balances.splice(i, 1);
+              i --;
+              continue;
+            } else 
+            if(balance.quantity < 0) {
+              this.toastr.error('not enough balance for seller.');
+              return;
+            }
+          } else 
+          if(balance.owner == buyerAddress) {
+            balance.quantity += quantity;
+            buyerItemExisted = true;
+          }
         }
-      );
-      */
+  
+        if(!buyerItemExisted) {
+          balances.push(
+            {
+              owner: buyerAddress,
+              quantity: quantity
+            }
+          );
+        }
+
+      }
+
+      console.log('new balances=', balances);
+
      
       const txhex = await this.kanbanSmartContract.getExecSmartContractHex(
         seed, environment.addresses.smartContract.NFT_Exchange, 
         atomicMathAbiArgs.abi, atomicMathAbiArgs.args);
       
-      this.orderServ.atomicMatch(this.owner, buyorder.id, sellorder, txhex, []).subscribe(
+      this.orderServ.atomicMatch(this.owner, buyorder.id, sellorder, txhex, balances).subscribe(
         (res: any) => {
           console.log('res from atomicMatch=', res);
           this.spinner.hide();
