@@ -6,7 +6,7 @@ import { UtilService } from './util.service';
 import Common from 'ethereumjs-common';
 import KanbanTxService from './kanban.tx.service';
 import { Web3Service } from './web3.service';
-
+var addresses = new Map();
 @Injectable({ providedIn: 'root' })
 export class KanbanSmartContractService {
     baseUrl = environment.endpoints.kanban;
@@ -36,8 +36,20 @@ export class KanbanSmartContractService {
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       let gasPrice = environment.chains.KANBAN.gasPrice;
       let gasLimit = 8000000;
-      const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
-  
+      let nonce;
+      const address = keyPairsKanban.address;
+      
+      if(addresses.get(address)) {
+        nonce = addresses.get(address) + 1;
+        addresses.set(address, nonce);
+      } {
+        nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(address));
+        addresses.set(address, nonce);
+        console.log('addresses=', addresses);
+      }
+
+      console.log('noce=', nonce);
+
       let kanbanValue = 0;
   
       const kanbanData = this.formExecKanbanSmartContractABI(abi, args);
