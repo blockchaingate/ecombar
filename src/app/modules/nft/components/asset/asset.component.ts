@@ -393,7 +393,7 @@ import { TranslateService } from '@ngx-translate/core';
       const privateKey = keyPair.privateKeyBuffer.privateKey;      
       const makerRelayerFee = 0;
       const coinType = this.coinServ.getCoinTypeIdByName(this.newPriceEntity.coin);
-      const price = this.newPriceEntity.quantity;
+      const price = this.newPriceEntity.price;
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
       let order: NftOrder;
@@ -469,8 +469,7 @@ import { TranslateService } from '@ngx-translate/core';
       const coinType = this.coinServ.getCoinTypeIdByName(this.newPriceEntity.coin);
       const price = this.newPriceEntity.price;
       const quantity = this.newPriceEntity.quantity;
-      console.log('price=', price);
-      console.log('quantity=', quantity);
+
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
       let order: NftOrder;

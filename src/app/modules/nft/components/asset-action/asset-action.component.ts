@@ -95,6 +95,9 @@ import BigNumber from 'bignumber.js';
     }
 
     isSellOrderOwner() {
+      if(!this.sellOrder) {
+        return false;
+      }
       const seller = this.utilServ.exgToFabAddress(this.sellOrder.maker) ;
       return seller == this.address;
     }
