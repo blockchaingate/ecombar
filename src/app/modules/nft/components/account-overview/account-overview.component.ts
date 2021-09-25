@@ -38,9 +38,12 @@ import { ToastrService } from 'ngx-toastr';
           console.log('ret=', ret);
           if (ret && ret.ok) {
             const setting = ret._body;
-            this.logo = setting.logo;
-            this.banner = setting.banner;
-            this.username = setting.username;
+            if(setting) {
+              this.logo = setting.logo;
+              this.banner = setting.banner;
+              this.username = setting.username;
+            }
+
           }
         }
       );          

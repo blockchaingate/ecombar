@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title pull-left">Make an Offer</h4>
+    <h4 class="modal-title pull-left">{{'Make Offer' | translate}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -10,7 +10,7 @@
     <app-nft-asset-sell-quantity [noText]="true" (updateQuantity)="onUpdateQuantity($event)"></app-nft-asset-sell-quantity>
     <div class="CreateCollection--actions m-1 py-3">
         <div class="ActionButtonrContainer text-center"  [ngClass]="'ActionButton--secondary'">
-            <div class="ActionButton--content" (click)="makeOffer()" style="min-width: 120px;">Make Offer</div>
+            <div class="ActionButton--content" (click)="makeOffer()" style="min-width: 120px;">{{'Make Offer' | translate}}</div>
         </div> 
     </div>    
 </div>
