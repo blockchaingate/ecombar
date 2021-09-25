@@ -765,6 +765,7 @@ export class WalletDashboardComponent implements OnInit{
       let abi;
       let args;
       let ret;
+      console.log('contractType===', contractType);
       if(contractType == 'ERC1155') {
         abi = {
           "inputs": [
@@ -802,8 +803,22 @@ export class WalletDashboardComponent implements OnInit{
         args = [from, toHex, tokenId, amount, '0x0'];
         console.log('args==', args);
         console.log('smartContractAddress=', smartContractAddress);
-        ret = await this.kanbanSmartContractServ.execSmartContract(seed, smartContractAddress, abi, args);
-        console.log('ret2 from transfer erc1155==', ret);
+        const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(seed, smartContractAddress, abi, args);
+        /*
+        const body = {
+          txhex,
+          from: from,
+          to: to
+        };
+        */
+        this.nftAssetServ.transfer(asset.smartContractAddress, asset.tokenId, this.walletAddress, to, amount, txhex).subscribe(
+          (ret: any) => {
+            console.log('ret for updated===', ret);
+            if(ret && ret.ok) {
+              this.toastr.success('asset ' + asset.name + ' was sent successfully');
+            }
+          }
+        );
       } else {
 
           abi = {
@@ -830,12 +845,8 @@ export class WalletDashboardComponent implements OnInit{
           };
           args = [from, toHex, tokenId];
           const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(seed, smartContractAddress, abi, args);
-          const body = {
-            txhex,
-            owner: to
-          };
 
-          this.nftAssetServ.updateWithHex(asset._id, body).subscribe(
+          this.nftAssetServ.transfer(asset.smartContractAddress, asset.tokenId, this.walletAddress, to, null, txhex).subscribe(
             (ret: any) => {
               console.log('ret for updated===', ret);
               if(ret && ret.ok) {
