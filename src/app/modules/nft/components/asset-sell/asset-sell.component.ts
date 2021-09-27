@@ -196,7 +196,7 @@ import { ToastrService } from 'ngx-toastr';
 
     onUpdateEntity(event) {
       this.coin = event.coin;
-      this.price = event.quantity;
+      this.price = event.price;
     }
   
     onUpdateQuantity(event) {

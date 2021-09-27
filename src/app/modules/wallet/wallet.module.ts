@@ -12,6 +12,7 @@ import { TransactionDetailComponent } from './modals/transaction-detail/transact
 import { ReceiveComponent } from './modals/receive/receive.component';
 import { SendComponent } from './modals/send/send.component';
 import { WalletComponent } from './wallet.component';
+import { SendNftComponent } from './modals/send-nft/send-nft.component';
 import { AddGasComponent } from './modals/add-gas/add-gas.component';
 import { DepositComponent } from './modals/deposit/deposit.component';
 import { WithdrawComponent } from './modals/withdraw/withdraw.component';
@@ -50,7 +51,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         DepositComponent,
         WithdrawComponent,
         LoginSettingModal,
-        ShowSeedPhraseModal
+        ShowSeedPhraseModal,
+        SendNftComponent
     ],
     imports: [
         WalletRoutingModule,

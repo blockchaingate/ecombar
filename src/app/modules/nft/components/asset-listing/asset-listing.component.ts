@@ -9,18 +9,18 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
   export class NftAssetListingComponent implements OnInit {
     @Input() listings: any;
     @Input() address: string;
-    @Input() owner: string;
+    @Output() onAction = new EventEmitter();
 
-    isOwner: boolean;
     constructor(private utilServ: UtilService) {}
     ngOnInit() {
-      this.isOwner = false;
-      if(this.owner && this.address) {
-        this.isOwner = this.owner == this.address;
-      }    
+  
       
     }
 
+    isOwner(listing) {
+      const seller = this.utilServ.exgToFabAddress(listing.maker);
+      return seller == this.address;
+    }
 
     addressDisplay(address: string) {
       return this.utilServ.addressDisplay(address);
@@ -28,5 +28,14 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 
     displayCoinName(coinType: number) {
       return this.utilServ.getCoinNameByTypeId(coinType);
+    }
+
+    buy(listing) {
+      console.log('buy it');
+      this.onAction.emit({action:'buy', order: listing});
+    }
+
+    cancel(listing) {
+      this.onAction.emit({action:'cancel', order: listing});
     }
   }

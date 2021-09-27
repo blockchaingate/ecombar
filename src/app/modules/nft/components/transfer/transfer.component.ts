@@ -92,7 +92,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
           const args = [this.utilServ.fabToExgAddress(this.to)];
           const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(
             seed, this.smartContractAddress, abi, args);
-          
+          /*
           this.assetServ.transfer(this.smartContractAddress, this.tokenId, this.to, txhex).subscribe(
                 (res: any) => {
                   if(res && res.ok) {
@@ -104,7 +104,8 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
                     
                   }
                 }
-              );          
+              );  
+          */        
       }
 
   }

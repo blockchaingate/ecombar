@@ -20,6 +20,7 @@ import { CompareComponent } from './compare/compare.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { OrderComponent } from './order/order.component';
 import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categories.component';
+import { VersionComponent } from './version/version.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -40,7 +41,8 @@ import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categ
     OrderComponent,
     ProductListWholeComponent,
     WishlistComponent,
-    SubCategoriesComponent
+    SubCategoriesComponent,
+    VersionComponent
   ],
   imports: [
     // QRCodeModule,

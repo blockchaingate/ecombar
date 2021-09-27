@@ -9,7 +9,7 @@
     [address]="address"
     [balances]="balances"
     [contractType]="contractType"
-    (refresh)="loadAsset()"
+    (onAction)="takeAction($event)"
     ></app-nft-asset-action>
     <div class="row">
         <div class="col col-5 dPgrCP">
@@ -58,9 +58,11 @@
                 <app-expansion 
                 [title]="'Listings' | translate"
                 [icon]="'local_offer'"
-                 [toggleable]="true">
-                    <app-nft-asset-listing *ngIf="owner && address" 
-                    [listings]="listings" [owner]="owner" [address]="address"></app-nft-asset-listing>
+                [toggleable]="true">
+                    <app-nft-asset-listing *ngIf="address" 
+                    [listings]="listings" 
+                    (onAction)="takeAction($event)"
+                    [address]="address"></app-nft-asset-listing>
                 </app-expansion>   
             </div>
      
@@ -69,13 +71,13 @@
                 [title]="'Offers' | translate"
                 [icon]="'toc'"
                  [toggleable]="true">
-                 <app-nft-asset-offers *ngIf="owner && address && wallet && asset" 
+                 <app-nft-asset-offers *ngIf="address && wallet && asset" 
                  [offers]="offers" 
                  [wallet]="wallet"
                  [asset]="asset"
                  [owner]="owner" 
                  [address]="address"
-                 (refresh)="loadAsset()"></app-nft-asset-offers>
+                 (onAction)="takeAction($event)"></app-nft-asset-offers>
                 </app-expansion>   
             </div>        
     

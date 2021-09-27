@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Send' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<div class="modal-body">
+    <div>
+        {{'Send to' | translate}}
+    </div>
+
+    <div>
+        <input class="form-control" type="text" placeholder="{{'To address' | translate}}" [(ngModel)]="to" name="to" required>
+    </div>
+
+    <div *ngIf="contractType == 'ERC1155'">
+        <div>
+            {{'Send amount' | translate}}
+        </div>
+        <div>
+            <input class="form-control" type="number" placeholder="{{'Send amount' | translate}}" [(ngModel)]="sendAmount" name="sendAmount" required>
+        </div>
+    </div>
+
+
+    <div class="text-center pt-3">
+
+        <div class="ActionButtonrContainer" (click)="sendAsset()">
+            <div class="ActionButton--content"  style="min-width: 40px;">
+                {{'Send' | translate}}
+            </div>
+        </div> 
+    </div>
+</div>

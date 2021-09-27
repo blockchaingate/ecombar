@@ -41,7 +41,7 @@ export class NftPortService {
 
   createBuyOrderERC1155(taker: string, sellOrder: NftOrder) {
 
-    const order = sellOrder.clone();
+    const order = NftOrder.from(sellOrder);
     order.tokenId = sellOrder.tokenId;
     order.maker = taker;
     order.side = 0;
@@ -74,6 +74,31 @@ export class NftPortService {
     order.replacementPattern = '0x00000000'
      + '0000000000000000000000000000000000000000000000000000000000000000'
      + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+     + '0000000000000000000000000000000000000000000000000000000000000000';
+
+    order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    return order;
+  }
+
+  createSellOrderERC1155(maker: string, buyOrder: NftOrder) {
+    console.log('before createSellOrderERC1155=');
+    console.log('maker==', maker);
+    const order = buyOrder.clone();
+    order.tokenId = buyOrder.tokenId;
+    order.maker = maker;
+    order.side = 1;
+    order.amount = buyOrder.amount;
+    order.taker = null;
+
+    order.calldata = this.getSafeTransferFromAbi(maker, nullAddress, buyOrder.tokenId, buyOrder.amount);
+
+    order.replacementPattern = '0x00000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
+     + '0000000000000000000000000000000000000000000000000000000000000000'
      + '0000000000000000000000000000000000000000000000000000000000000000';
 
     order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
@@ -336,6 +361,7 @@ export class NftPortService {
     if(order.amount) {
       total = new BigNumber(total).multipliedBy(order.amount).toFixed()
     }
+    console.log('total for hashToSign=', total)
     const args = [
       [
         order.getExchange(), order.getMaker(), order.getTaker(),  
@@ -578,7 +604,7 @@ export class NftPortService {
       "stateMutability": "nonpayable",
       "type": "function"
     };
-    const args = [from, to, tokenId, new BigNumber(amount).shiftedBy(18), '0x0'];
+    const args = [from, to, tokenId, new BigNumber(amount).shiftedBy(18).toFixed(), '0x0'];
 
     const abiData = this.web3Serv.getGeneralFunctionABI(abi, args);
     return abiData;

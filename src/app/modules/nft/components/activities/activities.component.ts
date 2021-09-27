@@ -29,6 +29,15 @@ import { NftEventService } from '../../services/nft-event.service';
         return this.utilServ.addressDisplay(address);
     }
 
+    getFrom(address: string) {
+        if(!address) {
+            return address;
+        }
+        if(address.indexOf('0x') == 0) {
+            return this.utilServ.exgToFabAddress(address);
+        }
+        return address;
+    }
     getCoinName(coinType: number) {
         return this.coinServ.getCoinNameByTypeId(coinType);
     }

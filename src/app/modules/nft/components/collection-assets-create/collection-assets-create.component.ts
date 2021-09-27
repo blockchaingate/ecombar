@@ -174,7 +174,7 @@ import BigNumber from 'bignumber.js/bignumber';
           "stateMutability": "nonpayable",
           "type": "function"
         };
-        args = [this.utilServ.fabToExgAddress(this.address), tokenId, new BigNumber(this.supply).shiftedBy(18), '', '0x0'];
+        args = [this.utilServ.fabToExgAddress(this.address), tokenId, new BigNumber(this.supply).shiftedBy(18).toFixed(), '', '0x0'];
       } else {
         abi  = {
           "constant": false,

@@ -27,13 +27,13 @@
                     {{event.quantity}}
                 </div>
                 <div class="Row--cell Row--cellIsSpaced ">
-                    <a routerLink="/nft/accounts/{{event.from}}">
+                    <a routerLink="/nft/accounts/{{getFrom(event.from)}}">
                         {{addressDisplay(event.from)}}
                     </a>
                     
                 </div>
                 <div class="Row--cell Row--cellIsSpaced ">
-                    <a routerLink="/nft/accounts/{{event.to}}">
+                    <a routerLink="/nft/accounts/{{getFrom(event.to)}}">
                         {{addressDisplay(event.to)}}
                     </a>
                     
