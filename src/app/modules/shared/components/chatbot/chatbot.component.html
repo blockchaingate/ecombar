@@ -1,0 +1,83 @@
+<app-chatbot-content *ngIf="chatOpen"></app-chatbot-content>
+
+<div class="chatbot-preview-container">
+  <div class="d-flex">
+    <!--
+      <span class="material-icons-outlined">
+        cancel
+      </span>
+      -->
+      <button *ngIf="!chatOpen" class="drift-widget-message-preview-text drift-widget-naked-button drift-widget-message-preview-text--align-right" aria-label="Chat message from Madearn: &quot;Welcome to Madearn! Have any questions?
+  &quot; - Click to open chat" aria-live="polite">
+        <p class="">Welcome to Madearn! Have any questions?
+        </p>
+      </button>
+      <div (click)="toggleChatOpen()">
+        <img src="https://driftt.imgix.net/https%3A%2F%2Ffile2.api.drift.com%2Fdata%2Fdrift-prod-file-uploads%2F2658%252F2658d824fe07b78a046b445f4e95709a%2Favatar.svg%3FmimeType%3Dimage%252Fsvg%252Bxml?fit=max&fm=png&h=200&w=200&s=c1386402536b4bb74f59faecaba2a145" alt="Avatar">
+      </div>
+  </div>
+
+</div>
+<!--
+<div class="drift-widget-message-preview-wrapper">
+  <div class="drift-widget-message-preview drift-widget-message-preview--align-right">
+    <button class="drift-widget-naked-button drift-widget-message-close-button drift-widget-close-button--align-right" aria-label="Close Drift Widget messenger preview overlay">
+      <svg width="10" height="10" viewBox="0 0 23 23" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" fill="white" d="M9.34583 11.2L0.384011 2.23818C-0.128004 1.72617 -0.128004 0.896026 0.384011 0.384011C0.896026 -0.128004 1.72617 -0.128004 2.23818 0.384011L11.2 9.34583L20.1618 0.384011C20.6738 -0.128004 21.504 -0.128004 22.016 0.384011C22.528 0.896026 22.528 1.72617 22.016 2.23818L13.0542 11.2L22.016 20.1618C22.528 20.6738 22.528 21.504 22.016 22.016C21.504 22.528 20.6738 22.528 20.1618 22.016L11.2 13.0542L2.23818 22.016C1.72617 22.528 0.896026 22.528 0.384011 22.016C-0.128003 21.504 -0.128003 20.6738 0.384011 20.1618L9.34583 11.2Z"></path>
+      </svg>
+    </button>
+    <button class="drift-widget-naked-button drift-widget-message-preview-text drift-widget-message-preview-text--align-right" aria-label="Chat message from Paybot: &quot;Welcome to Ecombar! Have any questions?
+  &quot; - Click to open chat" aria-live="polite">
+        <p class="">Welcome to PayScale! Have any questions?
+        </p>
+    </button>
+  </div>
+</div>
+-->
+
+
+<!--
+<div class="drift-conductor-item drift-frame-controller drift-frame-controller-align-right drift-has-chat" style="right: 24px; width: 360px; max-width: none; position: fixed; z-index: 2147483647; height: 100px; bottom: 24px;">
+ <div style="background: transparent; width: 100%; max-width: 100%; height: 100%; border: none; min-width: 100%; min-height: 100%;">
+  <main role="main" class="drift-widget-chat-layout" aria-label="Drift Widget messenger icon">
+    <div class="drift-widget-message-preview-wrapper" *ngIf="!chatOpen">
+      <div class="drift-widget-message-preview drift-widget-message-preview--align-right">
+        <button class="drift-widget-naked-button drift-widget-message-close-button drift-widget-close-button--align-right" aria-label="Close Drift Widget messenger preview overlay">
+          <svg width="10" height="10" viewBox="0 0 23 23" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" fill="white" d="M9.34583 11.2L0.384011 2.23818C-0.128004 1.72617 -0.128004 0.896026 0.384011 0.384011C0.896026 -0.128004 1.72617 -0.128004 2.23818 0.384011L11.2 9.34583L20.1618 0.384011C20.6738 -0.128004 21.504 -0.128004 22.016 0.384011C22.528 0.896026 22.528 1.72617 22.016 2.23818L13.0542 11.2L22.016 20.1618C22.528 20.6738 22.528 21.504 22.016 22.016C21.504 22.528 20.6738 22.528 20.1618 22.016L11.2 13.0542L2.23818 22.016C1.72617 22.528 0.896026 22.528 0.384011 22.016C-0.128003 21.504 -0.128003 20.6738 0.384011 20.1618L9.34583 11.2Z"></path>
+          </svg>
+        </button>
+        <button class="drift-widget-naked-button drift-widget-message-preview-text drift-widget-message-preview-text--align-right" aria-label="Chat message from Paybot: &quot;Welcome to Lux! Have any questions?
+          &quot; - Click to open chat">
+          <p class="">Welcome to Madearn! Have any questions?
+          </p>
+        </button>
+      </div>
+    </div>
+    <button class="drift-widget-controller drift-widget-controller--align-right circle drift-widget-controller--avatar" 
+    [ngClass]="chatOpen ? 'drift-widget-controller--closed' : ''" 
+    (click)="toggleChatOpen()"
+    aria-label="Click to open chat with Paybot in the Drift Widget messenger - Unread messages: 2" style=""
+    style="background: rgb(45, 103, 185);">
+      <div class="drift-widget-controller-icon circle">
+        <div class="drift-controller-icon--active">
+          <div class="drift-widget-recipient-avatar circle drift-controller-icon--avatar">
+            <div class="drift-widget-avatar circle drift-controller-icon--avatar-avatar" style="background-image: url(&quot;https://driftt.imgix.net/https%3A%2F%2Ffile2.api.drift.com%2Fdata%2Fdrift-prod-file-uploads%2F2658%252F2658d824fe07b78a046b445f4e95709a%2Favatar.svg%3FmimeType%3Dimage%252Fsvg%252Bxml?fit=max&amp;fm=png&amp;h=200&amp;w=200&amp;s=c1386402536b4bb74f59faecaba2a145&quot;);">
+            </div>
+          </div>
+
+        </div>
+        <div class="drift-controller-icon--close" style="background-color: rgb(255, 255, 255);"></div>
+      </div>
+      <div class="drift-controller-icon-unread">2</div>
+    </button>
+
+    
+    
+  </main>
+
+  </div>
+ 
+
+</div>
+-->

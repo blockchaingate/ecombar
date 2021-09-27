@@ -41,6 +41,10 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
 import { PasswordModalComponent } from './components/password-modal/password-modal.component';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { StoresHeaderComponent } from './components/stores-header/stores-header.component';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { ChatbotContentComponent } from './components/chatbot/content/content.component';
+import { ChatbotContentHeaderComponent } from './components/chatbot/content/header/header.component';
+import { ChatbotContentMessageComponent } from './components/chatbot/content/message/message.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -61,7 +65,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     NftWalletAsideComponent,
     PasswordModalComponent,
     LogoutModalComponent,
-    StoresHeaderComponent
+    StoresHeaderComponent,
+    ChatbotComponent,
+    ChatbotContentComponent,
+    ChatbotContentHeaderComponent,
+    ChatbotContentMessageComponent
   ],
   imports: [
     FormsModule,
@@ -87,6 +95,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     NftHeaderComponent,
     NftFooterComponent,
     StoresHeaderComponent,
+    ChatbotComponent,
+    ChatbotContentComponent,
+    ChatbotContentHeaderComponent,
+    ChatbotContentMessageComponent,
     TranslateModule
   ],
   providers: [
