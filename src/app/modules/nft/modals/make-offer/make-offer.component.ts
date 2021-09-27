@@ -30,4 +30,7 @@ import { Subject } from 'rxjs';
         this.close();
     }
 
+    onUpdateQuantity(event) {
+      this.entity.quantity = event.quantity;
+    }
   }

@@ -8,6 +8,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   })
   export class NftAssetOverviewComponent implements OnInit {
     @Input()  asset: any;
+    @Input() balance: number;
+    @Input() collection: any;
     ngOnInit() {
           
     }

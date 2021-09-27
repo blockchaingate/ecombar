@@ -34,6 +34,7 @@ import { NftAccountFavoritesComponent } from './components/account-favorites/acc
 import { NftAssetOverviewComponent } from './components/asset-overview/asset-overview.component';
 import { NftAssetSellMethodComponent } from './components/asset-sell-method/asset-sell-method.component';
 import { NftAssetSellPriceComponent } from './components/asset-sell-price/asset-sell-price.component';
+import { NftAssetSellQuantityComponent } from './components/asset-sell-quantity/asset-sell-quantity.component';
 import { NftAssetSellIncludeEndingPrinceComponent } from './components/asset-sell-include-ending-price/asset-sell-include-ending-price.component';
 import { NftAssetSellScheduleForFutureTimeComponent } from './components/asset-sell-schedule-for-future-time/asset-sell-schedule-for-future-time.component';
 import { NftAssetSellPrivacyComponent } from './components/asset-sell-privacy/asset-sell-privacy.component';
@@ -97,6 +98,7 @@ import { EventsSearchPipe } from './pipes/events-search.pipe';
     declarations: [
       NftComponent,
       NftAdminComponent,
+      NftAssetSellQuantityComponent,
       NftActivitiesComponent,
       NftAdminSidebarComponent,
       NftAccountActivityEventTypeComponent,

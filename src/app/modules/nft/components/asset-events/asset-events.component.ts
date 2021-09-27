@@ -23,6 +23,15 @@ export class NftAssetEventsComponent implements OnInit {
       return this.utilServ.getIcon(event);
     }
     
+    getFrom(address: string) {
+      if(!address) {
+          return address;
+      }
+      if(address.indexOf('0x') == 0) {
+          return this.utilServ.exgToFabAddress(address);
+      }
+      return address;
+  }
     addressDisplay(address: string) {
       return this.utilServ.addressDisplay(address);
     }

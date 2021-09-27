@@ -27,7 +27,9 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 import { WalletService } from 'src/app/modules/shared/services/wallet.service';
 import { LoginSettingModal } from '../../modals/login-setting/login-setting.modal';
 import { ShowSeedPhraseModal } from '../../modals/show-seed-phrase/show-seed-phrase.modal';
-
+import { NftAssetService } from 'src/app/modules/nft/services/nft-asset.service';
+import { SendNftComponent } from '../../modals/send-nft/send-nft.component';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 @Component({
   selector: 'app-admin-wallet-dashboard',
   providers: [],
@@ -40,6 +42,7 @@ export class WalletDashboardComponent implements OnInit{
   wallet: any;
   subtab: string;
   addresses: any;
+  nftAssets: any;
   withdrawAmount: number;
   currentCoinId: number;
   gasAmount: number;
@@ -82,8 +85,10 @@ export class WalletDashboardComponent implements OnInit{
       private storageServ: StorageService,
       private coinServ: CoinService,
       public ngxSmartModalService: NgxSmartModalService,
+      private nftAssetServ: NftAssetService,
       private kanbanServ: KanbanService,
       private route: ActivatedRoute,
+      private kanbanSmartContractServ: KanbanSmartContractService,
       private router: Router) {
     }
 
@@ -714,11 +719,157 @@ export class WalletDashboardComponent implements OnInit{
       this.router.navigate(['/wallet/import-wallet']);
     }
     
+    getNftAssetBalance(asset) {
+      if(!asset.balances || asset.balances.length == 0) {
+        return 1;
+      }
+      const myBalance = asset.balances.filter(item => item.owner == this.walletAddress);
+      if(myBalance && myBalance.length > 0) {
+        return myBalance[0].quantity;
+      }
+      return 0;
+    }
+
+    sellNftAsset(asset) {
+      this.router.navigate(['/nft/assets/' + asset.smartContractAddress + '/' + asset.tokenId + '/sell']);
+    }
+
+    sendNftAsset(asset) {
+      const contractType = asset.collection.type;
+      const initialState = {contractType};
+
+      this.modalRef = this.modalServ.show(SendNftComponent, {initialState});
+  
+      this.modalRef.content.onClose.subscribe(result => {
+        this.sendCoinParams = result;
+        console.log('results from sendNftAsset=', result);
+        const initialState = {
+          coins: this.coins,
+          pwdHash: this.wallet.pwdHash,
+          encryptedSeed: this.wallet.encryptedSeed
+        };          
+        
+        this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
+  
+        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+          this.sendNftAssetDo(seed, contractType, asset, this.sendCoinParams.to, this.sendCoinParams.sendAmount);
+        });
+      });
+    }
+
+    async sendNftAssetDo(seed, contractType, asset, to, amount) {
+      const from = this.utilServ.fabToExgAddress(this.walletAddress);
+      const toHex = this.utilServ.fabToExgAddress(to);
+      const smartContractAddress = asset.smartContractAddress;
+      const tokenId = asset.tokenId;
+      let abi;
+      let args;
+      let ret;
+      console.log('contractType===', contractType);
+      if(contractType == 'ERC1155') {
+        abi = {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            }
+          ],
+          "name": "safeTransferFrom",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        };
+        args = [from, toHex, tokenId, amount, '0x0'];
+        console.log('args==', args);
+        console.log('smartContractAddress=', smartContractAddress);
+        const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(seed, smartContractAddress, abi, args);
+        /*
+        const body = {
+          txhex,
+          from: from,
+          to: to
+        };
+        */
+        this.nftAssetServ.transfer(asset.smartContractAddress, asset.tokenId, this.walletAddress, to, amount, txhex).subscribe(
+          (ret: any) => {
+            console.log('ret for updated===', ret);
+            if(ret && ret.ok) {
+              this.toastr.success('asset ' + asset.name + ' was sent successfully');
+            }
+          }
+        );
+      } else {
+
+          abi = {
+            "constant": false,
+            "inputs": [
+              {
+                "name": "from",
+                "type": "address"
+              },
+              {
+                "name": "to",
+                "type": "address"
+              },
+              {
+                "name": "tokenId",
+                "type": "uint256"
+              }
+            ],
+            "name": "transferFrom",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+          };
+          args = [from, toHex, tokenId];
+          const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(seed, smartContractAddress, abi, args);
+
+          this.nftAssetServ.transfer(asset.smartContractAddress, asset.tokenId, this.walletAddress, to, null, txhex).subscribe(
+            (ret: any) => {
+              console.log('ret for updated===', ret);
+              if(ret && ret.ok) {
+                this.toastr.success('asset ' + asset.name + ' was sent successfully');
+              }
+            }
+          );
+          
+      }
+    }
+
     loadWallet() {
       const addresses = this.wallet.addresses;
       this.addresses = addresses;
       const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
       this.walletAddress = walletAddressItem.address;
+      this.nftAssetServ.getAllByOwner(this.walletAddress).subscribe(
+        (ret: any) => {
+          if(ret && ret.ok) {
+            this.nftAssets = ret._body;
+          }
+        }
+      );
       this.kanbanAddress = this.utilServ.fabToExgAddress(this.walletAddress);
       this.refreshGas();
       this.refreshAssets();

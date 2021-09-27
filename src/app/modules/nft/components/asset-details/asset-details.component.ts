@@ -17,6 +17,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     }
 
     showId(tokenId) {
-      return parseInt(tokenId, 16);
+
+      return tokenId.substring(0, 5) + '...' + tokenId.substring(tokenId.length - 3);
     }
   }

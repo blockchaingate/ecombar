@@ -42,11 +42,13 @@ export class NftAssetService {
     return this.http.get(url);    
   }
 
-  transfer(smartContractAddress: string, tokenId: string, newOwner: string, txhex: string) {
+  transfer(smartContractAddress: string, tokenId: string, from: string, to: string, quantity: number, txhex: string) {
     const url = environment.endpoints.blockchaingate  + 'nft-asset/smartContractAddressTokenId/' 
     + smartContractAddress + '/' + tokenId + '/transfer';
     const data = {
-      newOwner,
+      from,
+      to,
+      quantity,
       txhex
     };
 
@@ -75,6 +77,37 @@ export class NftAssetService {
           "internalType": "address",
           "name": "_owner",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    };
+
+    const abiEncoded = this.web3Serv.getGeneralFunctionABI(abi, args);
+    return this.kanbanServ.kanbanCall(smartContractAddress, abiEncoded);
+  }
+
+  getBalanceOf(address: string, smartContractAddress: string, tokenId: string) {
+    const args = [address, tokenId];
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",

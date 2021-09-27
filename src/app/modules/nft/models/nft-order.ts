@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js/bignumber';
 export class NftOrder {
     id: string;
     tokenId: string;
+    amount: number;
     hash: string;
     txhex: string;
     hashForSignature: string;
@@ -232,9 +233,10 @@ export class NftOrder {
         json.r,
         json.s,
         json.v);
-      order.id = json._id;
+      order.id = json._id ? json._id : json.id;
       order.hash = json.hash;
       order.tokenId = json.tokenId;
+      order.amount = json.amount;
       order.hashForSignature = json.hashForSignature;
       return order;
     }
@@ -266,7 +268,7 @@ export class NftOrder {
         listingTime: this.getListingTime(),
         expirationTime: this.getExpirationTime(),
         salt: this.getSalt(),
-
+        amount: this.amount,
         r: this.getR(),
         s: this.getS(),
         v: this.getV()

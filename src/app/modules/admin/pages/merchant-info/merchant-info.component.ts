@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../shared/services/user.service';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from '../../../shared/services/util.service';
 import { CoinService } from '../../../shared/services/coin.service';
@@ -34,7 +33,6 @@ export class MerchantInfoComponent implements OnInit{
       private iddockServ: IddockService,
       private store: Store<{ user: UserState }>,
       private web3Serv: Web3Service,
-      private ngxSmartModalServ: NgxSmartModalService,
       private utilServ: UtilService) {
     }
 

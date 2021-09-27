@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NftAssetService } from '../../services/nft-asset.service';
+import { NftCollectionService } from '../../services/nft-collection.service';
 import { NftOrder } from '../../models/nft-order';
 import { NftPortService } from '../../services/nft-port.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
@@ -15,6 +16,8 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { environment } from '../../../../../environments/environment';
+import BigNumber from 'bignumber.js/bignumber';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     providers: [],
@@ -23,6 +26,7 @@ import { environment } from '../../../../../environments/environment';
     styleUrls: ['./asset-sell.component.scss']
   })
   export class NftAssetSellComponent implements OnInit {
+    collection: any;
     asset: any;
     smartContractAddress: string;
     tokenId: string;
@@ -31,13 +35,15 @@ import { environment } from '../../../../../environments/environment';
     isProxyAuthenticated: boolean;
     modalRef: BsModalRef;
     coin: string;
+    price: number;
+    balance: number;
     quantity: number;
 
     constructor(
       private localSt: LocalStorage,
       private route: ActivatedRoute,
       private router: Router,
-      private web3Serv: Web3Service,
+      private collectionServ: NftCollectionService,
       private kanbanSmartContractServ: KanbanSmartContractService,
       private coinServ: CoinService,
       private spinner: NgxSpinnerService,
@@ -45,7 +51,8 @@ import { environment } from '../../../../../environments/environment';
       private assetServ: NftAssetService,
       private nftPortServ: NftPortService,
       private orderServ: NftOrderService,
-      private modalServ: BsModalService
+      private modalServ: BsModalService,
+      private toastr: ToastrService
       ) {
 
     }
@@ -60,6 +67,15 @@ import { environment } from '../../../../../environments/environment';
         this.wallet = wallet;
         const addresses = wallet.addresses;
         this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+
+
+        this.assetServ.getBalanceOf(this.utilServ.fabToExgAddress(this.address), this.smartContractAddress, this.tokenId).subscribe(
+          (res: any) => {
+            console.log('res in getBalanceOf=', res);
+            this.balance = new BigNumber(res.data).shiftedBy(-18).toNumber();
+            console.log('balance=', this.balance);
+          }
+        );
 
         this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
           ret => {
@@ -77,9 +93,21 @@ import { environment } from '../../../../../environments/environment';
           (res: any) => {
             if(res && res.ok) {
               this.asset = res._body;
+              console.log('res for asset====', res);
             }
           }
         );
+
+        this.collectionServ.getBySmartContractAddress(smartContractAddress).subscribe(
+          (res: any) => {
+            if(res && res.ok) {
+              this.collection = res._body;
+              console.log('this.collection=', this.collection);
+            }
+          }
+        );
+
+
       });          
     }
 
@@ -89,28 +117,43 @@ import { environment } from '../../../../../environments/environment';
       const privateKey = keyPair.privateKeyBuffer.privateKey;      
       const makerRelayerFee = 0;
       const coinType = this.coinServ.getCoinTypeIdByName(this.coin);
-      const price = this.quantity;
+      const price = this.price;
+      const quantity = this.quantity;
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
-      const order: NftOrder = this.nftPortServ.createOrder(
-        addressHex, 
-        null,
-        this.asset.smartContractAddress, 
-        this.asset.tokenId,
-        coinType, 
-        price,
-        makerRelayerFee,
-        1);
-
-
-
+      let order: NftOrder;
+      console.log('1111');
+      if(this.collection.type == 'ERC1155') {
+        order = this.nftPortServ.createOrderERC1155(
+          addressHex, 
+          null,
+          this.asset.smartContractAddress, 
+          this.asset.tokenId,
+          coinType, 
+          price,
+          quantity,
+          makerRelayerFee,
+          1);
+          console.log('2222');
+      } else {
+        order = this.nftPortServ.createOrder(
+          addressHex, 
+          null,
+          this.asset.smartContractAddress, 
+          this.asset.tokenId,
+          coinType, 
+          price,
+          makerRelayerFee,
+          1);
+      }
+      console.log('3333');
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
+      console.log('4444');
       order.hash = hash;
       order.hashForSignature = hashForSignature;
       order.r = signature.r;
       order.s = signature.s;
       order.v = signature.v;
-
 
       if(!this.isProxyAuthenticated) {
         const {abi, args} = this.nftPortServ.getRegisterProxyAbiArgs();
@@ -118,6 +161,7 @@ import { environment } from '../../../../../environments/environment';
           seed, environment.addresses.smartContract.ProxyRegistry, abi, args);
         order.txhex = txhex;
       }
+      console.log('5555');
       this.orderServ.create(order).subscribe(
         (res: any) => {
           if(res && res.ok) {
@@ -133,7 +177,10 @@ import { environment } from '../../../../../environments/environment';
     } 
 
     postListing() {
-      
+      if(this.quantity > this.balance) {
+        this.toastr.info('Not enough balance');
+        return;
+      }
       const initialState = {
         pwdHash: this.wallet.pwdHash,
         encryptedSeed: this.wallet.encryptedSeed
@@ -149,7 +196,10 @@ import { environment } from '../../../../../environments/environment';
 
     onUpdateEntity(event) {
       this.coin = event.coin;
-      this.quantity = event.quantity;
+      this.price = event.price;
     }
   
+    onUpdateQuantity(event) {
+      this.quantity = event.quantity;
+    }
   }

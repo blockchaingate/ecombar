@@ -1,12 +1,16 @@
 <div class="main-container">
-    <app-nft-asset-overview [asset]="asset"></app-nft-asset-overview>
+    <app-nft-asset-overview [collection]="collection" [asset]="asset" [balance]="balance"></app-nft-asset-overview>
 
     <div class="row">
         <div class="col col-8">
             <app-nft-asset-sell-method></app-nft-asset-sell-method>
             <app-nft-asset-sell-price (updateEntity)="onUpdateEntity($event)"></app-nft-asset-sell-price>
+            
+            <app-nft-asset-sell-quantity *ngIf="collection && (collection.type == 'ERC1155')" (updateQuantity)="onUpdateQuantity($event)"></app-nft-asset-sell-quantity>
+            
             <!--
             <app-nft-asset-sell-include-ending-price></app-nft-asset-sell-include-ending-price>
+            
             <app-nft-asset-sell-schedule-for-future-time></app-nft-asset-sell-schedule-for-future-time>
             
             <app-nft-asset-sell-privacy></app-nft-asset-sell-privacy>
@@ -22,7 +26,7 @@
         </div>
         <div class="col col-4">
             <app-nft-asset-sell-summary [asset]="asset" 
-            [coin]="coin" [quantity]="quantity" 
+            [coin]="coin" [price]="price" [quantity]="quantity" 
             (postListing)="postListing()"></app-nft-asset-sell-summary>
         </div>
     </div>
