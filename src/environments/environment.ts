@@ -4,6 +4,7 @@
 import * as Btc from 'bitcoinjs-lib';
 export const environment = {
   env: 'dev',
+  version: '1.0.0',
   production: false,
   appid: '5f80c3b09577e8dc2f8db596',
   cat_typ: 'ecombar',
