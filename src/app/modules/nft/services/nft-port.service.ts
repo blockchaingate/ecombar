@@ -604,7 +604,7 @@ export class NftPortService {
       "stateMutability": "nonpayable",
       "type": "function"
     };
-    const args = [from, to, tokenId, new BigNumber(amount).shiftedBy(18), '0x0'];
+    const args = [from, to, tokenId, new BigNumber(amount).shiftedBy(18).toFixed(), '0x0'];
 
     const abiData = this.web3Serv.getGeneralFunctionABI(abi, args);
     return abiData;
