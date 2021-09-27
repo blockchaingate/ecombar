@@ -27,6 +27,7 @@ import { LevelsComponent } from './components/common/form-trait/modals/levels/le
 import { ExpansionComponent } from './components/common/expansion/expansion.component';
 import { NftAssetSellComponent } from './components/asset-sell/asset-sell.component';
 import { NftRankingsComponent } from './components/rankings/rankings.component';
+import { VersionComponent } from './version/version.component';
 import { NftAccountActivityComponent } from './components/account-activity/account-activity.component';
 import { NftAccountOffersComponent } from './components/account-offers/account-offers.component';
 import { NftUnlockableContentComponent } from './modals/unlockable-content/unlockable-content.component';
@@ -129,6 +130,7 @@ import { EventsSearchPipe } from './pipes/events-search.pipe';
       NftAssetPriceHistoryComponent,
       ImageUploaderComponent,
       TextboxComponent,
+      VersionComponent,
       NftCancelListingComponent,
       NftPriceChangeComponent,
       NftMakeOfferComponent,

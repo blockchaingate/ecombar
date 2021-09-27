@@ -9,7 +9,6 @@ import { SearchComponent } from './search/search.component';
 import { OrderComponent } from './order/order.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
 import { CompareComponent } from './compare/compare.component';
-import { VersionComponent } from './version/version.component';
 
 const routes: Routes = [
   {
@@ -53,10 +52,7 @@ const routes: Routes = [
         path: 'order/:id',
         component: OrderComponent
       },     
-      {
-        path: 'version',
-        component: VersionComponent
-      },       
+      
       {
         path: 'apply-for-merchant',
         component: ApplyForMerchantComponent

@@ -148,7 +148,7 @@ export class NftOrder {
       return this.coinType;
     }
     getBasePrice() {
-      return new BigNumber(this.basePrice).multipliedBy(new BigNumber(1e18)).toFixed();
+      return '0x' + new BigNumber(this.basePrice).multipliedBy(new BigNumber(1e18)).toString(16);
     }
     getExtra() {
       return this.extra;

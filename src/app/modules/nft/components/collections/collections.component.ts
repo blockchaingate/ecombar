@@ -65,37 +65,32 @@ import { environment } from 'src/environments/environment';
       let args = ['ERC1155','ERC1155','',environment.addresses.smartContract.ProxyRegistry];
       const resp = await this.kanbanSmartContract.deploySmartContract(seed, ABI, Bytecode, args);
 
-      if (resp && resp.transactionHash) {
-          const txid = resp.transactionHash;
-          console.log('txid=', resp.transactionHash);
-          var that = this;
-          var myInterval = setInterval(function(){ 
-            that.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
-              (receipt: any) => {
-                if(receipt && receipt.transactionReceipt) {
-                  clearInterval(myInterval);
-                  if(receipt.transactionReceipt.contractAddress) {
-                    that.collection.smartContractAddress = receipt.transactionReceipt.contractAddress;
-                    that.collection.creator = that.address;
-                    that.collectionServ.create(that.collection).subscribe(
-                      (res: any) => {
-                        console.log('res from create collection=', res);
-                        that.spinner.hide();
-                        if(res && res.ok) {
-                          that.collection = res._body;
-                          that.collections.push(that.collection);
-                          that.modalRef = that.modalService.show(templateDone);
-                        }
-                      }
-                    );
-                  } else {
+      if(resp && resp.ok && resp._body && resp._body.status == '0x1') {
+        const txid = resp._body.transactionHash;
+        this.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
+          (receipt: any) => {
+            if(receipt && receipt.transactionReceipt) {
+              if(receipt.transactionReceipt.contractAddress) {
+                this.collection.smartContractAddress = receipt.transactionReceipt.contractAddress;
+                this.collection.creator = this.address;
+                this.collectionServ.create(this.collection).subscribe(
+                  (res: any) => {
+                    console.log('res from create collection=', res);
                     this.spinner.hide();
-                    this.toastr.error('Error with creating smart contract.', 'Ok');
+                    if(res && res.ok) {
+                      this.collection = res._body;
+                      this.collections.push(this.collection);
+                      this.modalRef = this.modalService.show(templateDone);
+                    }
                   }
-                }
+                );
+              } else {
+                this.spinner.hide();
+                this.toastr.error('Error with creating smart contract.', 'Ok');
               }
-            );
-           }, 1000);
+            }
+          }
+        );
       } else {
         this.spinner.hide();
         this.toastr.error('Failed to create smart contract.', 'Ok');

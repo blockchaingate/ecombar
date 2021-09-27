@@ -264,7 +264,7 @@ export class PlaceOrderComponent implements OnInit {
     console.log('address=', address);
     
     const txHex = await this.txHexforSendToken(
-      this.password, this.wallet, address, coin, new BigNumber(amount).multipliedBy(new BigNumber(1e18)).toFixed()
+      this.password, this.wallet, address, coin, '0x' + new BigNumber(amount).multipliedBy(new BigNumber(1e18)).toString(16)
     );
 
     console.log('txHex=', txHex);

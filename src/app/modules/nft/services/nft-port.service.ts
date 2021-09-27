@@ -439,7 +439,7 @@ export class NftPortService {
   atomicMatch(sell: NftOrder, buy: NftOrder, metadata) {
     let total = buy.getBasePrice();
     if(buy.amount) {
-      total = new BigNumber(total).multipliedBy(new BigNumber(buy.amount)).toFixed();
+      total = '0x' + new BigNumber(total).multipliedBy(new BigNumber(buy.amount)).toString(16);
     }
     const args = [
       [
@@ -604,7 +604,7 @@ export class NftPortService {
       "stateMutability": "nonpayable",
       "type": "function"
     };
-    const args = [from, to, tokenId, new BigNumber(amount).shiftedBy(18).toFixed(), '0x0'];
+    const args = [from, to, tokenId, '0x' + new BigNumber(amount).shiftedBy(18).toString(16), '0x0'];
 
     const abiData = this.web3Serv.getGeneralFunctionABI(abi, args);
     return abiData;
