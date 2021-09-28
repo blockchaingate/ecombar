@@ -1,3 +1,35 @@
-<div class="content-container">
-    dddd
+<div class="main-container">
+    <div class="content-container">
+        <div class="from-other-user message-block">
+            <div class="d-flex">
+                <div class="logo">
+                    logo
+                </div>
+                <div class="ml-2">
+                    <div class="text-muted"><small>User name</small></div>
+                    <div class="text-block text-from-other-user">text from usertext from usertext from usertext from usertext from usertext from usertext from usertext from usertext from usertext from usertext from usertext from usertext from user</div>
+                </div>
+            </div>
+        </div>
+        <div class="from-me message-block">
+            <div class="d-flex justify-content-end">
+                <div class="text-from-me text-block mr-2">
+                    text from me
+                </div>
+                <div class="logo">
+                    logo
+                </div>            
+            </div>
+        </div>
+    </div>
+    
+    <div class="send-message">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="" aria-label="">
+            <div class="input-group-append" (click)="sendMsg()">
+              <span class="input-group-text material-icons-outlined">send</span>
+            </div>
+          </div>       
+    </div>
 </div>
+

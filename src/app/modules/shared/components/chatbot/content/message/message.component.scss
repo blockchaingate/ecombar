@@ -1,3 +1,42 @@
+.main-container {
+    position: relative;
+    height: 100%;
+}
+
 .content-container {
     padding: 12px 16px;
+    background-color: #ebebeb;
+    height: 100%;
+}
+
+.text-from-other-user {
+    background-color: white;
+}
+
+.text-from-me {
+    background-color: greenyellow;
+    
+}
+
+
+.message-block {
+    margin-top: 10px;
+}
+
+.text-block {
+    padding: 10px;
+}
+
+.send-message {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.form-control, .input-group-text { 
+    border-radius: 0;
+}
+
+.input-group-text:hover {
+    cursor: pointer;
 }

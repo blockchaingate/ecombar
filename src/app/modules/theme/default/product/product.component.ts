@@ -1,22 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/modules/shared/services/product.service';
-import { ActivatedRoute } from '@angular/router';
-import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
-import { CartItem } from 'src/app/modules/shared/models/cart-item';
-import { Router } from '@angular/router';
-import { TranslateService } from 'src/app/modules/shared/services/translate.service';
-import { OrderService } from 'src/app/modules/shared/services/order.service';
-import { CommentService } from 'src/app/modules/shared/services/comment.service';
-import { FavoriteService } from 'src/app/modules/shared/services/favorite.service';
-import { AuthService } from 'src/app/modules/shared/services/auth.service';
-import { StorageService } from 'src/app/modules/shared/services/storage.service';
-import { ToastrService } from 'ngx-toastr';
-import { Web3Service } from 'src/app/modules/shared/services/web3.service';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { DataService } from 'src/app/modules/shared/services/data.service';
-import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProductComponent as ParnetProductComponent } from 'src/app/modules/store/product/product.component';
 @Component({
   selector: 'app-product',
