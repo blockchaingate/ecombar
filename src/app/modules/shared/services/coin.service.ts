@@ -192,7 +192,12 @@ export class CoinService {
             mycoin.receiveAdds.push(addr);
             return mycoin;
         }
-        if(name == 'EXG' || name == 'DUSD') {
+        if(
+            ['EXG', 'DUSD', 'DCAD', 'DCNY', 'DJPY', 'DGBP', 
+            'DEURO', 'DAUD', 'DMYR', 'DKRW', 'DPHP', 
+            'DTHB', 'DTWD', 'DSGD', 'DHKD', 'DINR',
+            'DMXN', 'DBRL', 'DNGN'
+        ].indexOf(name) >= 0) {
             mycoin.tokenType = 'FAB';
             const address = this.getAddress(addresses, 'FAB');
             const addr = new Address(0, address, 0);

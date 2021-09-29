@@ -71,11 +71,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
         }
     
         if (
-            this.currentCoin == 'EXG' 
-            || this.currentCoin == 'DUSD'
-            || this.currentCoin == 'BST'
-            || this.currentCoin == 'DSC'
-            ) {
+          ['EXG', 'DUSD', 'DCAD', 'DCNY', 'DJPY', 'DGBP', 
+          'DEURO', 'DAUD', 'DMYR', 'DKRW', 'DPHP', 
+          'DTHB', 'DTWD', 'DSGD', 'DHKD', 'DINR',
+          'DMXN', 'DBRL', 'DNGN', 'BST', 'DSC'
+      ].indexOf(this.currentCoin) >= 0) {
           return fabAddress;
         }
 

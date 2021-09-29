@@ -726,7 +726,12 @@ export class WalletDashboardComponent implements OnInit{
         }
       }
 
-      if(this.currentCoin == 'EXG' || this.currentCoin == 'DUSD') {
+      if(
+        ['EXG', 'DUSD', 'DCAD', 'DCNY', 'DJPY', 'DGBP', 
+        'DEURO', 'DAUD', 'DMYR', 'DKRW', 'DPHP', 
+        'DTHB', 'DTWD', 'DSGD', 'DHKD', 'DINR',
+        'DMXN', 'DBRL', 'DNGN', 'BST', 'DSC'
+    ].indexOf(this.currentCoin) >= 0) {
         return fabAddress;
       } 
       return ethAddress;

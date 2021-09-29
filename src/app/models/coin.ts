@@ -32,7 +32,12 @@ export class Coin {
         this.coinType = environment.CoinType.FAB;
         this.decimals = 8;
     } else 
-    if (name === 'DUSD') {
+    if (
+        ['DUSD', 'DCAD', 'DCNY', 'DJPY', 'DGBP', 
+        'DEURO', 'DAUD', 'DMYR', 'DKRW', 'DPHP', 
+        'DTHB', 'DTWD', 'DSGD', 'DHKD', 'DINR',
+        'DMXN', 'DBRL', 'DNGN'
+    ].indexOf(name) >= 0) {
         this.coinType = environment.CoinType.FAB;
         this.decimals = 6;
     } else 

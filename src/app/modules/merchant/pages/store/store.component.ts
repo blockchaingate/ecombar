@@ -44,7 +44,10 @@ export class StoreComponent implements OnInit {
   address: string;
   objectId: string;
 
-  coins = ['DUSD', 'USDT', 'FAB'];
+  coins = ['DUSD', 'USDT', 'DCAD', 'DCNY', 'DJPY', 'DGBP', 
+  'DEURO', 'DAUD', 'DMYR', 'DKRW', 'DPHP', 
+  'DTHB', 'DTWD', 'DSGD', 'DHKD', 'DINR',
+  'DMXN', 'DBRL', 'DNGN', 'BTC', 'ETH', 'FAB'];
 
   constructor(
     private coinServ: CoinService,
