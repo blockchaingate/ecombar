@@ -12,7 +12,7 @@
     (onAction)="takeAction($event)"
     ></app-nft-asset-action>
     <div class="row">
-        <div class="col col-5 dPgrCP">
+        <div class="col col-md-5 col-12 dPgrCP">
             <section class="Framereact__Frame-sc-139h1ex-0 cUPysq item--frame item--media-frame">
                 <app-nft-asset-image [asset]="asset"></app-nft-asset-image>
             </section>
@@ -25,7 +25,7 @@
                 [address]="address"></app-nft-asset-details>
             </section>
         </div>
-        <div class="col col-7">
+        <div class="col col-md-7 col-12">
             <app-nft-asset-info *ngIf="owner && address && asset"
             [collection]="collection" [asset]="asset"
             [owner]="owner"

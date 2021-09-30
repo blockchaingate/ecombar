@@ -57,7 +57,6 @@ import { Router } from '@angular/router';
             (ret: any) => {
               if(ret && ret.ok) {
                 this.setting = ret._body;
-                console.log('this.setting=', this.setting);
               }
             }
           );
@@ -70,8 +69,6 @@ import { Router } from '@angular/router';
     }
     
     onSearch() {
-      console.log('on Search');
-      console.log('searchText=', this.searchText);
     }
 
     onKeyDownEvent(event) {

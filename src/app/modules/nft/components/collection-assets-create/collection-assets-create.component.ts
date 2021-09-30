@@ -110,7 +110,6 @@ import assert from 'assert';
           (res: any) => {
             if(res && res.ok) {
               this.collection = res._body;
-              console.log('this.collection==', this.collection);
 
               this.tokenId = params.get('tokenId');
               if(this.tokenId) {

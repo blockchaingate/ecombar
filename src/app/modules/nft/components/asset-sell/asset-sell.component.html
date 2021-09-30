@@ -2,7 +2,7 @@
     <app-nft-asset-overview [collection]="collection" [asset]="asset" [balance]="balance"></app-nft-asset-overview>
 
     <div class="row">
-        <div class="col col-8">
+        <div class="col col-12 col-md-8">
             <app-nft-asset-sell-method></app-nft-asset-sell-method>
             <app-nft-asset-sell-price (updateEntity)="onUpdateEntity($event)"></app-nft-asset-sell-price>
             
@@ -24,7 +24,7 @@
            
 -->
         </div>
-        <div class="col col-4">
+        <div class="col col-12 col-md-4">
             <app-nft-asset-sell-summary [asset]="asset" 
             [coin]="coin" [price]="price" [quantity]="quantity" 
             (postListing)="postListing()"></app-nft-asset-sell-summary>

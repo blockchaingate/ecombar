@@ -222,10 +222,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 
               if(this.collection.type == 'ERC1155') {
-                console.log('this.address==', this.address);
                 this.assetServ.getBalanceOf(this.utilServ.fabToExgAddress(this.address), this.smartContractAddress, this.tokenId).subscribe(
                   (res: any) => {
-                    console.log('res in getBalanceOf=', res);
                     this.balance = new BigNumber(res.data).shiftedBy(-18).toNumber();
                     console.log('balance=', this.balance);
                   }
