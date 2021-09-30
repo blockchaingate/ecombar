@@ -5,6 +5,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { ToastrService } from 'ngx-toastr';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
     providers: [],
@@ -30,6 +31,7 @@ import { ToastrService } from 'ngx-toastr';
       private uploadService: UploadService, 
       private modalServ: BsModalService,
       private kanbanServ: KanbanService,
+      private utilServ: UtilService,
       private toastr: ToastrService,
       private settingServ: NftSettingService) {}
     ngOnInit() {
@@ -152,5 +154,11 @@ import { ToastrService } from 'ngx-toastr';
         }
       );
       
+    }
+
+    shared() {
+      const url = 'https://collectiongala.com' + '/nft/accounts/' + this.address;
+      this.utilServ.copy(url);
+      this.toastr.info('Your link was copied');
     }
   }
