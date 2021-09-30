@@ -8,6 +8,7 @@ export const environment = {
   cat_typ: 'ecom',
   
   endpoints: {
+    ws: 'wss://echo.websocket.org/',
     prod: 'https://api.blockchaingate.com/v2/',
     blockchaingate: 'https://api.blockchaingate.com/v2/',
     website: 'https://exchangily.com/',

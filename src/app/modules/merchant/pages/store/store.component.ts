@@ -16,7 +16,6 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { environment } from 'src/environments/environment';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-store',
@@ -29,6 +28,7 @@ export class StoreComponent implements OnInit {
   taxRate: number;
   name: string;
   images: any;
+  hideOnStore: boolean;
   nameChinese: string;
   currentTab: string;
   giveAwayRate: number;
@@ -67,6 +67,7 @@ export class StoreComponent implements OnInit {
   initStore(store) {
     this.store = store;
     this.id = store._id;
+    this.hideOnStore = store.hideOnStore;
     this.coin = store.coin;
     this.taxRate = store.taxRate;
     if(store.name) {
@@ -83,6 +84,7 @@ export class StoreComponent implements OnInit {
     this.objectId = store.objectId;   
   }
   ngOnInit() {
+    this.hideOnStore = true;
     this.images = [];
     this.storeageServ.getStoreRef().subscribe(
       (refAddress: string) => {
@@ -146,7 +148,9 @@ export class StoreComponent implements OnInit {
           en: this.name,
           sc: this.nameChinese
         },
-        coin: this.coin
+        taxRate: this.taxRate ? this.taxRate : 0,
+        coin: this.coin,
+        hideOnStore:this.hideOnStore
       };
       if(this.images && this.images.length > 0) {
         data.image = this.images[0];
@@ -207,7 +211,8 @@ export class StoreComponent implements OnInit {
         coin: this.coin,
         giveAwayRate: this.giveAwayRate,
         taxRate: this.taxRate ? this.taxRate : 0,
-        refAddress: this.refAddress
+        refAddress: this.refAddress,
+        hideOnStore: this.hideOnStore
       };      
       if(!this.coin) {
         this.toastr.error('Coin not selected', 'Ok');

@@ -14,6 +14,7 @@ export const environment = {
 
 
   endpoints: {
+    ws: 'wss://test.blockchaingate.com/message',
     local: 'https://test.blockchaingate.com/v2/',
     test: 'https://test.blockchaingate.com/v2/',
     prod: 'https://blockchaingate.com/v2/',
