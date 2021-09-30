@@ -159,6 +159,6 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     shared() {
       const url = 'https://collectiongala.com' + '/nft/accounts/' + this.address;
       this.utilServ.copy(url);
-      this.toastr.info('Your link was copied');
+      this.toastr.info('Link copied');
     }
   }
