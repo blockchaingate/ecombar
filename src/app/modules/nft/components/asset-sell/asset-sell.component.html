@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" *ngIf="asset && !asset.hide">
     <app-nft-asset-overview [collection]="collection" [asset]="asset" [balance]="balance"></app-nft-asset-overview>
 
     <div class="row">

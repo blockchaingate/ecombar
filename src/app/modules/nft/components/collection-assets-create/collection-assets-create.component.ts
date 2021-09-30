@@ -29,6 +29,7 @@ import assert from 'assert';
     modalRef: BsModalRef;
     slug: string;
     collection: any;
+    smartContractAddress: string;
     supply: number;
     media: string;
     tokenId: string;
@@ -106,11 +107,14 @@ import assert from 'assert';
       this.step = 1;
       this.route.paramMap.subscribe((params: ParamMap) =>  {
         this.slug = params.get('slug');   
-        this.collectionServ.getBySlug(this.slug).subscribe(
+        this.smartContractAddress = params.get('smartContractAddress');
+        const getCollection = this.slug ? this.collectionServ.getBySlug(this.slug) : this.collectionServ.getBySmartContractAddress(this.smartContractAddress);
+        getCollection.subscribe(
           (res: any) => {
             if(res && res.ok) {
               this.collection = res._body;
 
+              console.log('this.collection===', this.collection);
               this.tokenId = params.get('tokenId');
               if(this.tokenId) {
                 this.assetServ.getBySmartContractTokenId(this.collection.smartContractAddress, this.tokenId).subscribe(

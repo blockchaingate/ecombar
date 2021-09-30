@@ -84,7 +84,9 @@ import { NftFavoriteService } from '../../services/nft-favorite.service';
           (ret: any) => {
             if(ret && ret.ok) {
               this.assets = ret._body;
-              console.log('');
+              if(this.assets) {
+                this.assets = this.assets.filter(item => !item.hide);
+              }
             }
           }
         ); 

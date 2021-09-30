@@ -1,5 +1,5 @@
 
-<div *ngIf="asset">
+<div *ngIf="asset && !asset.hide">
     <app-nft-asset-action *ngIf="address && asset && wallet"
     [wallet]="wallet"
     [asset]="asset" 

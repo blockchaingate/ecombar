@@ -1014,8 +1014,12 @@ export class WalletDashboardComponent implements OnInit{
   }
 
   editNftAsset(asset) {
+
+    this.router.navigate(['/nft/assets/' + asset.smartContractAddress + '/' + asset.tokenId + '/edit']);
+    /*
     this.router.navigate([
       '/nft/admin/collections/' + asset.collection.slug + '/assets/' + asset.tokenId +'/edit'
     ]);
+    */
   }
 }

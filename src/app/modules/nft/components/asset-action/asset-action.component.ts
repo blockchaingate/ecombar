@@ -115,4 +115,8 @@ import BigNumber from 'bignumber.js';
       return seller;
     }
 
+    edit() {
+      this.router.navigate(['/nft/assets/' + this.asset.smartContractAddress + '/' + this.asset.tokenId + '/edit']);
+    }
+
   }

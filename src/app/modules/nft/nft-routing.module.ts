@@ -45,7 +45,10 @@ const routes: Routes = [
         },   
         {
           path: 'assets/:smartContractAddress/:tokenId/transfer', component: NftTransferComponent
-        },       
+        },      
+        {
+          path: 'assets/:smartContractAddress/:tokenId/edit', component: NftCollectionAssetsCreateComponent
+        },  
         {
           path: 'account', component: NftAccountComponent
         }, 
@@ -72,9 +75,6 @@ const routes: Routes = [
                 },
                 {
                   path: 'collections/:slug/assets/create', component: NftCollectionAssetsCreateComponent
-                },
-                {
-                  path: 'collections/:slug/assets/:tokenId/edit', component: NftCollectionAssetsCreateComponent
                 },
                 {
                   path: 'collections/:slug/assets/create-done', component: NftCollectionAssetsCreateDoneComponent
