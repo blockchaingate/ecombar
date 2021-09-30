@@ -74,6 +74,9 @@ const routes: Routes = [
                   path: 'collections/:slug/assets/create', component: NftCollectionAssetsCreateComponent
                 },
                 {
+                  path: 'collections/:slug/assets/:tokenId/edit', component: NftCollectionAssetsCreateComponent
+                },
+                {
                   path: 'collections/:slug/assets/create-done', component: NftCollectionAssetsCreateDoneComponent
                 }                             
             ]

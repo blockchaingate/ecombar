@@ -200,13 +200,14 @@
 
                 <ul class="responsive-table">
                     <li class="table-header">
-                      <div class="col col-3">{{'Collection' | translate}}</div>
-                      <div class="col col-4">{{'Asset' | translate}}</div>
+                      <div class="col col-2">{{'Collection' | translate}}</div>
+                      <div class="col col-2">{{'Asset' | translate}}</div>
+                      <div class="col col-2">{{'Supply' | translate}}</div>
                       <div class="col col-2">{{'Balance' | translate}}</div>
-                      <div class="col col-3"></div>
+                      <div class="col col-4"></div>
                     </li>
                     <li class="table-row" *ngFor="let asset of nftAssets">
-                      <div class="col col-3 text-black" data-label="{{'Collection' | translate}}">
+                      <div class="col col-2 text-black" data-label="{{'Collection' | translate}}">
                           <div class="d-flex">
                               <div>
                                 <div>
@@ -224,18 +225,21 @@
 
                         
                       </div>
-                      <div class="col col-4" data-label="{{'Asset' | translate}}">
+                      <div class="col col-2" data-label="{{'Asset' | translate}}">
                         {{asset.name}}
                         <img *ngIf="asset?.media" class="img-avatar" [src]="asset.media">
+                      </div>
+                      <div class="col col-2" data-label="{{'Supply' | translate}}">
+                        {{asset.quantity ? asset.quantity : 1}}
                       </div>
                       <div class="col col-2" data-label="{{'Balance' | translate}}">
                         {{getNftAssetBalance(asset)}}
                       </div>
-                      <div class="col col-3" data-label="{{'Operations' | translate}}">
+                      <div class="col col-4" data-label="{{'Operations' | translate}}">
                           <div class="d-flex">
                             <div class="m-1 py-3 text-center">
                                 <div class="ActionButtonrContainer " (click)="sellNftAsset(asset)">
-                                    <div class="ActionButton--content"  style="min-width: 40px;">
+                                    <div class="ActionButton--content"  style="min-width: 30px;">
                                         {{'Sell' | translate}}
                                     </div>
                                 </div> 
@@ -244,8 +248,16 @@
 
                             <div class="m-1 py-3 text-center">
                                 <div class="ActionButtonrContainer ActionButton--secondary" (click)="sendNftAsset(asset)">
-                                    <div class="ActionButton--content"  style="min-width: 40px;">
+                                    <div class="ActionButton--content"  style="min-width: 30px;">
                                         {{'Send' | translate}}
+                                    </div>
+                                </div> 
+                            </div>  
+
+                            <div class="m-1 py-3 text-center">
+                                <div class="ActionButtonrContainer ActionButton--secondary" *ngIf="editable(asset)" (click)="editNftAsset(asset)">
+                                    <div class="ActionButton--content"  style="min-width: 30px;">
+                                        {{'Edit' | translate}}
                                     </div>
                                 </div> 
                             </div>  

@@ -81,17 +81,30 @@ export class KanbanService {
         return this.http.getRaw(path);
     }
     
+    /*
     signJsonData(privateKey: any, data: any) {
 
         var queryString = Object.keys(data).filter((k) => (data[k] != null) && (data[k] != undefined))
         .map(key => key + '=' + data[key]).sort().join('&');
 
-        const test = this.web3Serv.signMessageTest(queryString, privateKey);
+        //const test = this.web3Serv.signMessageTest(queryString, privateKey);
         const signature = this.web3Serv.signKanbanMessageWithPrivateKey(queryString, privateKey);
         //console.log('signature here=', signature);
         return signature;  
     }
+    */
+    signJsonData(privateKey: any, data: any) {
 
+        var queryString = Object.keys(data).filter((k) => (data[k] != null) && (data[k] != undefined))
+        .map(key => key + '=' + (typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]))).sort().join('&');
+
+        console.log('queryString===', queryString);
+        //const test = this.web3Serv.signMessageTest(queryString, privateKey);
+        const signature = this.web3Serv.signKanbanMessageWithPrivateKey(queryString, privateKey);
+        //console.log('signature here=', signature);
+        return signature;  
+    }
+    
     submitDeposit(rawTransaction: string, rawKanbanTransaction: string) {
         const data = {
             'rawTransaction': rawTransaction,

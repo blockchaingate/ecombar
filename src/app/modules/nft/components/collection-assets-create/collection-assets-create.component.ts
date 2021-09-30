@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { randomBytes } from 'crypto';
 import BigNumber from 'bignumber.js/bignumber';
+import assert from 'assert';
 
 @Component({
     providers: [],
@@ -30,8 +31,10 @@ import BigNumber from 'bignumber.js/bignumber';
     collection: any;
     supply: number;
     media: string;
+    tokenId: string;
     name: string;
     address: string;
+    hide: boolean;
     wallet: any;
     externalLink: string;
     description: string;
@@ -56,9 +59,10 @@ import BigNumber from 'bignumber.js/bignumber';
       private collectionServ: NftCollectionService,
       private kanbanSmartContract: KanbanSmartContractService,
       private utilServ: UtilService,
+
       private assetServ: NftAssetService,
       private translateServ: TranslateService,
-      private router: Router, 
+      private kanbanServ: KanbanService, 
       private route: ActivatedRoute) {
 
     }
@@ -107,9 +111,58 @@ import BigNumber from 'bignumber.js/bignumber';
             if(res && res.ok) {
               this.collection = res._body;
               console.log('this.collection==', this.collection);
+
+              this.tokenId = params.get('tokenId');
+              if(this.tokenId) {
+                this.assetServ.getBySmartContractTokenId(this.collection.smartContractAddress, this.tokenId).subscribe(
+                  (retAsset: any) => {
+                    console.log('retAsset for getBySmartContractTokenId=', retAsset);
+                    if(retAsset && retAsset.ok) {
+                      const token = retAsset._body;
+                      console.log('token===', token);
+                      this.name = token.name;
+                      if(token.image) {
+                        this.media = token.image;
+                      }
+                      this.externalLink = token.externalLink;
+                      this.description = token.description;
+                      this.properties = token.properties;
+                      this.levels = token.levels;
+                      this.stats = token.stats;
+                      this.supply = token.quantity;
+                      this.hide = token.hide;
+                      this.unlockableContent = token.unlockableContent;
+                      
+
+/*
+        media: this.media,
+        name: this.name,
+        externalLink: this.externalLink,
+        description: this.description,
+        properties: this.properties,
+        levels: this.levels,
+        stats: this.stats,
+        quantity: this.supply,
+        balances: [
+          {
+              owner: this.address,
+              quantity: this.supply
+          }
+        ],
+        smartContractAddress: this.collection.smartContractAddress,
+        txhex: txhex,
+        creator: this.address,
+        unlockableContent: this.unlockableContent,
+*/
+
+                    }
+                  }
+                );
+              }
             }
           }
         );
+
       });
 
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
@@ -204,6 +257,7 @@ import BigNumber from 'bignumber.js/bignumber';
         description: this.description,
         properties: this.properties,
         levels: this.levels,
+        hide: this.hide,
         stats: this.stats,
         quantity: this.supply,
         balances: [
@@ -240,36 +294,6 @@ import BigNumber from 'bignumber.js/bignumber';
         }
       );
 
-      /*
-      if (resp && resp.transactionHash) {
-          const txid = resp.transactionHash;
-          console.log('txid=', resp.transactionHash);
-          var that = this;
-          var myInterval = setInterval(function(){ 
-          that.kanbanSmartContract.getTransactionReceipt(txid).subscribe(
-            (receipt: any) => {
-                if(receipt && receipt.transactionReceipt) {
-                  clearInterval(myInterval);
-                  that.spinner.hide();
-                  if(receipt.transactionReceipt && receipt.transactionReceipt.logs && receipt.transactionReceipt.logs.length > 0) {
-                    const log = receipt.transactionReceipt.logs[0];
-                    console.log('receipt.transactionReceipt.logs=', receipt.transactionReceipt.logs);
-                    console.log('log=', log);
-                    const topics = log.topics;
-                    const tokenId = topics[3];
-
-
-
-                  }
-                }
-              }
-            );
-           }, 1000);
-      } else {
-        this.spinner.hide();
-        this.toastr.error('Failed to create smart contract.', 'Ok');
-      }
-      */
     }
 
     createAssets() {
@@ -283,7 +307,45 @@ import BigNumber from 'bignumber.js/bignumber';
 
       this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
         this.spinner.show();
-        await this.mineAssetDo(seed, this.collection.smartContractAddress);
+        if(this.tokenId) {
+          const asset = {
+            media: this.media,
+            name: this.name,
+            externalLink: this.externalLink,
+            description: this.description,
+            properties: this.properties,
+            levels: this.levels,
+            hide: this.hide,
+            stats: this.stats,
+            quantity: this.supply,
+            balances: [
+              {
+                  owner: this.address,
+                  quantity: this.supply
+              }
+            ]
+          };
+
+          const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+          const privateKey = keyPair.privateKeyBuffer.privateKey;
+          const sig = this.kanbanServ.signJsonData(privateKey, asset);
+          asset['sig'] = sig.signature;  
+
+          console.log('asset===', asset);
+          this.assetServ.update(this.collection.smartContractAddress, this.tokenId, asset).subscribe(
+            (ret: any) => {
+              this.spinner.hide();
+              if(ret && ret.ok) {
+                this.toastr.success('Updated successfully.');
+              } else {
+                this.toastr.error(ret.error);
+              }
+            }
+          );
+        } else {
+          await this.mineAssetDo(seed, this.collection.smartContractAddress);
+        }
+        
         
       });
 

@@ -1003,4 +1003,19 @@ export class WalletDashboardComponent implements OnInit{
   }
 
 
+  editable(asset) {
+    if(!asset.quantity) {
+      return true;
+    }
+    if(asset.quantity == this.getNftAssetBalance(asset)) {
+      return true;
+    }
+    return false;
+  }
+
+  editNftAsset(asset) {
+    this.router.navigate([
+      '/nft/admin/collections/' + asset.collection.slug + '/assets/' + asset.tokenId +'/edit'
+    ]);
+  }
 }

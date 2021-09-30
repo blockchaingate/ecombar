@@ -11,6 +11,7 @@ import { ImageUploaderComponent } from './components/common/image-uploader/image
 import { TextboxComponent } from './components/common/textbox/textbox.component';
 import { TextareaComponent } from './components/common/textarea/textarea.component';
 import { TextareaSwitchComponent } from './components/common/textarea-switch/textarea-switch.component';
+import { HideSwitchComponent } from './components/common/hide-switch/hide-switch.component';
 import { FormTraitComponent } from './components/common/form-trait/form-trait.component';
 import { NftCollectionsListComponent } from './components/collections-list/collections-list.component';
 import { NftCollectionsAddComponent } from './components/collections-add/collections-add.component';
@@ -144,6 +145,7 @@ import { EventsSearchPipe } from './pipes/events-search.pipe';
       ButtonComponent,
       NftGetStartedComponent,
       TextareaSwitchComponent,
+      HideSwitchComponent,
       NftAssetSellMethodComponent,
       NftCollectionAssetsCreateDoneComponent,
       NftAssetSellPriceComponent,

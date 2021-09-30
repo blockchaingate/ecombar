@@ -54,10 +54,11 @@
     
     <app-textarea-switch [(ngModel)]="unlockableContent"></app-textarea-switch>
     
+    <app-hide-switch [(ngModel)]="hide"></app-hide-switch>
     <div class="CreateCollection--actions py-3">
         <div class="ActionButtonrContainer">
             <div class="ActionButton--content" (click)="createAssets()" style="min-width: 120px;">
-                {{'Create' | translate}}
+                {{(tokenId ? 'Update' : 'Create') | translate}}
             </div>
         </div> 
     </div>
