@@ -65,10 +65,10 @@
                 </ul>
             </li>
 
-            <li class="NavItem--isRoot" *ngIf="setting">
+            <li class="NavItem--isRoot">
                 <a class="NavItem--main">
                     <div class="img-container" style="height: 32px; width: 32px;">
-                        <img class="Image--image" *ngIf="setting.logo" src="{{setting.logo}}"
+                        <img class="Image--image" *ngIf="setting && setting.logo" [src]="setting.logo"
                             style="object-fit: cover;">
                     </div>
                 </a>
