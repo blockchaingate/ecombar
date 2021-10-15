@@ -190,7 +190,25 @@ addresses: {
         MTL: '0xF433089366899D83a9f26A773D59ec7eCF30355e',
         KNC: '0xdd974d5c2e2928dea5f71b9825b8b646686bd200',
         GVT: '0x103c3A209da59d3E7C4A89307e66521e081CFDF0',
-        DRGN: '0x419c4db4b9e25d6db2ad9691ccb832c8d9fda05e'
+        DRGN: '0x419c4db4b9e25d6db2ad9691ccb832c8d9fda05e',
+
+        CSU: '0x7650987b35272a64934b6d02aad6db5b3bd8d119',
+
+        LINK: '0x514910771af9ca656af840dff83e8264ecf986ca',
+        UNI: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+        SHIB: '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce',
+        CRO: '0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b',
+        GALA: '0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA',
+        POLY: '0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec',
+        CRV: '0xD533a949740bb3306d119CC777fa900bA034cd52',
+        SAND: '0x3845badAde8e6dFF049820680d1F14bD3903a5d0',
+        COMP: '0xc00e94cb662c3520282e6f5717214004a7f26888',
+        BAT: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
+        SUSHI: '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2',
+        CVC: '0x41e5560054824ea6b0732e656e3ad64e20e94e45',
+        CELR: '0x4f9254c83eb525f9fcf346490bbb3ed28a81c667',
+        YFI: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e',
+        SLP: '0x37236cd05b34cc79d3715af2383e96dd7443dcf1'
     },
     /*
     exchangilyOfficial: [
