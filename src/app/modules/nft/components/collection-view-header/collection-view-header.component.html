@@ -1,5 +1,5 @@
 <header class="collectionManagerView--header" *ngIf="collection">
-    <div class="collectionManagerView--collection-image" style="background-image: url({{collection.image}});"></div>
+    <div class="collectionManagerView--collection-image" [ngStyle]="{backgroundImage: 'url(' + getImageUrl() + ')'}"></div>
     <div id="category">
         <div id="category-name">
             <span>{{collection.name}}</span>

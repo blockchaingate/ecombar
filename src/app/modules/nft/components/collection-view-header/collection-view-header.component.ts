@@ -12,4 +12,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
           
     }
 
+    getImageUrl() {
+      return encodeURI(this.collection.image);
+    }
   }

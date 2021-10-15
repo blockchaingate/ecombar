@@ -35,7 +35,10 @@
 [title]="('About ' | translate) + collection.name"
 [icon]="'vertical_split'"
 [toggleable]="true">
-    <img class="img-thumbnail" src="{{collection.image}}">{{collection.description}}
+    <a href="/nft/admin/collections/{{collection.slug}}/view">
+        <img class="img-thumbnail" src="{{collection.image}}">{{collection.description}}
+    </a>
+    
 </app-expansion>
 
 <app-expansion 
