@@ -800,7 +800,7 @@ export class WalletDashboardComponent implements OnInit{
           "stateMutability": "nonpayable",
           "type": "function"
         };
-        args = [from, toHex, tokenId, amount, '0x0'];
+        args = [from, toHex, tokenId, '0x' + new BigNumber(amount).shiftedBy(18).toString(16), '0x0'];
         console.log('args==', args);
         console.log('smartContractAddress=', smartContractAddress);
         const txhex = await this.kanbanSmartContractServ.getExecSmartContractHex(seed, smartContractAddress, abi, args);
@@ -817,6 +817,9 @@ export class WalletDashboardComponent implements OnInit{
             if(ret && ret.ok) {
               this.toastr.success('asset ' + asset.name + ' was sent successfully');
             }
+          },
+          (error: any) => {
+            this.toastr.error(error.error);
           }
         );
       } else {
