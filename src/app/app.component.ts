@@ -18,7 +18,7 @@ import { themeEvn } from 'src/environments/themeEnv';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'ecombar';
+  title = 'Madearn';
   themeList = themeEvn.themeList;
   themeSwitch = themeEvn.themeSwitch;
 

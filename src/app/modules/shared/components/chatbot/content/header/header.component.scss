@@ -1,0 +1,46 @@
+header {
+    height: 32px;
+    position: relative;
+    overflow: hidden;
+    background: none;
+}
+
+.drift-widget-header-top-line {
+    height: 48px;
+}
+
+header {
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    max-height: 100%;
+    background: #fff;
+}
+
+.drift-widget-avatar {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #fff;
+    height: 48px;
+    width: 48px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-position: 50%;
+}
+
+.drift-widget-avatar.drift-widget-avatar--small {
+    width: 28px;
+    height: 28px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.action-btn {
+    position: absolute;
+    right: 10px;
+}
+

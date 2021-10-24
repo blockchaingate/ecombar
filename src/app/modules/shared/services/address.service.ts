@@ -8,14 +8,18 @@ export class AddressService {
   }
 
   getAddress(id: string) {
-    return this.http.get('addresses/' + id);
+    return this.http.get('addresses/' + id, false);
   }
 
   addAddress(address: any) {
-    return this.http.post('addresses/Create', address);
+    return this.http.post('addresses/Create2', address, false);
   }
 
   updateAddress(id: string, address: any) {
-    return this.http.post('addresses/Update/' + id, address);
+    return this.http.post('addresses/Update2/' + id, address, false);
+  }
+
+  getAddresses(walletAddress: string) {
+    return this.http.get('addresses/owner/' + walletAddress, false);
   }
 }

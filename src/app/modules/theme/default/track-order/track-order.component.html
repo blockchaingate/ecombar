@@ -35,8 +35,13 @@
                             
                             <button class="btn" (click)="change()">{{'Change' | translate}}</button>
                         </div>
-                        <div class="font-weight-bold">
-                            {{order.name}} {{order.streetNumber}} {{order.streetName}} {{order.city}} {{order.province}}, {{order.zip}} {{order.country}}
+                        <div>
+                            <div class="font-weight-bold">
+                                {{order.name}} {{order.buyerPhone}}
+                            </div>
+                            <div>
+                                {{order.streetNumber}} {{order.streetName}} {{order.city}} {{order.province}}, {{order.zip}} {{order.country}}
+                            </div>                       
                         </div>
                     </div>
 

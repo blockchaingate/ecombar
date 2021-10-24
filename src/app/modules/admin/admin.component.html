@@ -43,23 +43,22 @@
                 <a href="/" class="text-success">
                     {{'Go shopping' | translate}}
                 </a>
-                
+
             </div>
-            <div class="text-center text-secondary" 
-            *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
+            <div class="text-center text-secondary" *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
                 ({{'In review' | translate}})
             </div>
             <div class="pt-2 text-center">
-                <a target="_blank" class="text-success"  *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
+                <a target="_blank" class="text-success" *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
                     {{'My store' | translate}}
                 </a>
 
                 <a target="_blank" class="text-success" *ngIf="role == 'Customer'" href="/apply-for-merchant">
                     {{'Apply for merchant' | translate}}
-                </a>                
-            </div>   
-            
-            
+                </a>
+            </div>
+
+
             <div class="pt-2">
                 <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
             </div>
@@ -83,8 +82,8 @@
         <router-outlet></router-outlet>
     </main>
     <footer class="footer">
-        <div class="footer__copyright">&copy; 2020 Ecombar All Rights Reserved</div>
-        <div class="footer__signature">Powered by FA Enterprise</div>
+        <div class="footer__copyright">&copy; 2021 Madearn.com All Rights Reserved</div>
+        <div class="footer__signature">Powered by Fast Access Blockchain</div>
     </footer>
 </div>
 

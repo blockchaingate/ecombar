@@ -7,22 +7,27 @@
         <div class="d-flex align-items-center">
             {{wallet.name}}
             <div class="header__avatar" (click)="toggleDropDownActive()">
-    
-                    
-                    <div class="d-inline-block">
-                        <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+
+
+                <div class="d-inline-block">
+                    <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
+                    <i *ngIf="!(myPhotoUrl)" class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">
+                            account_balance_wallet
+                        </i>
+                    <!--
                         <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/crypto-wallet.png">
-                    </div>
-    
-                    <div class="d-inline-block">
-                        <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
-                            <ul class="dropdown__list">
-                                
-                                <li class="dropdown__list-item" *ngFor="let item of wallets.items; let i=index" (click)="changeWallet(i, item)">
-                                    <span class="dropdown__icon"><i class="fas fa-wallet"></i></span>
-                                    <span class="dropdown__title">{{item.name}}</span>
-                                </li>  
-                                <!--
+                        -->
+                </div>
+
+                <div class="d-inline-block">
+                    <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
+                        <ul class="dropdown__list">
+
+                            <li class="dropdown__list-item" *ngFor="let item of wallets.items; let i=index" (click)="changeWallet(i, item)">
+                                <span class="dropdown__icon"><i class="fas fa-wallet"></i></span>
+                                <span class="dropdown__title">{{item.name}}</span>
+                            </li>
+                            <!--
                                 <li class="dropdown__list-item" (click)="profile()">
                                     <span class="dropdown__icon"><i class="far fa-user"></i></span>
                                     <span class="dropdown__title">{{'my profile' | translate}}</span>
@@ -32,12 +37,12 @@
                                     <span class="dropdown__title">{{'log out' | translate}}</span>
                                 </li>
                                 -->
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
-    
-    
-    
+                </div>
+
+
+
             </div>
         </div>
 
@@ -55,23 +60,22 @@
                 </a>
                 <a href="/wallet" class="text-success">
                     {{'Wallet' | translate}}
-                </a>                
+                </a>
             </div>
-            <div class="text-center text-secondary" 
-            *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
+            <div class="text-center text-secondary" *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
                 ({{'In review' | translate}})
             </div>
             <div class="pt-2 text-center">
-                <a target="_blank" class="text-success"  *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
+                <a target="_blank" class="text-success" *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
                     {{'My store' | translate}}
                 </a>
 
                 <a target="_blank" class="text-success" *ngIf="role == 'Customer'" href="/apply-for-merchant">
                     {{'Apply for merchant' | translate}}
-                </a>                
-            </div>   
-            
-            
+                </a>
+            </div>
+
+
             <div class="pt-2">
                 <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
             </div>
@@ -95,8 +99,8 @@
         <router-outlet></router-outlet>
     </main>
     <footer class="footer">
-        <div class="footer__copyright">&copy; 2020 Ecombar All Rights Reserved</div>
-        <div class="footer__signature">Powered by FA Enterprise</div>
+        <div class="footer__copyright">&copy; 2021 Madearn.com All Rights Reserved</div>
+        <div class="footer__signature">Powered by Fast Access Blockchain</div>
     </footer>
 </div>
 

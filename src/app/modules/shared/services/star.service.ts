@@ -27,7 +27,7 @@ export class StarService {
    const path = '7star-charge-fund/merchant/' + walletAddress;
    const res = this.http.get(path);
    return res;  
-}
+  }
 
    getOrdersByAddress(address: string) {
       const url = '7star-order/address/' + address;

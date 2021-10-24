@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { themeEvn } from 'src/environments/themeEnv';
+import { ThemeService } from './services/theme.service';
 
 
 
@@ -145,8 +146,41 @@ switch (themeEvn.defaultTheme) {
   exports: [RouterModule]
 })
 export class AppRoutingModule { 
+  currentTheme!: String;
+
+  constructor(
+    private theme: ThemeService,
+    private router: Router) {
+    // this.router.resetConfig(defulatThenme);
+    // this.router.navigateByUrl('/home');
+
+  this.theme.currentMessage.subscribe(message => {
+    if(this.currentTheme == null || this.currentTheme==""){
+      this.currentTheme = message;
+      console.log("this.message: " + this.currentTheme);
+    }else{
+      this.currentTheme = message;
+      console.log("this.message: " + this.currentTheme);
+      switch (this.currentTheme) {
+        case 'Default':
+          this.router.resetConfig(defaultTheme);
+          break;
+        case 'MadEarn':
+          this.router.resetConfig(madEarn);
+          break;
+        // case 'NFT':
+        //   this.router.resetConfig(nft);
+        //   break;
+        default:
+          this.router.resetConfig(defaultTheme);
   
-}
+      }
+      this.router.navigateByUrl('');
+    }
+
+  });
+  
+}}
 
 // @NgModule({
 //   declarations: [],

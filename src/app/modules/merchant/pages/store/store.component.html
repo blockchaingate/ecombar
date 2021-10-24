@@ -29,7 +29,7 @@
         <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
         </div>
 
-        <div *ngIf="!(id)">
+        <div>
           <div>
             <label for="email"><b>Coin</b></label>
           </div>
@@ -42,10 +42,6 @@
             </select>
           </div>
         
-        </div>
-        <div *ngIf="id">
-          <label for="email"><b>{{'Coin' | translate}}:</b></label>
-          {{coin}}
         </div>
 
         <div>
@@ -70,11 +66,16 @@
   
   
         <div *ngIf="id">
-          <label for="email"><b>{{'Ref address' | translate}}(*):</b></label>
+          <label for="email"><b>{{"Merchant's referral address" | translate}}(*):</b></label>
           {{refAddress}}
         </div>     
         
-
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" [(ngModel)]="hideOnStore">
+          <label class="form-check-label" for="flexCheckChecked">
+            {{'Hide on Madearn' | translate}}
+          </label>
+        </div>
       </div>
       
 

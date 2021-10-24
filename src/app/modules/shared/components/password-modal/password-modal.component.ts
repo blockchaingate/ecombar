@@ -19,7 +19,7 @@ export class PasswordModalComponent implements OnInit{
     pwdHash: string;
     encryptedSeed: any;
     password: string;
-    gas: number = 0.001;
+    gas: number = 0.00001;
     fabPrivateKey: any;
     seed: Buffer;
 

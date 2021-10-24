@@ -1,0 +1,97 @@
+<main class="drift-widget-chat-layout-new" style="
+right: 24px;
+bottom: 124px;
+position: fixed; z-index: 2147483647;
+width: 400px!important; 
+max-height: calc(100% - 158px);
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;">
+    <div  class="drift-widget-chat-wrapper-new">
+        <app-chatbot-content-header></app-chatbot-content-header>
+        <app-chatbot-content-message></app-chatbot-content-message>
+        <!--
+        <div class="drift-widget-message-history drift-widget-message-history--no-composer" style="background: rgb(255, 255, 255);">
+            <div class="drift-widget-message-group-list-container" aria-hidden="false">
+                <div class="drift-widget-message-group-list-loader" style="background: rgb(255, 255, 255);">
+                    <div class="drift-widget-loader-balls">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+                    <div role="list" class="drift-widget-message-group-list" style="position: absolute; inset: 0px; overflow: scroll; margin-right: 0px; margin-bottom: 0px;">
+                        <div role="listitem" class="drift-widget-message-group-wrapper drift-widget-message-group-wrapper--last">
+                            <p class="drift-widget-message-group-timestamp" style="color: rgb(53, 63, 69);">Today 9:22 PM</p>
+                            <ul class="drift-widget-message-group drift-widget-message-group-type--AGENT">
+                                <li class="drift-widget-message-sender">
+                                    <span class="drift-widget-message--meta-author" style="color: rgb(53, 63, 69);">Luxbot</span>
+                                </li>
+                                <li class="drift-widget-message drift-widget-message-sender--AGENT">
+                                    <div class="drift-widget-message--box drift-widget-message--HTML drift-widget-message--bot" style="background: rgb(245, 248, 250); color: rgb(65, 65, 65);">
+                                        <div><p>Hey there!</p></div>
+                                    </div>
+                                    <span class="drift-widget-message-timestamp drift-widget-message-timestamp--AGENT">9:22 PM</span>
+                                </li>
+                                <li class="drift-widget-message-group-avatar message-group-avatar-bottom">
+                                    <div class="drift-widget-recipient-avatar">
+                                        <div class="drift-widget-avatar drift-widget-avatar--small" style="background-image: url(&quot;https://driftt.imgix.net/https%3A%2F%2Ffile2.api.drift.com%2Fdata%2Fdrift-prod-file-uploads%2F2658%252F2658d824fe07b78a046b445f4e95709a%2Favatar.svg%3FmimeType%3Dimage%252Fsvg%252Bxml?fit=max&amp;fm=png&amp;h=200&amp;w=200&amp;s=c1386402536b4bb74f59faecaba2a145&quot;);">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="drift-widget-message drift-widget-message-sender--AGENT">
+                                    <div class="drift-widget-message--box drift-widget-message--HTML drift-widget-message--bot" style="background: rgb(245, 248, 250); color: rgb(65, 65, 65);">
+                                        <div>
+                                            <p>Welcome to Lux! </p>
+                                            <p>Have any questions?</p>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <span class="drift-widget-message-timestamp drift-widget-message-timestamp--AGENT">9:22 PM</span>
+                                </li>
+                                <li class="drift-widget-message--meta-date drift-widget-message">
+                                    <div class="drift-widget-message--meta-status">
+                                        <svg class="drift-widget-message-sent" width="12" height="12" viewBox="0 0 36 36">
+                                            <path d="M8.311 16.54a.919.919 0 0 1-.645-.266L.27 8.922a.921.921 0 0 1-.005-1.3.916.916 0 0 1 1.296-.005l6.7 6.661L20.392.316a.914.914 0 0 1 1.293-.09.92.92 0 0 1 .09 1.296L9.001 16.224a.91.91 0 0 1-.657.315H8.31l.001.001z"></path>
+                                        </svg>
+                                        <span class="drift-widget-message--meta-date-stamp">9:22 PM</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="drift-widget-message-group drift-widget-message-group-type--END_USER drift-bot-buttons--set drift-bot-buttons--visible">
+                                <li class="drift-widget-button--list-item" aria-posinset="0">                          
+                                    <button class="drift-widget-button" aria-label="Yes, I have a question! - Click to reply with this message" style="color: rgb(45, 103, 185); background-color: rgb(255, 255, 255); border-color: rgb(45, 103, 185);">
+                                        Yes, I have a question!
+                                    </button>
+                                </li>
+                                <li class="drift-widget-button--list-item" aria-posinset="1">
+                                <button class="drift-widget-button" aria-label="Nope, I'm just browsing - Click to reply with this message" style="color: rgb(45, 103, 185); background-color: rgb(255, 255, 255); border-color: rgb(45, 103, 185);">
+                                        Nope, I'm just browsing
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;">
+                        <div style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"></div>
+                    </div>
+                    <div style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;">
+                        <div style="position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="drift-widget-chat-bottom">
+            <div class="drift-widget-composer--default drift-widget-composer--hidden">
+                <input multiple="" type="file" autocomplete="off" tabindex="-1" style="display: none;">
+                <div class="drift-widget-composer--text-area">
+                    <pre> </pre>
+                    <label class="drift-a11y-visually-hidden" for="drift-widget-composer-input">Choose an option above...</label>
+                    <textarea class="drift-widget-input" placeholder="Choose an option above..." aria-label="message composer" maxlength="4096" disabled="" id="drift-widget-composer-input" style="color: rgb(65, 65, 65); border-color: rgb(157, 169, 176); background: white;"></textarea>
+                </div>
+            </div>
+        </div>
+        -->
+    </div>
+</main>
