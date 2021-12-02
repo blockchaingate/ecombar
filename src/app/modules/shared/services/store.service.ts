@@ -18,7 +18,7 @@ export class StoreService {
   }
 
   getStores() {
-    return this.http.get('stores');
+    return this.http.get('stores/all/approved');
   }
 
   getStore(id: string) {
