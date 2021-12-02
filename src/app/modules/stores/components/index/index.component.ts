@@ -85,7 +85,7 @@ export class StoresIndexComponent implements OnInit {
             this.joinAsMemberDo(privateKey);
           }); 
         } else {
-          this.toastr.error('Ivalid referral code.');
+          this.toastr.error('Invalid referral code.');
         }
       }
     );
