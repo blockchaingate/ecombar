@@ -307,10 +307,6 @@ export class StoreComponent implements OnInit {
       }
 
     }
-
-
-
-
   }
 
   addStore() {
@@ -319,7 +315,7 @@ export class StoreComponent implements OnInit {
       return;
     }
     if(!this.refAddress) {
-      this.toastr.info('Your ref address is empty.');
+      this.toastr.info('Your referral code is empty.');
       return;      
     }
     let refAddressHex = '';
