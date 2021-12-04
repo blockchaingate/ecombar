@@ -122,7 +122,7 @@ export class TeamIndexComponent implements OnInit {
             this.joinAsMemberDo(privateKey);
           }); 
         } else {
-          this.toastr.error('ref address is not registered.');
+          this.toastr.error('Invalid referral code.');
         }
       }
     );

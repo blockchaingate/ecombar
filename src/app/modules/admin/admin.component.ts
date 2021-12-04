@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
   dropDownActive = false;
   //displayName: string;
   merchantId: string;
-
+  year = 2022;
 
 
   role: string;
@@ -36,6 +36,7 @@ export class AdminComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.year = (new Date()).getFullYear();
     //this.userState$ = this.store.select('user');
     console.log('ngiiiit admin modules');
     this.store.select('user').subscribe((user: UserState) => {
@@ -59,10 +60,6 @@ export class AdminComponent implements OnInit {
         );
       }
     })
-
-
-
-
 
     this.menuItems = [
       {
@@ -88,7 +85,6 @@ export class AdminComponent implements OnInit {
       } 
     ];
 
-
     const lang = this.storageServ.lang;
     if (!lang) {
       this.storageServ.get('_lang').subscribe(
@@ -102,9 +98,6 @@ export class AdminComponent implements OnInit {
     } else {
       this.translateServ.setDefaultLang(lang);
     }
-
-
-
   }
 
   changeLang() {

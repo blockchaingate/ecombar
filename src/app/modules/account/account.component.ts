@@ -18,6 +18,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
+  year = 2022;
   showNavMenu = false;
   dropDownActive = false;
   //displayName: string;
@@ -47,6 +48,8 @@ export class AccountComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.year = (new Date()).getFullYear();
+
     //this.userState$ = this.store.select('user');
     this.dataServ.currentWallets.subscribe(
       (wallets: any) => {
