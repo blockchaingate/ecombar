@@ -21,7 +21,7 @@ export class MerchantComponent implements OnInit {
   dropDownActive = false;
   //displayName: string;
   merchantId: string;
-
+  year = 2022;
   /*
   myPhotoUrlSelect: Observable<string>;
   displayNameSelect: Observable<string>;
@@ -77,6 +77,7 @@ export class MerchantComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.year = (new Date()).getFullYear();
     this.dataServ.currentWallets.subscribe(
       (wallets: any) => {
         this.wallets = wallets;
