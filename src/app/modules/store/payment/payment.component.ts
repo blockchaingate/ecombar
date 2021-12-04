@@ -322,7 +322,8 @@ export class PaymentComponent implements OnInit{
       console.log('fulfillmentFee=', fulfillmentFee);
       
       console.log('this.shippingfee=', this.shippingFee);  
-      this.parents = [];
+      //this.parents = [];
+      console.log('this.parents====', this.parents);
       this.agents = [];
       const args = [
         '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),

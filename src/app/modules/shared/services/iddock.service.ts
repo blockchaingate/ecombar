@@ -81,6 +81,7 @@ export class IddockService {
   }
   saveDock(type: string, data: any) {
     const url = 'iddock/Create/' + type;  
+    console.log('data for iddock==', data);
     return this.http.post(url, data, false);   
   }
 

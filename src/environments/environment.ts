@@ -141,11 +141,10 @@ export const environment = {
       },
     smartContract: {
 
-        feeDistribution: '0x9a54a4c81ac33ebeeddc247b64679c23d0fd682e',
-        locker: '0xc9042097dAC6db6f79408bef99092e40D66D4BB6',
-        exchangeRate: '0x6e6a2a79ebea4dfa66cb752c372917e6f5d38895',
-        sevenStarProxy: '0x708fbf96ad0eb56372ebb32f34be8cdda52fd3f1',
-
+        feeDistribution: '0x81dd9357bf85bdb272e9ee1ec0ec2baa8bdffd06',
+        locker: '0xab64a2a910a6dda85620a109cd012bb4a7b20b6f',
+        exchangeRate: '0xb9622a9e96ea64bcb0bafc609f810994250f0db4',
+        sevenStarProxy: '0x0449e15d3695023c3ae50e48687b704d3b3e25ce',
         
         NFT_Exchange: '0x2c8aa9e76fc3c92a799c6c68926bd24e53ff9abb',
         ProxyRegistry: '0x2e553ad1cd6ba24be952cc7273e4d869d19b1586',
