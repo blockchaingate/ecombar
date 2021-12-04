@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
   dropDownActive = false;
   //displayName: string;
   merchantId: string;
-
+  year = 2022;
   /*
   myPhotoUrlSelect: Observable<string>;
   displayNameSelect: Observable<string>;
@@ -42,6 +42,7 @@ export class AccountComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.year = (new Date()).getFullYear();
     //this.userState$ = this.store.select('user');
     console.log('ngiiiit');
     this.store.select('user').subscribe((user: UserState) => {
