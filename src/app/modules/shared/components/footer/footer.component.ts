@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./footer.component.scss']
   })
   export class NftFooterComponent implements OnInit {
+      year = 2022;
       ngOnInit() {
-          
+        this.year = (new Date()).getFullYear();
       }
   }
