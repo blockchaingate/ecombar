@@ -16,10 +16,10 @@
 
 <div class="container py-3">
     <div class="row">
-        <div class="col col-3 py-3" *ngFor="let store of stores">
+        <div class="col col-md-3 col-sm-6 col-12 py-3" *ngFor="let store of stores">
 
             <div class="card" (click)="gotoStore(store)">
-                <img *ngIf="store.image"  src="{{store.image}}" alt="Avatar" style="width:100%">
+                <img *ngIf="store.image"  src="{{store.image}}" alt="Avatar" class="store-image">
                 <div class="container">
                   <h4><b>{{store.name | translateField}}</b></h4>
                 </div>
