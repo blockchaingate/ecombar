@@ -75,6 +75,9 @@ import { Router } from '@angular/router';
       this.onSearch();
     }
 
+    login() {
+      this.router.navigate(['/wallet']);
+    }
     logout() {
       this.modalRef = this.modalServ.show( LogoutModalComponent );
       this.modalRef.content.onClose.subscribe(

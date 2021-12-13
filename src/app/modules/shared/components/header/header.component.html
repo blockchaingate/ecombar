@@ -93,8 +93,11 @@
                             {{'Account Settings' | translate}}
                         </a>
                     </li>
-                    <li (click)="logout()">
+                    <li *ngIf="wallet" (click)="logout()">
                         {{'Logout' | translate}}
+                    </li>
+                    <li *ngIf="!wallet" (click)="login()">
+                        {{'Log In' | translate}}
                     </li>
                 </ul>
             </li>
