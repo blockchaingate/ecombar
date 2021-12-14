@@ -49,6 +49,7 @@ import { TranslateService } from '@ngx-translate/core';
     constructor(
       private localSt: LocalStorage,
       private route: ActivatedRoute,
+      private router: Router,
       private nftPortServ: NftPortService,
       private assetServ: NftAssetService,
       private eventServ: NftEventService,
@@ -263,6 +264,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 
     takeActionDo() {
+      if(!this.wallet) {
+        this.router.navigate(['/wallet']);
+        return;
+      }
       const initialState = {
         pwdHash: this.wallet.pwdHash,
         encryptedSeed: this.wallet.encryptedSeed

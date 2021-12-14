@@ -102,10 +102,16 @@ export class WalletDashboardComponent implements OnInit{
           return;
         }
         this.wallets = wallets;
-        console.log('this.wallets==', this.wallets);
+
+        if(this.wallets.currentIndex >= this.wallets.items.length) {
+          this.onChange(this.wallets.items.length - 1);
+          return;
+        }
         this.wallet = this.wallets.items[this.wallets.currentIndex];
-        
-        this.loadWallet();
+
+        if(this.wallet) {
+          this.loadWallet();
+        }
 
       });
     }
