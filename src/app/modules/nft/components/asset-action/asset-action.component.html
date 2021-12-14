@@ -25,7 +25,7 @@
     </div>
     <div class="OrderManagerreact__DivContainer-rw3i3h-0 eyduij">
         <div class="OrderManager--cta-container">
-            <div *ngIf="(owner == address) || (balance > 0)">
+            <div *ngIf="owner && address && ((owner == address) || (balance > 0))">
                 <div class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light mx-3" (click)="edit()" data-testid="ActionButton" role="button" tabindex="0">
                     <div class="ActionButton--content" style="min-width: 120px;">{{'Edit' | translate}}</div>
                 </div> 
@@ -44,7 +44,7 @@
                     </div>                
                 </div>
     
-                <div *ngIf="!isSellOrderOwner()" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="buy()" data-testid="ActionButton" role="button" tabindex="0">
+                <div *ngIf="!isSellOrderOwner() || !address" class="ActionButtonreact__DivButton-sc-7jpoey-0 bwFKIF ActionButton--light" (click)="buy()" data-testid="ActionButton" role="button" tabindex="0">
                     <div class="ActionButton--content " style="min-width: 120px;">{{'Buy' | translate}}</div>
                 </div> 
      

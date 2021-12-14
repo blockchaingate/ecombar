@@ -81,13 +81,13 @@ import { TranslateService } from '@ngx-translate/core';
       this.balance = 0;
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
-        if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-          return;
+        if(wallets && wallets.items && (wallets.items.length > 0)) {
+          const wallet = wallets.items[wallets.currentIndex];
+          this.wallet = wallet;
+          const addresses = wallet.addresses;
+          this.address = addresses.filter(item => item.name == 'FAB')[0].address;
         }
-        const wallet = wallets.items[wallets.currentIndex];
-        this.wallet = wallet;
-        const addresses = wallet.addresses;
-        this.address = addresses.filter(item => item.name == 'FAB')[0].address;
+
 
         this.route.paramMap.subscribe((params: ParamMap) =>  {
           const smartContractAddress = params.get('smartContractAddress');   
@@ -222,12 +222,15 @@ import { TranslateService } from '@ngx-translate/core';
 
 
               if(this.collection.type == 'ERC1155') {
-                this.assetServ.getBalanceOf(this.utilServ.fabToExgAddress(this.address), this.smartContractAddress, this.tokenId).subscribe(
-                  (res: any) => {
-                    this.balance = new BigNumber(res.data).shiftedBy(-18).toNumber();
-                    console.log('balance=', this.balance);
-                  }
-                );
+                if(this.address) {
+                  this.assetServ.getBalanceOf(this.utilServ.fabToExgAddress(this.address), this.smartContractAddress, this.tokenId).subscribe(
+                    (res: any) => {
+                      this.balance = new BigNumber(res.data).shiftedBy(-18).toNumber();
+                      console.log('balance=', this.balance);
+                    }
+                  );
+                }
+
               } else {
                 this.assetServ.getOwner(this.smartContractAddress, this.tokenId).subscribe(
                   (res: any) => {
