@@ -31,7 +31,7 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
 })
 export class ProductAddComponent implements OnInit {
 
-  public insertImageSettings :ImageSettingsModel = { allowedTypes: ['.jpeg', '.jpg', '.png'], display: 'inline', width: 'auto', height: 'auto', saveFormat: 'Blob', saveUrl: null, path: null,}
+  public insertImageSettings :ImageSettingsModel = { allowedTypes: ['.jpeg', '.jpg', '.png'], display: 'inline', width: 'auto', height: 'auto', saveFormat: 'Base64', saveUrl: null, path: null,}
 
   smartContractAddress: string;
   wallets: any;
@@ -422,6 +422,7 @@ export class ProductAddComponent implements OnInit {
     const featuresLan: TextLan = { name: 'features', en: this.features, sc: this.featuresChinese };
     const detailLan: TextLan = { name: 'detail', en: this.detail, sc: this.detailChinese };
     const descLan: TextLan = { name: 'description', en: this.description, sc: this.descriptionChinese };
+
     const specLan = { 
       en: 
       [{
