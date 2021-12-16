@@ -45,12 +45,12 @@
 
                   <div class="form-field">
                     <label for="detail">Content</label>
-                    <ejs-richtexteditor [(ngModel)]='detail' placeholder="Enter product detail"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+                    <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detail' placeholder="Enter product detail"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
                   </div>                  
 
                   <div class="form-field">
                     <label for="description">Description</label>
-                    <ejs-richtexteditor [(ngModel)]='description' placeholder="Enter product description"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+                    <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="Enter product description"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
                   </div>
 
                 
@@ -364,12 +364,16 @@
         
         <div class="py-2">
           <label for="name"><b>内容</b></label>
-          <ejs-richtexteditor [(ngModel)]='detailChinese' placeholder="请输入内容"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
+          <ejs-richtexteditor 
+          [(ngModel)]='detailChinese' 
+          (uploading) = "addHeaders($event)"
+          placeholder="请输入内容"  
+          [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
    
         </div>
         <div class="py-2">
           <label for="name"><b>描述</b></label>
-          <ejs-richtexteditor [(ngModel)]='descriptionChinese' placeholder="请输入描述" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
+          <ejs-richtexteditor [(ngModel)]='descriptionChinese' (uploading) = "addHeaders($event)" placeholder="请输入描述" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
         </div>
        
 

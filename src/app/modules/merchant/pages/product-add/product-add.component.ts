@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { UserService } from 'src/app/modules/shared/services/user.service';
@@ -6,7 +6,7 @@ import { CategoryService } from 'src/app/modules/shared/services/category.servic
 import { BrandService } from 'src/app/modules/shared/services/brand.service';
 import { currencies } from '../../../../../environments/currencies';
 import { TextLan } from 'src/app/modules/shared/models/textlan';
-import {  ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
+import {  ImageSettingsModel, RichTextEditorComponent } from '@syncfusion/ej2-angular-richtexteditor';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { IddockService } from 'src/app/modules/shared/services/iddock.service';
@@ -19,7 +19,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-admin-product-add',
   providers: [ProductService, CategoryService],
@@ -31,8 +31,9 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
 })
 export class ProductAddComponent implements OnInit {
 
-  public insertImageSettings :ImageSettingsModel = { allowedTypes: ['.jpeg', '.jpg', '.png'], display: 'inline', width: 'auto', height: 'auto', saveFormat: 'Base64', saveUrl: null, path: null,}
 
+  public insertImageSettings :ImageSettingsModel;
+  timestamp: any;
   smartContractAddress: string;
   wallets: any;
   quantity: number;
@@ -109,6 +110,7 @@ export class ProductAddComponent implements OnInit {
       'green',
       'brown'
     ];
+    this.timestamp = Date.now();
     this.contentQuantity = 0;
     this.contents = [];
     this.colors = [];
@@ -150,6 +152,15 @@ export class ProductAddComponent implements OnInit {
               }
             }
           );
+        }
+        this.insertImageSettings = { 
+          allowedTypes: ['.jpeg', '.jpg', '.png'], 
+          display: 'inline', 
+          width: 'auto', 
+          height: 'auto', 
+        //saveFormat: 'Blob', 
+          saveUrl: 'https://' + (environment.production ? 'api' : 'test') + '.blockchaingate.com/v2/s3/' + walletAddress + '/' + this.timestamp + '/UploadFiles', 
+          path: "https://prodid.s3.ca-central-1.amazonaws.com/store/" + walletAddress + "/" + this.timestamp + "/"
         }
       }
     );  
@@ -269,6 +280,11 @@ export class ProductAddComponent implements OnInit {
         }
       );
     }
+  }
+
+  public addHeaders(args: any) {
+    console.log('add headerssss');
+    args.currentRequest.setRequestHeader('custom-header', 'Syncfusion');
   }
 
   changeTab(tabName: string) {
