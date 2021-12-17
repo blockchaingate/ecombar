@@ -69,10 +69,6 @@ export class AccountComponent implements OnInit {
       }
     })
 
-
-
-
-
     this.menuItems = [
       {
         title: 'Dashboard',
@@ -200,14 +196,10 @@ export class AccountComponent implements OnInit {
     } else {
       this.translateServ.setDefaultLang(lang);
     }
-
-
-
   }
 
   changeLang() {
     let lang = this.translateServ.getDefaultLang();
-    lang = (lang === 'en') ? 'sc' : 'en';
     this.translateServ.setDefaultLang(lang);
     this.storageServ.lang = lang;
   }
