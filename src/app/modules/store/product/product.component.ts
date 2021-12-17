@@ -17,7 +17,10 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
+import { CoinService } from '../../shared/services/coin.service';
+import { IddockService } from '../../shared/services/iddock.service';
+import { KanbanSmartContractService } from '../../shared/services/kanban.smartcontract.service';
+import BigNumber from 'bignumber.js';
 @Component({
   template:''
 })
@@ -27,13 +30,19 @@ export class ProductComponent implements OnInit {
   comments: any;
   id: string;
   parentId: string;
+  productObjectIds: any;
   currency: string;
   quantity: number;
   colors: any;
   colorsChinese: any;
   sizes: any;
+  smartContractAddress: string;
+  quantities: any;
   sizesChinese: any;
+  taxRate: number;
   relatedProducts: any;
+  total: number;
+  tax: number;
   favorite: any;
   isFavorited: boolean;
   token: any;
@@ -53,6 +62,7 @@ export class ProductComponent implements OnInit {
 
   selectedImage: string;
   constructor(
+    private coinServ: CoinService,
     private dataServ: DataService,
     private cartStoreServ: CartStoreService,
     private route: ActivatedRoute,
@@ -67,7 +77,9 @@ export class ProductComponent implements OnInit {
     private router: Router,
     private modalService: BsModalService,
     private storage: StorageService,
+    private kanbanSmartContractServ: KanbanSmartContractService,
     private authServ: AuthService,
+    private iddockServ: IddockService,
     private translateServ: TranslateService    
     ) {
 
@@ -85,6 +97,8 @@ export class ProductComponent implements OnInit {
       (store: any) => {
         this.storeId = store._id;
         this.currency = store.coin;
+        this.smartContractAddress = store.smartContractAddress;
+        this.taxRate = store.taxRate;
       }
     );
     
@@ -377,9 +391,13 @@ export class ProductComponent implements OnInit {
       this.cartStoreServ.addCartItem(cartItem);
   }
 
-  buyDo() {
-    const items: CartItem[] = [];
+  async buyDo(seed) {
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey;
 
+    const items: CartItem[] = [];
+    this.productObjectIds = [];
+    this.quantities = [this.quantity];
     const item = {
       productId: this.product._id,
       objectId: this.product.objectId,
@@ -402,25 +420,127 @@ export class ProductComponent implements OnInit {
       transAmount: this.product.price * Number(this.quantity)
     };
 
-    this.orderServ.create2(orderData).subscribe(
-      (res: any) => {
-        console.log('ress from create order', res);
-        if (res && res.ok) {
-          const body = res._body;
-          const orderID = body._id;
-          this.cartStoreServ.empty();
-          this.router.navigate(['/address/' + orderID]);
+
+
+
+
+    (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
+      if(res) {
+        if(res.ok) {
+          console.log('res._body=', res._body);
+          const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
+          orderData['objectId'] = objectId; 
+          
+          console.log('orderData===', orderData);
+
+          const abi = {
+            "inputs": [
+              {
+                "internalType": "bytes30",
+                "name": "objectId",
+                "type": "bytes30"
+              },
+              {
+                "internalType": "bytes30[]",
+                "name": "productObjectIds",
+                "type": "bytes30[]"
+              },
+              {
+                "internalType": "uint8[]",
+                "name": "quantities",
+                "type": "uint8[]"
+              },
+              {
+                "internalType": "uint256",
+                "name": "total",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tax",
+                "type": "uint256"
+              }
+            ],
+            "name": "createOrder",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          };
+
+          this.total = this.quantity * this.product.price;
+          this.tax = this.total * this.taxRate / 100;
+          this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
+          const args = [
+            '0x' + res._body._id.substring(0, 60), 
+            this.productObjectIds, 
+            this.quantities, 
+            '0x' + new BigNumber(this.total).shiftedBy(18).toString(16), 
+            '0x' + new BigNumber(this.tax).shiftedBy(18).toFixed()
+          ];
+          console.log('args for crate Order=', args);
+          const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
+
+
+
+
+          if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+
+
+
+
+
+
+              const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+              orderData['sig'] = sig.signature;    
+              this.orderServ.create2(orderData).subscribe(
+                (res: any) => {
+                  console.log('ress from create order', res);
+                  if (res && res.ok) {
+                    const body = res._body;
+                    const orderID = body._id;
+                    this.cartStoreServ.empty();
+
+                    this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
+                  }
+                }
+              );
+          }
         }
       }
-    );
+    });
+
+
+
+
+
   }
 
-  buyNow() {
+  buyNow(product: any, quantity: number) {
+    if(!Number(quantity)) {
+      return;
+    }
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };        
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.buyDo(seed);
+    });
+
+    /*
     if(this.token) {
       this.buyDo();
     } else {
       this.router.navigate(['auth/signin']);
     }
+    */
     /*
     const token = this.storage.token;
     if(token) {
