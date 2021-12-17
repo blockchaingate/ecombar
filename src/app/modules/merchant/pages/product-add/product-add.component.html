@@ -220,7 +220,7 @@
             </div>    
 
 
-            <!--
+            
             <div class="card-section">
               <div class="card">
                 <div class="container">  
@@ -253,7 +253,46 @@
                 </div>
               </div>
             </div>              
--->
+
+
+
+
+            <div class="card-section">
+              <div class="card">
+                <div class="container">  
+                  <div class="py-2">
+                    <label for="psw"><b>Size</b></label>
+                    <div>
+                      <div *ngFor="let c of sizes">
+                        <div class="d-flex align-items-center justify-content-between py-2">
+                          <div>
+                            {{c}}
+                          </div>
+                          <div (click)="removeSize(c)">
+                            <img src="/assets/svg/delete.svg">
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div>
+                      <div class="d-inline-block px-2">
+                        <input type="text" placeholder="Enter Size" [(ngModel)]="size" name="size">
+                      </div>
+                    </div>
+
+                    <div class="pt-2">
+                      <button class="btn" (click)="addSize()">{{'Add' | translate}}</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>   
+
+
+
+
             <div class="card-section">
               <div class="card">
                 <div class="container">  
@@ -360,6 +399,77 @@
 
         <label for="name"><b>子标题</b></label>
         <input type="text" placeholder="输入子标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">     
+
+
+        <div class="card-section">
+          <div class="card">
+            <div class="container">  
+              <div class="py-2">
+                <label for="psw"><b>颜色</b></label>
+                <div>
+                  <div *ngFor="let c of colorsChinese">
+                    <div class="d-flex align-items-center justify-content-between py-2">
+                      <div>
+                        {{c}}
+                      </div>
+                      <div (click)="removeColorChinese(c)">
+                        <img src="/assets/svg/delete.svg">
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div>
+                  <div class="d-inline-block px-2">
+                    <input type="text" placeholder="输入颜色" [(ngModel)]="colorChinese" name="colorChinese">
+                  </div>
+                </div>
+
+                <div class="pt-2">
+                  <button class="btn" (click)="addColorChinese()">{{'Add' | translate}}</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>              
+
+
+
+
+        <div class="card-section">
+          <div class="card">
+            <div class="container">  
+              <div class="py-2">
+                <label for="psw"><b>尺寸</b></label>
+                <div>
+                  <div *ngFor="let c of sizesChinese">
+                    <div class="d-flex align-items-center justify-content-between py-2">
+                      <div>
+                        {{c}}
+                      </div>
+                      <div (click)="removeSizeChinese(c)">
+                        <img src="/assets/svg/delete.svg">
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div>
+                  <div class="d-inline-block px-2">
+                    <input type="text" placeholder="输入尺寸" [(ngModel)]="sizeChinese" name="sizeChinese">
+                  </div>
+                </div>
+
+                <div class="pt-2">
+                  <button class="btn" (click)="addSizeChinese()">{{'Add' | translate}}</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>   
+
 
         
         <div class="py-2">

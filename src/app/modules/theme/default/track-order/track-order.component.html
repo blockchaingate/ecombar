@@ -137,7 +137,11 @@
                             
                             <div class="col col-8">
                                 <div class="font-weight-bold">
-                                    {{item.title}}
+                                    <div>
+                                        {{item.title}}
+                                    </div>
+                                    <div *ngIf="item.color"><small>{{item.color}}</small></div>
+                                    <div *ngIf="item.size"><small>{{item.size}}</small></div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-4">

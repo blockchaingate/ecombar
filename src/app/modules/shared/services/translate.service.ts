@@ -11,7 +11,11 @@ export class TranslateService {
         if(!fieldName) {
             return '';
         }
-        const lang = this.tranServ.getDefaultLang();
+        const lang = this.tranServ.currentLang;
         return fieldName[lang];
-    }        
+    }   
+    getLang() {
+        const lang = this.tranServ.currentLang;
+        return lang;
+    }     
 }

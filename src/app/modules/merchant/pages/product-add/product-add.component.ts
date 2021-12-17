@@ -47,6 +47,11 @@ export class ProductAddComponent implements OnInit {
   title: string;
   subtitle: string;
   price: string;
+  colorChinese: string;
+  priceChinese: string;
+  sizeChinese: string;
+  colorsChinese: any;
+  sizesChinese: any;
   specNameChinese: string;
   specValueChinese: string;
   product: any;
@@ -61,6 +66,8 @@ export class ProductAddComponent implements OnInit {
   color: string;
   objectId: string;
   colors: any;
+  sizes: any;
+  size: string;
   currentTab: string;
   category: string;
   categories: any;
@@ -114,6 +121,9 @@ export class ProductAddComponent implements OnInit {
     this.contentQuantity = 0;
     this.contents = [];
     this.colors = [];
+    this.sizes = [];
+    this.colorsChinese = [];
+    this.sizesChinese = [];
     this.specs = [];
     this.keywords = [];
     this.features = [];
@@ -266,7 +276,25 @@ export class ProductAddComponent implements OnInit {
             this.currency = product.currency;
             this.price = product.price;
             this.brand = product.brand;
-            this.colors = product.colors;
+            if(product.colors) {
+              if(product.colors.en) {
+                this.colors = product.colors.en;
+              }
+              if(product.colors.sc) {
+                this.colorsChinese = product.colors.sc;
+              }
+            }
+            if(product.sizes) {
+              if(product.sizes.en) {
+                this.sizes = product.sizes.en;
+              }
+              if(product.sizes.sc) {
+                this.sizesChinese = product.sizes.sc;
+              }
+            }
+            
+            
+            
             this.active = product.active;
             if (product.images) {
               this.images = product.images;
@@ -311,6 +339,39 @@ export class ProductAddComponent implements OnInit {
   removeColor(c) {
     this.colors = this.colors.filter(item => item != c);
   }
+
+  addSize() {
+    this.sizes.push(this.size);
+    this.size = '';
+  }
+
+  removeSize(c) {
+    this.sizes = this.sizes.filter(item => item != c);
+  }
+
+
+
+
+
+  addColorChinese() {
+    this.colorsChinese.push(this.colorChinese);
+    this.colorChinese = '';
+  }
+
+  removeColorChinese(c) {
+    this.colorsChinese = this.colorsChinese.filter(item => item != c);
+  }
+
+  addSizeChinese() {
+    this.sizesChinese.push(this.sizeChinese);
+    this.sizeChinese = '';
+  }
+
+  removeSizeChinese(c) {
+    this.sizesChinese = this.sizesChinese.filter(item => item != c);
+  }
+
+
 
   addKeyword() {
     this.keywords.push(this.keyword);
@@ -466,7 +527,14 @@ export class ProductAddComponent implements OnInit {
       primaryCategoryId: this.selectedCategory ? this.selectedCategory._id : null,
       active: this.active,
       images: this.images,
-      colors: this.colors,
+      colors: {
+        en: this.colors,
+        sc: this.colorsChinese
+      },
+      sizes: {
+        en: this.sizes,
+        sc: this.sizesChinese
+      },
       brand: this.brand ? this.brand : null
     };
     

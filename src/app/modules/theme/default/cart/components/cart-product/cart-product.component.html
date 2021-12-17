@@ -36,6 +36,8 @@
 
 <td data-title="Product">
     <a href="/product/{{product.productId}}" class="text-gray-90">{{product.title | translateField}}</a>
+    <div *ngIf="product.size">{{product.size}}</div>
+    <div *ngIf="product.color">{{product.color}}</div>
 </td>
 
 <td data-title="Price">

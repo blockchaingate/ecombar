@@ -7,7 +7,7 @@ import { RelatedProductsComponent } from './related-products/related-products.co
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 @NgModule({
   declarations: [
     ProductComponent,
@@ -19,7 +19,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CommonModule,
     FormsModule,
     SharedModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ButtonsModule.forRoot()
   ],
   providers: []
 })

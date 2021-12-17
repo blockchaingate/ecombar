@@ -98,6 +98,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.storeOwner = store.owner;
           const storedCart = this.cartStoreServ.items;
           this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
+          console.log('this.cartItems====', this.cartItems);
           this.calculateTotal();
         }
 

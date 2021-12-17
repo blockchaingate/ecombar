@@ -113,16 +113,51 @@
                                 <!-- <del class="font-size-20 ml-2 text-gray-6">$2,299.00</del> -->
                             </div>
                         </div>
-                        <div class="border-top border-bottom py-3 mb-4" *ngIf="colors && colors.length > 0">
-                            <div class="d-flex align-items-center">
-                                <h6 class="font-size-14 mb-0">{{'Color' | translate}}</h6>
-                                <select class="js-select selectpicker dropdown-select ml-3"
-                                    data-style="btn-sm bg-white font-weight-normal py-2 border">
-                                    <option selected value="">{{'Choose color' | translate}}</option>
-                                    <option *ngFor="let color of colors" value="{{color}}">{{color}}</option>
-                                </select>
+                        <div *ngIf="lang == 'en'">
+                            <div class="border-top border-bottom py-3 mb-4" *ngIf="colors && colors.length > 0">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="font-size-14 mb-0 mr-3">{{'Color' | translate}}</h6>
+                                      <div class="btn-group" btnRadioGroup [(ngModel)]="color">
+                                        <label class="btn btn-info" btnRadio="{{c}}" *ngFor="let c of colors"
+                                               [uncheckable]="true" tabindex="0" role="button">{{c}}</label>
+                                      </div>
+                                </div>
+                            </div>
+    
+                            <div class="border-top border-bottom py-3 mb-4" *ngIf="sizes && sizes.length > 0">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="font-size-14 mb-0 mr-3">{{'Size' | translate}}</h6>
+                                      <div class="btn-group" btnRadioGroup [(ngModel)]="size">
+                                        <label class="btn btn-info" btnRadio="{{c}}" *ngFor="let c of sizes"
+                                               [uncheckable]="true" tabindex="0" role="button">{{c}}</label>
+                                      </div>
+                                </div>
                             </div>
                         </div>
+
+                        <div *ngIf="lang == 'sc'">
+                            <div class="border-top border-bottom py-3 mb-4" *ngIf="colorsChinese && colorsChinese.length > 0">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="font-size-14 mb-0 mr-3">{{'颜色' | translate}}</h6>
+                                      <div class="btn-group" btnRadioGroup [(ngModel)]="colorChinese">
+                                        <label class="btn btn-info" btnRadio="{{cc}}" *ngFor="let cc of colorsChinese"
+                                               [uncheckable]="true" tabindex="0" role="button">{{cc}}</label>
+                                      </div>
+                                </div>
+                            </div>
+    
+                            <div class="border-top border-bottom py-3 mb-4" *ngIf="sizesChinese && sizesChinese.length > 0">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="font-size-14 mb-0 mr-3">{{'尺寸' | translate}}</h6>
+                                      <div class="btn-group" btnRadioGroup [(ngModel)]="sizeChinese">
+                                        <label class="btn btn-info" btnRadio="{{cc}}" *ngFor="let cc of sizesChinese"
+                                               [uncheckable]="true" tabindex="0" role="button">{{cc}}</label>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="d-md-flex align-items-end mb-3">
                             <div class="max-width-150 mb-4 mb-md-0">
                                 <h6 class="font-size-14">{{'Quantity' | translate}}</h6>

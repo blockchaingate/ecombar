@@ -30,10 +30,18 @@ export class ProductComponent implements OnInit {
   currency: string;
   quantity: number;
   colors: any;
+  colorsChinese: any;
+  sizes: any;
+  sizesChinese: any;
   relatedProducts: any;
   favorite: any;
   isFavorited: boolean;
   token: any;
+  lang: string;
+  colorChinese: string;
+  sizeChinese: string;
+  color: string;
+  size: string;
   storeId: string;
   overall: number;
   rating5: number;
@@ -67,6 +75,7 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.lang = this.translateServ.getLang();
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         this.wallet = wallet;
@@ -160,10 +169,26 @@ export class ProductComponent implements OnInit {
       (res: any) => {
         if(res && res.ok) {
           this.product = res._body;
-          this.colors = this.product.colors;
-
+          if(this.product.colors) {
+            if(this.product.colors.en) {
+              this.colors = this.product.colors.en;
+            }
+            if(this.product.colors.sc) {
+              this.colorsChinese = this.product.colors.sc;
+            }
+          }
+          
+          if(this.product.sizes) {
+            if(this.product.sizes.en) {
+              this.sizes = this.product.sizes.en;
+            }
+            if(this.product.sizes.sc) {
+              this.sizesChinese = this.product.sizes.sc;
+            }
+          }
           console.log('this.product=', this.product);
-          console.log('this.colors=', this.colors);
+          console.log('this.colorsChinese=', this.colorsChinese);
+
           this.selectedImage = this.product.images[0];
 
           const args2 = ['0x' + this.utilServ.ObjectId2SequenceId(this.product.objectId)];
@@ -343,6 +368,8 @@ export class ProductComponent implements OnInit {
         title: this.translateServ.transField(product.title),
         price: product.price,
         storeId: this.storeId,
+        size: this.lang == 'en' ? this.size : this.sizeChinese,
+        color: this.lang == 'en' ? this.color : this.colorChinese,
         currency: product.currency,
         thumbnailUrl: product.images ? product.images[0] : null,
         quantity: Number(quantity)
@@ -360,6 +387,8 @@ export class ProductComponent implements OnInit {
       currency: this.product.currency,
       quantity: Number(this.quantity),
       price: this.product.price,
+      size: this.lang == 'en' ? this.size : this.sizeChinese,
+      color: this.lang == 'en' ? this.color : this.colorChinese,
       thumbnailUrl: this.product.images ? this.product.images[0] : null,
       title: this.translateServ.transField(this.product.title)
     }
