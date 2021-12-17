@@ -30,6 +30,7 @@ export class StoreComponent implements OnInit {
   images: any;
   hideOnStore: boolean;
   nameChinese: string;
+  nameTraditionalChinese: string;
   currentTab: string;
   giveAwayRate: number;
   feeChargerSmartContractAddress: string;
@@ -72,7 +73,8 @@ export class StoreComponent implements OnInit {
     this.taxRate = store.taxRate;
     if(store.name) {
       this.name = store.name.en;
-      this.nameChinese = store.name.sc;  
+      this.nameChinese = store.name.sc;
+      this.nameTraditionalChinese = store.name.tc
     }
     if(store.image) {
       this.images = [store.image];
@@ -146,7 +148,8 @@ export class StoreComponent implements OnInit {
       const data: any = {
         name: {
           en: this.name,
-          sc: this.nameChinese
+          sc: this.nameChinese,
+          tc: this.nameTraditionalChinese
         },
         taxRate: this.taxRate ? this.taxRate : 0,
         coin: this.coin,
@@ -206,7 +209,8 @@ export class StoreComponent implements OnInit {
       const data: any = {
         name: {
           en: this.name,
-          sc: this.nameChinese
+          sc: this.nameChinese,
+          tc: this.nameTraditionalChinese
         },
         coin: this.coin,
         giveAwayRate: this.giveAwayRate,
@@ -384,7 +388,8 @@ export class StoreComponent implements OnInit {
           this.coin = '';
           this.taxRate = 0;
           this.name = '';
-          this.nameChinese = '';  
+          this.nameChinese = ''; 
+          this.nameTraditionalChinese = '' 
           this.images = [];
           this.feeChargerSmartContractAddress = '';     
           this.smartContractAddress = ''; 
