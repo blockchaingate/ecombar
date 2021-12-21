@@ -72,7 +72,7 @@
                                 <div class="ml-md-3 text-gray-9 font-size-14">{{'Availability' | translate}}: <span class="text-green font-weight-bold">
                                     <span *ngIf="!product.active">{{'Out of stock' | translate}}</span>
                                     <span *ngIf="product.active">
-                                        {{product.quantity}} {{'in stock' | translate}}
+                                        {{product.quantity - product.sales}} {{'in stock' | translate}}
                                     </span>
                                 </span></div>
                             </div>
