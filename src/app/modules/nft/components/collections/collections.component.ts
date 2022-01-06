@@ -108,7 +108,9 @@ import { environment } from 'src/environments/environment';
           name: event.name,
           description: event.description,
           image: event.image,
-          address: this.address
+          address: this.address,
+          payoutPercentageFee: event.payoutPercentageFee,
+          payoutWalletAddress: event.payoutWalletAddress
         }
 
         this.collection = collection;

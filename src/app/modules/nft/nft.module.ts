@@ -67,6 +67,7 @@ import { NftTransferComponent } from './components/transfer/transfer.component';
 import { NftAssetPriceHistoryComponent } from './components/asset-price-history/asset-price-history.component';
 import { NftAssetsComponent } from './components/assets/assets.component';
 import { NftIndexComponent } from './components/index/index.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { NftGetStartedComponent } from './components/get-started/get-started.component';
 import { NftPropertiesListComponent } from './components/properties-list/properties-list.component';
 import { NftLevelsListComponent } from './components/levels-list/levels-list.component';
@@ -205,6 +206,7 @@ import { EventsSearchPipe } from './pipes/events-search.pipe';
         NgxChartsModule,
         WalletModule,
         SharedModule,
+        TranslateModule,
         ModalModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]    
