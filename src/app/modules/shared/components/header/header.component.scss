@@ -46,6 +46,12 @@
     justify-content: center;    
 }
 
+@media only screen and (max-width: 768px) {
+    .search-container {
+      display: none;
+    }
+}
+
 .search-input {
     margin-right: 8px;
     position: relative;
@@ -72,15 +78,9 @@
     outline: none;    
 }
 
-.Navbar--items {
-    display: none;
-    margin: 0px;
-}
 
-@media (min-width: 922px) {
-    .Navbar--items {
-        display: flex;
-    }
+.Navbar--items {
+    display: flex;
 }
 
 ul:not(.browser-default) {
@@ -153,6 +153,16 @@ ul:not(.browser-default) li {
     visibility: hidden;
     width: 216px;
     z-index: 1;
+}
+
+.NavDropdown--items-wide {
+    width: 432px;
+}
+
+@media only screen and (max-width: 432px) {
+    .NavDropdown--items-wide {
+        width: 100%;
+    }
 }
 
 .NavItem--isRoot:hover .NavDropdown--items {

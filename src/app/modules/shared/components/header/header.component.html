@@ -14,42 +14,114 @@
             </div>
         </div>
         <ul class="Navbar--items">
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot d-md-none d-block">
+                <a class="NavItem--main">
+                    <i class="Iconreact__Icon-sc-1gugx8q-0 irlPce NavItem--icon material-icons NavItem--icon" size="32" title="Open menu" value="menu">menu</i>
+                </a>
+
+                <ul class="NavDropdown--items NavDropdown--items-wide">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col col-6">
+                                <li>
+                                    <a class="NavItem--main" routerLink="/">
+                                        {{'Home' | translate}}
+                                    </a>
+                                </li>
+                    
+                                <li>
+                                    <a class="NavItem--main" routerLink="/wallet">
+                                        {{'Wallet' | translate}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="NavItem--main" routerLink="/nft/assets">
+                                        {{'Explore' | translate}}
+                                    </a>
+                                </li>
+                    
+                                <li>
+                                    <a class="NavItem--main" routerLink="/nft/activities">
+                                        {{'Events' | translate}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="NavItem--main" routerLink="/nft/admin/collections">
+                                        {{'Create' | translate}}
+                                    </a>
+                                </li>
+                            </div>
+                            <div class="col col-6">
+                                
+                                <li routerLink="/nft/account">
+                                    {{'My Profile' | translate}}
+                                </li>
+
+                                <li>
+                                    <a routerLink="/nft/admin/collections">
+                                        {{'My Collections' | translate}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="/nft/admin/favorites">
+                                        {{'My Favorites' | translate}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="/nft/account/settings">
+                                        {{'Account Settings' | translate}}
+                                    </a>
+                                </li>
+                                <li *ngIf="wallet" (click)="logout()">
+                                    {{'Logout' | translate}}
+                                </li>
+                                <li *ngIf="!wallet" (click)="login()">
+                                    {{'Log In' | translate}}
+                                </li>
+
+                                <li (click)="changeLanguage('en')">
+                                    English
+                                </li>
+
+                                <li (click)="changeLanguage('sc')">
+                                    中文
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </ul>
+            </li>
+            <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main" routerLink="/">
                     {{'Home' | translate}}
                 </a>
             </li>
 
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main" routerLink="/wallet">
                     {{'Wallet' | translate}}
                 </a>
             </li>
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main" routerLink="/nft/assets">
                     {{'Explore' | translate}}
                 </a>
             </li>
 
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main" routerLink="/nft/activities">
                     {{'Events' | translate}}
                 </a>
             </li>
-            <!--   
-            <li class="NavItem--isRoot">
-                <a class="NavItem--main" href="/">
-                    Rankings
-                </a>
-            </li>   
-        -->
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main" routerLink="/nft/admin/collections">
                     {{'Create' | translate}}
                 </a>
             </li>
 
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main">
                     {{'Language' | translate}}
                 </a>
@@ -65,7 +137,7 @@
                 </ul>
             </li>
 
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main">
                     <div class="img-container" style="height: 32px; width: 32px;">
                         <img class="Image--image" *ngIf="setting && setting.logo" [src]="setting.logo"
@@ -102,7 +174,7 @@
                 </ul>
             </li>
 
-            <li class="NavItemreact__LiContainer-sc-1agh4ne-0 eUbTNn NavItem--isRoot" (click)="showAside = !showAside">
+            <li class="NavItemreact__LiContainer-sc-1agh4ne-0 eUbTNn NavItem--isRoot d-md-block d-none" (click)="showAside = !showAside">
                 <div class="NavItem--main ">
                     <i class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet"
                         value="account_balance_wallet" size="24">
