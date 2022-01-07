@@ -539,12 +539,18 @@ import { TranslateService } from '@ngx-translate/core';
       const sellerAddress = this.utilServ.fabToExgAddress(this.address);
       const buyorder = this.actionOrder;
       let sellorder: NftOrder
+      const payoutPercentageFee = (this.collection && this.collection.payoutPercentageFee) ? this.collection.payoutPercentageFee : 0;
+      let payoutWalletAddress = '';
+      if(this.collection && this.collection.payoutWalletAddress) {
+        payoutWalletAddress = this.collection.payoutWalletAddress;
+      }
+
       if(buyorder.amount) {
         sellorder = this.nftPortServ.createSellOrderERC1155(
-          sellerAddress, buyorder);
+          sellerAddress, buyorder, payoutPercentageFee, payoutWalletAddress);
       } else {
         sellorder = this.nftPortServ.createSellOrder(
-          sellerAddress, buyorder);
+          sellerAddress, buyorder, payoutPercentageFee, payoutWalletAddress);
       }
 
 

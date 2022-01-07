@@ -22,9 +22,7 @@ export class NftPortService {
   }
   
   createBuyOrder(taker: string, sellOrder: NftOrder) {
-    console.log('1111');
     const order = sellOrder.clone();
-    console.log('2222');
     order.tokenId = sellOrder.tokenId;
     order.maker = taker;
     order.side = 0;
@@ -62,12 +60,22 @@ export class NftPortService {
     return order;
   }
 
-  createSellOrder(maker: string, buyOrder: NftOrder) {
+  createSellOrder(maker: string, buyOrder: NftOrder, payoutPercentageFee: number, payoutWalletAddress: string) {
     const order = buyOrder.clone();
     order.tokenId = buyOrder.tokenId;
     order.maker = maker;
     order.side = 1;
     order.taker = null;
+
+    order.feeMethod = 0;
+    if(payoutPercentageFee) {
+      order.makerRelayerFee = (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
+      order.feeMethod = 1;
+    }
+    order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    if(payoutWalletAddress) {
+      order.feeRecipient = this.utilServ.fabToExgAddress(payoutWalletAddress);
+    }
 
     order.calldata = this.getTransferFromAbi(maker, nullAddress, buyOrder.tokenId);
 
@@ -76,11 +84,10 @@ export class NftPortService {
      + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
      + '0000000000000000000000000000000000000000000000000000000000000000';
 
-    order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
     return order;
   }
 
-  createSellOrderERC1155(maker: string, buyOrder: NftOrder) {
+  createSellOrderERC1155(maker: string, buyOrder: NftOrder, payoutPercentageFee: number, payoutWalletAddress: string) {
     console.log('before createSellOrderERC1155=');
     console.log('maker==', maker);
     const order = buyOrder.clone();
@@ -89,6 +96,20 @@ export class NftPortService {
     order.side = 1;
     order.amount = buyOrder.amount;
     order.taker = null;
+
+
+
+    order.feeMethod = 0;
+    if(payoutPercentageFee) {
+      order.makerRelayerFee = (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
+      order.feeMethod = 1;
+    }
+    order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    if(payoutWalletAddress) {
+      order.feeRecipient = this.utilServ.fabToExgAddress(payoutWalletAddress);
+    }
+
+
 
     order.calldata = this.getSafeTransferFromAbi(maker, nullAddress, buyOrder.tokenId, buyOrder.amount);
 
@@ -101,7 +122,6 @@ export class NftPortService {
      + '0000000000000000000000000000000000000000000000000000000000000000'
      + '0000000000000000000000000000000000000000000000000000000000000000';
 
-    order.feeRecipient = '0x0000000000000000000000000000000000000FEE';
     return order;
   }
 
@@ -662,7 +682,7 @@ export class NftPortService {
     const makerProtocolFee = 0;
     let feeMethod = 0;
     if(payoutPercentageFee) {
-      makerRelayerFee += (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
+      makerRelayerFee = (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
       feeMethod = 1;
     }
     const exchange = environment.addresses.smartContract.NFT_Exchange;
@@ -727,12 +747,9 @@ export class NftPortService {
     const makerProtocolFee = 0;
     let feeMethod = 0;
     if(payoutPercentageFee) {
-      makerRelayerFee += (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
+      makerRelayerFee = (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
       feeMethod = 1;
     }
-    const exchange = environment.addresses.smartContract.NFT_Exchange;
-
-
     let feeRecipient = '0x0000000000000000000000000000000000000FEE';
     if(payoutWalletAddress) {
       feeRecipient = this.utilServ.fabToExgAddress(payoutWalletAddress);
@@ -740,7 +757,7 @@ export class NftPortService {
     if(side == 0) {
       feeRecipient = '0x0000000000000000000000000000000000000000';
     }
-    
+    const exchange = environment.addresses.smartContract.NFT_Exchange;
     // const side = 1;
     const saleKind = 0;
     const howToCall = 0;
