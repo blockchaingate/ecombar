@@ -121,7 +121,11 @@ import { ToastrService } from 'ngx-toastr';
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
       let order: NftOrder;
-      console.log('1111');
+      const payoutPercentageFee = (this.collection && this.collection.payoutPercentageFee) ? this.collection.payoutPercentageFee : 0;
+      let payoutWalletAddress = '';
+      if(this.collection && this.collection.payoutWalletAddress) {
+        payoutWalletAddress = this.collection.payoutWalletAddress;
+      }
       if(this.collection.type == 'ERC1155') {
         order = this.nftPortServ.createOrderERC1155(
           addressHex, 
@@ -132,8 +136,9 @@ import { ToastrService } from 'ngx-toastr';
           price,
           quantity,
           makerRelayerFee,
-          1);
-          console.log('2222');
+          1,
+          payoutPercentageFee,
+          payoutWalletAddress);
       } else {
         order = this.nftPortServ.createOrder(
           addressHex, 
@@ -143,11 +148,11 @@ import { ToastrService } from 'ngx-toastr';
           coinType, 
           price,
           makerRelayerFee,
-          1);
+          1,
+          payoutPercentageFee,
+          payoutWalletAddress);
       }
-      console.log('3333');
       const {signature, hash, hashForSignature} = await this.nftPortServ.getOrderSignature(order, privateKey);
-      console.log('4444');
       order.hash = hash;
       order.hashForSignature = hashForSignature;
       order.r = signature.r;
@@ -160,7 +165,6 @@ import { ToastrService } from 'ngx-toastr';
           seed, environment.addresses.smartContract.ProxyRegistry, abi, args);
         order.txhex = txhex;
       }
-      console.log('5555');
       this.orderServ.create(order).subscribe(
         (res: any) => {
           if(res && res.ok) {

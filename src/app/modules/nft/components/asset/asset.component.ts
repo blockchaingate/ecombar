@@ -196,8 +196,8 @@ import { TranslateService } from '@ngx-translate/core';
         (res: any) => {
           if(res && res.ok) {
             this.asset = res._body;
-            console.log('this.asset=', this.asset);
             if(this.asset) {
+              this.owner = this.asset.owner;
               this.balances = this.asset.balances;
               if(this.asset.orders && this.asset.orders.length > 0) {
                 const sellOrders = this.asset.orders.filter(item => item.side == 1);              
@@ -402,7 +402,8 @@ import { TranslateService } from '@ngx-translate/core';
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
       let order: NftOrder;
-
+      const payoutPercentageFee = (this.collection && this.collection.payoutPercentageFee) ? this.collection.payoutPercentageFee : 0;
+      const payoutWalletAddress = (this.collection && this.collection.payoutWalletAddress) ? this.collection.payoutWalletAddress : 0;
       if(this.contractType == 'ERC1155') {
         order = this.nftPortServ.createOrderERC1155(
           addressHex, 
@@ -413,7 +414,9 @@ import { TranslateService } from '@ngx-translate/core';
           price,
           this.actionOrder.amount,
           makerRelayerFee,
-          1);
+          1,
+          payoutPercentageFee,
+          payoutWalletAddress);
       } else {
         order = this.nftPortServ.createOrder(
           addressHex, 
@@ -423,7 +426,9 @@ import { TranslateService } from '@ngx-translate/core';
           coinType, 
           price,
           makerRelayerFee,
-          1);
+          1,
+          payoutPercentageFee,
+          payoutWalletAddress);
       }
 
 
@@ -478,6 +483,9 @@ import { TranslateService } from '@ngx-translate/core';
       const addressHex = this.utilServ.fabToExgAddress(this.address);
 
       let order: NftOrder;
+      const payoutPercentageFee = (this.collection && this.collection.payoutPercentageFee) ? this.collection.payoutPercentageFee : 0;
+      const payoutWalletAddress = (this.collection && this.collection.payoutWalletAddress) ? this.collection.payoutWalletAddress : 0;
+
       if(this.contractType == 'ERC1155') {
         order = this.nftPortServ.createOrderERC1155(
           addressHex,
@@ -488,7 +496,9 @@ import { TranslateService } from '@ngx-translate/core';
           price,
           quantity,
           makerRelayerFee,
-          0);
+          0,
+          payoutPercentageFee,
+          payoutWalletAddress);
       } else {
         order = this.nftPortServ.createOrder(
           addressHex,
@@ -498,7 +508,9 @@ import { TranslateService } from '@ngx-translate/core';
           coinType, 
           price,
           makerRelayerFee,
-          0);
+          0,
+          payoutPercentageFee,
+          payoutWalletAddress);
       }
 
 

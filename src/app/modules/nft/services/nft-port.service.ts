@@ -169,13 +169,9 @@ export class NftPortService {
 
     const hash = res.data;
     
-    console.log('orderHash = ', hash);
     const hashForSignature = this.web3Serv.hashKanbanMessage(hash);
-
-    console.log('final hash=', hash);
     const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);    
 
-    console.log('signature=', signature);
     return {
       hash,
       hashForSignature,
@@ -361,7 +357,6 @@ export class NftPortService {
     if(order.amount) {
       total = new BigNumber(total).multipliedBy(order.amount).toFixed()
     }
-    console.log('total for hashToSign=', total)
     const args = [
       [
         order.getExchange(), order.getMaker(), order.getTaker(),  
@@ -381,7 +376,6 @@ export class NftPortService {
       order.getStaticExtradata()     
     ];
 
-    console.log('final args=', args);
     const abi = {
       "constant": true,
       "inputs": [
@@ -662,15 +656,25 @@ export class NftPortService {
     coinType: number,
     price: number,
     makerRelayerFee: number,
-    side: number) { //side = 1, sell;  side == 0 buy
-    const makerProtocolFee = 250;
+    side: number,  //side = 1, sell;  side == 0 buy
+    payoutPercentageFee: number,
+    payoutWalletAddress: string) { 
+    const makerProtocolFee = 0;
+    let feeMethod = 0;
+    if(payoutPercentageFee) {
+      makerRelayerFee += (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
+      feeMethod = 1;
+    }
     const exchange = environment.addresses.smartContract.NFT_Exchange;
 
     let feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    if(payoutWalletAddress) {
+      feeRecipient = this.utilServ.fabToExgAddress(payoutWalletAddress);
+    }
     if(side == 0) {
       feeRecipient = '0x0000000000000000000000000000000000000000';
     }
-    const feeMethod = 0;
+    
     // const side = 1;
     const saleKind = 0;
     const howToCall = 0;
@@ -717,15 +721,26 @@ export class NftPortService {
     price: number,
     quantity: number,
     makerRelayerFee: number,
-    side: number) { //side = 1, sell;  side == 0 buy
-    const makerProtocolFee = 250;
+    side: number,  //side = 1, sell;  side == 0 buy
+    payoutPercentageFee: number,
+    payoutWalletAddress: string) { 
+    const makerProtocolFee = 0;
+    let feeMethod = 0;
+    if(payoutPercentageFee) {
+      makerRelayerFee += (new BigNumber(payoutPercentageFee).multipliedBy(new BigNumber(100))).toNumber();
+      feeMethod = 1;
+    }
     const exchange = environment.addresses.smartContract.NFT_Exchange;
 
+
     let feeRecipient = '0x0000000000000000000000000000000000000FEE';
+    if(payoutWalletAddress) {
+      feeRecipient = this.utilServ.fabToExgAddress(payoutWalletAddress);
+    }
     if(side == 0) {
       feeRecipient = '0x0000000000000000000000000000000000000000';
     }
-    const feeMethod = 0;
+    
     // const side = 1;
     const saleKind = 0;
     const howToCall = 0;
