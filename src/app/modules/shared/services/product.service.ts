@@ -36,9 +36,12 @@ export class ProductService {
   }
   
   deleteProduct(id: string) {
-    return this.http.delete('products/delete/' + id, true);
+    return this.http.delete('products/delete/' + id, false);
   }
 
+  deleteProduct2(body: any) {
+    return this.http.post('products/Delete2', body, false);
+  }
   getMerchantAllProducts() {
     return this.http.get('products/merchant/all/products', true);
   }

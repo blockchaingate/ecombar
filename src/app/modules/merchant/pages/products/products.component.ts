@@ -4,6 +4,9 @@ import { UserService } from 'src/app/modules/shared/services/user.service';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -12,20 +15,30 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
+  modalRef: BsModalRef;
   products: any;
+  wallet: any;
   walletAddress: string;
   storeId: string;
   walletExgAddress: string;
   store: any;
   constructor(
     private router: Router,
+    private modalService: BsModalService,
     private dataServ: DataService,
     private utilServ: UtilService,
+    private kanbanServ: KanbanService,
     private productServ: ProductService) {
 
   }
 
   ngOnInit() {
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );
+
     this.dataServ.currentMyStore.subscribe(
       (store: any) => {
         if(store) {
@@ -38,11 +51,9 @@ export class ProductsComponent implements OnInit {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
-        console.log('walletAddress=', walletAddress);
         if(walletAddress) {
           this.productServ.getProductsOwnedBy(walletAddress).subscribe(
             (res: any) => {
-              console.log('ressss=', res);
               if (res) {
                 this.products = res;
               }
@@ -52,55 +63,16 @@ export class ProductsComponent implements OnInit {
       
       }
     );      
-    /*
-    this.store.select('user').subscribe(
-      (userState: UserState) => {
-        const role = userState.role;
-        const merchantId = userState.merchantId;
-        this.walletExgAddress = userState.walletExgAddress;
-        if(role == 'Admin') {
-          this.productServ.getProducts().subscribe(
-            (res: any) => {
-              if (res && res.ok) {
-                this.products = res._body;
-              }
-            }
-          );
-        } else
-        if((role == 'Seller') && merchantId) {
-          this.productServ.getMerchantProducts(merchantId).subscribe(
-            (res: any) => {
-              if (res && res.ok) {
-                this.products = res._body;
-              }
-            }
-          );
-        }
-      }
-    );
-    */
   }
 
 
   addNew() {
-    /*
-    if(!this.walletExgAddress) {
-      this.toastr.info(
-        this.translateServ.instant('Please set your wallet address in merchant information first'));
-      return;
-    }
-    */
+
     this.router.navigate(['/merchant/product/add']);
   }
 
   editProduct(product) {
-    /*
-    if(!this.walletExgAddress) {
-      this.toastr.info(
-        this.translateServ.instant('Please set your wallet address in merchant information first'));
-      return;
-    } 
-    */   
+
     this.router.navigate(['/merchant/product/' + product._id + '/edit']);
   }
 
@@ -109,7 +81,31 @@ export class ProductsComponent implements OnInit {
   }
   
   deleteProduct(product) {
-    this.productServ.deleteProduct(product._id).subscribe(
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };        
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+      this.deleteProductDo(privateKey, product);
+    });
+
+
+  }
+
+  deleteProductDo(privateKey, product) {
+    const body = {
+      id: product._id
+    };
+    const sig = this.kanbanServ.signJsonData(privateKey, body);
+    body['sig'] = sig.signature;  
+    this.productServ.deleteProduct2(body).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.products = this.products.filter((item) => item._id != product._id);

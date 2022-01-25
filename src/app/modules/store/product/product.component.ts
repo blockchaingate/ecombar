@@ -251,16 +251,6 @@ export class ProductComponent implements OnInit {
 
   }
 
-  /*
-  getProductQuantity() {
-    let quantity = 0;
-    const contents = this.product.contents;
-    for(let i=0;i<contents.length;i++) {
-      quantity += contents[i].quantity;
-    }
-    return quantity;
-  }
-  */
   decQuantity() {
     if(this.quantity > 1) {
       this.quantity --;
@@ -272,22 +262,6 @@ export class ProductComponent implements OnInit {
     this.quantity ++;
   }
 
-  /*
-  initForUser() {
-    console.log('initForUser start');
-    this.favoriteServ.isMyFavorite(this.id).subscribe(
-      (res: any) => {
-        console.log('res==', res);
-        if(res && res.ok) {
-          const favorites = res._body;
-          if(favorites && favorites.length) {
-            this.favorite = favorites[0];
-          }
-        }
-      }
-    );
-  }
-  */
   mouseEnter(image) {
       this.selectedImage = image;
   }
@@ -534,45 +508,5 @@ export class ProductComponent implements OnInit {
       this.buyDo(seed);
     });
 
-    /*
-    if(this.token) {
-      this.buyDo();
-    } else {
-      this.router.navigate(['auth/signin']);
-    }
-    */
-    /*
-    const token = this.storage.token;
-    if(token) {
-      this.authServ.isAuthenticated(token).subscribe(
-        (ret) => {
-          if(ret) {
-            this.buyDo();
-          } else {
-            this.router.navigate(['auth/signin']);
-          }
-        }
-      );
-    } else {
-      this.storage.get('_token').subscribe(
-        (token: string) => {
-          if(token) {
-            this.authServ.isAuthenticated(token).subscribe(
-              (ret) => {
-                if(ret) {
-                  this.buyDo();
-                } else {
-                  this.router.navigate(['auth/signin']);
-                }
-              }
-            ); 
-          } else {
-            this.router.navigate(['auth/signin']);
-          }
-         
-        }
-      );
-    }
-    */
   }
 }
