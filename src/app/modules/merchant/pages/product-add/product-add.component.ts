@@ -36,6 +36,9 @@ export class ProductAddComponent implements OnInit {
   timestamp: any;
   smartContractAddress: string;
   wallets: any;
+  taxRate: number;
+  giveAwayRate: number;
+  lockedDays: number;
   quantity: number;
   wallet: any;
   features: any;
@@ -183,36 +186,7 @@ export class ProductAddComponent implements OnInit {
         }
       }
     );
-    /*
-    this.userServ.getMe().subscribe(
-      ret => {
-        console.log('ret==', ret);
-        if(ret && ret.ok) {
-          const body = ret._body;
-          this.merchantId = body.defaultMerchant._id;
-          this.categoryServ.getCategories().subscribe(
-            (res: any) => {
-              if (res && res.ok) {
-                this.categories = res._body;
-                this.categories = this.categories.filter(item => !item.merchantId || item.merchantId == this.merchantId);
-              }
-            }
-          );
 
-
-          this.brandServ.getBrands().subscribe(
-            (res: any) => {
-              if (res && res.ok) {
-                this.brands = res._body;
-                this.brands = this.brands.filter(item => !item.merchantId || item.merchantId == this.merchantId);
-                console.log('this.brands=', this.brands);
-              }
-            }      
-          );          
-        }
-      }
-    );
-    */
 
 
 
@@ -241,8 +215,18 @@ export class ProductAddComponent implements OnInit {
 
             if(product.keywords) {
               this.keywords = product.keywords;
-
             }
+
+            if(product.taxRate) {
+              this.taxRate = product.taxRate;
+            }
+            if(product.giveAwayRate) {
+              this.giveAwayRate = product.giveAwayRate;
+            }
+            if(product.lockedDays) {
+              this.lockedDays = product.lockedDays;
+            }
+
             if (product.briefIntroduction) {
               this.detail = product.briefIntroduction.en;
               if(product.briefIntroduction.sc) {
@@ -523,6 +507,9 @@ export class ProductAddComponent implements OnInit {
       quantity: this.quantity,
       price: Number(this.price), 
       keywords: this.keywords,
+      lockedDays: this.lockedDays,
+      taxRate: this.taxRate,
+      giveAwayRate: this.giveAwayRate,
       contents: this.contents,
       primaryCategoryId: this.selectedCategory ? this.selectedCategory._id : null,
       active: this.active,

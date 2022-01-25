@@ -100,11 +100,13 @@ export class MerchantComponent implements OnInit {
         title: 'Catelog',
         icon: 'dashboard',
         items: [
+          /*
           {
             title: 'Store',
             link: 'store',
             icon: 'store'
-          },  
+          }, 
+          */ 
           {
             title: 'Categories',
             link: 'categories',
