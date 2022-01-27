@@ -3,7 +3,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { NftOrder } from '../../models/nft-order';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
+import BigNumber from 'bignumber.js/bignumber';
 @Component({
     providers: [],
     selector: 'app-nft-asset-info',
@@ -31,7 +31,9 @@ import { Router } from '@angular/router';
     transfer() {
       this.router.navigate(['/nft/assets/' + this.asset.smartContractAddress + '/' + this.asset.tokenId + '/transfer'])
     }
-    
+    totalPrice() {
+      return new BigNumber(this.sellOrder.amount).multipliedBy(this.sellOrder.basePrice).toNumber()
+    }
     copyLink() {
       const selBox = document.createElement('textarea');
       selBox.style.position = 'fixed';

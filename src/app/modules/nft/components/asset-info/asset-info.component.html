@@ -63,6 +63,7 @@
             <span>{{'Owned by ' | translate}}{{(owner == address ? 'you' : owner) | translate}}</span>
             <div class="pt-2" *ngIf="sellOrder">
                 <span class="price">{{sellOrder.basePrice}} {{getCoinName(sellOrder.coinType)}}</span>
+                <span class="price" *ngIf="sellOrder.amount"> X {{sellOrder.amount}} = {{totalPrice()}} {{getCoinName(sellOrder.coinType)}}</span>
             </div>
         </div>
 
