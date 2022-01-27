@@ -159,82 +159,24 @@ export class CartComponent implements OnInit, OnDestroy {
           console.log('res._body=', res._body);
           const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
           orderData['objectId'] = objectId; 
-          
-          console.log('orderData===', orderData);
-
-          const abi = {
-            "inputs": [
-              {
-                "internalType": "bytes30",
-                "name": "objectId",
-                "type": "bytes30"
-              },
-              {
-                "internalType": "bytes30[]",
-                "name": "productObjectIds",
-                "type": "bytes30[]"
-              },
-              {
-                "internalType": "uint8[]",
-                "name": "quantities",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint256",
-                "name": "total",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "tax",
-                "type": "uint256"
-              }
-            ],
-            "name": "createOrder",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-          };
-
-          const args = [
-            '0x' + res._body._id.substring(0, 60), 
-            this.productObjectIds, 
-            this.quantities, 
-            new BigNumber(this.total).shiftedBy(18).toFixed(), 
-            new BigNumber(this.tax).shiftedBy(18).toFixed()
-          ];
-          console.log('args for crate Order=', args);
-          const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
-
-
-
-
-          if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-            console.log('go for creating order');
-
-            const sig = this.kanbanServ.signJsonData(privateKey, orderData);
-            orderData['sig'] = sig.signature;               
-            this.orderServ.create2(orderData).subscribe(
-              (res: any) => {
-                console.log('ress from create order', res);
-                if (res && res.ok) {
-                  const body = res._body;
-                  const orderID = body._id;
-                  this.spinner.hide();
-                  this.cartStoreServ.empty();
-                  this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
-                }
-              },
-              err => { 
-                this.errMsg = err.message;
+          const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+          orderData['sig'] = sig.signature;               
+          this.orderServ.create2(orderData).subscribe(
+            (res: any) => {
+              if (res && res.ok) {
+                const body = res._body;
+                const orderID = body._id;
                 this.spinner.hide();
-                this.toastr.error('error while creating order');              
-               }
-            );  
-          } else {
-            this.spinner.hide();
-            this.toastr.error('failed to create order in smart contract');               
-          }
+                this.cartStoreServ.empty();
+                this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
+              }
+            },
+            err => { 
+              this.errMsg = err.message;
+              this.spinner.hide();
+              this.toastr.error('error while creating order');              
+             }
+          );  
         
         }
         else {

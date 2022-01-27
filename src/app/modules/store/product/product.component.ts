@@ -404,65 +404,6 @@ export class ProductComponent implements OnInit {
           console.log('res._body=', res._body);
           const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
           orderData['objectId'] = objectId; 
-          
-          console.log('orderData===', orderData);
-
-          const abi = {
-            "inputs": [
-              {
-                "internalType": "bytes30",
-                "name": "objectId",
-                "type": "bytes30"
-              },
-              {
-                "internalType": "bytes30[]",
-                "name": "productObjectIds",
-                "type": "bytes30[]"
-              },
-              {
-                "internalType": "uint8[]",
-                "name": "quantities",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint256",
-                "name": "total",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "tax",
-                "type": "uint256"
-              }
-            ],
-            "name": "createOrder",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-          };
-
-          this.total = this.quantity * this.product.price;
-          this.tax = this.total * this.taxRate / 100;
-          this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
-          const args = [
-            '0x' + res._body._id.substring(0, 60), 
-            this.productObjectIds, 
-            this.quantities, 
-            '0x' + new BigNumber(this.total).shiftedBy(18).toString(16), 
-            '0x' + new BigNumber(this.tax).shiftedBy(18).toFixed()
-          ];
-          console.log('args for crate Order=', args);
-          const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
-
-
-
-
-          if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-
-
-
-
-
 
               const sig = this.kanbanServ.signJsonData(privateKey, orderData);
               orderData['sig'] = sig.signature;    
@@ -479,7 +420,6 @@ export class ProductComponent implements OnInit {
                 }
               );
           }
-        }
       }
     });
 

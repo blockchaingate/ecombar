@@ -536,43 +536,16 @@ export class ProductAddComponent implements OnInit {
             console.log('res.body._id=', res._body._id);
             this.objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
             data.objectId = this.objectId;
-            //data.address = this.walletAddress;
-            //console.log('this.objectId=', this.objectId);
-            const abi = 	{
-              "inputs": [
-                {
-                  "internalType": "bytes30",
-                  "name": "objectId",
-                  "type": "bytes30"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "price",
-                  "type": "uint256"
-                }
-              ],
-              "name": "createProduct",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            };
-            const args = ['0x' + res._body._id.substring(0, 60), new BigNumber(data.price).multipliedBy(new BigNumber(1e18)).toFixed()];
-            console.log('args===', args);
-            const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
-            console.log('rettt=', ret);
-            if(ret.ok && ret._body && ret._body.status == '0x1') {
-              const sig = this.kanbanServ.signJsonData(privateKey, data);
-              data['sig'] = sig.signature;                 
-              this.productServ.create(data).subscribe(
+
+            const sig = this.kanbanServ.signJsonData(privateKey, data);
+            data['sig'] = sig.signature;                 
+            this.productServ.create(data).subscribe(
                 (res: any) => {
                   this.spinner.hide();
                   this.router.navigate(['/merchant/products']);
                 }
-              );
-            } else {
-              this.spinner.hide();
-              this.toastrServ.error('Failed to execute smart contract');
-            }
+            );
+
 
           } else {
             this.spinner.hide();

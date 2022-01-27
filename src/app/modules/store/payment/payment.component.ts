@@ -52,6 +52,7 @@ export class PaymentComponent implements OnInit{
     wallet: any;
     currency: string;
     storeId: string;
+    storeVersion: number;
 
     modalRef: BsModalRef;
     wallets: any;
@@ -112,7 +113,6 @@ export class PaymentComponent implements OnInit{
       for(let i=0;i<this.order.items.length;i++) {
         const item = this.order.items[i];
         this.subtotal += item.price * item.quantity;
-        console.log('');
       }
       
       this.subtotal = Number(this.subtotal.toFixed(2));
@@ -123,6 +123,7 @@ export class PaymentComponent implements OnInit{
     }
 
     ngOnInit() {
+      this.storeVersion = 0;
       this.parents = [];
       this.agents = [];
       this.orderID = this.route.snapshot.paramMap.get('orderID');
@@ -139,6 +140,9 @@ export class PaymentComponent implements OnInit{
       );
       this.dataServ.currentStore.subscribe(
         (store: any) => {
+          if(store.version) {
+            this.storeVersion = store.version;
+          }
           this.currency = store.coin;
           this.smartContractAddress = store.smartContractAddress;
           this.taxRate = store.taxRate;
@@ -148,7 +152,7 @@ export class PaymentComponent implements OnInit{
             (res: any) => {
               if(res && res.ok) {
                 this.order = res._body;
-                console.log('this.order=', this.order);
+                console.log('this.orderhaha=', this.order);
                 this.selectPayment(this.order.paymentMethod);
                 let shippingServiceSelected = 'express';
                 if(this.order.shippingServiceSelected) {
@@ -250,162 +254,12 @@ export class PaymentComponent implements OnInit{
       */
     }
 
-    async placeOrderDo(seed: Buffer) {
-      //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
-
-
-      const item = {
-        totalSale: this.subtotal,
-        totalShipping: this.shippingFee,
-        totalToPay: this.total * (1 - this.discount / 100),
-        paymentMethod: this.selectedPayment,
-        paymentStatus: 0,
-        charge_id: '',
-        shippingServiceSelected: this.selectedShippingService
-      }
-
-
-
-      const abi = {
-        "inputs": [
-          {
-            "internalType": "bytes30",
-            "name": "objectId",
-            "type": "bytes30"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fullfilmentFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-          },
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          },
-          {
-            "name": "_regionalAgents",
-            "type": "address[]"
-          },          
-          {
-            "internalType": "address[]",
-            "name": "_rewardBeneficiary",
-            "type": "address[]"
-          }
-        ],
-        "name": "payOrder",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      };
-      const msg = '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId) + '0000';
-      const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
-      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-      const privateKey = keyPair.privateKeyBuffer.privateKey; 
-      const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);  
-      const fulfillmentFee = '0x' + (new BigNumber(this.shippingFee).multipliedBy(new BigNumber(1e18)).toString(16));
-      console.log('fulfillmentFee=', fulfillmentFee);
-      
-      console.log('this.shippingfee=', this.shippingFee);  
-      //this.parents = [];
-      console.log('this.parents====', this.parents);
-      this.agents = [];
-      const args = [
-        '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
-        fulfillmentFee,
-        this.utilServ.fabToExgAddress(this.walletAddress),
-        signature.v,
-        signature.r,
-        signature.s,
-        this.agents,
-        this.parents
-      ];
-      console.log('args==', args);
-      
-
-
-
-
-
-
-
-      /*
-      const abi2 = this.web3Serv.getGeneralFunctionABI(
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "name": "_user",
-              "type": "address"
-            },
-            {
-              "name": "_msg",
-              "type": "bytes32"
-            },
-            {
-              "name": "v",
-              "type": "uint8"
-            },
-            {
-              "name": "r",
-              "type": "bytes32"
-            },
-            {
-              "name": "s",
-              "type": "bytes32"
-            }
-          ],
-          "name": "validateSignature",
-          "outputs": [
-            {
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        [ this.utilServ.fabToExgAddress(this.walletAddress),
-          msg,
-          signature.v,
-          signature.r,
-          signature.s]
-      );
-      console.log('arrrrguse=', [ this.utilServ.fabToExgAddress(this.walletAddress),
-        msg,
-        signature.v,
-        signature.r,
-        signature.s]);
-      console.log('this.feeChargerSmartContractAddress==', this.feeChargerSmartContractAddress);
-      this.kanbanServ.kanbanCall(this.feeChargerSmartContractAddress, abi2).subscribe(
-        (ret: any) => {
-          console.log('rettttfor validateSignature =', ret);
-        }
-      );
-
-
-
-
-
-
-      const abi3 = this.web3Serv.getGeneralFunctionABI(
-        {
+    getAbiArgs(seed) {
+      let abi;
+      let args;
+      let to;
+      if(this.storeVersion == 0) {
+        abi = {
           "inputs": [
             {
               "internalType": "bytes30",
@@ -436,130 +290,130 @@ export class PaymentComponent implements OnInit{
               "internalType": "bytes32",
               "name": "s",
               "type": "bytes32"
+            },
+            {
+              "name": "_regionalAgents",
+              "type": "address[]"
+            },          
+            {
+              "internalType": "address[]",
+              "name": "_rewardBeneficiary",
+              "type": "address[]"
             }
           ],
-          "name": "getChargePayOrderParams",
-          "outputs": [
-            {
-              "internalType": "bytes32",
-              "name": "",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            },
-            {
-              "internalType": "uint32",
-              "name": "",
-              "type": "uint32"
-            },
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint8",
-              "name": "",
-              "type": "uint8"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "",
-              "type": "bytes32"
-            }
-          ],
-          "stateMutability": "view",
+          "name": "payOrder",
+          "outputs": [],
+          "stateMutability": "nonpayable",
           "type": "function"
-        },
-        [ 
+        };
+        const msg = '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId) + '0000';
+        const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
+        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+        const privateKey = keyPair.privateKeyBuffer.privateKey; 
+        const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);  
+        const fulfillmentFee = '0x' + (new BigNumber(this.shippingFee).multipliedBy(new BigNumber(1e18)).toString(16));
+  
+        this.agents = [];
+        args = [
           '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
           fulfillmentFee,
           this.utilServ.fabToExgAddress(this.walletAddress),
           signature.v,
           signature.r,
-          signature.s          
-        ]
-      );
-      console.log('arrrrguse=', [ this.utilServ.fabToExgAddress(this.walletAddress),
-        msg,
-        signature.v,
-        signature.r,
-        signature.s]);
-      //console.log('this.feeChargerSmartContractAddress==', this.feeChargerSmartContractAddress);
-      this.kanbanServ.kanbanCall(this.smartContractAddress, abi3).subscribe(
-        (ret: any) => {
-          console.log('rettttfor fee getChargePayOrderParams=', ret);
-        }
-      );
+          signature.s,
+          this.agents,
+          this.parents
+        ];
+        to = this.smartContractAddress;
+      }
 
-
-
-
-
-
-      const abi4 = this.web3Serv.getGeneralFunctionABI(
-        {
+      if(this.storeVersion == 2) {
+        abi = {
           "inputs": [
             {
-              "internalType": "bytes30",
-              "name": "id",
-              "type": "bytes30"
+              "internalType": "bytes32",
+              "name": "_orderID",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "_paidCoin",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_totalAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_totalTax",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_totalRewardInPaidCoin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address[]",
+              "name": "_regionalAgents",
+              "type": "address[]"
+            },
+            {
+              "internalType": "address[]",
+              "name": "_rewardBeneficiary",
+              "type": "address[]"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_rewardInfo",
+              "type": "bytes"
             }
           ],
-          "name": "getOrderById",
+          "name": "chargeFundsWithFee",
           "outputs": [
             {
-              "components": [
-                {
-                  "internalType": "bytes30",
-                  "name": "id",
-                  "type": "bytes30"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "total",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct Ecombar.Order",
+              "internalType": "bool",
               "name": "",
-              "type": "tuple"
+              "type": "bool"
             }
           ],
-          "stateMutability": "view",
+          "stateMutability": "nonpayable",
           "type": "function"
-        },
-        [ 
-          '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId)        
-        ]
-      );
-      console.log('arrrrguse=', [ this.utilServ.fabToExgAddress(this.walletAddress),
-        msg,
-        signature.v,
-        signature.r,
-        signature.s]);
-      //console.log('this.feeChargerSmartContractAddress==', this.feeChargerSmartContractAddress);
-      this.kanbanServ.kanbanCall(this.smartContractAddress, abi4).subscribe(
-        (ret: any) => {
-          console.log('rettttfor fee getOrderById=', ret);
-        }
-      );
-      */
+        };
+        args = [
+          '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
+          this.coinServ.getCoinTypeIdByName(this.currency),
+          '0x' + new BigNumber(this.subtotal).shiftedBy(18).toString(16),
+          '0x' + new BigNumber(this.tax).shiftedBy(18).toString(16),
+        ];
+        to = this.feeChargerSmartContractAddress;
+      }
+
+      return {to, abi, args};
+    }
+    async placeOrderDo(seed: Buffer) {
+      //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
+
+
+      const item = {
+        totalSale: this.subtotal,
+        totalShipping: this.shippingFee,
+        totalToPay: this.total * (1 - this.discount / 100),
+        paymentMethod: this.selectedPayment,
+        paymentStatus: 0,
+        charge_id: '',
+        shippingServiceSelected: this.selectedShippingService
+      }
 
 
 
-
-
+      const {to, abi, args} = this.getAbiArgs(seed);
+      const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+      const privateKey = keyPair.privateKeyBuffer.privateKey; 
       
-      const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.smartContractAddress, abi, args);
+      const ret = await this.kanbanSmartContractServ.execSmartContract(seed, to, abi, args);
       console.log('ret from payment=', ret);    
 
       if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
