@@ -3,6 +3,9 @@ export class CartItem {
     objectId: string;
     title: string;
     price: number;
+    giveAwayRate: number;
+    taxRate: number;
+    lockedDays: number;
     storeId: string;
     size?: string;
     color?: string;

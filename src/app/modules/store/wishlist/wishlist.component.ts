@@ -15,6 +15,7 @@ export class WishlistComponent implements OnInit {
   favoriteId: string;
   modalRef: BsModalRef;
   favorites: any;
+  store: any;
   storeId: string;
   wallet: any;
   constructor(
@@ -32,9 +33,11 @@ export class WishlistComponent implements OnInit {
       }
     );
 
-    this.dataServ.currentStoreId.subscribe(
-      (storeId: string) => {
-        if(storeId) {
+    this.dataServ.currentStore.subscribe(
+      (store: any) => {
+        if(store) {
+          this.store = store;
+          const storeId = this.store._id;
           this.storeId = storeId;
           this.dataServ.currentWalletAddress.subscribe(
             (walletAddress: string) => {
@@ -60,6 +63,10 @@ export class WishlistComponent implements OnInit {
       objectId: item.objectId,
       title: item.title,
       price: item.price,
+      giveAwayRate: item.giveAwayRate ? item.giveAwayRate : this.store.giveAwayRate,
+      taxRate: item.taxRate ? item.taxRate : this.store.taxRate,
+      lockedDays: item.lockedDays ? item.lockedDays : this.store.lockedDays,
+
       storeId: this.storeId,
       thumbnailUrl: item.images ? item.images[0] : null,
       quantity: 1

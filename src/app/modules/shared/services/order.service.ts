@@ -22,6 +22,14 @@ export class OrderService {
     return this.http.get('orders/public/' + orderID, false);
   }
 
+  get7StarPay(orderID: string, currency: string, walletAddress: string) {
+    const data = {
+      address: walletAddress,
+      currency
+    };
+    return this.http.post('orders/' + orderID + '/7starpay', data, false);
+  }
+
   updatePayment(order_id: string, paymentData: any) {
     const url = 'orders/' + order_id + '/payment';
     return this.http.post(url, paymentData);  

@@ -12,6 +12,7 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 export class ProductsRowComponent implements OnInit{
   iddockRoot: string;
   storeId: string;
+  store: any;
   currency: string;
   @Input() products: any;
 
@@ -27,6 +28,7 @@ export class ProductsRowComponent implements OnInit{
       (store: any) => {
         console.log('store=', store);
         this.storeId = store._id;
+        this.store = store;
         this.currency = store.coin;
       }
     );
@@ -38,6 +40,9 @@ export class ProductsRowComponent implements OnInit{
       objectId: item.objectId,
       title: item.title,
       price: item.price,
+      giveAwayRate: item.giveAwayRate ? item.giveAwayRate : this.store.giveAwayRate,
+      taxRate: item.taxRate ? item.taxRate : this.store.taxRate,
+      lockedDays: item.lockedDays ? item.lockedDays : this.store.lockedDays,
       storeId: this.storeId,
       currency: item.currency,
       thumbnailUrl: item.images ? item.images[0] : null,

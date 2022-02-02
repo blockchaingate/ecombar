@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {TranslateService as TranService} from '@ngx-translate/core';
+import { ElementSchemaRegistry } from '@angular/compiler';
 
 @Injectable()
 export class TranslateService {
@@ -12,7 +13,16 @@ export class TranslateService {
             return '';
         }
         const lang = this.tranServ.currentLang;
-        return fieldName[lang];
+        let transalted = fieldName[lang];
+        if(!transalted) {
+            if(fieldName['sc']) {
+                transalted = fieldName['sc'];
+            } else
+            if(fieldName['en']) {
+                transalted = fieldName['en'];
+            }
+        }
+        return transalted;
     }   
     getLang() {
         const lang = this.tranServ.currentLang;

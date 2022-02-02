@@ -15,15 +15,19 @@ export class ProductListComponent implements OnInit {
     @Input() products: any;
     @Input() currency: string;
     storeId: string;
+    store: any;
     
     constructor(
       private cartStoreServ: CartStoreService,
       private translateServ: TranslateService,   
       private dataServ: DataService) {}
     ngOnInit() {
-      this.dataServ.currentStoreId.subscribe(
-        (storeId: string) => {
-          this.storeId = storeId;
+      this.dataServ.currentStore.subscribe(
+        (store: any) => {
+          if(store) {
+            this.store = store;
+            this.storeId = store._id;
+          }
         }
       );
     }
@@ -36,6 +40,9 @@ export class ProductListComponent implements OnInit {
         title: this.translateServ.transField(product.title),
         price: product.price,
         storeId: this.storeId,
+        giveAwayRate: product.giveAwayRate ? product.giveAwayRate : this.store.giveAwayRate,
+        taxRate: product.taxRate ? product.taxRate : this.store.taxRate,
+        lockedDays: product.lockedDays ? product.lockedDays : this.store.lockedDays,
         currency: product.currency,
         thumbnailUrl: product.images ? product.images[0] : null,
         quantity: 1

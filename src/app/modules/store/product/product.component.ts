@@ -33,6 +33,7 @@ export class ProductComponent implements OnInit {
   productObjectIds: any;
   currency: string;
   quantity: number;
+  store: any;
   colors: any;
   colorsChinese: any;
   sizes: any;
@@ -95,6 +96,7 @@ export class ProductComponent implements OnInit {
     );
     this.dataServ.currentStore.subscribe(
       (store: any) => {
+        this.store = store;
         this.storeId = store._id;
         this.currency = store.coin;
         this.smartContractAddress = store.smartContractAddress;
@@ -359,6 +361,10 @@ export class ProductComponent implements OnInit {
         size: this.lang == 'en' ? this.size : this.sizeChinese,
         color: this.lang == 'en' ? this.color : this.colorChinese,
         currency: product.currency,
+        giveAwayRate: product.giveAwayRate ? product.giveAwayRate : this.store.giveAwayRate,
+        taxRate: product.taxRate ? product.taxRate : this.store.taxRate,
+        lockedDays: product.lockedDays ? product.lockedDays : this.store.lockedDays,
+
         thumbnailUrl: product.images ? product.images[0] : null,
         quantity: Number(quantity)
       };
@@ -379,6 +385,9 @@ export class ProductComponent implements OnInit {
       currency: this.product.currency,
       quantity: Number(this.quantity),
       price: this.product.price,
+      giveAwayRate: this.product.giveAwayRate ? this.product.giveAwayRate : this.store.giveAwayRate,
+      taxRate: this.product.taxRate ? this.product.taxRate : this.store.taxRate,
+      lockedDays: this.product.lockedDays ? this.product.lockedDays : this.store.lockedDays,
       size: this.lang == 'en' ? this.size : this.sizeChinese,
       color: this.lang == 'en' ? this.color : this.colorChinese,
       thumbnailUrl: this.product.images ? this.product.images[0] : null,

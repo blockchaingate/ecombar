@@ -32,7 +32,7 @@ export class CartStoreService {
   }
 
   addCartItem(item: CartItem) {
-    console.log('item to be added=', item);
+    console.log('item to be added there we go=', item);
     console.log('items before added', this.items);
     // we assaign a new copy of todos by adding a new todo to it 
     // with automatically assigned ID ( don't do this at home, use uuid() )

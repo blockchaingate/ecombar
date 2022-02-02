@@ -13,6 +13,7 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 export class ProductRowComponent implements OnInit {
   iddockRoot: string;
   storeId: string;
+  store: any;
   currency: string;
   @Input() products: any;
 
@@ -29,6 +30,7 @@ export class ProductRowComponent implements OnInit {
     this.dataServ.currentStore.subscribe(
       (store: any) => {
         console.log('store=', store);
+        this.store = store;
         this.storeId = store._id;
         this.currency = store.coin;
       }
@@ -42,6 +44,9 @@ export class ProductRowComponent implements OnInit {
       title: item.title,
       price: item.price,
       storeId: this.storeId,
+      giveAwayRate: item.giveAwayRate ? item.giveAwayRate : this.store.giveAwayRate,
+      taxRate: item.taxRate ? item.taxRate : this.store.taxRate,
+      lockedDays: item.lockedDays ? item.lockedDays : this.store.lockedDays,
       currency: item.currency,
       thumbnailUrl: item.images ? item.images[0] : null,
       quantity: 1

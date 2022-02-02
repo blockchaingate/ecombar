@@ -12,6 +12,7 @@ import { DataService } from '../../services/data.service';
 export class ProductsGridComponent implements OnInit{
   iddockRoot: string;
   storeId: string;
+  store: any;
   currency: string;
   @Input() products: any;
 
@@ -27,17 +28,22 @@ export class ProductsGridComponent implements OnInit{
       (store: any) => {
         console.log('store=', store);
         this.storeId = store._id;
+        this.store = store;
         this.currency = store.coin;
       }
     );
   }
 
   addToCart(item: any) {
+    console.log('addToCart gogogo');
     const cartItem: CartItem = {
       productId: item._id,
       objectId: item.objectId,
       title: item.title,
       price: item.price,
+      giveAwayRate: item.giveAwayRate ? item.giveAwayRate : this.store.giveAwayRate,
+      taxRate: item.taxRate ? item.taxRate : this.store.taxRate,
+      lockedDays: item.lockedDays ? item.lockedDays : this.store.lockedDays,
       storeId: this.storeId,
       currency: item.currency,
       thumbnailUrl: item.images ? item.images[0] : null,

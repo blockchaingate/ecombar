@@ -5,7 +5,8 @@
             <ul class="responsive-table">
                 <li class="table-header">
                   <div class="col col-2">{{'ID' | translate}}</div>
-                  <div class="col col-4">{{'Details' | translate}}</div>
+                  <div class="col col-2">{{'Details' | translate}}</div>
+                  <div class="col col-2">{{'Lock period' | translate}}</div>
                   <div class="col col-2">{{'Release time' | translate}}</div>
                   <div class="col col-2">{{'Txids' | translate}}</div>
                   <div class="col col-2">{{'Status' | translate}}</div>
@@ -14,8 +15,11 @@
                             <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">
                                 {{showId(reward.id.substring(0, reward.id.length - 4)) }}
                             </div>
-                            <div class="col col-4" data-label="{{'Details' | translate}}">
+                            <div class="col col-2" data-label="{{'Details' | translate}}">
                                 {{showDetail(reward) }}
+                            </div>
+                            <div class="col col-2" data-label="{{'Lock period' | translate}}">
+                                {{reward.lockPeriod}}
                             </div>
                             <div class="col col-2" data-label="{{'Release time' | translate}}">
                                 {{showReleaseTime(reward) }}

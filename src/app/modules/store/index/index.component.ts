@@ -63,25 +63,5 @@ export class IndexComponent implements OnInit{
       }
     );
 
-    /*
-    this.productServ.getAdminHotCategories().subscribe(
-      (res: any) => {
-        if(res && res.ok) {
-          this.categories = res._body;
-        }
-      }
-    );
-
-    this.mainLayoutServ.getAdminMainLayouts().subscribe(
-      (res:any) => {
-        console.log('resss=', res);
-        if(res.ok) {
-          this.mainLayouts = res._body;
-          console.log('this.mainLayouts=', this.mainLayouts);
-          
-        }
-      }
-    );  
-    */  
   }
 }

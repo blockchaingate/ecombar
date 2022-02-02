@@ -39,11 +39,14 @@ export class PaymentComponent implements OnInit{
     taxRate: number;
     orderID: string;
     total: number;
+    starPayMeta: any;
+    rewardInfo: any;
     subtotal: number;
     parents: string[];
     agents: string[];
     selectedShippingService: string;
     walletAddress: string;
+    totalRewards: any;
     selectedPayment: string;
     smartContractAddress: string;
     feeChargerSmartContractAddress: string;
@@ -100,7 +103,7 @@ export class PaymentComponent implements OnInit{
       private userServ: UserService, 
       private orderServ: OrderService, 
       private addressServ: AddressService) {
-
+        this.totalRewards = [];
     }
 
     calculateTotal() {
@@ -109,16 +112,43 @@ export class PaymentComponent implements OnInit{
       if(!this.order || !this.order.items || (this.order.items.length == 0)) {
         return;
       }
-      console.log('this.images5');
+      let subtotalBigNumber = new BigNumber(0);
+      let taxBigNumber = new BigNumber(0);
       for(let i=0;i<this.order.items.length;i++) {
         const item = this.order.items[i];
-        this.subtotal += item.price * item.quantity;
+        console.log('item===', item);
+        const price = item.price;
+        const quantity = item.quantity;
+        const taxRate = item.taxRate;
+        //const giveAwayRate = item.giveAwayRate;
+        //const lockedDays = item.lockedDays;
+        const subtotalItem = new BigNumber(price).multipliedBy(new BigNumber(quantity));
+        subtotalBigNumber = subtotalBigNumber.plus(subtotalItem);
+        taxBigNumber = taxBigNumber.plus(subtotalItem.multipliedBy(taxRate).dividedBy(new BigNumber(100)));
+        /*
+        const realGiveAwayRate = giveAwayRate - 1;
+        const realGiveAways = subtotalItem.multipliedBy(realGiveAwayRate).dividedBy(new BigNumber(100));
+        let existed = false;
+        for(let j = 0; j < this.totalRewards.length; j++) {
+          const totalRewardItem = this.totalRewards[j];
+          if(totalRewardItem.lockedDays == lockedDays) {
+            totalRewardItem.rewards = totalRewardItem.rewards.plus(realGiveAways);
+            existed = true;
+            break;
+          }
+        }
+        if(!existed) {
+          this.totalRewards.push({
+              lockedDays: lockedDays,
+              rewards: realGiveAways
+          });
+        }
+        */
       }
       
-      this.subtotal = Number(this.subtotal.toFixed(2));
-      this.tax = new BigNumber(this.subtotal).multipliedBy(new BigNumber(this.taxRate).dividedBy(new BigNumber(100))).toNumber();
-
-      this.total = new BigNumber(this.subtotal).plus(new BigNumber(this.shippingFee)).plus(new BigNumber(this.tax)).toNumber();
+      this.subtotal = subtotalBigNumber.toNumber();
+      this.tax = taxBigNumber.toNumber();
+      this.total = subtotalBigNumber.plus(taxBigNumber).toNumber();
       ;
     }
 
@@ -162,6 +192,22 @@ export class PaymentComponent implements OnInit{
               }
             }
           );
+
+          this.dataServ.currentWalletAddress.subscribe(
+            (walletAddress: string) => {
+              if(walletAddress) {
+                this.orderServ.get7StarPay(this.orderID, this.currency, walletAddress).subscribe(
+                  (res: any) => {
+                    if(res && res.ok) {
+                      const body = res._body;
+                      console.log('body===', body);
+                      this.starPayMeta = body;
+                    }
+                });
+              }
+            }
+          );
+
         }
       );   
       
@@ -361,9 +407,9 @@ export class PaymentComponent implements OnInit{
               "type": "address[]"
             },
             {
-              "internalType": "address[]",
+              "internalType": "bytes32[]",
               "name": "_rewardBeneficiary",
-              "type": "address[]"
+              "type": "bytes32[]"
             },
             {
               "internalType": "bytes",
@@ -385,11 +431,18 @@ export class PaymentComponent implements OnInit{
         args = [
           '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
           this.coinServ.getCoinTypeIdByName(this.currency),
-          '0x' + new BigNumber(this.subtotal).shiftedBy(18).toString(16),
-          '0x' + new BigNumber(this.tax).shiftedBy(18).toString(16),
+          '0x' + new BigNumber(this.starPayMeta.totalAmount).shiftedBy(18).toString(16),
+          '0x' + new BigNumber(this.starPayMeta.totalTax).shiftedBy(18).toString(16),
+          '0x' + new BigNumber(this.starPayMeta.totalRewardInPaidCoin).shiftedBy(18).toString(16),
+          //this.starPayMeta.regionalAgents,
+          ['0x02c55515e62a0b25d2447c6d70369186b8f10359'],
+          this.starPayMeta.rewardBeneficiary,
+          this.starPayMeta.rewardInfo
         ];
+        console.log('args there we go4444===', args);
         to = this.feeChargerSmartContractAddress;
-      }
+        console.log('to=', to);
+      };
 
       return {to, abi, args};
     }
