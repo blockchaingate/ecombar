@@ -11,6 +11,7 @@ import { ImportWalletComponent } from './components/import-wallet/import-wallet.
 import { TransactionDetailComponent } from './modals/transaction-detail/transaction-detail.component';
 import { ReceiveComponent } from './modals/receive/receive.component';
 import { SendComponent } from './modals/send/send.component';
+import { RequestRefundComponent } from './modals/request-refund/request-refund.component';
 import { WalletComponent } from './wallet.component';
 import { AddGasComponent } from './modals/add-gas/add-gas.component';
 import { DepositComponent } from './modals/deposit/deposit.component';
@@ -54,6 +55,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         TransactionDetailComponent,
         ReceiveComponent,
         SendComponent,
+        RequestRefundComponent,
         AddGasComponent,
         DepositComponent,
         WithdrawComponent,

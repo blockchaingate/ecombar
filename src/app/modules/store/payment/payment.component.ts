@@ -397,11 +397,6 @@ export class PaymentComponent implements OnInit{
               "type": "uint256"
             },
             {
-              "internalType": "uint256",
-              "name": "_totalRewardInPaidCoin",
-              "type": "uint256"
-            },
-            {
               "internalType": "address[]",
               "name": "_regionalAgents",
               "type": "address[]"
@@ -429,13 +424,11 @@ export class PaymentComponent implements OnInit{
           "type": "function"
         };
         args = [
-          '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
+          '0x' + this.orderID,
           this.coinServ.getCoinTypeIdByName(this.currency),
           '0x' + new BigNumber(this.starPayMeta.totalAmount).shiftedBy(18).toString(16),
           '0x' + new BigNumber(this.starPayMeta.totalTax).shiftedBy(18).toString(16),
-          '0x' + new BigNumber(this.starPayMeta.totalRewardInPaidCoin).shiftedBy(18).toString(16),
-          //this.starPayMeta.regionalAgents,
-          ['0x02c55515e62a0b25d2447c6d70369186b8f10359'],
+          this.starPayMeta.regionalAgents,
           this.starPayMeta.rewardBeneficiary,
           this.starPayMeta.rewardInfo
         ];
