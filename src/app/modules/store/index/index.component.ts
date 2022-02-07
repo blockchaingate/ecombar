@@ -28,7 +28,6 @@ export class IndexComponent implements OnInit{
         if(storeOwner) {
           this.mainLayoutServ.getMerchantMainLayouts(storeOwner).subscribe(
             (ret: any) => {
-              console.log('ret444445555=', ret);
               if(ret && ret.ok) {
                 this.mainLayouts = ret._body;
               }
@@ -37,7 +36,6 @@ export class IndexComponent implements OnInit{
 
           this.productServ.getProductsOwnedBy(storeOwner).subscribe(
             (ret: any) => {
-              console.log('ret for latestProduct=', ret);
               this.latestProducts = ret;
             }            
           );
@@ -46,7 +44,6 @@ export class IndexComponent implements OnInit{
             (ret: any) => {
               if(ret && ret.ok) {
                 this.banners = ret._body;
-                console.log('this.banners=', this.banners);
               }
             }
           );

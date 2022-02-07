@@ -98,7 +98,6 @@ export class CartComponent implements OnInit, OnDestroy {
           this.storeOwner = store.owner;
           const storedCart = this.cartStoreServ.items;
           this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
-          console.log('this.cartItems====', this.cartItems);
           this.calculateTotal();
         }
 
@@ -110,14 +109,16 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   checkout() {
-    const initialState = {
-      pwdHash: this.wallet.pwdHash,
-      encryptedSeed: this.wallet.encryptedSeed
-    };        
     if(!this.wallet || !this.wallet.pwdHash) {
       this.router.navigate(['/wallet']);
       return;
     }
+
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };        
+
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {

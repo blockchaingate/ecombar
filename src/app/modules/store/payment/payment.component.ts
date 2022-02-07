@@ -148,7 +148,7 @@ export class PaymentComponent implements OnInit{
       
       this.subtotal = subtotalBigNumber.toNumber();
       this.tax = taxBigNumber.toNumber();
-      this.total = subtotalBigNumber.plus(taxBigNumber).toNumber();
+      this.total = subtotalBigNumber.plus(taxBigNumber).plus(new BigNumber(this.shippingFee)).toNumber();
       ;
     }
 
@@ -423,18 +423,20 @@ export class PaymentComponent implements OnInit{
           "stateMutability": "nonpayable",
           "type": "function"
         };
+        let totalAmount = new BigNumber(this.starPayMeta.totalAmount);
+        if(this.shippingFee) {
+          totalAmount = totalAmount.plus(new BigNumber(this.shippingFee));
+        }
         args = [
           '0x' + this.orderID,
           this.coinServ.getCoinTypeIdByName(this.currency),
-          '0x' + new BigNumber(this.starPayMeta.totalAmount).shiftedBy(18).toString(16),
+          '0x' + totalAmount.shiftedBy(18).toString(16),
           '0x' + new BigNumber(this.starPayMeta.totalTax).shiftedBy(18).toString(16),
           this.starPayMeta.regionalAgents,
           this.starPayMeta.rewardBeneficiary,
           this.starPayMeta.rewardInfo
         ];
-        console.log('args there we go4444===', args);
         to = this.feeChargerSmartContractAddress;
-        console.log('to=', to);
       };
 
       return {to, abi, args};
@@ -499,7 +501,6 @@ export class PaymentComponent implements OnInit{
 
                     this.kanbanServ.getExchangeBalance(this.utilServ.fabToExgAddress(this.walletAddress)).subscribe(
                       (resp: any) => {
-                          console.log('resp in here we go=', resp);
                           const selected = resp.filter(item => item.coinType == this.coinServ.getCoinTypeIdByName(this.currency));
                           if(selected && selected.length > 0) {
                             const currencyBalance = this.utilServ.showAmount(selected[0].unlockedAmount, 18);

@@ -1185,9 +1185,7 @@ export class CoinService {
                                 'stateMutability': 'nonpayable',
                                 'type': 'function'
                             };
-                            // console.log('foreeeee');
-                            console.log('amountSent=', amountSent);
-                            console.log('toAddress===', toAddress);
+
                             amountInTx = new BigNumber(amountSent);
                             let fxnCallHex = this.web3Serv.getGeneralFunctionABI(funcTransfer, 
                                 [this.utilServ.fabToExgAddress(toAddress), amountSent]);

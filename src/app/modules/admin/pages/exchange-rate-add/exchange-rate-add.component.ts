@@ -91,9 +91,7 @@ export class ExchangeRateAddComponent implements OnInit {
     const abiData = this.web3Serv.getGeneralFunctionABI(abi, args);
     this.kanbanServ.kanbanCall(this.to, abiData).subscribe(
       (ret: any) => {
-        console.log('ret for isOwner===', ret);
         const kanbanAddress = '0x' + ret.data.substring(ret.data.length - 40);
-        console.log('kanbanAddress==', kanbanAddress);
         this.owner = this.utilServ.exgToFabAddress(kanbanAddress);
       }
     );

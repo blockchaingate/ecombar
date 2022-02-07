@@ -48,7 +48,6 @@ export class TeamIndexComponent implements OnInit {
       (map: any) => {
         if(map && map.params && map.params.ref) {
           const refAddress = map.params.ref;
-          console.log('refAddress===', refAddress);
           this.storeageServ.storeRef(refAddress);
           
         }

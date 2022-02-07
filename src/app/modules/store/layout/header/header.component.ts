@@ -43,7 +43,6 @@ export class HeaderComponent implements OnInit {
           this.store = store;
           this.storeId = store._id;
           this.currency = store.coin;
-          console.log('store=====', store);
         }
 
       }
@@ -52,7 +51,6 @@ export class HeaderComponent implements OnInit {
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         if(wallet) {
-          console.log('wallethhhh===', wallet);
           this.wallet = wallet;
         }
         
@@ -65,11 +63,9 @@ export class HeaderComponent implements OnInit {
     );
     this.dataServ.currentStoreOwner.subscribe(
       (storeOwner: string) => {
-        console.log('storeOwner in here =', storeOwner);
         if(storeOwner) {
           this.categoryServ.getMerchantCategories(storeOwner).subscribe(
             (ret: any) => {
-              console.log('ret for caaat=', ret);
               if(ret && ret.ok) {
                 const allCategories = ret._body;
                 this.dataServ.changeStoreCategories(allCategories);
@@ -83,9 +79,7 @@ export class HeaderComponent implements OnInit {
 
     this.cartStoreServ.items$.subscribe((res) => {
       this.cartCount = 0;
-      console.log('this.images4');
       if (!res || (res.length === 0)) {
-        console.log('yes');
         res = this.cartStoreServ.items;
       }
 
@@ -168,16 +162,13 @@ export class HeaderComponent implements OnInit {
 
   buildCategoryTree(allCategories: any) {
     this.categories = this.arrayToTree(allCategories);
-    console.log('this.categories==', this.categories);
   }
 
   openMenu(){
-    console.log("Open Menu");
     this.menu = !this.menu;
   }
 
   closeMenu(){
-    console.log("close Menu");
     this.menu = false;
   }
 

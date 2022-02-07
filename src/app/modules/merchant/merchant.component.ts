@@ -59,16 +59,13 @@ export class MerchantComponent implements OnInit {
     const addresses = wallet.addresses;
     const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
     const walletAddress = walletAddressItem.address;
-    console.log('walletAddress==', walletAddress);
     if(walletAddress) {
       this.dataServ.changeWalletAddress(walletAddress); 
 
       this.storeServ.getStoresByAddress(walletAddress).subscribe(
         (ret: any) => {
-          console.log('ret for store==', ret);
           if(ret && ret.ok && ret._body && ret._body.length > 0) {
             const store = ret._body[ret._body.length - 1];
-            console.log('store in here==', store);
             this.dataServ.changeMyStore(store);
           }
         });

@@ -344,7 +344,6 @@ export class HttpService {
     */
     // fullUrl: http://...  or https://...
     getRaw(fullUrl: string, options?:any): Observable<any> {
-        console.log('fullUrl =', fullUrl);
         return this.http.get(fullUrl, options);
     }
 

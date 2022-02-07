@@ -202,13 +202,10 @@ export class ProductComponent implements OnInit {
               this.sizesChinese = this.product.sizes.sc;
             }
           }
-          console.log('this.product=', this.product);
-          console.log('this.colorsChinese=', this.colorsChinese);
 
           this.selectedImage = this.product.images[0];
 
           const args2 = ['0x' + this.utilServ.ObjectId2SequenceId(this.product.objectId)];
-          console.log('args2 in getProductById=', args2);
           const abi = this.web3Serv.getGeneralFunctionABI(
           {
             "inputs": [
@@ -244,7 +241,6 @@ export class ProductComponent implements OnInit {
 
           this.kanbanServ.kanbanCall(this.product.smartContractAddress, abi).subscribe(
             (ret: any) => {
-              console.log('rettttfor fee getProduct=', ret);
             }
           );
         }

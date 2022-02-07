@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'app-request-refund',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./request-refund.component.scss']
   })
   export class RequestRefundComponent implements OnInit {
+      constructor(public modalRef: BsModalRef) {
+      }
       ngOnInit(): void {
           
       }
       refundAll() {
           
+      }
+      close() {
+        this.modalRef.hide();
       }
   }

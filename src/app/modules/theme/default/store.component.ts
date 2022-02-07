@@ -42,7 +42,6 @@ export class StoreComponent implements OnInit{
                   if(walletAddress) {
                     this.kanbanServ.getExchangeBalance(this.utilServ.fabToExgAddress(walletAddress)).subscribe(
                       (resp: any) => {
-                          console.log('resp in here we go=', resp);
                           const selected = resp.filter(item => item.coinType == this.coinServ.getCoinTypeIdByName(currency));
                           if(selected && selected.length > 0) {
                             const currencyBalance = this.utilServ.showAmount(selected[0].unlockedAmount, 18);

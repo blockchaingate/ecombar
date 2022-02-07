@@ -87,7 +87,6 @@ export abstract class AddressComponent implements OnInit {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         if(walletAddress) {
-          console.log('walletAddress111====', walletAddress);
           this.addressServ.getAddresses(walletAddress).subscribe(
             (ret: any) => {
               if(ret && ret.ok) {
@@ -97,7 +96,6 @@ export abstract class AddressComponent implements OnInit {
                   (res: any) => {
                     if(res && res.ok) {
                       this.order = res._body;
-                      console.log('this.order====', this.order);
                       this.suite = this.order.unit;
                       this.streetNumber = this.order.streetNumber;
                       this.street = this.order.streetName;
@@ -194,7 +192,6 @@ export abstract class AddressComponent implements OnInit {
   }
 
   selectAddress(address: any) {
-    console.log('address==', address);
     this.id = address._id;
     this.suite = address.suite;
     this.streetNumber = address.streetNumber;

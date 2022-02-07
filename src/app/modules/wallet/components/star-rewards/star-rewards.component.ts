@@ -114,9 +114,7 @@ export class StarRewardsComponent implements OnInit{
     }
 
     async redeemDo(seed: Buffer) {
-      console.log('this.reward=', this.reward);
       let address = this.reward.address;
-      console.log('address==', address);
       //address = '0x3a3bc5a481892291720de88c17e1b41ae6a6a3e1';
       const abi = {
         "constant": false,
@@ -140,7 +138,6 @@ export class StarRewardsComponent implements OnInit{
       };
       const args = [this.reward.id, this.utilServ.fabToExgAddress(this.reward.user)];
 
-      console.log('args=', args);
       const ret = await this.kanbanSmartContractServ.execSmartContract(seed, address, abi, args);
       this.spinner.hide();
       if(ret && ret.ok && ret._body && ret._body.status == '0x1') {

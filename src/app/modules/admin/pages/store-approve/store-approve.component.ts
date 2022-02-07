@@ -54,7 +54,6 @@ export class StoreApproveComponent implements OnInit {
 
             
             this.proxyAddress = environment.addresses.smartContract.sevenStarProxy;
-            console.log('proxyAddress==', this.proxyAddress);
             const abi = this.web3Serv.getGeneralFunctionABI(
               {
                 "constant": true,
