@@ -14,6 +14,10 @@ export class OrderService {
     return this.http.post('orders/update2/' + orderID, data, false);
   }
 
+  requestRefund(id, data) {
+    return this.http.post('orders/' + id + '/requestRefund',  data, false);
+  }
+
   updateShipping(orderID: string, data) {
     return this.http.post('orders/updateShipping/' + orderID, data, false);
   }
@@ -22,6 +26,10 @@ export class OrderService {
     return this.http.get('orders/public/' + orderID, false);
   }
 
+  getRefund(orderID: string) {
+    return this.http.get('orders/' + orderID + '/7starpay/refund', false);
+  }
+  
   get7StarPay(orderID: string, currency: string, walletAddress: string) {
     const data = {
       address: walletAddress,

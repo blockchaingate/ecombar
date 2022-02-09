@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Refund' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <div *ngIf="refundItem.refundAll">
+        Refund all
+    </div>
+    <div *ngIf="!refundItem.refundAll">
+        <div *ngFor="let item of refundItem.items">
+            {{item.title}}({{item.price}}) X {{item.quantity}}
+        </div>
+    </div>   
+</div>
+
+<div class="modal-footer">
+
+    <div class="CreateCollection--actions">
+        <div class="ActionButtonrContainer">
+            <div class="ActionButton--content" (click)="refund()" style="min-width: 120px;">
+                {{'Refund' | translate}}
+            </div>
+        </div> 
+    </div>
+ 
+</div>

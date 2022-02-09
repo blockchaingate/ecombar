@@ -1,14 +1,37 @@
 <div class="modal-header">
-    <h4 class="modal-title pull-left">{{'Refund' | translate}}</h4>
+    <h4 class="modal-title pull-left">{{'Request refund' | translate}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
 </div>
 
 <div class="modal-body">
-    <div class="text-center">
-        <button class="btn" (click)="refundAll()">
-            {{'Refund all'| translate}}
-        </button>
+    <div class="container customCheckbox">
+        <div class="row mt-0 ml-4">
+            <div class="col-12 my_checkbox ">
+                <div class="row"> <input type="checkbox" [(ngModel)]="refundAll" id="RAW"> 
+                    <label for="RAW">{{'Refund all' | translate}}</label> 
+                </div>      
+            </div>
+        </div>
+        <div class="row mt-0 ml-4" *ngIf="!refundAll && realOrder">
+            <div class="col-12 my-2" *ngFor="let item of items; let i = index;">
+                {{item.title}}
+                    <input type="text" class="form-control border-1 height-40" 
+                    placeholder="{{'Quantity' | translate}}" [(ngModel)]="items[i].quantity" name="quantity">
+            </div>
+        </div>
     </div>
+</div>
+
+<div class="modal-footer">
+
+    <div class="CreateCollection--actions">
+        <div class="ActionButtonrContainer">
+            <div class="ActionButton--content" (click)="requestRefund()" style="min-width: 120px;">
+                {{'Request Refund' | translate}}
+            </div>
+        </div> 
+    </div>
+ 
 </div>

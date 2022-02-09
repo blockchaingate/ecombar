@@ -17,6 +17,10 @@ export class StarService {
       return this.http.get(url, false);
    }
 
+   getOrderVersion(id: string) {
+      const url = '7star-charge-fund/' + id + '/version';
+      return this.http.get(url, false);
+   }
    getTransactionHisotryForCustomer(walletAddress: string) {
       const path = '7star-charge-fund/customer/' + walletAddress;
       const res = this.http.get(path);

@@ -86,7 +86,6 @@ export class KanbanService {
         var queryString = Object.keys(data).filter((k) => (data[k] != null) && (data[k] != undefined))
         .map(key => key + '=' + (typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]))).sort().join('&');
 
-        console.log('queryString===', queryString);
         //const test = this.web3Serv.signMessageTest(queryString, privateKey);
         const signature = this.web3Serv.signKanbanMessageWithPrivateKey(queryString, privateKey);
         //console.log('signature here=', signature);

@@ -66,7 +66,6 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
     }
 
     onFlagChange(event) {
-      console.log('event=', event);
       this.isAdvance = event;
     }
 
@@ -91,10 +90,7 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
     
     onCoinChange(newCoin) {
       this.currentCoin = newCoin;
-      console.log('newCoin==', newCoin);
       this.mycoin = this.coinServ.formMyCoin(this.addresses, this.currentCoin);
-      console.log('this.coins=', this.coins);
-      console.log('this.coins.filter(item => item.coin == newCoin)=', this.coins.filter(item => item.coin == newCoin));
       this.balance = this.coins.filter(item => item.coin == newCoin)[0].balance;
     }
 

@@ -773,13 +773,10 @@ export class WalletDashboardComponent implements OnInit{
           if(res && res.success) {
             this.coins = res.data.filter(item => ((item.coin != 'CAD') && (item.coin != 'RMB')));
             const rewards = await this.getRewards(this.kanbanAddress);
-            console.log('this.coins=', this.coins);
             const exgCoin = this.coins.filter(item => item.coin == 'EXG')[0];
             const fabCoin = this.coins.filter(item => item.coin == 'FAB')[0];
             this.fabBalance = fabCoin.balance;
-            console.log('fabCoin==', fabCoin);
             this.currentCoin = exgCoin.coin;
-            console.log('exgCoin===', exgCoin);
             this.currentCoinAddress = this.getCurrentCoinAddress();
             this.walletBalance = Number(exgCoin.balance) + (Number(exgCoin.lockBalance) > 0 ? Number(exgCoin.lockBalance) : 0);
             this.walletValue = this.walletBalance * exgCoin.usdValue.USD;
