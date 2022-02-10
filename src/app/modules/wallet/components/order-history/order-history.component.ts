@@ -433,7 +433,7 @@ export class OrderHistoryComponent implements OnInit {
         const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
         const privateKey = keyPair.privateKeyBuffer.privateKey;
         const requestRefundId = this.utilServ.genRanHex(64);
-        const requestRefundSig = this.web3Serv.signKanbanMessageWithPrivateKey(requestRefundId, privateKey);
+        const requestRefundSig = this.web3Serv.signKanbanMessageHashWithPrivateKey(requestRefundId, privateKey);
         const data = {
           refundAll: this.requestRefundData.refundAll,
           items: this.requestRefundData.items.filter(item => item.quantity > 0),
