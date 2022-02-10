@@ -412,6 +412,7 @@ export class OrderHistoryComponent implements OnInit {
               }
               console.log('abi===', abi);
               console.log('args===', args);
+              console.log('to===', this.order.address);
               const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.address, abi, args);
               this.spinner.hide();
               if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
@@ -431,10 +432,12 @@ export class OrderHistoryComponent implements OnInit {
       requestRefundV2Do(seed: Buffer) {
         const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
         const privateKey = keyPair.privateKeyBuffer.privateKey;
-        const requestRefundSig = this.web3Serv.signKanbanMessageWithPrivateKey(this.order.id, privateKey);
+        const requestRefundId = this.utilServ.genRanHex(64);
+        const requestRefundSig = this.web3Serv.signKanbanMessageWithPrivateKey(requestRefundId, privateKey);
         const data = {
           refundAll: this.requestRefundData.refundAll,
           items: this.requestRefundData.items.filter(item => item.quantity > 0),
+          requestRefundId: '0x' + requestRefundId,
           requestRefundSig: requestRefundSig.signature
         };
         const sig = this.kanbanServ.signJsonData(privateKey, data);
@@ -452,6 +455,8 @@ export class OrderHistoryComponent implements OnInit {
       }
       
       async requestRefundDo(seed: Buffer) {
+
+        
         const abi = {
             "constant": false,
             "inputs": [
@@ -490,6 +495,43 @@ export class OrderHistoryComponent implements OnInit {
       }
 
       async cancelRequestRefundDo(seed: Buffer) {
+        this.starServ.getOrderVersion(this.order._id).subscribe(
+          async (ret: any) => {
+            if(ret && ret.ok) {
+              const version = ret._body.version;
+              if(!version) { //version 0
+                await this.cancelRequestRefundV1Do(seed);
+              } else
+              if(version == 2) {
+                await this.cancelRequestRefundV2Do(seed);
+              }
+            }
+          });  
+      }
+
+      async cancelRequestRefundV2Do(seed: Buffer) {
+        const realOrderId = this.order.id.substring(2, 26);
+        const data = {
+          id: realOrderId
+        }
+        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+        const privateKey = keyPair.privateKeyBuffer.privateKey;
+        const sig = this.kanbanServ.signJsonData(privateKey, data);
+        data['sig'] = sig.signature;   
+        this.orderServ.cancelrequestRefundV2(data).subscribe(
+          (ret: any) => {
+            this.spinner.hide();
+            if(ret && ret.ok && ret._body && ret._body._id) {
+              this.toastr.success('Request refund was canceled successfully');
+            } else {
+              this.toastr.error('Failed to cancel request refund');
+            }
+          }
+        );
+      }
+
+      async cancelRequestRefundV1Do(seed: Buffer) {
+      
         const abi = {
           "constant": false,
           "inputs": [

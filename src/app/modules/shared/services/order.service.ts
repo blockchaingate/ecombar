@@ -30,6 +30,10 @@ export class OrderService {
     return this.http.get('orders/' + orderID + '/7starpay/refund', false);
   }
   
+  cancelrequestRefundV2(data: any) {
+    return this.http.post('orders/cancelrequestRefundV2', data, false);
+  }
+
   get7StarPay(orderID: string, currency: string, walletAddress: string) {
     const data = {
       address: walletAddress,

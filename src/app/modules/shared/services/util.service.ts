@@ -115,7 +115,9 @@ export class UtilService {
         //const web3 = new Web3();
         //return web3.utils.randomHex(32);
     }
-
+    genRanHex(size) {
+        return [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+    }
     encrypt(publicKey, data) {
 
         const userPublicKey = Buffer.from(publicKey, 'hex');
