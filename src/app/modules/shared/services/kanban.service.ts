@@ -27,7 +27,7 @@ export class KanbanService {
 
     getKanbanBalance(address: string) {
         const path = this.baseUrl + 'kanban/getBalance/' + address;
-        // console.log('path1=' + path);
+        console.log('path1=' + path);
         return this.http.getRaw(path);
     }  
 

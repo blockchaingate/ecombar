@@ -53,7 +53,8 @@ export class PasswordModalComponent implements OnInit{
         this.kanbanServ.getKanbanBalance(this.utilServ.fabToExgAddress(address)).subscribe(
             (resp: any) => {
                 // console.log('resp=', resp);
-                const fab = this.utilServ.stripHexPrefix(resp.balance.FAB);
+                const balance = resp.balance.FAB ? resp.balance.FAB : resp.balance;
+                const fab = this.utilServ.stripHexPrefix(balance);
                 const gas = this.utilServ.hexToDec(fab) / 1e18;
                 if(gas < this.gas) {
                     this.toastr.error('No gas to make this transaction.');

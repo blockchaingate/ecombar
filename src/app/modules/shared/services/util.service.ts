@@ -328,6 +328,9 @@ export class UtilService {
     } 
     
     hexToDec(hex: string) {
+        if(!hex) {
+            return 0;
+        }
         if (hex.length === 1) {
             return this.hexCharToDec(hex);
         }

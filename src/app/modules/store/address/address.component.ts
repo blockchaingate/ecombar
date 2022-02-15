@@ -230,8 +230,8 @@ export abstract class AddressComponent implements OnInit {
     };    
 
     (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(res => {
-      if(res) {
-        if(res.ok) {
+      if(true || res) {
+        if(true || res.ok) {
           const sig = this.kanbanServ.signJsonData(privateKey, updatedOrder);
           updatedOrder['sig'] = sig.signature;           
           this.orderServ.update2(this.orderID, updatedOrder).subscribe(

@@ -198,6 +198,55 @@ export class OrderHistoryComponent implements OnInit {
           });        
       }
 
+      checkSignature(smartContractAddress: string, customer: string, orderId: string, r: string, s: string, v: string) {
+        const abi = {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_user",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "_msg",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint8",
+              "name": "v",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "r",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "s",
+              "type": "bytes32"
+            }
+          ],
+          "name": "validateSignature",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        }
+        const args = [customer, orderId, v, r, s];
+        const abiData = this.web3Serv.getGeneralFunctionABI(abi, args);
+        this.kanbanServ.kanbanCall(smartContractAddress, abiData).subscribe(
+          (ret: any) => {
+            console.log('ret for kanbanCall=', ret);
+          }
+        );
+      }
+
       getPassword(){
         const initialState = {
           pwdHash: this.wallet.pwdHash,
@@ -240,88 +289,91 @@ export class OrderHistoryComponent implements OnInit {
               const originalOrderID = body.originalOrderID;
               const customer = body.customer;
               const paidCoin = this.coinServ.getCoinTypeIdByName(body.paidCoin);
-              const refundAmount = '0x' + new BigNumber(body.refundAmount).shiftedBy(18).toString(16);
-              const refundTax = '0x' + new BigNumber(body.refundTax).shiftedBy(18).toString(16);
-              const refundRewardInPaidCoin = '0x' + new BigNumber(body.refundRewardInPaidCoin).shiftedBy(18).toString(16);
+              const refundAmount = body.refundAmount
+              const refundTax = body.refundTax;
+              const refundRewardInPaidCoin = body.refundRewardInPaidCoin;
+              const originalOrderInfo = body.originalOrderInfo;
+              const refundInfo = body.refundInfo;
               const regionalAgents = body.regionalAgents;
               const rewardBeneficiary = body.rewardBeneficiary;
               const v = body.v;
               const r = body.r;
               const s = body.s;
               const rewardInfo = body.rewardInfo;
+              this.checkSignature(this.order.address, customer, newOrderID, r, s, v);
               let abi;
               let args;
               if(body.refundAll) {
-                abi = {
+                abi = 	{
                   "inputs": [
-                    {
-                      "internalType": "bytes32",
-                      "name": "_newOrderID",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "_originalOrderID",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "address",
-                      "name": "_customer",
-                      "type": "address"
-                    },
-                    {
-                      "internalType": "uint32",
-                      "name": "_paidCoin",
-                      "type": "uint32"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "_refundAmount",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "_refundTax",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "_refundRewardInPaidCoin",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "address[]",
-                      "name": "_regionalAgents",
-                      "type": "address[]"
-                    },
-                    {
-                      "internalType": "address[]",
-                      "name": "_rewardBeneficiary",
-                      "type": "address[]"
-                    },
-                    {
-                      "internalType": "uint8",
-                      "name": "v",
-                      "type": "uint8"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "r",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "s",
-                      "type": "bytes32"
-                    }
+                  {
+                    "internalType": "bytes32",
+                    "name": "_newOrderID",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "_originalOrderID",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "_customer",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint32",
+                    "name": "_paidCoin",
+                    "type": "uint32"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "_refundAmount",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "_refundTax",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "_refundRewardInPaidCoin",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address[]",
+                    "name": "_regionalAgents",
+                    "type": "address[]"
+                  },
+                  {
+                    "internalType": "address[]",
+                    "name": "_rewardBeneficiary",
+                    "type": "address[]"
+                  },
+                  {
+                    "internalType": "uint8",
+                    "name": "v",
+                    "type": "uint8"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "r",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "s",
+                    "type": "bytes32"
+                  }
                   ],
                   "name": "refundAllWithSig",
                   "outputs": [
-                    {
-                      "internalType": "bool",
-                      "name": "",
-                      "type": "bool"
-                    }
+                  {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                  }
                   ],
                   "stateMutability": "nonpayable",
                   "type": "function"
@@ -333,80 +385,80 @@ export class OrderHistoryComponent implements OnInit {
               } else {
                 abi = {
                   "inputs": [
-                    {
-                      "internalType": "bytes32",
-                      "name": "_newOrderID",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "_originalOrderID",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "address",
-                      "name": "_customer",
-                      "type": "address"
-                    },
-                    {
-                      "internalType": "uint32",
-                      "name": "_paidCoin",
-                      "type": "uint32"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "_refundAmount",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "_refundTax",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "address[]",
-                      "name": "_regionalAgents",
-                      "type": "address[]"
-                    },
-                    {
-                      "internalType": "bytes32[]",
-                      "name": "_rewardBeneficiary",
-                      "type": "bytes32[]"
-                    },
-                    {
-                      "internalType": "uint8",
-                      "name": "v",
-                      "type": "uint8"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "r",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "s",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "bytes",
-                      "name": "_rewardInfo",
-                      "type": "bytes"
-                    }
+                  {
+                    "internalType": "bytes32",
+                    "name": "_newOrderID",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "_originalOrderID",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "_customer",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint32",
+                    "name": "_paidCoin",
+                    "type": "uint32"
+                  },
+                  {
+                    "internalType": "uint256[3]",
+                    "name": "_originalOrderInfo",
+                    "type": "uint256[3]"
+                  },
+                  {
+                    "internalType": "uint256[2]",
+                    "name": "_refundInfo",
+                    "type": "uint256[2]"
+                  },
+                  {
+                    "internalType": "address[]",
+                    "name": "_regionalAgents",
+                    "type": "address[]"
+                  },
+                  {
+                    "internalType": "bytes32[]",
+                    "name": "_rewardBeneficiary",
+                    "type": "bytes32[]"
+                  },
+                  {
+                    "internalType": "uint8",
+                    "name": "v",
+                    "type": "uint8"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "r",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "s",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "_rewardInfo",
+                    "type": "bytes"
+                  }
                   ],
                   "name": "refundSomeWithSig",
                   "outputs": [
-                    {
-                      "internalType": "bool",
-                      "name": "",
-                      "type": "bool"
-                    }
+                  {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                  }
                   ],
                   "stateMutability": "nonpayable",
                   "type": "function"
                 };
                 args = [
-                  newOrderID, originalOrderID, customer, paidCoin, refundAmount, refundTax, 
+                  newOrderID, originalOrderID, customer, paidCoin, originalOrderInfo, refundInfo, 
                   regionalAgents, rewardBeneficiary, v, r, s, rewardInfo
                 ];
               }
@@ -432,15 +484,24 @@ export class OrderHistoryComponent implements OnInit {
       requestRefundV2Do(seed: Buffer) {
         const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
         const privateKey = keyPair.privateKeyBuffer.privateKey;
-        const requestRefundId = this.utilServ.genRanHex(64);
-        const requestRefundSig = this.web3Serv.signKanbanMessageHashWithPrivateKey(requestRefundId, privateKey);
+        let requestRefundId = this.utilServ.genRanHex(64);
+        //const requestRefundSig = this.web3Serv.signKanbanMessageHashWithPrivateKey(requestRefundId, privateKey);
+
+
+        //requestRefundId = '528ea5c51829ee3374d696d72a2fcbba9448970fc10df62b49aa4cfc40aad251';
+        const hashForSignature = this.web3Serv.hashKanbanMessage('0x' + requestRefundId);
+        const requestRefundSig = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);
+
         const data = {
           refundAll: this.requestRefundData.refundAll,
           items: this.requestRefundData.items.filter(item => item.quantity > 0),
           requestRefundId: '0x' + requestRefundId,
-          requestRefundSig: requestRefundSig.signature
+          r: requestRefundSig.r,
+          s: requestRefundSig.s,
+          v: requestRefundSig.v
         };
         const sig = this.kanbanServ.signJsonData(privateKey, data);
+
         data['sig'] = sig.signature;   
         this.orderServ.requestRefund(this.realOrder._id, data).subscribe(
           (ret: any) => {

@@ -896,7 +896,8 @@ export class WalletDashboardComponent implements OnInit{
       this.kanbanServ.getKanbanBalance(this.kanbanAddress).subscribe(
           (resp: any) => {
               // console.log('resp=', resp);
-              const fab = this.utilServ.stripHexPrefix(resp.balance.FAB);
+              const balance = resp.balance.FAB ? resp.balance.FAB : resp.balance;
+              const fab = this.utilServ.stripHexPrefix(balance);
               this.gas = this.utilServ.hexToDec(fab) / 1e18;
 
           },

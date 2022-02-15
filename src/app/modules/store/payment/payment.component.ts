@@ -436,6 +436,7 @@ export class PaymentComponent implements OnInit{
           this.starPayMeta.rewardBeneficiary,
           this.starPayMeta.rewardInfo
         ];
+        console.log('args=======', args);
         to = this.feeChargerSmartContractAddress;
       };
 
