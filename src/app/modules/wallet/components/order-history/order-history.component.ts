@@ -14,7 +14,6 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { OrderService } from 'src/app/modules/shared/services/order.service';
-import BigNumber from 'bignumber.js';
 
 @Component({
     selector: 'app-order-history',

@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { OrderService } from '../../../shared/services/order.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -15,7 +14,6 @@ import { Subject } from 'rxjs';
       items: any;
       public onClose: Subject<any>;
       constructor(
-        private orderServ: OrderService,
         private modalRef: BsModalRef) {
       }
       ngOnInit(): void {
