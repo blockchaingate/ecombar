@@ -120,6 +120,7 @@ export class ProductAddComponent implements OnInit {
       'green',
       'brown'
     ];
+    this.lockedDays = 90;
     this.timestamp = Date.now();
     this.contentQuantity = 0;
     this.contents = [];
@@ -183,6 +184,7 @@ export class ProductAddComponent implements OnInit {
         if(store) {
           this.smartContractAddress = store.smartContractAddress;
           this.currency = store.coin;
+          this.lockedDays = store.lockedDays;
         }
       }
     );
@@ -294,6 +296,9 @@ export class ProductAddComponent implements OnInit {
     }
   }
 
+  changeLockedDays(days: number) {
+    this.lockedDays = days;
+  }
   public addHeaders(args: any) {
     console.log('add headerssss');
     args.currentRequest.setRequestHeader('custom-header', 'Syncfusion');

@@ -196,11 +196,11 @@ export class PaymentComponent implements OnInit{
           this.dataServ.currentWalletAddress.subscribe(
             (walletAddress: string) => {
               if(walletAddress) {
-                this.orderServ.get7StarPay(this.orderID, this.currency, walletAddress).subscribe(
+                this.orderServ.get7StarPay(this.orderID, walletAddress).subscribe(
                   (res: any) => {
                     if(res && res.ok) {
                       const body = res._body;
-                      console.log('body===', body);
+                      console.log('body for get7StarPay===', body);
                       this.starPayMeta = body;
                     }
                 });

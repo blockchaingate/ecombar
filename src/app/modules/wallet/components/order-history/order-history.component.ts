@@ -299,11 +299,12 @@ export class OrderHistoryComponent implements OnInit {
               const r = body.r;
               const s = body.s;
               const rewardInfo = body.rewardInfo;
+              const mainAddresses = body.mainAddresses;
               this.checkSignature(this.order.address, customer, newOrderID, r, s, v);
               let abi;
               let args;
               if(body.refundAll) {
-                abi = 	{
+                abi = {
                   "inputs": [
                   {
                     "internalType": "bytes32",
@@ -327,7 +328,7 @@ export class OrderHistoryComponent implements OnInit {
                   },
                   {
                     "internalType": "uint256",
-                    "name": "_refundAmount",
+                    "name": "_totalAmount",
                     "type": "uint256"
                   },
                   {
@@ -339,6 +340,11 @@ export class OrderHistoryComponent implements OnInit {
                     "internalType": "uint256",
                     "name": "_refundRewardInPaidCoin",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "address[3]",
+                    "name": "_mainAddresses",
+                    "type": "address[3]"
                   },
                   {
                     "internalType": "address[]",
@@ -379,7 +385,7 @@ export class OrderHistoryComponent implements OnInit {
                 };
                 args = [
                   newOrderID, originalOrderID, customer, paidCoin, refundAmount, refundTax, 
-                  refundRewardInPaidCoin, regionalAgents, rewardBeneficiary, v, r, s
+                  refundRewardInPaidCoin, mainAddresses, regionalAgents, rewardBeneficiary, v, r, s
                 ];
               } else {
                 abi = {
@@ -413,6 +419,11 @@ export class OrderHistoryComponent implements OnInit {
                     "internalType": "uint256[2]",
                     "name": "_refundInfo",
                     "type": "uint256[2]"
+                  },
+                  {
+                    "internalType": "address[3]",
+                    "name": "_mainAddresses",
+                    "type": "address[3]"
                   },
                   {
                     "internalType": "address[]",
@@ -458,7 +469,7 @@ export class OrderHistoryComponent implements OnInit {
                 };
                 args = [
                   newOrderID, originalOrderID, customer, paidCoin, originalOrderInfo, refundInfo, 
-                  regionalAgents, rewardBeneficiary, v, r, s, rewardInfo
+                  mainAddresses, regionalAgents, rewardBeneficiary, v, r, s, rewardInfo
                 ];
               }
               console.log('abi===', abi);
