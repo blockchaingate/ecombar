@@ -35,6 +35,15 @@ import { Router } from '@angular/router';
 
     ngOnInit() {
         this.showAside = false;    
+        this.localSt.getItem('lang').subscribe(
+          (lang: string) => {
+            console.log('lang in getItem=', lang);
+            if(lang) {
+              this.translateServ.setDefaultLang(lang);
+              this.translateServ.use(lang);
+            }
+          }
+        );
         this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
           if(!wallets || !wallets.items || (wallets.items.length == 0)) {
@@ -64,8 +73,10 @@ import { Router } from '@angular/router';
     }
 
     changeLanguage(lang: string) {
-      this.translateServ.setDefaultLang(lang);
-      this.translateServ.use(lang);
+      this.localSt.setItem('lang', lang).subscribe((ret) => {
+        this.translateServ.setDefaultLang(lang);
+        this.translateServ.use(lang);
+      });
     }
     
     onSearch() {
