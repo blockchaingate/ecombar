@@ -37,7 +37,6 @@ import { Router } from '@angular/router';
         this.showAside = false;    
         this.localSt.getItem('lang').subscribe(
           (lang: string) => {
-            console.log('lang in getItem=', lang);
             if(lang) {
               this.translateServ.setDefaultLang(lang);
               this.translateServ.use(lang);

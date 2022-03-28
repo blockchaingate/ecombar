@@ -51,27 +51,34 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     createCollection() {
 
       let payoutPercentageFee = 0;
-      try {
-        payoutPercentageFee = Number(this.payoutPercentageFee);
-      } catch(e) {
-        this.toastrServ.error('payoutPercentageFee is wrong.');
-        return;         
+      if(this.payoutPercentageFee) {
+        try {
+          payoutPercentageFee = Number(this.payoutPercentageFee);
+        } catch(e) {
+          this.toastrServ.error('payoutPercentageFee is wrong.');
+          return;         
+        }
       }
-      if((payoutPercentageFee <= 0) || (payoutPercentageFee >= 100) || (Number.isNaN(payoutPercentageFee))) {
+      if(this.payoutWalletAddress) {
+        try {
+          const exgAddress = this.utilServ.fabToExgAddress(this.payoutWalletAddress);
+          const len = exgAddress.length;
+          if(len != 42) {
+            this.toastrServ.error('payoutWalletAddress is wrong.');
+            return;             
+          }
+        } catch(e) {
+          this.toastrServ.error('payoutWalletAddress is wrong.');
+          return;          
+        }  
+      }
+
+
+      if((payoutPercentageFee < 0) || (payoutPercentageFee >= 100) || (Number.isNaN(payoutPercentageFee))) {
         this.toastrServ.error('payoutPercentageFee is wrong.');
         return;
       }
-      try {
-        const exgAddress = this.utilServ.fabToExgAddress(this.payoutWalletAddress);
-        const len = exgAddress.length;
-        if(len != 42) {
-          this.toastrServ.error('payoutWalletAddress is wrong.');
-          return;             
-        }
-      } catch(e) {
-        this.toastrServ.error('payoutWalletAddress is wrong.');
-        return;          
-      }      
+    
 
 
         const data = {
