@@ -21,6 +21,7 @@ export class PasswordModalComponent implements OnInit{
     password: string;
     fabPrivateKey: any;
     seed: Buffer;
+    noCheckGasBalance: boolean;
 
     constructor(
         private bsModalRef: BsModalRef,
@@ -54,8 +55,8 @@ export class PasswordModalComponent implements OnInit{
                 // console.log('resp=', resp);
                 const fab = this.utilServ.stripHexPrefix(resp.balance.FAB);
                 const gas = this.utilServ.hexToDec(fab) / 1e18;
-                if(gas <= 0.00001) {
-                    this.toastr.error('Not enough gas, please get free gas or add gas in wallet and try again.');
+                if(!this.noCheckGasBalance && (gas <= 0.00001)) {
+                    this.toastr.error('Not enough gas, please add gas in wallet and try again.');
                     return;
                 } else {
                     const privateKey = keyPair.privateKeyBuffer.privateKey;

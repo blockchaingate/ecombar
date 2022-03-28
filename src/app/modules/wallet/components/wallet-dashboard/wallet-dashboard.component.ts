@@ -298,7 +298,8 @@ export class WalletDashboardComponent implements OnInit{
         const initialState = {
           coins: this.coins,
           pwdHash: this.wallet.pwdHash,
-          encryptedSeed: this.wallet.encryptedSeed
+          encryptedSeed: this.wallet.encryptedSeed,
+          noCheckGasBalance: true
         };          
         
         this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });
@@ -492,7 +493,7 @@ export class WalletDashboardComponent implements OnInit{
 
           const item: TransactionItem = {
               walletId: this.wallet.id,
-              type: 'Add Gas',
+              type: 'Add gas',
               coin: currentCoin.name,
               tokenType: currentCoin.tokenType,
               amount: amount,
