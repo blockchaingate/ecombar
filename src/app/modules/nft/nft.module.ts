@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NftRoutingModule } from './nft-routing.module';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 import { NftComponent } from './nft.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NftAdminComponent } from './components/admin/admin.component';
 import { NftAdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
 import { NftCollectionsComponent } from './components/collections/collections.component';
@@ -207,7 +208,8 @@ import { EventsSearchPipe } from './pipes/events-search.pipe';
         WalletModule,
         SharedModule,
         TranslateModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        BsDropdownModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]    
 })

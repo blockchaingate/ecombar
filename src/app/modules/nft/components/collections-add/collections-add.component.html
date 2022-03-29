@@ -3,10 +3,28 @@
         <h4 class="CreateCollection--header">
             {{'Create your collection' | translate}}
         </h4>
+        <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="type" type="radio" name="flexRadioDefault" value="ERC721">
+            <label class="form-check-label" for="flexRadioDefault1">
+              ERC721
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="type" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="ERC1155">
+            <label class="form-check-label" for="flexRadioDefault2">
+              ERC1155
+            </label>
+        </div>
+        
         <p class="CreateCollection--info">
             {{'You can change these values later, along with configuring external URLs, and payment options.' | translate}}
         </p>
         <div class="form-container">
+
+
+
+
+
             <app-image-uploader [(ngModel)]="image" [title]="'Logo*' | translate" [subtitle]="'(350 x 350 recommended)' | translate"></app-image-uploader>
             <app-textbox [(ngModel)]="name" [title]="'Name *' | translate" ></app-textbox>
 

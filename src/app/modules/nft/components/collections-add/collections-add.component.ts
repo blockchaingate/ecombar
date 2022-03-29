@@ -36,6 +36,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     @Output() createEvent = new EventEmitter<any>();
     payoutPercentageFee: number;
     payoutWalletAddress: string;
+    type: string;
     name: string;
     description: string;
     image: string;
@@ -45,6 +46,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 
     }
     ngOnInit() {
+      this.type = 'ERC1155';
       //this.image = 'https://lh3.googleusercontent.com/E_vznLJI8etM3V_AmkgNeaIFDZ1ve4v9w-IBMkU4BzgisoX4kptb3jiD0fJcJpQoNwjrEmD61sA8cWVw9GDXIN7MlvVnjkUEcGCU=w250';    
     }
 
@@ -82,6 +84,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 
         const data = {
+            type: this.type,
             name: this.name,
             description: this.description,
             image: this.image,

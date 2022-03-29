@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { NftCollectionService } from '../../services/nft-collection.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
-import { ABI, Bytecode } from '../../../../config/erc1155';
+import { ABI as ERC1155ABI, Bytecode as ERC1155Bytecode} from '../../../../config/erc1155';
+import { ABI as ERC721ABI, Bytecode as ERC721Bytecode} from '../../../../config/erc721';
+
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
@@ -62,7 +64,21 @@ import { environment } from 'src/environments/environment';
 
     async deployKanbanDo(seed, templateDone) {
       this.spinner.show();
-      let args = ['ERC1155','ERC1155','',environment.addresses.smartContract.ProxyRegistry];
+      
+      let args;
+      let ABI;
+      let Bytecode;
+      if(this.collection.type === 'ERC1155') {
+        args = ['ERC1155','ERC1155','',environment.addresses.smartContract.ProxyRegistry];
+        ABI = ERC1155ABI;
+        Bytecode = ERC1155Bytecode;
+      } else {
+        args = ['ERC721','ERC721', environment.addresses.smartContract.ProxyRegistry];
+        ABI = ERC721ABI;
+        Bytecode = ERC721Bytecode;       
+      }
+
+      
       const resp = await this.kanbanSmartContract.deploySmartContract(seed, ABI, Bytecode, args);
 
       if(resp && resp.ok && resp._body && resp._body.status == '0x1') {
@@ -104,7 +120,7 @@ import { environment } from 'src/environments/environment';
  
 
         const collection = {
-          type: 'ERC1155',
+          type: event.type,
           name: event.name,
           description: event.description,
           image: event.image,

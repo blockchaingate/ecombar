@@ -359,6 +359,8 @@
     "Balance": "余额",
     "Receive": "收款",
     "Send": "转账",
+    "Hide Asset": "隐藏资产",
+    "Hide this asset from the public": "向公众隐藏此资产",
     "Add gas": "加燃料",
     "Locked": "锁仓",
     "Value(USD)": "价值（美元）",
