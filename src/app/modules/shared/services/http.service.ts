@@ -394,6 +394,10 @@ export class HttpService {
         return this.http.get(fullUrl, options);
     }
 
+    async getRawAsync(fullUrl: string, options?:any): Promise<any> {
+        return this.http.get(fullUrl, options).toPromise();
+    }
+
     // fullUrl: http://...  or https://...
     postRaw(fullUrl: string, data: any, options?: OPTIONS): Observable<any> {
         return this.http.post(fullUrl, data, options);

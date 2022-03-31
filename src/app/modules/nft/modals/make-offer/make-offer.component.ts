@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
   })
   export class NftMakeOfferComponent implements OnInit {
     public onClose: Subject<Buffer>;
-
+    collectionType: string;
     entity: any;
     constructor(private bsModalRef: BsModalRef) {}
     ngOnInit() {

@@ -71,6 +71,7 @@ import { TranslateService } from '@ngx-translate/core';
     takeAction(event) {
       this.action = event.action;
       this.actionOrder = event.order;
+
       if(this.actionOrder) {
         this.actionOrder = NftOrder.from(event.order);
       }
@@ -226,6 +227,10 @@ import { TranslateService } from '@ngx-translate/core';
                 if(this.address) {
                   this.assetServ.getBalanceOf(this.utilServ.fabToExgAddress(this.address), this.smartContractAddress, this.tokenId).subscribe(
                     (res: any) => {
+                      if(res.data == '0x') {
+                        this.balance = 0;
+                        return;
+                      }
                       this.balance = new BigNumber(res.data).shiftedBy(-18).toNumber();
                       console.log('balance=', this.balance);
                     }
@@ -296,6 +301,70 @@ import { TranslateService } from '@ngx-translate/core';
 
     }
 
+    async canBuy() {
+      const myAddress = this.address;
+      const orderMaker = this.actionOrder.maker;
+      //const orderTaker = this.actionOrder.taker;
+      const orderSide = this.actionOrder.side;
+      const coinType = this.actionOrder.coinType;
+      const basePrice = this.actionOrder.basePrice;
+      const amount = this.actionOrder.amount ? this.actionOrder.amount : 1;
+      const contractType = this.contractType;
+      
+      console.log('myAddress=', myAddress);
+      console.log('orderMaker=', orderMaker);
+      //console.log('orderTaker=', orderTaker);
+      console.log('orderSide=', orderSide);
+      console.log('coinType=', coinType);
+      console.log('basePrice=', basePrice);
+      console.log('amount=', amount);
+      console.log('contractType=', contractType);
+
+      let tokenBalance = 0;
+      if(contractType == 'ERC1155') {
+        const resForBalanceOf = await this.assetServ.getBalanceOfPromise(orderMaker, this.smartContractAddress, this.tokenId);
+        tokenBalance = new BigNumber(resForBalanceOf.data).shiftedBy(-18).toNumber();
+      } else {
+        const tokenOwnerResp =  await this.assetServ.getOwnerPromise(this.smartContractAddress, this.tokenId);
+
+        let tokenOwner = tokenOwnerResp.data;
+
+        tokenOwner = tokenOwner.replace('0x000000000000000000000000', '0x')
+
+        if(tokenOwner == orderMaker) {
+          tokenBalance = 1;
+        }
+      }
+
+      console.log('tokenBalance====', tokenBalance);
+      if (tokenBalance < amount) {
+        this.toastr.info("The sell order is invalid");
+        return false;
+      }
+
+      const tokenValue = new BigNumber(amount).plus(new BigNumber(basePrice)).toNumber();
+      
+      const exchangeBalances = await this.kanbanServ.getExchangeBalancePromise(this.utilServ.fabToExgAddress(myAddress));
+      console.log('exchangeBalances====', exchangeBalances);
+      if(!exchangeBalances || exchangeBalances.length == 0) {
+        this.toastr.info("You have no exchange balance to buy this asset.");
+        return false;    
+      }
+      const exchangeBalance = exchangeBalances.filter(item => item.coinType == coinType);
+      if(!exchangeBalance || exchangeBalance.length == 0) {
+        this.toastr.info("You have no " + this.utilServ.getCoinNameByTypeId(coinType) + " to buy this asset.");
+        return false;       
+      }
+
+      const yourTokenBalance = new BigNumber(exchangeBalance[0].unlockedAmount).shiftedBy(-18).toNumber();
+      console.log('your token Balance=', yourTokenBalance);
+      if(yourTokenBalance < tokenValue) {
+        this.toastr.info("You have not enough " + this.utilServ.getCoinNameByTypeId(coinType) + " to buy this asset.");
+        return false;           
+      }
+      return true;
+    }
+
     async buyDo(seed: Buffer) {
       let buyorder: NftOrder;
       console.log('go for buye');
@@ -307,6 +376,11 @@ import { TranslateService } from '@ngx-translate/core';
           this.utilServ.fabToExgAddress(this.address), this.actionOrder);
       }
 
+      const canBeMade = await this.canBuy();
+      if(!canBeMade) {
+        this.spinner.hide();
+        return;
+      }
       console.log('hehre');
       console.log('buyorder=', buyorder);
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
@@ -532,7 +606,70 @@ import { TranslateService } from '@ngx-translate/core';
       );
     }
 
+    async canAcceptOffer() {
 
+      const myAddress = this.address;
+      const orderMaker = this.actionOrder.maker;
+      //const orderTaker = this.actionOrder.taker;
+      const orderSide = this.actionOrder.side;
+      const coinType = this.actionOrder.coinType;
+      const basePrice = this.actionOrder.basePrice;
+      const amount = this.actionOrder.amount ? this.actionOrder.amount : 1;
+      const contractType = this.contractType;
+      
+      console.log('myAddress=', myAddress);
+      console.log('orderMaker=', orderMaker);
+      //console.log('orderTaker=', orderTaker);
+      console.log('orderSide=', orderSide);
+      console.log('coinType=', coinType);
+      console.log('basePrice=', basePrice);
+      console.log('amount=', amount);
+      console.log('contractType=', contractType);
+
+      let tokenBalance = 0;
+      if(contractType == 'ERC1155') {
+        const resForBalanceOf = await this.assetServ.getBalanceOfPromise(this.utilServ.fabToExgAddress(myAddress), this.smartContractAddress, this.tokenId);
+        tokenBalance = new BigNumber(resForBalanceOf.data).shiftedBy(-18).toNumber();
+      } else {
+        let tokenOwnerResp =  await this.assetServ.getOwnerPromise(this.smartContractAddress, this.tokenId);
+        let tokenOwner = tokenOwnerResp.data;
+
+        tokenOwner = tokenOwner.replace('0x000000000000000000000000', '0x')
+        
+        if(tokenOwner == this.utilServ.fabToExgAddress(myAddress)) {
+          tokenBalance = 1;
+        }
+      }
+
+      console.log('tokenBalance====', tokenBalance);
+      if (tokenBalance < amount) {
+        this.toastr.info("You have not enough assets to accept this offer");
+        return false;
+      }
+
+      const tokenValue = new BigNumber(amount).plus(new BigNumber(basePrice)).toNumber();
+      
+      const exchangeBalances = await this.kanbanServ.getExchangeBalancePromise(orderMaker);
+      console.log('exchangeBalances====', exchangeBalances);
+      if(!exchangeBalances || exchangeBalances.length == 0) {
+        this.toastr.info("The peer have no exchange balance to buy this asset.");
+        return false;    
+      }
+      const exchangeBalance = exchangeBalances.filter(item => item.coinType == coinType);
+      if(!exchangeBalance || exchangeBalance.length == 0) {
+        this.toastr.info("The peer have no " + this.utilServ.getCoinNameByTypeId(coinType) + " to buy this asset.");
+        return false;       
+      }
+
+      const thePeerTokenBalance = new BigNumber(exchangeBalance[0].unlockedAmount).shiftedBy(-18).toNumber();
+      console.log('The peer token Balance=', thePeerTokenBalance);
+      if(thePeerTokenBalance < tokenValue) {
+        this.toastr.info("The peer have not enough " + this.utilServ.getCoinNameByTypeId(coinType) + " to buy this asset.");
+        return false;           
+      }
+
+      return true;
+    }
 
     async acceptOfferDo(seed: Buffer) {
       console.log('this.actionOrder=', this.actionOrder);
@@ -543,6 +680,12 @@ import { TranslateService } from '@ngx-translate/core';
       let payoutWalletAddress = '';
       if(this.collection && this.collection.payoutWalletAddress) {
         payoutWalletAddress = this.collection.payoutWalletAddress;
+      }
+
+      const canBeAccepted = await this.canAcceptOffer();
+      if(!canBeAccepted) {
+        this.spinner.hide();
+        return;
       }
 
       if(buyorder.amount) {

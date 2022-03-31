@@ -210,7 +210,8 @@ export class WalletDashboardComponent implements OnInit{
       const initialState = {
         coins: this.coins,
         pwdHash: this.wallet.pwdHash,
-        encryptedSeed: this.wallet.encryptedSeed
+        encryptedSeed: this.wallet.encryptedSeed,
+        noCheckGasBalance: true
       };          
       
       this.modalRef = this.modalServ.show(PasswordModalComponent, { initialState });

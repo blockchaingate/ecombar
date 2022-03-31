@@ -189,6 +189,11 @@ export class KanbanService {
         return this.http.getRaw(path);        
     }
 
+    async getExchangeBalancePromise(address) {
+        const path = this.baseUrl + 'exchangily/getBalances/' + address;
+        return await this.http.getRawAsync(path);        
+    }
+
     async getScarAddress() {
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         let path = 'kanban/getScarAddress';

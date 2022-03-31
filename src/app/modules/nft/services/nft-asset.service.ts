@@ -93,6 +93,32 @@ export class NftAssetService {
     return this.kanbanServ.kanbanCall(smartContractAddress, abiEncoded);
   }
 
+  async getOwnerPromise(smartContractAddress: string, tokenId: string): Promise<any> {
+    const args = [tokenId];
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    };
+
+    const abiEncoded = this.web3Serv.getGeneralFunctionABI(abi, args);
+    return await this.kanbanServ.kanbanCallAsync(smartContractAddress, abiEncoded);
+  }
+
   getBalanceOf(address: string, smartContractAddress: string, tokenId: string) {
     const args = [address, tokenId];
     const abi = {
@@ -122,5 +148,36 @@ export class NftAssetService {
 
     const abiEncoded = this.web3Serv.getGeneralFunctionABI(abi, args);
     return this.kanbanServ.kanbanCall(smartContractAddress, abiEncoded);
+  }
+
+  async getBalanceOfPromise(address: string, smartContractAddress: string, tokenId: string): Promise<any> {
+    const args = [address, tokenId];
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    };
+
+    const abiEncoded = this.web3Serv.getGeneralFunctionABI(abi, args);
+    return await this.kanbanServ.kanbanCallAsync(smartContractAddress, abiEncoded);
   }
 }

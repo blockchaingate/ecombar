@@ -71,6 +71,10 @@ import { ToastrService } from 'ngx-toastr';
 
         this.assetServ.getBalanceOf(this.utilServ.fabToExgAddress(this.address), this.smartContractAddress, this.tokenId).subscribe(
           (res: any) => {
+            if(res.data == '0x') {
+              this.balance = 0;
+              return;
+            }
             this.balance = new BigNumber(res.data).shiftedBy(-18).toNumber();
             console.log('balance=', this.balance);
           }

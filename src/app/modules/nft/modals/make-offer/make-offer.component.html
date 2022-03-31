@@ -7,7 +7,7 @@
 <div class="modal-body">
     <app-nft-asset-sell-price (updateEntity)="onUpdateEntity($event)" [noText]="true"></app-nft-asset-sell-price>
 
-    <app-nft-asset-sell-quantity [noText]="true" (updateQuantity)="onUpdateQuantity($event)"></app-nft-asset-sell-quantity>
+    <app-nft-asset-sell-quantity *ngIf="collectionType == 'ERC1155'" [noText]="true" (updateQuantity)="onUpdateQuantity($event)"></app-nft-asset-sell-quantity>
     <div class="CreateCollection--actions m-1 py-3">
         <div class="ActionButtonrContainer text-center"  [ngClass]="'ActionButton--secondary'">
             <div class="ActionButton--content" (click)="makeOffer()" style="min-width: 120px;">{{'Make Offer' | translate}}</div>

@@ -14,6 +14,7 @@ import { NftMakeOfferComponent } from '../../modals/make-offer/make-offer.compon
     @Input() address: string;
     @Input() owner: string;
     @Input() wallet: any;
+    @Input() collection: any;
     @Input() asset: any;
     @Output() onAction = new EventEmitter();
     modalRef: BsModalRef;
@@ -42,7 +43,10 @@ import { NftMakeOfferComponent } from '../../modals/make-offer/make-offer.compon
     }
 
     makeOffer() {
-      this.modalRef = this.modalServ.show(NftMakeOfferComponent);
+      const initialState = {
+        collectionType: this.collection.type
+      }; 
+      this.modalRef = this.modalServ.show(NftMakeOfferComponent, {initialState});
 
       this.modalRef.content.onClose.subscribe( (data: any) => {
         console.log('data=', data);
