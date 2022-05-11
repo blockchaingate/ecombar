@@ -137,9 +137,10 @@ export class CartComponent implements OnInit, OnDestroy {
     
     let transAmount = 0;
 
+    
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
     const privateKey = keyPair.privateKeyBuffer.privateKey;
-
+    
     this.cartItems.forEach(item => {
       console.log('item=', item);
       this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
@@ -153,7 +154,26 @@ export class CartComponent implements OnInit, OnDestroy {
     let currency = this.currency;
     const orderData = { store: this.storeId, storeOwner: this.storeOwner, items, currency, transAmount };
 
+    const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+    orderData['sig'] = sig.signature;  
+    this.orderServ.create2(orderData).subscribe(
+      (res: any) => {
+        if (res && res.ok) {
+          const body = res._body;
+          const orderID = body._id;
+          this.spinner.hide();
+          this.cartStoreServ.empty();
+          this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
+        }
+      },
+      err => { 
+        this.errMsg = err.message;
+        this.spinner.hide();
+        this.toastr.error('error while creating order');              
+       }
+    );  
 
+    /*
     (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
       if(res) {
         if(res.ok) {
@@ -162,22 +182,7 @@ export class CartComponent implements OnInit, OnDestroy {
           orderData['objectId'] = objectId; 
           const sig = this.kanbanServ.signJsonData(privateKey, orderData);
           orderData['sig'] = sig.signature;               
-          this.orderServ.create2(orderData).subscribe(
-            (res: any) => {
-              if (res && res.ok) {
-                const body = res._body;
-                const orderID = body._id;
-                this.spinner.hide();
-                this.cartStoreServ.empty();
-                this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
-              }
-            },
-            err => { 
-              this.errMsg = err.message;
-              this.spinner.hide();
-              this.toastr.error('error while creating order');              
-             }
-          );  
+
         
         }
         else {
@@ -185,7 +190,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.toastr.error('error while saving to iddock');
         }
       }});
-
+      */
 
 
   }
