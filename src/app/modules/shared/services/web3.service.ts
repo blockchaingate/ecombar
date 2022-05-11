@@ -252,7 +252,7 @@ export class Web3Service {
       },
       environment.chains.ETH.hardfork,
     );
-    const tx = new KanbanTxService(txObject, { common: customCommon });
+    const tx = new Eth.Transaction(txObject, { common: customCommon });
 
     tx.sign(privKey);
     const serializedTx = tx.serialize();

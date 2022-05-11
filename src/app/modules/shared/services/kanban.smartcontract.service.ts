@@ -6,6 +6,7 @@ import { UtilService } from './util.service';
 import Common from 'ethereumjs-common';
 import KanbanTxService from './kanban.tx.service';
 import { Web3Service } from './web3.service';
+import * as Eth from 'ethereumjs-tx';
 var addresses = new Map();
 @Injectable({ providedIn: 'root' })
 export class KanbanSmartContractService {
@@ -80,7 +81,7 @@ export class KanbanSmartContractService {
         },
         environment.chains.ETH.hardfork,
       );
-      const tx = new KanbanTxService(txObject, { common: customCommon });
+      const tx = new Eth.Transaction(txObject, { common: customCommon });
   
       tx.sign(privKey);
       const serializedTx = tx.serialize();
@@ -130,7 +131,7 @@ export class KanbanSmartContractService {
           },
           environment.chains.ETH.hardfork,
         );
-        const tx = new KanbanTxService(txObject, { common: customCommon });
+        const tx = new Eth.Transaction(txObject, { common: customCommon });
     
         tx.sign(privKey);
         const serializedTx = tx.serialize();
