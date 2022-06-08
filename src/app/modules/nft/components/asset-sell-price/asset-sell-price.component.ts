@@ -21,6 +21,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
     
     ngOnInit() {
       this.acceptableCoins = this.utilServ.getAcceptableCoins();
+      console.log('this.acceptableCoins====', this.acceptableCoins);
       this.showPopup = false;
       this.selectedCoin = 'DUSD';  
     }

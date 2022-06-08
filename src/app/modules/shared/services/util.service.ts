@@ -35,7 +35,8 @@ export class UtilService {
             'FAB',
             'EXG',
             'BST',
-            'DSC'
+            'DSC',
+            'TWBTC'
         ];
     }
 

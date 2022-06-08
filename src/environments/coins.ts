@@ -40,5 +40,6 @@ export const coin_list: Coin[] = [
     { id: 196628, name: 'FABE', icon: ''},
     { id: 196629, name: 'EXGE', icon: ''},
     { id: 196630, name: 'DSCE', icon: ''},
+    { id: 131096, name: 'TWBTC', icon: ''},
     { id: 196631, name: 'BSTE', icon: ''}
 ];
