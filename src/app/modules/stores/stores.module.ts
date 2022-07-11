@@ -7,11 +7,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { StoresRoutingModule } from './stores-routing.module';
 import { StoresComponent } from './stores.component';
 import { StoresIndexComponent } from './components/index/index.component';
+import { VersionComponent } from './components/version/version.component';
 
 
 
 @NgModule({
-  declarations: [StoresComponent, StoresIndexComponent],
+  declarations: [StoresComponent, StoresIndexComponent, VersionComponent],
   imports: [
     CommonModule,
     StoresRoutingModule,

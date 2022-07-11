@@ -219,40 +219,19 @@ export abstract class AddressComponent implements OnInit {
       province: this.province,
       zip: this.postcode,
       country: this.country
-    };
+    };  
 
-    const updatedOrderForIdDock = {
-      merchantId: this.order.merchantId,
-      items: this.order.items,
-      currency: this.order.currency,
-      transAmount: this.order.transAmount,
-      ...updatedOrder
-    };    
-
-    (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(res => {
-      if(true || res) {
-        if(true || res.ok) {
-          const sig = this.kanbanServ.signJsonData(privateKey, updatedOrder);
-          updatedOrder['sig'] = sig.signature;           
-          this.orderServ.update2(this.orderID, updatedOrder).subscribe(
-            (res: any) => {
-              if (res && res.ok) {
-                this.addAddress(privateKey);
-                this.spinner.hide();
-                
-              }
-            }
-          );
-        } else {
-          this.toastr.info('updated iddock failed, please try again');
+    const sig = this.kanbanServ.signJsonData(privateKey, updatedOrder);
+    updatedOrder['sig'] = sig.signature;           
+    this.orderServ.update2(this.orderID, updatedOrder).subscribe(
+      (res: any) => {
+        if (res && res.ok) {
+          this.addAddress(privateKey);
           this.spinner.hide();
+          
         }
-        
-      } else {
-        this.toastr.info('updated iddock failed, please try again');
-        this.spinner.hide();
       }
-    });
+    );
 
 
 

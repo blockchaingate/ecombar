@@ -487,43 +487,31 @@ export class PaymentComponent implements OnInit{
           country: this.order.country,
           ...item
         };         
-        (await this.iddockServ.updateIdDock(seed, this.order.objectId, 'things', null, updatedOrderForIdDock, null)).subscribe(async res => {
-          if(res) {
-            if(res.ok) {
-              const sig = this.kanbanServ.signJsonData(privateKey, item);
-              item['sig'] = sig.signature;  
+        const sig = this.kanbanServ.signJsonData(privateKey, item);
+        item['sig'] = sig.signature;  
 
-              this.orderServ.update2(this.orderID, item).subscribe(
-                (res: any) => {
-                  if(res && res.ok) {
-                    this.order = res._body;
-                    this.toastr.success('payment was made successfully');
-                    this.spinner.hide();
-
-                    this.kanbanServ.getExchangeBalance(this.utilServ.fabToExgAddress(this.walletAddress)).subscribe(
-                      (resp: any) => {
-                          const selected = resp.filter(item => item.coinType == this.coinServ.getCoinTypeIdByName(this.currency));
-                          if(selected && selected.length > 0) {
-                            const currencyBalance = this.utilServ.showAmount(selected[0].unlockedAmount, 18);
-                            this.dataServ.changeCurrencyBalance(Number(currencyBalance));
-                          }
-                      },
-                      error => {
-                      }
-                    );                    
-                    //this.router.navigate(['/place-order/' + this.orderID]);
-                  }
-                }
-              );  
-              
-            } else {
+        this.orderServ.update2(this.orderID, item).subscribe(
+          (res: any) => {
+            if(res && res.ok) {
+              this.order = res._body;
+              this.toastr.success('payment was made successfully');
               this.spinner.hide();
-              this.toastr.error(res._body);
-            }
-            
-          }
-        });
 
+              this.kanbanServ.getExchangeBalance(this.utilServ.fabToExgAddress(this.walletAddress)).subscribe(
+                (resp: any) => {
+                    const selected = resp.filter(item => item.coinType == this.coinServ.getCoinTypeIdByName(this.currency));
+                    if(selected && selected.length > 0) {
+                      const currencyBalance = this.utilServ.showAmount(selected[0].unlockedAmount, 18);
+                      this.dataServ.changeCurrencyBalance(Number(currencyBalance));
+                    }
+                },
+                error => {
+                }
+              );                    
+              //this.router.navigate(['/place-order/' + this.orderID]);
+            }
+          }
+        );  
 
 
       } else {

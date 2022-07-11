@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { StoresComponent } from './stores.component';
 import { StoresIndexComponent } from './components/index/index.component';
+import { VersionComponent } from './components/version/version.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,10 @@ const routes: Routes = [
     children: [
       {
         path: '', component: StoresIndexComponent
-      },      
+      },  
+      {
+        path: 'version', component: VersionComponent
+      }    
     ]
   }
 ];
