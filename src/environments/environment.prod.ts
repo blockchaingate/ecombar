@@ -139,7 +139,7 @@ export const environment = {
   },  
 addresses: {
     ecombarOfficial: {
-        ETH: '0x0dF198C80893c1373a11AdE9ad6454181aE18E73',
+        ETH: '0x826001ce7dbb8c4cccb132c1b6742ecefa3e44f2',
     },
 
     smartContract: {
