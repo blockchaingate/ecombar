@@ -1,24 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+const baseUrl = environment.endpoints.paycool;
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpClient) { }
 
   getAll() {
     return this.http.get('stores');
   }
 
   getStoresByAddress(address: string) {
-    return this.http.get('stores/ownedBy/' + address);
+    const url = baseUrl + 'merchantreferral/owner/' + address + '/1000/0';
+    return this.http.get(url);
   }
 
   deleteStore(data: any) {
-    return this.http.post('stores/Delete', data, false);
+    return this.http.post('stores/Delete', data);
   }
 
   getStores() {
-    return this.http.get('stores/all/approved');
+    const url = baseUrl + 'merchantreferral/approved/1000/0';
+    return this.http.get(url);
   }
 
   getStore(id: string) {
@@ -27,10 +31,10 @@ export class StoreService {
   }
 
   create(data:any) {
-    return this.http.post('stores/Create', data, false);
+    return this.http.post('stores/Create', data);
   }
 
   update(id: string, data: any) {
-    return this.http.post('stores/Update/' + id, data, false);
+    return this.http.post('stores/Update/' + id, data);
   }
 }

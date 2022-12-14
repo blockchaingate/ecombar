@@ -29,7 +29,6 @@ export class BrandsComponent implements OnInit {
   ngOnInit() {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
-        console.log('walletAddressvvvffff=', walletAddress);
         if(walletAddress) {
           this.getMerchantBrands(walletAddress);
         }
@@ -43,11 +42,11 @@ export class BrandsComponent implements OnInit {
     ); 
   }
   getMerchantBrands(walletAddress: string) {
-    this.brandServ.getMerchantBrands(walletAddress).subscribe(
+    this.brandServ.getMerchantBrands(walletAddress, 100, 0).subscribe(
       (res: any) => {
         console.log('resssss=', res);
-        if (res && res.ok) {
-          this.brands = res._body;
+        if (res) {
+          this.brands = res;
         }
       }
     );

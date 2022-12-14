@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/modules/shared/services/data.service';
-import { StarService } from 'src/app/modules/shared/services/star.service';
+import { PaycoolService } from 'src/app/modules/shared/services/paycool.service';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -8,6 +8,9 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { Router } from '@angular/router';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
+import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-stores-index',
@@ -24,11 +27,13 @@ export class StoresIndexComponent implements OnInit {
 
   constructor(
     private dataServ: DataService,
-    private starServ: StarService,
+    private paycoolServ: PaycoolService,
     private storeageServ: StorageService,
     private toastr: ToastrService,
     private router: Router,
+    private utilServ: UtilService,
     public kanbanServ: KanbanService,
+    private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private storeServ: StoreService) { }
 
@@ -45,8 +50,9 @@ export class StoresIndexComponent implements OnInit {
       (walletAddress: string) => {
         if(walletAddress) {
           this.walletAddress = walletAddress;
-          this.starServ.isValidMember(walletAddress).subscribe(
+          this.paycoolServ.isValidMember(walletAddress).subscribe(
             (ret: any) => {
+              console.log('ret====', ret);
               this.isValidMember = ret.isValid;
             }
           );
@@ -62,17 +68,15 @@ export class StoresIndexComponent implements OnInit {
     this.storeServ.getStores().subscribe(
       (ret: any) => {
         console.log('ret==', ret);
-        if(ret && ret.ok) {
-          this.stores = ret._body;
-        }
+        this.stores = ret;
       }
     );
   }
 
   joinAsMember() {
-    this.starServ.isValidMember(this.parentId).subscribe(
+    this.paycoolServ.isValidMember(this.parentId).subscribe(
       (ret: any) => {
-        if(ret && ret.isValid) {
+        if((ret && ret.isValid) || (this.parentId == environment.addresses.Referral_ROOT)) {
           const initialState = {
             pwdHash: this.wallet.pwdHash,
             gas: 0,
@@ -81,8 +85,8 @@ export class StoresIndexComponent implements OnInit {
           
           this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
       
-          this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
-            this.joinAsMemberDo(privateKey);
+          this.modalRef.content.onClose.subscribe ((seed: any) => {
+            this.joinAsMemberDo(seed);
           }); 
         } else {
           this.toastr.error('Invalid referral code.');
@@ -93,14 +97,17 @@ export class StoresIndexComponent implements OnInit {
    
   }
 
-  joinAsMemberDo(privateKey: any) {
+  async joinAsMemberDo(seed: any) {
+    /*
     const data = {
       parentId: this.parentId
     };
+    */
     if(this.parentId == this.walletAddress) {
       this.toastr.info('You cannot refer yourself.');
       return;
     }
+    /*
     const sig = this.kanbanServ.signJsonData(privateKey, data);
     data['sig'] = sig.signature; 
     this.starServ.createRef(data).subscribe(
@@ -109,7 +116,33 @@ export class StoresIndexComponent implements OnInit {
           this.isValidMember = true;
         }
       }
-    );    
+    );  
+    */
+
+    const abi = {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_referral",
+          "type": "address"
+        }
+      ],
+      "name": "createAccount",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    const hexAddress = this.utilServ.fabToExgAddress(this.parentId);
+    const args = [hexAddress];
+    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, environment.addresses.smartContract.smartConractAdressReferral, abi, args);
+    console.log('ret====');
+    if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+      this.toastr.success('Your request was made successfully');
+    } else {
+      this.toastr.error('Failed to join');
+    }
   }
 
   gotoStore(store) {

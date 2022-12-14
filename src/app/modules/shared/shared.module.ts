@@ -24,6 +24,7 @@ import { TextLanService } from './services/textlan.service';
 import { StoreService } from './services/store.service';
 import { StarService } from './services/star.service';
 import { ChatService } from './services/chat.service';
+import { PaycoolService } from './services/paycool.service';
 import { BlogService } from './services/blog.service';
 import { WebsocketService } from './services/websocket.service';
 import { FeatureService } from './services/feature.service';
@@ -125,6 +126,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     IddockService,
     TextLanService,
     StarService,
+    PaycoolService,
     FeatureService,
     StoreService,
     NewsletterService,
@@ -155,6 +157,7 @@ export class SharedModule {
         KanbanService,
         IddockService,
         ShipService,
+        PaycoolService,
         TimerService,
         StarService,
         WalletGuardService,

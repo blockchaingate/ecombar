@@ -20,6 +20,7 @@ export const environment = {
     prod: 'https://blockchaingate.com/v2/',
     kanban: 'https://kanbantest.fabcoinapi.com/',
     blockchaingate: 'https://test.blockchaingate.com/v2/',
+    paycool: 'https://fabtest.info/api/',
     website: 'https://test.exchangily.com/',
     BTC: {
         exchangily: 'https://btctest.fabcoinapi.com/'
@@ -134,12 +135,14 @@ export const environment = {
   },
 
   addresses: {
-
+    Referral_ROOT: 'n1eXG5oe6wJ6h43akutyGfphqQsY1UfAUR',
     //exchangilyRecipient: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       ecombarOfficial: {
         ETH: '0x450C53c50F8c0413a5829B0A9ab9Fa7e38f3eD2E',
       },
     smartContract: {
+
+        smartConractAdressReferral: '0x686bba93b02abf2efdcfec1b42a2c93e6e7bb6a6',
 
         feeDistribution: '0x81dd9357bf85bdb272e9ee1ec0ec2baa8bdffd06',
         locker: '0xab64a2a910a6dda85620a109cd012bb4a7b20b6f',

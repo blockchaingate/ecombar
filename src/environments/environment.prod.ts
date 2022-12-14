@@ -11,6 +11,7 @@ export const environment = {
     ws: 'wss://echo.websocket.org/',
     prod: 'https://api.blockchaingate.com/v2/',
     blockchaingate: 'https://api.blockchaingate.com/v2/',
+    paycool: 'https://api.pay.cool/api/',
     website: 'https://exchangily.com/',
     kanban: 'https://kanbanprod.fabcoinapi.com/',
     BTC: {
@@ -138,12 +139,14 @@ export const environment = {
     hpp_key: 'hpRS5R56OATG'
   },  
 addresses: {
-    
+    Referral_ROOT: '13XarB3tKd54WDTrhegxdTMpf8QKTU2t2g',
     //exchangilyRecipient: '',
     ecombarOfficial: {
         ETH: '0x0dF198C80893c1373a11AdE9ad6454181aE18E73',
     },
     smartContract: {
+        smartConractAdressReferral: '0xcd9c20e8e1252d5cd5eacd825e1be2dbda808000',
+        
         feeDistribution: '0xf3b46ef452099ec2b6f81644b6da75c91c5e116a',
         locker: '0x08283086b2192666128b7a6eaf66df2dfd3f1b6b',
         exchangeRate: '0xc790135e17490400a46bebff9efcc77dac39bdcf',
