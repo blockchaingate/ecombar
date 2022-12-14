@@ -51,7 +51,7 @@
         "ethereumjs-tx": "^2.1.2",
         "ethereumjs-util": "^6.2.1",
         "ethereumjs-wallet": "^0.6.3",
-        "express": "^4.15.2",
+        "express": "^4.17.3",
         "lodash": "^4.17.20",
         "ngrx-store-localstorage": "^11.0.0",
         "ngx-bootstrap": "^6.2.0",
