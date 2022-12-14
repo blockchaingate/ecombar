@@ -17,31 +17,24 @@
 
       <div *ngIf="currentTab=='default'">
         <label for="email"><b>Name</b></label>
-        <input type="text" placeholder="Enter category name" [(ngModel)]="category" name="category" required>
+        <input type="text" placeholder="Enter category name" [(ngModel)]="name" name="name" required>
   
         <label for="email"><b>{{'Sequence' | translate}}</b></label>
         <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
   
-        <!--
-        <div class="custom-select" style="width:200px;" *ngIf="categories">
-          <select [(ngModel)]="parentId" name="parentId">
-            <option value="0">{{'Select Category' | translate}}:</option>
-            <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category | translateField}}</option>
-          </select>
-        </div> 
-        -->
+
 
 
         <div class="btn-group" dropdown>
           <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
                   aria-controls="dropdown-animated">
-            {{selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate)}} <span class="caret"></span>
+            {{selectedCategory ? (selectedCategory.name | translateField) : ('Select Category' | translate)}} <span class="caret"></span>
           </button>
           <div  *ngIf="categories && categories.length > 0">
             <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
             role="menu" aria-labelledby="button-animated">
           <li role="menuitem" *ngFor="let cat of categories | excludeCategories : id">
-            <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{cat.category | translateField}}</a>
+            <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{cat.name | translateField}}</a>
           </li>
         </ul>
           </div>
@@ -60,11 +53,16 @@
 
       </div>
       
-      <div *ngIf="currentTab=='Chinese'">
+      <div *ngIf="currentTab=='Simplified Chinese'">
         <label for="email"><b>名称</b></label>
-        <input type="text" placeholder="输入名称" [(ngModel)]="categoryChinese" name="categoryChinese">        
+        <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
       </div>
-
+      
+      <div *ngIf="currentTab=='Traditional Chinese'">
+        <label for="email"><b>名稱</b></label>
+        <input type="text" placeholder="輸入名稱" [(ngModel)]="nameTradition" name="nameTradition">        
+    
+      </div>
       <div class="text-right py-2">
         <button class="btn signinbtn" (click)="addCategory()">{{(id?'Update':'Add') | translate}}</button>
       </div>

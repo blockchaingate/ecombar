@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+
+const baseUrl = environment.endpoints.paycool;
 
 @Injectable({ providedIn: 'root' })
 export class CollectionService {
-  constructor(private http: HttpService) {
+  constructor(private http: HttpClient) {
   }
 
   create(data) {
@@ -15,19 +18,19 @@ export class CollectionService {
   }
 
   getCollections() {
-    return this.http.get('product-collections/', false);
+    return this.http.get('product-collections/');
   }
 
   getCollectionsForStore(storeId: string) {
-    return this.http.get('product-collections/merchant/' + storeId, false);
+    return this.http.get('product-collections/merchant/' + storeId);
   }
 
   getAdminCollections() {
     return this.http.get('product-collections/admin');
   }
 
-  getMerchantCollections(walletAddress: string) {
-    return this.http.get('product-collections/merchant/' + walletAddress);
+  getMerchantCollections(walletAddress: string, pageSize: number, pageNum: number) {
+    return this.http.get(baseUrl + 'collection/merchant/' + walletAddress + '/' + pageSize + '/' + pageNum);
   }
 
   getCollection(id: string) {

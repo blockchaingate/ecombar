@@ -70,34 +70,34 @@ export class DashboardComponent implements OnInit{
 
   getMerchantSummaries(walletAddress: string) {
 
-    this.brandServ.getMerchantBrands(walletAddress).subscribe(
+    this.brandServ.getMerchantBrands(walletAddress, 100, 0).subscribe(
       (res: any) => {
-        if (res && res.ok) {
-          this.brands_count = res._body.length;
+        if (res) {
+          this.brands_count = res.length;
         }
       }
     );
 
-    this.categoryServ.getMerchantCategories(walletAddress).subscribe(
+    this.categoryServ.getMerchantCategories(walletAddress, 100, 0).subscribe(
       (res: any) => {
-        if (res && res.ok) {
-          this.categories_count = res._body.length;
+        if (res) {
+          this.categories_count = res.length;
         }
       }
     );   
     
-    this.productServ.getProductsOwnedBy(walletAddress).subscribe(
+    this.productServ.getProductsOwnedBy(walletAddress, 100, 0).subscribe(
       (res: any) => {
-        if (res && res.ok) {
-          this.products_count = res._body.length;
+        if (res) {
+          this.products_count = res.length;
         }
       }
     );  
     
-    this.collectionServ.getMerchantCollections(walletAddress).subscribe(
+    this.collectionServ.getMerchantCollections(walletAddress, 100, 0).subscribe(
       (res: any) => {
-        if (res && res.ok) {
-          this.collections_count = res._body.length;
+        if (res) {
+          this.collections_count = res.length;
         }
       }
     );    

@@ -24,6 +24,7 @@ export class CollectionAddComponent implements OnInit {
   sequence: number;
   name: string;
   nameChinese: string;
+  nameTradition: string;
   currentTab: string;
   wallet: any;
   id: string;
@@ -66,10 +67,11 @@ export class CollectionAddComponent implements OnInit {
     if (this.id) {
       this.collectionServ.getCollection(this.id).subscribe(
         (res: any) => {
-          if (res && res.ok) {
+          if (res) {
             const collection = res._body;
             this.name = collection.name.en;
             this.nameChinese = collection.name.sc;
+            this.nameTradition = collection.name.tc;
             this.collectionProducts = collection.products;
             this.sequence = collection.sequence;
           }
@@ -80,7 +82,7 @@ export class CollectionAddComponent implements OnInit {
   }
 
   getMerchantProducts(walletAddress: string) {
-    this.productServ.getProductsOwnedBy(walletAddress).subscribe(
+    this.productServ.getProductsOwnedBy(walletAddress, 100, 0).subscribe(
       (res: any) => {
         if (res) {
           this.products = res;
@@ -137,7 +139,8 @@ export class CollectionAddComponent implements OnInit {
     const data = {
       name: {
         en: this.name,
-        sc: this.nameChinese
+        sc: this.nameChinese,
+        tc: this.nameTradition
       },
       sequence: this.sequence,
       products: products

@@ -159,7 +159,7 @@ export class ProductAddComponent implements OnInit {
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
         if(walletAddress) {
-          this.categoryServ.getMerchantCategories(walletAddress).subscribe(
+          this.categoryServ.getMerchantCategories(walletAddress, 100, 0).subscribe(
             (res: any) => {
               if (res && res.ok) {
                 this.categories = res._body;

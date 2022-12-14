@@ -51,9 +51,15 @@
 
       </div>
       
-      <div *ngIf="currentTab=='Chinese'">
+      <div *ngIf="currentTab=='Simplified Chinese'">
         <label for="email"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
+      </div>
+      
+      <div *ngIf="currentTab=='Traditional Chinese'">
+        <label for="email"><b>名稱</b></label>
+        <input type="text" placeholder="輸入名稱" [(ngModel)]="nameTradition" name="nameTradition">        
+    
       </div>
 
       <div class="text-right py-2">

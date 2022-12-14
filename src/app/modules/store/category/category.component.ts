@@ -154,9 +154,8 @@ export class CategoryComponent implements OnInit {
 
     this.productServ.customSearch(this.id, brands, colors, prices).subscribe(
       res => {
-        if (res && res.ok) {
-         const body = res._body;
-         this.products = body;   
+        if (res) {
+         this.products = res;   
         }     
       }      
     );

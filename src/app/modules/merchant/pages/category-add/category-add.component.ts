@@ -21,8 +21,9 @@ export class CategoryAddComponent implements OnInit {
   categories: any;
   selectedCategory: any;
   images: any;
-  category: string;
-  categoryChinese: string;
+  name: string;
+  nameChinese: string;
+  nameTradition: string;
   currentTab: string;
   wallet: any;
   id: string;
@@ -52,10 +53,10 @@ export class CategoryAddComponent implements OnInit {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         if(walletAddress) {
-          this.categoryServ.getMerchantCategories(walletAddress).subscribe(
+          this.categoryServ.getMerchantCategories(walletAddress, 100, 0).subscribe(
             (res: any) => {
-              if (res && res.ok) {
-                this.categories = res._body;
+              if (res) {
+                this.categories = res;
               }
             }
           );
@@ -68,16 +69,16 @@ export class CategoryAddComponent implements OnInit {
     if (this.id) {
       this.categoryServ.getCategory(this.id).subscribe(
         (res: any) => {
-          if (res && res.ok) {
-            const category = res._body;
+          if (res) {
+            const category = res;
             console.log('cateogryyy=', category);
-            this.category = category.category.en;
-            this.categoryChinese = category.category.sc;
+            this.name = category.name.en;
+            this.nameChinese = category.name.sc;
+            this.nameTradition = category.name.tc;
             this.sequence = category.sequence;
-            this.selectedCategory = category.parentId;
-            //this.parentId = category.parentId;
-            if(category.thumbnailUrl) {
-              this.images.push(category.thumbnailUrl);
+            this.selectedCategory = category.category;
+            if(category.image) {
+              this.images.push(category.image);
             }
           }
 
@@ -95,14 +96,16 @@ export class CategoryAddComponent implements OnInit {
     this.selectedCategory = cat;
   }
   addCategory() {
-    const initialState = {
-      pwdHash: this.wallet.pwdHash,
-      encryptedSeed: this.wallet.encryptedSeed
-    };          
     if(!this.wallet || !this.wallet.pwdHash) {
       this.router.navigate(['/wallet']);
       return;
     }
+    
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
@@ -113,13 +116,14 @@ export class CategoryAddComponent implements OnInit {
   addCategoryDo(privateKey: any) {
 
     const data = {
-      category: {
-        en: this.category,
-        sc: this.categoryChinese
+      name: {
+        en: this.name,
+        sc: this.nameChinese,
+        tc: this.nameTradition
       },
       sequence: this.sequence,
-      thumbnailUrl: (this.images && (this.images.length > 0)) ? this.images[0] : null,
-      parentId: this.selectedCategory ? this.selectedCategory._id : null
+      image: (this.images && (this.images.length > 0)) ? this.images[0] : null,
+      category: this.selectedCategory ? this.selectedCategory._id : null
     };
 
     const sig = this.kanbanServ.signJsonData(privateKey, data);
@@ -129,7 +133,7 @@ export class CategoryAddComponent implements OnInit {
 
       this.categoryServ.create(data).subscribe(
         (res: any) => {
-          if (res && res.ok) {
+          if (res && res._id) {
             this.router.navigate(['/merchant/categories']);
           }
         }
@@ -137,7 +141,7 @@ export class CategoryAddComponent implements OnInit {
     } else {
       this.categoryServ.update(this.id, data).subscribe(
         (res: any) => {
-          if (res && res.ok) {
+          if (res && res._id) {
             this.router.navigate(['/merchant/categories']);
           }
         }

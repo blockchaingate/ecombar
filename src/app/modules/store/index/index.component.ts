@@ -34,7 +34,7 @@ export class IndexComponent implements OnInit{
             }
           );
 
-          this.productServ.getProductsOwnedBy(storeOwner).subscribe(
+          this.productServ.getProductsOwnedBy(storeOwner, 100, 0).subscribe(
             (ret: any) => {
               this.latestProducts = ret;
             }            

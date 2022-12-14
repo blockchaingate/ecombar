@@ -52,7 +52,7 @@ export class ProductsComponent implements OnInit {
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
         if(walletAddress) {
-          this.productServ.getProductsOwnedBy(walletAddress).subscribe(
+          this.productServ.getProductsOwnedBy(walletAddress, 100, 0).subscribe(
             (res: any) => {
               if (res) {
                 this.products = res;

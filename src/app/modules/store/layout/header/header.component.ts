@@ -64,10 +64,10 @@ export class HeaderComponent implements OnInit {
     this.dataServ.currentStoreOwner.subscribe(
       (storeOwner: string) => {
         if(storeOwner) {
-          this.categoryServ.getMerchantCategories(storeOwner).subscribe(
+          this.categoryServ.getMerchantCategories(storeOwner, 100, 0).subscribe(
             (ret: any) => {
-              if(ret && ret.ok) {
-                const allCategories = ret._body;
+              if(ret) {
+                const allCategories = ret;
                 this.dataServ.changeStoreCategories(allCategories);
                 this.buildCategoryTree(allCategories);
               }

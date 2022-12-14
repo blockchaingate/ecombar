@@ -45,7 +45,7 @@ export class MainLayoutAddComponent implements OnInit {
 
       this.dataServ.currentWalletAddress.subscribe(
         (walletAddress: string) => {
-          this.collectionServ.getMerchantCollections(walletAddress).subscribe(
+          this.collectionServ.getMerchantCollections(walletAddress, 100, 0).subscribe(
             (res: any) => {
               if (res && res.ok) {
                 this.collections = res._body;
