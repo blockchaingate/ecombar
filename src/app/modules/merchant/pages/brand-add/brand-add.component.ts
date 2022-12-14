@@ -95,6 +95,7 @@ export class BrandAddComponent implements OnInit {
       sequence: this.sequence ? this.sequence : 0
     };
     
+    
     const sig = this.kanbanServ.signJsonData(privateKey, data);
     data['sig'] = sig.signature;   
     if (!this.id) {
