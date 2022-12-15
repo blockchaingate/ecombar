@@ -30,7 +30,7 @@ export class CollectionService {
   }
 
   getMerchantCollections(walletAddress: string, pageSize: number, pageNum: number) {
-    return this.http.get(baseUrl + 'collection/merchant/' + walletAddress + '/' + pageSize + '/' + pageNum);
+    return this.http.get(baseUrl + 'collection/owner/' + walletAddress + '/' + pageSize + '/' + pageNum);
   }
 
   getCollection(id: string) {

@@ -380,12 +380,12 @@
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
-                    <label for="psw"><b>{{'Give away Rate' | translate}}</b></label>
+                    <label for="psw"><b>{{'Rebate Rate' | translate}}</b></label>
                   </div>
                   <div class="py-2">
                     <div class="d-flex align-items-center">
                       <div class="d-inline-block px-2">
-                        <input type="text"  placeholder="Enter tax rate" [(ngModel)]="giveAwayRate" name="giveAwayRate">
+                        <input type="text"  placeholder="Enter rebate rate" [(ngModel)]="rebateRate" name="rebateRate">
                       </div>
                       %
                     </div>
@@ -466,7 +466,7 @@
         </div>
       </div>
 
-      <div *ngIf="currentTab=='Chinese'">
+      <div *ngIf="currentTab=='Simplified Chinese'">
         <label for="name"><b>标题</b></label>
         <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">     
 
@@ -635,6 +635,178 @@
 
 
      </div>
+
+
+     <div *ngIf="currentTab=='Traditional Chinese'">
+      <label for="name"><b>标题</b></label>
+      <input type="text" placeholder="输入标题" [(ngModel)]="titleTradition" name="titleTradition">     
+
+      <label for="name"><b>子标题</b></label>
+      <input type="text" placeholder="输入子标题" [(ngModel)]="subtitleTradition" name="subtitleTradition">     
+
+
+      <div class="card-section">
+        <div class="card">
+          <div class="container">  
+            <div class="py-2">
+              <label for="psw"><b>颜色</b></label>
+              <div>
+                <div *ngFor="let c of colorsTradition">
+                  <div class="d-flex align-items-center justify-content-between py-2">
+                    <div>
+                      {{c}}
+                    </div>
+                    <div (click)="removeColorTradition(c)">
+                      <img src="/assets/svg/delete.svg">
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              <div>
+                <div class="d-inline-block px-2">
+                  <input type="text" placeholder="输入颜色" [(ngModel)]="colorTradition" name="colorTradition">
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <button class="btn" (click)="addColorTradition()">{{'Add' | translate}}</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>              
+
+
+
+
+      <div class="card-section">
+        <div class="card">
+          <div class="container">  
+            <div class="py-2">
+              <label for="psw"><b>尺寸</b></label>
+              <div>
+                <div *ngFor="let c of sizesTradition">
+                  <div class="d-flex align-items-center justify-content-between py-2">
+                    <div>
+                      {{c}}
+                    </div>
+                    <div (click)="removeSizeTradition(c)">
+                      <img src="/assets/svg/delete.svg">
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              <div>
+                <div class="d-inline-block px-2">
+                  <input type="text" placeholder="输入尺寸" [(ngModel)]="sizeTradition" name="sizeTradition">
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <button class="btn" (click)="addSizeTradition()">{{'Add' | translate}}</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>   
+
+
+      
+      <div class="py-2">
+        <label for="name"><b>内容</b></label>
+        <ejs-richtexteditor 
+        [(ngModel)]='detailTradition' 
+        (uploading) = "addHeaders($event)"
+        placeholder="请输入内容"  
+        [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
+ 
+      </div>
+      <div class="py-2">
+        <label for="name"><b>描述</b></label>
+        <ejs-richtexteditor [(ngModel)]='descriptionTradition' (uploading) = "addHeaders($event)" placeholder="请输入描述" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
+      </div>
+     
+
+      <div class="py-2">
+        <div class="card">
+          <div class="container">
+            <div class="form-field">
+              <label for="specification">规格</label>
+
+              <div>
+                <div *ngFor="let spec of specsTradition">
+                  <div class="d-flex align-items-center justify-content-between py-2">
+                    <div>
+                      {{spec.name}}: {{spec.value}}
+                    </div>
+                    <div (click)="removeSpecTradition(spec)">
+                      <img src="/assets/svg/delete.svg">
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="d-flex">
+                <div class="w-50 px-2">
+                  <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="specNameTradition" name="specNameTradition">
+                </div>
+
+                <div class="w-50  px-2">
+                  <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Value" [(ngModel)]="specValueTradition" name="specValueTradition">
+                </div>                      
+              </div>
+
+              <div class="pt-2">
+                <button class="btn" (click)="addSpecTradition()">{{'Add' | translate}}</button>
+              </div>
+            </div>                  
+          </div>
+        </div>
+      </div>
+
+      <div class="py-2">
+        <div class="card">
+          <div class="container">
+            <div class="form-field">
+              <label for="specification">特征</label>
+
+              <div>
+                <div *ngFor="let feature of featuresTradition">
+                  <div class="d-flex align-items-center justify-content-between py-2">
+                    <div>
+                      {{feature}}
+                    </div>
+                    <div (click)="removeFeatureTradition(feature)">
+                      
+                      <img src="/assets/svg/delete.svg">
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              <div>
+                <div class=" px-2">
+                  <input type="text" style="display:table-cell; width:100%" placeholder="Enter Feature" [(ngModel)]="featureTradition" name="featureTradition">
+                </div>
+               
+              </div>
+
+              <div class="pt-2">
+                <button class="btn" (click)="addFeatureTradition()">{{'Add' | translate}}</button>
+              </div>
+            </div>                  
+          </div>
+        </div>
+      </div>
+
+
+
+   </div>
+
 
     </div>
 

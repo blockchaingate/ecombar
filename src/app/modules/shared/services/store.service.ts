@@ -13,6 +13,7 @@ export class StoreService {
 
   getStoresByAddress(address: string) {
     const url = baseUrl + 'merchantreferral/owner/' + address + '/1000/0';
+    console.log('url====', url);
     return this.http.get(url);
   }
 
@@ -26,7 +27,7 @@ export class StoreService {
   }
 
   getStore(id: string) {
-    const url = 'stores/' + id;
+    const url = baseUrl + 'merchantreferral/' + id;
     return this.http.get(url);
   }
 

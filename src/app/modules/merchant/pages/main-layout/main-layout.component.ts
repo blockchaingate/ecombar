@@ -44,7 +44,7 @@ export class MainLayoutComponent implements OnInit {
     }
 
     getMerchantMainLayouts(walletAddress: string) {
-      this.mainLayoutServ.getMerchantMainLayouts(walletAddress).subscribe(
+      this.mainLayoutServ.getMerchantMainLayouts(walletAddress, 100, 0).subscribe(
         (res: any) => {
           if (res && res.ok) {
             this.mainLayouts = res._body;

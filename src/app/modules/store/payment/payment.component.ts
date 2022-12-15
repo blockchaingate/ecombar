@@ -120,30 +120,9 @@ export class PaymentComponent implements OnInit{
         const price = item.price;
         const quantity = item.quantity;
         const taxRate = item.taxRate;
-        //const giveAwayRate = item.giveAwayRate;
-        //const lockedDays = item.lockedDays;
         const subtotalItem = new BigNumber(price).multipliedBy(new BigNumber(quantity));
         subtotalBigNumber = subtotalBigNumber.plus(subtotalItem);
         taxBigNumber = taxBigNumber.plus(subtotalItem.multipliedBy(taxRate).dividedBy(new BigNumber(100)));
-        /*
-        const realGiveAwayRate = giveAwayRate - 1;
-        const realGiveAways = subtotalItem.multipliedBy(realGiveAwayRate).dividedBy(new BigNumber(100));
-        let existed = false;
-        for(let j = 0; j < this.totalRewards.length; j++) {
-          const totalRewardItem = this.totalRewards[j];
-          if(totalRewardItem.lockedDays == lockedDays) {
-            totalRewardItem.rewards = totalRewardItem.rewards.plus(realGiveAways);
-            existed = true;
-            break;
-          }
-        }
-        if(!existed) {
-          this.totalRewards.push({
-              lockedDays: lockedDays,
-              rewards: realGiveAways
-          });
-        }
-        */
       }
       
       this.subtotal = subtotalBigNumber.toNumber();
@@ -180,8 +159,8 @@ export class PaymentComponent implements OnInit{
 
           this.orderServ.get(this.orderID).subscribe(
             (res: any) => {
-              if(res && res.ok) {
-                this.order = res._body;
+              if(res) {
+                this.order = res;
                 console.log('this.orderhaha=', this.order);
                 this.selectPayment(this.order.paymentMethod);
                 let shippingServiceSelected = 'express';
@@ -193,6 +172,7 @@ export class PaymentComponent implements OnInit{
             }
           );
 
+          /*
           this.dataServ.currentWalletAddress.subscribe(
             (walletAddress: string) => {
               if(walletAddress) {
@@ -207,7 +187,7 @@ export class PaymentComponent implements OnInit{
               }
             }
           );
-
+            */
         }
       );   
       

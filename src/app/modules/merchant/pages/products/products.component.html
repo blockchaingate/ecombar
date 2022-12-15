@@ -1,5 +1,5 @@
 <div class="px-2" *ngIf="store">
-  <div class="text-right my-3" *ngIf="store.status == 1">
+  <div class="text-right my-3" *ngIf="store.status == 2">
     <button class="btn" (click)="addNew()">{{'New' | translate}}</button>
 </div>
 
@@ -7,7 +7,7 @@
   <li class="table-header">
     <div class="col col-4">{{'Title' | translate}}</div>
     <div class="col col-3">{{'Price' | translate}}</div>
-    <div class="col col-3">{{'ObjectId' | translate}}</div>
+    <div class="col col-3">{{'Rebate rate' | translate}}</div>
     <div class="col col-2"></div>
 
   </li>
@@ -19,12 +19,7 @@
       
     </div>
     <div class="col col-3" data-label="Price">{{product.price}}</div>
-    <div class="col col-3" data-label="Currency">
-      <a target="_blank" href="/iddock/detail/things/{{product.objectId}}">
-        {{displayAddress(product.objectId)}}
-      </a>
-      
-    </div>
+    <div class="col col-3" data-label="Rebate rate">{{product.rebateRate}}</div>
     <div class="col col-2 text-right" data-label="Operations">
       <div class="d-inline-block px-2">
         <a (click)="editProduct(product)">

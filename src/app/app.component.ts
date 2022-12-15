@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
 
     this.localSt.getItem('ecomwallets').subscribe(
       (wallets: any) => {
+        console.log('wallets===', wallets);
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {
           //this.router.navigate(['/wallet']);
           return false;
@@ -53,12 +54,15 @@ export class AppComponent implements OnInit {
         const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
         const walletAddress = walletAddressItem.address;
         if(walletAddress) {
+          console.log('walletAddress====', walletAddress);
           this.dataServ.changeWalletAddress(walletAddress); 
 
           this.storeServ.getStoresByAddress(walletAddress).subscribe(
             (ret: any) => {
-              if(ret && ret.ok && ret._body && ret._body.length > 0) {
-                const store = ret._body[ret._body.length - 1];
+              console.log('ret in app=', ret);
+              if(ret && ret.length > 0) {
+                const store = ret[0];
+                console.log('store===', store);
                 this.dataServ.changeMyStore(store);
               }
             });

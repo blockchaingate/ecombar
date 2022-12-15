@@ -20,12 +20,12 @@
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
         <div  *ngIf="!(id)">
-          <label for="email"><b>{{'Give away Rate' | translate}}(%)</b></label>
-          <input type="text" placeholder="{{'Give away Rate' | translate}}" [(ngModel)]="giveAwayRate" name="giveAwayRate" required>  
+          <label for="email"><b>{{'rebate Rate' | translate}}(%)</b></label>
+          <input type="text" placeholder="{{'rebate Rate' | translate}}" [(ngModel)]="rebateRate" name="rebateRate" required>  
         </div>
         <div *ngIf="id">
-          <label for="email"><b>{{'Give away Rate' | translate}}(%):</b></label>
-          {{giveAwayRate}}
+          <label for="email"><b>{{'rebate Rate' | translate}}(%):</b></label>
+          {{rebateRate}}
         </div>
        <div>
         <label for="email"><b>Image</b></label>

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
-import { Product } from '../models/product';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+
+const baseUrl = environment.endpoints.paycool;
 
 @Injectable({ providedIn: 'root' })
 export class MainLayoutService {
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpClient) { }
   create(data) {
     return this.http.post('mainlayout/Create', data);
   }
@@ -17,8 +19,8 @@ export class MainLayoutService {
     return this.http.get('mainlayout/admin');
   }
 
-  getMerchantMainLayouts(walletAddress: string) {
-    return this.http.get('mainlayout/merchant/' + walletAddress);
+  getMerchantMainLayouts(merchantId: string, pageSize: number, pageNum: number) {
+    return this.http.get(baseUrl + 'mainlayout/merchant/' + merchantId + '/' + pageSize + '/' + pageNum);
   }  
  
   deleteMainLayout(data: any) {

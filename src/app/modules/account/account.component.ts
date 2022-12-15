@@ -155,8 +155,9 @@ export class AccountComponent implements OnInit {
 
       this.storeServ.getStoresByAddress(walletAddress).subscribe(
         (ret: any) => {
-          if(ret && ret.ok && ret._body && ret._body.length > 0) {
-            const store = ret._body[ret._body.length - 1];
+          console.log('ret in account=', ret);
+          if(ret && ret.length > 0) {
+            const store = ret[0];
             this.dataServ.changeMyStore(store);
           }
         });

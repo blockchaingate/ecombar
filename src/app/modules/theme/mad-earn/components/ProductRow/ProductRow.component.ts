@@ -44,7 +44,7 @@ export class ProductRowComponent implements OnInit {
       title: item.title,
       price: item.price,
       storeId: this.storeId,
-      giveAwayRate: item.giveAwayRate ? item.giveAwayRate : this.store.giveAwayRate,
+      rebateRate: item.rebateRate ? item.rebateRate : this.store.rebateRate,
       taxRate: item.taxRate ? item.taxRate : this.store.taxRate,
       lockedDays: item.lockedDays ? item.lockedDays : this.store.lockedDays,
       currency: item.currency,

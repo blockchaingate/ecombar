@@ -56,6 +56,7 @@ export class ProductsComponent implements OnInit {
             (res: any) => {
               if (res) {
                 this.products = res;
+                console.log('this.products===', this.products);
               }
             }
           );  

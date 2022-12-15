@@ -9,15 +9,15 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   create(data: Product) {
-    return this.http.post('products/Create', data);
+    return this.http.post(baseUrl + 'product', data);
   }
 
   update(id: string, data: Product) {
-    return this.http.put('products/Update/' + id, data);
+    return this.http.put(baseUrl + 'product/' + id, data);
   }
 
   getProduct(id: string) {
-    return this.http.get('products/' + id);
+    return this.http.get(baseUrl + 'product/' + id);
   }
 
   getRelatedProducts(id: string) {
@@ -28,13 +28,13 @@ export class ProductService {
     return this.http.get('products');
   }
 
-  getMerchantProducts(merchantId: string) {
+  getMerchantProducts(merchantId: string, pageSize: number, pageNum: number) {
     console.log('merchantId in here', merchantId);
-    return this.http.get('products/merchant/' + merchantId);
+    return this.http.get(baseUrl + 'product/merchant/' + merchantId + '/' + pageSize + '/' + pageNum);
   }
 
   getProductsOwnedBy(address: string, pageSize: number, pageNum: number){
-    return this.http.get('products/owner/' + address + '/' + pageSize + '/' + pageNum);
+    return this.http.get(baseUrl + 'product/owner/' + address + '/' + pageSize + '/' + pageNum);
   }
   
   deleteProduct(id: string) {
@@ -42,8 +42,9 @@ export class ProductService {
   }
 
   deleteProduct2(body: any) {
-    return this.http.post('products/Delete2', body);
+    return this.http.post(baseUrl + 'product/delete', body);
   }
+
   getMerchantAllProducts() {
     return this.http.get('products/merchant/all/products');
   }
@@ -70,7 +71,5 @@ export class ProductService {
     return this.http.get('product-categories/admin/hot');
   }
 
-  getMerchantHotCategories(merchant_id: string) {
-    return this.http.get('product-categories/merchant/' + merchant_id + '/hot');
-  }  
+ 
 }

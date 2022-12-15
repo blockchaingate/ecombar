@@ -35,6 +35,10 @@ export class CategoryService {
     return this.http.get(baseUrl + 'category/owner/' + walletAddress + '/' + pageSize + '/' + pageNum);
   }
 
+  getMerchantHotCategories(merchant_id: string, pageSize:number, pageNum:number) {
+    return this.http.get(baseUrl + '/category/hot/merchant/' + merchant_id + '/' + pageSize + '/' + pageNum);
+  } 
+
   getCategory(id: string) {
     return this.http.get(baseUrl + 'category/' + id);
   }

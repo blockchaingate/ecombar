@@ -1,44 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+const baseUrl = environment.endpoints.paycool;
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpClient) { }
 
   create2(data) {
-    return this.http.post('orders/create2', data, false);
+    return this.http.post(baseUrl + 'userpay/createOrder', data);
   }
 
   update2(orderID: string, data) {
-    return this.http.post('orders/update2/' + orderID, data, false);
+    return this.http.put(baseUrl + 'userpay/order/' + orderID, data);
   }
 
   requestRefund(id, data) {
-    return this.http.post('orders/' + id + '/requestRefund',  data, false);
+    return this.http.post('orders/' + id + '/requestRefund',  data);
   }
 
   updateShipping(orderID: string, data) {
-    return this.http.post('orders/updateShipping/' + orderID, data, false);
+    return this.http.post('orders/updateShipping/' + orderID, data);
   }
 
   get(orderID: string) {
-    return this.http.get('orders/public/' + orderID, false);
+    return this.http.get(baseUrl + 'userpay/order/' + orderID);
   }
 
   getRefund(orderID: string) {
-    return this.http.get('orders/' + orderID + '/7starpay/refund', false);
+    return this.http.get('order/' + orderID + '/7starpay/refund');
   }
   
   cancelrequestRefundV2(data: any) {
-    return this.http.post('orders/cancelrequestRefundV2', data, false);
+    return this.http.post('orders/cancelrequestRefundV2', data);
   }
 
   get7StarPay(orderID: string,  walletAddress: string) {
     const data = {
       address: walletAddress
     };
-    return this.http.post('orders/' + orderID + '/7starpay', data, false);
+    return this.http.post('orders/' + orderID + '/7starpay', data);
   }
 
   updatePayment(order_id: string, paymentData: any) {
@@ -47,25 +49,25 @@ export class OrderService {
   }
 
   getMyOrders(address: string) {
-    return this.http.get('orders/ownedBy/' + address, false);
+    return this.http.get('orders/ownedBy/' + address);
   }
 
   getMyProducts(address: string) {
-    return this.http.get('orders/my-products/' + address, false);
+    return this.http.get('orders/my-products/' + address);
   }
 
   getAllOrders() {
-    return this.http.get('orders/all', false);
+    return this.http.get('orders/all');
   }
 
   gerMerchantOrders(address: string) {
-    return this.http.get('orders/merchant-orders/' + address, false);
+    return this.http.get('orders/merchant-orders/' + address);
   }
 
   delete(orderID: string) {
     const data = {
       active: false
     }
-    return this.http.post('orders/update/' + orderID, data, true);
+    return this.http.post('orders/update/' + orderID, data);
   }
 }

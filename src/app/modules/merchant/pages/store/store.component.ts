@@ -32,7 +32,7 @@ export class StoreComponent implements OnInit {
   nameChinese: string;
   nameTraditionalChinese: string;
   currentTab: string;
-  giveAwayRate: number;
+  rebateRate: number;
   feeChargerSmartContractAddress: string;
   smartContractAddress: string;
   refAddress: string;
@@ -82,7 +82,7 @@ export class StoreComponent implements OnInit {
     this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
     this.smartContractAddress = store.smartContractAddress; 
     this.refAddress = store.refAddress;
-    this.giveAwayRate = store.giveAwayRate;
+    this.rebateRate = store.rebateRate;
     this.objectId = store.objectId;   
   }
   ngOnInit() {
@@ -213,7 +213,7 @@ export class StoreComponent implements OnInit {
           tc: this.nameTraditionalChinese
         },
         coin: this.coin,
-        giveAwayRate: this.giveAwayRate,
+        rebateRate: this.rebateRate,
         taxRate: this.taxRate ? this.taxRate : 0,
         refAddress: this.refAddress,
         hideOnStore: this.hideOnStore
@@ -233,7 +233,7 @@ export class StoreComponent implements OnInit {
         environment.addresses.smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
-        100-this.giveAwayRate,
+        100-this.rebateRate,
         '0x1'
       ];
   
@@ -334,7 +334,7 @@ export class StoreComponent implements OnInit {
       return;        
     }
 
-    if((this.giveAwayRate < 3) || (this.giveAwayRate >= 100) || !Number.isInteger(Number(this.giveAwayRate))) {
+    if((this.rebateRate < 3) || (this.rebateRate >= 100) || !Number.isInteger(Number(this.rebateRate))) {
       this.toastr.info('Give away rate is incorrect. it must be a integer between 3 and 100.');
       return;         
     }
@@ -394,7 +394,7 @@ export class StoreComponent implements OnInit {
           this.feeChargerSmartContractAddress = '';     
           this.smartContractAddress = ''; 
           this.refAddress = '';
-          this.giveAwayRate = 0;
+          this.rebateRate = 0;
           this.objectId = '';   
 
 

@@ -89,13 +89,13 @@ export abstract class AddressComponent implements OnInit {
         if(walletAddress) {
           this.addressServ.getAddresses(walletAddress).subscribe(
             (ret: any) => {
-              if(ret && ret.ok) {
-                this.addresses = ret._body;
+              if(ret) {
+                this.addresses = ret;
 
                 this.orderServ.get(this.orderID).subscribe(
                   (res: any) => {
-                    if(res && res.ok) {
-                      this.order = res._body;
+                    if(res) {
+                      this.order = res;
                       this.suite = this.order.unit;
                       this.streetNumber = this.order.streetNumber;
                       this.street = this.order.streetName;
@@ -225,7 +225,7 @@ export abstract class AddressComponent implements OnInit {
     updatedOrder['sig'] = sig.signature;           
     this.orderServ.update2(this.orderID, updatedOrder).subscribe(
       (res: any) => {
-        if (res && res.ok) {
+        if (res) {
           this.addAddress(privateKey);
           this.spinner.hide();
           
@@ -258,11 +258,12 @@ export abstract class AddressComponent implements OnInit {
 
     const sig = this.kanbanServ.signJsonData(privateKey, address);
     address['sig'] = sig.signature;  
+    console.log('this.id====', this.id);
     if (this.id) {
       this.addressServ.updateAddress(this.id, address).subscribe(
         (res: any) => {
           console.log('res for updateAddress', address);
-          if (res && res.ok) {
+          if (res) {
             this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
           }
         }
@@ -270,7 +271,7 @@ export abstract class AddressComponent implements OnInit {
     } else {
       this.addressServ.addAddress(address).subscribe(
         (res: any) => {
-          if (res && res.ok) {
+          if (res) {
             this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
             /*
             const _body = res._body;

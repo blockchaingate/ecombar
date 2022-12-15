@@ -20,7 +20,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CoinService } from '../../shared/services/coin.service';
 import { IddockService } from '../../shared/services/iddock.service';
 import { KanbanSmartContractService } from '../../shared/services/kanban.smartcontract.service';
-import BigNumber from 'bignumber.js';
+
 @Component({
   template:''
 })
@@ -183,8 +183,8 @@ export class ProductComponent implements OnInit {
     );
     this.productServ.getProduct(this.id).subscribe(
       (res: any) => {
-        if(res && res.ok) {
-          this.product = res._body;
+        if(res && res) {
+          this.product = res;
           if(this.product.colors) {
             if(this.product.colors.en) {
               this.colors = this.product.colors.en;
@@ -357,7 +357,7 @@ export class ProductComponent implements OnInit {
         size: this.lang == 'en' ? this.size : this.sizeChinese,
         color: this.lang == 'en' ? this.color : this.colorChinese,
         currency: product.currency,
-        giveAwayRate: product.giveAwayRate ? product.giveAwayRate : this.store.giveAwayRate,
+        rebateRate: product.rebateRate ? product.rebateRate : this.store.rebateRate,
         taxRate: product.taxRate ? product.taxRate : this.store.taxRate,
         lockedDays: product.lockedDays ? product.lockedDays : this.store.lockedDays,
 
@@ -381,7 +381,7 @@ export class ProductComponent implements OnInit {
       currency: this.product.currency,
       quantity: Number(this.quantity),
       price: this.product.price,
-      giveAwayRate: this.product.giveAwayRate ? this.product.giveAwayRate : this.store.giveAwayRate,
+      rebateRate: this.product.rebateRate ? this.product.rebateRate : this.store.rebateRate,
       taxRate: this.product.taxRate ? this.product.taxRate : this.store.taxRate,
       lockedDays: this.product.lockedDays ? this.product.lockedDays : this.store.lockedDays,
       size: this.lang == 'en' ? this.size : this.sizeChinese,

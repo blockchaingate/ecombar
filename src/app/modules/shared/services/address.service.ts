@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+
+const baseUrl = environment.endpoints.paycool;
 
 @Injectable({ providedIn: 'root' })
 export class AddressService {
 
-  constructor(private http: HttpService) {
+  constructor(private http: HttpClient) {
   }
 
   getAddress(id: string) {
-    return this.http.get('addresses/' + id, false);
+    return this.http.get(baseUrl + 'address/' + id);
   }
 
   addAddress(address: any) {
-    return this.http.post('addresses/Create2', address, false);
+    return this.http.post(baseUrl + 'address', address);
   }
 
   updateAddress(id: string, address: any) {
-    return this.http.post('addresses/Update2/' + id, address, false);
+    return this.http.put(baseUrl + 'address/' + id, address);
   }
 
   getAddresses(walletAddress: string) {
-    return this.http.get('addresses/owner/' + walletAddress, false);
+    return this.http.get(baseUrl + 'address/owner/' + walletAddress + '/100/0');
   }
 }
