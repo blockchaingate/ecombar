@@ -26,6 +26,11 @@ export class StoreService {
     return this.http.get(url);
   }
 
+  getStoresInEcombar() {
+    const url = baseUrl + 'merchantreferral/ecombar/1000/0';
+    return this.http.get(url);
+  }
+
   getStore(id: string) {
     const url = baseUrl + 'merchantreferral/' + id;
     return this.http.get(url);

@@ -16,6 +16,11 @@ export class OrderService {
     return this.http.put(baseUrl + 'userpay/order/' + orderID, data);
   }
 
+  getPaycoolRewardInfo(id: string, address: string, payType: string) {
+    const url = baseUrl + 'userpay/order/' + id + '/' + address + '/rewardInfo/' + payType;
+    return this.http.get(url);
+  }
+
   requestRefund(id, data) {
     return this.http.post('orders/' + id + '/requestRefund',  data);
   }

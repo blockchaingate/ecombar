@@ -65,7 +65,7 @@ export class StoresIndexComponent implements OnInit {
         this.wallet = wallet;
       }
     );
-    this.storeServ.getStores().subscribe(
+    this.storeServ.getStoresInEcombar().subscribe(
       (ret: any) => {
         console.log('ret==', ret);
         this.stores = ret;

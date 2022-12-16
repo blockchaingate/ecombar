@@ -205,44 +205,6 @@ export class ProductComponent implements OnInit {
 
           this.selectedImage = this.product.images[0];
 
-          const args2 = ['0x' + this.utilServ.ObjectId2SequenceId(this.product.objectId)];
-          const abi = this.web3Serv.getGeneralFunctionABI(
-          {
-            "inputs": [
-              {
-                "internalType": "bytes30",
-                "name": "id",
-                "type": "bytes30"
-              }
-            ],
-            "name": "getProductById",
-            "outputs": [
-              {
-                "components": [
-                  {
-                    "internalType": "bytes30",
-                    "name": "id",
-                    "type": "bytes30"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "price",
-                    "type": "uint256"
-                  }
-                ],
-                "internalType": "struct Ecombar.Product",
-                "name": "",
-                "type": "tuple"
-              }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-          }, args2);
-
-          this.kanbanServ.kanbanCall(this.product.smartContractAddress, abi).subscribe(
-            (ret: any) => {
-            }
-          );
         }
       }
     );

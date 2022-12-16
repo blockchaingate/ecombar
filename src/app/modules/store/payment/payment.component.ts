@@ -161,8 +161,6 @@ export class PaymentComponent implements OnInit{
             (res: any) => {
               if(res) {
                 this.order = res;
-                console.log('this.orderhaha=', this.order);
-                this.selectPayment(this.order.paymentMethod);
                 let shippingServiceSelected = 'express';
                 if(this.order.shippingServiceSelected) {
                   shippingServiceSelected = this.order.shippingServiceSelected;
@@ -223,6 +221,8 @@ export class PaymentComponent implements OnInit{
 
     }
 
+
+
     change() {
       this.router.navigate(['/store/' + this.storeId + '/address/' + this.orderID]);
     }
@@ -240,24 +240,10 @@ export class PaymentComponent implements OnInit{
       }
       this.calculateTotal();
     }
-
-    selectPayment(payment: string) {
-      if(!payment) {
-        return;
-      }
-      if(payment == 'usdt') {
-        this.discount = 3;
-      } else {
-        this.discount = 0;
-      }
-      this.selectedPayment = payment;
-    }   
+ 
 
     placeOrder() {
-      if(!this.parents || this.parents.length == 0) {
-        this.toastr.info('Cannot get your referral addresses, please refresh the page and try again.');
-        return;
-      } 
+
       const initialState = {
         pwdHash: this.wallet.pwdHash,
         encryptedSeed: this.wallet.encryptedSeed
@@ -268,243 +254,45 @@ export class PaymentComponent implements OnInit{
         this.spinner.show();
         this.placeOrderDo(seed);
       });      
-      /*
-      if (!this.selectedShippingService) {
-        return;
-      }
-      if (!this.selectedPayment) {
-        return;
-      }  
 
-      this.ngxSmartModalServ.getModal('passwordModal').open();
-      */
     }
 
-    getAbiArgs(seed) {
-      let abi;
-      let args;
-      let to;
-      if(this.storeVersion == 0) {
-        abi = {
-          "inputs": [
-            {
-              "internalType": "bytes30",
-              "name": "objectId",
-              "type": "bytes30"
-            },
-            {
-              "internalType": "uint256",
-              "name": "fullfilmentFee",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address",
-              "name": "_user",
-              "type": "address"
-            },
-            {
-              "internalType": "uint8",
-              "name": "v",
-              "type": "uint8"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "r",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "s",
-              "type": "bytes32"
-            },
-            {
-              "name": "_regionalAgents",
-              "type": "address[]"
-            },          
-            {
-              "internalType": "address[]",
-              "name": "_rewardBeneficiary",
-              "type": "address[]"
-            }
-          ],
-          "name": "payOrder",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        };
-        const msg = '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId) + '0000';
-        const hashForSignature = this.web3Serv.hashKanbanMessage(msg);
-        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-        const privateKey = keyPair.privateKeyBuffer.privateKey; 
-        const signature = this.web3Serv.signKanbanMessageHashWithPrivateKey(hashForSignature, privateKey);  
-        const fulfillmentFee = '0x' + (new BigNumber(this.shippingFee).multipliedBy(new BigNumber(1e18)).toString(16));
-  
-        this.agents = [];
-        args = [
-          '0x' + this.utilServ.ObjectId2SequenceId(this.order.objectId),
-          fulfillmentFee,
-          this.utilServ.fabToExgAddress(this.walletAddress),
-          signature.v,
-          signature.r,
-          signature.s,
-          this.agents,
-          this.parents
-        ];
-        to = this.smartContractAddress;
-      }
-
-      if(this.storeVersion == 2) {
-        abi = {
-          "inputs": [
-            {
-              "internalType": "bytes32",
-              "name": "_orderID",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "uint32",
-              "name": "_paidCoin",
-              "type": "uint32"
-            },
-            {
-              "internalType": "uint256",
-              "name": "_totalAmount",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "_totalTax",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address[]",
-              "name": "_regionalAgents",
-              "type": "address[]"
-            },
-            {
-              "internalType": "bytes32[]",
-              "name": "_rewardBeneficiary",
-              "type": "bytes32[]"
-            },
-            {
-              "internalType": "bytes",
-              "name": "_rewardInfo",
-              "type": "bytes"
-            }
-          ],
-          "name": "chargeFundsWithFee",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        };
-        let totalAmount = new BigNumber(this.starPayMeta.totalAmount);
-        if(this.shippingFee) {
-          totalAmount = totalAmount.plus(new BigNumber(this.shippingFee));
-        }
-        args = [
-          '0x' + this.orderID,
-          this.coinServ.getCoinTypeIdByName(this.currency),
-          '0x' + totalAmount.shiftedBy(18).toString(16),
-          '0x' + new BigNumber(this.starPayMeta.totalTax).shiftedBy(18).toString(16),
-          this.starPayMeta.regionalAgents,
-          this.starPayMeta.rewardBeneficiary,
-          this.starPayMeta.rewardInfo
-        ];
-        console.log('args=======', args);
-        to = this.feeChargerSmartContractAddress;
-      };
-
-      return {to, abi, args};
-    }
     async placeOrderDo(seed: Buffer) {
-      //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
-
-
-      const item = {
-        totalSale: this.subtotal,
-        totalShipping: this.shippingFee,
-        totalToPay: this.total * (1 - this.discount / 100),
-        paymentMethod: this.selectedPayment,
-        paymentStatus: 0,
-        charge_id: '',
-        shippingServiceSelected: this.selectedShippingService
-      }
-
-
-
-      const {to, abi, args} = this.getAbiArgs(seed);
+      const updated = {
+        totalShipping: this.shippingFee
+      };
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey; 
-      
-      const ret = await this.kanbanSmartContractServ.execSmartContract(seed, to, abi, args);
-      console.log('ret from payment=', ret);    
+      const sig = this.kanbanServ.signJsonData(privateKey, updated);
+      updated['sig'] = sig.signature;  
 
-      if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-        item.paymentStatus = 2;
-        const body = ret._body;
-        console.log('body==', body);
-        item.charge_id = body.transactionHash;    
-        console.log('charge_id==', item.charge_id);  
-        
-        const updatedOrderForIdDock = {
-          merchantId: this.order.merchantId,
-          items: this.order.items,
-          currency: this.order.currency,
-          transAmount: this.order.transAmount,
-          name: this.order.name,
-          unit: this.order.suite,
-          streetNumber: this.order.streetNumber,
-          streetName: this.order.street,
-          city: this.order.city,
-          province: this.order.province,
-          zip: this.order.postcode,
-          country: this.order.country,
-          ...item
-        };         
-        const sig = this.kanbanServ.signJsonData(privateKey, item);
-        item['sig'] = sig.signature;  
+      this.orderServ.update2(this.orderID, updated).subscribe(
+        (order) => {
+            this.orderServ.getPaycoolRewardInfo(this.orderID, this.walletAddress, 'WithFee').subscribe(
+                async (ret: any) => {
+                    this.order = ret;
 
-        this.orderServ.update2(this.orderID, item).subscribe(
-          (res: any) => {
-            if(res && res.ok) {
-              this.order = res._body;
-              this.toastr.success('payment was made successfully');
-              this.spinner.hide();
-
-              this.kanbanServ.getExchangeBalance(this.utilServ.fabToExgAddress(this.walletAddress)).subscribe(
-                (resp: any) => {
-                    const selected = resp.filter(item => item.coinType == this.coinServ.getCoinTypeIdByName(this.currency));
-                    if(selected && selected.length > 0) {
-                      const currencyBalance = this.utilServ.showAmount(selected[0].unlockedAmount, 18);
-                      this.dataServ.changeCurrencyBalance(Number(currencyBalance));
+                    const params = this.order.params;
+                    console.log('params==', params);
+            
+                    ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[0].to, params[0].data);
+                    if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+                      ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[1].to, params[1].data);
+                      if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+                        this.spinner.hide();
+                        this.toastr.success('the transaction was procssed successfully');
+                      } else {
+                        this.spinner.hide();
+                        this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
+                      }
+                    } else {
+                      this.spinner.hide();
+                      this.toastr.error('Failed to authorizeOperator, txid:' + ret._body.transactionHash);
                     }
-                },
-                error => {
                 }
-              );                    
-              //this.router.navigate(['/place-order/' + this.orderID]);
-            }
-          }
-        );  
-
-
-      } else {
-        this.spinner.hide();
-        this.toastr.error('payment failed');
-      }      
-
-
-
-
-
-
-
+            );
+        }
+      );
 
     }
 }
