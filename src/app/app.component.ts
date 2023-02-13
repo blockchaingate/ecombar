@@ -11,6 +11,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { ThemeService } from './services/theme.service';
 import { themeEvn } from 'src/environments/themeEnv';
+import { WalletService } from './modules/shared/services/wallet.service';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
     private storageServ: StorageService, 
     private dataServ: DataService,
     private storeServ: StoreService,
+    private walletServ: WalletService,
     private route: ActivatedRoute,
     private kanbanServ: KanbanService,
     private utilServ: UtilService,
@@ -47,50 +49,11 @@ export class AppComponent implements OnInit {
           //this.router.navigate(['/wallet']);
           return false;
         }
-        this.dataServ.changeWallets(wallets);
-        const wallet = wallets.items[wallets.currentIndex];
-        this.dataServ.changeWallet(wallet);
-        const addresses = wallet.addresses;
-        const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
-        const walletAddress = walletAddressItem.address;
-        if(walletAddress) {
-          console.log('walletAddress====', walletAddress);
-          this.dataServ.changeWalletAddress(walletAddress); 
-
-          this.storeServ.getStoresByAddress(walletAddress).subscribe(
-            (ret: any) => {
-              console.log('ret in app=', ret);
-              if(ret && ret.length > 0) {
-                const store = ret[0];
-                console.log('store===', store);
-                this.dataServ.changeMyStore(store);
-              }
-            });
-
-        }
+        this.walletServ.refreshWallets(wallets);
               
       }
     );
-    /*
-    .pipe(
-      take(1),
-      map((wallets: any) => {
-        console.log('wallets==', wallets);
-        if(!wallets || !wallets.items || (wallets.items.length == 0)) {
-          this.router.navigate(['/wallet']);
-          return false;
-        }
 
-        const wallet = wallets.items[wallets.currentIndex];
-
-        const addresses = wallet.addresses;
-        const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
-        const walletAddress = walletAddressItem.address;
-        this.dataServ.changeWalletAddress(walletAddress);
-        return true;
-      })
-    );
-    */
   }
 
   setLan() {
