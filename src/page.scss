@@ -1,0 +1,42 @@
+
+// 填写发布信息
+.w-form {
+  font-size: 16px; 
+  color: #3b3b3b; 
+  line-height: 34px; 
+  padding-top: 20px;
+  margin: 20px 0;
+  // border: solid 1px #eee;  // 灰色边框
+}
+.w-form dl {
+  width: 100%;  // 占据整行
+}
+.w-form dt {
+    float: left; 
+    width: 150px;  // 120px
+    padding: 6px 0 8px; 
+    text-align: right;
+}
+// .w-form dt span { color: #f00; }
+.w-form dd {
+  margin-left: 160px;  // 125px
+  padding: 5px 20px 5px 10px;
+}
+
+.mybtn {  // 自定义按钮
+  color: white;
+  background-color: #f60; 
+  border: 0;
+  border-radius: 0%;
+}
+.mybtn:hover {
+  cursor: pointer;  // 手形光标
+}
+
+.mybtn-fix {  // 自定义按钮(圆角)
+  color: white;
+  background-color: #f60; 
+  border: 0;
+  border-radius: 15%;  // 圆角
+}
+

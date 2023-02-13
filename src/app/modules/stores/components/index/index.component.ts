@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PaycoolService } from 'src/app/modules/shared/services/paycool.service';
@@ -12,13 +13,17 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { environment } from 'src/environments/environment';
 
+import { StoreList, StoreListHot, StoreListNew } from './mock-stores';    // 虚拟商家数据（测试）
+
 @Component({
   selector: 'app-stores-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.scss']
 })
 export class StoresIndexComponent implements OnInit {
-  stores: any;
+  stores: any;    // 商家列表
+  storesHot: any;    // 热门推荐
+  storesNew: any;    // 最新入驻
   wallet: any;
   parentId: string;
   walletAddress: string;
@@ -65,12 +70,18 @@ export class StoresIndexComponent implements OnInit {
         this.wallet = wallet;
       }
     );
+    // 获取商家数据（正式）
     this.storeServ.getStoresInEcombar().subscribe(
       (ret: any) => {
         console.log('ret==', ret);
         this.stores = ret;
+
+        // 注意！上述数据被测试数据替代
+        this.stores = StoreList;    // 虚拟商家数据（测试）
       }
     );
+    this.storesHot = StoreListHot;    // 虚拟商家数据（测试）
+    this.storesNew = StoreListNew;    // 虚拟商家数据（测试）
   }
 
   joinAsMember() {
@@ -145,7 +156,15 @@ export class StoresIndexComponent implements OnInit {
     }
   }
 
+  // 跳转商家页面
   gotoStore(store) {
     this.router.navigate(['/store/' + store._id]);
+  }
+
+  // 重新刷新列表
+  moreStore() {
+    this.stores = StoreListNew;    // 虚拟商家数据（测试）
+    // this.storesHot = StoreListHot;    // 虚拟商家数据（测试）
+    // this.storesNew = StoreListNew;    // 虚拟商家数据（测试）
   }
 }

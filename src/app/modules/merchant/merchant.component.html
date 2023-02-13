@@ -1,5 +1,9 @@
-<div class="grid" [ngClass]="showNavMenu ? 'grid--noscroll' : ''">
-    <header class="header">
+
+<!-- 新增统一页首 -->
+<app-stores-header></app-stores-header>
+
+<!-- <div class="grid" [ngClass]="showNavMenu ? 'grid--noscroll' : ''"> -->
+    <!-- <header class="header">
         <img class="header__menu" (click)="toggleShowNavMenu()" src="/assets/svg/bars-solid.svg">
         <div class="header__search">
             <input class="header__input" placeholder="{{'Search' | translate}}..." />
@@ -7,17 +11,16 @@
         <div class="d-flex align-items-center">
             {{wallet.name}}
             <div class="header__avatar" (click)="toggleDropDownActive()">
-    
-                    
-                    <div class="d-inline-block">
+
+                <div class="d-inline-block">
                         <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
                         <i *ngIf="!(myPhotoUrl)" class="Iconreact__Icon-sc-1gugx8q-0 kFnBGV NavItem--icon material-icons-outlined" title="Wallet" value="account_balance_wallet" size="24">
                             account_balance_wallet
-                        </i>
-                        <!--
+                        </i> -->
+                        <!--  更古老的
                         <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/crypto-wallet.png">
                         -->
-                    </div>
+                    <!-- </div>
     
                     <div class="d-inline-block">
                         <div class="dropdown" [ngClass]="dropDownActive ? 'dropdown--active' : ''">
@@ -26,8 +29,8 @@
                                 <li class="dropdown__list-item" *ngFor="let item of wallets.items; let i=index" (click)="changeWallet(i, item)">
                                     <span class="dropdown__icon"><i class="fas fa-wallet"></i></span>
                                     <span class="dropdown__title">{{item.name}}</span>
-                                </li>  
-                                <!--
+                                </li>   -->
+                                <!--  更古老的
                                 <li class="dropdown__list-item" (click)="profile()">
                                     <span class="dropdown__icon"><i class="far fa-user"></i></span>
                                     <span class="dropdown__title">{{'my profile' | translate}}</span>
@@ -37,90 +40,119 @@
                                     <span class="dropdown__title">{{'log out' | translate}}</span>
                                 </li>
                                 -->
-                            </ul>
+
+                            <!-- </ul>
                         </div>
                     </div>
-    
-    
-    
+
             </div>
         </div>
 
-    </header>
+    </header> -->
 
-    <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''">
+<div style="background-color: #f7f7f7;">  <!-- 背景灰色 -->
 
-        <div class="pt-2">
-            <div class="text-center text-dark">
-                {{displayName}}
-            </div>
+    <div class="main_page row">  <!-- "container" 宽度不对 -->
+        <div class="col-2">  <!-- 12格中占2格 -->
+            <div class="py-3">  <!-- "container" -->
+                <div class="menu_box" style="border-radius: 5%;">  <!-- 菜单页面, rounded 不够圆 -->
+                    <!-- <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''"> -->
+                    <div class="pt-2">
+                        <div class="text-center text-dark">
+                            {{displayName}}
+                        </div>
 
-            <div class="d-flex justify-content-around">
-                <a href="/" class="text-success">
-                    {{'Go shopping' | translate}}
-                </a>
-                <a href="/wallet" class="text-success">
-                    {{'Wallet' | translate}}
-                </a>                
-            </div>
-            <div class="text-center text-secondary" 
-            *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
-                ({{'In review' | translate}})
-            </div>
-            <div class="pt-2 text-center">
-                <a target="_blank" class="text-success"  *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
-                    {{'My store' | translate}}
-                </a>
+                        <!-- <div class="d-flex justify-content-around">
+                            <a href="/" class="text-success">
+                                {{'Shopping' | translate}}
+                            </a>
+                            <a href="/wallet" class="text-success">
+                                {{'Wallet' | translate}}
+                            </a>                
+                        </div> -->
+                        <div class="text-center text-secondary" 
+                        *ngIf="(role == 'Seller' || role == 'Delivery') && (merchantStatus == 'pending')">
+                            ({{'In review' | translate}})
+                        </div>
+                        <div class="pt-2 text-center">
+                            <a target="_blank" class="text-success"  *ngIf="role == 'Merchant'" href="/store/{{merchantId}}">
+                                {{'My store' | translate}}
+                            </a>
 
-                <a target="_blank" class="text-success" *ngIf="role == 'Customer'" href="/apply-for-merchant">
-                    {{'Apply for merchant' | translate}}
-                </a>                
-            </div>   
-            
-            
-            <div class="pt-2">
-                <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
-            </div>
+                            <a target="_blank" class="text-success" *ngIf="role == 'Customer'" href="/apply-for-merchant">
+                                {{'Apply for merchant' | translate}}
+                            </a>                
+                        </div>   
+                        
+                        
+                        <div class="pt-2">
+                            <img class="close__btn" (click)="toggleShowNavMenu()" src="/assets/svg/close.svg">
+                        </div>
 
-        </div>
-        <div class="text-center">
-            <img class="img-avatar" *ngIf="myPhotoUrl" [src]="myPhotoUrl">
-            <img class="img-avatar" *ngIf="!(myPhotoUrl)" src="/assets/images/default_avatar.jpeg">
-        </div>
+                    </div>
+                    <div class="avatar_box">  <!-- 我的头像 -->
+                        <img class="img-avatar" *ngIf="merchant.image" [src]="merchant.image">  <!-- myPhotoUrl -->
+                        <img class="img-avatar" *ngIf="!(merchant.image)" src="/assets/images/default_avatar.jpeg">
+                    </div>
+                    <div class="pt-2 text-center avatar_text">
+                        <h4>{{ merchant.name }}</h4>
+                        <span class="star">{{ merchant.star }}</span>
+                    </div>
 
-        <ul class="sidenav__list">
+                </div>
+                <div class="menu_box">  <!-- 菜单页面 -->
 
-            <ng-container *ngFor="let item of menuItems">
-                <ng-container *ngIf="item.link">
-                    <li class="sidenav__list-item" routerLink="{{item.link}}" routerLinkActive="active">
-                        <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
-                    </li>                    
-                </ng-container>
-                <ng-container *ngIf="!item.link">
-                    <li class="sidenav__list-item" (click)="toggle(item.title)"
-                    [attr.aria-expanded]="(extendedMenu == item.title)" aria-controls="collapseBasic">
-                    <img *ngIf="item.icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
-                    </li>
-                    <ul [collapse]="(extendedMenu != item.title)" [isAnimated]="true">
-                        <li class="sidenav__list-item" *ngFor="let subitem of item.items" routerLink="{{subitem.link}}" routerLinkActive="active">
-                            <img *ngIf="subitem.icon" src="/assets/svg/{{subitem.icon}}.svg">&nbsp;&nbsp; {{subitem.title | translate}}
+                    <ul class="sidenav__list">
+
+                        <ng-container *ngFor="let item of menuItems">
+                            <ng-container *ngIf="item.link">
+                                <li class="sidenav__list-item" style="border-bottom: solid 1px #eee;" routerLink="{{item.link}}">  <!-- routerLinkActive="active" -->
+                                    <img *ngIf="item.icon" class="svg_icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
+                                </li>                    
+                            </ng-container>
+                            <ng-container *ngIf="!item.link">
+                                <li class="sidenav__list-item" (click)="toggle(item.title)"
+                                [attr.aria-expanded]="(extendedMenu == item.title)" aria-controls="collapseBasic">
+                                <img *ngIf="item.icon" class="svg_icon" src="/assets/svg/{{item.icon}}.svg">&nbsp;&nbsp; {{item.title | translate}}
+                                </li>
+                                <ul class="sidenav__list_2" [collapse]="(extendedMenu != item.title)" [isAnimated]="true">
+                                    <li class="sidenav__list-item" *ngFor="let subitem of item.items" routerLink="{{subitem.link}}" routerLinkActive="active">
+                                        <img *ngIf="subitem.icon" class="svg_icon" src="/assets/svg/{{subitem.icon}}.svg">&nbsp;&nbsp; {{subitem.title | translate}}
+                                    </li>
+                                </ul>
+                            </ng-container>
+                        </ng-container>
+
+                        <li class="sidenav__list-item" (click)="changeLang()">
+                            <img class="svg_icon" src="/assets/svg/language.svg">&nbsp;&nbsp; English / 中文
                         </li>
                     </ul>
-                </ng-container>
-            </ng-container>
-\
-            <li class="sidenav__list-item" (click)="changeLang()">
-                <img src="/assets/svg/language.svg">&nbsp;&nbsp; English / 中文
-            </li>
-        </ul>
-    </aside>
-    <main class="main">
-        <router-outlet></router-outlet>
-    </main>
-    <footer class="footer">
-        <div class="footer__copyright">&copy; {{year}} 7-Star Group Corp All Rights Reserved</div>
-        <div class="footer__signature">Powered by FA Enterprise</div>
-    </footer>
+                    <!-- </aside> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col">  <!-- 12格中剩余 -->
+            <div class="py-3">  <!-- "container" -->
+                <div class="main_box">  <!-- 内容页面 -->
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+    <!-- <main class="main">
+        <router-outlet></router-outlet>
+    </main> -->
+    <!-- <footer class="footer">
+        <div class="footer__copyright">&copy; {{year}} 7-Star Group Corp All Rights Reserved</div>
+        <div class="footer__signature">Powered by FA Enterprise 2</div>
+    </footer> -->
+<!-- </div> -->
+
+<!-- 新增统一页脚 -->
+<app-nft-footer></app-nft-footer>
 
 <ngx-bootstrap-spinner></ngx-bootstrap-spinner>

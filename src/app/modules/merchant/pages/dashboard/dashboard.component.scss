@@ -35,6 +35,7 @@ $width-sidenav: 240px;
   background-color: white;
   transform: translateY(0);
   transition: all .3s;
+  border: solid 1px #eee;  // 灰色四边框
 
   &-icon {
     display: flex;

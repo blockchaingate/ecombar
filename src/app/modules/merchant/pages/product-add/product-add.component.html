@@ -10,14 +10,409 @@
     <button class="btn" (click)="importWallet()">Import Wallet</button>
   </div>
 </div>
-    <div class="container" *ngIf="!noWallet">
-      <h1>New product</h1>
-      <hr>
-      <div class="text-right my-3">
-        <button class="btn" (click)="saveProduct()">Save</button>
+
+<div style="padding: 0 20px;" *ngIf="!noWallet">  <!-- class="container" -->
+  <h1>{{'New product' | translate}}</h1>
+  <!-- <hr> -->
+
+  <div class="text-right my-3">
+    <button type="button" class="btn btn-lg mybtn-fix" (click)="saveProduct()">&nbsp;&nbsp;{{'Save' | translate}}&nbsp;&nbsp;</button>
+  </div>
+
+  <ul class="nav nav-tabs">
+    <li *ngIf="NavTab == 'General'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">General</a>
+    </li> 
+    <li *ngIf="NavTab != 'General'" class="nav-item" (click)="changeNavTab('General')">
+      <a class="nav-link" href="javascript:;">General</a>
+    </li> 
+
+    <li *ngIf="NavTab == 'Data'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">Data</a>
+    </li> 
+    <li *ngIf="NavTab != 'Data'" class="nav-item" (click)="changeNavTab('Data')">
+      <a class="nav-link" href="javascript:;">Data</a>
+    </li> 
+
+    <li *ngIf="NavTab == 'Image'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">Image</a>
+    </li> 
+    <li *ngIf="NavTab != 'Image'" class="nav-item" (click)="changeNavTab('Image')">
+      <a class="nav-link" href="javascript:;">Image</a>
+    </li> 
+  </ul>
+
+  <!-- General -->
+  <div *ngIf="NavTab == 'General'">
+
+    <ul class="nav nav-tabs">
+      <li *ngIf="currentTab == 'default'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab != 'default'" class="nav-item" (click)="changeTab('default')">
+        <a class="nav-link" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab == 'Simplified Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Simplified Chinese'" class="nav-item" (click)="changeTab('Simplified Chinese')">
+        <a class="nav-link" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab == 'Traditional Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">繁體中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Traditional Chinese'" class="nav-item" (click)="changeTab('Traditional Chinese')">
+        <a class="nav-link" href="javascript:;">繁體中文</a>
+      </li> 
+    </ul>
+
+    <div class="w-form row">
+  
+      <!-- 缺省英文 -->
+      <div class="w-100" *ngIf="currentTab == 'default'">  <!-- 100% 宽度 -->
+
+        <dl>
+          <dt>Title</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="Enter product title" [(ngModel)]="title" name="title" required>
+          </dd>
+        </dl>
+        <dl>
+          <dt>Sub Title</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="Enter product subtitle" [(ngModel)]="subtitle" name="subtitle">
+          </dd>
+        </dl>
+        <dl>
+          <dt>Content</dt>
+          <dd class="text-left">
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detail' placeholder="Enter product detail"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+          </dd>
+        </dl>
+        <dl>
+          <dt>Description</dt>
+          <dd class="text-left">
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="Enter product description"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+          </dd>
+        </dl>
+
+      </div>
+    
+      <!-- 简体中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Simplified Chinese'">
+
+        <dl>
+          <dt>标题</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="输入产品标题" [(ngModel)]="title" name="title" required>
+          </dd>
+        </dl>
+        <dl>
+          <dt>子标题</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="输入产品子标题" [(ngModel)]="subtitle" name="subtitle">
+          </dd>
+        </dl>
+        <dl>
+          <dt>内容</dt>
+          <dd class="text-left">
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detail' placeholder="输入产品内容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+          </dd>
+        </dl>
+        <dl>
+          <dt>描述</dt>
+          <dd class="text-left">
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="输入产品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+          </dd>
+        </dl>
+
       </div>
 
-      <div class="d-flex align-items-center navigate-bar my-3">
+      <!-- 繁體中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Traditional Chinese'">
+
+        <dl>
+          <dt>標題</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="輸入產品標題" [(ngModel)]="title" name="title" required>
+          </dd>
+        </dl>
+        <dl>
+          <dt>子標題</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="輸入產品子標題" [(ngModel)]="subtitle" name="subtitle">
+          </dd>
+        </dl>
+        <dl>
+          <dt>內容</dt>
+          <dd class="text-left">
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detail' placeholder="輸入產品內容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+          </dd>
+        </dl>
+        <dl>
+          <dt>描述</dt>
+          <dd class="text-left">
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="輸入產品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+          </dd>
+        </dl>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Data -->
+  <div *ngIf="NavTab == 'Data'">
+    <div class="w-form row">
+
+      <legend>Price</legend>
+
+      <dl>
+        <dt>Price</dt>
+        <dd class="text-left">
+          <!-- 50% 宽度, 文字 -->
+          <input type="text" class="inp w-75" placeholder="Enter price" [(ngModel)]="price" name="price" required> &nbsp;&nbsp; 
+          {{currency}}
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Tax rate</dt>
+        <dd class="text-left">
+          <!-- 50% 宽度, 文字 -->
+          <input type="text" class="inp w-75" placeholder="Enter tax rate" [(ngModel)]="taxRate" name="taxRate"> &nbsp;&nbsp; 
+          %
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Rebate Rate</dt>
+        <dd class="text-left">
+          <!-- 50% 宽度, 文字 -->
+          <input type="text" class="inp w-75" placeholder="Enter rebate rate" [(ngModel)]="rebateRate" name="rebateRate"> &nbsp;&nbsp; 
+          %
+        </dd>
+      </dl>
+
+      <legend>Stock</legend>
+
+      <dl>
+        <dt>Quantity</dt>
+        <dd class="text-left">
+          <input type="text" class="inp w-75" placeholder="Enter product quantity" [(ngModel)]="quantity" name="quantity" required>
+
+          <!-- <div *ngFor="let content of contents">
+            <div class="d-flex align-items-center justify-content-between py-2">
+              <div>
+                {{content.name}}: {{content.quantity}}
+              </div>
+              <div>
+                <button class="btn" (click)="removeContent(content)">{{'Remove' | translate}}</button>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="d-flex">
+            <div class="w-50 px-2">
+              <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="contentName" name="contentName">
+            </div>
+            <div class="w-50  px-2">
+              <input type="number"  style="display:table-cell; width:100%"  placeholder="Enter Quantity" [(ngModel)]="contentQuantity" name="contentQuantity">
+            </div> 
+          </div>
+          <div class="pt-2">
+            <button class="btn" (click)="addContent()">{{'Add' | translate}}</button>
+          </div> -->
+        </dd>
+      </dl>
+
+      <dl>
+        <dt></dt>
+        <dd class="text-left">
+          <div class="form-check text-left">
+            <input type="radio" [checked]="active" (click)="setActive(true)" name="radio"> &nbsp;&nbsp;
+            <label class="form-check-label" for="flexRadioDefault1">Available</label>
+          </div>
+          <div class="form-check text-left">
+            <input type="radio" [checked]="!active" (click)="setActive(false)" name="radio"> &nbsp;&nbsp;
+            <label class="form-check-label" for="flexRadioDefault2">Out of stock</label>
+          </div>
+        </dd>
+      </dl>
+
+      <legend>Specification</legend>
+
+      <dl>
+        <dt>Colors</dt>
+        <dd class="text-left">
+          <div>
+            <div *ngFor="let c of colors">
+              <div class="d-flex align-items-center justify-content-between py-2">
+                <div>
+                  {{c}}
+                </div>
+                <div (click)="removeColor(c)">
+                  <img src="/assets/svg/delete.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <!-- 50% 宽度, 按钮 -->
+            <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="color" name="color"> &nbsp;&nbsp;
+            <button class="button mybtn" (click)="addColor()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+          </div>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Size</dt>
+        <dd class="text-left">
+          <div>
+            <div *ngFor="let c of sizes">
+              <div class="d-flex align-items-center justify-content-between py-2">
+                <div>
+                  {{c}}
+                </div>
+                <div (click)="removeSize(c)">
+                  <img src="/assets/svg/delete.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <!-- 50% 宽度, 按钮 -->
+            <input type="text" class="inp w-75" placeholder="Enter Size" [(ngModel)]="size" name="size"> &nbsp;&nbsp;
+            <button class="button mybtn" (click)="addSize()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+          </div>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Category</dt>
+        <dd class="text-left">
+          <!-- <div *ngIf="categories">
+            <select [(ngModel)]="category" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="">Select Category:</option>
+              <option *ngFor="let cat of categories" value="{{cat._id}}">
+                {{cat.category | translateField}}
+                <span *ngIf="cat.parentId">
+                  ({{cat.parentId.category | translateField}})
+                </span>
+              </option>
+            </select>
+          </div> -->
+          <div class="btn-group" dropdown>
+            <button id="button-animated" dropdownToggle type="button" class="button mybtn dropdown-toggle"
+                    aria-controls="dropdown-animated">
+              {{ selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate) }} <span class="caret"></span>
+            </button>
+            <div  *ngIf="categories && categories.length > 0">
+              <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                <li role="menuitem" *ngFor="let cat of categories">
+                  <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{ cat.category | translateField }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Brand</dt>
+        <dd class="text-left">
+          <div class="py-2" *ngIf="brands">
+            <select [(ngModel)]="brand" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="">Select Brand:</option>
+              <option *ngFor="let br of brands" value="{{br._id}}">{{ br.name | translateField }}</option>
+            </select>
+          </div>
+          &nbsp;&nbsp; 
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Specification</dt>
+        <dd class="text-left">
+          <div *ngFor="let spec of specs">
+            <div class="d-flex align-items-center justify-content-between py-2">
+              <div>
+                {{ spec.name }}: {{spec.value}}
+              </div>
+              <div (click)="removeSpec(spec)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+          </div>
+          <!-- 30% 宽度, 30% 宽度, 按钮 -->
+          <input type="text" class="inp w-35" placeholder="Enter Name" [(ngModel)]="specName" name="specName"> &nbsp;&nbsp;
+          <input type="text" class="inp w-35" placeholder="Enter Value" [(ngModel)]="specValue" name="specValue"> &nbsp;&nbsp;
+          <button class="button mybtn" (click)="addSpec()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Features</dt>
+        <dd class="text-left">
+          <div *ngFor="let feature of features">
+            <div class="d-flex align-items-center justify-content-between py-2">
+              <div>
+                {{ feature }}
+              </div>
+              <div (click)="removeFeature(feature)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+          </div>
+          <!-- 50% 宽度, 按钮 -->
+          <input type="text" class="inp w-75" placeholder="Enter Feature" [(ngModel)]="feature" name="feature"> &nbsp;&nbsp;
+          <button class="button mybtn" (click)="addFeature()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+        </dd>
+      </dl>
+
+      <legend>Locked days</legend>
+
+      <dl>
+        <dt>Locked days</dt>
+        <dd class="text-left">
+          <div class="btn-group w-75" dropdown>  <!-- 75% 宽 -->
+            <button id="button-basic" dropdownToggle type="button" class="button mybtn dropdown-toggle"
+                    aria-controls="dropdown-basic">
+              {{ lockedDays }} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="button-basic">
+              <li role="menuitem"><a class="dropdown-item" (click)="changeLockedDays(90)">90</a></li>
+              <li role="menuitem"><a class="dropdown-item" (click)="changeLockedDays(366)">366</a></li>
+            </ul>
+          </div>
+          <!-- <input type="text" class="inp" placeholder="Enter locked days" [(ngModel)]="lockedDays" name="lockedDays"> -->
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+
+  <!-- Image -->
+  <div *ngIf="NavTab == 'Image'">
+    <div class="w-form row">
+
+      <legend>Image</legend>
+
+      <dl>
+        <dt>Images</dt>
+        <dd class="text-left">
+          <app-admin-upload-media [(images)]="images" [singleFile]="false"></app-admin-upload-media>
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+
+</div>
+  
+      <!-- <div class="d-flex align-items-center navigate-bar my-3">
         <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
           English
         </div>
@@ -27,13 +422,14 @@
         <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Traditional Chinese')">
           繁體中文
         </div>
-      </div>   
+      </div> -->
       
-      <div *ngIf="currentTab == 'default'">
+      <!-- <div *ngIf="currentTab == 'default'"> -->
 
-        <div class="row">
-          <div class="col col-8">
-            <div class="card-section">
+        <!-- <div class="row">
+          <div class="col col-8"> -->
+
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">
                   <div class="form-field">
@@ -55,58 +451,27 @@
                     <label for="description">Description</label>
                     <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="Enter product description"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
                   </div>
-
                 
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">
                   <div class="form-field">
                     <label for="specification">Quantity</label>
                     <input type="text" placeholder="Enter product quantity" [(ngModel)]="quantity" name="quantity" required>
-                    <!--s
-                    <div>
-                      <div *ngFor="let content of contents">
-                        <div class="d-flex align-items-center justify-content-between py-2">
-                          <div>
-                            {{content.name}}: {{content.quantity}}
-                          </div>
-                          <div>
-                            <button class="btn" (click)="removeContent(content)">{{'Remove' | translate}}</button>
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  
-                    <div class="d-flex">
-                      <div class="w-50 px-2">
-                        <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="contentName" name="contentName">
-                      </div>
-
-                      <div class="w-50  px-2">
-                        <input type="number"  style="display:table-cell; width:100%"  placeholder="Enter Quantity" [(ngModel)]="contentQuantity" name="contentQuantity">
-                      </div>                      
-                    </div>
-
-                    <div class="pt-2">
-                      <button class="btn" (click)="addContent()">{{'Add' | translate}}</button>
-                    </div>
-                    -->
-                  </div>                  
+                  </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">
                   <div class="form-field">
                     <label for="specification">Specification</label>
-
                     <div>
                       <div *ngFor="let spec of specs">
                         <div class="d-flex align-items-center justify-content-between py-2">
@@ -117,33 +482,29 @@
                             <img src="/assets/svg/delete.svg">
                           </div>
                         </div>
-                        
                       </div>
                     </div>
                     <div class="d-flex">
                       <div class="w-50 px-2">
                         <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="specName" name="specName">
                       </div>
-
                       <div class="w-50  px-2">
                         <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Value" [(ngModel)]="specValue" name="specValue">
                       </div>                      
                     </div>
-
                     <div class="pt-2">
                       <button class="btn" (click)="addSpec()">{{'Add' | translate}}</button>
                     </div>
-                  </div>                  
+                  </div> 
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">
                   <div class="form-field">
                     <label for="specification">Features</label>
-
                     <div>
                       <div *ngFor="let feature of features">
                         <div class="d-flex align-items-center justify-content-between py-2">
@@ -151,39 +512,36 @@
                             {{feature}}
                           </div>
                           <div (click)="removeFeature(feature)">
-                            
                             <img src="/assets/svg/delete.svg">
                           </div>
                         </div>
-                        
                       </div>
                     </div>
                     <div>
                       <div class=" px-2">
                         <input type="text" style="display:table-cell; width:100%" placeholder="Enter Feature" [(ngModel)]="feature" name="feature">
                       </div>
-                     
                     </div>
-
                     <div class="pt-2">
                       <button class="btn" (click)="addFeature()">{{'Add' | translate}}</button>
                     </div>
-                  </div>                  
+                  </div> 
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">
                   <app-admin-upload-media [(images)]="images" [singleFile]="false"></app-admin-upload-media>
                 </div>
               </div>
-            </div>   
+            </div>  -->
 
-          </div>
-          <div class="col col-4">
-            <div class="card-section">
+          <!-- </div>
+          <div class="col col-4"> -->
+
+            <!-- <div class="card-section">
               <div class="card p-3">
 
                 <div class="form-check">
@@ -202,9 +560,9 @@
                 </div>
 
               </div>
-            </div>
+            </div> -->
 
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
@@ -215,16 +573,12 @@
                       </div>
                       {{currency}}
                     </div>
-
                   </div>
-
                 </div>
               </div>
-            </div>    
+            </div> -->
 
-
-            
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
@@ -239,7 +593,6 @@
                             <img src="/assets/svg/delete.svg">
                           </div>
                         </div>
-                        
                       </div>
                     </div>
                     <div>
@@ -247,20 +600,15 @@
                         <input type="text" placeholder="Enter Color" [(ngModel)]="color" name="color">
                       </div>
                     </div>
-
                     <div class="pt-2">
                       <button class="btn" (click)="addColor()">{{'Add' | translate}}</button>
                     </div>
                   </div>
-
                 </div>
               </div>
-            </div>              
+            </div> -->
 
-
-
-
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
@@ -275,7 +623,6 @@
                             <img src="/assets/svg/delete.svg">
                           </div>
                         </div>
-                        
                       </div>
                     </div>
                     <div>
@@ -283,64 +630,38 @@
                         <input type="text" placeholder="Enter Size" [(ngModel)]="size" name="size">
                       </div>
                     </div>
-
                     <div class="pt-2">
                       <button class="btn" (click)="addSize()">{{'Add' | translate}}</button>
                     </div>
                   </div>
-
                 </div>
               </div>
-            </div>   
+            </div>    -->
 
-
-
-
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
                     <label for="psw"><b>Category</b></label>
                   </div>
-    
-                  <!--
-                  <div *ngIf="categories">
-                    <select [(ngModel)]="category" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                      <option value="">Select Category:</option>
-                      <option *ngFor="let cat of categories" value="{{cat._id}}">
-                        {{cat.category | translateField}}
-                        <span *ngIf="cat.parentId">
-                          ({{cat.parentId.category | translateField}})
-                        </span>
-                      </option>
-                    </select>
+                  <div class="btn-group" dropdown>
+                    <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                            aria-controls="dropdown-animated">
+                      {{selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate)}} <span class="caret"></span>
+                    </button>
+                    <div  *ngIf="categories && categories.length > 0">
+                      <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                      <li role="menuitem" *ngFor="let cat of categories">
+                        <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{cat.category | translateField}}</a>
+                      </li>
+                    </ul>
                   </div>
-                -->
-
-                <div class="btn-group" dropdown>
-                  <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                          aria-controls="dropdown-animated">
-                    {{selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate)}} <span class="caret"></span>
-                  </button>
-                  <div  *ngIf="categories && categories.length > 0">
-                    <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
-                    role="menu" aria-labelledby="button-animated">
-                  <li role="menuitem" *ngFor="let cat of categories">
-                    <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{cat.category | translateField}}</a>
-                  </li>
-                </ul>
-                  </div>
-        
                 </div>
-
-
-
                 </div>
               </div>
-            </div> 
+            </div>  -->
 
-
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
@@ -352,16 +673,15 @@
                       <option *ngFor="let br of brands" value="{{br._id}}">{{br.name | translateField}}</option>
                     </select>
                   </div>
-    
                 </div>
               </div>
-            </div>     
+            </div>  -->
  
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
-                    <label for="psw"><b>{{'Tax rate' | translate}}</b></label>
+                    <label for="psw"><b>Tax rate</b></label>
                   </div>
                   <div class="py-2">
                     <div class="d-flex align-items-center">
@@ -373,14 +693,13 @@
                   </div>
                 </div>
               </div>
-            </div>               
+            </div>  -->
 
-
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="container">  
                   <div class="py-2">
-                    <label for="psw"><b>{{'Rebate Rate' | translate}}</b></label>
+                    <label for="psw"><b>Rebate Rate</b></label>
                   </div>
                   <div class="py-2">
                     <div class="d-flex align-items-center">
@@ -392,12 +711,12 @@
                   </div>
                 </div>
               </div>
-            </div>    
+            </div>  -->
  
-            <div class="card-section">
+            <!-- <div class="card-section">
               <div class="card">
                 <div class="py-2">
-                  <label for="psw"><b>{{'Locked days' | translate}}</b></label>
+                  <label for="psw"><b>Locked days</b></label>
                 </div>
                 <div class="btn-group" dropdown>
                   <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
@@ -410,22 +729,8 @@
                     <li role="menuitem"><a class="dropdown-item" (click)="changeLockedDays(366)">366</a></li>
                   </ul>
                 </div>
-                <!--
-                <div class="container">  
-                  <div class="py-2">
-                    <label for="psw"><b>{{'Locked days' | translate}}</b></label>
-                  </div>
-                  <div class="py-2">
-                    <div class="d-flex align-items-center">
-                      <div class="d-inline-block px-2">
-                        <input type="text"  placeholder="Enter locked days" [(ngModel)]="lockedDays" name="lockedDays">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              -->
               </div>
-            </div>               
+            </div> -->
 
           <!--  
             <div class="card-section">
@@ -462,353 +767,9 @@
               </div>
             </div>   
           -->           
-          </div>
-        </div>
-      </div>
 
-      <div *ngIf="currentTab=='Simplified Chinese'">
-        <label for="name"><b>标题</b></label>
-        <input type="text" placeholder="输入标题" [(ngModel)]="titleChinese" name="titleChinese">     
-
-        <label for="name"><b>子标题</b></label>
-        <input type="text" placeholder="输入子标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">     
-
-
-        <div class="card-section">
-          <div class="card">
-            <div class="container">  
-              <div class="py-2">
-                <label for="psw"><b>颜色</b></label>
-                <div>
-                  <div *ngFor="let c of colorsChinese">
-                    <div class="d-flex align-items-center justify-content-between py-2">
-                      <div>
-                        {{c}}
-                      </div>
-                      <div (click)="removeColorChinese(c)">
-                        <img src="/assets/svg/delete.svg">
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-                <div>
-                  <div class="d-inline-block px-2">
-                    <input type="text" placeholder="输入颜色" [(ngModel)]="colorChinese" name="colorChinese">
-                  </div>
-                </div>
-
-                <div class="pt-2">
-                  <button class="btn" (click)="addColorChinese()">{{'Add' | translate}}</button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>              
-
-
-
-
-        <div class="card-section">
-          <div class="card">
-            <div class="container">  
-              <div class="py-2">
-                <label for="psw"><b>尺寸</b></label>
-                <div>
-                  <div *ngFor="let c of sizesChinese">
-                    <div class="d-flex align-items-center justify-content-between py-2">
-                      <div>
-                        {{c}}
-                      </div>
-                      <div (click)="removeSizeChinese(c)">
-                        <img src="/assets/svg/delete.svg">
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-                <div>
-                  <div class="d-inline-block px-2">
-                    <input type="text" placeholder="输入尺寸" [(ngModel)]="sizeChinese" name="sizeChinese">
-                  </div>
-                </div>
-
-                <div class="pt-2">
-                  <button class="btn" (click)="addSizeChinese()">{{'Add' | translate}}</button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>   
-
-
-        
-        <div class="py-2">
-          <label for="name"><b>内容</b></label>
-          <ejs-richtexteditor 
-          [(ngModel)]='detailChinese' 
-          (uploading) = "addHeaders($event)"
-          placeholder="请输入内容"  
-          [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
-   
-        </div>
-        <div class="py-2">
-          <label for="name"><b>描述</b></label>
-          <ejs-richtexteditor [(ngModel)]='descriptionChinese' (uploading) = "addHeaders($event)" placeholder="请输入描述" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
-        </div>
-       
-
-        <div class="py-2">
-          <div class="card">
-            <div class="container">
-              <div class="form-field">
-                <label for="specification">规格</label>
-
-                <div>
-                  <div *ngFor="let spec of specsChinese">
-                    <div class="d-flex align-items-center justify-content-between py-2">
-                      <div>
-                        {{spec.name}}: {{spec.value}}
-                      </div>
-                      <div (click)="removeSpecChinese(spec)">
-                        <img src="/assets/svg/delete.svg">
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-                <div class="d-flex">
-                  <div class="w-50 px-2">
-                    <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="specNameChinese" name="specNameChinese">
-                  </div>
-
-                  <div class="w-50  px-2">
-                    <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Value" [(ngModel)]="specValueChinese" name="specValueChinese">
-                  </div>                      
-                </div>
-
-                <div class="pt-2">
-                  <button class="btn" (click)="addSpecChinese()">{{'Add' | translate}}</button>
-                </div>
-              </div>                  
-            </div>
-          </div>
-        </div>
-
-        <div class="py-2">
-          <div class="card">
-            <div class="container">
-              <div class="form-field">
-                <label for="specification">特征</label>
-
-                <div>
-                  <div *ngFor="let feature of featuresChinese">
-                    <div class="d-flex align-items-center justify-content-between py-2">
-                      <div>
-                        {{feature}}
-                      </div>
-                      <div (click)="removeFeatureChinese(feature)">
-                        
-                        <img src="/assets/svg/delete.svg">
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-                <div>
-                  <div class=" px-2">
-                    <input type="text" style="display:table-cell; width:100%" placeholder="Enter Feature" [(ngModel)]="featureChinese" name="featureChinese">
-                  </div>
-                 
-                </div>
-
-                <div class="pt-2">
-                  <button class="btn" (click)="addFeatureChinese()">{{'Add' | translate}}</button>
-                </div>
-              </div>                  
-            </div>
-          </div>
-        </div>
-
-
-
-     </div>
-
-
-     <div *ngIf="currentTab=='Traditional Chinese'">
-      <label for="name"><b>标题</b></label>
-      <input type="text" placeholder="输入标题" [(ngModel)]="titleTradition" name="titleTradition">     
-
-      <label for="name"><b>子标题</b></label>
-      <input type="text" placeholder="输入子标题" [(ngModel)]="subtitleTradition" name="subtitleTradition">     
-
-
-      <div class="card-section">
-        <div class="card">
-          <div class="container">  
-            <div class="py-2">
-              <label for="psw"><b>颜色</b></label>
-              <div>
-                <div *ngFor="let c of colorsTradition">
-                  <div class="d-flex align-items-center justify-content-between py-2">
-                    <div>
-                      {{c}}
-                    </div>
-                    <div (click)="removeColorTradition(c)">
-                      <img src="/assets/svg/delete.svg">
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              <div>
-                <div class="d-inline-block px-2">
-                  <input type="text" placeholder="输入颜色" [(ngModel)]="colorTradition" name="colorTradition">
-                </div>
-              </div>
-
-              <div class="pt-2">
-                <button class="btn" (click)="addColorTradition()">{{'Add' | translate}}</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>              
-
-
-
-
-      <div class="card-section">
-        <div class="card">
-          <div class="container">  
-            <div class="py-2">
-              <label for="psw"><b>尺寸</b></label>
-              <div>
-                <div *ngFor="let c of sizesTradition">
-                  <div class="d-flex align-items-center justify-content-between py-2">
-                    <div>
-                      {{c}}
-                    </div>
-                    <div (click)="removeSizeTradition(c)">
-                      <img src="/assets/svg/delete.svg">
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              <div>
-                <div class="d-inline-block px-2">
-                  <input type="text" placeholder="输入尺寸" [(ngModel)]="sizeTradition" name="sizeTradition">
-                </div>
-              </div>
-
-              <div class="pt-2">
-                <button class="btn" (click)="addSizeTradition()">{{'Add' | translate}}</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>   
-
-
-      
-      <div class="py-2">
-        <label for="name"><b>内容</b></label>
-        <ejs-richtexteditor 
-        [(ngModel)]='detailTradition' 
-        (uploading) = "addHeaders($event)"
-        placeholder="请输入内容"  
-        [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>            
- 
-      </div>
-      <div class="py-2">
-        <label for="name"><b>描述</b></label>
-        <ejs-richtexteditor [(ngModel)]='descriptionTradition' (uploading) = "addHeaders($event)" placeholder="请输入描述" [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>  
-      </div>
-     
-
-      <div class="py-2">
-        <div class="card">
-          <div class="container">
-            <div class="form-field">
-              <label for="specification">规格</label>
-
-              <div>
-                <div *ngFor="let spec of specsTradition">
-                  <div class="d-flex align-items-center justify-content-between py-2">
-                    <div>
-                      {{spec.name}}: {{spec.value}}
-                    </div>
-                    <div (click)="removeSpecTradition(spec)">
-                      <img src="/assets/svg/delete.svg">
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              <div class="d-flex">
-                <div class="w-50 px-2">
-                  <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="specNameTradition" name="specNameTradition">
-                </div>
-
-                <div class="w-50  px-2">
-                  <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Value" [(ngModel)]="specValueTradition" name="specValueTradition">
-                </div>                      
-              </div>
-
-              <div class="pt-2">
-                <button class="btn" (click)="addSpecTradition()">{{'Add' | translate}}</button>
-              </div>
-            </div>                  
-          </div>
-        </div>
-      </div>
-
-      <div class="py-2">
-        <div class="card">
-          <div class="container">
-            <div class="form-field">
-              <label for="specification">特征</label>
-
-              <div>
-                <div *ngFor="let feature of featuresTradition">
-                  <div class="d-flex align-items-center justify-content-between py-2">
-                    <div>
-                      {{feature}}
-                    </div>
-                    <div (click)="removeFeatureTradition(feature)">
-                      
-                      <img src="/assets/svg/delete.svg">
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              <div>
-                <div class=" px-2">
-                  <input type="text" style="display:table-cell; width:100%" placeholder="Enter Feature" [(ngModel)]="featureTradition" name="featureTradition">
-                </div>
-               
-              </div>
-
-              <div class="pt-2">
-                <button class="btn" (click)="addFeatureTradition()">{{'Add' | translate}}</button>
-              </div>
-            </div>                  
-          </div>
-        </div>
-      </div>
-
-
-
-   </div>
-
-
-    </div>
+        <!-- </div>
+      </div> -->
 
 <!--
     <ngx-smart-modal #passwordModal identifier="passwordModal">

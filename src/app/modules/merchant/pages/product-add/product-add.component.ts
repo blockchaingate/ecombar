@@ -20,6 +20,7 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-admin-product-add',
   providers: [ProductService, CategoryService],
@@ -84,7 +85,8 @@ export class ProductAddComponent implements OnInit {
   colors: any;
   sizes: any;
   size: string;
-  currentTab: string;
+  NavTab: string;    // 导航 Tab
+  currentTab: string;    // 语言 Tab
   category: string;
   categories: any;
   brand: string;
@@ -180,7 +182,8 @@ export class ProductAddComponent implements OnInit {
     this.images = [
 
     ];
-    this.currentTab = 'default';
+    this.NavTab = 'General';    // 缺省页面
+    this.currentTab = 'default';    // 缺省页面
     this.currencies = currencies;
 
     this.dataServ.currentWallet.subscribe(
@@ -222,9 +225,6 @@ export class ProductAddComponent implements OnInit {
       }
     );
 
-
-
-
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
@@ -232,7 +232,7 @@ export class ProductAddComponent implements OnInit {
         (res: any) => {
           if (res) {
             const product = res;
-            this.product = product;
+            this.product = product;  // 看起来没用上
             if (product.title) {
               this.title = product.title.en;
               this.titleChinese = product.title.sc;
@@ -337,16 +337,11 @@ export class ProductAddComponent implements OnInit {
               }
             }
             
-            
-            
             this.active = product.active;
             if (product.images) {
               this.images = product.images;
             }
-
             this.category = product.primaryCategoryId;
-
-
           }
 
         }
@@ -360,6 +355,10 @@ export class ProductAddComponent implements OnInit {
   public addHeaders(args: any) {
     console.log('add headerssss');
     args.currentRequest.setRequestHeader('custom-header', 'Syncfusion');
+  }
+
+  changeNavTab(tabName: string) {
+    this.NavTab = tabName;
   }
 
   changeTab(tabName: string) {
@@ -594,8 +593,6 @@ export class ProductAddComponent implements OnInit {
     const detailLan: TextLan = { name: 'detail', en: this.detail, sc: this.detailChinese, tc: this.detailTradition };
     const descLan: TextLan = { name: 'description', en: this.description, sc: this.descriptionChinese, tc: this.descriptionTradition };
 
-
-    
     const specLan = { 
       en: 
       [{

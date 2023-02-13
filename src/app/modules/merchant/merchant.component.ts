@@ -6,6 +6,8 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
+import { MyStore } from './mock-merchant';    // 虚拟商家数据（测试）
+
 @Component({
   providers: [],
   selector: 'app-merchant',
@@ -13,6 +15,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
   styleUrls: ['./merchant.component.scss']
 })
 export class MerchantComponent implements OnInit {
+  merchant: any;    // 商家信息
   extendedMenu: string;
   isCollapsed = false;
   showNavMenu = false;
@@ -216,7 +219,7 @@ export class MerchantComponent implements OnInit {
       this.translateServ.setDefaultLang(lang);
     }
 
-
+    this.merchant = MyStore;    // 虚拟商家信息（测试）
 
   }
 

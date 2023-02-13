@@ -78,3 +78,16 @@
     width: 100%;
     height: auto;
 }
+
+// ---------- 我的按钮 ----------
+
+.mybtn {  // 自定义按钮
+    background-color: #f60; 
+    color: white;
+    border: 0;
+    border-radius: 0%;
+ // border-radius: 15%;  // 圆角
+}
+.mybtn:hover {
+    cursor: pointer;  // 手形光标
+}

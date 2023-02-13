@@ -1,40 +1,60 @@
+
+<h1>{{'Products' | translate}}</h1>
+
 <div class="px-2" *ngIf="store">
   <div class="text-right my-3" *ngIf="store.status == 2">
-    <button class="btn" (click)="addNew()">{{'New' | translate}}</button>
-</div>
+    <button type="button" class="btn btn-lg mybtn-fix" (click)="addNew()">&nbsp;&nbsp;{{'New' | translate}}&nbsp;&nbsp;</button>
+  </div>
 
-<ul class="responsive-table">
-  <li class="table-header">
-    <div class="col col-4">{{'Title' | translate}}</div>
-    <div class="col col-3">{{'Price' | translate}}</div>
-    <div class="col col-3">{{'Rebate rate' | translate}}</div>
-    <div class="col col-2"></div>
+  <dl class="work-list row">
+    <dt class="col-4">{{'Title' | translate}}</dt>
+    <dt class="col-3">{{'Price' | translate}}</dt>
+    <dt class="col-3">{{'Rebate rate' | translate}}</dt>
+    <dt class="col"></dt>
+  </dl>
 
-  </li>
-  <li class="table-row" *ngFor="let product of products">
-    <div class="col col-4" data-label="Title">
+  <dl class="work-list row" *ngFor="let product of products">
+    <dd class="col-4">
       <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
-        {{product.title | translateField}}
+        {{ product.title | translateField }}
       </a>
-      
-    </div>
-    <div class="col col-3" data-label="Price">{{product.price}}</div>
-    <div class="col col-3" data-label="Rebate rate">{{product.rebateRate}}</div>
-    <div class="col col-2 text-right" data-label="Operations">
+    </dd>
+    <dd class="col-3">{{ product.price }}</dd>
+    <dd class="col-3">{{ product.rebateRate }}</dd>
+    <dd class="col">
       <div class="d-inline-block px-2">
         <a (click)="editProduct(product)">
           <img src="/assets/svg/edit.svg">
         </a>
       </div>
-
       <div class="d-inline-block px-2">
         <a (click)="deleteProduct(product)">
           <img src="/assets/svg/delete.svg">
         </a>
       </div>
-    </div>
-  </li>
-</ul>
+    </dd>
+  </dl>
+  
+    <!-- <li class="table-row" *ngFor="let product of products">
+      <div class="col col-4" data-label="Title">
+        <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
+          {{product.title | translateField}}
+        </a>
+      </div>
+      <div class="col col-3" data-label="Price">{{ product.price }}</div>
+      <div class="col col-3" data-label="Rebate rate">{{ product.rebateRate }}</div>
+      <div class="col col-2 text-right" data-label="Operations">
+        <div class="d-inline-block px-2">
+          <a (click)="editProduct(product)">
+            <img src="/assets/svg/edit.svg">
+          </a>
+        </div>
+        <div class="d-inline-block px-2">
+          <a (click)="deleteProduct(product)">
+            <img src="/assets/svg/delete.svg">
+          </a>
+        </div>
+      </div>
+    </li> -->
 
 </div>
-

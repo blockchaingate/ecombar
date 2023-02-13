@@ -3,8 +3,6 @@ import { Routes, RouterModule, Router } from '@angular/router';
 import { themeEvn } from 'src/environments/themeEnv';
 import { ThemeService } from './services/theme.service';
 
-
-
 const defaultTheme: Routes = [
   {
     path: '',
@@ -137,7 +135,6 @@ switch (themeEvn.defaultTheme) {
     routes = defaultTheme;
 
 }
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {

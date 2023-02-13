@@ -12,7 +12,10 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
   selector: 'app-admin-products',
   providers: [ProductService, UserService],
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: [
+    './products.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class ProductsComponent implements OnInit {
   modalRef: BsModalRef;

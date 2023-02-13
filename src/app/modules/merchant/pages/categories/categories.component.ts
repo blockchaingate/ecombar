@@ -13,7 +13,11 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
   selector: 'app-admin-categories',
   providers: [CategoryService],
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './categories.component.scss', 
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class CategoriesComponent implements OnInit {
   categories: any;

@@ -1,9 +1,12 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+
 const baseUrl = environment.endpoints.paycool;
 
 @Injectable({ providedIn: 'root' })
+
 export class StoreService {
   constructor(private http: HttpClient) { }
 
@@ -31,16 +34,16 @@ export class StoreService {
     return this.http.get(url);
   }
 
-  getStore(id: string) {
+  getStore( id: string ) {
     const url = baseUrl + 'merchantreferral/' + id;
     return this.http.get(url);
   }
 
-  create(data:any) {
+  create( data: any ) {
     return this.http.post('stores/Create', data);
   }
 
-  update(id: string, data: any) {
+  update( id: string, data: any ) {
     return this.http.post('stores/Update/' + id, data);
   }
 }

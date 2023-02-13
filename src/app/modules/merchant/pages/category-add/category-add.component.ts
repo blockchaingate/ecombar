@@ -13,7 +13,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   selector: 'app-admin-category-add',
   providers: [CategoryService],
   templateUrl: './category-add.component.html',
-  
+  styleUrls: ['./category-add.component.scss']
 })
 export class CategoryAddComponent implements OnInit {
   modalRef: BsModalRef;
@@ -24,7 +24,8 @@ export class CategoryAddComponent implements OnInit {
   name: string;
   nameChinese: string;
   nameTradition: string;
-  currentTab: string;
+  NavTab: string;    // 导航 Tab
+  currentTab: string;    // 语言 Tab
   wallet: any;
   id: string;
 
@@ -42,7 +43,8 @@ export class CategoryAddComponent implements OnInit {
 
   ngOnInit() {
     this.images = [];
-    this.currentTab = 'default';
+    this.NavTab = 'General';    // 缺省页面
+    this.currentTab = 'default';    // 缺省页面
 
     this.dataServ.currentWallet.subscribe(
       (wallet: string) => {
@@ -63,7 +65,6 @@ export class CategoryAddComponent implements OnInit {
         }
       }
     );
-
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
@@ -87,25 +88,34 @@ export class CategoryAddComponent implements OnInit {
     }
   }
 
+  changeNavTab(tabName: string) {
+    this.NavTab = tabName;
+  }
+
   changeTab(tabName: string) {
     this.currentTab = tabName;
   }
 
-
   changeSelectedCategory(cat: any) {
     this.selectedCategory = cat;
   }
+
   addCategory() {
-    if(!this.wallet || !this.wallet.pwdHash) {
-      this.router.navigate(['/wallet']);
-      return;
-    }
+    // if(!this.wallet || !this.wallet.pwdHash) {
+    //   this.router.navigate(['/wallet']);
+    //   return;
+    // }
     
     const initialState = {
       pwdHash: this.wallet.pwdHash,
       encryptedSeed: this.wallet.encryptedSeed
     };          
 
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
+    
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
@@ -115,7 +125,7 @@ export class CategoryAddComponent implements OnInit {
 
   addCategoryDo(privateKey: any) {
 
-    const data = {
+    const data: any = {
       name: {
         en: this.name,
         sc: this.nameChinese,
@@ -129,10 +139,10 @@ export class CategoryAddComponent implements OnInit {
     const sig = this.kanbanServ.signJsonData(privateKey, data);
     data['sig'] = sig.signature;  
 
-    if (!this.id) {
-
+    if (! this.id) {
       this.categoryServ.create(data).subscribe(
         (res: any) => {
+          console.log('res=', res);
           if (res && res._id) {
             this.router.navigate(['/merchant/categories']);
           }
@@ -141,6 +151,7 @@ export class CategoryAddComponent implements OnInit {
     } else {
       this.categoryServ.update(this.id, data).subscribe(
         (res: any) => {
+          console.log('res=', res);
           if (res && res._id) {
             this.router.navigate(['/merchant/categories']);
           }
