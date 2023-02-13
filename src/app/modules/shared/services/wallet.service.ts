@@ -14,10 +14,17 @@ import * as bchaddr from 'bchaddrjs';
 import * as wif from 'wif';
 import { Wallet } from '../../../models/wallet';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { DataService } from './data.service';
+import { MerchantService } from './merchant.service';
+import { StoreService } from './store.service';
 
 @Injectable({ providedIn: 'root' })
 export class WalletService {
-    constructor(private localSt: LocalStorage, private utilServ: UtilService, private coinServ: CoinService) {
+    constructor(
+
+    private dataServ: DataService,
+    private storeServ: StoreService,
+        private localSt: LocalStorage, private utilServ: UtilService, private coinServ: CoinService) {
 
     }
 
@@ -132,4 +139,27 @@ export class WalletService {
     updateWallets(wallets) {
         return this.localSt.setItem('ecomwallets', wallets);
     }    
+
+    refreshWallets(wallets: any) {
+        this.dataServ.changeWallets(wallets);
+        const wallet = wallets.items[wallets.currentIndex];
+        this.dataServ.changeWallet(wallet);
+        const addresses = wallet.addresses;
+        const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
+        const walletAddress = walletAddressItem.address;
+        if(walletAddress) {
+          this.dataServ.changeWalletAddress(walletAddress); 
+
+          this.storeServ.getStoresByAddress(walletAddress).subscribe(
+            (ret: any) => {
+              console.log('ret in app=', ret);
+              if(ret && ret.length > 0) {
+                const store = ret[0];
+                console.log('store===', store);
+                this.dataServ.changeMyStore(store);
+              }
+            });
+
+        }
+    }
 }
