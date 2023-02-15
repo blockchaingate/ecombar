@@ -27,7 +27,8 @@ import { environment } from 'src/environments/environment';
   templateUrl: './product-add.component.html',
   styleUrls: [
     './product-add.component.scss',
-    '../../../../../card.scss'
+    '../../../../../card.scss',
+    '../../../../../page.scss'
   ]
 })
 export class ProductAddComponent implements OnInit {

@@ -1,20 +1,20 @@
 <form style="border:1px solid #ccc" *ngIf="mainLayout">
     <div class="container">
-      <h1>{{'New Main Layout item' | translate}}</h1>
+      <h1>{{ 'New Main Layout item' | translate }}</h1>
       <hr>
 
       <div>
         <div>
           <label for="type"><b>Type</b></label>
           <select [(ngModel)]="mainLayout.type" name="type">
-              <option value="">{{'Select Type' | translate}}:</option>
-              <option value="Single Collection">{{'Single Collection' | translate}}</option>
-              <option value="Combo Collection">{{'Combo Collection' | translate}}</option>
+              <option value="">{{ 'Select Type' | translate }}:</option>
+              <option value="Single Collection">{{ 'Single Collection' | translate }}</option>
+              <option value="Combo Collection">{{ 'Combo Collection' | translate }}</option>
           </select>  
         </div>
 
         <div class="mt-3">
-          <label for="sequence"><b>{{'Sequence' | translate}}</b></label>
+          <label for="sequence"><b>{{ 'Sequence' | translate }}</b></label>
           <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="mainLayout.sequence" name="sequence" required>  
         </div>
 
@@ -27,7 +27,7 @@
 
         <div *ngIf="mainLayout.type=='Combo Collection'">
           <div *ngFor="let col of collections">
-            <input type="checkbox" name="collection_{{col._id}}" [(ngModel)]="col.isChecked">&nbsp;&nbsp;{{col.name | translateField}}
+            <input type="checkbox" name="collection_{{col._id}}" [(ngModel)]="col.isChecked">&nbsp;&nbsp; {{ col.name | translateField }}
           </div>
                 
         </div>
@@ -36,7 +36,7 @@
 
 
       <div class="text-right py-2">
-        <button type="submit" class="btn signinbtn" (click)="addMainLayout()">{{(id?'Update':'Add') | translate}}</button>
+        <button type="submit" class="btn signinbtn" (click)="addMainLayout()">{{ (id ? 'Update' : 'Add') | translate }}</button>
       </div>
     </div>
 </form>

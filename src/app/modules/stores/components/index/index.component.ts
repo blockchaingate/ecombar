@@ -74,14 +74,27 @@ export class StoresIndexComponent implements OnInit {
     this.storeServ.getStoresInEcombar().subscribe(
       (ret: any) => {
         console.log('ret==', ret);
-        this.stores = ret;
 
-        // 注意！上述数据被测试数据替代
-        this.stores = StoreList;    // 虚拟商家数据（测试）
+        // this.stores = StoreList;    // 虚拟商家数据（测试）
+        this.stores = ret;
       }
     );
-    this.storesHot = StoreListHot;    // 虚拟商家数据（测试）
-    this.storesNew = StoreListNew;    // 虚拟商家数据（测试）
+    this.storeServ.queryHotlist().subscribe(    // 获取“热门推荐”
+      (ret: any) => {
+        console.log('ret==', ret);
+
+        // this.storesHot = StoreListHot;    // 虚拟商家数据（测试）
+        this.storesHot = ret;
+      }
+    );
+    this.storeServ.queryNewlist().subscribe(    // 获取“最新入驻”
+      (ret: any) => {
+        console.log('ret==', ret);
+
+        // this.storesNew = StoreListNew;    // 虚拟商家数据（测试）
+        this.storesNew = ret;
+      }
+    );
   }
 
   joinAsMember() {

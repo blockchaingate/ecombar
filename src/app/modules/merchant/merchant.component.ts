@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
@@ -72,6 +73,9 @@ export class MerchantComponent implements OnInit {
           if(ret && ret.length > 0) {
             const store = ret[0];
             this.dataServ.changeMyStore(store);
+
+            // this.merchant = MyStore;    // 虚拟商家信息（测试）
+            // this.merchant = ret;
           }
         });
 
@@ -90,6 +94,7 @@ export class MerchantComponent implements OnInit {
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         this.wallet = wallet;
+
       }
     );
     this.menuItems = [

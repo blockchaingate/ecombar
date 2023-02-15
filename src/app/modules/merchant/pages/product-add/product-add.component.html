@@ -11,15 +11,15 @@
   </div>
 </div>
 
-<div style="padding: 0 20px;" *ngIf="!noWallet">  <!-- class="container" -->
-  <h1>{{'New product' | translate}}</h1>
+<div class="myNavTabs" style="padding: 0 20px;" *ngIf="!noWallet">  <!-- class="container" -->
+  <h1>{{ 'New product' | translate }}</h1>
   <!-- <hr> -->
 
   <div class="text-right my-3">
-    <button type="button" class="btn btn-lg mybtn-fix" (click)="saveProduct()">&nbsp;&nbsp;{{'Save' | translate}}&nbsp;&nbsp;</button>
+    <button type="button" class="btn btn-lg myButton-fix" (click)="saveProduct()">&nbsp;&nbsp; {{ 'Save' | translate }} &nbsp;&nbsp;</button>
   </div>
 
-  <ul class="nav nav-tabs">
+  <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
     <li *ngIf="NavTab == 'General'" class="nav-item">
       <a class="nav-link active" href="javascript:;">General</a>
     </li> 
@@ -40,12 +40,15 @@
     <li *ngIf="NavTab != 'Image'" class="nav-item" (click)="changeNavTab('Image')">
       <a class="nav-link" href="javascript:;">Image</a>
     </li> 
+
+    <li class="nav-item"></li>  <!-- 右边留空 -->
+    <li class="nav-item"></li>
   </ul>
 
   <!-- General -->
   <div *ngIf="NavTab == 'General'">
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
       <li *ngIf="currentTab == 'default'" class="nav-item">
         <a class="nav-link active" href="javascript:;">English</a>
       </li> 
@@ -64,9 +67,11 @@
       <li *ngIf="currentTab != 'Traditional Chinese'" class="nav-item" (click)="changeTab('Traditional Chinese')">
         <a class="nav-link" href="javascript:;">繁體中文</a>
       </li> 
+      <li class="nav-item"></li>  <!-- 右边留空 -->
+      <li class="nav-item"></li>
     </ul>
 
-    <div class="w-form row">
+    <div class="work-form row">
   
       <!-- 缺省英文 -->
       <div class="w-100" *ngIf="currentTab == 'default'">  <!-- 100% 宽度 -->
@@ -104,25 +109,25 @@
         <dl>
           <dt>标题</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="输入产品标题" [(ngModel)]="title" name="title" required>
+            <input type="text" class="inp w-75" placeholder="输入产品标题" [(ngModel)]="titleChinese" name="titleChinese" required>
           </dd>
         </dl>
         <dl>
           <dt>子标题</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="输入产品子标题" [(ngModel)]="subtitle" name="subtitle">
+            <input type="text" class="inp w-75" placeholder="输入产品子标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">
           </dd>
         </dl>
         <dl>
           <dt>内容</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detail' placeholder="输入产品内容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detailChinese' placeholder="输入产品内容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
           </dd>
         </dl>
         <dl>
           <dt>描述</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="输入产品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='descriptionChinese' placeholder="输入产品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
           </dd>
         </dl>
 
@@ -134,25 +139,25 @@
         <dl>
           <dt>標題</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="輸入產品標題" [(ngModel)]="title" name="title" required>
+            <input type="text" class="inp w-75" placeholder="輸入產品標題" [(ngModel)]="titleTradition" name="titleTradition" required>
           </dd>
         </dl>
         <dl>
           <dt>子標題</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="輸入產品子標題" [(ngModel)]="subtitle" name="subtitle">
+            <input type="text" class="inp w-75" placeholder="輸入產品子標題" [(ngModel)]="subtitleTradition" name="subtitleTradition">
           </dd>
         </dl>
         <dl>
           <dt>內容</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detail' placeholder="輸入產品內容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detailTradition' placeholder="輸入產品內容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
           </dd>
         </dl>
         <dl>
           <dt>描述</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="輸入產品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='descriptionTradition' placeholder="輸入產品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
           </dd>
         </dl>
 
@@ -164,7 +169,7 @@
 
   <!-- Data -->
   <div *ngIf="NavTab == 'Data'">
-    <div class="w-form row">
+    <div class="work-form row">
 
       <legend>Price</legend>
 
@@ -222,7 +227,7 @@
             </div> 
           </div>
           <div class="pt-2">
-            <button class="btn" (click)="addContent()">{{'Add' | translate}}</button>
+            <button class="btn" (click)="addContent()">{{ 'Add' | translate }}</button>
           </div> -->
         </dd>
       </dl>
@@ -261,7 +266,7 @@
           <div>
             <!-- 50% 宽度, 按钮 -->
             <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="color" name="color"> &nbsp;&nbsp;
-            <button class="button mybtn" (click)="addColor()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+            <button class="button myButton" (click)="addColor()">&nbsp;&nbsp; {{ 'Add' | translate }} &nbsp;&nbsp;</button>
           </div>
         </dd>
       </dl>
@@ -284,7 +289,7 @@
           <div>
             <!-- 50% 宽度, 按钮 -->
             <input type="text" class="inp w-75" placeholder="Enter Size" [(ngModel)]="size" name="size"> &nbsp;&nbsp;
-            <button class="button mybtn" (click)="addSize()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+            <button class="button myButton" (click)="addSize()">&nbsp;&nbsp; {{ 'Add' | translate }} &nbsp;&nbsp;</button>
           </div>
         </dd>
       </dl>
@@ -304,7 +309,7 @@
             </select>
           </div> -->
           <div class="btn-group" dropdown>
-            <button id="button-animated" dropdownToggle type="button" class="button mybtn dropdown-toggle"
+            <button id="button-animated" dropdownToggle type="button" class="button myButton dropdown-toggle"
                     aria-controls="dropdown-animated">
               {{ selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate) }} <span class="caret"></span>
             </button>
@@ -348,7 +353,7 @@
           <!-- 30% 宽度, 30% 宽度, 按钮 -->
           <input type="text" class="inp w-35" placeholder="Enter Name" [(ngModel)]="specName" name="specName"> &nbsp;&nbsp;
           <input type="text" class="inp w-35" placeholder="Enter Value" [(ngModel)]="specValue" name="specValue"> &nbsp;&nbsp;
-          <button class="button mybtn" (click)="addSpec()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+          <button class="button myButton" (click)="addSpec()">&nbsp;&nbsp; {{ 'Add' | translate }} &nbsp;&nbsp;</button>
         </dd>
       </dl>
 
@@ -367,7 +372,7 @@
           </div>
           <!-- 50% 宽度, 按钮 -->
           <input type="text" class="inp w-75" placeholder="Enter Feature" [(ngModel)]="feature" name="feature"> &nbsp;&nbsp;
-          <button class="button mybtn" (click)="addFeature()">&nbsp;&nbsp;{{'Add' | translate}}&nbsp;&nbsp;</button>
+          <button class="button myButton" (click)="addFeature()">&nbsp;&nbsp; {{ 'Add' | translate }} &nbsp;&nbsp;</button>
         </dd>
       </dl>
 
@@ -377,7 +382,7 @@
         <dt>Locked days</dt>
         <dd class="text-left">
           <div class="btn-group w-75" dropdown>  <!-- 75% 宽 -->
-            <button id="button-basic" dropdownToggle type="button" class="button mybtn dropdown-toggle"
+            <button id="button-basic" dropdownToggle type="button" class="button myButton dropdown-toggle"
                     aria-controls="dropdown-basic">
               {{ lockedDays }} <span class="caret"></span>
             </button>
@@ -396,7 +401,7 @@
 
   <!-- Image -->
   <div *ngIf="NavTab == 'Image'">
-    <div class="w-form row">
+    <div class="work-form row">
 
       <legend>Image</legend>
 
@@ -493,7 +498,7 @@
                       </div>                      
                     </div>
                     <div class="pt-2">
-                      <button class="btn" (click)="addSpec()">{{'Add' | translate}}</button>
+                      <button class="btn" (click)="addSpec()">{{ 'Add' | translate }}</button>
                     </div>
                   </div> 
                 </div>
@@ -523,7 +528,7 @@
                       </div>
                     </div>
                     <div class="pt-2">
-                      <button class="btn" (click)="addFeature()">{{'Add' | translate}}</button>
+                      <button class="btn" (click)="addFeature()">{{ 'Add' | translate }}</button>
                     </div>
                   </div> 
                 </div>
@@ -601,7 +606,7 @@
                       </div>
                     </div>
                     <div class="pt-2">
-                      <button class="btn" (click)="addColor()">{{'Add' | translate}}</button>
+                      <button class="btn" (click)="addColor()">{{ 'Add' | translate }}</button>
                     </div>
                   </div>
                 </div>
@@ -631,7 +636,7 @@
                       </div>
                     </div>
                     <div class="pt-2">
-                      <button class="btn" (click)="addSize()">{{'Add' | translate}}</button>
+                      <button class="btn" (click)="addSize()">{{ 'Add' | translate }}</button>
                     </div>
                   </div>
                 </div>
@@ -759,7 +764,7 @@
                     </div>
 
                     <div class="pt-2">
-                      <button class="btn" (click)="addKeyword()">{{'Add' | translate}}</button>
+                      <button class="btn" (click)="addKeyword()">{{ 'Add' | translate }}</button>
                     </div>
                   </div>
 

@@ -1,32 +1,57 @@
 
-<div class="container">
-    <div class="text-right">
-      <button class="btn" routerLink="/merchant/brand/add" routerLinkActive="active">{{'New' | translate}}</button>
+
+<h1>{{'Brands' | translate}}</h1>
+
+<div class="px-2">
+  <div class="text-right my-3">
+    <button type="button" class="btn btn-lg myButton-fix" routerLink="/merchant/brand/add" routerLinkActive="active">&nbsp;&nbsp; {{'New' | translate}} &nbsp;&nbsp;</button>
   </div>
-  
-    <ul class="responsive-table">
-      <li class="table-header">
-        <div class="col col-3">{{'Name' | translate}}</div>
-        <div class="col col-3">{{'Sequence' | translate}}</div>
-        <div class="col col-3"></div>
-      </li>
-      <li class="table-row" *ngFor="let brand of brands">
-        <div class="col col-3" data-label="Name">{{brand.name | translateField}}</div>
-        <div class="col col-3" data-label="Sequance">{{brand.sequence}}</div>
-        <div class="col col-3 text-right" data-label="Operations">
-  
-          <div class="d-inline-block px-2">
-            <a (click)="editBrand(brand._id)">
-              <img src="/assets/svg/edit.svg">
-            </a>
-          </div>
-    
-          <div class="d-inline-block px-2">
-            <a (click)="deleteBrand(brand._id)">
-              <img src="/assets/svg/delete.svg">
-            </a>
-          </div>        
+
+  <dl class="work-list row">
+    <dt class="col-3">{{ 'Name' | translate }}</dt>
+    <dt class="col-3">{{ 'Sequence' | translate }}</dt>
+    <dt class="col"></dt>
+  </dl>
+
+  <dl class="work-list row" *ngFor="let brand of brands">
+    <dd class="col-3">{{ brand.name | translateField }}</dd>
+    <dd class="col-3">{{ brand.sequence }}</dd>
+    <dd class="col">
+      <div class="d-inline-block px-2">
+        <a (click)="editBrand(brand._id)">
+          <img src="/assets/svg/edit.svg">
+        </a>
+      </div>
+      <div class="d-inline-block px-2">
+        <a (click)="deleteBrand(brand._id)">
+          <img src="/assets/svg/delete.svg">
+        </a>
+      </div> 
+    </dd>
+  </dl>
+
+  <!-- <ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-3">{{ 'Name' | translate }}</div>
+      <div class="col col-3">{{ 'Sequence' | translate }}</div>
+      <div class="col col-3"></div>
+    </li>
+    <li class="table-row" *ngFor="let brand of brands">
+      <div class="col col-3" data-label="Name">{{ brand.name | translateField }}</div>
+      <div class="col col-3" data-label="Sequance">{{ brand.sequence }}</div>
+      <div class="col col-3 text-right" data-label="Operations">
+        <div class="d-inline-block px-2">
+          <a (click)="editBrand(brand._id)">
+            <img src="/assets/svg/edit.svg">
+          </a>
         </div>
-      </li>
-    </ul>
-  </div>
+        <div class="d-inline-block px-2">
+          <a (click)="deleteBrand(brand._id)">
+            <img src="/assets/svg/delete.svg">
+          </a>
+        </div> 
+      </div>
+    </li>
+  </ul> -->
+
+</div>

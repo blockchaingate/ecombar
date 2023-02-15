@@ -3,12 +3,12 @@
 
 <div class="px-2">
   <div class="text-right my-3">
-    <button type="button" class="btn btn-lg mybtn-fix" routerLink="/merchant/category/add" routerLinkActive="active">&nbsp;&nbsp;{{'New' | translate}}&nbsp;&nbsp;</button>
+    <button type="button" class="btn btn-lg myButton-fix" routerLink="/merchant/category/add" routerLinkActive="active">&nbsp;&nbsp; {{ 'New' | translate }} &nbsp;&nbsp;</button>
   </div>
 
   <dl class="work-list row">
-    <dt class="col-3">{{'Name' | translate}}</dt>
-    <dt class="col-3">{{'Sequence' | translate}}</dt>
+    <dt class="col-3">{{ 'Name' | translate }}</dt>
+    <dt class="col-3">{{ 'Sequence' | translate }}</dt>
     <dt class="col"></dt>
   </dl>
 
@@ -31,8 +31,8 @@
 
   <!-- <ul class="responsive-table">
     <li class="table-header">
-      <div class="col col-3">{{'Name' | translate}}</div>
-      <div class="col col-3">{{'Sequence' | translate}}</div>
+      <div class="col col-3">{{ 'Name' | translate }}</div>
+      <div class="col col-3">{{ 'Sequence' | translate }}</div>
       <div class="col col-3"></div>
     </li>
     <li class="table-row" *ngFor="let category of categories">

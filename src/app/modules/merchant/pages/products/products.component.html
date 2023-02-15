@@ -3,7 +3,7 @@
 
 <div class="px-2" *ngIf="store">
   <div class="text-right my-3" *ngIf="store.status == 2">
-    <button type="button" class="btn btn-lg mybtn-fix" (click)="addNew()">&nbsp;&nbsp;{{'New' | translate}}&nbsp;&nbsp;</button>
+    <button type="button" class="btn btn-lg myButton-fix" (click)="addNew()">&nbsp;&nbsp; {{ 'New' | translate }} &nbsp;&nbsp;</button>
   </div>
 
   <dl class="work-list row">

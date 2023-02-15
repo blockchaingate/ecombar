@@ -1,6 +1,27 @@
 
-// 填写发布信息
-.w-form {
+// ---------- 我的 nav-tabs 菜单 ----------
+
+.myNavTabs .nav-tabs li a {
+  color:#a5a5a5;  // 未选颜色
+}
+.myNavTabs .nav-tabs li a:hover {
+  color: #7f7f7f;    // 深一点点
+  border-color:#eee #eee transparent #eee
+}
+.myNavTabs .nav-tabs li a.active {
+  color:#333;  // 选中颜色
+}
+.myNavTabs .nav-tabs li a.active :hover {
+  color:#333;  // 颜色不变  // 放 a:hover 后
+}
+
+.myNavTabs .nav-tabs { 
+  margin-bottom:25px;  // 下面间隙
+}
+
+// ---------- 我的 work-form 表单 ----------
+
+.work-form {
   font-size: 16px; 
   color: #3b3b3b; 
   line-height: 34px; 
@@ -8,35 +29,69 @@
   margin: 20px 0;
   // border: solid 1px #eee;  // 灰色边框
 }
-.w-form dl {
+.work-form dl {
   width: 100%;  // 占据整行
 }
-.w-form dt {
+.work-form dt {
     float: left; 
     width: 150px;  // 120px
     padding: 6px 0 8px; 
     text-align: right;
 }
-// .w-form dt span { color: #f00; }
-.w-form dd {
+.work-form dt span { 
+  color: #f00; 
+}
+.work-form dd {
   margin-left: 160px;  // 125px
   padding: 5px 20px 5px 10px;
 }
+// 单行文本
+.work-form .inp {
+  // float: left;
+  height: 36px;
+  background-color: #ffffff; 
+  border: 1px solid #d8d8d8; 
+  border-radius: 5px; 
+  margin: 0px;
+}
 
-.mybtn {  // 自定义按钮
+// ---------- 自定义按钮 ----------
+
+.myButton {  // 自定义按钮
   color: white;
   background-color: #f60; 
   border: 0;
   border-radius: 0%;
 }
-.mybtn:hover {
+.myButton:hover {
   cursor: pointer;  // 手形光标
 }
 
-.mybtn-fix {  // 自定义按钮(圆角)
+.myButton-fix {  // 自定义按钮(圆角)
   color: white;
   background-color: #f60; 
   border: 0;
   border-radius: 15%;  // 圆角
 }
 
+// ---------- 其它样式 ----------
+
+legend {
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+}
+
+.work-list {
+  width: 100%;
+  font-size: 16px; 
+  color: #3b3b3b; 
+  background-color: #ffffff; 
+  line-height: 34px; 
+  margin: 10px 0;
+  border-bottom: solid 1px #eee;  // 灰色下边框
+}
+
+.work-list dt {
+  background-color: #f7f7f7;  // 背景灰色
+}

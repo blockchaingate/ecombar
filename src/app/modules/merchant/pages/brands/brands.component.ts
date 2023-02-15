@@ -11,7 +11,11 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
   selector: 'app-admin-brands',
   providers: [BrandService, UserService],
   templateUrl: './brands.component.html',
-  styleUrls: ['./brands.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './brands.component.scss',
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class BrandsComponent implements OnInit {
   brands: any;

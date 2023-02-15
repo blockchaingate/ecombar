@@ -1,12 +1,12 @@
-<div style="padding: 0 20px;">    <!-- class="container" -->
+
+<div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
   <h1>{{'New Category' | translate}}</h1>
-  <!-- <hr> -->
 
   <div class="text-right py-2">
-    <button type="button" class="btn btn-lg mybtn-fix" (click)="addCategory()">&nbsp;&nbsp;{{(id ? 'Update' : 'Add') | translate}}&nbsp;&nbsp;</button>
+    <button type="button" class="btn btn-lg myButton-fix" (click)="addCategory()">&nbsp;&nbsp; {{ (id ? 'Update' : 'Add') | translate }} &nbsp;&nbsp;</button>
   </div>
 
-  <ul class="nav nav-tabs">
+  <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
     <li *ngIf="NavTab == 'General'" class="nav-item">
       <a class="nav-link active" href="javascript:;">General</a>
     </li> 
@@ -20,12 +20,16 @@
     <li *ngIf="NavTab != 'Data'" class="nav-item" (click)="changeNavTab('Data')">
       <a class="nav-link" href="javascript:;">Data</a>
     </li> 
+
+    <li class="nav-item"></li>  <!-- 右边留空 -->
+    <li class="nav-item"></li>
+    <li class="nav-item"></li>
   </ul>
 
   <!-- General -->
   <div *ngIf="NavTab == 'General'">
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
       <li *ngIf="currentTab == 'default'" class="nav-item">
         <a class="nav-link active" href="javascript:;">English</a>
       </li> 
@@ -44,9 +48,11 @@
       <li *ngIf="currentTab != 'Traditional Chinese'" class="nav-item" (click)="changeTab('Traditional Chinese')">
         <a class="nav-link" href="javascript:;">繁體中文</a>
       </li> 
+      <li class="nav-item"></li>  <!-- 右边留空 -->
+      <li class="nav-item"></li>
     </ul>
 
-    <div class="w-form row">
+    <div class="work-form row">
 
       <!-- 缺省英文 -->
       <div class="w-100" *ngIf="currentTab == 'default'">  <!-- 100% 宽度 -->
@@ -55,12 +61,6 @@
           <dt>Name</dt>
           <dd class="text-left">
             <input type="text" class="inp w-75" placeholder="Enter category name" [(ngModel)]="name" name="name" required>
-          </dd>
-        </dl>
-        <dl>
-          <dt>Sequence</dt>
-          <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="Enter category sequence" [(ngModel)]="sequence" name="sequence" required>
           </dd>
         </dl>
         
@@ -72,13 +72,7 @@
         <dl>
           <dt>名称</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="输入类别名称" [(ngModel)]="name" name="name" required>
-          </dd>
-        </dl>
-        <dl>
-          <dt>序列</dt>
-          <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="输入类别序列" [(ngModel)]="sequence" name="sequence" required>
+            <input type="text" class="inp w-75" placeholder="输入类别名称" [(ngModel)]="nameChinese" name="nameChinese" required>
           </dd>
         </dl>
 
@@ -90,13 +84,7 @@
         <dl>
           <dt>名稱</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="輸入類別名稱" [(ngModel)]="name" name="name" required>
-          </dd>
-        </dl>
-        <dl>
-          <dt>序列</dt>
-          <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="輸入類別序列" [(ngModel)]="sequence" name="sequence" required>
+            <input type="text" class="inp w-75" placeholder="輸入類別名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
           </dd>
         </dl>
 
@@ -107,13 +95,20 @@
 
   <!-- Data -->
   <div *ngIf="NavTab == 'Data'">
-    <div class="w-form row">
+    <div class="work-form row">
+
+      <dl>
+        <dt>Sequence</dt>
+        <dd class="text-left">
+          <input type="text" class="inp w-75" placeholder="Enter category sequence" [(ngModel)]="sequence" name="sequence" required>
+        </dd>
+      </dl>
 
       <dl>
         <dt>Category</dt>
         <dd class="text-left">
           <div class="btn-group" dropdown>
-            <button id="button-animated" dropdownToggle type="button" class="button mybtn dropdown-toggle"
+            <button id="button-animated" dropdownToggle type="button" class="button myButton dropdown-toggle"
                     aria-controls="dropdown-animated">
               {{ selectedCategory ? (selectedCategory.name | translateField) : ('Select Category' | translate) }} <span class="caret"></span>
             </button>
@@ -139,4 +134,3 @@
   </div>
 
 </div>
-  

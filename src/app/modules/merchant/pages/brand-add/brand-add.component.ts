@@ -11,7 +11,10 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-admin-brand-add',
   providers: [],
   templateUrl: './brand-add.component.html',
-  
+  styleUrls: [
+    './brand-add.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class BrandAddComponent implements OnInit {
   modalRef: BsModalRef;
@@ -20,7 +23,8 @@ export class BrandAddComponent implements OnInit {
   name: string;
   nameChinese: string;
   nameTradition: string;
-  currentTab: string;
+  NavTab: string;    // 导航 Tab
+  currentTab: string;    // 语言 Tab
   id: string;
 
   constructor(
@@ -35,7 +39,8 @@ export class BrandAddComponent implements OnInit {
 
   ngOnInit() {
  
-    this.currentTab = 'default';
+    this.NavTab = 'General';    // 缺省页面
+    this.currentTab = 'default';    // 缺省页面
     this.dataServ.currentWallet.subscribe(
       (wallet: string) => {
         this.wallet = wallet;
@@ -59,6 +64,10 @@ export class BrandAddComponent implements OnInit {
         }
       );
     }
+  }
+
+  changeNavTab(tabName: string) {
+    this.NavTab = tabName;
   }
 
   changeTab(tabName: string) {

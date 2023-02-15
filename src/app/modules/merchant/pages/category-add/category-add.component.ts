@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/modules/shared/services/category.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +14,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   selector: 'app-admin-category-add',
   providers: [CategoryService],
   templateUrl: './category-add.component.html',
-  styleUrls: ['./category-add.component.scss']
+  styleUrls: [
+    './category-add.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class CategoryAddComponent implements OnInit {
   modalRef: BsModalRef;

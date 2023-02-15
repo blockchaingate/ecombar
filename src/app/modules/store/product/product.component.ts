@@ -60,6 +60,8 @@ export class ProductComponent implements OnInit {
   rating2: number;
   rating1: number;
   wallet: any;
+  NavTab: string;    // 导航 Tab
+  currentTab: string;    // 语言 Tab
 
   selectedImage: string;
   constructor(
@@ -119,7 +121,6 @@ export class ProductComponent implements OnInit {
       }
     );
 
-    
     this.overall = 0;
     this.rating1 = 0;
     this.rating2 = 0;
@@ -169,8 +170,6 @@ export class ProductComponent implements OnInit {
         }
     );
 
-
-
     this.quantity = 1;
 
     this.commentServ.getComments(this.id).subscribe(
@@ -209,6 +208,17 @@ export class ProductComponent implements OnInit {
       }
     );
 
+    this.NavTab = 'Description';    // 缺省页面
+    this.currentTab = 'default';    // 缺省页面
+
+  }
+
+  changeNavTab(tabName: string) {
+    this.NavTab = tabName;
+  }
+
+  changeTab(tabName: string) {
+    this.currentTab = tabName;
   }
 
   decQuantity() {

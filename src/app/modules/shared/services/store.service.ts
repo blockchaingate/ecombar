@@ -14,7 +14,7 @@ export class StoreService {
     return this.http.get('stores');
   }
 
-  getStoresByAddress(address: string) {
+  getStoresByAddress( address: string ) {
     const url = baseUrl + 'merchantreferral/owner/' + address + '/1000/0';
     console.log('url====', url);
     return this.http.get(url);
@@ -31,6 +31,17 @@ export class StoreService {
 
   getStoresInEcombar() {
     const url = baseUrl + 'merchantreferral/ecombar/1000/0';
+    return this.http.get(url);
+  }
+
+  queryHotlist() {    // 获取“热门推荐”
+    const url = baseUrl + 'merchantreferral/hot';
+    return this.http.get(url);
+
+  }
+
+  queryNewlist() {    // 获取“最新入驻”
+    const url = baseUrl + 'merchantreferral/new';
     return this.http.get(url);
   }
 

@@ -1,20 +1,20 @@
 
 <div class="container">
     <div class="text-right">
-      <button class="btn" routerLink="/merchant/top-category-banner/add" routerLinkActive="active">{{'New' | translate}}</button>
+      <button class="btn" routerLink="/merchant/top-category-banner/add" routerLinkActive="active">{{ 'New' | translate }}</button>
   </div>
   
     <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-3">{{'Image' | translate}}</div>
-        <div class="col col-3">{{'Sequence' | translate}}</div>
+        <div class="col col-3">{{ 'Image' | translate }}</div>
+        <div class="col col-3">{{ 'Sequence' | translate }}</div>
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let banner of banners">
         <div class="col col-3" data-label="Title">
-          <img class="img-avatar" src="{{banner.image}}">
+          <img class="img-avatar" src="{{ banner.image }}">
         </div>
-        <div class="col col-3" data-label="Sequance">{{banner.sequence}}</div>
+        <div class="col col-3" data-label="Sequance">{{ banner.sequence }}</div>
         <div class="col col-3 text-right" data-label="Operations">
   
           <div class="d-inline-block px-2">

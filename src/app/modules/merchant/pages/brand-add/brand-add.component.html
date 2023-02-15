@@ -1,41 +1,110 @@
-<div style="border:1px solid #ccc">
-    <div class="container">
-      <h1>{{'New Brand' | translate}}</h1>
-      <hr>
-      
-      <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
-          English
-        </div>
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Simplified Chinese')">
-          简体中文
-        </div>
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Traditional Chinese')">
-          繁體中文
-        </div>
+
+<div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
+  <h1>{{'New Brand' | translate}}</h1>
+
+  <div class="text-right py-2">
+    <button type="button" class="btn btn-lg myButton-fix" (click)="addBrand()">&nbsp;&nbsp; {{(id ? 'Update' : 'Add') | translate}} &nbsp;&nbsp;</button>
+  </div>
+
+  <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
+    <li *ngIf="NavTab == 'General'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">General</a>
+    </li> 
+    <li *ngIf="NavTab != 'General'" class="nav-item" (click)="changeNavTab('General')">
+      <a class="nav-link" href="javascript:;">General</a>
+    </li> 
+
+    <li *ngIf="NavTab == 'Data'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">Data</a>
+    </li> 
+    <li *ngIf="NavTab != 'Data'" class="nav-item" (click)="changeNavTab('Data')">
+      <a class="nav-link" href="javascript:;">Data</a>
+    </li> 
+
+    <li class="nav-item"></li>  <!-- 右边留空 -->
+    <li class="nav-item"></li>
+    <li class="nav-item"></li>
+  </ul>
+
+  <!-- General -->
+  <div *ngIf="NavTab == 'General'">
+
+    <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
+      <li *ngIf="currentTab == 'default'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab != 'default'" class="nav-item" (click)="changeTab('default')">
+        <a class="nav-link" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab == 'Simplified Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Simplified Chinese'" class="nav-item" (click)="changeTab('Simplified Chinese')">
+        <a class="nav-link" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab == 'Traditional Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">繁體中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Traditional Chinese'" class="nav-item" (click)="changeTab('Traditional Chinese')">
+        <a class="nav-link" href="javascript:;">繁體中文</a>
+      </li> 
+      <li class="nav-item"></li>  <!-- 右边留空 -->
+      <li class="nav-item"></li>
+    </ul>
+
+    <div class="work-form row">
+
+      <!-- 缺省英文 -->
+      <div class="w-100" *ngIf="currentTab == 'default'">  <!-- 100% 宽度 -->
+
+        <dl>
+          <dt>Name</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="Enter brand name" [(ngModel)]="name" name="name" required>
+          </dd>
+        </dl>
+        
       </div>
 
-      <div *ngIf="currentTab=='default'">
-        <label for="email"><b>Name</b></label>
-        <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
+      <!-- 简体中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Simplified Chinese'">
 
-        <label for="email"><b>{{'Sequence' | translate}}</b></label>
-        <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
-          
+        <dl>
+          <dt>名称</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="输入品牌名称" [(ngModel)]="nameChinese" name="nameChinese" required>
+          </dd>
+        </dl>
+
       </div>
-      
-      <div *ngIf="currentTab=='Simplified Chinese'">
-        <label for="email"><b>名称</b></label>
-        <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
-    
+
+      <!-- 繁體中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Traditional Chinese'">
+
+        <dl>
+          <dt>名稱</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="輸入品牌名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
+          </dd>
+        </dl>
+
       </div>
-      <div *ngIf="currentTab=='Traditional Chinese'">
-        <label for="email"><b>名稱</b></label>
-        <input type="text" placeholder="輸入名稱" [(ngModel)]="nameTradition" name="nameTradition">        
-    
-      </div>
-      <div class="text-right py-2">
-        <button class="btn signinbtn" (click)="addBrand()">{{(id?'Update':'Add') | translate}}</button>
-      </div>
+
     </div>
   </div>
+
+  <!-- Data -->
+  <div *ngIf="NavTab == 'Data'">
+    <div class="work-form row">
+
+      <dl>
+        <dt>Sequence</dt>
+        <dd class="text-left">
+          <input type="text" class="inp w-75" placeholder="Enter brand sequence" [(ngModel)]="sequence" name="sequence" required>
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+
+</div>

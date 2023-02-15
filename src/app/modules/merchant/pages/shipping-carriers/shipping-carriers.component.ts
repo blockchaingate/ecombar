@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ShippingCarrierService } from 'src/app/modules/shared/services/shipping-carrier.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
@@ -8,11 +9,14 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 
 @Component({
-    selector: 'app-admin-shipping-carriers',
-    providers: [],
-    templateUrl: './shipping-carriers.component.html',
-    styleUrls: ['./shipping-carriers.component.scss']
-  })
+  selector: 'app-admin-shipping-carriers',
+  providers: [],
+  templateUrl: './shipping-carriers.component.html',
+  styleUrls: [
+    './shipping-carriers.component.scss',
+    '../../../../../page.scss'
+  ]
+})
   export class ShippingCarriersComponent implements OnInit{
     shippingCarriers: any;
     wallet: any;
