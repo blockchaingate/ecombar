@@ -18,7 +18,7 @@
       <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
     </dd>
     <dd class="col-3">{{ order.dateCreated | date }}</dd>
-    <dd class="col-3">{{ order.totalToPay }}</dd>
+    <dd class="col-3">{{ order.totalAmount }}</dd>  <!-- 旧值 order.totalToPay -->
     <dd class="col">
       <div>
         {{ getStatus(order) | translate }}
@@ -52,8 +52,8 @@
           </a>
           <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
         </div>
-        <div class="col col-3" data-label="{{ 'Date Created' | translate }}">{{ order.dateCreated | date }}</div>
-        <div class="col col-3" data-label="{{ 'Total' | translate }}">{{ order.totalToPay }}</div>
+        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
+        <div class="col col-3" data-label="{{'Total' | translate}}">{{ order.totalAmount }}</div>
         <div class="col col-3" data-label="{{'Status' | translate}}">
           <div>
             {{ getStatus(order) | translate }}

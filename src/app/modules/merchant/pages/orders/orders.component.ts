@@ -54,9 +54,10 @@ export class OrdersComponent implements OnInit {
         if(walletAddress) {
           this.orderServ.gerMerchantOrders(walletAddress).subscribe(
             (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
+                // if(res && res.ok) {
+                //   this.orders = res._body;
+                // }
+                this.orders = res;
             }
           );
         }
