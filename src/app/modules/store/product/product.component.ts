@@ -366,36 +366,41 @@ export class ProductComponent implements OnInit {
       merchantId: this.storeId
     };
 
-    (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
-      if(res) {
-        if(res.ok) {
-          console.log('res._body=', res._body);
-          const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
-          orderData['objectId'] = objectId; 
+    // (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
+    //   if(res) {
+    //     if(res.ok) {
+    //       console.log('res._body=', res._body);
+    //       const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
+    //       orderData['objectId'] = objectId; 
 
-              const sig = this.kanbanServ.signJsonData(privateKey, orderData);
-              orderData['sig'] = sig.signature;    
-              this.orderServ.create2(orderData).subscribe(
-                (res: any) => {
-                  // console.log('ress from create order', res);
-                  // if (res && res.ok) {
-                  //   const body = res._body;
-                  //   const orderID = body._id;
-                  //   this.cartStoreServ.empty();
+    //           const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+    //           orderData['sig'] = sig.signature;    
+    //           this.orderServ.create2(orderData).subscribe(
+    //             (res: any) => {
+    //               console.log('ress from create order', res);
+    //               if (res && res.ok) {
+    //                 const body = res._body;
+    //                 const orderID = body._id;
+    //                 this.cartStoreServ.empty();
 
-                  //   this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
-                  // }
-                  if (res && res._id) {
-                    const orderID = res._id;
-                    this.cartStoreServ.empty();
-          
-                    this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
-                  }
-                }
-              );
+    //                 this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
+    //               }
+    //             }
+    //           );
+    //       }
+    //   }
+    // });
+
+      this.orderServ.create2(orderData).subscribe(
+        (res: any) => {
+          // console.log('ress from create order', res);
+          if (res && res._id) {
+            const orderID = res._id;
+            this.cartStoreServ.empty();
+            this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
           }
-      }
-    });
+        }
+      );
   }
 
   buyNow(product: any, quantity: number) {
