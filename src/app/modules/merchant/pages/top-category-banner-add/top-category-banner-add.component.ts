@@ -41,7 +41,7 @@ export class TopCategoryBannerAddComponent implements OnInit {
       }
     ); 
     this.images = [];
-    this.currentTab = 'default';
+    this.currentTab = 'default English';
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {

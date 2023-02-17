@@ -93,5 +93,6 @@ legend {
 }
 
 .work-list dt {
-  background-color: #f7f7f7;  // 背景灰色
+  // 可将 style="background-color: #f7f7f7;" 改用 "bg-light"
+  background-color: #f7f7f7;  // 背景灰色 
 }

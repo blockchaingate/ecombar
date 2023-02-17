@@ -30,10 +30,10 @@
   <div *ngIf="NavTab == 'General'">
 
     <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
-      <li *ngIf="currentTab == 'default'" class="nav-item">
+      <li *ngIf="currentTab == 'default English'" class="nav-item">
         <a class="nav-link active" href="javascript:;">English</a>
       </li> 
-      <li *ngIf="currentTab != 'default'" class="nav-item" (click)="changeTab('default')">
+      <li *ngIf="currentTab != 'default English'" class="nav-item" (click)="changeTab('default English')">
         <a class="nav-link" href="javascript:;">English</a>
       </li> 
       <li *ngIf="currentTab == 'Simplified Chinese'" class="nav-item">
@@ -55,7 +55,7 @@
     <div class="work-form row">
 
       <!-- 缺省英文 -->
-      <div class="w-100" *ngIf="currentTab == 'default'">  <!-- 100% 宽度 -->
+      <div class="w-100" *ngIf="currentTab == 'default English'">  <!-- 100% 宽度 -->
 
         <dl>
           <dt>Name</dt>

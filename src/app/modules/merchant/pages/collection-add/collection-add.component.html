@@ -4,7 +4,7 @@
       <hr>
       
       <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default English')">
           English
         </div>
         <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Simplified Chinese')">
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div *ngIf="currentTab=='default'">
+      <div *ngIf="currentTab == 'default English'">
         <div>
           <label for="email"><b>Name</b></label>
           <input type="text" placeholder="Enter collection name" [(ngModel)]="name" name="name" required>

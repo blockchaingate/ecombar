@@ -3,11 +3,11 @@
     <header id="header" class="u-header u-header-left-aligned-nav">
         <div class="u-header__section">
             <!-- Topbar -->
-            <div class="u-header-topbar py-2 d-none d-xl-block bg-primary border-bottom-0">
+            <div class="u-header-topbar py-2 d-none d-xl-block border-bottom-0">  <!-- 去掉 "bg-primary" 黄底色 -->
                 <div class="container">
                     <div class="d-flex align-items-center">
                         <div class="topbar-left">
-                            <a href="/store/{{storeId}}" class="text-gray-70 font-size-13 u-header-topbar__nav-link">{{"Welcome to " | translate}} {{store.name | translateField}}</a>
+                            <a href="/store/{{storeId}}" class="text-gray-70 font-size-16 u-header-topbar__nav-link">{{"Welcome to " | translate}} {{store.name | translateField}}</a>
                         </div>
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
@@ -19,14 +19,14 @@
                                 -->
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
                                     <a href="/store/{{storeId}}/track-order" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
-                                                                                {{"Track Your Order"|translate}}</a>
+                                                                                {{ "Track Your Order" | translate }}</a>
                                 </li>
                                 <li *ngIf="currency" class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
                                     <!-- Account Sidebar Toggle Button -->
                                     <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
                                         data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
                                         <img src="{{getLogo(currency)}}" class="img-logo">&nbsp;
-                                        <a href="/wallet">{{wallet.name}}({{currencyBalance}}{{currency}})</a>
+                                        <a href="/wallet">{{ wallet.name }}({{ currencyBalance }}{{ currency }})</a>
                                         <!-- <span
                                                                                         class="text-primary-darken-5">or</span><a
                                                                                         routerLink="/auth/signin">Sign
@@ -63,7 +63,7 @@
             <!-- End Topbar -->
 
             <!-- Logo-Search-header-icons -->
-            <div class="py-2 py-xl-5 bg-primary">
+            <div class="py-2 py-xl-5">  <!-- 去掉 "bg-primary" 黄底色 -->
                 <div class="container my-0dot5 my-xl-0">
                     <div class="row align-items-center">
                         <!-- Logo-offcanvas-menu -->
@@ -72,11 +72,8 @@
                             <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                                 <!-- Logo -->
                                 <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center" routerLink="/store/{{storeId}}" aria-label="Electro">
-                                    <img class="main-logo" src="{{store.image ? store.image : '/assets/images/logo/ecombar-logo.png'}}" />
-                                    <div class="logo-text">{{store.name | translateField}}</div>
-
-
-
+                                    <img class="main-logo" src="{{ store.image ? store.image : '/assets/images/logo/ecombar-logo.png' }}" />
+                                    <div class="logo-text">&nbsp;&nbsp;{{ store.name | translateField }}</div>
                                 </a>
                                 <!-- End Logo -->
 
@@ -132,15 +129,15 @@
                         <!-- Search Bar -->
                         <div class="col d-none d-xl-block">
                             <form class="js-focus-state" (ngSubmit)="onSearch()">
-                                <label class="sr-only" for="searchproduct">{{'Search'|translate}}</label>
+                                <label class="sr-only" for="searchproduct">{{ 'Search' | translate }}</label>
                                 <div class="input-group">
-                                    <input type="text" name="searchText" [(ngModel)]="searchText" class="form-control py-2 pl-5 font-size-15 border-right-0 height-42 border-width-0 rounded-left-pill border-primary" name="email" id="searchproduct-item" placeholder="{{'Search for Products'|translate}}" aria-label="Search for Products"
-                                        aria-describedby="searchProduct1" required>
+                                    <input type="text" name="searchText" [(ngModel)]="searchText" class="form-control py-2 pl-5 font-size-15 rounded-left-pill border-dark" name="email" id="searchproduct-item" placeholder="{{ 'Search for Products' | translate }}" aria-label="Search for Products"
+                                        aria-describedby="searchProduct1" required>  <!-- 删除 "border-primary" -->  <!-- "border-right-0 height-42 border-width-0" -->
                                     <div class="input-group-append" *ngIf="categories">
                                         <!-- Select -->
-                                        <select [(ngModel)]="categoryId" name="categoryId" class="js-select selectpicker dropdown-select custom-search-categories-select bg-white" data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
+                                        <select [(ngModel)]="categoryId" name="categoryId" class="js-select selectpicker dropdown-select custom-search-categories-select border-dark bg-white" data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
                                             <option value="" selected>{{"All Categories"|translate}}</option>
-                                            <option *ngFor="let category of categories" value="{{category._id}}">{{category.category | translateField}}</option>
+                                            <option *ngFor="let category of categories" value="{{category._id}}">{{ category.category | translateField }}</option>
                                         </select>
                                         <!-- End Select -->
                                         <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill" type="submit" id="searchProduct1" routerLinkActive="router-link-active">
@@ -211,26 +208,24 @@
             <!-- End Logo-Search-header-icons -->
 
             <!-- Primary-menu-wide -->
-            <div class="d-none d-xl-block bg-primary border-color-2">
+            <div class="pb-3 d-none d-xl-block">  <!-- 去掉 "bg-primary border-color-2" 黄底色，撑开底部 -->
                 <div class="container">
                     <div class="min-height-45">
                         <!-- Nav -->
                         <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--wide u-header__navbar--no-space">
                             <!-- Navigation -->
                             <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
-                                <ul class="navbar-nav u-header__navbar-nav">
-                                    <li class="nav-item hs-has-mega-menu u-header__nav-item">
-                                        <a class="nav-link u-header__nav-link " href="/store/{{storeId}}">{{'Home'|translate}}</a>
+                                <ul class="navbar-nav align-items-end">  <!-- 靠下对齐 -->  <!-- "u-header__navbar-nav" -->
+                                    <li class="nav-item font-size-20">  <!-- "hs-has-mega-menu u-header__nav-item" -->
+                                        <a class="nav-link u-header__nav-link" href="/store/{{storeId}}">{{ 'Home' | translate }}</a>
                                     </li>
-                                    <li *ngFor="let category of categories" class="nav-item hs-has-mega-menu u-header__nav-item">
-                                        <a class="nav-link u-header__nav-link u-header__nav-link-toggle" href="/store/{{storeId}}/category/{{category._id}}">{{category.category | translateField}}</a>
-                                        <div class="hs-mega-menu w-100 u-header__sub-menu"
-aria-labelledby="smartphonesMegaMenu">
-                                        <app-sub-categories [storeId]="storeId" [category]="category"></app-sub-categories>
+                                    <li *ngFor="let category of categories" class="nav-item m-1">  <!-- "hs-has-mega-menu u-header__nav-item" -->
+                                        <!-- "nav-link u-header__nav-link u-header__nav-link-toggle" -->
+                                        <a class="nav-link text-center" href="/store/{{storeId}}/category/{{category._id}}">{{ category.category | translateField }}</a>
+                                        <div class="w-100 border rounded" aria-labelledby="smartphonesMegaMenu">  <!-- 圆角边框 -->  <!-- "hs-mega-menu u-header__sub-menu" -->
+                                            <app-sub-categories [storeId]="storeId" [category]="category"></app-sub-categories>
                                         </div>
                                     </li>
-
-
                                 </ul>
                             </div>
                             <!-- End Navigation -->

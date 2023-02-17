@@ -47,7 +47,7 @@ export class CollectionAddComponent implements OnInit {
     this.products = [];
     this.collectionProducts = [];
     this.productId = '';
-    this.currentTab = 'default';
+    this.currentTab = 'default English';
     this.dataServ.currentWallet.subscribe(
       (wallet: string) => {
         this.wallet = wallet;

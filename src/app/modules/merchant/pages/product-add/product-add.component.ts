@@ -184,7 +184,7 @@ export class ProductAddComponent implements OnInit {
 
     ];
     this.NavTab = 'General';    // 缺省页面
-    this.currentTab = 'default';    // 缺省页面
+    this.currentTab = 'default English';    // 缺省页面
     this.currencies = currencies;
 
     this.dataServ.currentWallet.subscribe(

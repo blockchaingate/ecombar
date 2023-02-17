@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { ActivatedRoute } from '@angular/router';
@@ -209,7 +210,7 @@ export class ProductComponent implements OnInit {
     );
 
     this.NavTab = 'Description';    // 缺省页面
-    this.currentTab = 'default';    // 缺省页面
+    this.currentTab = 'default English';    // 缺省页面
 
   }
 
@@ -371,10 +372,7 @@ export class ProductComponent implements OnInit {
       transAmount: this.product.price * Number(this.quantity)
     };
 
-
-
-
-
+    
     (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
       if(res) {
         if(res.ok) {
@@ -400,10 +398,7 @@ export class ProductComponent implements OnInit {
       }
     });
 
-
-
-
-
+    
   }
 
   buyNow(product: any, quantity: number) {

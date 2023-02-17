@@ -42,153 +42,153 @@ import { ShippingCarriersComponent } from './pages/shipping-carriers/shipping-ca
 import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shipping-carrier-add.component';
 
 const routes: Routes = [
-  {
+{
     path: '', component: MerchantComponent,
     children: [
-      {
-        path: 'dashboard', component: DashboardComponent
-      },
-      {
-        path: 'users', component: UsersComponent
-      },
-      {
-        path: 'address', component: AddressComponent
-      },   
-      {
-        path: 'products', component: ProductsComponent
-      },
-      {
-        path: 'main-layout', component: MainLayoutComponent
-      },    
-      {
-        path: 'main-layout/add', component: MainLayoutAddComponent
-      },   
-      {
-        path: 'main-layout/:id/edit', component: MainLayoutAddComponent
-      },                 
-      {
-        path: 'merchant-applications', component: MerchantApplicationsComponent
-      },      
-      {
-        path: 'orders', component: OrdersComponent
-      }, 
-      {
-        path: 'newsletters', component: NewslettersComponent
-      }, 
-      {
-        path: 'shipping/:orderID', component: ShippingComponent
-      },   
-      {
-        path: 'ships', component: ShipsComponent
-      },                    
-      {
-        path: 'product/add', component: ProductAddComponent
-      },
-      {
-        path: 'merchant-info', component: MerchantInfoComponent
-      },
-      {
-        path: 'profile', component: ProfileComponent
-      },     
-     
-      {
-        path: 'product/:id/edit', component: ProductAddComponent
-      },
-      {
-        path: 'categories', component: CategoriesComponent
-      },
-      {
-        path: 'category/add', component: CategoryAddComponent
-      },
-      {
-        path: 'category/:id/edit', component: CategoryAddComponent
-      },
-      {
-        path: 'store', component: StoreComponent
-      },     
-      {
-        path: 'brands', component: BrandsComponent
-      },
-      {
-        path: 'brand/add', component: BrandAddComponent
-      },
-      {
-        path: 'brand/:id/edit', component: BrandAddComponent
-      },      
-      {
-        path: 'banners', component: BannersComponent
-      },
-      {
-        path: 'banner/add', component: BannerAddComponent
-      },
-      {
-        path: 'banner/:id/edit', component: BannerAddComponent
-      },
-      {
-        path: 'small-banners', component: SmallBannersComponent
-      },
-      {
-        path: 'small-banner/add', component: SmallBannerAddComponent
-      },
-      {
-        path: 'top-category-banners', component: TopCategoryBannersComponent
-      },
-      {
-        path: 'top-category-banner/add', component: TopCategoryBannerAddComponent
-      },
-      {
-        path: 'small-banner/:id/edit', component: SmallBannerAddComponent
-      },
-      {
-        path: 'features', component: FeaturesComponent
-      },
-      {
-        path: 'feature/add', component: FeatureAddComponent
-      },
-      {
-        path: 'feature/:id/edit', component: FeatureAddComponent
-      },
-      {
-        path: 'collections', component: CollectionsComponent
-      },
-      {
-        path: 'collection/add', component: CollectionAddComponent
-      },
-      {
-        path: 'collection/:id/edit', component: CollectionAddComponent
-      },
-      {
-        path: 'user/:id/edit', component: UserAddComponent
-      },
-      {
-        path: 'merchants', component: MerchantsComponent
-      },
-      {
-        path: 'customer-service', component: CustomerServiceComponent
-      },
-      {
-        path: 'returns-policy', component: ReturnsPolicyComponent
-      },
-      {
-        path: 'faq', component: FaqComponent
-      },    
-      {
-        path: 'shipping-carriers', component: ShippingCarriersComponent
-      },
-      {
-        path: 'shipping-carrier/add', component: ShippingCarrierAddComponent
-      },
-      {
-        path: 'shipping-carrier/:id/edit', component: ShippingCarrierAddComponent
-      },
-      {
-        path: 'upload', component: UploadMediaComponent
-      },
-      {
-        path: '', redirectTo: 'dashboard'
-      }
+        {
+            path: 'dashboard', component: DashboardComponent
+        },
+        {
+            path: 'users', component: UsersComponent
+        },
+        {
+            path: 'address', component: AddressComponent
+        },   
+        {
+            path: 'products', component: ProductsComponent
+        },
+        {
+            path: 'main-layout', component: MainLayoutComponent
+        },    
+        {
+            path: 'main-layout/add', component: MainLayoutAddComponent
+        },   
+        {
+            path: 'main-layout/:id/edit', component: MainLayoutAddComponent
+        },                 
+        {
+            path: 'merchant-applications', component: MerchantApplicationsComponent
+        },      
+        {
+            path: 'orders', component: OrdersComponent
+        }, 
+        {
+            path: 'newsletters', component: NewslettersComponent
+        }, 
+        {
+            path: 'shipping/:orderID', component: ShippingComponent
+        },   
+        {
+            path: 'ships', component: ShipsComponent
+        },                    
+        {
+            path: 'product/add', component: ProductAddComponent
+        },
+        {
+            path: 'merchant-info', component: MerchantInfoComponent
+        },
+        {
+            path: 'profile', component: ProfileComponent
+        },     
+        
+        {
+            path: 'product/:id/edit', component: ProductAddComponent
+        },
+        {
+            path: 'categories', component: CategoriesComponent
+        },
+        {
+            path: 'category/add', component: CategoryAddComponent
+        },
+        {
+            path: 'category/:id/edit', component: CategoryAddComponent
+        },
+        {
+            path: 'store', component: StoreComponent
+        },     
+        {
+            path: 'brands', component: BrandsComponent
+        },
+        {
+            path: 'brand/add', component: BrandAddComponent
+        },
+        {
+            path: 'brand/:id/edit', component: BrandAddComponent
+        },      
+        {
+            path: 'banners', component: BannersComponent
+        },
+        {
+            path: 'banner/add', component: BannerAddComponent
+        },
+        {
+            path: 'banner/:id/edit', component: BannerAddComponent
+        },
+        {
+            path: 'small-banners', component: SmallBannersComponent
+        },
+        {
+            path: 'small-banner/add', component: SmallBannerAddComponent
+        },
+        {
+            path: 'top-category-banners', component: TopCategoryBannersComponent
+        },
+        {
+            path: 'top-category-banner/add', component: TopCategoryBannerAddComponent
+        },
+        {
+            path: 'small-banner/:id/edit', component: SmallBannerAddComponent
+        },
+        {
+            path: 'features', component: FeaturesComponent
+        },
+        {
+            path: 'feature/add', component: FeatureAddComponent
+        },
+        {
+            path: 'feature/:id/edit', component: FeatureAddComponent
+        },
+        {
+            path: 'collections', component: CollectionsComponent
+        },
+        {
+            path: 'collection/add', component: CollectionAddComponent
+        },
+        {
+            path: 'collection/:id/edit', component: CollectionAddComponent
+        },
+        {
+            path: 'user/:id/edit', component: UserAddComponent
+        },
+        {
+            path: 'merchants', component: MerchantsComponent
+        },
+        {
+            path: 'customer-service', component: CustomerServiceComponent
+        },
+        {
+            path: 'returns-policy', component: ReturnsPolicyComponent
+        },
+        {
+            path: 'faq', component: FaqComponent
+        },    
+        {
+            path: 'shipping-carriers', component: ShippingCarriersComponent
+        },
+        {
+            path: 'shipping-carrier/add', component: ShippingCarrierAddComponent
+        },
+        {
+            path: 'shipping-carrier/:id/edit', component: ShippingCarrierAddComponent
+        },
+        {
+            path: 'upload', component: UploadMediaComponent
+        },
+        {
+            path: '', redirectTo: 'dashboard'
+        }
     ]
-  }
+}
 ];
 
 @NgModule({

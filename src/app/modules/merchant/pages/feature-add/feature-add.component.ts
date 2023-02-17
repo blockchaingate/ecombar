@@ -46,7 +46,7 @@ export class FeatureAddComponent implements OnInit {
         this.wallet = wallet;
       }
     ); 
-    this.currentTab = 'default';
+    this.currentTab = 'default English';
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {

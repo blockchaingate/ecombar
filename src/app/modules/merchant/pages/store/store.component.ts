@@ -114,7 +114,7 @@ export class StoreComponent implements OnInit {
         }
       }
     );
-    this.currentTab = 'default';
+    this.currentTab = 'default English';
 
     /*
     this.id = this.route.snapshot.paramMap.get('id');

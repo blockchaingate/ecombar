@@ -1,26 +1,62 @@
 
-<div class="container">
-  
-    <ul class="responsive-table">
+<h1>{{'Orders' | translate}}</h1>
+
+<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+
+  <dl class="work-list row">
+    <dt class="col-3">{{ 'Id' | translate }}</dt>
+    <dt class="col-3">{{ 'Date Created' | translate }}</dt>
+    <dt class="col-3">{{ 'Total' | translate }}</dt>
+    <dt class="col">{{ 'Status' | translate }}</dt>
+  </dl>
+
+  <dl class="work-list row" *ngFor="let order of orders">
+    <dd class="col-3">
+      <a target="_blank" *ngIf="order.store" href="/store/{{order.store._id}}/track-order/{{order._id}}">
+        {{ trimText(order._id) }}
+      </a>
+      <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
+    </dd>
+    <dd class="col-3">{{ order.dateCreated | date }}</dd>
+    <dd class="col-3">{{ order.totalToPay }}</dd>
+    <dd class="col">
+      <div>
+        {{ getStatus(order) | translate }}
+      </div>
+      <div *ngIf="order.paymentStatus == 2" >
+        <a (click)="requestRefund(order)">
+          Request refund
+        </a>
+      </div>
+      <div *ngIf="order.paymentStatus == 5" >
+        <a (click)="cancelRequestRefund(order)">
+          Cancel request refund
+        </a>
+      </div>
+    </dd>
+  </dl>
+
+</div>
+
+    <!-- <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-3">{{'Id' | translate}}</div>
-        <div class="col col-3">{{'Date Created' | translate}}</div>
-        <div class="col col-3">{{'Total' | translate}}</div>
-        <div class="col col-3">{{'Status' | translate}}</div>
+        <div class="col col-3">{{ 'Id' | translate }}</div>
+        <div class="col col-3">{{ 'Date Created' | translate }}</div>
+        <div class="col col-3">{{ 'Total' | translate }}</div>
+        <div class="col col-3">{{ 'Status' | translate }}</div>
       </li>
       <li class="table-row" *ngFor="let order of orders">
-        <div class="col col-3" data-label="{{'Id' | translate}}">
+        <div class="col col-3" data-label="{{ 'Id' | translate }}">
           <a target="_blank" *ngIf="order.store" href="/store/{{order.store._id}}/track-order/{{order._id}}">
-            {{trimText(order._id)}}
+            {{ trimText(order._id) }}
           </a>
-          <span *ngIf="!order.store">{{trimText(order._id)}}</span>
+          <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
         </div>
-        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
-        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
-
+        <div class="col col-3" data-label="{{ 'Date Created' | translate }}">{{ order.dateCreated | date }}</div>
+        <div class="col col-3" data-label="{{ 'Total' | translate }}">{{ order.totalToPay }}</div>
         <div class="col col-3" data-label="{{'Status' | translate}}">
           <div>
-            {{getStatus(order) | translate}}
+            {{ getStatus(order) | translate }}
           </div>
           <div *ngIf="order.paymentStatus == 2" >
             <a (click)="requestRefund(order)">
@@ -34,5 +70,5 @@
           </div>
         </div>
       </li>
-    </ul>
-  </div>
+    </ul> -->
+  

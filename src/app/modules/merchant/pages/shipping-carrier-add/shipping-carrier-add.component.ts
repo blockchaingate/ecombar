@@ -40,7 +40,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     ngOnInit() {
    
       this.NavTab = 'General';    // 缺省页面
-      this.currentTab = 'default';    // 缺省页面
+      this.currentTab = 'default English';    // 缺省页面
       this.dataServ.currentWallet.subscribe(
         (wallet: string) => {
           this.wallet = wallet;

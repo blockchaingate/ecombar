@@ -49,10 +49,10 @@
   <div *ngIf="NavTab == 'General'">
 
     <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
-      <li *ngIf="currentTab == 'default'" class="nav-item">
+      <li *ngIf="currentTab == 'default English'" class="nav-item">
         <a class="nav-link active" href="javascript:;">English</a>
       </li> 
-      <li *ngIf="currentTab != 'default'" class="nav-item" (click)="changeTab('default')">
+      <li *ngIf="currentTab != 'default English'" class="nav-item" (click)="changeTab('default English')">
         <a class="nav-link" href="javascript:;">English</a>
       </li> 
       <li *ngIf="currentTab == 'Simplified Chinese'" class="nav-item">
@@ -74,7 +74,7 @@
     <div class="work-form row">
   
       <!-- 缺省英文 -->
-      <div class="w-100" *ngIf="currentTab == 'default'">  <!-- 100% 宽度 -->
+      <div class="w-100" *ngIf="currentTab == 'default English'">  <!-- 100% 宽度 -->
 
         <dl>
           <dt>Title</dt>
@@ -418,7 +418,7 @@
 </div>
   
       <!-- <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default English')">
           English
         </div>
         <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Simplified Chinese')">
@@ -429,7 +429,7 @@
         </div>
       </div> -->
       
-      <!-- <div *ngIf="currentTab == 'default'"> -->
+      <!-- <div *ngIf="currentTab == 'default English'"> -->
 
         <!-- <div class="row">
           <div class="col col-8"> -->

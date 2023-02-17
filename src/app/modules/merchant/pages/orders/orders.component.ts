@@ -16,7 +16,11 @@ import { Router } from '@angular/router';
   selector: 'app-admin-orders',
   providers: [OrderService],
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './orders.component.scss', 
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class OrdersComponent implements OnInit {
   orders: any;
