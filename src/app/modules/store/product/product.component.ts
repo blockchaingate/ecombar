@@ -30,6 +30,7 @@ export class ProductComponent implements OnInit {
   comments: any;
   id: string;
   parentId: string;
+  walletAddress: string;
   productObjectIds: any;
   currency: string;
   quantity: number;
@@ -99,7 +100,8 @@ export class ProductComponent implements OnInit {
     this.dataServ.currentStore.subscribe(
       (store: any) => {
         this.store = store;
-        this.storeId = store._id;
+        console.log('store===', store);
+        this.storeId = store.id;
         this.currency = store.coin;
         this.smartContractAddress = store.smartContractAddress;
         this.taxRate = store.taxRate;
@@ -110,6 +112,7 @@ export class ProductComponent implements OnInit {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
         if(walletAddress) {
+          this.walletAddress = walletAddress;
           this.favoriteServ.isMyFavorite(this.id, walletAddress).subscribe(
             (ret: any) => {
               if(ret && ret.ok) {
@@ -339,67 +342,40 @@ export class ProductComponent implements OnInit {
       this.cartStoreServ.addCartItem(cartItem);
   }
 
-  async buyDo(seed) {
-    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-    const privateKey = keyPair.privateKeyBuffer.privateKey;
+  async buyDo(seed, product, quantity) {
 
-    const items: CartItem[] = [];
+    const items = [];
     this.productObjectIds = [];
-    this.quantities = [this.quantity];
+    this.quantities = [quantity];
     const item = {
-      productId: this.product._id,
-      objectId: this.product.objectId,
-      storeId: this.storeId,
-      currency: this.product.currency,
-      quantity: Number(this.quantity),
+      productId: product._id,
+      quantity: Number(quantity),
       price: this.product.price,
-      rebateRate: this.product.rebateRate ? this.product.rebateRate : this.store.rebateRate,
-      taxRate: this.product.taxRate ? this.product.taxRate : this.store.taxRate,
-      lockedDays: this.product.lockedDays ? this.product.lockedDays : this.store.lockedDays,
-      size: this.lang == 'en' ? this.size : this.sizeChinese,
-      color: this.lang == 'en' ? this.color : this.colorChinese,
-      thumbnailUrl: this.product.images ? this.product.images[0] : null,
-      title: this.translateServ.transField(this.product.title)
+      rebateRate: product.rebateRate ? product.rebateRate : this.store.rebateRate,
+      taxRate: product.taxRate ? product.taxRate : this.store.taxRate,
+      lockedDays: product.lockedDays ? product.lockedDays : this.store.lockedDays,
     }
 
     items.push(item);
 
     const orderData = { 
-      merchantId: this.product.merchantId, 
       items: items, 
-      currency:this.product.currency, 
-      transAmount: this.product.price * Number(this.quantity)
+      currency:this.currency,
+      owner: this.walletAddress,
+      merchantId: this.storeId
     };
 
+    this.orderServ.create2(orderData).subscribe(
+      (res: any) => {
+        console.log('ress from create order', res);
+        if (res && res._id) {
+          const orderID = res._id;
+          this.cartStoreServ.empty();
 
-
-
-
-    (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
-      if(res) {
-        if(res.ok) {
-          console.log('res._body=', res._body);
-          const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
-          orderData['objectId'] = objectId; 
-
-              const sig = this.kanbanServ.signJsonData(privateKey, orderData);
-              orderData['sig'] = sig.signature;    
-              this.orderServ.create2(orderData).subscribe(
-                (res: any) => {
-                  console.log('ress from create order', res);
-                  if (res && res.ok) {
-                    const body = res._body;
-                    const orderID = body._id;
-                    this.cartStoreServ.empty();
-
-                    this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
-                  }
-                }
-              );
-          }
+          this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
+        }
       }
-    });
-
+    );
 
 
 
@@ -422,7 +398,7 @@ export class ProductComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-      this.buyDo(seed);
+      this.buyDo(seed, product, quantity);
     });
 
   }
