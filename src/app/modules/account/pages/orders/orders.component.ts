@@ -52,9 +52,7 @@ export class OrdersComponent implements OnInit {
           this.walletAddress = walletAddress;
           this.orderServ.getMyOrders(walletAddress).subscribe(
             (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
+              this.orders = res;
             }
           ); 
         }

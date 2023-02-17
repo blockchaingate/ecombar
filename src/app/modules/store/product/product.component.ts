@@ -367,7 +367,6 @@ export class ProductComponent implements OnInit {
 
     this.orderServ.create2(orderData).subscribe(
       (res: any) => {
-        console.log('ress from create order', res);
         if (res && res._id) {
           const orderID = res._id;
           this.cartStoreServ.empty();

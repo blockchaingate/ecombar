@@ -54,7 +54,7 @@ export class OrderService {
   }
 
   getMyOrders(address: string) {
-    return this.http.get('orders/ownedBy/' + address);
+    return this.http.get(baseUrl + 'userpay/orders/user/' + address + '/100/0');
   }
 
   getMyProducts(address: string) {
@@ -65,8 +65,9 @@ export class OrderService {
     return this.http.get('orders/all');
   }
 
-  gerMerchantOrders(address: string) {
-    return this.http.get('orders/merchant-orders/' + address);
+  gerMerchantOrders(walletAddress: string) {
+    const url = environment.endpoints.paycool + 'userpay/orders/merchant/' + walletAddress + '/' + 100 + '/' + 0;
+    return this.http.get(url);
   }
 
   delete(orderID: string) {

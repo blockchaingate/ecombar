@@ -16,7 +16,7 @@
           <span *ngIf="!order.store">{{trimText(order._id)}}</span>
         </div>
         <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
-        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
+        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalAmount}}</div>
 
         <div class="col col-3" data-label="{{'Status' | translate}}">
           <div>
