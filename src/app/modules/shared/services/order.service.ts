@@ -54,7 +54,7 @@ export class OrderService {
   }
 
   getMyOrders(address: string) {
-    // return this.http.get('orders/ownedBy/' + address);
+    // 后端 router.get("/orders/user/:id/:pageSize/:pageNum", UserPayController.getOrdersByUser);
     return this.http.get(baseUrl + 'userpay/orders/user/' + address + '/100/0');
   }
 

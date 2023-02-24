@@ -29,19 +29,23 @@ export class StoreService {
     return this.http.get(url);
   }
 
-  getStoresInEcombar() {
-    const url = baseUrl + 'merchantreferral/ecombar/1000/0';
+  getStoresInEcombar() {    // 获取“商家列表”
+    // 后端 router.get("/ecombar/:pageSize/:pageNum", MerchantReferralController.getAllEcombarReferrals);
+    // 后端使用 Mongoose 连接 MongoDB，定义模式和模型（models 目录），进行查询。
+    // 条件 .find({ address, status: 2, hideOnStore: false })
+    const url = baseUrl + 'merchantreferral/ecombar/1000/0';    // 1000/0 一次取完，前端应改为逐页读
     return this.http.get(url);
   }
 
   queryHotlist() {    // 获取“热门推荐”
-    const url = baseUrl + 'merchantreferral/hot';
+    // 后端 router.get("/hot", MerchantReferralController.getHotReferrals);
+    const url = baseUrl + 'merchantreferral/hot';  // 后端未完成
     return this.http.get(url);
-
   }
 
   queryNewlist() {    // 获取“最新入驻”
-    const url = baseUrl + 'merchantreferral/new';
+    // 后端 router.get("/new", MerchantReferralController.getNewReferrals);
+    const url = baseUrl + 'merchantreferral/new';  // 后端未完成
     return this.http.get(url);
   }
 

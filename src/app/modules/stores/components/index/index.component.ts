@@ -70,8 +70,7 @@ export class StoresIndexComponent implements OnInit {
         this.wallet = wallet;
       }
     );
-    // 获取商家数据（正式）
-    this.storeServ.getStoresInEcombar().subscribe(
+    this.storeServ.getStoresInEcombar().subscribe(    // 获取“商家列表”
       (ret: any) => {
         console.log('ret==', ret);
 

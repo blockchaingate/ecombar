@@ -4,7 +4,7 @@ import { AddressRoutingModule } from './address-routing.module';
 import { CommonModule } from '@angular/common';
 import { AddressComponent } from './address.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
 
 @NgModule({
@@ -15,6 +15,7 @@ import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
     AddressRoutingModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,  // Fix: No provider for ControlContainer found
     SharedModule,
     NgxSpinnerModule,
     ModalModule.forRoot()

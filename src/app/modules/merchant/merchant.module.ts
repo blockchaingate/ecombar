@@ -53,6 +53,7 @@ import { BlogAddComponent } from './pages/blog-add/blog-add.component';
 
 import { ShippingCarriersComponent } from './pages/shipping-carriers/shipping-carriers.component';
 import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shipping-carrier-add.component';
+
 @NgModule({
   declarations: [
     MerchantComponent,
@@ -107,7 +108,7 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     NgxSpinnerModule,
     ReactiveFormsModule,
     RichTextEditorModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
   ],
   providers: [ToolbarService, LinkService, ImageService, HtmlEditorService]
 })

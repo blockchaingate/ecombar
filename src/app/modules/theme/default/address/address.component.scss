@@ -18,3 +18,42 @@ form{
         padding: 5px 5px;
     }
 }
+
+
+// ---------- 自定义按钮 ----------
+
+.myButton-A {  // 自定义按钮
+  width: 200px;
+  background-color: #ffd814;
+  display: block;
+  // color: white;
+  // background-color: #f60; 
+  // border: 0;
+  // border-radius: 0%;
+}
+.myButton-A:hover {
+  background-color: #f7ca00;
+  cursor: pointer;  // 手形光标
+}
+
+.myButton-B {  // 自定义按钮
+  width: 200px;
+  background-color: #ffa41c;
+  display: block;
+}
+.myButton-B:hover {
+  background-color: #fa8900;
+  cursor: pointer;  // 手形光标
+}
+
+.myButton-C {  // 自定义按钮
+  width: 200px;
+  background-color: #a5a5a5;
+  display: block;
+}
+.myButton-C:hover {
+  background-color: #7f7f7f;
+  cursor: pointer;  // 手形光标
+}
+
+  
