@@ -26,6 +26,8 @@ export class StoresIndexComponent implements OnInit {
   storesNew: any;    // 最新入驻
   wallet: any;
   parentId: string;
+  pageNum: number = 0;
+  pageSize: number = 10;
   walletAddress: string;
   modalRef: BsModalRef;
   isValidMember: boolean;
@@ -57,7 +59,6 @@ export class StoresIndexComponent implements OnInit {
           this.walletAddress = walletAddress;
           this.paycoolServ.isValidMember(walletAddress).subscribe(
             (ret: any) => {
-              console.log('ret====', ret);
               this.isValidMember = ret.isValid;
             }
           );
@@ -70,7 +71,7 @@ export class StoresIndexComponent implements OnInit {
         this.wallet = wallet;
       }
     );
-    this.storeServ.getStoresInEcombar().subscribe(    // 获取“商家列表”
+    this.storeServ.getStoresInEcombar(this.pageSize, this.pageNum).subscribe(    // 获取“商家列表”
       (ret: any) => {
         console.log('ret==', ret);
 
@@ -175,7 +176,17 @@ export class StoresIndexComponent implements OnInit {
 
   // 重新刷新列表
   moreStore() {
-    this.stores = StoreListNew;    // 虚拟商家数据（测试）
+
+    this.storeServ.getStoresInEcombar(this.pageSize, ++this.pageNum).subscribe(    // 获取“商家列表”
+    (ret: any) => {
+      
+      if(ret && ret.length > 0) {
+        this.stores = this.stores.concat(ret);
+      }
+      
+    }
+  );
+    //this.stores = StoreListNew;    // 虚拟商家数据（测试）
     // this.storesHot = StoreListHot;    // 虚拟商家数据（测试）
     // this.storesNew = StoreListNew;    // 虚拟商家数据（测试）
   }

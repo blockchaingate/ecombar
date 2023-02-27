@@ -29,11 +29,11 @@ export class StoreService {
     return this.http.get(url);
   }
 
-  getStoresInEcombar() {    // 获取“商家列表”
+  getStoresInEcombar(pageSize: number, pageNum: number) {    // 获取“商家列表”
     // 后端 router.get("/ecombar/:pageSize/:pageNum", MerchantReferralController.getAllEcombarReferrals);
     // 后端使用 Mongoose 连接 MongoDB，定义模式和模型（models 目录），进行查询。
     // 条件 .find({ address, status: 2, hideOnStore: false })
-    const url = baseUrl + 'merchantreferral/ecombar/1000/0';    // 1000/0 一次取完，前端应改为逐页读
+    const url = baseUrl + 'merchantreferral/ecombar/' + pageSize +'/' + pageNum;    // 1000/0 一次取完，前端应改为逐页读
     return this.http.get(url);
   }
 

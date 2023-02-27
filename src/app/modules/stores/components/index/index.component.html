@@ -5,12 +5,10 @@
         [(ngModel)]="parentId" name="parentId" required>
     </div>
 
-    <div class="CreateCollection--actions">
-        <div class="ActionButtonrContainer">
-            <div class="ActionButton--content" (click)="joinAsMember()" style="min-width: 120px;">
-                {{'Join as a customer' | translate}}
-            </div>
-        </div> 
+    <div class="text-center">
+        <button class="btn btn-danger" (click)="joinAsMember()">
+            {{'Join as a customer' | translate}}
+        </button>
     </div>    
 </div>
 
@@ -21,29 +19,36 @@
             <div class="list_box">  <!-- 商家列表 -->
                 <ul>
                     <li class="shop_li" *ngFor="let store of stores">
-                        <div class="row" (click)="gotoStore(store)">
-                            <div class="left_logo border">
-                                <img *ngIf="store.image"  src="{{ store.image }}">
+                        <div class="row" >
+                            <div class="col col-md-2">
+                                <div class="left_logo border">
+                                    <img *ngIf="store.image"  src="{{ store.image }}">
+                                </div>
                             </div>
-                            <div class="right_info">
-                                <span class="title">{{ store.name | translateField }}</span><br>
-                                <span class="star">{{ store.star }}</span><br>
-                                <span class="text">{{ store.text }}</span><br>
-                                <span class="address">地址：{{ store.businessAddress.en }}</span><br>
+                            <div class="col col-md-6">
+                                <div class="title cursor-pointer" (click)="gotoStore(store)">
+                                    {{ store.name | translateField }}
+                                </div>
+                                <div class="text">{{ store.businessContents | translateField }}</div>
+                                <div class="address">
+                                    <img src="https://www.laibihui.com/templates/business/skin4/images/posi_i.png">
+                                    {{ store.businessAddress | translateField }}
+
+                                </div>
                             </div>
-                            <div class="tel">
-                                <span><strong>{{ store.phone }}</strong></span>
+
+                            <div class="col col-md-4">
+                                <div class="tel" *ngIf="store.phone">
+                                    <span><strong>{{ store.phone }}</strong></span>
+                                </div>
                             </div>
                         </div>
                     </li>
                 </ul>
                 <div class="row">
-                    <div class="pagination">
-                        <ul>
-                            <li><a href="#" (click)="moreStore()">上一页</a></li>
-                            <li><a href="#" (click)="moreStore()">下一页</a></li>
-                        </ul>
-                    </div>
+                    <button type="button" class="btn btn-outline-danger btn-lg btn-block" (click)="moreStore()">
+                        {{'More' | translate}}
+                    </button>
                 </div>
             </div>
         </div>

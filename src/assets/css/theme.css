@@ -2569,7 +2569,7 @@ pre code {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #dddddd;
-  border-radius: 1.4rem;
+  border-radius: 0.1rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -2686,7 +2686,6 @@ select.form-control:focus::-ms-value {
   padding: 1.125rem 1.125rem;
   font-size: 1.09375rem;
   line-height: 1.5;
-  border-radius: 2rem;
 }
 
 select.form-control[size], select.form-control[multiple] {
@@ -3093,7 +3092,7 @@ textarea.form-control {
   padding: 0.67rem 1rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  border-radius: 1.4rem;
+  border-radius: 0.1rem;
   transition: all 0.2s ease-in-out;
 }
 
@@ -5127,14 +5126,12 @@ fieldset:disabled a.btn {
   padding: 1.125rem 1.125rem;
   font-size: 1.09375rem;
   line-height: 1.5;
-  border-radius: 2rem;
 }
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.625rem 1.125rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  border-radius: 1.3rem;
 }
 
 .btn-block {
@@ -5627,7 +5624,7 @@ input[type="button"].btn-block {
   white-space: nowrap;
   background-color: #fff;
   border: 1px solid #d5dae2;
-  border-radius: 1.4rem;
+  border-radius: 0.1rem;
 }
 
 .input-group-text input[type="radio"],
@@ -5649,7 +5646,6 @@ input[type="button"].btn-block {
   padding: 1.125rem 1.125rem;
   font-size: 1.09375rem;
   line-height: 1.5;
-  border-radius: 2rem;
 }
 
 .input-group-sm > .form-control:not(textarea),
@@ -5860,7 +5856,7 @@ input[type="button"].btn-block {
   background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 1rem center/8px 10px;
   background-color: #fff;
   border: 1px solid #d5dae2;
-  border-radius: 1.4rem;
+  border-radius: 0.1rem;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -6116,16 +6112,8 @@ input[type="button"].btn-block {
   background-color: #97a4af;
 }
 
-.custom-range:disabled::-webkit-slider-runnable-track {
-  cursor: default;
-}
-
 .custom-range:disabled::-moz-range-thumb {
   background-color: #97a4af;
-}
-
-.custom-range:disabled::-moz-range-track {
-  cursor: default;
 }
 
 .custom-range:disabled::-ms-thumb {
@@ -6320,7 +6308,7 @@ input[type="button"].btn-block {
   line-height: 1;
   background-color: transparent;
   border: 1px solid transparent;
-  border-radius: 1.4rem;
+  border-radius: 0.1rem;
 }
 
 .navbar-toggler:hover, .navbar-toggler:focus {
@@ -25258,15 +25246,6 @@ button:focus {
   box-shadow: 0 4px 11px rgba(254, 215, 0, 0.35);
 }
 
-.btn-primary:not(label.btn), .btn-primary:not(label.btn):not([href]):not(:disabled):not(.disabled), .btn-primary:not([href]), .btn-primary:not([href]):not([href]):not(:disabled):not(.disabled) {
-  background-color: #fed700;
-  border-color: #fed700;
-}
-
-.btn-primary:hover {
-  background-color: #fed700;
-  border-color: #fed700;
-}
 
 /* secondary button :hover, :focus, :active effects */
 .btn-secondary[href]:hover, .btn-secondary[href]:focus, .btn-secondary[href]:active, .btn-secondary[type]:hover, .btn-secondary[type]:focus, .btn-secondary[type]:active {
@@ -27253,9 +27232,6 @@ button:focus {
   cursor: pointer;
 }
 
-.btn:not([href]):not([type]):not(:disabled):not(.disabled) {
-  cursor: default;
-}
 
 label.btn {
   cursor: pointer !important;
