@@ -22,15 +22,10 @@
 
 // ---------- 商家列表 ----------
 
-.main_page {
-  width: 1200px;
-  background-color: #f7f7f7;  // 背景灰色
-  margin: 0 auto;  // 水平居中２
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
+
 .list_box {
   width: 100%;  // 整行 w-100
   background: #fff; 
@@ -47,6 +42,13 @@
   font-size: 24px;
   color: #333;
   font-weight: bold;
+}
+
+h4 {
+  font-size: 16px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 ul {
@@ -141,28 +143,21 @@ ul {
 
 .rlist_box dt {  // 共用: 热门推荐+最新入驻
   width: 100%;  // 整行 w-100
-  height: 80px;
   color: #fff; 
   background-color: #FF591E; 
-  font-size: 24px; 
+  font-size: 20px; 
   font-weight: bold; 
-  padding-top: 20px; 
   box-sizing: border-box; 
   text-align: center;
 }
 .rlist_box dd {
   margin: 0px;  // 没有空隙
-  padding: 0 30px; 
-  height: 80px;
   background: #fff;
 }
 .rlist_box dd :hover {
   background: #fafafa;
 }
 
-.rlist_box dd .l_box { 
-  margin-left: 5px; padding-top: 15px;
-}
 .rlist_box dd .l_box .l_num {
   vertical-align: middle;
   font-size: 30px; font-weight: 400px; vertical-align: middle; color:#777; margin-right: 16px; font-family: number; font-style: italic;
@@ -193,9 +188,6 @@ ul {
   background-color: #FF591E; 
 }
 
-.rlist_box .hot_rec dd .r_box {
-  margin-left: 20px; padding-top: 4px;
-}
 
 // ---------- 最新入驻 ----------
 
@@ -207,9 +199,6 @@ ul {
   background-color: #FFFFFF; 
 }
 
-.rlist_box .new_rec dd .r_box {
-  margin-left: 20px; padding-top: 4px;
-}
 
 // ---------- 上页下页 ----------
 

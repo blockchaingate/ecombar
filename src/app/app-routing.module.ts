@@ -25,6 +25,11 @@ const defaultTheme: Routes = [
       import('./modules/theme/default/store.module').then(m => m.StoreModule)
   },
   {
+    path: 'newstore/:storeId',
+    loadChildren: () =>
+      import('./modules/newstore/newstore.module').then(m => m.NewstoreModule)
+  },
+  {
     path: 'iddock',
     loadChildren: () =>
       import('./modules/iddock/iddock.module').then(m => m.IddockModule)

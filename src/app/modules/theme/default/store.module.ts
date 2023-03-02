@@ -8,6 +8,7 @@ import { StoreComponent } from './store.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuMobileComponent } from './layout/header/menu-mobile/menu-mobile.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { MenuComponent } from './menu/menu.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { Category2Component } from './category/category2.component';
 import { SearchComponent } from './search/search.component';
@@ -21,7 +22,6 @@ import { ProductItemFourComponent } from './components/product-item-four/product
 import { CompareComponent } from './compare/compare.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { OrderComponent } from './order/order.component';
-import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categories.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { CustomerServiceComponent } from './customer-service/customer-service.component';
@@ -35,6 +35,7 @@ import { BlogComponent } from './blog/blog.component';
     StoreComponent,
     HeaderComponent,
     FooterComponent,
+    MenuComponent,
     Category2Component,
     ProductListComponent,
     MenuMobileComponent,
@@ -48,7 +49,6 @@ import { BlogComponent } from './blog/blog.component';
     OrderComponent,
     ProductListWholeComponent,
     WishlistComponent,
-    SubCategoriesComponent,
     TrackOrderComponent,
     StoreLocatorComponent,
     CustomerServiceComponent,

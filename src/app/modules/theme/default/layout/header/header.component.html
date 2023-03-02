@@ -4,10 +4,12 @@
         <div class="u-header__section">
             <!-- Topbar -->
             <div class="u-header-topbar py-2 d-none d-xl-block border-bottom-0">  <!-- 去掉 "bg-primary" 黄底色 -->
-                <div class="container">
+                <div class="container-fluid">
                     <div class="d-flex align-items-center">
                         <div class="topbar-left">
-                            <a href="/store/{{storeId}}" class="text-gray-70 font-size-16 u-header-topbar__nav-link">{{"Welcome to " | translate}} {{store.name | translateField}}</a>
+                            <p class="text-gray-70 font-size-16 u-header-topbar__nav-link">
+                                {{"Welcome to " | translate}} {{store.name | translateField}}
+                            </p>
                         </div>
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
@@ -137,15 +139,18 @@
                                         <!-- Select -->
                                         <select [(ngModel)]="categoryId" name="categoryId" class="js-select selectpicker dropdown-select custom-search-categories-select border-dark bg-white" data-style="btn height-42 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-0 pl-0 pr-5 py-2">
                                             <option value="" selected>{{"All Categories"|translate}}</option>
-                                            <option *ngFor="let category of categories" value="{{category._id}}">{{ category.category | translateField }}</option>
+                                            <option *ngFor="let category of categories" value="{{category._id}}">
+                                                {{ category.name | translateField }}
+                                            </option>
                                         </select>
                                         <!-- End Select -->
-                                        <button class="btn btn-dark height-42 py-2 px-3 rounded-right-pill" type="submit" id="searchProduct1" routerLinkActive="router-link-active">
+                                        <button class="btn btn-dark py-2 px-3 rounded-right-pill" type="submit" id="searchProduct1" routerLinkActive="router-link-active">
                                             <span class="ec ec-search font-size-20"></span>
                                         </button>
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                         <!-- End Search Bar -->
                         <!-- Header Icons -->
@@ -207,34 +212,7 @@
             </div>
             <!-- End Logo-Search-header-icons -->
 
-            <!-- Primary-menu-wide -->
-            <div class="pb-3 d-none d-xl-block">  <!-- 去掉 "bg-primary border-color-2" 黄底色，撑开底部 -->
-                <div class="container">
-                    <div class="min-height-45">
-                        <!-- Nav -->
-                        <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--wide u-header__navbar--no-space">
-                            <!-- Navigation -->
-                            <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
-                                <ul class="navbar-nav align-items-end">  <!-- 靠下对齐 -->  <!-- "u-header__navbar-nav" -->
-                                    <li class="nav-item font-size-20">  <!-- "hs-has-mega-menu u-header__nav-item" -->
-                                        <a class="nav-link u-header__nav-link" href="/store/{{storeId}}">{{ 'Home' | translate }}</a>
-                                    </li>
-                                    <li *ngFor="let category of categories" class="nav-item m-1">  <!-- "hs-has-mega-menu u-header__nav-item" -->
-                                        <!-- "nav-link u-header__nav-link u-header__nav-link-toggle" -->
-                                        <a class="nav-link text-center" href="/store/{{storeId}}/category/{{category._id}}">{{ category.category | translateField }}</a>
-                                        <div class="w-100 border rounded" aria-labelledby="smartphonesMegaMenu">  <!-- 圆角边框 -->  <!-- "hs-mega-menu u-header__sub-menu" -->
-                                            <app-sub-categories [storeId]="storeId" [category]="category"></app-sub-categories>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- End Navigation -->
-                        </nav>
-                        <!-- End Nav -->
-                    </div>
-                </div>
-            </div>
-            <!-- End Primary-menu-wide -->
         </div>
     </header>
 </div>
+<app-menu [categories]="categories" [storeId]="storeId"></app-menu>

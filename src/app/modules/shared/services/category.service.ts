@@ -31,10 +31,14 @@ export class CategoryService {
   }
   
 
-  getMerchantCategories(walletAddress: string, pageSize:number, pageNum:number) {
+  getMerchantCategories(walletAddress: string, pageSize: number, pageNum:number) {
     return this.http.get(baseUrl + 'category/owner/' + walletAddress + '/' + pageSize + '/' + pageNum);
   }
 
+  getMerchantCategoriesTree(walletAddress: string) {
+    return this.http.get(baseUrl + 'category/tree/owner/' + walletAddress);
+  }
+  
   getMerchantHotCategories(merchant_id: string, pageSize:number, pageNum:number) {
     return this.http.get(baseUrl + '/category/hot/merchant/' + merchant_id + '/' + pageSize + '/' + pageNum);
   } 
