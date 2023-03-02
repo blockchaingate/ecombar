@@ -124,7 +124,7 @@
               [class.is-invalid]="isValid(workForm,'postcode')"
               formControlName="postcode" [(ngModel)]="postcode" name="postcode" required minlength="3">        
             <span class="invalid-feedback" *ngIf="isValid(workForm,'postcode')">
-              Postcode at least 2 characters long
+              Postcode at least 3 characters long
             </span> 
           </dd>
         </dl>
@@ -132,7 +132,7 @@
           <dt>{{ "Country" | translate }}</dt>
           <dd class="text-left">
             <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter country' | translate }}" 
-            formControlName="country" [(ngModel)]="country" name="country" required minlength="2">        
+            formControlName="country" [(ngModel)]="country" name="country">        
           </dd>
         </dl>
 
@@ -144,7 +144,9 @@
         </div>
   
         <div class="ml-md-3">
-          <a (click)="confirm()" class="btn myButton-A">{{ "Confirm" | translate }}</a>
+          <!-- Fix: 通过 [disabled] 要求表单首先合规，未指定 (ngSubmit)，因此用 (click) -->
+          <!-- <a (click)="confirm()" class="btn myButton-A">{{ "Confirm" | translate }}</a> -->
+          <button (click)="confirm()" type="submit" class="btn myButton-A" [disabled]="!workForm.valid">{{ "Confirm" | translate }}</button>
         </div>
       </div>
 
