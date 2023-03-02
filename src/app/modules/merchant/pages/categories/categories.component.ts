@@ -53,7 +53,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryServ.getMerchantCategories(walletAddress, 100, 0).subscribe(
       (res: any) => {
         if (res) {
-          this.categories = this.categories.concat(res);
+          this.categories = res;
         }
       }
     );

@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <ul class="nav bg-danger justify-content-center">
+        <li class="nav-item" *ngFor="let category of categories">
+          <div *ngIf="category.children && (category.children.length > 0)">
+            <a class="nav-link text-white" type="button" id="category-{{category._id}}" data-bs-toggle="dropdown">
+              {{ category.name | translateField }}
+            </a>
+            <ul class="dropdown-menu">
+              <li *ngFor="let subcategory of category.children">
+                <a class="dropdown-item" href="/store/{{storeId}}/category/{{subcategory._id}}">
+                  {{subcategory.name | translateField}}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="!category.children || (category.children.length == 0)">
+            <a class="nav-link text-white" href="/store/{{storeId}}/category/{{category._id}}">
+              {{ category.name | translateField }}
+            </a>
+          </div>
+        </li>
+    </ul>
+</div>
+
+

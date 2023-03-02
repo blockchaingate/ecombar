@@ -1,8 +1,11 @@
 <div class="container-fluid">
     <main id="content" role="main">
+        <!--
         <app-slide-show></app-slide-show>
         <app-small-banners></app-small-banners>
+        
         <app-feature-list></app-feature-list>
+        
         <div *ngFor="let item of mainLayouts">
             <div *ngIf="item.type == 'Single Collection'">
                 <app-collections [collection]="item.col"></app-collections>
@@ -13,6 +16,7 @@
         </div>
         <app-top-categories [categories]="categories"></app-top-categories>
         <app-top-category-banners [banners]="banners"></app-top-category-banners>
+        -->
         <app-products-grid [products]="latestProducts"></app-products-grid>
     </main>
 </div>
