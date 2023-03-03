@@ -16,6 +16,7 @@ import { compilerOperationSigningSerializationLocktime } from '@bitauth/libauth'
 
 // 定义验证规则：FormBuilder 构建表单数据，FormGroup 表单类型，Validators 表单验证
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
     template: ''
@@ -46,7 +47,8 @@ export abstract class AddressComponent implements OnInit {
   // 添加 fb 属性，用来创建表单
   // constructor(private fb: FormBuilder) { }
   constructor(
-    private fb: FormBuilder,    // 添加 fb 属性，用来创建表单
+    private fb: FormBuilder,  // 添加 fb 属性，用来创建表单
+    private cd: ChangeDetectorRef,  // 变更检测 detectChanges()
     private modalService: BsModalService,
     private iddockServ: IddockService,
     private spinner: NgxSpinnerService,
@@ -60,6 +62,10 @@ export abstract class AddressComponent implements OnInit {
     private addressServ: AddressService) {
 
   }
+
+    ngAfterContentChecked() {    // 使用 ngAfterViewInit, ngAfterContentInit 无效
+        this.cd.detectChanges();  // 变更检测 detectChanges()
+    }
 
   ngOnInit() {
 
@@ -218,9 +224,9 @@ export abstract class AddressComponent implements OnInit {
     });
   }
 
-  isValid(form: any, id: string) {
+  isInvalid( form: any, id: string ) {
     // *ngIf="(workForm.get('name').touched || workForm.get('name').dirty) && workForm.get('name').invalid"
-    return (form.get(id).touched || form.get(id).dirty) && form.get(id).invalid;
+    return (form.get(id).touched || form.get(id).dirty) && form.get(id).invalid;  // .errors 也可
   }
 
   updateOrderAddress() {
@@ -242,19 +248,38 @@ export abstract class AddressComponent implements OnInit {
 
   }
 
-  selectAddress(address: any) {
-    this.id = address._id;
-    this.suite = address.suite;
-    this.streetNumber = address.streetNumber;
-    this.street = address.street;
-    this.name = address.name;
-    this.buyerPhone = address.buyerPhone;
-    this.district = address.district;
-    this.city = address.city;
-    this.province = address.province;
-    this.postcode = address.postcode;
-    this.country = address.country;
-  }
+    // 遍历表单，设为“已触摸”
+    markFormGroupTouched( formGroup: FormGroup ) {
+        (<any>Object).values(formGroup.controls).forEach(item => {
+            if (item.controls) {
+                this.markFormGroupTouched(item);
+            } else {
+                item.markAsTouched();
+             // item.markAsDirty();
+             // item.updateValueAndValidity();
+            }
+        });
+    }
+
+    selectAddress( address: any ) {
+        this.id = address._id;
+        this.suite = address.suite;
+        this.streetNumber = address.streetNumber;
+        this.street = address.street;
+        this.name = address.name;
+        this.buyerPhone = address.buyerPhone;
+        this.district = address.district;
+        this.city = address.city;
+        this.province = address.province;
+        this.postcode = address.postcode;
+        this.country = address.country;
+
+        // Fix: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked.
+        setTimeout(() => {  // 1, 异步解决 setTimeout(); 2, 变更检测 detectChanges()
+            // Fix: 在更换地址时，马上展示检测
+            this.markFormGroupTouched(this.workForm);  // 遍历表单，设为“已触摸”
+        });
+    }
 
   async updateOrderAddressDo(seed: Buffer) {
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
