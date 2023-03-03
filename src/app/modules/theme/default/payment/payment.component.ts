@@ -6,7 +6,10 @@ import {PaymentComponent as ParentPaymentComponent} from 'src/app/modules/store/
   selector: 'app-payment',
   providers: [UserService],
   templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss']
+  styleUrls: [
+    './payment.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 
 export class PaymentComponent extends ParentPaymentComponent{}

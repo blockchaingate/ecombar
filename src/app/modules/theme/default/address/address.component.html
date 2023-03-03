@@ -140,13 +140,13 @@
 
       <div class="d-flex justify-content-between py-2">
         <div class="ml-md-3">
-          <a class="btn myButton-C">{{ "Cancel" | translate }}</a>  <!-- (click)="" -->
+          <a class="btn myButton-C font-size-18">{{ "Cancel" | translate }}</a>  <!-- (click)="" -->
         </div>
   
         <div class="ml-md-3">
           <!-- Fix: 通过 [disabled] 要求表单首先合规，未指定 (ngSubmit)，因此用 (click) -->
           <!-- <a (click)="confirm()" class="btn myButton-A">{{ "Confirm" | translate }}</a> -->
-          <button (click)="confirm()" type="submit" class="btn myButton-A" [disabled]="!workForm.valid">{{ "Confirm" | translate }}</button>
+          <button (click)="confirm()" type="submit" class="btn myButton-A font-size-18" [disabled]="!workForm.valid">{{ "Confirm" | translate }}</button>
         </div>
       </div>
 
