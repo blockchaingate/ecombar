@@ -29,7 +29,8 @@ export class OrderService {
     return this.http.post('orders/updateShipping/' + orderID, data);
   }
 
-  get(orderID: string) {
+  get( orderID: string ) {
+    // 后端 router.get("/order/:id", UserPayController.getOrder);
     return this.http.get(baseUrl + 'userpay/order/' + orderID);
   }
 

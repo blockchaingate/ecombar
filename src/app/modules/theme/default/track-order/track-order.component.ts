@@ -3,6 +3,9 @@ import { TrackOrderComponent as ParentTrackOrderComponent } from 'src/app/module
 @Component({
   selector: 'app-track-order',
   templateUrl: './track-order.component.html',
-  styleUrls: ['./track-order.component.css']
+  styleUrls: [
+    './track-order.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class TrackOrderComponent extends ParentTrackOrderComponent{}

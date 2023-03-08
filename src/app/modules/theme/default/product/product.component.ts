@@ -5,7 +5,10 @@ import { ProductComponent as ParnetProductComponent } from 'src/app/modules/stor
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  styleUrls: [
+    './product.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 
 export class ProductComponent extends ParnetProductComponent { }

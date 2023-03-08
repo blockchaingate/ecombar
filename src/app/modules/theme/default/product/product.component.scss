@@ -124,32 +124,6 @@
 
 // ---------- 自定义按钮 ----------
 
-.myButton-A {  // 自定义按钮
-  width: 200px;
-  background-color: #ffd814;
-  display: block;
-  // color: white;
-  // background-color: #f60; 
-  // border: 0;
-  // border-radius: 0%;
-}
-.myButton-A:hover {
-  background-color: #f7ca00;
-  cursor: pointer;  // 手形光标
-}
-
-.myButton-B {  // 自定义按钮
-  width: 200px;
-  background-color: #ffa41c;
-  display: block;
-}
-.myButton-B:hover {
-  background-color: #fa8900;
-  cursor: pointer;  // 手形光标
-}
-
-// ---------- 自定义按钮 ----------
-
 // .btn-info-2[href]:hover, .btn-info-2[href]:focus, .btn-info-2[href]:active, .btn-info-2[type]:hover, .btn-info-2[type]:focus, .btn-info-2[type]:active {
 //   box-shadow: 0 4px 11px rgba(0, 223, 252, 0.35);
 // }

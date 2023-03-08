@@ -14,9 +14,9 @@
   <dl class="work-list row" *ngFor="let order of orders">
     <dd class="col-2">
       <a target="_blank" *ngIf="order.store" href="/store/{{order.store._id}}/track-order/{{order._id}}">
-        {{ trimText(order._id) }}
+        {{ order._id }}
       </a>
-      <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
+      <span *ngIf="!order.store">{{ order._id }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
     </dd>
     <dd class="col-3">{{ order.dateCreated | date }}</dd>
     <dd class="col-3">{{ order.totalAmount }}</dd>  <!-- 旧值 order.totalToPay -->

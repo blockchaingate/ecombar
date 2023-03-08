@@ -80,9 +80,9 @@ export class OrdersComponent implements OnInit {
     return count;
   }
 
-  trimText(id:string) {
-    return id.substring(0,3) + '...' + id.substring(id.length - 3);
-  }
+    trimText( id:string ) {    // 地址不长，不用此函数，用户可复制地址
+        return id.substring(0,3) + '...' + id.substring(id.length - 3);
+    }
   getStatus(order) {
     let status = '';
     const paymentStatus = order.paymentStatus;

@@ -74,6 +74,51 @@
   border-radius: 15%;  // 圆角
 }
 
+.myButton-Submit {  // 提交按钮（用于下单 Place order）
+  width: 200px;
+  // color: #3b3b3b; 
+  background-color: #ffd814;
+  display: block;
+  // border-radius: 0%;
+}
+.myButton-Submit:hover {
+  background-color: #f7ca00;
+  cursor: pointer;  // 手形光标
+}
+
+.myButton-Buy {  // 提交按钮（用于下单 Buy）
+  width: 200px;
+  background-color: #ffa41c;
+  display: block;
+}
+.myButton-Buy:hover {
+  background-color: #fa8900;
+  cursor: pointer;  // 手形光标
+}
+
+.myButton-Cancel {  // 自定义按钮
+  width: 200px;
+  background-color: #a5a5a5;
+  display: block;
+}
+.myButton-Cancel:hover {
+  background-color: #7f7f7f;
+  cursor: pointer;  // 手形光标
+}
+
+.myButton-White {  // 小白按钮（用于地址 Change）
+  width: 120px;
+  // color: #3b3b3b; 
+  background-color: white;
+  display: block;
+  border: solid 1px #3b3b3b;  // 灰色边框
+  // border-radius: 0%;
+}
+.myButton-White:hover {
+  background-color: #d8d8d8;
+  cursor: pointer;  // 手形光标
+}
+
 // ---------- 其它样式 ----------
 
 legend {
