@@ -12,7 +12,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   selector: 'app-admin-ships',
   providers: [],
   templateUrl: './ships.component.html',
-  styleUrls: ['./ships.component.scss']
+  styleUrls: [
+    './ships.component.scss',
+    '../../../../../page.scss'
+]
 })
 export class ShipsComponent implements OnInit{
     modalRef: BsModalRef;

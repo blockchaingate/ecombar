@@ -1,4 +1,5 @@
 <div *ngIf="merchantStatus != 'pending'">
+
   <div class="main-overview" *ngIf="!isUserSummary">
     <div class="overviewCard" [routerLink]="['/admin/brands']">
       <div class="overviewCard-icon overviewCard-icon--document">
@@ -38,7 +39,7 @@
     </div>
   </div> 
   
-  <div class="main-overview" *ngIf="isUserSummary">
+  <div class="main-overview" *ngIf="isUserSummary">  <!-- 菜单: My Account -->
     <div class="overviewCard" [routerLink]="['/admin/cart']">
       <div class="overviewCard-icon overviewCard-icon--document">
          <img src="/assets/svg/cart-white.svg">
@@ -76,13 +77,17 @@
       </div>
     </div>
   </div> 
+
+  <div class="border-top m-3">  <!-- margin, sides, $spacer * 1.0 -->
+    <app-admin-orders></app-admin-orders>
+  </div>
   
-  <div class="card">
+  <!-- <div class="card">
       <div class="card__header">{{'Orders' | translate}}</div>
       <div class="card__main">
         <app-admin-orders></app-admin-orders>
       </div>
-  </div>
+  </div> -->
   
 </div>
 

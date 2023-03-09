@@ -38,6 +38,7 @@ export class MerchantComponent implements OnInit {
   merchantStatus: string;
 
   menuItems: any;
+
   constructor(
     private router: Router, 
     private translateServ: TranslateService, 
@@ -101,7 +102,8 @@ export class MerchantComponent implements OnInit {
       {
         title: 'Dashboard',
         link: 'dashboard',
-        icon: 'dashboard'
+        icon: 'dashboard',
+        line: 1,  // 下边线支持
       },
       {
         title: 'Catelog',

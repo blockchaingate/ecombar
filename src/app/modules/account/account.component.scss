@@ -21,12 +21,12 @@ $--p-surface-hovered: rgba(92, 106, 196, 0.12);
 $--p-action-primary: #202e78;
 $--p-text: #212b36;
 
-.img-avatar {
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  width: 40px;
-  height: 40px;
-}
+// .img-avatar {
+//   border-radius: 50%;
+//   border: 2px solid rgba(255, 255, 255, 0.2);
+//   width: 40px;
+//   height: 40px;
+// }
 
 @mixin box-shadow {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -182,8 +182,14 @@ small {
   list-style-type: none;
 }
 
+.sidenav__list_2 {
+  margin-left: 30px;  // 子选单向右错开
+  padding: 0;
+  list-style-type: none;
+}
+
 .sidenav__list-item {
-  padding: 20px 20px 20px 40px;
+  padding: 10px 10px 10px 20px;  // 上，右，下，左
   color: $--p-text;
 }
 
@@ -604,4 +610,64 @@ ul li {
     // height: auto;
     // padding: none;
   }
+}
+
+// ---------- 菜单页面 ----------
+
+.main_page {
+  width: 1500px;
+  background-color: #f7f7f7;  // 背景灰色
+  text-align: center;  // 水平居中１
+  margin: 0 auto;  // 水平居中２
+}
+
+.menu_box {
+  float: left; 
+  width: 100%;  // 占据整行
+  background-color: #ffffff; 
+  margin: 0 0 20px 0; 
+  box-sizing: border-box; 
+  text-align: center;
+  border: solid 1px #eee;  // 灰色四边框
+}
+
+.avatar_box {
+  width: 100%;  // 占据整行
+  height: 100px;
+  text-align: center;  // 水平居中
+  // vertical-align: middle;  // 垂直居中  // 无效
+}
+
+.avatar_box img {
+  border-radius: 50%;
+  border: solid 1px #efefef; 
+  width: 100px;
+  height: 100px;
+  // margin: 10px;  // 垂直居中  100 - 10 * 2 = 80
+}
+
+.avatar_text .star {
+  color: #FF591E; 
+  font-size: 18px; 
+  font-weight: bold; 
+  font-family: number; 
+  font-style: italic;
+}
+.avatar_text .text {
+  color: #999999;
+}
+
+.svg_icon {
+  background-size: 20px 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- 内容页面 ---------- */
+
+.main_box {
+  // float: right; 
+  width: 100%;  /* 占据整行 */
+  background-color: #ffffff; 
+  border: solid 1px #eee;  // 灰色四边框
 }

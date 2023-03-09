@@ -13,7 +13,10 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
   selector: 'app-admin-ships',
   providers: [],
   templateUrl: './ships.component.html',
-  styleUrls: ['./ships.component.scss']
+  styleUrls: [
+    './ships.component.scss',
+    '../../../../../page.scss'
+]
 })
 export class ShipsComponent implements OnInit{
     modalRef: BsModalRef;

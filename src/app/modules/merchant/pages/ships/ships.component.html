@@ -1,24 +1,25 @@
 
-<div class="container">
-  
-    <ul class="responsive-table">
-      <li class="table-header">
-        <div class="col col-2">{{'Order Id' | translate}}</div>
-        <div class="col col-2">{{'Tracking number' | translate}}</div>
-        <div class="col col-2">{{'Total' | translate}}</div>
-        <div class="col col-2">{{'Payment Method' | translate}}</div>
-        <div class="col col-2">{{'Status' | translate}}</div>
-        <div class="col col-2"></div>
-      </li>
+<h1>{{'Ships' | translate}}</h1>
 
-      <li class="table-row" *ngFor="let ship of ships">
-        <div class="col col-2" data-label="{{'Order Id' | translate}}">{{ship.orderId}}</div>
-        <div class="col col-2" data-label="{{'Tracking number' | translate}}">{{ship.trackingNumber}}</div>
-        <div class="col col-2">
-          <button class="btn" (click)="openModal(ship, template)">Details</button>
-        </div>
-      </li>      
-    </ul>
+<div class="container">
+  <ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-2">{{ 'Order Id' | translate }}</div>
+      <div class="col col-2">{{ 'Tracking number' | translate }}</div>
+      <div class="col col-2">{{ 'Total' | translate }}</div>
+      <div class="col col-2">{{ 'Payment Method' | translate }}</div>
+      <div class="col col-2">{{ 'Status' | translate }}</div>
+      <div class="col col-2"></div>
+    </li>
+
+    <li class="table-row" *ngFor="let ship of ships">
+      <div class="col col-2" data-label="{{'Order Id' | translate}}">{{ship.orderId}}</div>
+      <div class="col col-2" data-label="{{'Tracking number' | translate}}">{{ship.trackingNumber}}</div>
+      <div class="col col-2">
+        <button class="btn" (click)="openModal(ship, template)">Details</button>
+      </div>
+    </li>      
+  </ul>
 </div>
 
 <ng-template #template>
@@ -30,7 +31,6 @@
   </div>
   <div class="modal-body">
       <div class="container">
-    
         <ul class="responsive-table">
           <li class="table-header">
             <div class="col col-4">{{'Date created' | translate}}</div>
@@ -82,4 +82,3 @@
       </div>
   </div>
 </ng-template>
-
