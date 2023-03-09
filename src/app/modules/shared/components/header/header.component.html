@@ -3,7 +3,7 @@
         <div class="nav-bar-left">
             <img src="/assets/images/logo/ecombar-logo.png">
             <span class="logo-text">
-                {{'MadEarn' | translate}}
+                {{ 'MadEarn' | translate }}
             </span>
         </div>
         <div class="search-container">
@@ -15,60 +15,51 @@
         <ul class="Navbar--items">
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" routerLink="/">
-                    {{'Home' | translate}}
+                    {{ 'Home' | translate }}
                 </a>
             </li>
-
             <li class="NavItem--isRoot">
                 <a class="NavItem--main" routerLink="/wallet">
-                    {{'Wallet' | translate}}
+                    {{ 'Wallet' | translate }}
                 </a>
             </li>
-
             <li class="NavItem--isRoot" *ngIf="verionType == 'madearn'">
                 <a class="NavItem--main" routerLink="/merchant">
-                    {{'Merchant' | translate}}
+                    {{ 'Merchant' | translate }}
                 </a>
             </li>
-
             <li class="NavItem--isRoot" *ngIf="verionType == 'madearn'">
                 <a class="NavItem--main" routerLink="/account">
-                    {{'Account' | translate}}
+                    {{ 'Account' | translate }}
                 </a>
             </li>
-
             <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">
                 <a class="NavItem--main" routerLink="/nft/assets">
-                    {{'Explore' | translate}}
+                    {{ 'Explore' | translate }}
                 </a>
             </li>
-
             <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">
                 <a class="NavItem--main" routerLink="/nft/activities">
-                    {{'Events' | translate}}
+                    {{ 'Events' | translate }}
                 </a>
             </li>
-
             <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">
                 <a class="NavItem--main" routerLink="/nft/admin/collections">
-                    {{'Create' | translate}}
+                    {{ 'Create' | translate }}
                 </a>
             </li>
 
             <li class="NavItem--isRoot">
                 <a class="NavItem--main">
-                    {{'Language' | translate}}
+                    {{ 'Language' | translate }}
                 </a>
                 <ul class="NavDropdown--items">
-
                     <li (click)="changeLanguage('en')">
                         English
                     </li>
-
                     <li (click)="changeLanguage('sc')">
                         简体中文
                     </li>
-
                     <li (click)="changeLanguage('tc')">
                         繁體中文
                     </li>
@@ -82,28 +73,26 @@
                     </div>
                 </a>
                 <ul class="NavDropdown--items">
-
                     <li routerLink="/nft/account">
-                        {{'My Profile' | translate}}
+                        {{ 'My Profile' | translate }}
                     </li>
-
                     <li>
                         <a routerLink="/nft/admin/collections">
-                            {{'My Collections' | translate}}
+                            {{ 'My Collections' | translate }}
                         </a>
                     </li>
                     <li>
                         <a routerLink="/nft/admin/favorites">
-                            {{'My Favorites' | translate}}
+                            {{ 'My Favorites' | translate }}
                         </a>
                     </li>
                     <li>
                         <a routerLink="/nft/account/settings">
-                            {{'Account Settings' | translate}}
+                            {{ 'Account Settings' | translate }}
                         </a>
                     </li>
                     <li (click)="logout()">
-                        {{'Logout' | translate}}
+                        {{ 'Logout' | translate }}
                     </li>
                 </ul>
             </li>

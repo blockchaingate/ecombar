@@ -33,8 +33,12 @@ import { StarService } from 'src/app/modules/shared/services/star.service';
   selector: 'app-admin-wallet-dashboard',
   providers: [],
   templateUrl: './wallet-dashboard.component.html',
-  styleUrls: [ ]
+  styleUrls: [
+    './wallet-dashboard.component.scss',
+    '../../../../../page.scss'
+  ]
 })
+
 export class WalletDashboardComponent implements OnInit{
   coins: any;
   wallets: any;
@@ -72,7 +76,7 @@ export class WalletDashboardComponent implements OnInit{
   transactionHistories: any;
   merchantTransactionHistories: any;
   gas: any;
-  currentTab: string;
+  NavTab: string;    // 导航 Tab
   
    constructor(
       private toastr: ToastrService,
@@ -93,8 +97,7 @@ export class WalletDashboardComponent implements OnInit{
 
     ngOnInit() {
       this.gas = 0;
-      this.currentTab = 'wallet';
-      this.subtab = 'assets';
+      this.subtab = 'Assets';
       this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {
@@ -108,8 +111,9 @@ export class WalletDashboardComponent implements OnInit{
         this.wallet = this.wallets.items[this.wallets.currentIndex];
         
         this.loadWallet();
-
       });
+
+      this.NavTab = 'Wallet';    // 缺省页面
     }
     
     receive() {
@@ -680,8 +684,8 @@ export class WalletDashboardComponent implements OnInit{
       this.currentCoinAddress = this.getCurrentCoinAddress();
     }
 
-    changeTab(tabName: string) {
-      this.currentTab = tabName;
+    changeNavTab( tabName: string ) {
+      this.NavTab = tabName;
       if(tabName == 'history') {
         this.starServ.getTransactionHisotryForCustomer(this.walletAddress).subscribe(
           (ret: any) => {
@@ -698,7 +702,7 @@ export class WalletDashboardComponent implements OnInit{
               this.merchantTransactionHistories = ret._body;
             }
           }
-        );        
+        );
       }
     }
 

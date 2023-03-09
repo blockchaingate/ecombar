@@ -1,37 +1,70 @@
-<ul class="responsive-table">
+
+<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+
+    <dl class="work-list row">
+        <dt class="col-2">{{ 'Coin' | translate }}</dt>
+        <dt class="col-3">{{ 'Balance' | translate }}</dt>
+        <dt class="col-3">{{ 'Locked' | translate }}</dt>
+        <dt class="col-2">{{ 'Value(USD)' | translate }}</dt>
+        <dt class="col"></dt>
+    </dl>
+
+    <dl class="work-list row" *ngFor="let coin of coins">
+        <dd class="col-2">{{ coin.coin | translate }}</dd>
+        <dd class="col-3">
+            <div *ngIf="coin.balance && (coin.balance >= 0)">
+                {{ coin.balance }}
+            </div>
+        </dd>
+        <dd class="col-3">
+            <div class="text-black" *ngIf="coin.lockBalance && (coin.lockBalance > 0)">
+                {{ coin.lockBalance }}
+            </div>
+        </dd>
+        <dd class="col-2">
+            <div *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
+                {{ (coin.balance + coin.lockBalance) * coin.usdValue.USD }}
+            </div>
+        </dd>
+        <dd class="col">
+            <a (click)="depositDo(coin)">
+                <img src="/assets/svg/deposit.svg">
+            </a>           
+        </dd>
+    </dl>
+
+</div>
+
+
+<!-- <ul class="responsive-table">
     <li class="table-header">
-        <div class="col col-2">{{'Coin' | translate}}</div>
-        <div class="col col-3">{{'Balance' | translate}}</div>
-        <div class="col col-3">{{'Locked' | translate}}</div>
-        <div class="col col-2">{{'Value(USD)' | translate}}</div>
+        <div class="col col-2">{{ 'Coin' | translate }}</div>
+        <div class="col col-3">{{ 'Balance' | translate }}</div>
+        <div class="col col-3">{{ 'Locked' | translate }}</div>
+        <div class="col col-2">{{ 'Value(USD)' | translate }}</div>
         <div class="col col-2"></div>
     </li>
     <li class="table-row" *ngFor="let coin of coins">
-
         <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">{{coin.coin | translate}}</div>
         <div class="col col-3" data-label="{{'Balance' | translate}}">
             <div *ngIf="coin.balance && (coin.balance >= 0)" class="text-black">
                 {{coin.balance}}
             </div>
         </div>
-
         <div class="col col-3" data-label="{{'Locked' | translate}}">
             <div class="text-black" *ngIf="coin.lockBalance && (coin.lockBalance > 0)">
                 {{coin.lockBalance}}
             </div>
         </div>
-
         <div class="col col-2 text-black" data-label="{{'Value(USD)' | translate}}">
             <div *ngIf="coin.balance && coin.lockBalance && ((coin.lockBalance + coin.balance) > 0)">
                 {{(coin.balance + coin.lockBalance) * coin.usdValue.USD}}
             </div>
-
         </div>
         <div class="col col-2" data-label="Dividend">
             <a (click)="depositDo(coin)">
                 <img src="/assets/svg/deposit.svg">
                 </a>           
         </div>
-
     </li>
-</ul>
+</ul> -->

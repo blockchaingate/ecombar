@@ -18,7 +18,11 @@ import { OrderService } from 'src/app/modules/shared/services/order.service';
 @Component({
     selector: 'app-order-history',
     templateUrl: './order-history.component.html',
-    styleUrls: ['./order-history.component.scss', '../../../../../table.scss']
+    styleUrls: [
+      './order-history.component.scss', 
+      '../../../../../table.scss',
+      '../../../../../page.scss'
+    ]
 })
 export class OrderHistoryComponent implements OnInit {
     @Input() transactionHistories: any;
