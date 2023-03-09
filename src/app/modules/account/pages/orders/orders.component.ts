@@ -59,6 +59,7 @@ export class OrdersComponent implements OnInit {
               // if(res && res.ok) {
               //   this.orders = res._body;
               // }
+              // console.log("[Orders]=", res);
               this.orders = res;
             }
           ); 
@@ -85,6 +86,7 @@ export class OrdersComponent implements OnInit {
   trimText(id:string) {
     return id.substring(0,3) + '...' + id.substring(id.length - 3);
   }
+
   getStatus(order) {
     let status = '';
     const paymentStatus = order.paymentStatus;
@@ -218,7 +220,6 @@ export class OrdersComponent implements OnInit {
 
   }
 
-
   cancelRequestRefund(order: any) {
     this.order = order;
 
@@ -315,7 +316,5 @@ export class OrdersComponent implements OnInit {
       
     }
   }
-
-
 
 }

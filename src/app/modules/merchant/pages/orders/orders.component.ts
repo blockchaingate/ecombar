@@ -57,6 +57,7 @@ export class OrdersComponent implements OnInit {
                 // if(res && res.ok) {
                 //   this.orders = res._body;
                 // }
+                // console.log("[Orders]=", res);
                 this.orders = res;
             }
           );

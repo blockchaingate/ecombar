@@ -41,7 +41,7 @@ export class TrackOrderComponent implements OnInit {
   onSearch() {
     this.orderServ.get(this.orderId).subscribe(
       (ret: any) => {
-        // console.log('ret=', ret);
+        console.log('[Order]=', ret);
         if (ret) {  // ret && ret.ok
           this.order = ret;  // ret._body
           this.currency = this.order.currency;

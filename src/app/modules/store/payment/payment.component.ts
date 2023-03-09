@@ -281,6 +281,10 @@ export class PaymentComponent implements OnInit{
                       if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
                         this.spinner.hide();
                         this.toastr.success('the transaction was procssed successfully');
+                        // Fix: 支付后会停在此页面。改为跳去查看所有订单
+                        setInterval( () => {
+                          this.router.navigate(['/account/orders']);
+                        }, 1000);  // 发现未更新状态，给个延时
                       } else {
                         this.spinner.hide();
                         this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
