@@ -7,7 +7,10 @@ import { DataService } from '../../services/data.service';
 @Component({
   selector: 'app-products-grid',
   templateUrl: './products-grid.component.html',
-  styleUrls: []
+  styleUrls: [
+    './products-grid.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class ProductsGridComponent implements OnInit{
   iddockRoot: string;

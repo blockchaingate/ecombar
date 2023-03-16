@@ -1,23 +1,24 @@
 
 <!-- 商家页 -->
+<!-- <ul class="list-unstyled" -->
 
-<ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible" *ngIf="products">
-    <li  *ngFor="let item of products" class="col-wd-3 col-md-4 pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
-        <div class="product-item__outer h-100 w-100">
-            <div class="product-item__inner p-md-3 row no-gutters">
-                <div class="col col-lg-auto product-media-left">
-                    <a href="/store/{{storeId}}/product/{{item._id}}" class="max-width-150 d-block">
+<div class="d-flex flex-wrap my-1" *ngIf="products">  <!-- Flex换行，上下空隙1 -->  <!-- class="row list-unstyled products-group no-gutters mb-0 overflow-visible" -->
+    <div  *ngFor="let item of products" class="m-1">  <!-- 四边空隙1 -->  <!-- class="col-wd-3 col-md-4 pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0" -->
+        <!-- <div class="product-item__outer h-100 w-100"> -->
+            <div class="food_box border">  <!-- "product-item__inner p-md-3 row no-gutters" -->
+                <div class="m-1">  <!-- "col col-lg-auto product-media-left" -->
+                    <a href="/store/{{storeId}}/product/{{item._id}}" class="align-items-center">
                         <img class="img-fluid" src="{{item.images[0]}}" alt="Image Description">
-                    </a>
+                    </a>  <!-- class="max-width-150 d-block" -->
                 </div>
-                <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
-                    <div class="mb-4">
+                <div class="">  <!-- class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1" -->
+                    <div class="mb-1 p-1">
                         <div class="mb-2">
                             <a href="/store/{{storeId}}/product/{{item._id}}" class="font-size-12 text-gray-5">
                                 {{item.primaryCategoryId ? (item.primaryCategoryId.category | translateField) : ''}}
                             </a>
                         </div>
-                        <h5 class="product-item__title">
+                        <div class="font-size-16">  <!-- class="product-item__title" -->
                             <a [routerLink]="['/store/' + storeId + '/product/' + item._id]" class="text-blue font-weight-bold">
                             {{item.title | translateField}}
                             </a>
@@ -26,9 +27,9 @@
                                 <img src="/assets/iddock.ico">
                             </a>
                             -->
-                        </h5>
+                        </div>
                     </div>
-                    <div class="flex-center-between mb-3">
+                    <div class="flex-center-between px-1 mb-1 font-size-14">  <!-- "flex-center-between mb-3" -->
                         <div class="prodcut-price">
                             <div class="text-gray-100">{{item.price}} {{currency}}</div>
                         </div>
@@ -44,6 +45,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </li>
-</ul>
+        <!-- </div> -->
+    </div>
+</div>
