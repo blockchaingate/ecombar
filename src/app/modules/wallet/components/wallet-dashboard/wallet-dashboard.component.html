@@ -1,12 +1,12 @@
 
-<!-- 上边线，下边线，倒解决了 margin 问题 -->
+<!-- 上下边线，解决 margin 问题 -->
 <main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="!wallets">  <!-- 背景灰色 -->
     <!-- <div class="container" *ngIf="!wallets"> -->
         <app-no-wallet></app-no-wallet>
     <!-- </div> -->
 </main>
 
-<!-- 上边线，下边线，倒解决了 margin 问题 -->
+<!-- 上下边线，解决 margin 问题 -->
 <main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="wallets">  <!-- 背景灰色 -->
 <!-- <div class="container" *ngIf="wallets"> -->
 
@@ -84,32 +84,44 @@
 
                         <div class="d-flex text-black px-3">
                             <div class="CreateCollection--actions m-1 pt-2 text-center">
-                                <div class="ActionButtonrContainer ">
+                                <!-- <div class="ActionButtonrContainer ">
                                     <div class="ActionButton--content" (click)="receive()" style="min-width: 120px;">
                                         {{ 'Receive' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-danger btn-sm btn-block" style="min-width: 150px;" (click)="receive()">
+                                    {{ 'Receive' | translate }}
+                                </button>
                             </div>  
                             <div class="CreateCollection--actions m-1 pt-2 text-center">
-                                <div class="ActionButtonrContainer ActionButton--secondary">
+                                <!-- <div class="ActionButtonrContainer ActionButton--secondary">
                                     <div class="ActionButton--content" (click)="send()" style="min-width: 120px;">
                                         {{ 'Send' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-outline-dark btn-sm btn-block" style="min-width: 150px;" (click)="send()">
+                                    {{ 'Send' | translate }}
+                                </button>
                             </div>              
                             <div class="CreateCollection--actions m-1 pt-2 text-center">
-                                <div class="ActionButtonrContainer ActionButton--secondary">
+                                <!-- <div class="ActionButtonrContainer ActionButton--secondary">
                                     <div class="ActionButton--content" (click)="addGas()" style="min-width: 120px;">
                                         {{ 'Add Gas' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-outline-dark btn-sm btn-block" style="min-width: 150px;" (click)="addGas()">
+                                    {{ 'Add Gas' | translate }}
+                                </button>
                             </div>                        
                             <div class="CreateCollection--actions m-1 pt-2 text-center" *ngIf="gas==0">
-                                <div class="ActionButtonrContainer ActionButton--secondary">
+                                <!-- <div class="ActionButtonrContainer ActionButton--secondary">
                                     <div class="ActionButton--content" (click)="getFreeGas()" style="min-width: 120px;">
                                         {{ 'Get free Gas' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-outline-dark btn-sm btn-block" style="min-width: 150px;" (click)="getFreeGas()">
+                                    {{ 'Get free Gas' | translate }}
+                                </button>
                             </div>                                 
                         </div>    
                     </div>

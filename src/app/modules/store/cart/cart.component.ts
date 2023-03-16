@@ -102,12 +102,12 @@ export class CartComponent implements OnInit, OnDestroy {
       (store: any) => {
         if(store) {
           this.currency = store.coin;
-          this.storeId = store._id;
-          this.merchantId = store.id;
+          this.storeId = store._id;  // 返回“商家页” products-grid
+          this.merchantId = store.id;  // 小心名字看错
           this.taxRate = store.taxRate;
           this.storeOwner = store.owner;
           const storedCart = this.cartStoreServ.items;
-          this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
+          this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.merchantId) : [];  // Fix: this.storeId 用错
           this.calculateTotal();
         }
 
@@ -119,6 +119,9 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   checkout() {
+    if (this.total <= 0) {  // Fix: 价格为 0 处理
+      return;
+    }
     if(!this.wallet || !this.wallet.pwdHash) {
       this.router.navigate(['/wallet']);
       return;

@@ -27,9 +27,11 @@
     <div class="border w-100 px-2 py-3 d-flex justify-content-center align-items-center" *ngIf="!singleFile || !images || (images.length == 0)">  <!-- 100% 加长，取消 col col-3 -->
       <div>
         <div class="Polaris-Stack__Item_yiyol py-2">
-          <button class="button myButton" (click)="fileUpload.click()">Click</button>
+          <!-- <button class="button myButton" (click)="fileUpload.click()">Click</button> -->
+          <button type="button" class="btn btn-danger btn-sm btn-block newButton-S" (click)="fileUpload.click()">
+            {{ 'Click' | translate }}
+          </button>
         </div>
-
         <div class="Polaris-Stack__Item_yiyol">
           <span class="Polaris-TextStyle--variationSubdued_1segu">or drop files to upload</span>
         </div>        

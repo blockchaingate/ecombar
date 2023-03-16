@@ -1,9 +1,12 @@
 
 <h1>{{ 'Shipping Carriers' | translate }}</h1>
 
-<div class="px-2">
-  <div class="text-right my-3">
-    <button type="button" class="btn btn-lg myButton-fix" routerLink="/merchant/shipping-carrier/add" routerLinkActive="active">&nbsp;&nbsp; {{'New' | translate}} &nbsp;&nbsp;</button>
+<div class="px-3">
+  <div class="text-right my-2">
+    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" 
+      routerLink="/merchant/shipping-carrier/add" routerLinkActive="active">
+      {{ 'New' | translate }}
+    </button>  <!-- 靠右对齐，圆角边框 btn-block float-right -->
   </div>
 
   <dl class="work-list row">

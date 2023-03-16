@@ -2,8 +2,10 @@
 <div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
   <h1>{{'New Category' | translate}}</h1>
 
-  <div class="text-right py-2">
-    <button type="button" class="btn btn-lg myButton-fix" (click)="addCategory()">&nbsp;&nbsp; {{ (id ? 'Update' : 'Add') | translate }} &nbsp;&nbsp;</button>
+  <div class="text-right my-2">
+    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addCategory()">
+      {{ (id ? 'Update' : 'Add') | translate }}
+    </button>  <!-- 圆角边框 -->
   </div>
 
   <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->

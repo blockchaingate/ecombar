@@ -1,4 +1,14 @@
 
+<!-- 统一页脚 -->
+
+<a href="#" id="navBackToTop" aria-label="Back to top" onclick="document.body.scrollTop = 0; document.documentElement.scrollTop = 0; event.preventDefault();">
+    <div class="border py-2 text-center font-size-16">  <!-- padding, top/bottom, $spacer * .5 -->
+    <!-- <span class="navFooterBackToTopText"> -->
+      Back to top
+    <!-- </span> -->
+    </div>
+</a>
+
 <div class="text-center py-3 border-top">
     <img src="/assets/images/logo-s.png" class="logo-thumbnail">&nbsp;
     {{year}}&nbsp;{{'Copyright' | translate}}  <!-- 通过字典定义 -->

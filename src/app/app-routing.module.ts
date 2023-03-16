@@ -5,7 +5,7 @@ import { ThemeService } from './services/theme.service';
 
 const defaultTheme: Routes = [
   {
-    path: '',
+    path: '',  // 缺省 'stores'
     loadChildren: () =>
       import('./modules/stores/stores.module').then(m => m.StoresModule)
   },

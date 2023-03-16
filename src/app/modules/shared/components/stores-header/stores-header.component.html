@@ -1,3 +1,7 @@
+
+<!-- 页首，用于 Home -->
+<!-- 由于另一页首涉及之前项目 NFT，我们先以此页为主 -->
+
 <div class="nav-bar">
     <nav class="nav-bar-main">
         <div class="nav-bar-left">
@@ -24,15 +28,25 @@
                 </a>
             </li>
             <li class="NavItem--isRoot">
+                <a class="NavItem--main" routerLink="/account">
+                    {{ 'Account' | translate }}
+                </a>
+            </li>
+            <li class="NavItem--isRoot">
                 <a class="NavItem--main" routerLink="/team">
                     {{ 'Team' | translate }}
                 </a>
             </li>
             <li class="NavItem--isRoot">
+                <a class="NavItem--main" routerLink="/merchant">
+                    {{ 'Merchant' | translate }}
+                </a>
+            </li>
+            <!-- <li class="NavItem--isRoot">
                 <a class="NavItem--main" routerLink="/merchant/products">
                     {{ 'Store' | translate }}
                 </a>
-            </li>
+            </li> -->
 
             <li class="NavItem--isRoot">
                 <a class="NavItem--main">

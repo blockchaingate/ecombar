@@ -1,3 +1,7 @@
+
+<!-- 页首，用于 Wallet -->
+<!-- 涉及之前项目 NFT，我们先以 app-stores-header 为主 -->
+
 <div class="nav-bar">
     <nav class="nav-bar-main">
         <div class="nav-bar-left">
@@ -13,7 +17,7 @@
             </div>
         </div>
         <ul class="Navbar--items">
-            <li class="NavItem--isRoot">
+            <li class="NavItem--isRoot">  <!-- 缺省 "/stores" -->
                 <a class="NavItem--main" routerLink="/">
                     {{ 'Home' | translate }}
                 </a>
@@ -33,7 +37,7 @@
                     {{ 'Account' | translate }}
                 </a>
             </li>
-            <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">
+            <li class="NavItem--isRoot" *ngIf="verionType != 'madearn'">  <!-- 之前项目 NFT -->
                 <a class="NavItem--main" routerLink="/nft/assets">
                     {{ 'Explore' | translate }}
                 </a>
@@ -66,7 +70,7 @@
                 </ul>
             </li>
 
-            <li class="NavItem--isRoot" *ngIf="(verionType != 'madearn') && setting">
+            <li class="NavItem--isRoot" *ngIf="(verionType != 'madearn') && setting">  <!-- 之前项目 NFT -->
                 <a class="NavItem--main">
                     <div class="img-container" style="height: 32px; width: 32px;">
                         <img class="Image--image" *ngIf="setting.logo" src="{{setting.logo}}" style="object-fit: cover;">

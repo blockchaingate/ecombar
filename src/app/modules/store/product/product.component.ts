@@ -55,6 +55,7 @@ export class ProductComponent implements OnInit {
   color: string;
   size: string;
   storeId: string;
+  storeId2: string;  // Fix: 返回“商家页” products-grid
   overall: number;
   rating5: number;
   rating4: number;
@@ -103,6 +104,7 @@ export class ProductComponent implements OnInit {
         this.store = store;
         console.log('store===', store);
         this.storeId = store.id;
+        this.storeId2 = store._id;  // Fix: 返回“商家页” products-grid
         this.currency = store.coin;
         this.smartContractAddress = store.smartContractAddress;
         this.taxRate = store.taxRate;
@@ -187,7 +189,12 @@ export class ProductComponent implements OnInit {
     this.productServ.getProduct(this.id).subscribe(
       (res: any) => {
         if(res && res) {
+          // console.log('this.product=', res);
           this.product = res;
+          if (! this.product.sales) {
+            this.product.sales = 0;  // Fix: product.quantity - product.sales 错误，还得查后端接口
+          }
+
           if(this.product.colors) {
             if(this.product.colors.en) {
               this.colors = this.product.colors.en;

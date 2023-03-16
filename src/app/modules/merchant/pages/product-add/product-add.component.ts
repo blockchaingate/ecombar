@@ -198,8 +198,8 @@ export class ProductAddComponent implements OnInit {
         if(walletAddress) {
           this.categoryServ.getMerchantCategories(walletAddress, 100, 0).subscribe(
             (res: any) => {
-              if (res && res.ok) {
-                this.categories = res._body;
+              if (res) {  //  && res.ok
+                this.categories = res;  // res._body
               }
             }
           );
@@ -306,8 +306,13 @@ export class ProductAddComponent implements OnInit {
               this.contents = product.contents;
             }
 
-            if(product.primaryCategoryId) {
-              this.selectedCategory = product.primaryCategoryId;
+            if(product.primaryCategory && this.categories) {
+              for (let i = 0; i < this.categories.length; i ++) {
+                if (this.categories[i]._id == product.primaryCategory) {
+                  this.selectedCategory = this.categories[i];
+                  console.log('selectedCategory=', this.selectedCategory);
+                }
+              }
             }
             this.quantity = product.quantity;
             this.currency = product.currency;
@@ -342,7 +347,7 @@ export class ProductAddComponent implements OnInit {
             if (product.images) {
               this.images = product.images;
             }
-            this.category = product.primaryCategoryId;
+            this.category = product.primaryCategory;  // primaryCategoryId
           }
 
         }
@@ -626,7 +631,7 @@ export class ProductAddComponent implements OnInit {
       taxRate: this.taxRate,
       rebateRate: this.rebateRate,
       contents: this.contents,
-      primaryCategoryId: this.selectedCategory ? this.selectedCategory._id : null,
+      primaryCategory: this.selectedCategory ? this.selectedCategory._id : null,
       active: this.active,
       images: this.images,
       colors: {

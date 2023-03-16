@@ -1,5 +1,5 @@
 
-<!-- 上边线，下边线，倒解决了 margin 问题 -->
+<!-- 上下边线，解决 margin 问题 -->
 <main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="order">  <!-- 背景灰色 -->
 
   <div class="row justify-content-center">  <!-- 本行，水平置中 -->
@@ -140,13 +140,16 @@
 
       <div class="d-flex justify-content-between py-2">
         <div class="ml-md-3">
-          <a class="btn myButton-Cancel font-size-18">{{ "Cancel" | translate }}</a>  <!-- (click)="" -->
+          <button type="button" class="btn btn-default btn-lg btn-block newButton border">  <!-- (click)="" -->
+            {{ "Cancel" | translate }}
+          </button>
         </div>
-  
         <div class="ml-md-3">
           <!-- Fix: 通过 [disabled] 要求表单首先合规，未指定 (ngSubmit)，因此用 (click) -->
           <!-- <a (click)="confirm()" class="btn myButton-Submit">{{ "Confirm" | translate }}</a> -->
-          <button (click)="confirm()" type="submit" class="btn myButton-Submit font-size-18" [disabled]="!workForm.valid">{{ "Confirm" | translate }}</button>
+          <button type="button" class="btn btn-danger btn-lg btn-block newButton" [disabled]="!workForm.valid" (click)="confirm()">
+            {{ "Confirm" | translate }}
+          </button>
         </div>
       </div>
 

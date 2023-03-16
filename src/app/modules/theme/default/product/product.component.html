@@ -1,5 +1,7 @@
 
-<!-- 上边线，下边线，倒解决了 margin 问题 -->
+<!-- 商品页 -->
+
+<!-- 上下边线，解决 margin 问题 -->
 <main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="product">  <!-- 背景灰色 style="background-color: #f7f7f7;" -->
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">
@@ -182,11 +184,16 @@
                                 <!-- End Quantity -->
                             </div>
                             <div class="ml-md-3">
-                                <a (click)="addToCart(product, quantity)" class="btn myButton-Submit font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}</a>
+                                <!-- <a (click)="addToCart(product, quantity)" class="btn myButton-Submit font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}</a> -->
+                                <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="addToCart(product, quantity)">
+                                    <i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}
+                                </button>
                             </div>
-
                             <div class="ml-md-3">
-                                <a (click)="buyNow(product, quantity)" class="btn myButton-Buy font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}</a>
+                                <!-- <a (click)="buyNow(product, quantity)" class="btn myButton-Buy font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}</a> -->
+                                <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="buyNow(product, quantity)">
+                                    <i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}
+                                </button>
                             </div>
                         </div>
                     </div>

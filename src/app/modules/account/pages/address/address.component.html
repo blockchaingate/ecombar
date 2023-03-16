@@ -111,13 +111,16 @@
 
 <div class="d-flex justify-content-between py-2">
   <div class="ml-md-3">
-    <a class="btn myButton-Cancel font-size-18">{{ "Cancel" | translate }}</a>  <!-- (click)="" -->
+    <button type="button" class="btn btn-default btn-lg btn-block newButton border">  <!-- (click)="" -->
+      {{ "Cancel" | translate }}
+    </button>
   </div>
-
   <div class="ml-md-3">
     <!-- Fix: 通过 [disabled] 要求表单首先合规，未指定 (ngSubmit)，因此用 (click) -->
     <!-- <a (click)="addAddress()" class="btn myButton-Submit">{{ "Confirm" | translate }}</a> -->
-    <button (click)="addAddress()" type="submit" class="btn myButton-Submit font-size-18" [disabled]="!workForm.valid">{{ "Add" | translate }}</button>
+    <button type="button" class="btn btn-danger btn-lg btn-block newButton" [disabled]="!workForm.valid" (click)="addAddress()">
+      {{ "Add" | translate }}
+    </button>
   </div>
 </div>
 
