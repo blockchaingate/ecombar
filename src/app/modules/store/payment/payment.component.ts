@@ -17,6 +17,7 @@ import BigNumber from 'bignumber.js';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { StarService } from 'src/app/modules/shared/services/star.service';
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 
 interface ShippingCarrier {
   _id: string;
@@ -56,10 +57,12 @@ export class PaymentComponent implements OnInit{
     currency: string;
     storeId: string;
     storeVersion: number;
+    tableNo: number;  // 台号 no
 
     modalRef: BsModalRef;
     wallets: any;
     password: string;
+
     shippingCarriers: ShippingCarrier[] = [
       {
         _id: '1',
@@ -86,6 +89,7 @@ export class PaymentComponent implements OnInit{
 
 
     constructor(
+      private cartStoreServ: CartStoreService,
       private iddockServ: IddockService,
       private utilServ: UtilService,
       private web3Serv: Web3Service,
@@ -217,11 +221,9 @@ export class PaymentComponent implements OnInit{
       this.total = 0;
       this.subtotal = 0;
       
-
-
+      console.log('tableno=', this.cartStoreServ.getTableNo());
+      this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
     }
-
-
 
     change() {
       this.router.navigate(['/store/' + this.storeId + '/address/' + this.orderID]);
@@ -283,7 +285,9 @@ export class PaymentComponent implements OnInit{
                         this.toastr.success('the transaction was procssed successfully');
                         // Fix: 支付后会停在此页面。改为跳去查看所有订单
                         setInterval( () => {
-                          this.router.navigate(['/account/orders']);
+                          // this.router.navigate(['/account/orders']);
+                          // http://localhost:4200/store/640f368a23979c464aa2e296/order-list
+                          this.router.navigate(['/store/' + this.storeId + '/order-list']);
                         }, 1000);  // 发现未更新状态，给个延时
                       } else {
                         this.spinner.hide();

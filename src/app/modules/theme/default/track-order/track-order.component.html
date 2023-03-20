@@ -137,7 +137,7 @@
                                 <div class="text-muted py-3">
                                     {{'Your order' | translate}}
                                 </div>
-                                <div *ngFor="let item of order.items" class="py-2">
+                                <div class="py-2" *ngFor="let item of order.items">
                                     <div class="row">
                                         <div class="col col-4">
                                             <img class="img-thumbnail" [src]="item.thumbnailUrl">

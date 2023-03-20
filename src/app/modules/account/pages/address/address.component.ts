@@ -36,7 +36,6 @@ export class AddressComponent implements OnInit{
         private cd: ChangeDetectorRef,  // 变更检测 detectChanges()
         private userServ: UserService, 
         private addressServ: AddressService) {
-
     }
 
     ngAfterContentChecked() {    // 使用 ngAfterViewInit, ngAfterContentInit 无效

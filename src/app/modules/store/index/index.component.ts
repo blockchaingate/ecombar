@@ -39,6 +39,7 @@ export class IndexComponent implements OnInit{
         this.productServ.getMerchantProducts(storeId, 100, 0).subscribe(
           (ret: any) => {
             this.latestProducts = ret;
+            console.log('latestProducts===', this.latestProducts);
           }            
         );
 

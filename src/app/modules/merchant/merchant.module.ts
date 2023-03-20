@@ -22,6 +22,7 @@ import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-a
 import { TopCategoryBannersComponent } from './pages/top-category-banners/top-category-banners.component';
 import { TopCategoryBannerAddComponent } from './pages/top-category-banner-add/top-category-banner-add.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { OrderComponent } from './pages/order/order.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { NewslettersComponent } from './pages/newsletters/newsletters.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -67,6 +68,7 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     MerchantApplicationsComponent,
     BannersComponent,
     OrdersComponent,
+    OrderComponent,
     ProfileComponent,
     BannerAddComponent,
     CollectionAddComponent,

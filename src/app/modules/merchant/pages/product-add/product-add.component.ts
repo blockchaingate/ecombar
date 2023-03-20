@@ -44,7 +44,7 @@ export class ProductAddComponent implements OnInit {
   quantity: number;
   wallet: any;
   features: any;
-  selectedCategory: any;
+  selectedCategory: any;  // 选中的“category”
   feature: string;
   walletAddress: string;
   featureChinese: string;
@@ -89,7 +89,7 @@ export class ProductAddComponent implements OnInit {
   NavTab: string;    // 导航 Tab
   currentTab: string;    // 语言 Tab
   category: string;
-  categories: any;
+  categories: any;  // 整个“category”树，用于 html
   brand: string;
   brands: any;
   defaultColors: any;
@@ -198,6 +198,7 @@ export class ProductAddComponent implements OnInit {
         if(walletAddress) {
           this.categoryServ.getMerchantCategories(walletAddress, 100, 0).subscribe(
             (res: any) => {
+              console.log("getMerchantCategories=", res);
               if (res) {  //  && res.ok
                 this.categories = res;  // res._body
               }
@@ -232,6 +233,7 @@ export class ProductAddComponent implements OnInit {
       this.productServ.getProduct(this.id).subscribe(
         (res: any) => {
           if (res) {
+            console.log("getProduct=", res);
             const product = res;
             this.product = product;  // 看起来没用上
             if (product.title) {
@@ -651,7 +653,8 @@ export class ProductAddComponent implements OnInit {
     //console.log('datahash==', datahash);
     const sig = this.kanbanServ.signJsonData(privateKey, data);
     data['sig'] = sig.signature; 
-    if(!this.id) {   
+    if (! this.id) {   
+      // console.log('dataaaaaa1=', data);
       this.productServ.create(data).subscribe(
           (res: any) => {
             this.spinner.hide();
@@ -659,9 +662,10 @@ export class ProductAddComponent implements OnInit {
           }
       );    
     } else {     
+      console.log('dataaaaaa2=', data);
       this.productServ.update(this.id, data).subscribe(
         async (res: any) => {
-          console.log('res=', res);
+          console.log('update res=', res);
           this.spinner.hide();
           this.router.navigate(['/merchant/products']);
         }

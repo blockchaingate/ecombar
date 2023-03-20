@@ -59,6 +59,7 @@ export class CategoryComponent implements OnInit {
     private categoryServ: CategoryService) { }
 
   ngOnInit() {
+    console.log("[Category2Component]");
     this.dataServ.currentStoreId.subscribe(
       (storeId: string) => {
         this.storeId = storeId;

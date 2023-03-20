@@ -25,6 +25,21 @@ const defaultTheme: Routes = [
       import('./modules/theme/default/store.module').then(m => m.StoreModule)
   },
   {
+    path: 'store/:storeId/type/:type',    // 类别 category
+    loadChildren: () =>
+      import('./modules/theme/default/store.module').then(m => m.StoreModule)
+  },
+  {
+    path: 'store/:storeId/no/:no',    // 台号 no
+    loadChildren: () =>
+      import('./modules/theme/default/store.module').then(m => m.StoreModule)
+  },
+  {
+    path: 'store/:storeId/type/:type/no/:no',    // 类别  // 台号 no
+    loadChildren: () =>
+      import('./modules/theme/default/store.module').then(m => m.StoreModule)
+  },
+  {
     path: 'newstore/:storeId',
     loadChildren: () =>
       import('./modules/newstore/newstore.module').then(m => m.NewstoreModule)

@@ -8,7 +8,7 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/store/{{storeId}}/order-list">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/merchant/orders">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
                         <!-- <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{ 'Home' | translate }}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{ product.primaryCategoryId?._id }}">{{ product.primaryCategoryId?.category | translateField }}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{ product && product.title | translateField }}</li> -->
@@ -23,11 +23,17 @@
         <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
 
             <div class="container font-size-16" *ngIf="order">  <!-- container 水平置中了 -->
-                <div>
+                <div class="text-left">
                     {{ 'ObjectId' | translate }}: 
                     <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
                         {{order.objectId}}
                     </a>
+                </div>
+                <div class="text-left">
+                    {{ 'Owner' | translate }}: {{ order.owner }}
+                </div>
+                <div class="text-left">
+                    {{ 'Date' | translate }}: {{ order.dateCreated | date }}
                 </div>
                 <div class="text-center">
                     <h2>{{ "Order" | translate }}</h2>
@@ -84,37 +90,18 @@
                                     </th>
                                 </tr>
                                 <tr *ngIf="order.paymentStatus != 2">
-                                    <td colspan="3">
-                                    </td>
-                                    <td>
-                                        <div class="d-md-flex">
-                                            <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="placeOrder()">
-                                                {{'Place Order' | translate}}
-                                            </button>
-                                            <!-- <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(tableNo && tableNo > 0)" (click)="placeOrder()">
-                                                {{'Place Order' | translate}}
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(!tableNo || tableNo <= 0)" (click)="checkout()">
-                                                {{'Check Out' | translate}}
-                                            </button> -->
-                                        </div>
+                                    <td colspan="4" class="text-center">
+                                        This order is Waiting for Pay
                                     </td>
                                 </tr>
                                 <tr *ngIf="order.paymentStatus == 2">
                                     <td colspan="4" class="text-center">
-                                        Your order was paid successfully with txid: {{ order.charge_id }}
+                                        This order was Paid Successfully with txid: {{ order.charge_id }}
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
                     </form>
-                </div>
-        
-                <div class="font-size-14">
-                    {{ 'Merchant Name' | translate }}: {{ order.merchantId.name }}
-                </div>
-                <div class="font-size-14">
-                    {{ 'Merchant Phone' | translate }}: {{ order.merchantId.phone }}
                 </div>
                 <!-- <div>
                     {{ 'Email' | translate }}: {{ order.merchantId.email }}

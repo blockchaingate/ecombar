@@ -11,10 +11,12 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   create(data) {
+    // 后端 router.post("/", CategoryController.createMerchantCategory);
     return this.http.post(baseUrl + 'category', data);
   }
 
   update(id: string, data) {
+    // 后端 router.put("/:id", CategoryController.updateMerchantCategory);
     return this.http.put(baseUrl + 'category/' + id, data);
   }
 
@@ -30,7 +32,6 @@ export class CategoryService {
     return this.http.get('product-categories/admin_with_counts');
   }
   
-
   getMerchantCategories(walletAddress: string, pageSize: number, pageNum:number) {
     return this.http.get(baseUrl + 'category/owner/' + walletAddress + '/' + pageSize + '/' + pageNum);
   }
@@ -47,7 +48,7 @@ export class CategoryService {
     return this.http.get(baseUrl + 'category/' + id);
   }
 
-  deleteCategory(data: any) {
+  deleteCategory(data: any) {  // 后端缺此方法
     return this.http.post('product-categories/Delete', data);
   }
 }

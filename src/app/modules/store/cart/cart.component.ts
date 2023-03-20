@@ -50,117 +50,115 @@ export class CartComponent implements OnInit, OnDestroy {
   trans_code: string;
   smartContractAddress: string;
   errMsg = '';
+  tableNo: number;  // 台号 no
+  orderID = '';  // 订单号
 
-  constructor(
-    private modalService: BsModalService,
-    private utilServ: UtilService,
-    private cartStoreServ: CartStoreService,
-    private orderServ: OrderService,
-    private router: Router,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private dataServ: DataService,
-    private iddockServ: IddockService,
-    private translateServ: TranslateService,
-    private coinServ: CoinService,
-    private kanbanServ: KanbanService,
-    private kanbanSmartContractServ: KanbanSmartContractService
-  ) {
-  }
-
-  calculateTotal(): void {
-    this.total = 0;
-
-    for(let i = 0; i < this.cartItems.length; i++) {
-      const item = this.cartItems[i];
-      const value = item.price * item.quantity;
-      this.total += Number(value.toFixed(2));
+    constructor(
+        private modalService: BsModalService,
+        private utilServ: UtilService,
+        private cartStoreServ: CartStoreService,
+        private orderServ: OrderService,
+        private router: Router,
+        private spinner: NgxSpinnerService,
+        private toastr: ToastrService,
+        private dataServ: DataService,
+        private iddockServ: IddockService,
+        private translateServ: TranslateService,
+        private coinServ: CoinService,
+        private kanbanServ: KanbanService,
+        private kanbanSmartContractServ: KanbanSmartContractService) {
     }
 
-    this.tax = this.total * this.taxRate / 100;
-  }
+    calculateTotal(): void {
+        this.total = 0;
 
-  ngOnInit(): void {
-
-    this.dataServ.currentWallet.subscribe(
-      (wallet: any) => {
-        if(wallet) {
-          this.wallet = wallet;
-        }
-      }
-    );
-
-    this.dataServ.currentWalletAddress.subscribe(
-      (walletAddress: any) => {
-        if(walletAddress) {
-          this.walletAddress = walletAddress;
-        }
-      }
-    );
-
-    this.dataServ.currentStore.subscribe(
-      (store: any) => {
-        if(store) {
-          this.currency = store.coin;
-          this.storeId = store._id;  // 返回“商家页” products-grid
-          this.merchantId = store.id;  // 小心名字看错
-          this.taxRate = store.taxRate;
-          this.storeOwner = store.owner;
-          const storedCart = this.cartStoreServ.items;
-          this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.merchantId) : [];  // Fix: this.storeId 用错
-          this.calculateTotal();
+        for(let i = 0; i < this.cartItems.length; i++) {
+            const item = this.cartItems[i];
+            const value = item.price * item.quantity;
+            this.total += Number(value.toFixed(2));
         }
 
-      }
-    );
-
-
-
-  }
-
-  checkout() {
-    if (this.total <= 0) {  // Fix: 价格为 0 处理
-      return;
-    }
-    if(!this.wallet || !this.wallet.pwdHash) {
-      this.router.navigate(['/wallet']);
-      return;
+        this.tax = this.total * this.taxRate / 100;
     }
 
-    const initialState = {
-      pwdHash: this.wallet.pwdHash,
-      encryptedSeed: this.wallet.encryptedSeed
-    };        
+    ngOnInit(): void {
 
-    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+        this.dataServ.currentWallet.subscribe(
+            (wallet: any) => {
+                if(wallet) {
+                    this.wallet = wallet;
+                }
+            }
+        );
+        this.dataServ.currentWalletAddress.subscribe(
+            (walletAddress: any) => {
+                if(walletAddress) {
+                    this.walletAddress = walletAddress;
+                }
+            }
+        );
 
-    this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-      this.spinner.show();
-      this.checkoutDo(seed);
-    });
-  }
+        this.dataServ.currentStore.subscribe(
+            (store: any) => {
+                if(store) {
+                    this.currency = store.coin;
+                    this.storeId = store._id;  // 返回“商家页” products-grid
+                    this.merchantId = store.id;  // 小心名字看错
+                    this.taxRate = store.taxRate;
+                    this.storeOwner = store.owner;
+                    const storedCart = this.cartStoreServ.items;
+                    console.log("storeId=", this.storeId);
+                    console.log("merchantId=", this.merchantId);
+                    console.log("storedCart=", storedCart);
+                    this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
+                    this.calculateTotal();
+                }
+            }
+        );
 
+        console.log('tableno=', this.cartStoreServ.getTableNo());
+        this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
+    }
 
+    checkout() {
+        if (this.total <= 0) {  // Fix: 价格为 0 处理
+            return;
+        }
+        if (!this.wallet || !this.wallet.pwdHash) {
+            this.router.navigate(['/wallet']);
+            return;
+        }
 
-  async checkoutDo(seed: Buffer) {
-    const items: CartItem[] = [];
-    this.quantities = [];
- 
+        const initialState = {
+            pwdHash: this.wallet.pwdHash,
+            encryptedSeed: this.wallet.encryptedSeed
+        };        
 
-    
-    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-    const privateKey = keyPair.privateKeyBuffer.privateKey;
-    
-    this.cartItems.forEach(item => {
-      console.log('item=', item);
-      this.quantities.push(item.quantity);
+        this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
-      const titleTran = this.translateServ.transField(item.title);
-      item.title = titleTran ? titleTran : item.title;
-      items.push(item);
-    });
-    let currency = this.currency;
-    const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
+        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+            this.spinner.show();
+            this.checkoutDo(seed);
+        });
+    }
+
+    async checkoutDo(seed: Buffer) {
+        const items: CartItem[] = [];
+        this.quantities = [];
+
+        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+        const privateKey = keyPair.privateKeyBuffer.privateKey;
+        
+        this.cartItems.forEach(item => {
+            console.log('item=', item);
+            this.quantities.push(item.quantity);
+
+            const titleTran = this.translateServ.transField(item.title);
+            item.title = titleTran ? titleTran : item.title;
+            items.push(item);
+        });
+        let currency = this.currency;
+        const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
 
     /*
         owner: { type: String},
@@ -178,23 +176,32 @@ export class CartComponent implements OnInit, OnDestroy {
         quantity: Number
     }], 
     */
-    const sig = this.kanbanServ.signJsonData(privateKey, orderData);
-    orderData['sig'] = sig.signature;  
-    this.orderServ.create2(orderData).subscribe(
-      (res: any) => {
-        if (res) {
-          const body = res;
-          const orderID = body._id;
-          this.spinner.hide();
-          this.cartStoreServ.empty();
-          this.router.navigate(['/store/' + this.storeId + '/address/' + orderID]);
+        const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+        orderData['sig'] = sig.signature;  
+        this.orderServ.create2(orderData).subscribe(
+        (res: any) => {
+            if (res) {
+                const body = res;
+                this.orderID = body._id;
+                this.spinner.hide();
+                this.cartStoreServ.empty();
+                console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
+                if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+                    // 点餐现场，不需要地址。指定点餐的商家，需要后端支持
+                    // 我们假定用户点餐，先支付。然后厨房按单上菜
+                    this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);  // 进入支付
+
+                } else {
+                    // console.log('goto=', '/store/', this.storeId, '/address/', this.orderID);
+                    this.router.navigate(['/store/' + this.storeId + '/address/' + this.orderID]);  // 地址页
+                }
+            }
+        },
+        err => { 
+            this.errMsg = err.message;
+            this.spinner.hide();
+            this.toastr.error('error while creating order');              
         }
-      },
-      err => { 
-        this.errMsg = err.message;
-        this.spinner.hide();
-        this.toastr.error('error while creating order');              
-       }
     );  
 
     /*
@@ -215,8 +222,109 @@ export class CartComponent implements OnInit, OnDestroy {
         }
       }});
       */
+  }
 
+  // 注意：购物车(Cart) 取消 Place Order，共用 Check Out
+  placeOrder() {
+    if (this.total <= 0) {  // Fix: 价格为 0 处理
+      return;
+    }
+    if(!this.wallet || !this.wallet.pwdHash) {
+      this.router.navigate(['/wallet']);
+      return;
+    }
 
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+    this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+      this.spinner.show();
+      this.placeOrderDo(seed);
+    });      
+  }
+
+  async placeOrderDo( seed: Buffer ) {  // 堂食直接支付
+    const items: CartItem[] = [];
+    this.quantities = [];
+
+    this.cartItems.forEach(item => {
+      console.log('item=', item);
+      this.quantities.push(item.quantity);
+
+      const titleTran = this.translateServ.transField(item.title);
+      item.title = titleTran ? titleTran : item.title;
+      items.push(item);
+    });
+    let currency = this.currency;
+    const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
+
+    const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    const privateKey = keyPair.privateKeyBuffer.privateKey;
+    const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+    orderData['sig'] = sig.signature;  
+    this.orderServ.create2(orderData).subscribe(
+      (res: any) => {
+        if (res) {
+          const body = res;
+          this.orderID = body._id;
+          this.spinner.hide();
+          this.cartStoreServ.empty();
+          console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
+          if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+            // 点餐现场，不需要地址。指定点餐的商家，需要后端支持
+            // 我们假定用户点餐，先支付。然后厨房按单上菜
+            const updated = {
+              totalShipping: 0  // 没有运费
+            };
+            this.orderServ.update2(this.orderID, updated).subscribe(
+              (order) => {
+                  this.orderServ.getPaycoolRewardInfo(this.orderID, this.walletAddress, 'WithFee').subscribe(
+                      async (ret: any) => {
+                        const order = ret;
+        
+                        const params = order.params;
+                        console.log('params==', params);
+                
+                        ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[0].to, params[0].data);
+                        if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+                          ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[1].to, params[1].data);
+                          if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+                            this.spinner.hide();
+                            this.toastr.success('the transaction was procssed successfully');
+                            // Fix: 支付后会停在此页面。改为跳去查看所有订单
+                            setInterval( () => {
+                                // this.router.navigate(['/account/orders']);
+                                // http://localhost:4200/store/640f368a23979c464aa2e296/order-list
+                                this.router.navigate(['/store/' + this.storeId + '/order-list']);
+                            }, 1000);  // 发现未更新状态，给个延时
+                          } else {
+                            this.spinner.hide();
+                            this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
+                          }
+                        } else {
+                          this.spinner.hide();
+                          this.toastr.error('Failed to authorizeOperator, txid:' + ret._body.transactionHash);
+                        }
+                      }
+                  );
+              } 
+            );
+        
+          } else {
+            // 网站送货，需要地址。明显来这里，出错了。
+
+          }
+        }
+      },
+      err => { 
+        this.errMsg = err.message;
+        this.spinner.hide();
+        this.toastr.error('error while creating order');              
+       }
+    );  
   }
 
   clear() {

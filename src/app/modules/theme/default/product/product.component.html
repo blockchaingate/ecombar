@@ -10,13 +10,10 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{ 'Home' | translate }}</a></li>
-                        <!--
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Product</a></li>
-                        -->
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/store/{{storeId}}">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
+                        <!-- <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{ 'Home' | translate }}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{ product.primaryCategoryId?._id }}">{{ product.primaryCategoryId?.category | translateField }}</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{ product && product.title | translateField }}</li>
-
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{ product && product.title | translateField }}</li> -->
                     </ol>
                 </nav>
             </div>
@@ -27,9 +24,9 @@
     <div class="mb-3 container border rounded bg-white">  <!-- 背景白色，圆角边框 -->
 
         <!-- Single Product Body -->
-        <div class="mb-xl-14 mb-6">
+        <div class="mb-3">  <!-- 没必要 mb-xl-14 了 -->
             <div class="row">
-                <div class="col-md-5 mb-4 mb-md-0">
+                <div class="col-md-5 m-3 mb-md-0">
                     <div id="sliderSyncingNav" class="js-slick-carousel u-slick mb-2">
                         <div class="" >
                             <img class="img-fluid" [src]="selectedImage" alt="Image Description">
@@ -53,7 +50,7 @@
                             <p *ngIf="product.subtitle">
                                 {{product.subtitle | translateField}}
                             </p>
-                            <div class="mb-2">
+                            <!-- <div class="mb-2">
                                 <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="/store/{{storeId}}/product/{{id}}/#product-tabs">
                                     <div class="text-warning mr-2">
                                         <small class="fa-star" 
@@ -69,32 +66,31 @@
                                     </div>
                                     <span class="text-secondary font-size-13">({{ comments ? comments.length : 0 }} {{ 'customer reviews' | translate }})</span>
                                 </a>
-                            </div>
+                            </div> -->
                             <hr>
                             <!-- <div class="d-md-flex align-items-center"> -->
                                 <!--
                                 <a href="#" class="max-width-150 ml-n2 mb-2 mb-md-0 d-block"><img class="img-fluid" src="../../assets/img/200X60/img1.png" alt="Image Description"></a>
                                 -->
-                                <div class="ml-md-3 text-gray-9">{{ 'Availability' | translate }}: <span class="text-green font-weight-bold">
-                                    <span *ngIf="!product.active">{{ 'Out of stock' | translate }}</span>
-                                    <span *ngIf="product.active">
-                                        {{ product.quantity - product.sales }} {{ 'In Stock' | translate }}
-                                    </span>
-                                </span></div>
+                            <!-- <div class="ml-md-3 text-gray-9">{{ 'Availability' | translate }}:  -->
+                                <!-- <span class="text-green font-weight-bold"> -->
+                                    <span class="text-red font-weight-bold" *ngIf="!product.active">{{ 'Out of stock' | translate }}</span>
+                                    <span class="text-green font-weight-bold" *ngIf="product.active">
+                                        {{ 'In Stock' | translate }}
+                                    </span>  <!-- {{ product.quantity - product.sales }} -->
+                                <!-- </span> -->
+                            <!-- </div> -->
                             <!-- </div> -->
                             <br>
                         </div>
-                        <div class="flex-horizontal-center flex-wrap mb-4">
+                        <!-- <div class="flex-horizontal-center flex-wrap mb-4">
                             <a (click)="toggleFavorite(id)" class="text-gray-6 font-size-13 mr-2">
                                 <i class="ec ec-favorites mr-1" [ngClass]="isFavorited ? 'favorited' : ''"></i> 
                                 <span [ngClass]="isFavorited ? 'favorited' : ''">
                                     {{'Wishlist' | translate}}
                                 </span>
                             </a>
-                            <!--
-                            <a href="#" class="text-gray-6 font-size-13 ml-2"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                            -->
-                        </div>
+                        </div> -->
                         <div class="mb-2">
                             {{'Content' | translate}}:
                             <!-- <ul class="font-size-14 pl-3 ml-1 text-gray-110">
@@ -116,27 +112,25 @@
                             </div>
                         </div>
 
-                        <hr>
-                        <!-- <div *ngIf="lang == 'en'"> -->  <!-- 有 translate 够用了 -->
-                            <dl *ngIf="colors && colors.length > 0">
-                                <dt>{{ 'Color' | translate }}</dt>
-                                <dd class="text-left">
-                                    <div btnRadioGroup [(ngModel)]="color">  <!-- 取消 btn-group -->
-                                        <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of colors"
-                                               [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
-                                    </div>
-                                </dd>
-                            </dl>
-
-                            <dl *ngIf="sizes && sizes.length > 0">
-                                <dt>{{ 'Size' | translate }}</dt>
-                                <dd class="text-left">
-                                    <div btnRadioGroup [(ngModel)]="size">  <!-- 取消 btn-group -->
-                                        <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of sizes"
-                                               [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
-                                    </div>
-                                </dd>
-                            </dl>
+                        <!-- <hr>
+                        <dl *ngIf="colors && colors.length > 0">
+                            <dt>{{ 'Color' | translate }}</dt>
+                            <dd class="text-left">
+                                <div btnRadioGroup [(ngModel)]="color">
+                                    <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of colors"
+                                            [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl *ngIf="sizes && sizes.length > 0">
+                            <dt>{{ 'Size' | translate }}</dt>
+                            <dd class="text-left">
+                                <div btnRadioGroup [(ngModel)]="size">
+                                    <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of sizes"
+                                            [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
+                                </div>
+                            </dd>
+                        </dl> -->
                         <!-- </div> -->
                         <hr>
 
@@ -184,17 +178,16 @@
                                 <!-- End Quantity -->
                             </div>
                             <div class="ml-md-3">
-                                <!-- <a (click)="addToCart(product, quantity)" class="btn myButton-Submit font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}</a> -->
-                                <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="addToCart(product, quantity)">
+                                <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="addToCart(product, quantity)">
                                     <i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}
                                 </button>
                             </div>
-                            <div class="ml-md-3">
-                                <!-- <a (click)="buyNow(product, quantity)" class="btn myButton-Buy font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}</a> -->
-                                <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="buyNow(product, quantity)">
-                                    <i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}
-                                </button>
-                            </div>
+                            <!-- <div class="ml-md-3">
+                                <a (click)="addToCart(product, quantity)" class="btn myButton-Submit font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}</a>
+                            </div> -->
+                            <!-- <div class="ml-md-3">
+                                <a (click)="buyNow(product, quantity)" class="btn myButton-Buy font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}</a>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -204,10 +197,10 @@
 
         <!-- Single Product Tab -->
 
-        <div class="myNavTabs-2" style="padding: 0 20px;">
+        <!-- <div class="myNavTabs-2" style="padding: 0 20px;">
 
-          <ul class="nav nav-tabs justify-content-center nav-justified">  <!-- 水平居中，等宽 -->
-            <li class="nav-item"></li>  <!-- 两边留空 -->
+          <ul class="nav nav-tabs justify-content-center nav-justified">
+            <li class="nav-item"></li>
 
             <li *ngIf="NavTab == 'Description'" class="nav-item">
               <a class="nav-link active" href="javascript:;">{{ 'Description' | translate }}</a>
@@ -240,7 +233,7 @@
             <li class="nav-item"></li>
           </ul>
             
-        </div>
+        </div> -->
 
         <!-- Description -->
         <div *ngIf="NavTab == 'Description'" class="WorkForm-2">
@@ -248,28 +241,28 @@
         </div>
 
         <!-- Specification -->
-        <div *ngIf="NavTab == 'Specification'" class="WorkForm-2">
-            <table class="table table-hover text-center" *ngIf="product.specs && product.specs.en">  <!-- 滑入效果，文字居中 -->
+        <!-- <div *ngIf="NavTab == 'Specification'" class="WorkForm-2">
+            <table class="table table-hover text-center" *ngIf="product.specs && product.specs.en">
                 <tbody>
                     <tr *ngFor="let spec of product.specs.en[0].details">
-                        <td class="border-top-0">{{ spec.name }}</td>  <!-- th td 去除上边线 -->
+                        <td class="border-top-0">{{ spec.name }}</td>
                         <td class="border-top-0">{{ spec.value }}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
 
         <!-- Features -->
-        <div *ngIf="NavTab == 'Features'" class="WorkForm-2">
+        <!-- <div *ngIf="NavTab == 'Features'" class="WorkForm-2">
             <ul>
                 <li *ngFor="let feature of product.features.en">
                     {{ feature }}
                 </li>
             </ul>
-        </div>
+        </div> -->
 
         <!-- Reviews -->
-        <div *ngIf="NavTab == 'Reviews'" class="WorkForm-2">
+        <!-- <div *ngIf="NavTab == 'Reviews'" class="WorkForm-2">
             <app-comments 
             [overall]="overall" 
             [comments]="comments"
@@ -279,7 +272,7 @@
             [rating4]="rating4"
             [rating5]="rating5"
             ></app-comments>
-        </div>
+        </div> -->
         
         <!-- End Single Product Tab -->
 

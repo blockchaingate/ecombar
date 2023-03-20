@@ -70,8 +70,16 @@ export class CartStoreService {
     this._items.next(this.items);
   }
 
-  
   empty() {
     return this.saveCartItems([]);
   }
+
+  getTableNo(): number {
+    return parseInt( localStorage.getItem('tableNo') );
+  }
+
+  setTableNo( no: number ) {
+    localStorage.setItem('tableNo', no.toString());
+  }
+
 }

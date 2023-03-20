@@ -3,7 +3,7 @@
 
 <!-- 上下边线，解决 margin 问题 -->
 <!-- <main id="content" role="main" class="cart-page"> -->
-<main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
+<main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 style="background-color: #f7f7f7;" -->
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">
         <div class="container">
@@ -11,8 +11,9 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">{{'Home'|translate}}</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{'Cart'|translate}}</li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/store/{{storeId}}">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
+                        <!-- <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">{{'Home'|translate}}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{'Cart'|translate}}</li> -->
                     </ol>
                 </nav>
             </div>
@@ -22,18 +23,18 @@
     <!-- End breadcrumb -->
 
     <div class="mb-3 container border rounded bg-white">  <!-- 背景白色，圆角边框 -->
-        <div class="mb-4 d-flex justify-content-center">
+        <div class="m-4 d-flex justify-content-center">
             <h1 class="text-center mr-3">{{'Cart'|translate}}</h1>
             <button class="btn btn-link" (click)="clear()">
                 Clear
             </button>   
         </div>
 
-        <div class="mb-10 cart-table">
-            <form class="mb-4" action="#" method="post">
-                <table class="table" cellspacing="0">
+        <div class="cart-table">  <!-- 下边框 mb-10 -->
+            <form class="" action="#" method="post">  <!-- "mb-4" -->
+                <table class="table mb-3" cellspacing="0">
                     <thead>
-                        <tr class="font-size-20">
+                        <tr>
                             <th class="product-remove">&nbsp;</th>
                             <th class="product-thumbnail">&nbsp;</th>
                             <th class="product-name">{{'Product' | translate}}</th>
@@ -45,56 +46,56 @@
                     <tbody>
                         <tr class="" *ngFor="let item of cartItems;let i = index;" app-cart-product (productUpdated)="updateProduct($event)" [currency]="currency" [product]="item">
                         </tr>
-                        <tr class="border-top">
-                            <td colspan="6" class="space-top-2 justify-content-center">
-                                <div class="pt-md-3">
-                                    <div class="d-block d-md-flex flex-center-between">
-                                        <div class="mb-3 mb-md-0 w-xl-40">
-                                            <!-- Apply coupon Form -->
-                                            <form class="js-focus-state">
-                                                <label class="sr-only" for="subscribeSrEmailExample1">{{'Coupon code' | translate}}</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="text" id="subscribeSrEmailExample1" placeholder="{{'Coupon code' | translate}}" aria-label="Coupon code" aria-describedby="subscribeButtonExample2" required>
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"><i class="fas fa-tags d-md-none"></i><span class="d-none d-md-inline">{{'Apply coupon' | translate}}</span></button>
-                                                    </div>
+                    </tbody>
+                    <tfoot class="border-top">
+                        <tr>
+                            <th colspan="5" class="text-right font-size-24">Cart Totals</th>
+                            <th class="font-size-17">
+                                {{total}} {{currency}}
+                            </th>
+                        </tr>
+                        <!-- <tr class="cart-subtotal">
+                            <th colspan="5" class="text-right font-size-24">Cart totals</th>
+                            <td data-title="Subtotal"><span class="amount">{{total}} {{currency}}</span></td>
+                        </tr> -->
+                        <tr>
+                            <td colspan="5">
+                            </td>
+                            <td>
+                                <!-- <div class="d-block d-md-flex flex-center-between"> -->
+                                    <div class="">  <!-- "mb-3 mb-md-0 w-xl-40" -->
+                                        <!-- Apply coupon Form -->
+                                        <!-- <form class="js-focus-state">
+                                            <label class="sr-only" for="subscribeSrEmailExample1">{{'Coupon code' | translate}}</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="text" id="subscribeSrEmailExample1" placeholder="{{'Coupon code' | translate}}" aria-label="Coupon code" aria-describedby="subscribeButtonExample2" required>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"><i class="fas fa-tags d-md-none"></i><span class="d-none d-md-inline">{{'Apply coupon' | translate}}</span></button>
                                                 </div>
-                                            </form>
-                                            <!-- End Apply coupon Form -->
-                                        </div>
-                                        <div class="d-md-flex">
-                                            <!-- <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button> -->
-                                            <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="checkout()">
-                                                {{ 'Check Out' | translate }}
-                                            </button>
-                                        </div>
+                                            </div>
+                                        </form> -->
+                                        <!-- End Apply coupon Form -->
                                     </div>
-                                </div>
+                                    <div class="d-md-flex">
+                                        <!-- <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button> -->
+                                        <!-- <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(tableNo && tableNo > 0)" (click)="placeOrder()">
+                                            {{'Place Order' | translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(!tableNo || tableNo <= 0)" (click)="checkout()">
+                                            {{'Check Out' | translate}}
+                                        </button> -->
+                                        <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="checkout()">
+                                            {{'Check Out' | translate}}
+                                        </button>
+                                        <!-- <a (click)="checkout()" class="btn myButton-Buy font-size-18 d-md-inline-block" *ngIf="tableNo">{{'Place Order' | translate}}</a> -->
+                                        <!-- <a (click)="checkout()" class="btn myButton-Buy font-size-18 d-md-inline-block" *ngIf="!tableNo">{{'Check Out' | translate}}</a> -->
+                                    </div>  <!-- "ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none " -->
+                                <!-- </div> -->
                             </td>
                         </tr>
-                    </tbody>
+                    </tfoot>
                 </table>
             </form>
-        </div>
-        <div class="mb-8 cart-total">
-            <div class="row">
-                <div class="col-xl-5 col-lg-6 offset-lg-6 offset-xl-7 col-md-8 offset-md-4">
-                    <div class="border-bottom border-color-1 mb-3">
-                        <h3 class="d-inline-block section-title mb-0 pb-2 font-size-26">Cart totals</h3>
-                    </div>
-                    <table class="table mb-3 mb-md-0">
-                        <tbody>
-                            <tr class="cart-subtotal">
-                                <th class="font-size-22">Subtotal</th>
-                                <td data-title="Subtotal"><span class="font-size-20">{{total}} {{currency}}</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a>
-                        <button type="button" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-md-none" (click)="checkout()">Proceed to checkout</button>
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 </main>

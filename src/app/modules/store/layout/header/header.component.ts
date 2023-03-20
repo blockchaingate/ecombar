@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
   currency: string;
   menu = false;
   _lang: string;
+  tableNo: number;  // 台号 no
 
   constructor(
     private dataServ: DataService,
@@ -63,7 +64,6 @@ export class HeaderComponent implements OnInit {
     );
     this.dataServ.currentStoreOwner.subscribe(
       (storeOwner: string) => {
-        
         if(storeOwner) {
           this.categoryServ.getMerchantCategoriesTree(storeOwner).subscribe(
             (ret: any) => {
@@ -92,6 +92,11 @@ export class HeaderComponent implements OnInit {
       }
 
     });
+
+    setInterval( () => {
+      this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
+    }, 1000);  // 给个延时
+
   }
 
 

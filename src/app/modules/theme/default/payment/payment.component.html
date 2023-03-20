@@ -6,22 +6,20 @@
         <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
 
             <div class="font-size-16" *ngIf="order">  <!-- container -->
-
                 <div>
                     {{ 'ObjectId' | translate }}: 
                     <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
                         {{ order.objectId }}
                     </a>
                 </div>
-
                 <div class="text-center">
                     <h1>{{ "Payment" | translate }}</h1>
                 </div>
 
-                <div class="row">
+                <div class="row" *ngIf="(!tableNo || tableNo <= 0)">  <!-- 现场点餐 1 -->
 
-                    <div class="col col-8 px-2">
-                        <div class="card w-100 p-3">
+                    <!-- <div class="col col-8 px-2"> -->
+                        <div class="m-3 p-3 container w-90 border rounded">
                             <div class="p-3">
                                 <div>  <!-- "py-3" -->
                                     <div class="py-2 text-muted d-flex align-items-center justify-content-between">
@@ -39,10 +37,8 @@
                                         <div>
                                             {{order.streetNumber}} {{order.streetName}} {{order.city}} {{order.province}}, {{order.zip}} {{order.country}}
                                         </div>
-                                        
                                     </div>
                                 </div>
-
                                 <div class="py-3">
                                     <div class="py-2 text-muted">
                                         {{'Shipping services' | translate}}
@@ -50,7 +46,6 @@
                                     <div class="row Shipping-method">
 
                                         <div class="col col-4 border-top border-bottom  p-3 col-md-offset-1" [ngClass]="selectedShippingService=='express' ? 'selected' : ''" (click)="selectShippingService('express')">
-
                                             <div class="d-flex align-items-start">
                                                 <img src="/assets/svg/delivery2.svg">
                                                 <div class="px-3">
@@ -58,18 +53,16 @@
                                                         {{'Express delivery' | translate}}
                                                     </div>
                                                     <div class="text-muted">
-                                                        {{'We ship in 1-2 days' | translate}}
-                                                    </div>
+                                                        {{'We ship as soon as possible' | translate}}
+                                                    </div>  <!-- 'We ship in 1-2 days' -->
                                                     <div>
-                                                        10{{currency}}
+                                                        10 {{currency}}
                                                     </div>
                                                 </div>
                                             </div>
-                
                                         </div>
-                
-                                        <div class="col col-4 border p-3"  [ngClass]="selectedShippingService=='standard' ? 'selected' : ''" (click)="selectShippingService('standard')">
-                
+                                        
+                                        <!-- <div class="col col-4 border p-3"  [ngClass]="selectedShippingService=='standard' ? 'selected' : ''" (click)="selectShippingService('standard')">
                                             <div class="d-flex align-items-start">
                                                 <img src="/assets/svg/delivery.svg">
                                                 <div class="px-3">
@@ -84,10 +77,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> 
-                                        
+                                        </div>  -->
+
                                         <div class="col col-4 border-top border-bottom p-3" [ngClass]="selectedShippingService=='pickup' ? 'selected' : ''" (click)="selectShippingService('pickup')">
-                
                                             <div class="d-flex align-items-start">
                                                 <img src="/assets/svg/pickup.svg">
                                                 <div class="px-3">
@@ -102,24 +94,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-                
-                                        </div>                        
+                                        </div> 
+
                                     </div>  
                                 </div>
-                        
-                                <div class="d-flex justify-content-center" *ngIf="order.paymentStatus != 2">
-                                    <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="placeOrder()">
+
+                                <!-- <div class="d-flex justify-content-center" *ngIf="order.paymentStatus != 2">
+                                    <button (click)="placeOrder()" type="submit" class="btn myButton-Submit font-size-18">
                                         {{ 'Place order' | translate }}
                                     </button>
                                 </div>
                                 <div class="text-center" *ngIf="order.paymentStatus == 2">
                                     {{'Your order was paid successfully with txid' | translate}}: {{order.charge_id}}
-                                </div>
+                                </div> -->
                             </div>
                         </div>
-                    </div>
+                    <!-- </div> -->
 
-                    <div class="col col-4 px-2">
+                    <!-- <div class="col col-4 px-2">
                         <div class="card w-100 p-3">
                             <div class="p-3 border-bottom">
                                 <div class="text-muted py-3">
@@ -163,7 +155,6 @@
                                         {{subtotal}}{{currency}}
                                     </div>                        
                                 </div>
-
                                 <div class="row py-2">
                                     <div class="col col-6">
                                         {{'Shipping' | translate}}
@@ -172,7 +163,6 @@
                                         {{(shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate}}
                                     </div>                        
                                 </div>  
-
                                 <div class="row py-2">
                                     <div class="col col-6">
                                         {{'Tax' | translate}}
@@ -189,7 +179,6 @@
                                     {{discount}}%
                                     </div>                        
                                 </div>  
-
                                 <div class="row py-2">
                                     <div class="col col-6 font-weight-bold">
                                         {{'Total' | translate}}
@@ -200,9 +189,96 @@
                                 </div>
                             </div>
                         </div> 
-                    </div>
-
+                    </div> -->
                 </div>
+
+                <div class="cart-table">  <!-- 下边框 mb-10 -->
+                    <form class="" action="#" method="post">  <!-- "mb-4" -->
+                        <table class="table mb-3" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="product-name">{{'Product' | translate}}</th>
+                                    <th class="product-price">{{'Price' | translate}}</th>
+                                    <th class="product-quantity w-lg-15">{{'Quantity' | translate}}</th>
+                                    <th class="product-subtotal">{{'Total' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="py-2" *ngFor="let item of order.items">
+                                    <td class="font-weight-bold">{{ item.title }}</td>
+                                    <td>{{ item.price }}</td>
+                                    <td>x {{ item.quantity }}</td>
+                                    <td>{{ item.price * item.quantity }} {{ currency }}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="border-top">
+                                <tr>
+                                    <th colspan="3" class="text-right font-size-20">{{ 'Subtotal' | translate }}</th>
+                                    <th class="font-size-17">
+                                        {{subtotal}} {{currency}}
+                                    </th>
+                                </tr>
+                                <tr *ngIf="(!tableNo || tableNo <= 0)">  <!-- 现场点餐 2 -->
+                                    <th colspan="3" class="text-right font-size-20">{{ 'Shipping' | translate }}</th>
+                                    <th class="font-size-17">
+                                        {{ (shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate }}
+                                    </th>
+                                </tr>
+                                <tr *ngIf="discount">
+                                    <th colspan="3" class="text-right font-size-20">{{ 'Discount' | translate }}</th>
+                                    <th class="font-size-17">
+                                        {{ discount }}%
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" class="text-right font-size-20">{{ 'Tax' | translate }}</th>
+                                    <th class="font-size-17">
+                                        {{tax}} {{currency}}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" class="text-right font-size-20">{{ 'Total' | translate }}</th>
+                                    <th class="font-size-17">
+                                        {{total}} {{currency}}
+                                    </th>
+                                </tr>
+                                <tr *ngIf="order.paymentStatus != 2">
+                                    <td colspan="3">
+                                    </td>
+                                    <td>
+                                        <div class="d-md-flex">
+                                            <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="placeOrder()">
+                                                {{'Place Order' | translate}}
+                                            </button>
+                                            <!-- <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(tableNo && tableNo > 0)" (click)="placeOrder()">
+                                                {{'Place Order' | translate}}
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(!tableNo || tableNo <= 0)" (click)="checkout()">
+                                                {{'Check Out' | translate}}
+                                            </button> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="order.paymentStatus == 2">
+                                    <td colspan="4" class="text-center">
+                                        Your order was paid successfully with txid: {{ order.charge_id }}
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+        
+                <div class="font-size-14">
+                    {{ "Merchant's Name" | translate }}: {{ order.merchantId.name }}
+                </div>
+                <div class="font-size-14">
+                    {{ "Merchant's Phone" | translate }}: {{ order.merchantId.phone }}
+                </div>
+                <!-- <div>
+                    {{ 'Email' | translate }}: {{ order.merchantId.email }}
+                </div> -->
+                <!-- Login Email: {{ order.merchantId.createMemberId.email }} -->
     
             </div>
 

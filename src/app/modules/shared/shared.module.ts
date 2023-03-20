@@ -4,6 +4,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { PaymentService } from './services/payment.service';
 import { NftHeaderComponent } from './components/header/header.component';
 import { NftFooterComponent } from './components/footer/footer.component';
+import { MenuComponent_2 } from './components/menu/menu.component';    // 我是新的 MenuComponent
 import { FavoriteService } from './services/favorite.service';
 import { CommentService } from './services/comment.service';
 import { IddockService } from './services/iddock.service';
@@ -72,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChatbotComponent,
     ChatbotContentComponent,
     ChatbotContentHeaderComponent,
-    ChatbotContentMessageComponent
+    ChatbotContentMessageComponent,
+    MenuComponent_2,    // 我是新的 MenuComponent
   ],
   imports: [
     FormsModule,

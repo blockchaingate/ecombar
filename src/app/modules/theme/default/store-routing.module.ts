@@ -10,6 +10,7 @@ import { OrderComponent } from './order/order.component';
 import { ApplyForMerchantComponent } from './apply-for-merchant/apply-for-merchant.component';
 import { CompareComponent } from './compare/compare.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
+import { OrderListComponent } from './order-list/order-list.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { CustomerServiceComponent } from './customer-service/customer-service.component';
 import { ReturnsComponent } from './returns/returns.component';
@@ -29,7 +30,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../auth/auth.module').then(m => m.AuthModule)
       },
-  
       {
         path: 'product',
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
@@ -57,6 +57,14 @@ const routes: Routes = [
       {
         path: 'track-order/:id',
         component: TrackOrderComponent
+      },
+      {
+        path: 'order-list',
+        component: OrderListComponent
+      },
+      {
+        path: 'order-list/:id',
+        component: OrderListComponent
       },
       {
         path: 'store-locator',

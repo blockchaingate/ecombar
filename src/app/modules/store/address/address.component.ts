@@ -302,7 +302,7 @@ export abstract class AddressComponent implements OnInit {
     this.orderServ.update2(this.orderID, updatedOrder).subscribe(
       (res: any) => {
         if (res) {
-          this.addAddress(privateKey);
+          this.addAddress(privateKey);  // 继续处理
           this.spinner.hide();
           
         }

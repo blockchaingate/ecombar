@@ -17,8 +17,12 @@
 
   <dl class="work-list row" *ngFor="let product of products">
     <dd class="col-4">
-      <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
+      <!-- <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
         {{ product.title | translateField }}
+      </a> -->
+      <!-- 进入“购买”，改为进入“编辑” -->
+      <a  (click)="editProduct(product)">
+        <u>{{ product.title | translateField }}</u>
       </a>
     </dd>
     <dd class="col-3">{{ product.price }}</dd>
@@ -37,6 +41,7 @@
     </dd>
   </dl>
   
+
     <!-- <li class="table-row" *ngFor="let product of products">
       <div class="col col-4" data-label="Title">
         <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">

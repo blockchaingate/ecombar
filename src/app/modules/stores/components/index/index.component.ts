@@ -171,7 +171,7 @@ export class StoresIndexComponent implements OnInit {
 
   // 跳转商家页面
   gotoStore(store) {
-    this.router.navigate(['/store/' + store._id]);
+    this.router.navigate(['/store/' + store._id + '/no/-1']);    // 台号 -1，缺省网店 
   }
 
   // 重新刷新列表

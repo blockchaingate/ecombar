@@ -1,0 +1,69 @@
+
+<!-- 上下边线，解决 margin 问题 -->
+<main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
+
+  <div class="bg-gray-13 bg-md-transparent">
+    <div class="container">
+        <!-- breadcrumb -->
+        <div class="my-md-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/store/{{storeId}}">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
+                    <!-- <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{ 'Home' | translate }}</a></li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{ product.primaryCategoryId?._id }}">{{ product.primaryCategoryId?.category | translateField }}</a></li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{ product && product.title | translateField }}</li> -->
+                </ol>
+            </nav>
+        </div>
+        <!-- End breadcrumb -->
+    </div>
+  </div>
+
+  <div class="row justify-content-center">  <!-- 本行，水平置中 -->
+      <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
+
+          <div class="text-center">
+              <h1>{{ 'Orders' | translate }}</h1>
+          </div>
+
+          <div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+
+            <dl class="work-list row">
+              <dt class="col-3">{{ 'Id' | translate }}</dt>
+              <dt class="col-3">{{ 'Date Created' | translate }}</dt>
+              <dt class="col-3">{{ 'Total' | translate }}</dt>
+              <dt class="col">{{ 'Status' | translate }}</dt>
+            </dl>
+          
+            <dl class="work-list row" *ngFor="let order of orders">
+              <dd class="col-3">  <!-- 旧值 order.store, order.store._id -->
+                <a target="_blank" *ngIf="order.merchantId" href="/store/{{order.merchantId}}/order/{{order._id}}">
+                  <u>{{ order._id }}</u>
+                </a>
+                <span *ngIf="!order.merchantId">{{ order._id }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
+              </dd>
+              <dd class="col-3">{{ order.dateCreated | date }}</dd>
+              <dd class="col-3">{{ order.totalAmount }}</dd>  <!-- 旧值 order.totalToPay -->
+              <dd class="col">
+                <div>
+                  {{ getStatus(order) | translate }}
+                </div>
+                <div *ngIf="order.paymentStatus == 2" >
+                  <a (click)="requestRefund(order)">
+                    <u>Request refund</u>
+                  </a>
+                </div>
+                <div *ngIf="order.paymentStatus == 5" >
+                  <a (click)="cancelRequestRefund(order)">
+                    <u>Cancel request refund</u>
+                  </a>
+                </div>
+              </dd>
+            </dl>
+          
+          </div>
+                      
+      </div>
+  </div>
+
+</main>

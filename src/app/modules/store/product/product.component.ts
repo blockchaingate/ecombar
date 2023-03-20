@@ -54,8 +54,8 @@ export class ProductComponent implements OnInit {
   sizeChinese: string;
   color: string;
   size: string;
-  storeId: string;
-  storeId2: string;  // Fix: 返回“商家页” products-grid
+  storeId: string;  // Fix: 返回“商家页” products-grid
+  merchantId: string;
   overall: number;
   rating5: number;
   rating4: number;
@@ -103,8 +103,8 @@ export class ProductComponent implements OnInit {
       (store: any) => {
         this.store = store;
         console.log('store===', store);
-        this.storeId = store.id;
-        this.storeId2 = store._id;  // Fix: 返回“商家页” products-grid
+        this.storeId = store._id;  // Fix: 返回“商家页” products-grid
+        this.merchantId = store.id;  // merchantId
         this.currency = store.coin;
         this.smartContractAddress = store.smartContractAddress;
         this.taxRate = store.taxRate;
@@ -289,7 +289,7 @@ export class ProductComponent implements OnInit {
   addToFavoriteDo(privateKey: any) {
     const data = {
       parentId: this.parentId,
-      store: this.storeId   
+      store: this.storeId
     };
     const sig = this.kanbanServ.signJsonData(privateKey, data);
     data['sig'] = sig.signature; 
@@ -370,7 +370,7 @@ export class ProductComponent implements OnInit {
       items: items, 
       currency:this.currency,
       owner: this.walletAddress,
-      merchantId: this.storeId
+      merchantId: this.merchantId
     };
 
     // (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {

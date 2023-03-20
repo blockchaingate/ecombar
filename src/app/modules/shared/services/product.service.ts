@@ -13,6 +13,9 @@ export class ProductService {
   }
 
   update(id: string, data: Product) {
+    // console.log('[update] url =', baseUrl + 'product/' + id);
+    // console.log('[update] data=', data);
+    // 后端 router.put("/:id", ProductController.updateMerchantProduct);
     return this.http.put(baseUrl + 'product/' + id, data);
   }
 
