@@ -23,18 +23,21 @@
         <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
 
             <div class="container font-size-16" *ngIf="order">  <!-- container 水平置中了 -->
-                <div>
+                <!-- <div>
                     {{ 'ObjectId' | translate }}: 
                     <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
                         {{order.objectId}}
                     </a>
+                </div> -->
+                <div>
+                    {{ 'Order' | translate }}: {{ orderId }}
                 </div>
                 <div class="text-center">
                     <h2>{{ "Order" | translate }}</h2>
                 </div>
 
                 <div class="cart-table">  <!-- 下边框 mb-10 -->
-                    <form class="" action="#" method="post">  <!-- "mb-4" -->
+                    <form class="font-size-18" action="#" method="post">  <!-- "mb-4" -->
                         <table class="table mb-3" cellspacing="0">
                             <thead>
                                 <tr>
@@ -52,51 +55,43 @@
                                     <td>{{ item.price * item.quantity }} {{ currency }}</td>
                                 </tr>
                             </tbody>
-                            <tfoot class="border-top">
+                            <tfoot class="border-top font-size-20">
                                 <tr>
-                                    <th colspan="3" class="text-right font-size-20">{{ 'Subtotal' | translate }}</th>
+                                    <th colspan="3" class="text-right">{{ 'Subtotal' | translate }}</th>
                                     <th class="font-size-17">
                                         {{subtotal}} {{currency}}
                                     </th>
                                 </tr>
-                                <tr>
-                                    <th colspan="3" class="text-right font-size-20">{{ 'Shipping' | translate }}</th>
+                                <!-- <tr>
+                                    <th colspan="3" class="text-right">{{ 'Shipping' | translate }}</th>
                                     <th class="font-size-17">
                                         {{ (shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate }}
                                     </th>
-                                </tr>
-                                <tr *ngIf="discount">
-                                    <th colspan="3" class="text-right font-size-20">{{ 'Discount' | translate }}</th>
+                                </tr> -->
+                                <!-- <tr *ngIf="discount">
+                                    <th colspan="3" class="text-right">{{ 'Discount' | translate }}</th>
                                     <th class="font-size-17">
                                         {{ discount }}%
                                     </th>
-                                </tr>
+                                </tr> -->
                                 <tr>
-                                    <th colspan="3" class="text-right font-size-20">{{ 'Tax' | translate }}</th>
+                                    <th colspan="3" class="text-right">{{ 'Tax' | translate }}</th>
                                     <th class="font-size-17">
                                         {{tax}} {{currency}}
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th colspan="3" class="text-right font-size-20">{{ 'Total' | translate }}</th>
+                                    <th colspan="3" class="text-right">{{ 'Total' | translate }}</th>
                                     <th class="font-size-17">
                                         {{total}} {{currency}}
                                     </th>
                                 </tr>
                                 <tr *ngIf="order.paymentStatus != 2">
-                                    <td colspan="3">
-                                    </td>
-                                    <td>
+                                    <td colspan="4" class="text-center">
                                         <div class="d-md-flex">
                                             <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="placeOrder()">
-                                                {{'Place Order' | translate}}
+                                                {{'Pay Bill' | translate}}
                                             </button>
-                                            <!-- <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(tableNo && tableNo > 0)" (click)="placeOrder()">
-                                                {{'Place Order' | translate}}
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(!tableNo || tableNo <= 0)" (click)="checkout()">
-                                                {{'Check Out' | translate}}
-                                            </button> -->
                                         </div>
                                     </td>
                                 </tr>
@@ -109,13 +104,13 @@
                         </table>
                     </form>
                 </div>
-        
-                <div class="font-size-14">
+
+                <!-- <div class="font-size-14">
                     {{ 'Merchant Name' | translate }}: {{ order.merchantId.name }}
                 </div>
                 <div class="font-size-14">
                     {{ 'Merchant Phone' | translate }}: {{ order.merchantId.phone }}
-                </div>
+                </div> -->
                 <!-- <div>
                     {{ 'Email' | translate }}: {{ order.merchantId.email }}
                 </div> -->

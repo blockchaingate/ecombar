@@ -26,7 +26,74 @@
               <h1>{{ 'Orders' | translate }}</h1>
           </div>
 
-          <div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+          <div class="cart-table">  <!-- 下边框 mb-10 -->
+            <form class="font-size-18" action="#" method="post">  <!-- "mb-4" -->
+              <table class="table mb-3" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th class="product-name">{{'Order' | translate}}</th>
+                    <th class="product-name">{{'Product' | translate}}</th>
+                    <th class="product-price">{{'Price' | translate}}</th>
+                    <th class="product-quantity w-lg-15">{{'Quantity' | translate}}</th>
+                    <th class="product-subtotal">{{'Total' | translate}}</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let order of orders">
+                  <tr class="py-2" *ngFor="let item of order.items">
+                    <td>{{ order._id }}</td>
+                    <td class="font-weight-bold">{{ item.title }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>x {{ item.quantity }}</td>
+                    <td>{{ item.price * item.quantity }} {{ currency }}</td>
+                  </tr>
+                </tbody>
+                <tfoot class="border-top font-size-20">
+                  <tr>
+                    <th colspan="4" class="text-right">{{ 'Subtotal' | translate }}</th>
+                    <th class="font-size-17">
+                        {{subtotal}} {{currency}}
+                    </th>
+                  </tr>
+                  <!-- <tr>
+                    <th colspan="4" class="text-right">{{ 'Shipping' | translate }}</th>
+                    <th class="font-size-17">
+                        {{ (shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate }}
+                    </th>
+                  </tr> -->
+                  <!-- <tr *ngIf="discount">
+                    <th colspan="4" class="text-right">{{ 'Discount' | translate }}</th>
+                    <th class="font-size-17">
+                        {{ discount }}%
+                    </th>
+                  </tr> -->
+                  <tr>
+                    <th colspan="4" class="text-right">{{ 'Tax' | translate }}</th>
+                    <th class="font-size-17">
+                        {{tax}} {{currency}}
+                    </th>
+                  </tr>
+                  <tr>
+                    <th colspan="4" class="text-right">{{ 'Total' | translate }}</th>
+                    <th class="font-size-17">
+                        {{total}} {{currency}}
+                    </th>
+                  </tr>
+                  <tr>
+                    <td colspan="5">
+                      <div class="d-md-flex">
+                        <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="placeOrder()">
+                            {{'Pay Bill' | translate}}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+          </div>
+
+
+          <!-- <div class="px-2">
 
             <dl class="work-list row">
               <dt class="col-3">{{ 'Id' | translate }}</dt>
@@ -36,14 +103,14 @@
             </dl>
           
             <dl class="work-list row" *ngFor="let order of orders">
-              <dd class="col-3">  <!-- 旧值 order.store, order.store._id -->
+              <dd class="col-3">
                 <a target="_blank" *ngIf="order.merchantId" href="/store/{{order.merchantId}}/order/{{order._id}}">
                   <u>{{ order._id }}</u>
                 </a>
-                <span *ngIf="!order.merchantId">{{ order._id }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
+                <span *ngIf="!order.merchantId">{{ order._id }}</span>
               </dd>
               <dd class="col-3">{{ order.dateCreated | date }}</dd>
-              <dd class="col-3">{{ order.totalAmount }}</dd>  <!-- 旧值 order.totalToPay -->
+              <dd class="col-3">{{ order.totalAmount }}</dd>
               <dd class="col">
                 <div>
                   {{ getStatus(order) | translate }}
@@ -61,7 +128,7 @@
               </dd>
             </dl>
           
-          </div>
+          </div> -->
                       
       </div>
   </div>

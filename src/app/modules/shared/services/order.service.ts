@@ -16,6 +16,12 @@ export class OrderService {
     return this.http.put(baseUrl + 'userpay/order/' + orderID, data);
   }
 
+  update_items(externalOrderNumber: string, data) {  // Order 更新 items
+    // put https://fabtest.info/api/userpay/order/externalOrderNumber/123456
+    // 将 {"items":[{...}, ...]} 更新到指定的 externalOrderNumber
+    return this.http.put(baseUrl + 'userpay/order/externalOrderNumber/' + externalOrderNumber, data);
+  }
+
   getPaycoolRewardInfo(id: string, address: string, payType: string) {
     const url = baseUrl + 'userpay/order/' + id + '/' + address + '/rewardInfo/' + payType;
     return this.http.get(url);

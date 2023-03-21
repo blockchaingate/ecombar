@@ -105,17 +105,16 @@ export class MerchantComponent implements OnInit {
         icon: 'dashboard',
         line: 1,  // 下边线支持
       },
-      {
-        title: 'Catelog',
-        icon: 'dashboard',
-        items: [
-          /*
-          {
-            title: 'Store',
-            link: 'store',
-            icon: 'store'
-          }, 
-          */ 
+      // ---------- ---------- 二级菜单，改为一级 ---------- ----------
+      // {
+      //   title: 'Catelog',
+      //   icon: 'dashboard',
+      //   items: [
+      //     // {
+      //     //   title: 'Store',
+      //     //   link: 'store',
+      //     //   icon: 'store'
+      //     // }, 
           {
             title: 'Categories',
             link: 'categories',
@@ -136,80 +135,82 @@ export class MerchantComponent implements OnInit {
             link: 'orders',
             icon: 'order'
           },
-          {
-            title: 'Shipping Carriers',
-            link: 'shipping-carriers',
-            icon: 'order'
-          },
-          {
-            title: 'Ships',
-            link: 'ships',
-            icon: 'order'
-          },
-          {
-            title: 'Newsletters',
-            link: 'newsletters',
-            icon: 'order'
-          }      
-        ]
-      },
-      {
-        title: 'Home Page',
-        icon: 'dashboard',
-        items: [
-          {
-            title: 'Banners',
-            link: 'banners',
-            icon: 'banner'
-          },
-          {
-            title: 'Small Banners',
-            link: 'small-banners',
-            icon: 'banner'
-          },  
-          {
-            title: 'Top Category Banners',
-            link: 'top-category-banners',
-            icon: 'banner'
-          },    
-          {
-            title: 'Features',
-            link: 'features',
-            icon: 'banner'
-          },
-          {
-            title: 'Main Layout',
-            link: 'main-layout',
-            icon: 'category'
-          },        
-          {
-            title: 'Collections',
-            link: 'collections',
-            icon: 'collection'
-          },  
-        ]
-      },
-      {
-        title: 'Content',
-        icon: 'dashboard',
-        items: [
-          {
-            title: 'Customer Service',
-            link: 'customer-service',
-            icon: 'order'
-          },
-          {
-            title: 'Returns policy',
-            link: 'returns-policy',
-            icon: 'order'
-          },
-          {
-            title: 'Faq',
-            link: 'faq',
-            icon: 'order'
-          } 
-        ]        
-      }
+      //     {
+      //       title: 'Shipping Carriers',
+      //       link: 'shipping-carriers',
+      //       icon: 'order'
+      //     },
+      //     {
+      //       title: 'Ships',
+      //       link: 'ships',
+      //       icon: 'order'
+      //     },
+      //     {
+      //       title: 'Newsletters',
+      //       link: 'newsletters',
+      //       icon: 'order'
+      //     }
+      //   ]
+      // },
+      // ---------- ---------- 删除“Home Page”菜单 ---------- ----------
+      // {
+      //   title: 'Home Page',
+      //   icon: 'dashboard',
+      //   items: [
+      //     {
+      //       title: 'Banners',
+      //       link: 'banners',
+      //       icon: 'banner'
+      //     },
+      //     {
+      //       title: 'Small Banners',
+      //       link: 'small-banners',
+      //       icon: 'banner'
+      //     },  
+      //     {
+      //       title: 'Top Category Banners',
+      //       link: 'top-category-banners',
+      //       icon: 'banner'
+      //     },    
+      //     {
+      //       title: 'Features',
+      //       link: 'features',
+      //       icon: 'banner'
+      //     },
+      //     {
+      //       title: 'Main Layout',
+      //       link: 'main-layout',
+      //       icon: 'category'
+      //     },        
+      //     {
+      //       title: 'Collections',
+      //       link: 'collections',
+      //       icon: 'collection'
+      //     },  
+      //   ]
+      // },
+      // ---------- ---------- 删除“Content”菜单 ---------- ----------
+      // {
+      //   title: 'Content',
+      //   icon: 'dashboard',
+      //   items: [
+      //     {
+      //       title: 'Customer Service',
+      //       link: 'customer-service',
+      //       icon: 'order'
+      //     },
+      //     {
+      //       title: 'Returns policy',
+      //       link: 'returns-policy',
+      //       icon: 'order'
+      //     },
+      //     {
+      //       title: 'Faq',
+      //       link: 'faq',
+      //       icon: 'order'
+      //     } 
+      //   ]        
+      // }
     ];
 
     const lang = this.storageServ.lang;

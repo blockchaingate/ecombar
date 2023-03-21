@@ -184,8 +184,9 @@
                                         </a>
                                     </li>
                                     <li class="mx-3">  <!-- 水平间隙 "list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg" -->
-                                        <a href="/store/{{storeId}}/order-list" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i>
-                                            {{ "Orders" | translate }}</a>
+                                        <a href="/store/{{storeId}}/order" class="u-header-topbar__nav-link">  <!-- order-list -->
+                                            <i class="ec ec-transport mr-1"></i>{{ "Order" | translate }}
+                                        </a>
                                     </li>
                                     <li *ngIf="currency" class="mx-3">  <!-- 水平间隙 "list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg" -->
                                         <!-- Account Sidebar Toggle Button -->

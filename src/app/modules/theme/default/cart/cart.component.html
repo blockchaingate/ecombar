@@ -1,5 +1,6 @@
 
 <!-- 购物车 -->
+<!-- 原 Check Out 改 Place Order -->
 
 <!-- 上下边线，解决 margin 问题 -->
 <!-- <main id="content" role="main" class="cart-page"> -->
@@ -59,11 +60,9 @@
                             <td data-title="Subtotal"><span class="amount">{{total}} {{currency}}</span></td>
                         </tr> -->
                         <tr>
-                            <td colspan="5">
-                            </td>
-                            <td>
+                            <td colspan="6">
                                 <!-- <div class="d-block d-md-flex flex-center-between"> -->
-                                    <div class="">  <!-- "mb-3 mb-md-0 w-xl-40" -->
+                                    <!-- <div class="mb-3 mb-md-0 w-xl-40"> -->
                                         <!-- Apply coupon Form -->
                                         <!-- <form class="js-focus-state">
                                             <label class="sr-only" for="subscribeSrEmailExample1">{{'Coupon code' | translate}}</label>
@@ -75,7 +74,7 @@
                                             </div>
                                         </form> -->
                                         <!-- End Apply coupon Form -->
-                                    </div>
+                                    <!-- </div> -->
                                     <div class="d-md-flex">
                                         <!-- <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button> -->
                                         <!-- <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(tableNo && tableNo > 0)" (click)="placeOrder()">
@@ -85,7 +84,7 @@
                                             {{'Check Out' | translate}}
                                         </button> -->
                                         <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="checkout()">
-                                            {{'Check Out' | translate}}
+                                            {{'Place Order' | translate}}  <!-- 注意！它调用的是 checkout() -->
                                         </button>
                                         <!-- <a (click)="checkout()" class="btn myButton-Buy font-size-18 d-md-inline-block" *ngIf="tableNo">{{'Place Order' | translate}}</a> -->
                                         <!-- <a (click)="checkout()" class="btn myButton-Buy font-size-18 d-md-inline-block" *ngIf="!tableNo">{{'Check Out' | translate}}</a> -->

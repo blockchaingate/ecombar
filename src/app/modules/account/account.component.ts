@@ -78,42 +78,43 @@ export class AccountComponent implements OnInit {
         link: 'orders',
         icon: 'order'
       },
-      {
-        title: 'Ships',
-        link: 'ships',
-        icon: 'order'
-      },
-      {
-        title: 'Address',
-        link: 'address',
-        icon: 'address',
-        roles: ['Customer']
-      },
+      // ---------- ---------- 删除多余菜单 ---------- ----------
+      // {
+      //   title: 'Ships',
+      //   link: 'ships',
+      //   icon: 'order'
+      // },
+      // {
+      //   title: 'Address',
+      //   link: 'address',
+      //   icon: 'address',
+      //   roles: ['Customer']
+      // },
 
-      {
-        title: 'My cart',
-        link: 'cart',
-        icon: 'cart',
-        roles: ['Customer']
-      },
-      {
-        title: 'My favorite',
-        link: 'favorite',
-        icon: 'favorite',
-        roles: ['Customer']
-      },
-      {
-        title: 'My products',
-        link: 'my-products',
-        icon: 'product',
-        roles: ['Customer']
-      },
-      {
-        title: 'My comments',
-        link: 'my-comments',
-        icon: 'comment',
-        roles: ['Customer'] 
-      }      
+      // {
+      //   title: 'My cart',
+      //   link: 'cart',
+      //   icon: 'cart',
+      //   roles: ['Customer']
+      // },
+      // {
+      //   title: 'My favorite',
+      //   link: 'favorite',
+      //   icon: 'favorite',
+      //   roles: ['Customer']
+      // },
+      // {
+      //   title: 'My products',
+      //   link: 'my-products',
+      //   icon: 'product',
+      //   roles: ['Customer']
+      // },
+      // {
+      //   title: 'My comments',
+      //   link: 'my-comments',
+      //   icon: 'comment',
+      //   roles: ['Customer'] 
+      // }      
     ];
 
     /*

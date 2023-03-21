@@ -43,7 +43,7 @@ const routes: Routes = [
         component: Category2Component
       },  
       {
-        path: 'order/:id',
+        path: 'order',  // 取消 'order/:id'
         component: OrderComponent
       },         
       {

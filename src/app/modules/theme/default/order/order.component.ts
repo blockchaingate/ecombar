@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {OrderComponent as ParentOrderComponent} from 'src/app/modules/store/order/order.component';
-
+import { OrderMineComponent as ParentOrderComponent } from 'src/app/modules/store/order/order-mine.component';
 
 @Component({
   selector: 'app-order',
