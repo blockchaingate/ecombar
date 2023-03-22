@@ -38,6 +38,7 @@ export class OrderMineComponent implements OnInit {
     modalRef: BsModalRef;
     tax: number;
     taxRate: number;
+    tableNo: number;  // 台号 no
     
     constructor(
         private route: ActivatedRoute, 
@@ -57,6 +58,9 @@ export class OrderMineComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
+        console.log('tableno=', this.tableNo);
+
         this.dataServ.currentWallet.subscribe(
             (wallet: any) => {
                 if(wallet) {
@@ -71,24 +75,32 @@ export class OrderMineComponent implements OnInit {
                     // "/:pageSize/:pageNum" = '/100/0' 也是够用
                     this.orderServ.getMyOrders(walletAddress).subscribe(
                         (res: any) => {
-                            // if(res && res.ok) {
-                            //   this.orders = res._body;
-                            // }
                             console.log("[Orders]=", res);
                             // let res2 = [];
                             if (Array.isArray(res)) {  // 数组确认
                                 let now = new Date();
                                 for (let i = 0; i < res.length; i ++) {  // 数组遍历
-                                    if (res[i].paymentStatus == 0) {  // 'waiting for pay'
-                                        let time = new Date(res[i].dateCreated);
+                                    const order = res[i];
+                                    if (order 
+                                    &&  order.externalOrderNumber
+                                    &&  order.paymentStatus == 0) {  // 'waiting for pay'
+                                        let time = new Date(order.dateCreated);
                                         if (now.getTime() - time.getTime() < 24 * 3600 * 1000) {  // 24 小时
-                                            // res2.unshift(res[i]);  // 增添元素
-                                            this.order = res[i];  // 找到订单
-                                            this.orderId = this.order._id;
-                                            console.log('this.order=', this.order);
-                                            this.currency = this.order.currency;
-                                            this.calculateTotal();
-                                            break;
+                                            const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+                                            // console.log('num match=', num);
+                                            // [
+                                            //     "(8)",
+                                            //     "8"
+                                            // ]
+                                            if (num && num[1] && num[1] == String(this.tableNo)) {  // 还要对上桌号
+                                                // res2.unshift(res[i]);  // 增添元素
+                                                this.order = order;  // 找到订单
+                                                this.orderId = this.order._id;
+                                                console.log('this.order=', this.order);
+                                                this.currency = this.order.currency;
+                                                this.calculateTotal();
+                                                break;
+                                            }
                                         }
                                     }
                                 }

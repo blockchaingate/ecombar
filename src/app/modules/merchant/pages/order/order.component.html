@@ -1,39 +1,28 @@
 
 <!-- 上下边线，解决 margin 问题 -->
-<main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
-
-    <div class="bg-gray-13 bg-md-transparent">
-        <div class="container">
-            <!-- breadcrumb -->
-            <div class="my-md-3">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/merchant/orders">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
-                        <!-- <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{ 'Home' | translate }}</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{ product.primaryCategoryId?._id }}">{{ product.primaryCategoryId?.category | translateField }}</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{ product && product.title | translateField }}</li> -->
-                    </ol>
-                </nav>
-            </div>
-            <!-- End breadcrumb -->
-        </div>
-    </div>
+<!-- <main id="content" role="main" class="border-top border-bottom bg-light"> -->
 
     <div class="row justify-content-center">  <!-- 本行，水平置中 -->
         <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
 
             <div class="container font-size-16" *ngIf="order">  <!-- container 水平置中了 -->
                 <div class="text-left">
+                    {{ 'Number' | translate }}: {{ tableNo }}
+                </div>
+                <!-- <div class="text-left">
                     {{ 'ObjectId' | translate }}: 
                     <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
                         {{order.objectId}}
                     </a>
-                </div>
+                </div> -->
                 <div class="text-left">
                     {{ 'Owner' | translate }}: {{ order.owner }}
                 </div>
                 <div class="text-left">
-                    {{ 'Date' | translate }}: {{ order.dateCreated | date }}
+                    {{ 'Order' | translate }}: {{ orderId }}
+                </div>
+                <div class="text-left">
+                    {{ 'Date' | translate }}: {{ order.dateCreated | date:'yyyy-MM-dd hh:mm:ss' }}
                 </div>
                 <div class="text-center">
                     <h2>{{ "Order" | translate }}</h2>
@@ -112,8 +101,7 @@
         </div>
     </div>
 
-</main>
-
+<!-- </main> -->
 
 
 <!-- <div class="m-3 list-group" *ngIf="order">

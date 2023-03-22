@@ -131,6 +131,11 @@ export class MerchantComponent implements OnInit {
             icon: 'brand'
           },
           {
+            title: 'Status',
+            link: 'order-state',
+            icon: 'order'
+          },
+          {
             title: 'Orders',
             link: 'orders',
             icon: 'order'

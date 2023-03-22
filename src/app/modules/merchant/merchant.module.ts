@@ -22,6 +22,8 @@ import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-a
 import { TopCategoryBannersComponent } from './pages/top-category-banners/top-category-banners.component';
 import { TopCategoryBannerAddComponent } from './pages/top-category-banner-add/top-category-banner-add.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { OrderStateComponent } from './pages/order-state/order-state.component';
+import { OrderList2Component } from './pages/order-list-2/order-list-2.component';
 import { OrderComponent } from './pages/order/order.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { NewslettersComponent } from './pages/newsletters/newsletters.component';
@@ -68,6 +70,8 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     MerchantApplicationsComponent,
     BannersComponent,
     OrdersComponent,
+    OrderStateComponent,
+    OrderList2Component,
     OrderComponent,
     ProfileComponent,
     BannerAddComponent,

@@ -85,6 +85,8 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
+        console.log('tableno=', this.tableNo);
 
         this.dataServ.currentWallet.subscribe(
             (wallet: any) => {
@@ -100,24 +102,32 @@ export class CartComponent implements OnInit, OnDestroy {
                     // "/:pageSize/:pageNum" = '/100/0' 也是够用
                     this.orderServ.getMyOrders(walletAddress).subscribe(
                         (res: any) => {
-                            // if(res && res.ok) {
-                            //   this.orders = res._body;
-                            // }
                             console.log("[Orders]=", res);
                             // let res2 = [];
                             if (Array.isArray(res)) {  // 数组确认
                                 let now = new Date();
                                 for (let i = 0; i < res.length; i ++) {  // 数组遍历
-                                    if (res[i].paymentStatus == 0) {  // 'waiting for pay'
-                                        let time = new Date(res[i].dateCreated);
+                                    const order = res[i];
+                                    if (order 
+                                    &&  order.externalOrderNumber
+                                    &&  order.paymentStatus == 0) {  // 'waiting for pay'
+                                        let time = new Date(order.dateCreated);
                                         if (now.getTime() - time.getTime() < 24 * 3600 * 1000) {  // 24 小时
-                                            // res2.unshift(res[i]);  // 增添元素
-                                            this.order = res[i];  // 找到订单
-                                            this.orderId = this.order._id;
-                                            console.log('this.order=', this.order);
-                                            this.currency = this.order.currency;
-                                            this.calculateTotal();
-                                            break;
+                                            const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+                                            // console.log('num match=', num);
+                                            // [
+                                            //     "(8)",
+                                            //     "8"
+                                            // ]
+                                            if (num && num[1] && num[1] == String(this.tableNo)) {  // 还要对上桌号
+                                                // res2.unshift(res[i]);  // 增添元素
+                                                this.order = order;  // 找到订单
+                                                this.orderId = this.order._id;
+                                                console.log('this.order=', this.order);
+                                                this.currency = this.order.currency;
+                                                this.calculateTotal();
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -145,9 +155,6 @@ export class CartComponent implements OnInit, OnDestroy {
                 }
             }
         );
-
-        console.log('tableno=', this.cartStoreServ.getTableNo());
-        this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
     }
 
     checkout() {
@@ -232,7 +239,11 @@ export class CartComponent implements OnInit, OnDestroy {
         } else {    // 新的订单
 
             const uuid = uuidv4();  // '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
-            const uuid2 = uuid.replace(/-/g, '');  // 去掉 - 字符
+            let uuid2 = uuid.replace(/-/g, '');  // 去掉 - 字符
+            if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+                const no = this.cartStoreServ.getTableNo();
+                uuid2 = `${uuid2}(${no})`;  // 加入台号
+            }
             const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency, externalOrderNumber: uuid2 };
             console.log('orderData=', orderData);
             // owner: { type: String},

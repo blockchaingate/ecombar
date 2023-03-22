@@ -13,6 +13,8 @@ import { CategoryAddComponent } from './pages/category-add/category-add.componen
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { OrderStateComponent } from './pages/order-state/order-state.component';
+import { OrderList2Component } from './pages/order-list-2/order-list-2.component';
 import { OrderComponent } from './pages/order/order.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { NewslettersComponent } from './pages/newsletters/newsletters.component';
@@ -72,6 +74,12 @@ const routes: Routes = [
         },      
         {
             path: 'orders', component: OrdersComponent
+        }, 
+        {
+            path: 'order-state', component: OrderStateComponent
+        }, 
+        {
+            path: 'order-list-2/:no', component: OrderList2Component
         }, 
         {
             path: 'order/:id', component: OrderComponent

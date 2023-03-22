@@ -38,6 +38,7 @@ export class OrderComponent implements OnInit {
     modalRef: BsModalRef;
     tax: number;
     taxRate: number;
+    tableNo: number;  // 台号 no (计算)
     
     constructor(
         private route: ActivatedRoute, 
@@ -70,6 +71,19 @@ export class OrderComponent implements OnInit {
                 // this.selectPayment(this.order.paymentMethod);
                 // this.selectShippingService(this.order.shippingServiceSelected);
                 this.calculateTotal();
+
+                const order = this.order;
+                if (order && order.externalOrderNumber) {
+                    const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+                    // console.log('num match=', num);
+                    // [
+                    //     "(8)",
+                    //     "8"
+                    // ]
+                    if (num && num[1]) {  // 还要对上桌号
+                        this.tableNo = parseInt(num[1]);  // 台号 no (计算)
+                    }
+                }
             }
         });
         this.dataServ.currentStoreId.subscribe(
