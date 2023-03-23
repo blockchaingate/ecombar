@@ -188,24 +188,23 @@
                                             <i class="ec ec-transport mr-1"></i>{{ "Order" | translate }}
                                         </a>
                                     </li>
-                                    <li *ngIf="currency" class="mx-3">  <!-- 水平间隙 "list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg" -->
-                                        <!-- Account Sidebar Toggle Button -->
+                                    <!-- 水平间隙 "list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg" -->
+                                    <!-- <li *ngIf="currency" class="mx-3">  
                                         <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
                                             data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
                                             <img src="{{getLogo(currency)}}" class="img-logo">&nbsp;
-                                            <a href="/wallet">{{ wallet.name }}&nbsp;({{ currencyBalance }}&nbsp;{{ currency }})</a>
+                                            <a href="/wallet">{{ wallet.name }}&nbsp;({{ currencyBalance }}&nbsp;{{ currency }})</a> -->
                                             <!-- <span class="text-primary-darken-5">or</span>
                                                 <a routerLink="/auth/signin">Sign in</a> -->
-                                        </a>
-                                        <!-- End Account Sidebar Toggle Button -->
+                                        <!-- </a>
                                     </li>
-                                    <li *ngIf="!currency" class="mx-3">  <!-- 水平间隙 "list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg" -->
+                                    <li *ngIf="!currency" class="mx-3">
                                         <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
                                             data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">
                                             <img src="{{getLogo(currency)}}" class="img-logo">&nbsp;
                                             <a href="/wallet">{{ "Wallet" | translate }}</a>
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <!-- <li class="mx-3">
                                         <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
                                             data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">

@@ -113,33 +113,33 @@ export class OrderList2Component implements OnInit {
     trimText( id:string ) {    // 地址不长，不用此函数，用户可复制地址
         return id.substring(0,3) + '...' + id.substring(id.length - 3);
     }
-  getStatus(order) {
-    let status = '';
-    const paymentStatus = order.paymentStatus;
-    if(!paymentStatus) {
-      status = 'waiting for pay';
-    } else 
-    if(paymentStatus == 1) {
-      status = 'paid already';
-    } else 
-    if(paymentStatus == 2) {
-      status = 'payment confirmed';
-    } else 
-    if(paymentStatus == 3) {
-      status = 'payment cancelled';
-    } else 
-    if(paymentStatus == 4) {
-      status = 'payment frozened';
-    } else 
-    if(paymentStatus == 5) {
-      status = 'request refund';
-    } else 
-    if(paymentStatus == 6) {
-      status = 'refunded';
-    }
-    return status;
-  }
 
+    getStatus(order) {
+        let status = '';
+        const paymentStatus = order.paymentStatus;
+        if (! paymentStatus) {
+            status = 'Placed order';  // 'waiting for pay'
+        } else 
+        if (paymentStatus == 1) {
+            status = 'paid already';
+        } else 
+        if (paymentStatus == 2) {
+            status = 'Paid bill';  // 'payment confirmed'
+        } else 
+        if (paymentStatus == 3) {
+            status = 'payment cancelled';
+        } else 
+        if (paymentStatus == 4) {
+            status = 'payment frozened';
+        } else 
+        if (paymentStatus == 5) {
+            status = 'request refund';
+        } else 
+        if (paymentStatus == 6) {
+            status = 'refunded';
+        }
+        return status;
+    }
 
   refund(order: any) {
     this.order = order;

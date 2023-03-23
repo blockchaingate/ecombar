@@ -194,7 +194,7 @@ export class OrderListComponent implements OnInit {
                                 this.spinner.hide();
                                 this.toastr.success('the transaction was procssed successfully');
                                 // Fix: 支付后会停在此页面。改为跳去查看所有订单
-                                setInterval( () => {
+                                setTimeout( () => {
                                     // this.router.navigate(['/account/orders']);
                                     // http://localhost:4200/store/640f368a23979c464aa2e296/order-list
                                     this.router.navigate(['/store/' + this.storeId + '/order-list']);

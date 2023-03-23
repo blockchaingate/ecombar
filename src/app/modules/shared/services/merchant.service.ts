@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { HttpService } from './http.service';
@@ -65,4 +66,23 @@ export class MerchantService {
     update(data: any) {
         return this.http.post('merchants/FindOneAndUpdate', data);
     }
+
+    getTableOrder( no: string ): any {
+        let orders = JSON.parse(localStorage.getItem('tableOrders'));
+        if (! orders) orders = { };
+        return orders[no];
+    }
+
+    setTableOrder( no: string, data: any ) {
+        if (! data) data = { };
+        let orders = JSON.parse(localStorage.getItem('tableOrders'));
+        if (! orders) orders = { };
+        orders[no] = data;
+        localStorage.setItem('tableOrders', JSON.stringify(orders));
+    }
+
+    initTableOrder() {
+        localStorage.setItem('tableOrders', JSON.stringify( {} ));
+    }
+    
 }

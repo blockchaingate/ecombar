@@ -23,15 +23,15 @@
         <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
 
             <div class="container font-size-16" *ngIf="order">  <!-- container 水平置中了 -->
+                <div class="text-left">
+                    {{ 'Number' | translate }}: {{ tableNo }}
+                </div>
                 <!-- <div>
                     {{ 'ObjectId' | translate }}: 
                     <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
                         {{order.objectId}}
                     </a>
                 </div> -->
-                <div class="text-left">
-                    {{ 'Number' | translate }}: {{ tableNo }}
-                </div>
                 <div class="text-left">
                     {{ 'Order' | translate }}: {{ orderId }}
                 </div>
@@ -121,6 +121,29 @@
                     {{ 'Email' | translate }}: {{ order.merchantId.email }}
                 </div> -->
                 <!-- Login Email: {{ order.merchantId.createMemberId.email }} -->
+            </div>
+            <!-- 显示“空白订单” -->
+            <div class="container font-size-16" *ngIf="!order">  <!-- container 水平置中了 -->
+                <div class="text-center">
+                    <h2>{{ "Order" | translate }}</h2>
+                </div>
+                <div class="cart-table">  <!-- 下边框 mb-10 -->
+                    <form class="font-size-18" action="#" method="post">  <!-- "mb-4" -->
+                        <table class="table mb-3" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="product-name">{{'Product' | translate}}</th>
+                                    <th class="product-price">{{'Price' | translate}}</th>
+                                    <th class="product-quantity w-lg-15">{{'Quantity' | translate}}</th>
+                                    <th class="product-subtotal">{{'Total' | translate}}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+                    <br>
+                    <br>
+                    <br>
+                </div>
             </div>
 
         </div>

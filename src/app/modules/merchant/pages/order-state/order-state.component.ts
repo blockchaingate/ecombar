@@ -12,6 +12,7 @@ import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanb
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { Router } from '@angular/router';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 
 @Component({
     selector: 'app-admin-order-state',
@@ -41,6 +42,7 @@ export class OrderStateComponent implements OnInit {
         private kanbanSmartContractServ: KanbanSmartContractService,
         private modalService: BsModalService,
         private dataServ: DataService,
+        private merchantServ: MerchantService,
         private orderServ: OrderService) {
     }
 
@@ -102,7 +104,19 @@ export class OrderStateComponent implements OnInit {
                                     console.log("[orderState]=", data);
                                     const keys = Object.keys(data);
                                     for (let i = 0; i < keys.length; i ++) {  // 数组遍历
-                                        const order = data[keys[i]];
+                                        const no = keys[i];
+                                        const order = data[no];
+                                        // 判断与记录的差异
+                                        const tableOrder = this.merchantServ.getTableOrder(no);
+                                        console.log("[tableOrder]=", tableOrder);
+                                        const diff = this.CompareOrders(order, tableOrder);
+                                        if (! diff) {
+                                            if (order.paymentStatus == 2) {  // 'payment confirmed'
+                                                order["flag"] = 2;
+                                            } else {
+                                                order["flag"] = 1;
+                                            }
+                                        }
                                         this.orderState.push(order);  // 增添元素(结尾)
                                     }
                                     this.orders = this.orderState;
@@ -114,52 +128,76 @@ export class OrderStateComponent implements OnInit {
             }
         );
 
-
+        setInterval(() => {
+            location.reload();
+        }, 10 * 1000); // 重新加载当前页面，间隔 10 秒
     }
 
-  getItemsCount(order) {
-    let count = 0;
-    let items = order.items;
-    for(let i=0;i<items.length;i++) {
-      const item = items[i];
-      if(item.quantity) {
-        count += item.quantity;
-      }
-      
+    CompareOrders( order: any, order2: any ) {
+        if (!order && !order2) return true;  // 两个都为空
+        if (!order || !order2) return false;  // 任一个为空
+
+        if (order["_id"] != order2["_id"]) return false;
+        if (order["owner"] != order2["owner"]) return false;
+        if (order["totalTax"] != order2["totalTax"]) return false;
+        // if (order["totalShipping"] != order2["totalShipping"]) return false;
+        if (order["totalAmount"] != order2["totalAmount"]) return false;
+        if (order["paymentStatus"] != order2["paymentStatus"]) return false;
+
+        let len = 0, len2 = 0;
+        if (order["items"] && Array.isArray(order["items"])) {
+            len = order["items"].length;
+        }
+        if (order2["items"] && Array.isArray(order2["items"])) {
+            len2 = order2["items"].length;
+        }
+        if (len != len2) return false;
+
+        return true;
     }
-    return count;
-  }
+
+    getItemsCount(order) {
+        let count = 0;
+        let items = order.items;
+        for(let i=0;i<items.length;i++) {
+            const item = items[i];
+            if(item.quantity) {
+                count += item.quantity;
+            }
+        }
+        return count;
+    }
 
     trimText( id:string ) {    // 地址不长，不用此函数，用户可复制地址
         return id.substring(0,3) + '...' + id.substring(id.length - 3);
     }
-  getStatus(order) {
-    let status = '';
-    const paymentStatus = order.paymentStatus;
-    if(!paymentStatus) {
-      status = 'waiting for pay';
-    } else 
-    if(paymentStatus == 1) {
-      status = 'paid already';
-    } else 
-    if(paymentStatus == 2) {
-      status = 'payment confirmed';
-    } else 
-    if(paymentStatus == 3) {
-      status = 'payment cancelled';
-    } else 
-    if(paymentStatus == 4) {
-      status = 'payment frozened';
-    } else 
-    if(paymentStatus == 5) {
-      status = 'request refund';
-    } else 
-    if(paymentStatus == 6) {
-      status = 'refunded';
-    }
-    return status;
-  }
 
+    getStatus(order) {
+        let status = '';
+        const paymentStatus = order.paymentStatus;
+        if (! paymentStatus) {
+            status = 'Placed order';  // 'waiting for pay'
+        } else 
+        if (paymentStatus == 1) {
+            status = 'paid already';
+        } else 
+        if (paymentStatus == 2) {
+            status = 'Paid bill';  // 'payment confirmed'
+        } else 
+        if (paymentStatus == 3) {
+            status = 'payment cancelled';
+        } else 
+        if (paymentStatus == 4) {
+            status = 'payment frozened';
+        } else 
+        if (paymentStatus == 5) {
+            status = 'request refund';
+        } else 
+        if (paymentStatus == 6) {
+            status = 'refunded';
+        }
+        return status;
+    }
 
   refund(order: any) {
     this.order = order;

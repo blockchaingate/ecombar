@@ -28,14 +28,20 @@
     <dd class="col-2">{{ order.dateCreated | date:'MM-dd hh:mm' }}</dd>
     <dd class="col-2">{{ order.totalAmount }}</dd>
     <dd class="col">
-      <div>
+      <div *ngIf="!order.flag">
         {{ getStatus(order) | translate }}
       </div>
-      <div *ngIf="order.paymentStatus == 5">
+      <div *ngIf="order.flag == 1" class="border border-warning text-warning">
+        {{ getStatus(order) | translate }}
+      </div>
+      <div *ngIf="order.flag >= 2" class="border border-danger text-danger">
+        {{ getStatus(order) | translate }}
+      </div>
+      <!-- <div *ngIf="order.paymentStatus == 5">
         <a (click)="refund(order)">
           Approve refund
         </a>
-      </div>
+      </div> -->
     </dd>
     <!-- <dd class="col">
       <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">

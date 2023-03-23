@@ -20,6 +20,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import BigNumber from 'bignumber.js';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ActivatedRoute } from '@angular/router';
+import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
 
 @Component({
     template:''
@@ -39,12 +40,14 @@ export class OrderComponent implements OnInit {
     tax: number;
     taxRate: number;
     tableNo: number;  // 台号 no (计算)
+    diffFlag: number;
     
     constructor(
         private route: ActivatedRoute, 
         private modalService: BsModalService,
         private utilServ: UtilService,
         private cartStoreServ: CartStoreService,
+        private merchantServ: MerchantService,
         private orderServ: OrderService,
         private router: Router,
         private spinner: NgxSpinnerService,
@@ -82,6 +85,18 @@ export class OrderComponent implements OnInit {
                     // ]
                     if (num && num[1]) {  // 还要对上桌号
                         this.tableNo = parseInt(num[1]);  // 台号 no (计算)
+
+                        // 判断与记录的差异
+                        const tableOrder = this.merchantServ.getTableOrder(num[1]);
+                        // console.log("[tableOrder]=", tableOrder);
+                        const diff = this.CompareOrders(order, tableOrder);
+                        if (! diff) {
+                            if (order.paymentStatus == 2) {  // 'payment confirmed'
+                                this.diffFlag = 2;
+                            } else {
+                                this.diffFlag = 1;
+                            }
+                        }
                     }
                 }
             }
@@ -121,6 +136,29 @@ export class OrderComponent implements OnInit {
                 }
             }
         );
+    }
+
+    CompareOrders( order: any, order2: any ) {
+        if (!order && !order2) return true;  // 两个都为空
+        if (!order || !order2) return false;  // 任一个为空
+
+        if (order["_id"] != order2["_id"]) return false;
+        if (order["owner"] != order2["owner"]) return false;
+        if (order["totalTax"] != order2["totalTax"]) return false;
+        // if (order["totalShipping"] != order2["totalShipping"]) return false;
+        if (order["totalAmount"] != order2["totalAmount"]) return false;
+        if (order["paymentStatus"] != order2["paymentStatus"]) return false;
+
+        let len = 0, len2 = 0;
+        if (order["items"] && Array.isArray(order["items"])) {
+            len = order["items"].length;
+        }
+        if (order2["items"] && Array.isArray(order2["items"])) {
+            len2 = order2["items"].length;
+        }
+        if (len != len2) return false;
+
+        return true;
     }
 
     calculateTotal() {
@@ -192,12 +230,14 @@ export class OrderComponent implements OnInit {
                             if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
                                 this.spinner.hide();
                                 this.toastr.success('the transaction was procssed successfully');
+
+                                location.reload();  // 重新加载当前页面
                                 // Fix: 支付后会停在此页面。改为跳去查看所有订单
-                                setInterval( () => {
-                                    // this.router.navigate(['/account/orders']);
-                                    // http://localhost:4200/store/640f368a23979c464aa2e296/order-list
-                                    this.router.navigate(['/store/' + this.storeId + '/order-list']);
-                                }, 1000);  // 发现未更新状态，给个延时
+                                // setTimeout( () => {
+                                //     // this.router.navigate(['/account/orders']);
+                                //     // http://localhost:4200/store/640f368a23979c464aa2e296/order-list
+                                //     this.router.navigate(['/store/' + this.storeId + '/order-list']);
+                                // }, 1000);  // 发现未更新状态，给个延时
                             } else {
                                 this.spinner.hide();
                                 this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
@@ -210,5 +250,36 @@ export class OrderComponent implements OnInit {
                 );
             }
         );
+    }
+
+    // 收到订单状态，记入最新记录
+    confirmOrder() {
+        if (! this.order) {
+            return;
+        }
+        if (this.tableNo <= 0) {  // 台号 no (计算)
+            return;
+        }
+
+        let data = { };
+        data["_id"] = this.order["_id"];
+        data["owner"] = this.order["owner"];
+        data["totalTax"] = this.order["totalTax"];
+        // data["totalShipping"] = this.order["totalShipping"];
+        data["totalAmount"] = this.order["totalAmount"];
+        data["paymentStatus"] = this.order["paymentStatus"];
+        if (this.order["items"] && this.order["items"].length >= 0) {
+            data["items"] = [ ];
+            const size = this.order["items"].length;
+            for (let i = 0; i < size; i ++) {
+                data["items"].push(this.order["items"][i]["title"]);  // 增添元素(结尾)
+            }
+        }
+
+        this.merchantServ.setTableOrder(String(this.tableNo), data);
+        console.log('confirmOrder==', this.tableNo, data);
+        // console.log('setTableOrder==', this.merchantServ.getTableOrder(String(this.tableNo)));
+
+        location.reload();  // 重新加载当前页面
     }
 }

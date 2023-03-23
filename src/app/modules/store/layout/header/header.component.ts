@@ -93,7 +93,7 @@ export class HeaderComponent implements OnInit {
 
     });
 
-    setInterval( () => {
+    setTimeout( () => {
       this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
     }, 1000);  // 给个延时
 
