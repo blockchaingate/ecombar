@@ -21,6 +21,7 @@ import BigNumber from 'bignumber.js';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ActivatedRoute } from '@angular/router';
 import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     template:''
@@ -40,7 +41,8 @@ export class OrderComponent implements OnInit {
     tax: number;
     taxRate: number;
     tableNo: number;  // 台号 no (计算)
-    diffFlag: number;
+    diffFlag: number;  // 已是最新(1 下单, 2 支付)，不是最新(3 下单, 4 支付)
+    QrUrl: string;  // 二维码地址
     
     constructor(
         private route: ActivatedRoute, 
@@ -61,67 +63,6 @@ export class OrderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.orderId = this.route.snapshot.paramMap.get('id');
-        // console.log('[OrderComponent]', this.orderId);
-        this.orderServ.get(this.orderId).subscribe(
-            (res: any) => {
-                // console.log('this.order ret=', res);
-                if (res) {  //  && res.ok
-                this.order = res;  // res._body
-                console.log('this.order=', this.order);
-                // 初始化数据
-                this.currency = this.order.currency;
-                // this.selectPayment(this.order.paymentMethod);
-                // this.selectShippingService(this.order.shippingServiceSelected);
-                this.calculateTotal();
-
-                const order = this.order;
-                if (order && order.externalOrderNumber) {
-                    const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
-                    // console.log('num match=', num);
-                    // [
-                    //     "(8)",
-                    //     "8"
-                    // ]
-                    if (num && num[1]) {  // 还要对上桌号
-                        this.tableNo = parseInt(num[1]);  // 台号 no (计算)
-
-                        // 判断与记录的差异
-                        const tableOrder = this.merchantServ.getTableOrder(num[1]);
-                        // console.log("[tableOrder]=", tableOrder);
-                        const diff = this.CompareOrders(order, tableOrder);
-                        if (! diff) {
-                            if (order.paymentStatus == 2) {  // 'payment confirmed'
-                                this.diffFlag = 2;
-                            } else {
-                                this.diffFlag = 1;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        this.dataServ.currentStoreId.subscribe(
-            (storeId: string) => {
-                this.storeId = storeId;
-            }
-        );
-        // this.dataServ.currentStore.subscribe(
-        //     (store: any) => {
-        //         if(store) {
-        //             this.currency = store.coin;
-        //             this.storeId = store._id;  // 返回“商家页” products-grid
-        //             this.merchantId = store.id;  // 小心名字看错
-        //             this.taxRate = store.taxRate;
-        //             this.storeOwner = store.owner;
-        //             const storedCart = this.cartStoreServ.items;
-        //             console.log("storedCart=", storedCart);
-        //             this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.merchantId) : [];  // Fix: this.storeId 用错
-        //             this.calculateTotal();
-        //         }
-        //     }
-        // );
-    
         this.dataServ.currentWallet.subscribe(
             (wallet: any) => {
                 if(wallet) {
@@ -136,6 +77,64 @@ export class OrderComponent implements OnInit {
                 }
             }
         );
+
+        this.orderId = this.route.snapshot.paramMap.get('id');
+        // console.log('[OrderComponent]', this.orderId);
+        this.dataServ.currentMyStore.subscribe(
+            (store: any) => {
+                if(store) {
+                    this.storeId = store._id;
+                    console.log('store===', store);
+                    this.orderServ.get(this.orderId).subscribe(
+                        (res: any) => {
+                            // console.log('this.order ret=', res);
+                            if (res) {  //  && res.ok
+                            this.order = res;  // res._body
+                            console.log('this.order=', this.order);
+                            // 初始化数据
+                            this.currency = this.order.currency;
+                            // this.selectPayment(this.order.paymentMethod);
+                            // this.selectShippingService(this.order.shippingServiceSelected);
+                            this.calculateTotal();
+            
+                            const order = this.order;
+                            if (order && order.externalOrderNumber) {
+                                const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+                                // console.log('num match=', num);
+                                // [
+                                //     "(8)",
+                                //     "8"
+                                // ]
+                                if (num && num[1]) {  // 还要对上桌号
+                                    this.tableNo = parseInt(num[1]);  // 台号 no (计算)
+            
+                                    // 判断与记录的差异
+                                    const tableOrder = this.merchantServ.getTableOrder(num[1]);
+                                    // console.log("[tableOrder]=", tableOrder);
+                                    const diff = this.CompareOrders(order, tableOrder);
+                                    if (! diff) {  // 不同
+                                        if (order.memo == 'PayBill') {  // 改为修改 memo
+                                     // if (order.paymentStatus == 2) {  // 'payment confirmed'
+                                            this.diffFlag = 4;
+                                        } else {
+                                            this.diffFlag = 3;
+                                        }
+                                    } else {  // 相同
+                                        if (order.memo == 'PayBill') {
+                                            this.diffFlag = 2;
+                                        } else {
+                                            this.diffFlag = 1;
+                                        }
+                                    }
+                                    this.QrUrl = environment.EX_WEBSITE + `store/${this.storeId}/order/${this.orderId}`;
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        );
+    
     }
 
     CompareOrders( order: any, order2: any ) {

@@ -62,7 +62,7 @@ export class OrderStateComponent implements OnInit {
                         (res: any) => {
                             if (res) {
                                 this.orders = res;
-                                console.log("[Orders]=", res);
+                                // console.log("[Orders]=", res);
                                 if (Array.isArray(res)) {  // 数组确认
                                     let data = { };
                                     const now = new Date();
@@ -111,7 +111,8 @@ export class OrderStateComponent implements OnInit {
                                         console.log("[tableOrder]=", tableOrder);
                                         const diff = this.CompareOrders(order, tableOrder);
                                         if (! diff) {
-                                            if (order.paymentStatus == 2) {  // 'payment confirmed'
+                                            if (order.memo == 'PayBill') {  // 改为修改 memo
+                                         // if (order.paymentStatus == 2) {  // 'payment confirmed'
                                                 order["flag"] = 2;
                                             } else {
                                                 order["flag"] = 1;
@@ -142,7 +143,7 @@ export class OrderStateComponent implements OnInit {
         if (order["totalTax"] != order2["totalTax"]) return false;
         // if (order["totalShipping"] != order2["totalShipping"]) return false;
         if (order["totalAmount"] != order2["totalAmount"]) return false;
-        if (order["paymentStatus"] != order2["paymentStatus"]) return false;
+        // if (order["paymentStatus"] != order2["paymentStatus"]) return false;  // 改为修改 memo
 
         let len = 0, len2 = 0;
         if (order["items"] && Array.isArray(order["items"])) {

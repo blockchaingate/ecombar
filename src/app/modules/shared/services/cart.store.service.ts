@@ -83,4 +83,12 @@ export class CartStoreService {
     localStorage.setItem('tableNo', no.toString());
   }
 
+  getOrderId(): string {
+    return localStorage.getItem('orderId');
+  }
+
+  setOrderId( orderId: string ) {
+    localStorage.setItem('orderId', orderId);
+  }
+
 }

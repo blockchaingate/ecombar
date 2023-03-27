@@ -29,13 +29,23 @@ const defaultTheme: Routes = [
     loadChildren: () =>
       import('./modules/theme/default/store.module').then(m => m.StoreModule)
   },
+  // {
+  //   path: 'store/:storeId/no/:no',    // 台号 no
+  //   loadChildren: () =>
+  //     import('./modules/theme/default/store.module').then(m => m.StoreModule)
+  // },
+  // {
+  //   path: 'store/:storeId/type/:type/no/:no',    // 类别  // 台号 no
+  //   loadChildren: () =>
+  //     import('./modules/theme/default/store.module').then(m => m.StoreModule)
+  // },
   {
-    path: 'store/:storeId/no/:no',    // 台号 no
+    path: 'store/:storeId/order/:orderId',    // 订单 no
     loadChildren: () =>
       import('./modules/theme/default/store.module').then(m => m.StoreModule)
   },
   {
-    path: 'store/:storeId/type/:type/no/:no',    // 类别  // 台号 no
+    path: 'store/:storeId/type/:type/order/:orderId',    // 类别  // 订单 no
     loadChildren: () =>
       import('./modules/theme/default/store.module').then(m => m.StoreModule)
   },

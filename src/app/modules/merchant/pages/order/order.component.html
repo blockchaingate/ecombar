@@ -78,26 +78,26 @@
                                         {{total}} {{currency}}
                                     </th>
                                 </tr>
-                                <tr *ngIf="diffFlag && order.paymentStatus != 2">
+                                <tr *ngIf="diffFlag == 3">  <!-- && order.paymentStatus != 2 -->
                                     <td colspan="4">
                                         <button type="button" class="btn btn-warning btn-lg btn-block NewButton" (click)="confirmOrder()">
                                             {{'Place Order' | translate}}, {{'GET IT' | translate}}
                                         </button>
                                     </td>
                                 </tr>
-                                <tr *ngIf="diffFlag && order.paymentStatus == 2">
+                                <tr *ngIf="diffFlag == 4">  <!-- && order.paymentStatus == 2 -->
                                     <td colspan="4">
                                         <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="confirmOrder()">
                                             {{'Pay Bill' | translate}}, {{'GET IT' | translate}}
                                         </button>
                                     </td>
                                 </tr>
-                                <tr *ngIf="!diffFlag && order.paymentStatus != 2">
+                                <tr *ngIf="diffFlag == 1">  <!-- && order.paymentStatus != 2 -->
                                     <td colspan="4" class="text-center font-size-20">
                                         {{'Place Order' | translate}}, {{'We knew' | translate}}
                                     </td>
                                 </tr>
-                                <tr *ngIf="!diffFlag && order.paymentStatus == 2">
+                                <tr *ngIf="diffFlag == 2">  <!-- && order.paymentStatus == 2 -->
                                     <td colspan="4" class="text-center font-size-20">
                                         {{'Pay Bill' | translate}}, {{'We knew' | translate}}
                                     </td>
@@ -106,7 +106,13 @@
                         </table>
                     </form>
                 </div>
-                <!-- <div>
+                <div class="text-center">
+                    <qrcode [qrdata]="QrUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+                </div>
+                <div class="text-center">
+                    {{ QrUrl }}
+                </div>
+                    <!-- <div>
                     {{ 'Email' | translate }}: {{ order.merchantId.email }}
                 </div> -->
                 <!-- Login Email: {{ order.merchantId.createMemberId.email }} -->

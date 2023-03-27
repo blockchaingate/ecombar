@@ -2,6 +2,11 @@
 <h1>{{'Orders' | translate}} (No. {{ tableNo }})</h1>
 
 <div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+  <div class="text-right my-2">
+    <button type="button" class="btn btn-danger btn-sm newButton-S rounded" (click)="newOrder()">
+      {{ 'New' | translate }}
+    </button>  <!-- 圆角边框 -->
+  </div>
 
   <dl class="work-list row">
     <dt class="col-3">{{ 'Id' | translate }}</dt>
@@ -20,15 +25,18 @@
     </dd>
     <dd class="col-3">{{ order.dateCreated | date:'MM-dd hh:mm' }}</dd>
     <dd class="col-2">{{ order.totalAmount }}</dd>
-    <dd class="col">
+    <dd class="col" *ngIf="order.memo">
+      {{ order.memo }}
+    </dd>
+    <dd class="col" *ngIf="!order.memo">
       <div>
         {{ getStatus(order) | translate }}
       </div>
-      <div *ngIf="order.paymentStatus == 5">
+      <!-- <div *ngIf="order.paymentStatus == 5">
         <a (click)="refund(order)">
           Approve refund
         </a>
-      </div>
+      </div> -->
     </dd>
     <!-- <dd class="col">
       <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">

@@ -1,4 +1,6 @@
 
+<!-- 顾客“订单” -->
+
 <!-- 上下边线，解决 margin 问题 -->
 <main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
 
@@ -92,18 +94,18 @@
                                         {{total}} {{currency}}
                                     </th>
                                 </tr>
-                                <tr *ngIf="order.paymentStatus != 2">
+                                <tr *ngIf="diffFlag == 2">  <!-- order.paymentStatus != 2 -->
                                     <td colspan="4" class="text-center">
                                         <div class="d-md-flex">
-                                            <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="placeOrder()">
+                                            <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="payBill()">
                                                 {{'Pay Bill' | translate}}
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr *ngIf="order.paymentStatus == 2">
-                                    <td colspan="4" class="text-center">
-                                        Your order was paid successfully with txid: {{ order.charge_id }}
+                                <tr *ngIf="diffFlag == 3">  <!-- order.paymentStatus == 2 -->
+                                    <td colspan="4" class="text-center font-size-20">
+                                        We are preparing the bill for you.
                                     </td>
                                 </tr>
                             </tfoot>
@@ -145,7 +147,12 @@
                     <br>
                 </div>
             </div>
-
+            <div class="text-center">
+                <qrcode [qrdata]="QrUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+            </div>
+            <div class="text-center">
+                {{ QrUrl }}
+            </div>
         </div>
     </div>
 

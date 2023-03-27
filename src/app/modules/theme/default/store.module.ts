@@ -29,7 +29,7 @@ import { CustomerServiceComponent } from './customer-service/customer-service.co
 import { ReturnsComponent } from './returns/returns.component';
 import { FaqComponent } from './faq/faq.component';
 import { BlogComponent } from './blog/blog.component';
-// import { QRCodeModule } from 'angularx-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,7 @@ import { BlogComponent } from './blog/blog.component';
     BlogComponent
   ],
   imports: [
-    // QRCodeModule,
+    QRCodeModule,
     StoreRoutingModule,
     CommonModule,
     FormsModule,
