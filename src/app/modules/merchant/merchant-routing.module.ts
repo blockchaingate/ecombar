@@ -15,7 +15,9 @@ import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrderStateComponent } from './pages/order-state/order-state.component';
 import { OrderList2Component } from './pages/order-list-2/order-list-2.component';
+import { FoodListComponent } from './pages/food-list/food-list.component';
 import { OrderComponent } from './pages/order/order.component';
+import { Order2Component } from './pages/order-2/order-2.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { NewslettersComponent } from './pages/newsletters/newsletters.component';
 import { TopCategoryBannersComponent } from './pages/top-category-banners/top-category-banners.component';
@@ -82,7 +84,13 @@ const routes: Routes = [
             path: 'order-list-2/:no', component: OrderList2Component
         }, 
         {
+            path: 'food-list', component: FoodListComponent
+        }, 
+        {
             path: 'order/:id', component: OrderComponent
+        }, 
+        {
+            path: 'order-2/:id', component: Order2Component
         }, 
         {
             path: 'newsletters', component: NewslettersComponent

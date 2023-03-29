@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {OrderComponent as ParentOrderComponent} from 'src/app/modules/store/order/order.component';
+import { OrderMerchantComponent as ParentOrderComponent } from 'src/app/modules/store/order/order-m.component';
 
 
 @Component({

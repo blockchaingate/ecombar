@@ -1,11 +1,11 @@
 
 <div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
-  <h1>{{'New Shipping Carrier' | translate}}</h1>
+  <h1>{{'New Table Number' | translate}}</h1>
 
-  <div class="text-right my-2">
+  <div class="text-right my-2">  <!-- 靠右对齐，圆角边框 -->
     <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addShippingCarrier()">
       {{ (id ? 'Update' : 'Add') | translate }}
-    </button>  <!-- 圆角边框 -->
+    </button>
   </div>
 
   <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
@@ -62,13 +62,13 @@
         <dl>
           <dt>Name</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="Enter shipping carrier name" [(ngModel)]="name" name="name" required>
+            <input type="text" class="inp w-75" placeholder="Enter table name" [(ngModel)]="name" name="name" required>
           </dd>
         </dl>
         <dl>
           <dt>Description</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="Enter shipping carrier description" [(ngModel)]="desc" name="desc" required>
+            <input type="text" class="inp w-75" placeholder="Enter table description" [(ngModel)]="desc" name="desc" required>
           </dd>
         </dl>
         
@@ -80,13 +80,13 @@
         <dl>
           <dt>名称</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="输入承运人名称" [(ngModel)]="nameChinese" name="nameChinese" required>
+            <input type="text" class="inp w-75" placeholder="输入桌号名称" [(ngModel)]="nameChinese" name="nameChinese" required>
           </dd>
         </dl>
         <dl>
           <dt>描述</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="输入承运人描述" [(ngModel)]="descChinese" name="descChinese" required>
+            <input type="text" class="inp w-75" placeholder="输入桌号描述" [(ngModel)]="descChinese" name="descChinese" required>
           </dd>
         </dl>
 
@@ -98,13 +98,13 @@
         <dl>
           <dt>名稱</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="輸入承運人名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
+            <input type="text" class="inp w-75" placeholder="輸入桌號名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
           </dd>
         </dl>
         <dl>
           <dt>描述</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="輸入承運人描述" [(ngModel)]="descTradition" name="descTradition" required>
+            <input type="text" class="inp w-75" placeholder="輸入桌號描述" [(ngModel)]="descTradition" name="descTradition" required>
           </dd>
         </dl>
 
@@ -117,16 +117,16 @@
   <div *ngIf="NavTab == 'Data'">
     <div class="work-form row">
 
-      <dl>
+      <!-- <dl>
         <dt>Flat Rate</dt>
         <dd class="text-left">
           <input type="text" class="inp w-75" placeholder="Enter flat rate" [(ngModel)]="flatRate" name="flatRate" required>
         </dd>
-      </dl>
+      </dl> -->
       <dl>
         <dt>Sequence</dt>
         <dd class="text-left">
-          <input type="text" class="inp w-75" placeholder="Enter shipping carrier sequence" [(ngModel)]="sequence" name="sequence" required>
+          <input type="text" class="inp w-75" placeholder="Enter table sequence" [(ngModel)]="sequence" name="sequence" required>
         </dd>
       </dl>
 
@@ -134,4 +134,3 @@
   </div>
 
 </div>
-          

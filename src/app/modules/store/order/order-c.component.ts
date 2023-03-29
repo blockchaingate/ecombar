@@ -25,7 +25,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
     template:''
 })
-export class OrderMineComponent implements OnInit {
+export class OrderClientComponent implements OnInit {
     // id: string;
     storeId: string;
     merchantId: string;
@@ -150,7 +150,6 @@ export class OrderMineComponent implements OnInit {
             }
         );
 
-        // 这块可以放 CheckOut，为测试方便，先放在这里
         this.orderId = this.cartStoreServ.getOrderId();  // 订单 no
         if (this.orderId) {
             this.orderServ.get(this.orderId).subscribe(  // 获取订单对象
@@ -307,47 +306,59 @@ export class OrderMineComponent implements OnInit {
 
         const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
         const privateKey = keyPair.privateKeyBuffer.privateKey;
-        
-        if (this.order  // 已有订单
-        &&  this.order.externalOrderNumber
-        &&  this.order.merchantId == this.merchantId
-     // &&  this.order.owner == this.walletAddress  // Memo: 是后台创建的订单
-        &&  this.order.memo != 'PayBill') {  // 已经支付，不可修改
-            // const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
-            // console.log('orderData2=', orderData);
 
-            const items2 = this.order.items;  // 旧的订单商品
-            const updated = {
-                items: items2,
-                memo: 'PayBill'
-            };
-            const sig = this.kanbanServ.signJsonData(privateKey, updated);
-            updated['sig'] = sig.signature;  
-            // console.log('[combine]=', this.orderId, updated);
-            this.orderServ.update_items(this.order.externalOrderNumber, updated).subscribe(  // Order 增添数据
+        const orderId = this.cartStoreServ.getOrderId();  // 订单 no
+        if (orderId) {
+            this.orderServ.get(orderId).subscribe(  // 获取最新数据
                 (res: any) => {
-                    if (res) {
-                        const body = res;
-                        const orderNewID = body._id;
-                        this.spinner.hide();
-                        this.cartStoreServ.empty();
-                        // console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
-                        if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+                    // console.log('order ret=', res);
+                    if (res) {  //  && res.ok
+                        const order = res;  // res._body
+                        // console.log('order ret=', this.order);
 
-                            location.reload();  // 重新加载当前页面
-                        } else {
-                            // 网上点餐，我们暂不在此实现
-                            // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
-                            // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
+                        if (order.externalOrderNumber
+                        &&  order.merchantId == this.merchantId
+                     // &&  order.owner == this.walletAddress  // Memo: 是后台创建的订单
+                        &&  order.memo != 'PayBill') {  // 已经支付，不可修改
+                            // const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
+                            // console.log('orderData2=', orderData);
+
+                            const items2 = order.items;  // 旧的订单商品
+                            const updated = {
+                                items: items2,
+                                memo: 'PayBill'
+                            };
+                            const sig = this.kanbanServ.signJsonData(privateKey, updated);
+                            updated['sig'] = sig.signature;  
+                            // console.log('[combine]=', this.orderId, updated);
+                            this.orderServ.update_items(order.externalOrderNumber, updated).subscribe(  // Order 增添数据
+                                (res: any) => {
+                                    if (res) {
+                                        const body = res;
+                                        const orderNewID = body._id;
+                                        this.spinner.hide();
+                                        this.cartStoreServ.empty();
+                                        // console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
+                                        if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+
+                                            location.reload();  // 重新加载当前页面
+                                        } else {
+                                            // 网上点餐，我们暂不在此实现
+                                            // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
+                                            // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
+                                        }
+                                    }
+                                },
+                                err => { 
+                                    this.errMsg = err.message;
+                                    this.spinner.hide();
+                                    this.toastr.error('error while combining order');              
+                                }
+                            );  
                         }
                     }
-                },
-                err => { 
-                    this.errMsg = err.message;
-                    this.spinner.hide();
-                    this.toastr.error('error while combining order');              
                 }
-            );  
+            );
         }
     }
 

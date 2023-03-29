@@ -1,0 +1,33 @@
+
+<!-- 厨师制作清单 -->
+
+<h1>{{'Food Items' | translate}}</h1>
+
+<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+
+  <dl class="work-list row">
+    <dt class="col-1">{{ 'No' | translate }}</dt>
+    <dt class="col-2">{{ 'Order' | translate }}</dt>
+    <dt class="col-2">{{ 'Date Created' | translate }}</dt>
+    <dt class="col-3">{{ 'Title' | translate }}</dt>
+    <dt class="col-1">{{ 'Price' | translate }}</dt>
+    <dt class="col-1">{{ 'Quantity' | translate }}</dt>
+    <dt class="col"></dt>
+  </dl>
+
+  <dl class="work-list row" *ngFor="let food of foodData">
+    <dd class="col-1">{{ food.tableNo }}</dd>
+    <dd class="col-2">
+      <a target="_blank" *ngIf="food.merchantId" href="/merchant/order-2/{{food.orderId}}">
+        {{ trimText(food.orderId) }} - {{ food.num }}
+      </a>
+      <span *ngIf="!food.merchantId">{{ trimText(food.orderId) }} / {{ food.num }}</span>
+    </dd>
+    <dd class="col-2">{{ food.dateCreated | date:'MM-dd hh:mm' }}</dd>
+    <dd class="col-3">{{ food.title }}</dd>
+    <dd class="col-1">{{ food.price }}</dd>
+    <dd class="col-1">{{ food.quantity }}</dd>
+    <dd class="col"><a class="font-size-26 px-4 border border-danger rounded" (click)="removeFood(food.orderId, food.food, food.quantity)">×</a></dd>
+  </dl>
+
+</div>

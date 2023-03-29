@@ -75,20 +75,24 @@ export class CartStoreService {
     return this.saveCartItems([]);
   }
 
-  getTableNo(): number {
-    return parseInt( localStorage.getItem('tableNo') );
-  }
+    // 购物车有对应台号
 
-  setTableNo( no: number ) {
-    localStorage.setItem('tableNo', no.toString());
-  }
+    getTableNo(): number {
+        return parseInt( localStorage.getItem('tableNo') );
+    }
 
-  getOrderId(): string {
-    return localStorage.getItem('orderId');
-  }
+    setTableNo( no: number ) {
+        localStorage.setItem('tableNo', no.toString());
+    }
 
-  setOrderId( orderId: string ) {
-    localStorage.setItem('orderId', orderId);
-  }
+    // 购物车有对应订单
+
+    getOrderId(): string {
+        return localStorage.getItem('orderId');
+    }
+
+    setOrderId( orderId: string ) {
+        localStorage.setItem('orderId', orderId);
+    }
 
 }

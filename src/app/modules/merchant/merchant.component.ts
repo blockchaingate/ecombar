@@ -130,6 +130,11 @@ export class MerchantComponent implements OnInit {
             link: 'brands',
             icon: 'brand'
           },
+          { // Memo: 缺个台号管理，不惊动后端了
+            title: 'Table Numbers',  // 'Shipping Carriers'
+            link: 'shipping-carriers',  // 'shipping-carriers'
+            icon: 'category'  // 'order'
+          },
           {
             title: 'Status',
             link: 'order-state',
@@ -140,11 +145,11 @@ export class MerchantComponent implements OnInit {
             link: 'orders',
             icon: 'order'
           },
-      //     {
-      //       title: 'Shipping Carriers',
-      //       link: 'shipping-carriers',
-      //       icon: 'order'
-      //     },
+          {
+            title: 'Food Items',
+            link: 'food-list',
+            icon: 'order'
+          },
       //     {
       //       title: 'Ships',
       //       link: 'ships',

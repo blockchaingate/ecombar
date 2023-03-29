@@ -20,7 +20,6 @@ import { MerchantService } from 'src/app/modules/shared/services/merchant.servic
     templateUrl: './order-state.component.html',
     styleUrls: [
         './order-state.component.scss', 
-        '../../../../../table.scss',
         '../../../../../page.scss'
     ]
 })
@@ -29,6 +28,7 @@ export class OrderStateComponent implements OnInit {
     order: any;
     orderState: any;
     wallet: any;
+    walletAddress: any;
     modalRef: BsModalRef;
 
     constructor(
@@ -57,81 +57,91 @@ export class OrderStateComponent implements OnInit {
         this.dataServ.currentWalletAddress.subscribe(
             (walletAddress: string) => {
                 if(walletAddress) {
-                    // "/:pageSize/:pageNum" = '/100/0'，用着先，以后后端再支持
-                    this.orderServ.gerMerchantOrders(walletAddress).subscribe(
-                        (res: any) => {
-                            if (res) {
-                                this.orders = res;
-                                // console.log("[Orders]=", res);
-                                if (Array.isArray(res)) {  // 数组确认
-                                    let data = { };
-                                    const now = new Date();
-                                    for (let i = 0; i < res.length; i ++) {  // 数组遍历
-                                        let order = res[i];
-                                        if (! order) continue;
-                                        const time = new Date(order.dateCreated);
-                                        // if (now.getTime() - time.getTime() < 2 * 24 * 3600 * 1000) {  // 24 小时 * 2
-                                            if (! order.owner) continue;
-                                            if (order && order.externalOrderNumber) {
-                                                const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
-                                                // console.log('num match=', num);
-                                                // [
-                                                //     "(8)",
-                                                //     "8"
-                                                // ]
-                                                if (num && num[1]) {  // 还要对上桌号
-                                                    order["tableNo"] = num[1];  // 台号 no (计算)
-                                                } else {
-                                                    order["tableNo"] = order.owner;
-                                                }
-                                            } else {
-                                                order["tableNo"] = order.owner;
-                                            }
-                                            const tableNo = order["tableNo"];
-                                            if (typeof(tableNo) == 'string') {
-                                                if (! data[tableNo]) {  // 未有记录，给予记录
-                                                    data[tableNo] = order;
-                                                } else {  // 已有记录，更新最新记录
-                                                    const order2 = data[tableNo];
-                                                    const time2 = new Date(order2.dateCreated);
-                                                    if (time.getTime() > time2.getTime()) {  // 更加新的时间
-                                                        data[tableNo] = order;
-                                                    }
-                                                }
-                                            }
-                                        // }
-                                    }
-                                    console.log("[orderState]=", data);
-                                    const keys = Object.keys(data);
-                                    for (let i = 0; i < keys.length; i ++) {  // 数组遍历
-                                        const no = keys[i];
-                                        const order = data[no];
-                                        // 判断与记录的差异
-                                        const tableOrder = this.merchantServ.getTableOrder(no);
-                                        console.log("[tableOrder]=", tableOrder);
-                                        const diff = this.CompareOrders(order, tableOrder);
-                                        if (! diff) {
-                                            if (order.memo == 'PayBill') {  // 改为修改 memo
-                                         // if (order.paymentStatus == 2) {  // 'payment confirmed'
-                                                order["flag"] = 2;
-                                            } else {
-                                                order["flag"] = 1;
-                                            }
-                                        }
-                                        this.orderState.push(order);  // 增添元素(结尾)
-                                    }
-                                    this.orders = this.orderState;
-                                }
-                            }
-                        }
-                    );
+                    this.walletAddress = walletAddress;
+                    this.updateOrderState();  // 更新“后台台号状态”
                 }
             }
         );
 
         setInterval(() => {
-            location.reload();
+            // location.reload();
+            this.updateOrderState();  // 更新“后台台号状态”
         }, 10 * 1000); // 重新加载当前页面，间隔 10 秒
+    }
+
+    // 更新“后台台号状态”（即时刷新）
+    updateOrderState() {
+        this.orderState = [ ];
+        if (this.walletAddress) {
+            // "/:pageSize/:pageNum" = '/100/0'，用着先，以后后端再支持
+            this.orderServ.gerMerchantOrders(this.walletAddress).subscribe(
+                (res: any) => {
+                    if (res) {
+                        this.orders = res;
+                        // console.log("[Orders]=", res);
+                        if (Array.isArray(res)) {  // 数组确认
+                            let data = { };
+                            const now = new Date();
+                            for (let i = 0; i < res.length; i ++) {  // 数组遍历
+                                let order = res[i];
+                                if (! order) continue;
+                                const time = new Date(order.dateCreated);
+                                // if (now.getTime() - time.getTime() < 2 * 24 * 3600 * 1000) {  // 24 小时 * 2
+                                    if (! order.owner) continue;
+                                    if (order && order.externalOrderNumber) {
+                                        const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+                                        // console.log('num match=', num);
+                                        // [
+                                        //     "(8)",
+                                        //     "8"
+                                        // ]
+                                        if (num && num[1]) {  // 要有台号
+                                            order["tableNo"] = num[1];  // 台号 no (计算)
+                                        } else {
+                                            order["tableNo"] = order.owner;
+                                        }
+                                    } else {
+                                        order["tableNo"] = order.owner;
+                                    }
+                                    const tableNo = order["tableNo"];
+                                    if (typeof(tableNo) == 'string') {
+                                        if (! data[tableNo]) {  // 未有记录，给予记录
+                                            data[tableNo] = order;
+                                        } else {  // 已有记录，更新最新记录
+                                            const order2 = data[tableNo];
+                                            const time2 = new Date(order2.dateCreated);
+                                            if (time.getTime() > time2.getTime()) {  // 更加新的时间
+                                                data[tableNo] = order;
+                                            }
+                                        }
+                                    }
+                                // }
+                            }
+                            console.log("[orderState]=", data);
+                            const keys = Object.keys(data);
+                            for (let i = 0; i < keys.length; i ++) {  // 数组遍历
+                                const no = keys[i];
+                                const order = data[no];
+                                // 判断与记录的差异
+                                const tableOrder = this.merchantServ.getTableOrder(no);
+                                console.log("[tableOrder]=", tableOrder);
+                                const diff = this.CompareOrders(order, tableOrder);
+                                if (! diff) {
+                                    if (order.memo == 'PayBill') {  // 改为修改 memo
+                                    // if (order.paymentStatus == 2) {  // 'payment confirmed'
+                                        order["flag"] = 2;
+                                    } else {
+                                        order["flag"] = 1;
+                                    }
+                                }
+                                this.orderState.push(order);  // 增添元素(结尾)
+                            }
+                            this.orders = this.orderState;
+                        }
+                    }
+                }
+            );
+        }
     }
 
     CompareOrders( order: any, order2: any ) {

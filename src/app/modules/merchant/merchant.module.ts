@@ -24,7 +24,9 @@ import { TopCategoryBannerAddComponent } from './pages/top-category-banner-add/t
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrderStateComponent } from './pages/order-state/order-state.component';
 import { OrderList2Component } from './pages/order-list-2/order-list-2.component';
+import { FoodListComponent } from './pages/food-list/food-list.component';
 import { OrderComponent } from './pages/order/order.component';
+import { Order2Component } from './pages/order-2/order-2.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { NewslettersComponent } from './pages/newsletters/newsletters.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -72,7 +74,9 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     OrdersComponent,
     OrderStateComponent,
     OrderList2Component,
+    FoodListComponent,
     OrderComponent,
+    Order2Component,
     ProfileComponent,
     BannerAddComponent,
     CollectionAddComponent,

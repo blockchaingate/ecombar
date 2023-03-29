@@ -79,8 +79,10 @@ export class CartComponent implements OnInit, OnDestroy {
             const value = item.price * item.quantity;
             this.total += Number(value.toFixed(2));
         }
-
         this.tax = this.total * this.taxRate / 100;
+
+        this.tax = Number(this.tax.toFixed(2));  // 小数留位
+        this.total = Number(this.total.toFixed(2));
     }
 
     ngOnInit(): void {
@@ -158,19 +160,19 @@ export class CartComponent implements OnInit, OnDestroy {
             }
         );
 
-        // 这块可以放 CheckOut，为测试方便，先放在这里
-        this.orderId = this.cartStoreServ.getOrderId();  // 订单 no
-        if (this.orderId) {
-            this.orderServ.get(this.orderId).subscribe(  // 获取订单对象
-                (res: any) => {
-                    // console.log('order ret=', res);
-                    if (res) {  //  && res.ok
-                        this.order = res;  // res._body
-                        console.log('order ret=', this.order);
-                    }
-                }
-            );
-        }
+        // // 这块可以放 CheckOut，为测试方便，先放在这里
+        // this.orderId = this.cartStoreServ.getOrderId();  // 订单 no
+        // if (this.orderId) {
+        //     this.orderServ.get(this.orderId).subscribe(  // 获取订单对象
+        //         (res: any) => {
+        //             // console.log('order ret=', res);
+        //             if (res) {  //  && res.ok
+        //                 this.order = res;  // res._body
+        //                 console.log('order ret=', this.order);
+        //             }
+        //         }
+        //     );
+        // }
 
     }
 
@@ -208,141 +210,154 @@ export class CartComponent implements OnInit, OnDestroy {
 
             const titleTran = this.translateServ.transField(item.title);
             item.title = titleTran ? titleTran : item.title;
+            item.lockedDays = 1;  // 下单
             items.push(item);
         });
-        let currency = this.currency;
-        if (this.order  // 已有订单
-        &&  this.order.externalOrderNumber
-        &&  this.order.merchantId == this.merchantId
-     // &&  this.order.owner == this.walletAddress  // Memo: 是后台创建的订单
-        &&  this.order.memo != 'PayBill') {  // 已经支付，不可修改
-            // const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
-            // console.log('orderData2=', orderData);
 
-            let times = 1;
-            if (this.order.memo) {
-                const num = this.order.memo.match(/PlaceOrder(.*)/);  // \( \) 转义符
-                console.log('num match=', num);
-                // [
-                //     "PlaceOrder1",
-                //     "1"
-                // ]
-                if (num && num[1]) {  // 下单次数
-                    times = parseInt(num[1]);
-                    times ++;
-                }
-            }
-            const memo = `PlaceOrder${times}`;
-
-            const items2 = this.order.items;  // 旧的订单商品
-            const items3 = items2.concat(items);  // 合并新的商品
-            const updated = {
-                items: items3,
-                memo: memo
-            };
-            const sig = this.kanbanServ.signJsonData(privateKey, updated);
-            updated['sig'] = sig.signature;  
-            // console.log('[combine]=', this.orderId, updated);
-            this.orderServ.update_items(this.order.externalOrderNumber, updated).subscribe(  // Order 增添数据
+        const orderId = this.cartStoreServ.getOrderId();  // 订单 no
+        if (orderId) {
+            this.orderServ.get(orderId).subscribe(  // 获取最新数据
                 (res: any) => {
-                    if (res) {
-                        const body = res;
-                        const orderNewID = body._id;
-                        this.spinner.hide();
-                        this.cartStoreServ.empty();
-                        // console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
-                        if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
-                            // 点餐现场，不需要地址。点餐之后进入订单页
-                        // this.router.navigate(['/store/'+ this.storeId + '/payment/' + orderNewID]);  // 进入支付
-                            this.router.navigate(['/store/' + this.storeId + '/order']);
+                    // console.log('order ret=', res);
+                    if (res) {  //  && res.ok
+                        const order = res;  // res._body
+                        // console.log('order ret=', this.order);
 
-                        } else {
-                            // 网上点餐，我们暂不在此实现
-                            // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
-                            // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
+                        let currency = this.currency;
+                        if (order.externalOrderNumber
+                        &&  order.merchantId == this.merchantId
+                    // &&  order.owner == this.walletAddress  // Memo: 是后台创建的订单
+                        &&  order.memo != 'PayBill') {  // 已经支付，不可修改
+                            // const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
+                            // console.log('orderData2=', orderData);
+                
+                            let times = 1;
+                            if (order.memo) {
+                                const num = order.memo.match(/PlaceOrder(.*)/);  // \( \) 转义符
+                                console.log('num match=', num);
+                                // [
+                                //     "PlaceOrder1",
+                                //     "1"
+                                // ]
+                                if (num && num[1]) {  // 下单次数
+                                    times = parseInt(num[1]);
+                                    times ++;
+                                }
+                            }
+                            const memo = `PlaceOrder${times}`;
+                
+                            const items2 = order.items;  // 旧的订单商品
+                            const items3 = items2.concat(items);  // 合并新的商品
+                            const updated = {
+                                items: items3,
+                                memo: memo
+                            };
+                            const sig = this.kanbanServ.signJsonData(privateKey, updated);
+                            updated['sig'] = sig.signature;  
+                            // console.log('[combine]=', orderId, updated);
+                            this.orderServ.update_items(order.externalOrderNumber, updated).subscribe(  // Order 增添数据
+                                (res: any) => {
+                                    if (res) {
+                                        const body = res;
+                                        const orderNewID = body._id;
+                                        this.spinner.hide();
+                                        this.cartStoreServ.empty();
+                                        // console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
+                                        if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+                                            // 点餐现场，不需要地址。点餐之后进入订单页
+                                        // this.router.navigate(['/store/'+ this.storeId + '/payment/' + orderNewID]);  // 进入支付
+                                            this.router.navigate(['/store/' + this.storeId + '/order']);
+                
+                                        } else {
+                                            // 网上点餐，我们暂不在此实现
+                                            // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
+                                            // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
+                                        }
+                                    }
+                                },
+                                err => { 
+                                    this.errMsg = err.message;
+                                    this.spinner.hide();
+                                    this.toastr.error('error while combining order');              
+                                }
+                            );  
                         }
+                
+                        // 新的订单，改在后台创建
+
+                        // } else {    // 新的订单
+
+                        //     const uuid = uuidv4();  // '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+                        //     let uuid2 = uuid.replace(/-/g, '');  // 去掉 - 字符
+                        //     if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+                        //         const no = this.cartStoreServ.getTableNo();
+                        //         uuid2 = `${uuid2}(${no})`;  // 加入台号
+                        //     }
+                        //     const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency, externalOrderNumber: uuid2 };
+                        //     console.log('orderData=', orderData);
+                        //     // owner: { type: String},
+                        //     // totalAmount: {type: Number},
+                        //     // totalTax: {type: Number},
+                        //     // totalShipping: {type: Number},
+                        //     // currency: {type: String, required: true},
+                        //     // merchantId: {type: String, required: true},
+                        //     // items: [{
+                        //     //     title: String,
+                        //     //     taxRate: Number,
+                        //     //     lockedDays: Number,
+                        //     //     rebateRate: Number,
+                        //     //     price: Number,
+                        //     //     quantity: Number
+                        //     // }], 
+                        //     const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+                        //     orderData['sig'] = sig.signature;  
+                        //     this.orderServ.create2(orderData).subscribe(
+                        //         (res: any) => {
+                        //             if (res) {
+                        //                 const body = res;
+                        //                 const orderNewID = body._id;
+                        //                 this.spinner.hide();
+                        //                 this.cartStoreServ.empty();
+                        //                 console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
+                        //                 if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+                        //                     // 点餐现场，不需要地址。点餐之后进入订单页
+                        //                 // this.router.navigate(['/store/'+ this.storeId + '/payment/' + orderNewID]);  // 进入支付
+                        //                     this.router.navigate(['/store/' + this.storeId + '/order']);
+
+                        //                 } else {
+                        //                     // 网上点餐，我们暂不在此实现
+                        //                     // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
+                        //                     // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
+                        //                 }
+                        //             }
+                        //         },
+                        //         err => { 
+                        //             this.errMsg = err.message;
+                        //             this.spinner.hide();
+                        //             this.toastr.error('error while creating order');              
+                        //         }
+                        //     );  
+                        // }
+
+                    // (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
+                    //   if(res) {
+                    //     if(res.ok) {
+                    //       console.log('res._body=', res._body);
+                    //       const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
+                    //       orderData['objectId'] = objectId; 
+                    //       const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+                    //       orderData['sig'] = sig.signature;               
+                    //     }
+                    //     else {
+                    //       this.spinner.hide();
+                    //       this.toastr.error('error while saving to iddock');
+                    //     }
+                    //   }});
+
                     }
-                },
-                err => { 
-                    this.errMsg = err.message;
-                    this.spinner.hide();
-                    this.toastr.error('error while combining order');              
                 }
-            );  
+            );
         }
-
-        // 新的订单，改在后台创建
-
-        // } else {    // 新的订单
-
-        //     const uuid = uuidv4();  // '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
-        //     let uuid2 = uuid.replace(/-/g, '');  // 去掉 - 字符
-        //     if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
-        //         const no = this.cartStoreServ.getTableNo();
-        //         uuid2 = `${uuid2}(${no})`;  // 加入台号
-        //     }
-        //     const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency, externalOrderNumber: uuid2 };
-        //     console.log('orderData=', orderData);
-        //     // owner: { type: String},
-        //     // totalAmount: {type: Number},
-        //     // totalTax: {type: Number},
-        //     // totalShipping: {type: Number},
-        //     // currency: {type: String, required: true},
-        //     // merchantId: {type: String, required: true},
-        //     // items: [{
-        //     //     title: String,
-        //     //     taxRate: Number,
-        //     //     lockedDays: Number,
-        //     //     rebateRate: Number,
-        //     //     price: Number,
-        //     //     quantity: Number
-        //     // }], 
-        //     const sig = this.kanbanServ.signJsonData(privateKey, orderData);
-        //     orderData['sig'] = sig.signature;  
-        //     this.orderServ.create2(orderData).subscribe(
-        //         (res: any) => {
-        //             if (res) {
-        //                 const body = res;
-        //                 const orderNewID = body._id;
-        //                 this.spinner.hide();
-        //                 this.cartStoreServ.empty();
-        //                 console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
-        //                 if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
-        //                     // 点餐现场，不需要地址。点餐之后进入订单页
-        //                 // this.router.navigate(['/store/'+ this.storeId + '/payment/' + orderNewID]);  // 进入支付
-        //                     this.router.navigate(['/store/' + this.storeId + '/order']);
-
-        //                 } else {
-        //                     // 网上点餐，我们暂不在此实现
-        //                     // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
-        //                     // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
-        //                 }
-        //             }
-        //         },
-        //         err => { 
-        //             this.errMsg = err.message;
-        //             this.spinner.hide();
-        //             this.toastr.error('error while creating order');              
-        //         }
-        //     );  
-        // }
-
-    // (await this.iddockServ.addIdDock(seed, 'things', null, orderData, null)).subscribe( async res => {
-    //   if(res) {
-    //     if(res.ok) {
-    //       console.log('res._body=', res._body);
-    //       const objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
-    //       orderData['objectId'] = objectId; 
-    //       const sig = this.kanbanServ.signJsonData(privateKey, orderData);
-    //       orderData['sig'] = sig.signature;               
-
-        
-    //     }
-    //     else {
-    //       this.spinner.hide();
-    //       this.toastr.error('error while saving to iddock');
-    //     }
-    //   }});
 
     }
 

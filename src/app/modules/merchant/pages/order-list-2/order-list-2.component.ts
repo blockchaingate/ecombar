@@ -28,11 +28,11 @@ export class OrderList2Component implements OnInit {
     orders: any;
     order: any;
     wallet: any;
+    walletAddress: string;
     modalRef: BsModalRef;
     storeId: string;
     merchantId: string;
     currency: string;
-    walletAddress: string;
     tableNo: string;  // 台号 no  // OrderList 的主人
     errMsg = '';
 

@@ -26,7 +26,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
     template:''
 })
-export class OrderComponent implements OnInit {
+export class OrderMerchantComponent implements OnInit {
     orderId: string;
     order: any;
     // id: string;
@@ -43,6 +43,7 @@ export class OrderComponent implements OnInit {
     tableNo: number;  // 台号 no (计算)
     diffFlag: number;  // 已是最新(1 下单, 2 支付)，不是最新(3 下单, 4 支付)
     QrUrl: string;  // 二维码地址
+    errMsg = '';
     
     constructor(
         private route: ActivatedRoute, 
@@ -85,56 +86,63 @@ export class OrderComponent implements OnInit {
                 if(store) {
                     this.storeId = store._id;
                     console.log('store===', store);
-                    this.orderServ.get(this.orderId).subscribe(
-                        (res: any) => {
-                            // console.log('this.order ret=', res);
-                            if (res) {  //  && res.ok
-                            this.order = res;  // res._body
-                            console.log('this.order=', this.order);
-                            // 初始化数据
-                            this.currency = this.order.currency;
-                            // this.selectPayment(this.order.paymentMethod);
-                            // this.selectShippingService(this.order.shippingServiceSelected);
-                            this.calculateTotal();
-            
-                            const order = this.order;
-                            if (order && order.externalOrderNumber) {
-                                const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
-                                // console.log('num match=', num);
-                                // [
-                                //     "(8)",
-                                //     "8"
-                                // ]
-                                if (num && num[1]) {  // 还要对上桌号
-                                    this.tableNo = parseInt(num[1]);  // 台号 no (计算)
-            
-                                    // 判断与记录的差异
-                                    const tableOrder = this.merchantServ.getTableOrder(num[1]);
-                                    // console.log("[tableOrder]=", tableOrder);
-                                    const diff = this.CompareOrders(order, tableOrder);
-                                    if (! diff) {  // 不同
-                                        if (order.memo == 'PayBill') {  // 改为修改 memo
-                                     // if (order.paymentStatus == 2) {  // 'payment confirmed'
-                                            this.diffFlag = 4;
-                                        } else {
-                                            this.diffFlag = 3;
-                                        }
-                                    } else {  // 相同
-                                        if (order.memo == 'PayBill') {
-                                            this.diffFlag = 2;
-                                        } else {
-                                            this.diffFlag = 1;
-                                        }
-                                    }
-                                    this.QrUrl = environment.EX_WEBSITE + `store/${this.storeId}/order/${this.orderId}`;
-                                }
-                            }
-                        }
-                    });
+                    this.updateOrderData();  // 更新“后台订单查看”
                 }
             }
         );
     
+    }
+
+    // 更新“后台订单查看”（即时刷新）
+    updateOrderData() {
+        if (this.orderId) {
+            this.orderServ.get(this.orderId).subscribe(
+                (res: any) => {
+                    // console.log('this.order ret=', res);
+                    if (res) {  //  && res.ok
+                    this.order = res;  // res._body
+                    console.log('this.order=', this.order);
+                    // 初始化数据
+                    this.currency = this.order.currency;
+                    // this.selectPayment(this.order.paymentMethod);
+                    // this.selectShippingService(this.order.shippingServiceSelected);
+                    this.calculateTotal();
+
+                    const order = this.order;
+                    if (order && order.externalOrderNumber) {
+                        const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+                        // console.log('num match=', num);
+                        // [
+                        //     "(8)",
+                        //     "8"
+                        // ]
+                        if (num && num[1]) {  // 要有台号
+                            this.tableNo = parseInt(num[1]);  // 台号 no (计算)
+
+                            // 判断与记录的差异
+                            const tableOrder = this.merchantServ.getTableOrder(num[1]);
+                            // console.log("[tableOrder]=", tableOrder);
+                            const diff = this.CompareOrders(order, tableOrder);
+                            if (! diff) {  // 不同
+                                if (order.memo == 'PayBill') {  // 改为修改 memo
+                            // if (order.paymentStatus == 2) {  // 'payment confirmed'
+                                    this.diffFlag = 4;
+                                } else {
+                                    this.diffFlag = 3;
+                                }
+                            } else {  // 相同
+                                if (order.memo == 'PayBill') {
+                                    this.diffFlag = 2;
+                                } else {
+                                    this.diffFlag = 1;
+                                }
+                            }
+                            this.QrUrl = environment.EX_WEBSITE + `store/${this.storeId}/order/${this.orderId}`;
+                        }
+                    }
+                }
+            });
+        }
     }
 
     CompareOrders( order: any, order2: any ) {
@@ -185,7 +193,7 @@ export class OrderComponent implements OnInit {
     }
   
     placeOrder() {
-        if (this.total <= 0) {  // Fix: 价格为 0 处理
+        if (this.total <= 0) {
             return;
         }
         if (!this.wallet || !this.wallet.pwdHash) {
@@ -280,5 +288,86 @@ export class OrderComponent implements OnInit {
         // console.log('setTableOrder==', this.merchantServ.getTableOrder(String(this.tableNo)));
 
         location.reload();  // 重新加载当前页面
+    }
+
+    setFood( orderId: string, foodId: string, quantity: number, flag: number ) {    // set: 0 做好 1 下订
+        if (quantity <= 0) {
+            return;
+        }
+        if (!this.wallet || !this.wallet.pwdHash) {
+            this.router.navigate(['/wallet']);
+            return;
+        }
+
+        const initialState = {
+            pwdHash: this.wallet.pwdHash,
+            encryptedSeed: this.wallet.encryptedSeed
+        };        
+        this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+            this.spinner.show();
+            this.setFoodDo(seed, orderId, foodId, quantity, flag);
+        });
+    }
+
+    async setFoodDo( seed: Buffer, orderId: string, foodId: string, quantity: number, flag: number ) {
+
+        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+        const privateKey = keyPair.privateKeyBuffer.privateKey;
+
+        this.orderServ.get(orderId).subscribe(  // 获取最新数据
+            (res: any) => {
+                // console.log('order ret=', res);
+                if (res) {  //  && res.ok
+                    const order = res;  // res._body
+                    // const currency = order.currency;
+
+                    if (order.externalOrderNumber
+                 // &&  order.owner == this.walletAddress  // Memo: 是后台创建的订单
+                 // &&  order.memo != 'PayBill'  // Memo: 不管 PayBill 情况
+                    ) {
+                        let items = order.items;  // 旧的订单商品
+                        let memo = order.memo;
+                        for (let i = 0; i < items.length; i ++) {  // 食物遍历
+                            const food = items[i];
+                            if (food._id == foodId && food.quantity == quantity) {  // 找到指定食物
+                                if (food.lockedDays > 0 && flag <= 0) {
+                                    items[i].lockedDays = 0;  // 设为做好  // 不用 food 变量
+                                    break;
+                                } else if (food.lockedDays <= 0 && flag > 0) {
+                                    items[i].lockedDays = 1;  // 设为下订
+                                    break;
+                                }
+                            }
+                        }
+                        const updated = {
+                            items: items,
+                            memo: memo
+                        };
+                        const sig = this.kanbanServ.signJsonData(privateKey, updated);
+                        updated['sig'] = sig.signature;  
+                        // console.log('[combine]=', this.orderId, updated);
+                        this.orderServ.update_items(order.externalOrderNumber, updated).subscribe(  // Order 更新数据
+                            (res: any) => {
+                                if (res) {
+                                    const body = res;
+                                    const orderNewID = body._id;
+                                    this.spinner.hide();
+
+                                    // location.reload();  // 重新加载当前页面
+                                    this.updateOrderData();  // 更新“后台订单查看”
+                                }
+                            },
+                            err => { 
+                                this.errMsg = err.message;
+                                this.spinner.hide();
+                                this.toastr.error('error while combining order');              
+                            }
+                        );  
+                    }
+                }
+            }
+        );
     }
 }

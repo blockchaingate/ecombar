@@ -53,11 +53,11 @@
                 <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none" type="text" [value]="product.quantity">
             </div>
             <div class="col-auto pr-1">
-                <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" >
-                    <small class="fas fa-minus btn-icon__inner" (click)="quantityReduce()"></small>
+                <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle">  <!-- border-0 -->
+                    <small class="fas fa-minus btn-icon__inner" (click)="quantityReduce()">－</small>
                 </a>
-                <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" >
-                    <small class="fas fa-plus btn-icon__inner"  (click)="quantityAdd()"></small>
+                <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle">  <!-- border-0 -->
+                    <small class="fas fa-plus btn-icon__inner"  (click)="quantityAdd()">＋</small>
                 </a>
             </div>
         </div>
@@ -66,5 +66,6 @@
 </td>
 
 <td data-title="Total">
-    <span class="">{{product.price * product.quantity}} {{currency}}</span>
+    <!-- <span class="">{{ product.price * product.quantity }} {{ currency }}</span> -->
+    <span class="">{{ product.price * product.quantity | number:'1.2-2' }} {{ currency }}</span>  <!-- 保留两位小数 -->
 </td>

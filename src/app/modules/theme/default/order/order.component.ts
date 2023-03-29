@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderMineComponent as ParentOrderComponent } from 'src/app/modules/store/order/order-mine.component';
+import { OrderClientComponent as ParentOrderComponent } from 'src/app/modules/store/order/order-c.component';
 
 @Component({
   selector: 'app-order',

@@ -1,5 +1,5 @@
 
-<!-- 订单查看(后台) -->
+<!-- 订单查看(厨师) -->
 
 <!-- 上下边线，解决 margin 问题 -->
 <!-- <main id="content" role="main" class="border-top border-bottom bg-light"> -->
@@ -40,6 +40,7 @@
                                     <th class="product-price">{{'Price' | translate}}</th>
                                     <th class="product-quantity w-lg-15">{{'Quantity' | translate}}</th>
                                     <th class="product-subtotal">{{'Total' | translate}}</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,6 +52,14 @@
                                     <td>{{ item.price }}</td>
                                     <td>x {{ item.quantity }}</td>
                                     <td>{{ item.price * item.quantity }} {{ currency }}</td>
+                                    <td>
+                                        <div *ngIf="item.lockedDays <= 0">
+                                            <a class="font-size-20 px-4 border border-danger rounded" (click)="setFood(orderId, item._id, item.quantity, 1)">√</a>
+                                        </div>
+                                        <div *ngIf="item.lockedDays > 0">
+                                            <a class="font-size-20 px-4 border border-danger rounded" (click)="setFood(orderId, item._id, item.quantity, 0)">×</a>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot class="border-top">
@@ -59,52 +68,43 @@
                                     <th class="font-size-17">
                                         {{subtotal}} {{currency}}
                                     </th>
+                                    <th></th>
                                 </tr>
                                 <!-- <tr>
                                     <th colspan="4" class="text-right font-size-20">{{ 'Shipping' | translate }}</th>
                                     <th class="font-size-17">
                                         {{ (shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate }}
                                     </th>
+                                    <th></th>
                                 </tr> -->
                                 <tr *ngIf="discount">
                                     <th colspan="4" class="text-right font-size-20">{{ 'Discount' | translate }}</th>
                                     <th class="font-size-17">
                                         {{ discount }}%
                                     </th>
+                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th colspan="4" class="text-right font-size-20">{{ 'Tax' | translate }}</th>
                                     <th class="font-size-17">
                                         {{tax}} {{currency}}
                                     </th>
+                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th colspan="4" class="text-right font-size-20">{{ 'Total' | translate }}</th>
                                     <th class="font-size-17">
                                         {{total}} {{currency}}
                                     </th>
+                                    <th></th>
                                 </tr>
-                                <tr *ngIf="diffFlag == 3">  <!-- && order.paymentStatus != 2 -->
-                                    <td colspan="5">
-                                        <button type="button" class="btn btn-warning btn-lg btn-block NewButton" (click)="confirmOrder()">
-                                            {{ 'Number' | translate }}: {{ tableNo }}, {{'Placed Order' | translate}}
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr *ngIf="diffFlag == 4">  <!-- && order.paymentStatus == 2 -->
-                                    <td colspan="5">
-                                        <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="confirmOrder()">
-                                            {{ 'Number' | translate }}: {{ tableNo }}, {{'Pay Bill' | translate}}
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr *ngIf="diffFlag == 1">  <!-- && order.paymentStatus != 2 -->
-                                    <td colspan="5" class="text-center font-size-20 border">
+                                <tr *ngIf="diffFlag == 1 || diffFlag == 3">  <!-- && order.paymentStatus != 2 -->
+                                    <td colspan="6" class="text-center font-size-20 border">
                                         <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'Placed Order' | translate}}</b>
                                     </td>
                                 </tr>
-                                <tr *ngIf="diffFlag == 2">  <!-- && order.paymentStatus == 2 -->
-                                    <td colspan="5" class="text-center font-size-20 border">
+                                <tr *ngIf="diffFlag == 2 || diffFlag == 4">  <!-- && order.paymentStatus == 2 -->
+                                    <td colspan="6" class="text-center font-size-20 border">
                                         <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'Pay Bill' | translate}}</b>
                                     </td>
                                 </tr>
@@ -128,94 +128,3 @@
     </div>
 
 <!-- </main> -->
-
-
-<!-- <div class="m-3 list-group" *ngIf="order">
-    <div class="list-group-item list-group-item-action active">
-        Order ID:{{id}}
-    </div>
-    <div class="list-group-item list-group-item-action">
-        <div class="list-group-item list-group-item-action active">
-            Merchant information
-        </div>
-        <div class="list-group-item list-group-item-action">
-            Name: {{order.merchantId.name}}
-        </div>
-        <div class="list-group-item list-group-item-action">
-            Phone: {{order.merchantId.phone}}
-        </div>  
-        <div class="list-group-item list-group-item-action">
-            Email: {{order.merchantId.email}}
-        </div>    
-        <div class="list-group-item list-group-item-action">
-            Login Email: {{order.merchantId.createMemberId.email}}
-        </div>         
-    </div>
-    <div class="list-group-item list-group-item-action">
-        <div class="list-group-item list-group-item-action active">
-            Items information
-        </div>
-        <div class="list-group-item list-group-item-action">
-            <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of order.items">
-                    <th scope="row">
-                        <img class="img-thumbnail" [src]="item.thumbnailUrl">
-                    </th>
-                    <td>{{item.title}}</td>
-                    <td>{{item.price}} {{item.currency}}</td>
-                    <td>{{item.quantity}}</td>
-                  </tr>
-                </tbody>
-              </table>
-        </div>        
-    </div>       
-    <div class="list-group-item list-group-item-action">
-        <div class="list-group-item list-group-item-action active">
-            Payment information
-        </div>
-        <div class="list-group-item list-group-item-action">
-            Payment Method: {{order.paymentMethod}}
-        </div>
-        <div class="list-group-item list-group-item-action">
-            payment Status: {{order.paymentStatus}}
-        </div>  
-        <div class="list-group-item list-group-item-action">
-            Charge ID: {{order.charge_id}}
-        </div>          
-    </div>   
-    <div class="list-group-item list-group-item-action">
-        <div class="list-group-item list-group-item-action active">
-            Shipping information
-        </div>
-        <div class="list-group-item list-group-item-action">
-            Shipping Service: {{order.shippingServiceSelected}}
-        </div>
-        <div class="list-group-item list-group-item-action">
-            Receiver name: {{order.name}}
-        </div>  
-        <div class="list-group-item list-group-item-action">
-            Address: {{order.unit}} {{order.streetNumber}} {{order.streetName}} {{order.district}}
-            {{order.city}} {{order.zip}}, {{order.province}} {{order.country}}
-        </div>         
-    </div>     
-    <div class="list-group-item list-group-item-action">
-        <div class="list-group-item list-group-item-action active">
-            Iddock information
-        </div>
-        <div class="list-group-item list-group-item-action">
-            Object ID: 
-            <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
-                {{order.objectId}}
-            </a>
-        </div>        
-    </div>  
-</div> -->
