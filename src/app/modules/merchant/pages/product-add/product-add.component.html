@@ -78,6 +78,7 @@
       <!-- 缺省英文 -->
       <div class="w-100" *ngIf="currentTab == 'default English'">  <!-- 100% 宽度 -->
 
+        <legend>Description</legend>
         <dl>
           <dt>Title</dt>
           <dd class="text-left">
@@ -103,11 +104,54 @@
           </dd>
         </dl>
 
+        <legend>Specification</legend>
+        <dl>
+          <dt>{{ 'Flavor' | translate }}</dt>
+          <dd class="text-left">
+            <div class="d-flex align-items-center justify-content-between px-3" *ngFor="let c of colors">
+              <div>
+                {{c}}
+              </div>
+              <div (click)="removeColor(c)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+            <div>
+              <!-- 50% 宽度, 按钮 -->
+              <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="color" name="color"> &nbsp;&nbsp;
+              <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addColor()">
+                {{ 'Add' | translate }}
+              </button>  <!-- btn-block  -->
+            </div>
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ 'Size' | translate }}</dt>
+          <dd class="text-left">
+            <div class="d-flex align-items-center justify-content-between px-3" *ngFor="let c of sizes">
+              <div>
+                {{c}}
+              </div>
+              <div (click)="removeSize(c)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+            <div>
+              <!-- 50% 宽度, 按钮 -->
+              <input type="text" class="inp w-75" placeholder="Enter Size" [(ngModel)]="size" name="size"> &nbsp;&nbsp;
+              <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addSize()">
+                {{ 'Add' | translate }}
+              </button>  <!-- btn-block  -->
+            </div>
+          </dd>
+        </dl>
+  
       </div>
     
       <!-- 简体中文 -->
       <div class="w-100" *ngIf="currentTab == 'Simplified Chinese'">
 
+        <legend>描述</legend>
         <dl>
           <dt>标题</dt>
           <dd class="text-left">
@@ -133,11 +177,54 @@
           </dd>
         </dl>
 
+        <legend>规格</legend>
+        <dl>
+          <dt>口味</dt>
+          <dd class="text-left">
+            <div class="d-flex align-items-center justify-content-between px-3" *ngFor="let c of colorsChinese">
+              <div>
+                {{c}}
+              </div>
+              <div (click)="removeColorChinese(c)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+            <div>
+              <!-- 50% 宽度, 按钮 -->
+              <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="colorChinese" name="colorChinese"> &nbsp;&nbsp;
+              <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addColorChinese()">
+                {{ 'Add' | translate }}
+              </button>  <!-- btn-block  -->
+            </div>
+          </dd>
+        </dl>
+        <dl>
+          <dt>尺寸</dt>
+          <dd class="text-left">
+            <div class="d-flex align-items-center justify-content-between px-3" *ngFor="let c of sizesChinese">
+              <div>
+                {{c}}
+              </div>
+              <div (click)="removeSizeChinese(c)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+            <div>
+              <!-- 50% 宽度, 按钮 -->
+              <input type="text" class="inp w-75" placeholder="Enter Size" [(ngModel)]="sizeChinese" name="sizeChinese"> &nbsp;&nbsp;
+              <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addSizeChinese()">
+                {{ 'Add' | translate }}
+              </button>  <!-- btn-block  -->
+            </div>
+          </dd>
+        </dl>
+
       </div>
 
       <!-- 繁體中文 -->
       <div class="w-100" *ngIf="currentTab == 'Traditional Chinese'">
 
+        <legend>描述</legend>
         <dl>
           <dt>標題</dt>
           <dd class="text-left">
@@ -160,6 +247,48 @@
           <dt>描述</dt>
           <dd class="text-left">
             <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='descriptionTradition' placeholder="輸入產品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+          </dd>
+        </dl>
+
+        <legend>規格</legend>
+        <dl>
+          <dt>口味</dt>
+          <dd class="text-left">
+            <div class="d-flex align-items-center justify-content-between px-3" *ngFor="let c of colorsTradition">
+              <div>
+                {{c}}
+              </div>
+              <div (click)="removeColorTradition(c)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+            <div>
+              <!-- 50% 宽度, 按钮 -->
+              <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="colorTradition" name="colorTradition"> &nbsp;&nbsp;
+              <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addColorTradition()">
+                {{ 'Add' | translate }}
+              </button>  <!-- btn-block  -->
+            </div>
+          </dd>
+        </dl>
+        <dl>
+          <dt>尺寸</dt>
+          <dd class="text-left">
+            <div class="d-flex align-items-center justify-content-between px-3" *ngFor="let c of sizesTradition">
+              <div>
+                {{c}}
+              </div>
+              <div (click)="removeSizeTradition(c)">
+                <img src="/assets/svg/delete.svg">
+              </div>
+            </div>
+            <div>
+              <!-- 50% 宽度, 按钮 -->
+              <input type="text" class="inp w-75" placeholder="Enter Size" [(ngModel)]="sizeTradition" name="sizeTradition"> &nbsp;&nbsp;
+              <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addSizeTradition()">
+                {{ 'Add' | translate }}
+              </button>  <!-- btn-block  -->
+            </div>
           </dd>
         </dl>
 
@@ -249,56 +378,6 @@
       </dl>
 
       <legend>Specification</legend>
-
-      <dl>
-        <dt>Colors</dt>
-        <dd class="text-left">
-          <div>
-            <div *ngFor="let c of colors">
-              <div class="d-flex align-items-center justify-content-between py-2">
-                <div>
-                  {{c}}
-                </div>
-                <div (click)="removeColor(c)">
-                  <img src="/assets/svg/delete.svg">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <!-- 50% 宽度, 按钮 -->
-            <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="color" name="color"> &nbsp;&nbsp;
-            <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addColor()">
-              {{ 'Add' | translate }}
-            </button>  <!-- btn-block  -->
-          </div>
-        </dd>
-      </dl>
-
-      <dl>
-        <dt>Size</dt>
-        <dd class="text-left">
-          <div>
-            <div *ngFor="let c of sizes">
-              <div class="d-flex align-items-center justify-content-between py-2">
-                <div>
-                  {{c}}
-                </div>
-                <div (click)="removeSize(c)">
-                  <img src="/assets/svg/delete.svg">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <!-- 50% 宽度, 按钮 -->
-            <input type="text" class="inp w-75" placeholder="Enter Size" [(ngModel)]="size" name="size"> &nbsp;&nbsp;
-            <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addSize()">
-              {{ 'Add' | translate }}
-            </button>  <!-- btn-block  -->
-          </div>
-        </dd>
-      </dl>
 
       <dl>
         <dt>Category</dt>

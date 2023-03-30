@@ -189,7 +189,7 @@ export class ProductComponent implements OnInit {
     this.productServ.getProduct(this.id).subscribe(
       (res: any) => {
         if(res && res) {
-          // console.log('this.product=', res);
+          console.log('this.product=', res);
           this.product = res;
           if (! this.product.sales) {
             this.product.sales = 0;  // Fix: product.quantity - product.sales 错误，还得查后端接口
@@ -327,7 +327,7 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  addToCart(product: any, quantity: number) {
+  addToCart( product: any, quantity: number ) {
     if(!Number(quantity)) {
         return;
     }

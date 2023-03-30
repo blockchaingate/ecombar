@@ -38,6 +38,9 @@ export class OrderClientComponent implements OnInit {
     modalRef: BsModalRef;
     tax: number;
     taxRate: number;
+    tips: number;
+    tipsRate: number;
+    selectedTips: string;
     tableNo: number;  // 台号 no
     orderId: string;  // 订单 no
     order: any;  // 订单
@@ -169,9 +172,12 @@ export class OrderClientComponent implements OnInit {
                             //     "8"
                             // ]
                             if (num && num[1]) {
+                                this.selectedTips = "0";  // 小费预设
+                                this.tipsRate = 0;
+
                                 this.tableNo = parseInt(num[1]);
                                 this.currency = this.order.currency;
-                                this.calculateTotal();
+                                this.calculateTotal();  // 放在 tips 之后
                                 this.QrUrl = environment.EX_WEBSITE + `store/${this.storeId}/order/${this.orderId}`;
 
                                 if (this.order.memo == 'PayBill') {  // 改为修改 memo
@@ -189,6 +195,24 @@ export class OrderClientComponent implements OnInit {
 
     }
 
+    selectTips( tipsRate: number ) {
+        if (tipsRate < 0) {
+            return;
+        }
+        this.selectedTips = String(tipsRate);
+        switch (tipsRate) {
+            default:
+                this.tipsRate = 0;  break;
+            case 0:  case 5:  
+            case 10:  case 15:  
+            case 20:  case 25:  
+            case 30:  case 35:  
+                this.tipsRate = tipsRate;  break;
+        }
+        console.log('tips=', this.tipsRate);
+        this.calculateTotal();
+    }
+  
     calculateTotal() {
         this.subtotal = 0;
         this.total = 0;
@@ -200,7 +224,7 @@ export class OrderClientComponent implements OnInit {
         let taxBigNumber = new BigNumber(0);
         for (let i = 0; i < this.order.items.length; i ++) {
             const item = this.order.items[i];
-            console.log('item===', item);
+            // console.log('item===', item);
             const price = item.price;
             const quantity = item.quantity;
             const taxRate = item.taxRate;
@@ -208,9 +232,11 @@ export class OrderClientComponent implements OnInit {
             subtotalBigNumber = subtotalBigNumber.plus(subtotalItem);
             taxBigNumber = taxBigNumber.plus(subtotalItem.multipliedBy(taxRate).dividedBy(new BigNumber(100)));
         }
+        const tipsBigNumber = subtotalBigNumber.multipliedBy(new BigNumber(this.tipsRate)).dividedBy(new BigNumber(100));
         this.subtotal = subtotalBigNumber.toNumber();
+        this.tips = tipsBigNumber.toNumber();
         this.tax = taxBigNumber.toNumber();
-        this.total = subtotalBigNumber.plus(taxBigNumber).plus(new BigNumber(this.shippingFee)).toNumber();
+        this.total = subtotalBigNumber.plus(taxBigNumber).plus(tipsBigNumber).plus(new BigNumber(this.shippingFee)).toNumber();
     }
   
     placeOrder() {
@@ -324,8 +350,24 @@ export class OrderClientComponent implements OnInit {
                             // console.log('orderData2=', orderData);
 
                             const items2 = order.items;  // 旧的订单商品
+                            let items3;
+                            if (this.tipsRate > 0) {  // 有小费存在
+                                const item_t = {
+                                    "productId": "000000000000000000000001",
+                                    "title": `Tips ${this.tipsRate}%`,
+                                    "price": this.tips,
+                                    "storeId": this.storeId,
+                                    "rebateRate": 0,
+                                    "taxRate": 0,
+                                    "lockedDays": 0,
+                                    "quantity": 1
+                                };
+                                items3 = items2.concat( [item_t] );  // 合并新的商品
+                            } else {
+                                items3 = items2;
+                            }
                             const updated = {
-                                items: items2,
+                                items: items3,
                                 memo: 'PayBill'
                             };
                             const sig = this.kanbanServ.signJsonData(privateKey, updated);

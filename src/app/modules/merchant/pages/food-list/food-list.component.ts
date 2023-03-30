@@ -75,7 +75,7 @@ export class FoodListComponent implements OnInit {
                 (res: any) => {
                     if (res) {
                         this.orders = res;
-                        // console.log("[Orders]=", res);
+                        console.log("[Orders]=", res);
                         if (Array.isArray(res)) {  // 数组确认
                             let data = [ ];
                             const now = new Date();
@@ -84,7 +84,7 @@ export class FoodListComponent implements OnInit {
                                 if (! order) continue;
                                 const time = new Date(order.dateCreated);
                                 // if (now.getTime() - time.getTime() < 2 * 24 * 3600 * 1000) {  // 24 小时 * 2
-                                    if (! order.owner) continue;
+                                    // if (! order.owner) continue;  // 商家开的单，没有 owner
                                     // if (order.memo == 'PayBill') continue;  // 先买单了，菜要继续
                                     if (order && order.externalOrderNumber) {
                                         const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符

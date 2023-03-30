@@ -34,10 +34,10 @@
     <a href="/product/{{product.productId}}"><img class="img-fluid max-width-100 p-1 border border-color-1" [src]="product.thumbnailUrl" alt="Image Description"></a>
 </td>
 
-<td data-title="Product">
-    <a href="/product/{{product.productId}}" class="text-gray-90">{{product.title | translateField}}</a>
-    <div *ngIf="product.size">{{product.size}}</div>
-    <div *ngIf="product.color">{{product.color}}</div>
+<td data-title="Product">  <!-- 购物车，调整细节 -->
+    <a href="/product/{{product.productId}}" class="text-gray-90"><b>{{ product.title | translateField }}</b></a>
+    <div *ngIf="product.color"><span class="border-bottom">{{ product.color }}</span></div>
+    <div *ngIf="product.size"><span class="border-bottom">{{ product.size }}</span></div>
 </td>
 
 <td data-title="Price">

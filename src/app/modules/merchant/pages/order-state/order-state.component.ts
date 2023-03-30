@@ -87,7 +87,7 @@ export class OrderStateComponent implements OnInit {
                                 if (! order) continue;
                                 const time = new Date(order.dateCreated);
                                 // if (now.getTime() - time.getTime() < 2 * 24 * 3600 * 1000) {  // 24 小时 * 2
-                                    if (! order.owner) continue;
+                                    // if (! order.owner) continue;  // 商家开的单，没有 owner
                                     if (order && order.externalOrderNumber) {
                                         const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
                                         // console.log('num match=', num);

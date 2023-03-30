@@ -83,6 +83,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
         this.tax = Number(this.tax.toFixed(2));  // 小数留位
         this.total = Number(this.total.toFixed(2));
+        console.log('cartItems===', this.cartItems);
     }
 
     ngOnInit(): void {
@@ -210,6 +211,12 @@ export class CartComponent implements OnInit, OnDestroy {
 
             const titleTran = this.translateServ.transField(item.title);
             item.title = titleTran ? titleTran : item.title;
+            if (item.color && item.color.length > 0) {
+                item.title += `, ${item.color}`;  // 口味
+            }
+            if (item.size && item.size.length > 0) {
+                item.title += `, ${item.size}`;  // 尺寸
+            }
             item.lockedDays = 1;  // 下单
             items.push(item);
         });
@@ -254,7 +261,9 @@ export class CartComponent implements OnInit, OnDestroy {
                             };
                             const sig = this.kanbanServ.signJsonData(privateKey, updated);
                             updated['sig'] = sig.signature;  
-                            // console.log('[combine]=', orderId, updated);
+                            // console.log('[combine] orderId=', orderId);
+                            // console.log('[combine] externalOrderNumber=', order.externalOrderNumber);
+                            // console.log('[combine] updated=', updated);
                             this.orderServ.update_items(order.externalOrderNumber, updated).subscribe(  // Order 增添数据
                                 (res: any) => {
                                     if (res) {

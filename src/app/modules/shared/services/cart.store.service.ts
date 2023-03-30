@@ -32,7 +32,7 @@ export class CartStoreService {
     this._items.next(val);
   }
 
-  addCartItem(item: CartItem) {
+  addCartItem( item: CartItem ) {
     console.log('item to be added there we go=', item);
     console.log('items before added', this.items);
     // we assaign a new copy of todos by adding a new todo to it 
@@ -42,7 +42,10 @@ export class CartStoreService {
     let items = this.items;
     if (this.items) {
       for (let i = 0; i < items.length; i++) {
-        if (items[i].productId === item.productId) {
+        // Fix: 当 Color/Size 不同，请不要合并
+        if (items[i].productId === item.productId
+        &&  items[i].color === item.color
+        &&  items[i].size === item.size) {
           console.log('this.items[i].quantity', this.items[i].quantity);
           console.log('item.quantity', item.quantity);
           items[i].quantity = item.quantity + this.items[i].quantity;

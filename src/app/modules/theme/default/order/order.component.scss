@@ -1,4 +1,19 @@
+
 .img-thumbnail {
-    max-width: 40px;
-    height: auto;
+  max-width: 40px;
+  height: auto;
+}
+
+// ---------- 自定义按钮 ----------
+
+.Tips-method>div {
+    cursor: pointer;
+}
+
+.Tips-method>div:hover {
+    background-color: #fed700;
+}
+
+.Tips-method .selected {
+    background-color: #fed700!important;
 }

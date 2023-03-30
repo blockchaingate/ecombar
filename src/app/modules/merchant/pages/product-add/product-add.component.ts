@@ -404,9 +404,6 @@ export class ProductAddComponent implements OnInit {
   }
 
 
-
-
-
   addColorChinese() {
     this.colorsChinese.push(this.colorChinese);
     this.colorChinese = '';
@@ -424,9 +421,6 @@ export class ProductAddComponent implements OnInit {
   removeSizeChinese(c) {
     this.sizesChinese = this.sizesChinese.filter(item => item != c);
   }
-
-
-
 
   addColorTradition() {
     this.colorsTradition.push(this.colorTradition);
