@@ -501,7 +501,8 @@
       <dl>
         <dt>Images</dt>
         <dd class="text-left">
-          <app-admin-upload-media [(images)]="images" [singleFile]="false"></app-admin-upload-media>
+          <!-- [(images)] 双向绑定 -> [images] 单向绑定 -->
+          <app-admin-upload-media [images]="images" [singleFile]="false"></app-admin-upload-media>
         </dd>
       </dl>
 
@@ -631,7 +632,7 @@
             <!-- <div class="card-section">
               <div class="card">
                 <div class="container">
-                  <app-admin-upload-media [(images)]="images" [singleFile]="false"></app-admin-upload-media>
+                  <app-admin-upload-media [images]="images" [singleFile]="false"></app-admin-upload-media>
                 </div>
               </div>
             </div>  -->

@@ -1,4 +1,10 @@
+
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';  // Ionic
+
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouteReuseStrategy } from '@angular/router';
+
 import { WalletRoutingModule } from './wallet-routing.module';
 import { WalletDashboardComponent } from './components/wallet-dashboard/wallet-dashboard.component';
 import { MnemonicComponent } from './components/mnemonic/mnemonic.component';
@@ -31,9 +37,9 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
+// import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';  // 只支持到 @angular/core@^8.0.0
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerModule } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 @NgModule({
     declarations: [
@@ -69,20 +75,24 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         ShowSeedPhraseModal
     ],
     imports: [
+        IonicModule,  // Ionic
+        CommonModule,
         WalletRoutingModule,
         QRCodeModule,
         SharedModule,
         FormsModule, 
         ReactiveFormsModule,
-        CommonModule,
-        NgxSpinnerModule,
+        // NgxSpinnerModule,
         ModalModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        NgxBootstrapSwitchModule.forRoot()
+        BsDropdownModule.forRoot()
+        // NgxBootstrapSwitchModule.forRoot()
     ],
     exports: [
         NoWalletComponent,
         StarRewardsComponent,
-    ]
+    ],
+    providers: [ 
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    ],
 })
 export class WalletModule { }

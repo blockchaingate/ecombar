@@ -8,9 +8,9 @@ import { UtilService } from './util.service';
 import TronWeb from 'tronweb';
 
 const HttpProvider = TronWeb.providers.HttpProvider;
-const fullNode = new HttpProvider(environment.chains.TRX.fullNode);
-const solidityNode = new HttpProvider(environment.chains.TRX.solidityNode);
-const eventServer = new HttpProvider(environment.chains.TRX.eventServer);
+const fullNode = new HttpProvider(environment.chains['TRX']['fullNode']);
+const solidityNode = new HttpProvider(environment.chains['TRX']['solidityNode']);
+const eventServer = new HttpProvider(environment.chains['TRX']['eventServer']);
 const ADDRESS_PREFIX_REGEX = /^(41)/;
 
 const tronWeb = new TronWeb(
@@ -24,7 +24,7 @@ export class ApiService {
     constructor(private http: HttpClient, private utilServ: UtilService) {}
     
     async getBtcUtxos(address: string): Promise<[BtcUtxo]> {
-        const url = environment.endpoints.BTC.exchangily + 'getutxos/' + address;
+        const url = environment.endpoints['BTC'].exchangily + 'getutxos/' + address;
         console.log('url in getBtcUtxos' + url);
         let response = null;
         try {
@@ -34,7 +34,7 @@ export class ApiService {
     }
 
     chargeOrder(orderID, txhex: string) {
-        const url = environment.endpoints.blockchaingate + 'orders/' + orderID + '/charge' ;
+        const url = environment.endpoints['blockchaingate'] + 'orders/' + orderID + '/charge' ;
 
         const data = {
             rawTransaction: txhex
@@ -44,18 +44,18 @@ export class ApiService {
     }
 
     getTransactionHistoryEvents(data) {
-        const url = environment.endpoints.kanban + 'getTransactionHistoryEvents';
+        const url = environment.endpoints['kanban'] + 'getTransactionHistoryEvents';
         return this.http.post(url, data);
     }  
           
     getEthTransactionStatusSync(txid: string) {
-        const url = environment.endpoints.ETH.exchangily + 'gettransactionstatus/' + txid;
+        const url = environment.endpoints['ETH'].exchangily + 'gettransactionstatus/' + txid;
         return this.http.get(url);
     }
 
     getFabTransactionJsonSync(txid: string) {
         txid = this.utilServ.stripHexPrefix(txid);
-        const url = environment.endpoints.FAB.exchangily + 'gettransactionjson/' + txid;
+        const url = environment.endpoints['FAB'].exchangily + 'gettransactionjson/' + txid;
         return this.http.get(url);
     }  
 
@@ -71,13 +71,13 @@ export class ApiService {
     }
     
     getEthTransactionSync(txid: string) {
-        const url = environment.endpoints.ETH.exchangily + 'gettransaction/' + txid;
+        const url = environment.endpoints['ETH'].exchangily + 'gettransaction/' + txid;
         return this.http.get(url);
     }
     
     getBtcTransactionSync(txid: string) {
         txid = this.utilServ.stripHexPrefix(txid);
-        const url = environment.endpoints.BTC.exchangily + 'gettransactionjson/' + txid;
+        const url = environment.endpoints['BTC'].exchangily + 'gettransactionjson/' + txid;
         return this.http.get(url);        
     }
 
@@ -99,10 +99,12 @@ export class ApiService {
              txHash = '0x' + response.txid;
              }
         } catch (err) {
-             if (err.error && err.error.Error) {
-             errMsg = err.error.Error;
-             console.log('err there we go', err.error.Error);
-            }
+            // Fix: Property 'error' does not exist on type 'unknown'.
+            console.log(`err there we go: ${err}`);
+            // if (err.error && err.error.Error) {
+            //  errMsg = err.error.Error;
+            //  console.log('err there we go', err.error.Error);
+            // }
         }
  
         //return ret;
@@ -112,7 +114,7 @@ export class ApiService {
     async postBchTx(txHex: string) {
         let txHash = '';
         let errMsg = '';
-        const url = environment.endpoints.BCH.exchangily + 'postrawtransaction';
+        const url = environment.endpoints['BCH'].exchangily + 'postrawtransaction';
         let response = null;
  
         const data = {
@@ -127,10 +129,12 @@ export class ApiService {
              txHash = '0x' + response.txid;
              }
         } catch (err) {
-             if (err.error && err.error.Error) {
-             errMsg = err.error.Error;
-             console.log('err there we go', err.error.Error);
-            }
+            // Fix: Property 'error' does not exist on type 'unknown'.
+            console.log(`err there we go: ${err}`);
+            //  if (err.error && err.error.Error) {
+            //  errMsg = err.error.Error;
+            //  console.log('err there we go', err.error.Error);
+            // }
         }
  
         //return ret;
@@ -138,7 +142,7 @@ export class ApiService {
      }
 
      async getEthNonce (address: string) {
-        const url = environment.endpoints.ETH.exchangily + 'getnonce/' + address + '/latest';
+        const url = environment.endpoints['ETH'].exchangily + 'getnonce/' + address + '/latest';
         const response = await this.http.get(url).toPromise() as string;
         return Number (response);
     }
@@ -149,7 +153,7 @@ export class ApiService {
         // token: M5TN678RMY96HIZVKIAIK22WKQ6CN7R7JB
 
         /*
-        const url = environment.endpoints.ETH.etherscan + 'api?module=proxy&action=eth_sendRawTransaction&hex='
+        const url = environment.endpoints['ETH'].etherscan + 'api?module=proxy&action=eth_sendRawTransaction&hex='
         + txHex + '&apikey=M5TN678RMY96HIZVKIAIK22WKQ6CN7R7JB';
         let response = null;
         if (txHex) {
@@ -168,7 +172,7 @@ export class ApiService {
         */
         let txHash = '';
         let errMsg = '';
-        const url = environment.endpoints.ETH.exchangily + 'sendsignedtransaction';
+        const url = environment.endpoints['ETH'].exchangily + 'sendsignedtransaction';
         const data = {
             signedtx: txHex
         };
@@ -176,11 +180,12 @@ export class ApiService {
             try {
                 txHash = await this.http.post(url, data, {responseType: 'text'}).toPromise() as string;
             } catch (err) {
-                console.log('errqqq=', err);
-                if (err.error) {
-                 errMsg = err.error;
-                }
- 
+                // Fix: Property 'error' does not exist on type 'unknown'.
+                console.log(`err there we go: ${err}`);
+                // console.log('errqqq=', err);
+                // if (err.error) {
+                //  errMsg = err.error;
+                // }
             }          
         }    
 
@@ -190,7 +195,7 @@ export class ApiService {
      async postDogeTx(txHex: string) {
         let txHash = '';
         let errMsg = '';
-        const url = environment.endpoints.DOGE.exchangily + 'postrawtransaction';
+        const url = environment.endpoints['DOGE'].exchangily + 'postrawtransaction';
         let response = null;
  
         const data = {
@@ -205,10 +210,12 @@ export class ApiService {
              txHash = '0x' + response.txid;
              }
         } catch (err) {
-             if (err.error && err.error.Error) {
-             errMsg = err.error.Error;
-             console.log('err there we go', err.error.Error);
-            }
+            // Fix: Property 'error' does not exist on type 'unknown'.
+            console.log(`err there we go: ${err}`);
+            //  if (err.error && err.error.Error) {
+            //  errMsg = err.error.Error;
+            //  console.log('err there we go', err.error.Error);
+            // }
         }
  
         //return ret;
@@ -218,7 +225,7 @@ export class ApiService {
      async postFabTx(txHex: string) {
         
         /*
-        const url = 'http://fabtest.info:9001/fabapi/' + '/sendrawtransaction/' + txHex;
+        const url = 'http://test.fabcoin.org:9001/fabapi/' + '/sendrawtransaction/' + txHex;
         console.log('txHex=' + txHex);
         console.log('url=' + url);
         let response = null;
@@ -234,7 +241,7 @@ export class ApiService {
         console.log('ret from postFabTx=' + ret);
         return ret;
         */
-       const url = environment.endpoints.FAB.exchangily + 'postrawtransaction';
+       const url = environment.endpoints['FAB'].exchangily + 'postrawtransaction';
 
        // console.log('url here we go:', url);
        let txHash = '';
@@ -255,11 +262,12 @@ export class ApiService {
                 } 
             }
            } catch (err) {
-               if (err.error && err.error.Error) {
-                errMsg = err.error.Error;
-                console.log('err there we go', err.error.Error);
-               }
-
+                // Fix: Property 'error' does not exist on type 'unknown'.
+                console.log(`err there we go: ${err}`);
+            //    if (err.error && err.error.Error) {
+            //     errMsg = err.error.Error;
+            //     console.log('err there we go', err.error.Error);
+            //    }
            }
 
        }       
@@ -268,7 +276,7 @@ export class ApiService {
     }
 
      async getFabUtxos(address: string): Promise<[FabUtxo]> {
-        const url = environment.endpoints.FAB.exchangily + 'getutxos/' + address;
+        const url = environment.endpoints['FAB'].exchangily + 'getutxos/' + address;
         const response = await this.http.get(url).toPromise() as [FabUtxo];
         return response;
     }
@@ -276,7 +284,7 @@ export class ApiService {
      async postLtcTx(txHex: string) {
         let txHash = '';
         let errMsg = '';
-        const url = environment.endpoints.LTC.exchangily + 'postrawtransaction';
+        const url = environment.endpoints['LTC'].exchangily + 'postrawtransaction';
         let response = null;
  
         const data = {
@@ -291,10 +299,12 @@ export class ApiService {
              txHash = '0x' + response.txid;
              }
         } catch (err) {
-             if (err.error && err.error.Error) {
-             errMsg = err.error.Error;
-             console.log('err there we go', err.error.Error);
-            }
+            // Fix: Property 'error' does not exist on type 'unknown'.
+            console.log(`err there we go: ${err}`);
+            //  if (err.error && err.error.Error) {
+            //  errMsg = err.error.Error;
+            //  console.log('err there we go', err.error.Error);
+            // }
         }
  
         //return ret;
@@ -313,7 +323,7 @@ export class ApiService {
     }
 
     async getBchUtxos(address: string): Promise<[BtcUtxo]> {
-        const url = environment.endpoints.BCH.exchangily + 'getutxos/' + address;
+        const url = environment.endpoints['BCH'].exchangily + 'getutxos/' + address;
         console.log('url in getBchUtxos' + url);
         let response = null;
         try {

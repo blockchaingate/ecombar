@@ -1,7 +1,9 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+
 import * as Btc from 'bitcoinjs-lib';
+
 export const environment = {
   env: 'dev',
   production: false,
@@ -11,8 +13,7 @@ export const environment = {
   PUBLIC_KEY: '8aff99f9727143fccd28e62df14e4e67305faa70d19b4cb0b9d4cde18ea3cd23c8e58bda3c26e10813aaa6020f3d07a3d9f83a9062cfe662a600949325378b99',
 
 //  EX_GATEWAY: 'https://test.blockchaingate.com/v2/payment/gateway',
-  EX_WEBSITE: 'http://localhost:4200/',
-
+  EX_WEBSITE: 'http://192.168.2.12:8100/',  /* 我的 IP */
 
   endpoints: {
     ws: 'wss://test.blockchaingate.com/message',
@@ -21,7 +22,7 @@ export const environment = {
     prod: 'https://blockchaingate.com/v2/',
     kanban: 'https://kanbantest.fabcoinapi.com/',
     blockchaingate: 'https://test.blockchaingate.com/v2/',
-    paycool: 'https://fabtest.info/api/',
+    paycool: 'https://test.fabcoin.org/api/',  // fabtest.info  => test.fabcoin.org
     website: 'https://test.exchangily.com/',
     BTC: {
         exchangily: 'https://btctest.fabcoinapi.com/'

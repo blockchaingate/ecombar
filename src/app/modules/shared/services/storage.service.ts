@@ -4,7 +4,7 @@ import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { TransactionItem } from '../../../models/transaction-item';
-import {Transaction} from '../../../interfaces/kanban.interface';
+import { Transaction } from '../../../interfaces/kanban.interface';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -17,10 +17,10 @@ export class StorageService {
 
     constructor(private storage: StorageMap, private localSt: LocalStorage) {
         if (!this._appId) {
-            this.storage.get('_appId').subscribe((ret: string) => { this._appId = ret; });
+            this.storage.get('_appId').subscribe((ret: any) => { this._appId = ret; });
         }
         if (!this._token) {
-            this.storage.get('_token').subscribe((ret: string) => { this._token = ret; });
+            this.storage.get('_token').subscribe((ret: any) => { this._token = ret; });
         }
         if (!this._user) {
             this.storage.get('_user').subscribe((ret: User) => { this._user = ret; });
@@ -79,7 +79,7 @@ export class StorageService {
     }
     
     storeToTransactionHistoryList(transactionItem: TransactionItem) {
-        this.getTransactionHistoryList().subscribe((transactionHistory: TransactionItem[]) => {
+        this.getTransactionHistoryList().subscribe((transactionHistory: any) => {
             if (!transactionHistory) {
                 transactionHistory = [];
             }

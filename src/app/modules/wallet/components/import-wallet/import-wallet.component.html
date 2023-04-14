@@ -1,50 +1,97 @@
-<div class="container">
+
+<!-- <ion-content class="container"> -->
+  <ion-row class="menu text-black">
+      {{ 'Restore Wallet' | translate }}
+  </ion-row>
+  <ion-row class="panel border">
+      <ion-col size-md="3" size-sm="12"></ion-col>
+      <ion-col size-md="6" size-sm="12" class="text-black">
+          <form class="user-form" [formGroup]="userForm">
+            <div class="form-group">
+              <label for="exampleInputEmail1">{{ 'Wallet Name' | translate }}</label>
+              <input type="text" class="form-control" formControlName="name" id="name" aria-describedby="emailHelp" placeholder="{{ 'Type wallet name' | translate }}">
+              <div class="error text-danger smallfont" *ngIf="!userForm.get('name').valid && userForm.get('name').touched">
+                  {{ "Wnvalid" | translate }}.
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">{{ 'Wallet Password' | translate }}</label>
+                <input type="password" autocomplete="off" class="form-control" formControlName="password" id="password" placeholder="{{ 'Type wallet password' | translate }}">
+                <div class="error text-danger smallfont" *ngIf="!userForm.get('password').valid && userForm.get('password').touched">
+                    {{ "Pwdvalid" | translate }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword2">{{ 'Confirm Wallet Password' | translate }}</label>
+                <input type="password" autocomplete="off" class="form-control" formControlName="pwdconfirm" id="pwdconfirm" placeholder="{{'Type wallet password' | translate }}">
+                <div class="error text-danger smallfont" *ngIf="userForm.get('pwdconfirm').touched && userForm.hasError('notSame')">
+                    {{ "Password doesn't match" | translate }}!
+                </div>
+            </div>
+            <div class="form-group">  <!-- autoGrow(($event.target as HTMLInputElement).value) -->
+                <label for="exampleInputEmail1">{{ 'Seed phrase, seperated by space' | translate }}</label>
+                <textarea class="form-control" (input)="autoGrowEvent($event)" formControlName="seedphrase" id="seedphrase" name="seedphrase" id="exampleFormControlTextarea1" rows="5"></textarea>
+                <div class="error text-danger smallfont" *ngIf="seedPhraseInvalid">
+                    {{ "Seed Phrase is invalid" | translate }}!
+                </div>
+            </div>
+
+              <ion-row class="words">
+                  <ion-col size="12" *ngIf="userForm.get('password').valid && userForm.get('password').valid && !userForm.hasError('notSame') && userForm.get('seedphrase').valid && !seedPhraseInvalid">
+                    <ion-button class="ActionButtonrContainer" (click)="onSubmit()" expand="block" style="min-width: 120px;">
+                      {{ 'Import Wallet' | translate}}
+                    </ion-button>
+                  </ion-col>
+              </ion-row>
+          </form>
+      </ion-col>
+      <ion-col size-md="3" size-sm="12"></ion-col>
+  </ion-row>
+<!-- </ion-content> -->
+
+
+<!-- <div class="container">
     <div class="row menu text-black">
-        {{'Restore Wallet' | translate }}
+        {{ 'Restore Wallet' | translate }}
     </div>
     <div class="row panel border">
         <div class="col-md-3 col-sm-12"></div>
         <div class="col-md-6 col-sm-12 text-black">
             <form class="user-form" [formGroup]="userForm">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">{{'Wallet Name' | translate }}</label>
+                    <label for="exampleInputEmail1">{{ 'Wallet Name' | translate }}</label>
                     <input type="text" class="form-control" formControlName="name" id="name" aria-describedby="emailHelp" placeholder="{{ 'Type wallet name' | translate }}">
                     <div class="error text-danger smallfont" *ngIf="!userForm.get('name').valid && userForm.get('name').touched">
-                        {{"Wnvalid" | translate}}.
+                        {{ "Wnvalid" | translate }}.
                     </div>
                 </div>
-
-
                 <div class="form-group">
-                    <label for="exampleInputPassword1">{{'Wallet Password' | translate }}</label>
+                    <label for="exampleInputPassword1">{{ 'Wallet Password' | translate }}</label>
                     <input type="password" autocomplete="off" class="form-control" formControlName="password" id="password" placeholder="{{ 'Type wallet password' | translate }}">
                     <div class="error text-danger smallfont" *ngIf="!userForm.get('password').valid && userForm.get('password').touched">
-                        {{"Pwdvalid" | translate}}
+                        {{ "Pwdvalid" | translate }}
                     </div>
                 </div>
-
-
                 <div class="form-group">
-                    <label for="exampleInputPassword2">{{'Confirm Wallet Password' | translate }}</label>
+                    <label for="exampleInputPassword2">{{ 'Confirm Wallet Password' | translate }}</label>
                     <input type="password" autocomplete="off" class="form-control" formControlName="pwdconfirm" id="pwdconfirm" placeholder="{{'Type wallet password' | translate }}">
                     <div class="error text-danger smallfont" *ngIf="userForm.get('pwdconfirm').touched && userForm.hasError('notSame')">
-                        {{"Password doesn't match" | translate }}!
+                        {{ "Password doesn't match" | translate }}!
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">{{'Seed phrase, seperated by space' | translate }}</label>
-                    <textarea class="form-control" (input)="autoGrow($event.target.value)" formControlName="seedphrase" id="seedphrase" name="seedphrase" id="exampleFormControlTextarea1" rows="5"></textarea>
+                    <label for="exampleInputEmail1">{{ 'Seed phrase, seperated by space' | translate }}</label>
+                    <textarea class="form-control" (input)="autoGrowEvent($event)" formControlName="seedphrase" id="seedphrase" name="seedphrase" id="exampleFormControlTextarea1" rows="5"></textarea>
                     <div class="error text-danger smallfont" *ngIf="seedPhraseInvalid">
-                        {{"Seed Phrase is invalid" | translate }}!
+                        {{ "Seed Phrase is invalid" | translate }}!
                     </div>
                 </div>
 
                 <div class="row words">
                     <div class="col-12" *ngIf="userForm.get('password').valid && userForm.get('password').valid && !userForm.hasError('notSame') && userForm.get('seedphrase').valid && !seedPhraseInvalid">
-
                         <div class="CreateCollection--actions m-1 py-3 text-center">
                             <div class="ActionButtonrContainer ">
-                                <div class="ActionButton--content" (click)="onSubmit()" style="min-width: 120px;">{{'Import Wallet' | translate}}</div>
+                                <div class="ActionButton--content" (click)="onSubmit()" style="min-width: 120px;">{{ 'Import Wallet' | translate }}</div>
                             </div> 
                         </div>                        
                     </div>
@@ -53,5 +100,4 @@
         </div>
         <div class="col-md-3 col-sm-12"></div>
     </div>
-
-</div>
+</div> -->

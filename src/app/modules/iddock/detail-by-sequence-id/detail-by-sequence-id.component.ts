@@ -15,7 +15,7 @@ export class DetailBySequenceIDComponent implements OnInit {
     baseUrl: string;
     constructor(private route: ActivatedRoute, private iddockServ: IddockService) { }
     ngOnInit() {
-      this.baseUrl = environment.endpoints.website;
+      this.baseUrl = environment.endpoints['website'];
       this.type = this.route.snapshot.paramMap.get('type');
       this.id = this.route.snapshot.paramMap.get('id');
       console.log('thisid=', this.id);

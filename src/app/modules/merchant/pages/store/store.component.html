@@ -29,7 +29,8 @@
         </div>
        <div>
         <label for="email"><b>Image</b></label>
-        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        <!-- [(images)] 双向绑定 -> [images] 单向绑定 -->
+        <app-admin-upload-media [images]="images" [singleFile]="true"></app-admin-upload-media>
         </div>
 
         <div>

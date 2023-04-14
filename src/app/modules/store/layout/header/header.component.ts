@@ -141,11 +141,23 @@ export class HeaderComponent implements OnInit {
     this.storageServ.lang =  this._lang;
   }
 
-  onChange(lan: string) {
+  onChangeEvent( event: Event ) {  // lan: string
+    // error TS2339: Property 'value' does not exist on type 'void'.
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    const lan = value;  // lan: string
+    this.onChange(lan);
+  }
+
+  onChange( lan: string ) {
     this._lang = lan;
     this.translate.setDefaultLang(lan);
     this.translate.use(lan);
     this.storageServ.lang = lan;
+  }
+
+  changeLanguage(lang: string) {
+    this.onChange(lang);
   }
 
 }

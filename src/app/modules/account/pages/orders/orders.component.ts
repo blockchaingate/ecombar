@@ -8,7 +8,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
@@ -36,7 +36,7 @@ export class OrdersComponent implements OnInit {
     private coinServ: CoinService,
     private router: Router,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private dataServ: DataService,
@@ -136,7 +136,7 @@ export class OrdersComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.requestRefundDo(seed);
     });
   }
@@ -195,7 +195,7 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    this.spinner.hide();
+    // this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       this.toastr.success('Request refund was made successfully');
       this.order.paymentStatus = 5;
@@ -234,7 +234,7 @@ export class OrdersComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.cancelRequestRefundDo(seed);
     });
   }
@@ -292,7 +292,7 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    this.spinner.hide();
+    // this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       /*
       const data = {

@@ -7,7 +7,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 
 @Component({
   selector: 'app-wallet-star-rewards',
@@ -28,14 +28,14 @@ export class StarRewardsComponent implements OnInit{
     constructor(
       public kanbanServ: KanbanService,
       private dataServ: DataService,
-      private spinner: NgxSpinnerService,
+      // private spinner: NgxSpinnerService,
       private kanbanSmartContractServ: KanbanSmartContractService,
       private modalService: BsModalService,   
       private toastr: ToastrService,   
       private utilServ: UtilService) {}
     ngOnInit() {
       this.dataServ.currentWallet.subscribe(
-        (wallet: string) => {
+        (wallet: any) => {
           this.wallet = wallet;
         }
       ); 
@@ -56,7 +56,7 @@ export class StarRewardsComponent implements OnInit{
     }
 
     getTxidUrl(txid: string) {
-      return environment.endpoints.website + 'explorer/tx-detail/' + txid; 
+      return environment.endpoints['website'] + 'explorer/tx-detail/' + txid; 
     }
     
     showStatus(status: number) {
@@ -73,6 +73,7 @@ export class StarRewardsComponent implements OnInit{
       if(status == 3) {
         return 'redeemed';
       }
+      return '';
     }
     
 
@@ -112,7 +113,7 @@ export class StarRewardsComponent implements OnInit{
       this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
   
       this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-        this.spinner.show();
+        // this.spinner.show();
         this.redeemDo(seed);
       });      
     }
@@ -143,7 +144,7 @@ export class StarRewardsComponent implements OnInit{
       const args = [this.reward.id, this.utilServ.fabToExgAddress(this.reward.user)];
 
       const ret = await this.kanbanSmartContractServ.execSmartContract(seed, address, abi, args);
-      this.spinner.hide();
+      // this.spinner.hide();
       if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
         this.reward.status = 3;
         this.toastr.success('The reward was redeemed.');

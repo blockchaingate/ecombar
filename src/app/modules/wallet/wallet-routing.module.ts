@@ -37,7 +37,11 @@ const routes: Routes = [
                 path: 'import-wallet', component: ImportWalletComponent
             },
             {
-                path: '', redirectTo: 'dashboard'
+                path: '', 
+                redirectTo: 'dashboard',
+                // Fix: Error NG04014: Invalid configuration of route '{path: "wallet//", redirectTo: "dashboard"}': 
+                // please provide 'pathMatch'. The default value of 'pathMatch' is 'prefix', but often the intent is to use 'full'.
+                pathMatch: 'full',
             }             
         ]
     }

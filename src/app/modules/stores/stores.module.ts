@@ -1,4 +1,7 @@
+
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,11 +12,10 @@ import { StoresComponent } from './stores.component';
 import { StoresIndexComponent } from './components/index/index.component';
 import { VersionComponent } from './components/version/version.component';
 
-
-
 @NgModule({
   declarations: [StoresComponent, StoresIndexComponent, VersionComponent],
   imports: [
+    IonicModule,  // Ionic
     CommonModule,
     StoresRoutingModule,
     SharedModule,

@@ -6,7 +6,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js';
 import { Signature } from '../../../../interfaces/kanban.interface';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { environment } from '../../../../../environments/environment';
@@ -390,7 +390,8 @@ export class WalletDashboardComponent implements OnInit{
       if (currentCoin.name === 'BTC' || currentCoin.name === 'FAB' || currentCoin.name === 'DOGE' || currentCoin.name === 'LTC') {
           const bytes = bs58.decode(addressInWallet);
           console.log('bytes=', bytes);
-          addressInWallet = bytes.toString('hex');
+        // Fix: error TS2554: Expected 0 arguments, but got 1.
+        addressInWallet = Buffer.from(bytes).toString('hex');  // 替代 bytes.toString('hex');
       } else if (currentCoin.name === 'BCH') {
           const keyPairsCurrentCoin = this.coinServ.getKeyPairs('BCH', seed, 0, 0, 'b');
           let prefix = '6f';
@@ -425,7 +426,8 @@ export class WalletDashboardComponent implements OnInit{
               return;
           }
           const bytes = bs58.decode(fabAddress);
-          addressInWallet = bytes.toString('hex');
+        // Fix: error TS2554: Expected 0 arguments, but got 1.
+        addressInWallet = Buffer.from(bytes).toString('hex');  // 替代 bytes.toString('hex');
           console.log('addressInWallet for exg', addressInWallet);
       }
 
@@ -494,7 +496,7 @@ export class WalletDashboardComponent implements OnInit{
       } else {
 
         
-          const addr = environment.addresses.exchangilyOfficial.FAB;
+          const addr = environment['addresses'].exchangilyOfficial.FAB;
 
           const item: TransactionItem = {
               walletId: this.wallet.id,
@@ -627,7 +629,7 @@ export class WalletDashboardComponent implements OnInit{
           if (resp && resp.data && resp.data.transactionID) {
 
              this.toastr.info(this.translateServ.instant('Moving fund to DEX was submitted, please wait for ') 
-             + environment.depositMinimumConfirmations[currentCoin] + this.translateServ.instant('confirmations.'));
+             + environment['depositMinimumConfirmations'][currentCoin] + this.translateServ.instant('confirmations.'));
           } else if (resp.error) {
             this.toastr.error(resp.error);
               //this.alertServ.openSnackBar(resp.error, 'Ok');
@@ -706,7 +708,15 @@ export class WalletDashboardComponent implements OnInit{
       }
     }
 
-    onChange(index) {
+    onChangeEvent( event: Event ) {  // index: string
+      // error TS2339: Property 'value' does not exist on type 'void'.
+      const target = event.target as HTMLInputElement;
+      const value = target.value;
+      const index = value;  // index: string
+      this.onChange(index);
+    }
+  
+    onChange( index ) {
       this.wallet = this.wallets.items[index];
       this.wallets.currentIndex = index;
 
@@ -760,7 +770,7 @@ export class WalletDashboardComponent implements OnInit{
       const abiData = this.web3Serv.getGeneralFunctionABI(
         abi, args
       );
-      const lockers = this.kanbanServ.kanbanCall(environment.addresses.smartContract.locker,abiData).toPromise();
+      const lockers = this.kanbanServ.kanbanCall(environment['addresses'].smartContract.locker,abiData).toPromise();
       */
     }
 

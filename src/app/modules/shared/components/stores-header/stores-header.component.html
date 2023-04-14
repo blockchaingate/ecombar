@@ -2,7 +2,27 @@
 <!-- 页首，用于 Home -->
 <!-- 由于另一页首涉及之前项目 NFT，我们先以此页为主 -->
 
-<div class="nav-bar">
+<ion-toolbar>
+  <ion-thumbnail slot="start">
+    <ion-img src="/assets/images/logo/ecombar-logo.png"></ion-img>
+  </ion-thumbnail>
+  <h1>{{ 'MadEat' | translate }}</h1>
+
+  <ion-buttons slot="end"> 
+    <ion-button fill="clear" routerLink="/stores"><ion-icon name="home-outline"></ion-icon>&nbsp;{{ 'Home' | translate }}</ion-button>
+    <ion-button fill="clear" routerLink="/wallet"><ion-icon name="key-outline"></ion-icon>&nbsp;{{ 'Wallet' | translate }}</ion-button>
+    <ion-button fill="clear" routerLink="/account"><ion-icon name="person-outline"></ion-icon>&nbsp;{{ 'Account' | translate }}</ion-button>
+    <ion-button fill="clear" routerLink="/merchant"><ion-icon name="storefront-outline"></ion-icon>&nbsp;{{ 'Merchant' | translate }}</ion-button>
+    <ion-select interface="popover" placeholder="LANGUAGE" [(ngModel)]="_lang" (ionChange)="changeLanguage(_lang)">
+      <ion-select-option value="en">English</ion-select-option>
+      <ion-select-option value="sc">简体中文</ion-select-option>
+      <ion-select-option value="tc">繁體中文</ion-select-option>
+    </ion-select>
+  </ion-buttons>
+</ion-toolbar>
+
+
+<!-- <div class="nav-bar">
     <nav class="nav-bar-main">
         <div class="nav-bar-left">
             <img src="/assets/images/logo/ecombar-logo.png">
@@ -42,11 +62,6 @@
                     {{ 'Merchant' | translate }}
                 </a>
             </li>
-            <!-- <li class="NavItem--isRoot">
-                <a class="NavItem--main" routerLink="/merchant/products">
-                    {{ 'Store' | translate }}
-                </a>
-            </li> -->
 
             <li class="NavItem--isRoot">
                 <a class="NavItem--main">
@@ -106,8 +121,8 @@
 
         </ul>
     </nav>
-</div>
+</div> -->
 
-<aside *ngIf="showAside">
+<!-- <aside *ngIf="showAside">
     <app-wallet-aside></app-wallet-aside>
-</aside>
+</aside> -->

@@ -6,7 +6,8 @@ export class TranslateFieldPipe extends TranslatePipe implements PipeTransform {
     constructor(private translateServ: TranslateService) {
         super(translateServ,null);
     }
-    transform( fieldName: any): any {
+    // Fix: error TS4114: This member must have an 'override' modifier because it overrides a member in the base class 'TranslatePipe'.
+    override transform( fieldName: any): any {
         if(!fieldName) {
             return '';
         }

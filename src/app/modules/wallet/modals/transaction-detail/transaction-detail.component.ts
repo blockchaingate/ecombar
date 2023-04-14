@@ -50,7 +50,7 @@ export class TransactionDetailComponent {
         const chain = tx.chain;
         const txid = tx.transactionId;
         if(chain == 'KANBAN') {
-            return  environment.endpoints.website + 'explorer/tx-detail/' + txid;
+            return  environment.endpoints['website'] + 'explorer/tx-detail/' + txid;
         } else
         if(chain == 'BTC') {
             const baseUrl = this.production ? 'https://live.blockcypher.com/btc' : 'https://live.blockcypher.com/btc-testnet';
@@ -61,7 +61,7 @@ export class TransactionDetailComponent {
             return baseUrl + '/tx/' + txid;
         } else
         if(chain == 'FAB') {
-            const baseUrl = this.production ? 'https://fabexplorer.info' : 'https://fabtest.info'
+            const baseUrl = this.production ? 'https://fabexplorer.info' : 'https://test.fabcoin.org'
             return baseUrl + '/#/transactions/' + txid;
         } else
         if(chain == 'LTC') {
@@ -76,6 +76,7 @@ export class TransactionDetailComponent {
         if(chain == 'TRX') {
             return 'https://tronscan.org/#/transaction/' + txid;
         }
+        return "";  // 来到这里，明显有问题
     }
    
 }

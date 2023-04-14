@@ -15,8 +15,8 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import BigNumber from 'bignumber.js/bignumber';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import BigNumber from 'bignumber.js/bignumber';  // 'bignumber.js'
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { environment } from 'src/environments/environment';
@@ -27,7 +27,6 @@ import { environment } from 'src/environments/environment';
   templateUrl: './product-add.component.html',
   styleUrls: [
     './product-add.component.scss',
-    '../../../../../card.scss',
     '../../../../../page.scss'
   ]
 })
@@ -128,7 +127,7 @@ export class ProductAddComponent implements OnInit {
     private iddockServ: IddockService,
     private modalService: BsModalService,
     //private ngxSmartModalServ: NgxSmartModalService,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private coinServ: CoinService,
     private categoryServ: CategoryService,
     private kanbanSmartContractServ: KanbanSmartContractService,
@@ -555,7 +554,7 @@ export class ProductAddComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.saveProductDo(seed);
     });
   }
@@ -651,7 +650,7 @@ export class ProductAddComponent implements OnInit {
       // console.log('dataaaaaa1=', data);
       this.productServ.create(data).subscribe(
           (res: any) => {
-            this.spinner.hide();
+            // this.spinner.hide();
             this.router.navigate(['/merchant/products']);
           }
       );    
@@ -660,7 +659,7 @@ export class ProductAddComponent implements OnInit {
       this.productServ.update(this.id, data).subscribe(
         async (res: any) => {
           console.log('update res=', res);
-          this.spinner.hide();
+          // this.spinner.hide();
           this.router.navigate(['/merchant/products']);
         }
       );      

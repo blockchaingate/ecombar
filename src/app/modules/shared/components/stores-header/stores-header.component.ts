@@ -1,4 +1,7 @@
+
 import { Component, OnInit } from '@angular/core';
+import { IonicModule, AlertController } from '@ionic/angular';
+
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
 import { PasswordModalComponent } from '../password-modal/password-modal.component';
@@ -21,6 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
     wallet: any;
     wallets: any;
     currentWalletIndex: number;
+    _lang: string;
 
     constructor(
       private localSt: LocalStorage, 

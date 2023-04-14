@@ -18,6 +18,7 @@ import { OrderList2Component } from './pages/order-list-2/order-list-2.component
 import { FoodListComponent } from './pages/food-list/food-list.component';
 import { OrderComponent } from './pages/order/order.component';
 import { Order2Component } from './pages/order-2/order-2.component';
+import { QrCodeComponent } from './pages/qr-code/qr-code.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { NewslettersComponent } from './pages/newsletters/newsletters.component';
 import { TopCategoryBannersComponent } from './pages/top-category-banners/top-category-banners.component';
@@ -91,6 +92,9 @@ const routes: Routes = [
         }, 
         {
             path: 'order-2/:id', component: Order2Component
+        }, 
+        {
+            path: 'qr-code', component: QrCodeComponent
         }, 
         {
             path: 'newsletters', component: NewslettersComponent
@@ -205,7 +209,9 @@ const routes: Routes = [
             path: 'upload', component: UploadMediaComponent
         },
         {
-            path: '', redirectTo: 'dashboard'
+            path: '', 
+            redirectTo: 'dashboard',
+            pathMatch: 'full',
         }
     ]
 }

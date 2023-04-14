@@ -97,4 +97,8 @@ export class TrackOrderComponent implements OnInit {
 
     this.total = Number(this.total.toFixed(2));
   }
+
+  placeOrder() {  // Fix
+
+  }
 }

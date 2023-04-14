@@ -1,0 +1,7 @@
+{
+  "name": "ecombar-MadEat",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

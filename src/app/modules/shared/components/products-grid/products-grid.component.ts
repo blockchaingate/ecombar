@@ -34,7 +34,7 @@ export class ProductsGridComponent implements OnInit{
         private categoryServ: CategoryService, 
         private favoriteServ: FavoriteService,
         private cartStoreServ: CartStoreService) {
-        this.iddockRoot = environment.IDDOCK;
+        this.iddockRoot = environment['IDDOCK'];
     }
 
     ngOnInit() {

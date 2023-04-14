@@ -10,7 +10,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { TranslateService } from '@ngx-translate/core';
-import BigNumber from 'bignumber.js/bignumber';
+// import BigNumber from 'bignumber.js/bignumber';  // 'bignumber.js'
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { ApiService } from 'src/app/modules/shared/services/api.service';
 import { IddockService } from 'src/app/modules/shared/services/iddock.service';
@@ -86,8 +86,8 @@ export class PlaceOrderComponent extends ParentPlaceOrderComponent{}
 
 //     });
 
-//     this.ps_store_id = environment.moneris.ps_store_id;
-//     this.hpp_key = environment.moneris.hpp_key;
+//     this.ps_store_id = environment['moneris'].ps_store_id;
+//     this.hpp_key = environment['moneris'].hpp_key;
 
 //     this.orderID = this.route.snapshot.paramMap.get('orderID');
 //     this.orderServ.get(this.orderID).subscribe(
@@ -97,7 +97,7 @@ export class PlaceOrderComponent extends ParentPlaceOrderComponent{}
 
 //           console.log('this.order=', this.order);
 //           this.code = 'n.' + this.order.num;
-//           this.payLink = environment.endpoints.website + 'ex/' + this.code;
+//           this.payLink = environment.endpoints['website'] + 'ex/' + this.code;
 //           this.subtotal = this.order.totalSale;
 //           this.shippingFee = this.order.totalShipping;
 //           this.total = this.order.totalToPay;
@@ -108,7 +108,7 @@ export class PlaceOrderComponent extends ParentPlaceOrderComponent{}
 //           if(this.order.paymentStatus != 2) {
 //             this.payPalConfig = {
 //               currency,
-//               clientId: environment.paypal_client_id,
+//               clientId: environment['paypal_client_id'],
 //               createOrderOnClient: (data) => <ICreateOrderRequest>{
 //                 intent: 'CAPTURE',
 //                 purchase_units: [
@@ -260,7 +260,7 @@ export class PlaceOrderComponent extends ParentPlaceOrderComponent{}
 //   async payOrderDo() {
 
     
-//     const address = environment.addresses.ecombarOfficial.ETH;
+//     const address = environment['addresses'].ecombarOfficial.ETH;
 //     const amount = this.order.totalToPay;
 //     const coin = this.coinServ.getCoinTypeIdByName('USDT');
 //     console.log('address=', address);
@@ -369,7 +369,7 @@ export class PlaceOrderComponent extends ParentPlaceOrderComponent{}
 //         (res: any) => {
 //           if(res.ok) {
 //             this.trans_code = res._body.trans_code;
-//             this.payLink = environment.endpoints.website + 'ex/' + this.trans_code;
+//             this.payLink = environment.endpoints['website'] + 'ex/' + this.trans_code;
 //             console.log('this.payLink===', this.payLink);
 //             window.open(this.payLink, "_blank");
 //             //this.startTimer();

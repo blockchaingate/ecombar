@@ -15,6 +15,7 @@ import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { CustomerServiceComponent } from './customer-service/customer-service.component';
 import { ReturnsComponent } from './returns/returns.component';
 import { FaqComponent } from './faq/faq.component';
+import { ProductsGridComponent } from 'src/app/modules/shared/components/products-grid/products-grid.component';
 
 const routes: Routes = [
   {
@@ -43,7 +44,7 @@ const routes: Routes = [
         component: Category2Component
       },  
       {
-        path: 'order',  // 取消 'order/:id'
+        path: 'order2',  // 取消 'order/:id'  // 原值 'order'，为防止二义，改
         component: OrderComponent
       },         
       {

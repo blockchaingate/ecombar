@@ -9,7 +9,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,6 +27,7 @@ export class ShippingCarriersComponent implements OnInit{
     shippingCarriers: any;
     wallet: any;
     walletAddress: string;
+    store: any;
     storeId: string;
     merchantId: string;
     currency: string;
@@ -40,14 +41,14 @@ export class ShippingCarriersComponent implements OnInit{
         private orderServ: OrderService,
         private coinServ: CoinService,
         private toastr: ToastrService,
-        private spinner: NgxSpinnerService,
+        // private spinner: NgxSpinnerService,
         private router: Router,
         private shippingCarrierServ: ShippingCarrierService) {
     }
 
     ngOnInit() {
         this.dataServ.currentWallet.subscribe(
-            (wallet: string) => {
+            (wallet: any) => {
                 this.wallet = wallet;
             }
         ); 
@@ -58,10 +59,12 @@ export class ShippingCarriersComponent implements OnInit{
                 }
             }
         );
+   
         this.dataServ.currentMyStore.subscribe(
             (store: any) => {
                 if(store) {
                     this.currency = store.coin;
+                    this.store = store;
                     this.storeId = store._id;  // 返回“商家页” products-grid
                     this.merchantId = store.id;  // 小心名字看错
                     console.log('store===', store);
@@ -134,7 +137,7 @@ export class ShippingCarriersComponent implements OnInit{
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
         this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            this.spinner.show();
+            // this.spinner.show();
             this.newOrderDo(seed, tableNo);
         });
     }
@@ -176,14 +179,14 @@ export class ShippingCarriersComponent implements OnInit{
                 if (res) {
                     const body = res;
                     const orderNewID = body._id;
-                    this.spinner.hide();
+                    // this.spinner.hide();
 
                     location.reload();  // 重新加载当前页面
                 }
             },
             err => { 
                 this.errMsg = err.message;
-                this.spinner.hide();
+                // this.spinner.hide();
                 this.toastr.error('error while creating order');              
             }
         );  

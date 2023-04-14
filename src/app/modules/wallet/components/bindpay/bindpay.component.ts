@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { StarService } from 'src/app/modules/shared/services/star.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+// import { NgxSpinnerService } from 'ngx-bootstrap-spinner';  // 只支持到 @angular/common@^10.0.0
 
 @Component({
   selector: 'app-wallet-bindpay',
@@ -33,7 +33,7 @@ export class BindpayComponent implements OnInit{
         private kanbanSmartContractServ: KanbanSmartContractService,
         private dataServ: DataService,
         private route: ActivatedRoute,
-        private spinner: NgxSpinnerService,
+        // private spinner: NgxSpinnerService,
         private toastr: ToastrService,
         private starServ: StarService,
         private web3Serv: Web3Service,
@@ -44,7 +44,7 @@ export class BindpayComponent implements OnInit{
         this.tab =  'pay';
         this.parents = [];
         this.dataServ.currentWallet.subscribe(
-            (wallet: string) => {
+            (wallet: any) => {
               this.wallet = wallet;
             }
         ); 
@@ -97,7 +97,7 @@ export class BindpayComponent implements OnInit{
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
       
         this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-            this.spinner.show();
+            // this.spinner.show();
             this.submitDo(seed);
         });        
     }
@@ -155,7 +155,7 @@ export class BindpayComponent implements OnInit{
         ];
 
         const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
-        this.spinner.hide();
+        // this.spinner.hide();
         if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
             this.toastr.success('the transaction was procssed successfully');
         } else {

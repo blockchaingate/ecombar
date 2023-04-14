@@ -35,7 +35,7 @@ export class BannerAddComponent implements OnInit {
 
   ngOnInit() {
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 

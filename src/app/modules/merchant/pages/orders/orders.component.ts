@@ -9,7 +9,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { Router } from '@angular/router';
 
 @Component({
@@ -34,7 +34,7 @@ export class OrdersComponent implements OnInit {
     private web3Serv: Web3Service,
     private coinServ: CoinService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private kanbanSmartContractServ: KanbanSmartContractService,
     private modalService: BsModalService,
     private dataServ: DataService,
@@ -43,7 +43,7 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 
@@ -126,7 +126,7 @@ export class OrdersComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.refundDo(seed);
     });
   }
@@ -179,7 +179,7 @@ export class OrdersComponent implements OnInit {
       signature.s
     ];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.order.store.smartContractAddress, abi, args);
-    this.spinner.hide();
+    // this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       /*
       const data = {
@@ -187,7 +187,7 @@ export class OrdersComponent implements OnInit {
       };
       this.orderServ.update2(this.order._id, data).subscribe(
         (ret: any) => {
-          this.spinner.hide();
+          // this.spinner.hide();
           if(ret && ret.ok) {
             this.order.paymentStatus = 6;
             this.toastr.success('Refund was made successfully');

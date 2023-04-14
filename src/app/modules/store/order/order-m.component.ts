@@ -1,5 +1,6 @@
 
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+
 import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { Router } from '@angular/router';
@@ -13,7 +14,7 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
@@ -53,7 +54,7 @@ export class OrderMerchantComponent implements OnInit {
         private merchantServ: MerchantService,
         private orderServ: OrderService,
         private router: Router,
-        private spinner: NgxSpinnerService,
+        // private spinner: NgxSpinnerService,
         private toastr: ToastrService,
         private dataServ: DataService,
         private iddockServ: IddockService,
@@ -137,7 +138,7 @@ export class OrderMerchantComponent implements OnInit {
                                     this.diffFlag = 1;
                                 }
                             }
-                            this.QrUrl = environment.EX_WEBSITE + `store/${this.storeId}/order/${this.orderId}`;
+                            this.QrUrl = `/store/${this.storeId}/order/${this.orderId}`;  // environment['EX_WEBSITE'] + 
                         }
                     }
                 }
@@ -208,7 +209,7 @@ export class OrderMerchantComponent implements OnInit {
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
         this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            this.spinner.show();
+            // this.spinner.show();
             this.placeOrderDo(seed);
         });      
     }
@@ -235,7 +236,7 @@ export class OrderMerchantComponent implements OnInit {
                         if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
                             ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[1].to, params[1].data);
                             if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-                                this.spinner.hide();
+                                // this.spinner.hide();
                                 this.toastr.success('the transaction was procssed successfully');
 
                                 location.reload();  // 重新加载当前页面
@@ -246,11 +247,11 @@ export class OrderMerchantComponent implements OnInit {
                                 //     this.router.navigate(['/store/' + this.storeId + '/order-list']);
                                 // }, 1000);  // 发现未更新状态，给个延时
                             } else {
-                                this.spinner.hide();
+                                // this.spinner.hide();
                                 this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
                             }
                         } else {
-                            this.spinner.hide();
+                            // this.spinner.hide();
                             this.toastr.error('Failed to authorizeOperator, txid:' + ret._body.transactionHash);
                         }
                     }
@@ -306,7 +307,7 @@ export class OrderMerchantComponent implements OnInit {
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
         this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            this.spinner.show();
+            // this.spinner.show();
             this.setFoodDo(seed, orderId, foodId, quantity, flag);
         });
     }
@@ -353,7 +354,7 @@ export class OrderMerchantComponent implements OnInit {
                                 if (res) {
                                     const body = res;
                                     const orderNewID = body._id;
-                                    this.spinner.hide();
+                                    // this.spinner.hide();
 
                                     // location.reload();  // 重新加载当前页面
                                     this.updateOrderData();  // 更新“后台订单查看”
@@ -361,7 +362,7 @@ export class OrderMerchantComponent implements OnInit {
                             },
                             err => { 
                                 this.errMsg = err.message;
-                                this.spinner.hide();
+                                // this.spinner.hide();
                                 this.toastr.error('error while combining order');              
                             }
                         );  

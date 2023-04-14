@@ -32,7 +32,7 @@ export class ExchangeRateComponent implements OnInit {
   }
 
   async getRate(coinName: string) {
-    const to = environment.addresses.smartContract.exchangeRate;
+    const to = environment['addresses'].smartContract.exchangeRate;
     const coinId = this.coinServ.getCoinTypeIdByName(coinName);
     const abi = {
       "constant": true,

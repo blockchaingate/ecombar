@@ -8,12 +8,12 @@
 
                 <li class="nav-item"  *ngFor="let collection of collections; index as i; first as isFirst">
                   <a  [ngClass]="activeTab == i ? 'nav-link js-animation-link active':'nav-link js-animation-link'" 
-                      [attr.id]="collection._id+'-tab'"  [attr.aria-controls]="collection._id" 
+                      [attr.id]="collection['_id']+'-tab'"  [attr.aria-controls]="collection['_id']" 
                       
                       (click)="switchTab(i)"
                       >
                       <div class="d-md-flex justify-content-md-center align-items-md-center collection-name"  >
-                        {{ collection.name | translateField}}
+                        {{ collection['name'] | translateField}}
                       </div>
                   </a>
               </li>
@@ -25,11 +25,11 @@
             <div 
             *ngFor="let collection of collections; index as i; first as isFirst"
             class="tab-pane fade pt-2 " [ngClass]="activeTab == i ?'show active':''" 
-            [attr.id]="collection._id" role="tabpanel" 
-            [attr.aria-labelledby]="collection._id+'-tab'" 
+            [attr.id]="collection['_id']" role="tabpanel" 
+            [attr.aria-labelledby]="collection['_id']+'-tab'" 
             data-target-group="groups">
                 <ul class="row list-unstyled products-group no-gutters">
-                    <li class="col-6 col-md-4 col-xl product-item" *ngFor="let product of collection.products; index as l;">
+                    <li class="col-6 col-md-4 col-xl product-item" *ngFor="let product of collection['products']; index as l;">
                         <div class="product-item__outer h-100 w-100">
                             <div class="product-item__inner px-xl-4 p-3">
                                 <div class="product-item__body pb-xl-2">

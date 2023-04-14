@@ -14,7 +14,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import BigNumber from 'bignumber.js';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { StarService } from 'src/app/modules/shared/services/star.service';
 import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
@@ -97,7 +97,7 @@ export class PaymentComponent implements OnInit{
       private kanbanSmartContractServ: KanbanSmartContractService,   
       private kanbanServ: KanbanService,
       private starServ: StarService,
-      private spinner: NgxSpinnerService,
+      // private spinner: NgxSpinnerService,
       private modalService: BsModalService,
       private localSt: LocalStorage,      
       private router: Router,
@@ -253,7 +253,7 @@ export class PaymentComponent implements OnInit{
       this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
   
       this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-        this.spinner.show();
+        // this.spinner.show();
         this.placeOrderDo(seed);
       });      
 
@@ -281,7 +281,7 @@ export class PaymentComponent implements OnInit{
                     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
                       ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[1].to, params[1].data);
                       if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-                        this.spinner.hide();
+                        // this.spinner.hide();
                         this.toastr.success('the transaction was procssed successfully');
 
                         location.reload();  // 重新加载当前页面
@@ -292,11 +292,11 @@ export class PaymentComponent implements OnInit{
                         //   this.router.navigate(['/store/' + this.storeId + '/order-list']);
                         // }, 1000);  // 发现未更新状态，给个延时
                       } else {
-                        this.spinner.hide();
+                        // this.spinner.hide();
                         this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
                       }
                     } else {
-                      this.spinner.hide();
+                      // this.spinner.hide();
                       this.toastr.error('Failed to authorizeOperator, txid:' + ret._body.transactionHash);
                     }
                 }

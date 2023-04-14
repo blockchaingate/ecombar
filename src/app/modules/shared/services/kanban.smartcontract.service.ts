@@ -9,7 +9,7 @@ import * as Eth from 'ethereumjs-tx';
 
 @Injectable({ providedIn: 'root' })
 export class KanbanSmartContractService {
-    baseUrl = environment.endpoints.kanban;
+    baseUrl = environment.endpoints['kanban'];
 
     constructor(
         private coinServ: CoinService,
@@ -39,7 +39,7 @@ export class KanbanSmartContractService {
     }
     async getExecSmartContractHexWithData(seed: Buffer, smartContractAddress: string, kanbanData: any, gasLimit = 8000000) {
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-      let gasPrice = environment.chains.KANBAN.gasPrice;
+      let gasPrice = environment.chains['KANBAN'].gasPrice;
       const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
   
       let kanbanValue = 0;
@@ -64,13 +64,13 @@ export class KanbanSmartContractService {
   
   
       const customCommon = Common.forCustomChain(
-        environment.chains.ETH.chain,
+        environment.chains['ETH'].chain,
         {
-          name: environment.chains.KANBAN.chain.name,
-          networkId: environment.chains.KANBAN.chain.networkId,
-          chainId: environment.chains.KANBAN.chain.chainId
+          name: environment.chains['KANBAN'].chain.name,
+          networkId: environment.chains['KANBAN'].chain.networkId,
+          chainId: environment.chains['KANBAN'].chain.chainId
         },
-        environment.chains.ETH.hardfork,
+        environment.chains['ETH'].hardfork,
       );
       const tx = new Eth.Transaction(txObject, { common: customCommon });
   
@@ -101,7 +101,7 @@ export class KanbanSmartContractService {
 
     async deploySmartContract(seed: Buffer, abi: any, bytecode: any, args: any) {
         const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-        let gasPrice = environment.chains.KANBAN.gasPrice;
+        let gasPrice = environment.chains['KANBAN'].gasPrice;
         let gasLimit = 8000000;
         const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
     
@@ -126,13 +126,13 @@ export class KanbanSmartContractService {
     
     
         const customCommon = Common.forCustomChain(
-          environment.chains.ETH.chain,
+          environment.chains['ETH'].chain,
           {
-            name: environment.chains.KANBAN.chain.name,
-            networkId: environment.chains.KANBAN.chain.networkId,
-            chainId: environment.chains.KANBAN.chain.chainId
+            name: environment.chains['KANBAN'].chain.name,
+            networkId: environment.chains['KANBAN'].chain.networkId,
+            chainId: environment.chains['KANBAN'].chain.chainId
           },
-          environment.chains.ETH.hardfork,
+          environment.chains['ETH'].hardfork,
         );
         const tx = new Eth.Transaction(txObject, { common: customCommon });
     

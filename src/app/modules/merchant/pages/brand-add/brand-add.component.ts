@@ -42,7 +42,7 @@ export class BrandAddComponent implements OnInit {
     this.NavTab = 'General';    // 缺省页面
     this.currentTab = 'default English';    // 缺省页面
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 

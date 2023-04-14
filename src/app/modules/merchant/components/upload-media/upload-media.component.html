@@ -1,5 +1,7 @@
 
-<input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" (change)="fileChangeEvent($event.target.files)" style="display:none;" />
+<!-- Fix: error TS2339: fileChangeEvent($event.target.files), fileChangeEvent(($event.target as HTMLInputElement).files) -->
+<input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" (change)="fileChangeEvent($event)" style="display:none;" />
+
 <div class="container w-100">
 
   <div *ngIf="checkedImages && (checkedImages.length > 0)" class="pb-2 d-flex justify-content-between">

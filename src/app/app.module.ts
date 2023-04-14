@@ -1,7 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
+
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';  // Ionic
+
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouteReuseStrategy } from '@angular/router';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'; // 导入 CommonModule
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,8 +26,6 @@ import { ThemeService } from './services/theme.service';
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({keys: ['user'], rehydrate: true})(reducer);
 }
-
-
 
 // const defaultTheme: Routes = [
 //   {
@@ -137,8 +143,6 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
 //   },
 // ];
 
-
-
 // const nft: Routes = [
 //   {
 //     path: 'wallet',
@@ -160,25 +164,38 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    // MenuMobileComponent,
-  ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    AppRoutingModule,
-    StoreModule.forRoot(reducers, {metaReducers}),   
-    HttpClientModule,
-    TranslateModule.forRoot(),
-    BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
-  ],
-  exports:[RouterModule],
-  providers: [DataService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        // MenuMobileComponent,
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        IonicModule.forRoot(),  // Ionic
+        AppRoutingModule,
+        CommonModule,  // 在 imports 数组中导入 NgIf 或者 CommonModule
+        HttpClientModule,
+        BrowserAnimationsModule,
+        StoreModule.forRoot(reducers, {metaReducers}),   
+        TranslateModule.forRoot(),
+        BrowserAnimationsModule, // required animations module
+        ToastrModule.forRoot(), // ToastrModule added
+    ],
+    exports: [ RouterModule ],
+    providers: [ 
+        DataService,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    ],
+    bootstrap: [ AppComponent ]
 })
 export class AppModule { 
+    // Fix: error NG6009: The `AppComponent` class is a standalone component, 
+    // which can not be used in the `@NgModule.bootstrap` array. 
+    // Use the `bootstrapApplication` function for bootstrap instead.
+    // 使用 bootstrapApplication 函数引导应用程序
+    // ngDoBootstrap() {
+    //     bootstrapApplication(AppComponent);
+    // }
+
   // currentTheme!: String;
 
   // constructor(

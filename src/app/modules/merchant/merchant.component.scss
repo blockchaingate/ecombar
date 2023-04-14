@@ -1,4 +1,4 @@
-// Sass tils
+
 $color-fiord: #394263; // sidenav bg & dark text
 $color-white: #fff; // card bg
 $color-athens-gray: #eaedf1; // content bg
@@ -20,40 +20,6 @@ $width-sidenav: 240px;
 $--p-surface-hovered: rgba(92, 106, 196, 0.12);
 $--p-action-primary: #202e78;
 $--p-text: #212b36;
-
-// .img-avatar {
-//   border-radius: 50%;
-//   border: 2px solid rgba(255, 255, 255, 0.2);
-//   width: 40px;
-//   height: 40px;
-// }
-
-@mixin box-shadow {
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-}
-
-small {
-  font-size: 12px;
-}
-/* Simple dashboard grid CSS */
-
-// Establish dashboard css grid layout - mobile
-.grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: 100%; // Charts responsiveness won't work with fr units
-  grid-template-rows: $height-header 1fr $height-footer;
-  grid-template-areas:
-    "header"
-    "main"
-    "footer";
-  height: 100vh;
-  overflow-x: hidden; // Prevent overflow scroll from hidden sidenav
-
-  &--noscroll {
-    overflow-y: hidden;
-  }
-}
 
 /* Give every child element its grid name */
 .header {
@@ -177,32 +143,6 @@ small {
   }
 }
 
-.sidenav__list {
-  padding: 0;
-  list-style-type: none;
-}
-
-.sidenav__list_2 {
-  margin-left: 30px;  // 子选单向右错开
-  padding: 0;
-  list-style-type: none;
-}
-
-.sidenav__list-item {
-  padding: 10px 10px 10px 20px;  // 上，右，下，左
-  color: $--p-text;
-}
-
-.sidenav__list-item:hover {
-  background-color: lightgray;
-  color: white;
-  cursor: pointer;
-}
-
-.sidenav__list-item.active {
-  background: $--p-surface-hovered;
-  color: $--p-action-primary;
-}
 .header {
   grid-area: header;
   display: flex;
@@ -280,343 +220,11 @@ small {
   }
 }
 
-.dropdown {
-  position: absolute;
-  top: 54px;
-  right: -16px;
-  width: 220px;
-  height: auto;
-  z-index: 1;
-  background-color: #fff;
-  border-radius: 4px;
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.3s;
-  @include box-shadow;
-
-  &__list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-
-  &__list-item {
-    padding: 12px 24px;
-    color: $color-abbey;
-    text-transform: capitalize;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  &__icon {
-    color: $color-java;
-  }
-
-  &__title {
-    margin-left: 10px;
-  }
-
-  &:before {
-    position: absolute;
-    content: "";
-    top: -6px;
-    right: 30px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 6px solid #fff;
-  }
-
-  &--active {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-a {
-  text-decoration: none;
-}
-
-// Mobile screen breakpoints (750px)
-@media only screen and (min-width: 46.875em) {
-  // Break out to sidenav grid layout on medium + screens
-  .grid {
-    display: grid;
-    grid-template-columns: $width-sidenav calc(100% - 240px); // Charts responsiveness won't work with fr units
-    grid-template-rows: $height-header 1fr $height-footer;
-    grid-template-areas:
-      "sidenav header"
-      "sidenav main"
-      "sidenav footer";
-    height: 100vh;
-  }
-
-  .sidenav {
-    position: relative;
-    transform: translateX(0);
-
-    &__brand-close {
-      visibility: hidden;
-    }
-  }
-
-  .main-header {
-    &__intro-wrapper {
-      padding: 0 30px;
-    }
-  }
-
-  .header {
-    &__menu {
-      display: none;
-    }
-
-    &__search {
-      margin-left: 20px; // No menu icon; move 'er back over
-    }
-
-    &__avatar {
-      width: 40px;
-      height: 40px;
-    }
-  }
-}
-
-// Medium screens breakpoint (1050px)
-@media only screen and (min-width: 65.625em) {
-  .main {
-    &__cards {
-      column-count: 2;
-    }
-  }
-  .close__btn {
-    display: none;
-  }
-  .main-header {
-    &__intro-wrapper {
-      flex-direction: row;
-    }
-
-    &__welcome {
-      align-items: flex-start;
-    }
-  }
-}
-
-ul li {
-  display: flex;
-  align-items: center;
-}
-
-::ng-deep {
-  .col-3 {
-    -ms-flex: 25%;
-    flex: 25%;
-    max-width: 25%;
-  }
-  .container {
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  h2 {
-    font-size: 26px;
-    margin: 20px 0;
-    text-align: center;
-    small {
-      font-size: 0.5em;
-    }
-  }
-
-  .responsive-table {
-    margin-left: -40px;
-    li {
-      border-radius: 3px;
-      padding: 25px 30px;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 25px;
-    }
-    .table-header {
-      background-color: #95a5a6;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .table-row {
-      background-color: #ffffff;
-      box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
-    }
-    .col-1 {
-      flex-basis: 10%;
-    }
-    .col-2 {
-      flex-basis: 40%;
-    }
-    .col-3 {
-      flex-basis: 25%;
-    }
-    .col-4 {
-      flex-basis: 25%;
-    }
-
-    @media all and (max-width: 767px) {
-      .table-header {
-        display: none;
-      }
-      .table-row {
-      }
-      li {
-        display: block;
-      }
-      .col {
-        flex-basis: 100%;
-      }
-      .col {
-        display: flex;
-        padding: 10px 0;
-        &:before {
-          color: #6c7a89;
-          padding-right: 10px;
-          content: attr(data-label);
-          flex-basis: 50%;
-          text-align: right;
-        }
-      }
-    }
-  }
-
-  .card {
-    /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-  }
-
-  /* On mouse-over, add a deeper shadow */
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-
-  .card .container {
-    padding: 30px;
-  }
-
-  .card .container input {
-    min-width: 0;
-    min-height: 3.6rem;
-    margin: 0;
-    padding: 0.5rem 1.2rem;
-    background: none;
-    border: 0.1rem solid lightgray;
-  }
-
-  .btn {
-    text-decoration: none;
-    border: 1px solid #fed700;
-    position: relative;
-    overflow: hidden;
-    background-color: #fed700;
-    color: #333e48;
-    font-weight: 700;
-    border-radius: 0;
-  }
-
-  .btn:hover {
-    background-color: #333e48;
-    border-color: #333e48;
-    color: white;
-    border-radius: 0;
-  }
-
-  select {
-    width: 100%;
-    height: 50px;
-    font-size: 100%;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 0;
-    background-color: #c0392b;
-    border: none;
-    border-bottom: 2px solid #962d22;
-    color: #eeeeee;
-    padding: 10px;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding: 10px;
-  }
-  /* For IE <= 11 */
-  select::-ms-expand {
-    display: none;
-  }
-
-  select {
-    width: 100%;
-    height: 50px;
-    font-size: 100%;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 0;
-    background-color: white;
-
-    border: none;
-    border-bottom: 2px solid grey;
-    color: black;
-    padding: 10px;
-    padding-right: 38px;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    /* Adding transition effect */
-    transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
-  }
-  /* For IE <= 11 */
-  select::-ms-expand {
-    display: none;
-  }
-  select:hover,
-  select:focus {
-    color: black;
-    background-color: white;
-    border-bottom-color: #dcdcdc;
-  }
-
-  /* Full-width input fields */
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-  }
-
-  input[type="text"]:focus,
-  input[type="password"]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-
-  .custom-select {
-    // height: auto;
-    // padding: none;
-  }
-}
-
 // ---------- 菜单页面 ----------
 
 .main_page {
   width: 1500px;
-  background-color: #f7f7f7;  // 背景灰色
+  // background-color: #f7f7f7;  // 背景灰色
   text-align: center;  // 水平居中１
   margin: 0 auto;  // 水平居中２
 }
@@ -624,38 +232,39 @@ ul li {
 .menu_box {
   float: left; 
   width: 100%;  // 占据整行
-  background-color: #ffffff; 
+  color: lightgray;
+  background-color: darkslategray; 
   margin: 0 0 20px 0; 
   box-sizing: border-box; 
-  text-align: center;
-  border: solid 1px #eee;  // 灰色四边框
+  // text-align: left;
+  // border: solid 1px #eee;  // 灰色四边框
 }
 
-.avatar_box {
-  width: 100%;  // 占据整行
-  height: 100px;
-  text-align: center;  // 水平居中
-  // vertical-align: middle;  // 垂直居中  // 无效
-}
+// .avatar_box {
+//   width: 100%;  // 占据整行
+//   height: 100px;
+//   text-align: center;  // 水平居中
+//   // vertical-align: middle;  // 垂直居中  // 无效
+// }
 
-.avatar_box img {
-  border-radius: 50%;
-  border: solid 1px #efefef; 
-  width: 100px;
-  height: 100px;
-  // margin: 10px;  // 垂直居中  100 - 10 * 2 = 80
-}
+// .avatar_box img {
+//   border-radius: 50%;
+//   border: solid 1px #efefef; 
+//   width: 100px;
+//   height: 100px;
+//   // margin: 10px;  // 垂直居中  100 - 10 * 2 = 80
+// }
 
-.avatar_text .star {
-  color: #FF591E; 
-  font-size: 18px; 
-  font-weight: bold; 
-  font-family: number; 
-  font-style: italic;
-}
-.avatar_text .text {
-  color: #999999;
-}
+// .avatar_text .star {
+//   color: #FF591E; 
+//   font-size: 18px; 
+//   font-weight: bold; 
+//   font-family: number; 
+//   font-style: italic;
+// }
+// .avatar_text .text {
+//   color: #999999;
+// }
 
 .svg_icon {
   background-size: 20px 20px;
@@ -663,11 +272,43 @@ ul li {
   height: 20px;
 }
 
+.sidenav__list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.sidenav__list_2 {
+  margin-left: 30px;  // 子选单向右错开
+  padding: 0;
+  list-style-type: none;
+}
+
+.sidenav__list-title {
+  padding: 10px 10px 10px 20px;  // 上，右，下，左
+  // color: $--p-text;
+}
+
+.sidenav__list-item {
+  padding: 10px 10px 10px 20px;  // 上，右，下，左
+  // color: $--p-text;
+}
+
+.sidenav__list-item:hover {
+  background-color: dodgerblue;
+  color: white;
+  cursor: pointer;
+}
+
+.sidenav__list-item.active {
+  background: $--p-surface-hovered;
+  color: $--p-action-primary;
+}
+
 /* ---------- 内容页面 ---------- */
 
 .main_box {
   // float: right; 
   width: 100%;  /* 占据整行 */
-  background-color: #ffffff; 
-  border: solid 1px #eee;  // 灰色四边框
+  // background-color: #ffffff; 
+  // border: solid 1px #eee;  // 灰色四边框
 }

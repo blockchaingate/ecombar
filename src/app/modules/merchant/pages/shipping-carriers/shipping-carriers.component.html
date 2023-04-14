@@ -1,17 +1,68 @@
 
-<h1>{{ 'Table Numbers' | translate }}</h1>
+<!-- “台号”管理 -->
+
+<ion-grid class="px-2 font-size-18 bg-white border-bottom">
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-title><h1>{{ 'Table Numbers' | translate }}</h1></ion-title>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" class="ion-text-end" *ngIf="store.status == 2">
+      <button type="button" class="btn btn-danger btn-lg newButton-S rounded" 
+        routerLink="/merchant/shipping-carrier/add" routerLinkActive="active">
+        {{ 'New' | translate }}
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="bg-light">
+    <ion-col size="3">{{ 'Name' | translate }}</ion-col>
+    <!-- <ion-col size="3">{{ 'Flat Rate' | translate }}</ion-col> -->
+    <ion-col size="3">{{ 'Sequence' | translate }}</ion-col>
+    <ion-col size="3"></ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid class="bg-white" *ngFor="let shippingCarrier of shippingCarriers">
+  <ion-row class="work-list">
+    <ion-col size="3">{{ shippingCarrier.name | translateField }}</ion-col>
+    <!-- <ion-col size="3">{{ shippingCarrier.flatRate }}</ion-col> -->
+    <ion-col size="3">{{ shippingCarrier.sequence }}</ion-col>
+    <ion-col size="3">
+      <div class="d-inline-block px-2">
+        <a (click)="editShippingCarrier(shippingCarrier._id)">
+          <img src="/assets/svg/edit.svg">
+        </a>
+      </div>
+      <div class="d-inline-block px-2">
+        <a (click)="deleteShippingCarrier(shippingCarrier._id)">
+          <img src="/assets/svg/delete.svg">
+        </a>
+      </div>
+    </ion-col>
+    <ion-col>
+      <div class="d-inline-block px-2">
+        <a class="border border-danger rounded px-3 py-1" (click)="newOrder(shippingCarrier.sequence)">
+          {{ 'New Order' | translate }}
+        </a>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<!-- <h1>{{ 'Table Numbers' | translate }}</h1>
 
 <div class="px-3">
-  <div class="text-right my-2">  <!-- 靠右对齐，圆角边框 -->
+  <div class="text-right my-2">
     <button type="button" class="btn btn-danger btn-lg newButton-S rounded" 
       routerLink="/merchant/shipping-carrier/add" routerLinkActive="active">
       {{ 'New' | translate }}
     </button>
   </div>
-
   <dl class="work-list row">
     <dt class="col-3">{{ 'Name' | translate }}</dt>
-    <!-- <dt class="col-3">{{ 'Flat Rate' | translate }}</dt> -->
     <dt class="col-3">{{ 'Sequence' | translate }}</dt>
     <dt class="col-3"></dt>
     <dt class="col"></dt>
@@ -19,7 +70,6 @@
 
   <dl class="work-list row" *ngFor="let shippingCarrier of shippingCarriers">
     <dd class="col-3">{{ shippingCarrier.name | translateField }}</dd>
-    <!-- <dd class="col-3">{{ shippingCarrier.flatRate }}</dd> -->
     <dd class="col-3">{{ shippingCarrier.sequence }}</dd>
     <dd class="col-3">
       <div class="d-inline-block px-2">
@@ -41,4 +91,4 @@
       </div>
     </dd>
   </dl>
-</div>
+</div> -->

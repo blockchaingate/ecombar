@@ -1,3 +1,6 @@
+
+import { IonicModule } from '@ionic/angular';
+
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { BrandService } from './services/brand.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -77,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuComponent_2,    // 我是新的 MenuComponent
   ],
   imports: [
+    IonicModule,  // Ionic
     FormsModule,
     CommonModule,
     RouterModule,

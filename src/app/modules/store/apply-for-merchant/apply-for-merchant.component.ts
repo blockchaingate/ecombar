@@ -10,7 +10,7 @@ import { UserState } from 'src/app/store/states/user.state';
 import { Store } from '@ngrx/store';
 import { selectMerchantId, selectEmail } from 'src/app/store/selectors/user.selector';
 import { TranslateService } from '@ngx-translate/core';
-import { dispatch } from 'rxjs/internal/observable/pairs';
+// import { dispatch } from 'rxjs/internal/observable/pairs';
 import { updateMerchantStatus } from 'src/app/store/actions/user.actions';
 
 @Component({

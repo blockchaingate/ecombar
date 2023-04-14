@@ -33,7 +33,7 @@ export class OrderRewardsComponent implements OnInit {
       }
   
       getTxidUrl(txid: string) {
-        return environment.endpoints.website + 'explorer/tx-detail/' + txid; 
+        return environment.endpoints['website'] + 'explorer/tx-detail/' + txid; 
       }
       
       showStatus(status: number) {
@@ -50,6 +50,7 @@ export class OrderRewardsComponent implements OnInit {
         if(status == 3) {
           return 'redeemed';
         }
+        return '';
       }
       
   

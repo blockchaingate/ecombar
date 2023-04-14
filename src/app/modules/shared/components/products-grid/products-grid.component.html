@@ -5,7 +5,7 @@
 <app-menu-2 [categories]="categories" [storeId]="storeId"></app-menu-2>  <!-- 仅用于此页 -->
 
 <div class="d-flex flex-wrap my-1" *ngIf="products">  <!-- Flex换行，上下空隙1 -->  <!-- class="row list-unstyled products-group no-gutters mb-0 overflow-visible" -->
-    <div  *ngFor="let item of products" class="m-1">  <!-- 四边空隙1 -->  <!-- class="col-wd-3 col-md-4 pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0" -->
+    <div *ngFor="let item of products" class="m-1">  <!-- 四边空隙1 -->  <!-- class="col-wd-3 col-md-4 pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0" -->
         <!-- <div class="product-item__outer h-100 w-100"> -->
             <div class="food_box border" *ngIf="!(item.primaryCategory && type && item.primaryCategory != type)">  <!-- 类别（过滤） -->  <!-- product-item__inner p-md-3 row no-gutters -->
                 <div class="m-1">  <!-- "col col-lg-auto product-media-left" -->

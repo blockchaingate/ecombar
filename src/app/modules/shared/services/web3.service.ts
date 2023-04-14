@@ -11,6 +11,8 @@ import { Signature, EthTransactionObj } from '../../../interfaces/kanban.interfa
 import * as Account from 'eth-lib/lib/account';
 import * as  Hash from 'eth-lib/lib/hash';
 import * as Btc from 'bitcoinjs-lib';
+// Fix: export 'TransactionBuilder' / 'ECPair' was not found in 'bitcoinjs-lib'
+import { TransactionBuilder, ECPair } from 'bitcoinjs-lib';  
 
 @Injectable({ providedIn: 'root' })
 export class Web3Service {
@@ -64,7 +66,7 @@ export class Web3Service {
     //const pubkey = Buffer.from( '0250863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b2352', 'hex' );
     //const pubkeyBuf = Buffer.from('04a097026e876544a0e40f9ca836435560af4470e161bf60c23465dcb3151c947d1cbe052875211972107e25fca8dd939f1c6e749a43862673ec5cf7a8567f2d95', 'hex')
     const pubkeyBuf = Buffer.concat([Buffer.from('04', 'hex'), pubKey]);
-    const pubkey = Btc.ECPair.fromPublicKey(pubkeyBuf);
+    const pubkey = ECPair.fromPublicKey(pubkeyBuf);
 
     const { address } = Btc.payments.p2pkh({ 
       pubkey: pubkey.publicKey,
@@ -226,8 +228,8 @@ export class Web3Service {
       abiHex = abiHex.slice(2);
     }
 
-    let gasPrice = environment.chains.KANBAN.gasPrice;
-    let gasLimit = environment.chains.KANBAN.gasLimit;
+    let gasPrice = environment.chains['KANBAN'].gasPrice;
+    let gasLimit = environment.chains['KANBAN'].gasLimit;
     if (options) {
       if (options.gasPrice) {
         gasPrice = options.gasPrice;
@@ -257,13 +259,13 @@ export class Web3Service {
     let txhex = '';
 
     const customCommon = Common.forCustomChain(
-      environment.chains.ETH.chain,
+      environment.chains['ETH'].chain,
       {
-        name: environment.chains.KANBAN.chain.name,
-        networkId: environment.chains.KANBAN.chain.networkId,
-        chainId: environment.chains.KANBAN.chain.chainId
+        name: environment.chains['KANBAN'].chain.name,
+        networkId: environment.chains['KANBAN'].chain.networkId,
+        chainId: environment.chains['KANBAN'].chain.chainId
       },
-      environment.chains.ETH.hardfork,
+      environment.chains['ETH'].hardfork,
     );
     const tx = new Eth.Transaction(txObject, { common: customCommon });
 
@@ -460,7 +462,7 @@ export class Web3Service {
         console.log('privKey=====', privKey);
         console.log('txParams=====', txParams);
         const EthereumTx = Eth.Transaction;
-        const tx = new EthereumTx(txParams, { chain: environment.chains.ETH.chain, hardfork: environment.chains.ETH.hardfork });
+        const tx = new EthereumTx(txParams, { chain: environment.chains['ETH'].chain, hardfork: environment.chains['ETH'].hardfork });
         tx.sign(privKey);
         const serializedTx = tx.serialize();
         const txhex = '0x' + serializedTx.toString('hex');
@@ -529,7 +531,8 @@ export class Web3Service {
       }
 
       getTransactionHash(txhex: string) {
-        const hash = ethUtil.keccak(txhex).toString('hex');
+        // const hash = ethUtil.keccak(txhex).toString('hex');
+        const hash = ethUtil.keccak(Buffer.from(txhex, 'hex')).toString('hex');
         return '0x' + hash;
       }    
 }

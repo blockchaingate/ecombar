@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Product } from '../models/product';
 import { HttpClient } from '@angular/common/http';
-const baseUrl = environment.endpoints.paycool;
+const baseUrl = environment.endpoints['paycool'];
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {

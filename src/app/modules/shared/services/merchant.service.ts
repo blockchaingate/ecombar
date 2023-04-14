@@ -11,10 +11,10 @@ export class MerchantService {
     private _merchant: Merchant;
 
     constructor(private http: HttpService, private storage: StorageMap) {
-        if(!this._id) {
-            storage.get('_merchantId').subscribe((ret: string) => {this._id = ret});
+        if (! this._id) {
+            storage.get('_merchantId').subscribe((ret: any) => {this._id = ret});
         }
-        if(!this._merchant) {
+        if (! this._merchant) {
             storage.get('_merchant').subscribe((ret: Merchant) => {this._merchant = ret});
         }
     }

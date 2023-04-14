@@ -101,9 +101,9 @@ export class MerchantComponent implements OnInit {
     this.menuItems = [
       {
         title: 'Dashboard',
-        link: 'dashboard',
-        icon: 'dashboard',
-        line: 1,  // 下边线支持
+        link: '/merchant/dashboard',
+        icon: 'tv-outline',
+        // line: 1,  // 下边线支持
       },
       // ---------- ---------- 二级菜单，改为一级 ---------- ----------
       // {
@@ -117,38 +117,43 @@ export class MerchantComponent implements OnInit {
       //     // }, 
           {
             title: 'Categories',
-            link: 'categories',
-            icon: 'category'
+            link: '/merchant/categories',
+            icon: 'grid-outline'
           },    
           {
             title: 'Products',
-            link: 'products',
-            icon: 'product'
+            link: '/merchant/products',
+            icon: 'cube-outline'
           },
-          {
-            title: 'Brands',
-            link: 'brands',
-            icon: 'brand'
-          },
+          // {
+          //   title: 'Brands',
+          //   link: '/merchant/brands',
+          //   icon: 'brand'
+          // },
           { // Memo: 缺个台号管理，不惊动后端了
             title: 'Table Numbers',  // 'Shipping Carriers'
-            link: 'shipping-carriers',  // 'shipping-carriers'
-            icon: 'category'  // 'order'
+            link: '/merchant/shipping-carriers',  // 'shipping-carriers'
+            icon: 'cafe-outline'  // 'order'
           },
           {
             title: 'Status',
-            link: 'order-state',
-            icon: 'order'
+            link: '/merchant/order-state',
+            icon: 'bar-chart-outline'
           },
           {
             title: 'Orders',
-            link: 'orders',
-            icon: 'order'
+            link: '/merchant/orders',
+            icon: 'reader-outline'
           },
           {
             title: 'Food Items',
-            link: 'food-list',
-            icon: 'order'
+            link: '/merchant/food-list',
+            icon: 'fast-food-outline'
+          },
+          {
+            title: 'QR Code',
+            link: '/merchant/qr-code',
+            icon: 'qr-code-outline'
           },
       //     {
       //       title: 'Ships',
@@ -226,7 +231,7 @@ export class MerchantComponent implements OnInit {
     const lang = this.storageServ.lang;
     if (!lang) {
       this.storageServ.get('_lang').subscribe(
-        (lang2: string) => {
+        (lang2: any) => {
           if (lang2) {
             this.translateServ.setDefaultLang(lang2);
           }
@@ -240,6 +245,11 @@ export class MerchantComponent implements OnInit {
     this.merchant = MyStore;    // 虚拟商家信息（测试）
 
   }
+
+    // 导航方法
+    navigateTo( link: string ) {
+        this.router.navigate([link]);
+    }
 
   changeLang() {
     let lang = this.translateServ.getDefaultLang();

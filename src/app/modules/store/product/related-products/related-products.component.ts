@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./related-products.component.scss']
 })
 export class RelatedProductsComponent implements OnInit {
+  storeId: any;  // Fix
    @Input() products: any;
    @Output() onAddToFavorite= new EventEmitter<string>();
    @Output() onAddToCart= new EventEmitter<any>();

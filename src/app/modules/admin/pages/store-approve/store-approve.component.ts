@@ -9,7 +9,7 @@ import { StoreService } from 'src/app/modules/shared/services/store.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+// import { NgxSpinnerService } from 'ngx-bootstrap-spinner';  // 只支持到 @angular/common@^10.0.0
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -30,7 +30,7 @@ export class StoreApproveComponent implements OnInit {
     private web3Serv: Web3Service,
     private utilServ: UtilService,
     private dataServ: DataService,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private modalService: BsModalService,
     private toastr: ToastrService,
     private kanbanSmartContractServ: KanbanSmartContractService,
@@ -38,7 +38,7 @@ export class StoreApproveComponent implements OnInit {
 
   ngOnInit() {
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 
@@ -53,7 +53,7 @@ export class StoreApproveComponent implements OnInit {
 
 
             
-            this.proxyAddress = environment.addresses.smartContract.sevenStarProxy;
+            this.proxyAddress = environment['addresses'].smartContract.sevenStarProxy;
             const abi = this.web3Serv.getGeneralFunctionABI(
               {
                 "constant": true,
@@ -105,7 +105,7 @@ export class StoreApproveComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.approveDo(seed);
     });
   }
@@ -154,12 +154,12 @@ async approveDo(seed: Buffer) {
         "type": "function"
       };
 
-      const ret3 = await this.kanbanSmartContractServ.execSmartContract(seed, environment.addresses.smartContract.feeDistribution, abiRegisterFeeCharger, argsRegisterFeeCharger);
+      const ret3 = await this.kanbanSmartContractServ.execSmartContract(seed, environment['addresses'].smartContract.feeDistribution, abiRegisterFeeCharger, argsRegisterFeeCharger);
       
       if(ret3 && ret3.ok && ret3._body && ret3._body.status == '0x1') {
         this.storeServ.update(this.store._id, {status: 1}).subscribe(
           (ret: any) => {
-            this.spinner.hide();
+            // this.spinner.hide();
             if(ret && ret.ok) {
               this.toastr.success('the store was approved.');
               this.router.navigate(['/admin/stores']);
@@ -170,7 +170,7 @@ async approveDo(seed: Buffer) {
         );
       } else {
         this.toastr.error('Failed to registerFeeCharger.');
-        this.spinner.hide();
+        // this.spinner.hide();
       }
 
 
@@ -179,7 +179,7 @@ async approveDo(seed: Buffer) {
       this.toastr.error('Failed to registerMerchant.');
     }
   } catch(e) {
-    this.spinner.hide();
+    // this.spinner.hide();
   }
   }
 }

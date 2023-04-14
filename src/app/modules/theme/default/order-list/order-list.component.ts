@@ -9,7 +9,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import BigNumber from 'bignumber.js';
@@ -45,7 +45,7 @@ export class OrderListComponent implements OnInit {
         private coinServ: CoinService,
         private router: Router,
         private toastr: ToastrService,
-        private spinner: NgxSpinnerService,
+        // private spinner: NgxSpinnerService,
         private kanbanSmartContractServ: KanbanSmartContractService,
         private modalService: BsModalService,
         private dataServ: DataService,
@@ -162,7 +162,7 @@ export class OrderListComponent implements OnInit {
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
         this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            this.spinner.show();
+            // this.spinner.show();
             this.placeOrderDo(seed);
         });      
     }
@@ -191,7 +191,7 @@ export class OrderListComponent implements OnInit {
                         if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
                             ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[1].to, params[1].data);
                             if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-                                this.spinner.hide();
+                                // this.spinner.hide();
                                 this.toastr.success('the transaction was procssed successfully');
                                 // Fix: 支付后会停在此页面。改为跳去查看所有订单
                                 setTimeout( () => {
@@ -200,11 +200,11 @@ export class OrderListComponent implements OnInit {
                                     this.router.navigate(['/store/' + this.storeId + '/order-list']);
                                 }, 1000);  // 发现未更新状态，给个延时
                             } else {
-                                this.spinner.hide();
+                                // this.spinner.hide();
                                 this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
                             }
                         } else {
-                            this.spinner.hide();
+                            // this.spinner.hide();
                             this.toastr.error('Failed to authorizeOperator, txid:' + ret._body.transactionHash);
                         }
                     }

@@ -1,22 +1,135 @@
 
 <!-- 订单查看(后台) -->
 
-<!-- 上下边线，解决 margin 问题 -->
-<!-- <main id="content" role="main" class="border-top border-bottom bg-light"> -->
+<ion-grid class="border rounded bg-white" *ngIf="order">
+  <ion-row class="font-size-16">
+    <ion-col size="12" class="ion-text-left">
+      {{ 'Number' | translate }}: {{ tableNo }}
+    </ion-col>
+    <ion-col size="12" class="ion-text-left">
+      {{ 'Owner' | translate }}: {{ order.owner }}
+    </ion-col>
+    <ion-col size="12" class="ion-text-left">
+      {{ 'Order' | translate }}: {{ orderId }}
+    </ion-col>
+    <ion-col size="12" class="ion-text-left">
+      {{ 'Date' | translate }}: {{ order.dateCreated | date:'yyyy-MM-dd hh:mm:ss' }}
+    </ion-col>
+  </ion-row>
 
-    <div class="row justify-content-center">  <!-- 本行，水平置中 -->
-        <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-title><h1>{{ "Order" | translate }}</h1></ion-title>
+    </ion-col>
+  </ion-row>
 
-            <div class="container font-size-16" *ngIf="order">  <!-- container 水平置中了 -->
+  <ion-row>
+    <ion-col size="12" class="cart-table">
+
+      <form class="" action="#" method="post">  <!-- "mb-4" -->
+          <table class="table mb-3" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th></th>
+                      <th class="product-name">{{'Product' | translate}}</th>
+                      <th class="product-price">{{'Price' | translate}}</th>
+                      <th class="product-quantity w-lg-15">{{'Quantity' | translate}}</th>
+                      <th class="product-subtotal">{{'Total' | translate}}</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr class="py-2" *ngFor="let item of order.items">
+                      <td>
+                          <div *ngIf="item.lockedDays <= 0">×</div>
+                      </td>
+                      <td class="font-weight-bold">{{ item.title }}</td>
+                      <td>{{ item.price }}</td>
+                      <td>x {{ item.quantity }}</td>
+                      <td>{{ item.price * item.quantity }} {{ currency }}</td>
+                  </tr>
+              </tbody>
+              <tfoot class="border-top">
+                  <tr>
+                      <th colspan="4" class="text-right font-size-20">{{ 'Subtotal' | translate }}</th>
+                      <th class="font-size-17">
+                          {{subtotal}} {{currency}}
+                      </th>
+                  </tr>
+                  <!-- <tr>
+                      <th colspan="4" class="text-right font-size-20">{{ 'Shipping' | translate }}</th>
+                      <th class="font-size-17">
+                          {{ (shippingFee == 0 ? 'Free' : (shippingFee + currency)) | translate }}
+                      </th>
+                  </tr> -->
+                  <!-- <tr *ngIf="discount">
+                      <th colspan="4" class="text-right font-size-20">{{ 'Discount' | translate }}</th>
+                      <th class="font-size-17">
+                          {{ discount }}%
+                      </th>
+                  </tr> -->
+                  <tr>
+                      <th colspan="4" class="text-right font-size-20">{{ 'Tax' | translate }}</th>
+                      <th class="font-size-17">
+                          {{tax}} {{currency}}
+                      </th>
+                  </tr>
+                  <tr>
+                      <th colspan="4" class="text-right font-size-20">{{ 'Total' | translate }}</th>
+                      <th class="font-size-17">
+                          {{total}} {{currency}}
+                      </th>
+                  </tr>
+                  <tr *ngIf="diffFlag == 3">  <!-- && order.paymentStatus != 2 -->
+                      <td colspan="5">
+                          <button type="button" class="btn btn-warning btn-lg btn-block NewButton" (click)="confirmOrder()">
+                              {{ 'Number' | translate }}: {{ tableNo }}, {{'Placed Order' | translate}}
+                          </button>
+                      </td>
+                  </tr>
+                  <tr *ngIf="diffFlag == 4">  <!-- && order.paymentStatus == 2 -->
+                      <td colspan="5">
+                          <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="confirmOrder()">
+                              {{ 'Number' | translate }}: {{ tableNo }}, {{'Pay Bill' | translate}}
+                          </button>
+                      </td>
+                  </tr>
+                  <tr *ngIf="diffFlag == 1">  <!-- && order.paymentStatus != 2 -->
+                      <td colspan="5" class="text-center font-size-20 border">
+                          <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'Placed Order' | translate}}</b>
+                      </td>
+                  </tr>
+                  <tr *ngIf="diffFlag == 2">  <!-- && order.paymentStatus == 2 -->
+                      <td colspan="5" class="text-center font-size-20 border">
+                          <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'Pay Bill' | translate}}</b>
+                      </td>
+                  </tr>
+              </tfoot>
+          </table>
+      </form>
+
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="py-3">
+    <ion-col size="12" class="ion-text-center">
+      <!-- 生成二维码 -->
+      <qrcode [qrdata]="QrUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      <!-- 显示二维码链接 -->
+      {{ QrUrl }}
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+    <!-- <div class="row justify-content-center">
+        <div class="m-3 p-3 container border rounded bg-white">
+
+            <div class="container font-size-16" *ngIf="order">
                 <div class="text-left">
                     {{ 'Number' | translate }}: {{ tableNo }}
                 </div>
-                <!-- <div class="text-left">
-                    {{ 'ObjectId' | translate }}: 
-                    <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
-                        {{order.objectId}}
-                    </a>
-                </div> -->
                 <div class="text-left">
                     {{ 'Owner' | translate }}: {{ order.owner }}
                 </div>
@@ -30,8 +143,8 @@
                     <h2>{{ "Order" | translate }}</h2>
                 </div>
 
-                <div class="cart-table">  <!-- 下边框 mb-10 -->
-                    <form class="" action="#" method="post">  <!-- "mb-4" -->
+                <div class="cart-table">
+                    <form class="" action="#" method="post">
                         <table class="table mb-3" cellspacing="0">
                             <thead>
                                 <tr>
@@ -60,18 +173,6 @@
                                         {{subtotal}} {{currency}}
                                     </th>
                                 </tr>
-                                <!-- <tr>
-                                    <th colspan="4" class="text-right font-size-20">{{ 'Shipping' | translate }}</th>
-                                    <th class="font-size-17">
-                                        {{ (shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate }}
-                                    </th>
-                                </tr> -->
-                                <tr *ngIf="discount">
-                                    <th colspan="4" class="text-right font-size-20">{{ 'Discount' | translate }}</th>
-                                    <th class="font-size-17">
-                                        {{ discount }}%
-                                    </th>
-                                </tr>
                                 <tr>
                                     <th colspan="4" class="text-right font-size-20">{{ 'Tax' | translate }}</th>
                                     <th class="font-size-17">
@@ -84,26 +185,26 @@
                                         {{total}} {{currency}}
                                     </th>
                                 </tr>
-                                <tr *ngIf="diffFlag == 3">  <!-- && order.paymentStatus != 2 -->
+                                <tr *ngIf="diffFlag == 3">
                                     <td colspan="5">
                                         <button type="button" class="btn btn-warning btn-lg btn-block NewButton" (click)="confirmOrder()">
                                             {{ 'Number' | translate }}: {{ tableNo }}, {{'Placed Order' | translate}}
                                         </button>
                                     </td>
                                 </tr>
-                                <tr *ngIf="diffFlag == 4">  <!-- && order.paymentStatus == 2 -->
+                                <tr *ngIf="diffFlag == 4">
                                     <td colspan="5">
                                         <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="confirmOrder()">
                                             {{ 'Number' | translate }}: {{ tableNo }}, {{'Pay Bill' | translate}}
                                         </button>
                                     </td>
                                 </tr>
-                                <tr *ngIf="diffFlag == 1">  <!-- && order.paymentStatus != 2 -->
+                                <tr *ngIf="diffFlag == 1">
                                     <td colspan="5" class="text-center font-size-20 border">
                                         <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'Placed Order' | translate}}</b>
                                     </td>
                                 </tr>
-                                <tr *ngIf="diffFlag == 2">  <!-- && order.paymentStatus == 2 -->
+                                <tr *ngIf="diffFlag == 2">
                                     <td colspan="5" class="text-center font-size-20 border">
                                         <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'Pay Bill' | translate}}</b>
                                     </td>
@@ -118,16 +219,10 @@
                 <div class="text-center">
                     {{ QrUrl }}
                 </div>
-                    <!-- <div>
-                    {{ 'Email' | translate }}: {{ order.merchantId.email }}
-                </div> -->
-                <!-- Login Email: {{ order.merchantId.createMemberId.email }} -->
             </div>
 
         </div>
-    </div>
-
-<!-- </main> -->
+    </div> -->
 
 
 <!-- <div class="m-3 list-group" *ngIf="order">

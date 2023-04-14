@@ -88,7 +88,7 @@ export class AdminComponent implements OnInit {
     const lang = this.storageServ.lang;
     if (!lang) {
       this.storageServ.get('_lang').subscribe(
-        (lang2: string) => {
+        (lang2: any) => {
           if (lang2) {
             this.translateServ.setDefaultLang(lang2);
           }

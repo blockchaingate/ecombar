@@ -89,7 +89,7 @@ export class TransactionHistoryComponent implements OnInit {
     ngOnInit() {
         this.currentType = 'All';
         this.storageService.getTransactionHistoryList().subscribe(
-            (transactionHistory: TransactionItem[]) => {
+            (transactionHistory: any) => {
                 //console.log('transactionHistory=', transactionHistory);
                 if (transactionHistory && (transactionHistory.length > 0)) {
                     //this.transactionHistory = transactionHistory.reverse().filter(s => s.walletId === this.walletId);

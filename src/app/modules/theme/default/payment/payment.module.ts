@@ -5,7 +5,7 @@ import { PaymentComponent } from './payment.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerModule } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
     CommonModule,
     FormsModule,
     SharedModule,
-    NgxSpinnerModule,
+    // NgxSpinnerModule,
     ModalModule.forRoot()
   ],
   providers: []

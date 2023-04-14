@@ -16,7 +16,7 @@ export class ImageUploadComponent {
 
   // ...... other methods and imports skipped for brevity
 
-  changeImage(imageInput: HTMLInputElement) {
+  changeImage( imageInput: HTMLInputElement ) {
     const file: File = imageInput.files[0];
     this.uploadImageLabel = `${file.name} (${(file.size * 0.000001).toFixed(2)} MB)`;
     if (file.size > 1048576) {

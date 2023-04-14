@@ -12,7 +12,8 @@
         <input type="text" placeholder="{{'Enter subtitle' | translate}}" [(ngModel)]="subtitle" name="subtitle">  
         -->
         <label for="image"><b>{{ 'Image' | translate }}</b></label>
-        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        <!-- [(images)] 双向绑定 -> [images] 单向绑定 -->
+        <app-admin-upload-media [images]="images" [singleFile]="true"></app-admin-upload-media>
         <label for="email"><b>{{ 'Link' | translate }}</b></label>
         <input type="text" placeholder="{{'Enter link' | translate}}" [(ngModel)]="clickLink" name="clickLink">
 

@@ -1,10 +1,13 @@
+
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectToken } from 'src/app/store/selectors/user.selector';
+// import { AppState } from 'src/app/store/states';
+import { UserState } from 'src/app/store/states/user.state';
 
 interface OPTIONS {
     headers?: HttpHeaders | {
@@ -21,16 +24,21 @@ interface OPTIONS {
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
-    constructor(private http: HttpClient, private storage: StorageService, private store: Store) { }
+    constructor(
+        private http: HttpClient, 
+        private storage: StorageService, 
+        private store: Store<{ user: UserState }>) { 
+     // private store: Store) {  // Fix
+    }
 
     get(path: string, jwtAuth = false, pubkey = true): Observable<any> {
-        const url = environment.endpoints.blockchaingate + path;
-        //console.log('url ==', url);
+        const url = environment.endpoints['blockchaingate'] + path;
+        console.log('2,url ==', url);
         const ret = new Observable<any>((observer) => {
-            if(jwtAuth === true) {
+            if (jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        if(!token) {
+                        if (! token) {
                             observer.error('url=' + url + ',Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
@@ -50,7 +58,8 @@ export class HttpService {
                                 }
                             );
                         }
-                    });
+                    }
+                );
             } else if (pubkey === true) {
                 const httpHeaders = new HttpHeaders({
                     'Content-Type': 'application/json'
@@ -90,14 +99,13 @@ export class HttpService {
     }
 
     post(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
-        const url = environment.endpoints.blockchaingate + path;
-        //data.appId = environment.appid;
-
+        const url = environment.endpoints['blockchaingate'] + path;
+        // data.appId = environment['appid'];
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
                     (token: string) => {
-                        if(!token) {
+                        if (! token) {
                             observer.error('url=' + url + ',Token not exists');
                         } else {
                             const httpHeaders = new HttpHeaders({
@@ -107,7 +115,6 @@ export class HttpService {
                             const options: OPTIONS = {
                                 headers: httpHeaders
                             };   
-                            
                             this.http.post(url, data, options).subscribe(
                                 (res) => {
                                     observer.next(res);
@@ -156,11 +163,10 @@ export class HttpService {
 
         });
         return ret;
-
     }
 
     put(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
-        const url = environment.endpoints.blockchaingate + path;
+        const url = environment.endpoints['blockchaingate'] + path;
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
@@ -175,7 +181,6 @@ export class HttpService {
                             const options: OPTIONS = {
                                 headers: httpHeaders
                             };   
-                            
                             this.http.put(url, data, options).subscribe(
                                 (res) => {
                                     observer.next(res);
@@ -226,7 +231,7 @@ export class HttpService {
     }
 
     delete(path: string, jwtAuth = false, pubkey = true): Observable<any> {
-        const url = environment.endpoints.blockchaingate + path;
+        const url = environment.endpoints['blockchaingate'] + path;
         const ret = new Observable<any>((observer) => {
             if(jwtAuth === true) {
                 this.store.select(selectToken).subscribe(
@@ -241,7 +246,6 @@ export class HttpService {
                             const options: OPTIONS = {
                                 headers: httpHeaders
                             };   
-                            
                             this.http.delete(url, options).subscribe(
                                 (res) => {
                                     observer.next(res);
@@ -303,7 +307,7 @@ export class HttpService {
         const options: OPTIONS = {
             headers: httpHeaders
         };
-        const url = environment.endpoints.blockchaingate + path;
+        const url = environment.endpoints['blockchaingate'] + path;
         return this.http.delete(url, options);
         */
     }
@@ -321,7 +325,7 @@ export class HttpService {
         const options: OPTIONS = {
             headers: httpHeaders
         };
-        const url = environment.endpoints.blockchaingate + path;
+        const url = environment.endpoints['blockchaingate'] + path;
         return this.http.get(url, options);
     }
 
@@ -338,7 +342,7 @@ export class HttpService {
             headers: httpHeaders
         };
         data.appId = this.storage.appId;
-        const url = environment.endpoints.blockchaingate + path;
+        const url = environment.endpoints['blockchaingate'] + path;
         return this.http.post(url, data, options);
     }
     */

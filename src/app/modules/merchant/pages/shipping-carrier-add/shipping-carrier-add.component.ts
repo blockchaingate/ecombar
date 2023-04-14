@@ -23,8 +23,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     flatRate: number;
     name: string;
     nameChinese: string;
+    nameTradition: string;
     desc: string;
     descChinese: string;
+    descTradition: string;
     NavTab: string;    // 导航 Tab
     currentTab: string;    // 语言 Tab
       id: string;
@@ -43,7 +45,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
       this.NavTab = 'General';    // 缺省页面
       this.currentTab = 'default English';    // 缺省页面
       this.dataServ.currentWallet.subscribe(
-        (wallet: string) => {
+        (wallet: any) => {
           this.wallet = wallet;
         }
       ); 

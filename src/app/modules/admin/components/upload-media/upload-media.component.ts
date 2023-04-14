@@ -56,7 +56,12 @@ export class UploadMediaComponent implements OnInit {
     this.checkedImages = [];
   }
 
-  fileChangeEvent(e: File[]) {
+  fileChangeEvent( event: Event ) {  // e: File[]
+    // Fix: error TS2339: Property 'files' does not exist on type 'EventTarget'.
+    const fileInput = event.target as HTMLInputElement;
+    const files = fileInput.files;
+    const e = files;  // e: File[]
+
     if (!e) { return; }
     this.uploadSuccess = false;/* DXACF */
     this.url = '';

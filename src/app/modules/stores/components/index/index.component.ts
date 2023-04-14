@@ -13,7 +13,7 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { environment } from 'src/environments/environment';
 
-import { StoreList, StoreListHot, StoreListNew } from './mock-stores';    // 虚拟商家数据（测试）
+// import { StoreList, StoreListHot, StoreListNew } from './mock-stores';    // 虚拟商家数据（测试）
 
 @Component({
   selector: 'app-stores-index',
@@ -47,7 +47,7 @@ export class StoresIndexComponent implements OnInit {
   ngOnInit(): void {
     console.log('stores here we go');
     this.storeageServ.getStoreRef().subscribe(
-      (refAddress: string) => {
+      (refAddress: any) => {
         this.parentId = refAddress;
       }
     );
@@ -100,7 +100,7 @@ export class StoresIndexComponent implements OnInit {
   joinAsMember() {
     this.paycoolServ.isValidMember(this.parentId).subscribe(
       (ret: any) => {
-        if((ret && ret.isValid) || (this.parentId == environment.addresses.Referral_ROOT)) {
+        if((ret && ret.isValid) || (this.parentId == environment['addresses'].Referral_ROOT)) {
           const initialState = {
             pwdHash: this.wallet.pwdHash,
             gas: 0,
@@ -160,7 +160,7 @@ export class StoresIndexComponent implements OnInit {
     };
     const hexAddress = this.utilServ.fabToExgAddress(this.parentId);
     const args = [hexAddress];
-    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, environment.addresses.smartContract.smartConractAdressReferral, abi, args);
+    const ret = await this.kanbanSmartContractServ.execSmartContract(seed, environment['addresses'].smartContract.smartConractAdressReferral, abi, args);
     console.log('ret====');
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       this.toastr.success('Your request was made successfully');

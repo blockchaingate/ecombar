@@ -56,8 +56,10 @@ const routes: Routes = [
         path: 'upload', component: UploadMediaComponent
       },
       {
-        path: '', redirectTo: 'dashboard'
-      }
+        path: '', 
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+  }
     ]
   }
 ];

@@ -1,19 +1,70 @@
 
-<h1>{{'Orders' | translate}} (No. {{ tableNo }})</h1>
+<!-- 列示所有订单（指定台号） -->
 
-<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+<ion-grid class="px-2 font-size-18 bg-white border-bottom">
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-title><h1>{{ 'Orders' | translate }} (No. {{ tableNo }})</h1></ion-title>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" class="ion-text-end" *ngIf="store.status == 2">
+      <button type="button" class="btn btn-danger btn-sm newButton-S rounded" (click)="newOrder()">
+        {{ 'New Order' | translate }}
+      </button>  <!-- 圆角边框 -->
+    </ion-col>
+  </ion-row>
+  <ion-row class="bg-light">
+    <ion-col size="3">{{ 'Id' | translate }}</ion-col>
+    <ion-col size="3">{{ 'Date Created' | translate }}</ion-col>
+    <ion-col size="2">{{ 'Total' | translate }}</ion-col>
+    <ion-col>{{ 'Status' | translate }}</ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid class="bg-white" *ngFor="let order of orders">
+  <ion-row class="work-list">
+    <ion-col size="3">
+      <a target="_blank" *ngIf="order.merchantId" href="/merchant/order/{{ order._id }}">
+        {{ order._id }}
+      </a>
+      <span *ngIf="!order.merchantId">{{ order._id }}</span>
+    </ion-col>
+    <ion-col size="3">{{ order.dateCreated | date:'MM/dd hh:mm' }}</ion-col>
+    <ion-col size="2">{{ order.totalAmount }}</ion-col>
+    <ion-col *ngIf="order.memo">
+      {{ order.memo }}
+    </ion-col>
+    <ion-col *ngIf="!order.memo">
+      {{ getStatus(order) | translate }}
+    </ion-col>
+      <!-- <div *ngIf="order.paymentStatus == 5">
+        <a (click)="refund(order)">
+          Approve refund
+        </a>
+      </div> -->
+      <!-- <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">
+        <a href="/merchant/shipping/{{order._id}}">
+          <img src="/assets/svg/shipping.svg">
+        </a>
+      </div> -->
+  </ion-row>
+</ion-grid>
+
+
+<!-- <h1>{{ 'Orders' | translate }} (No. {{ tableNo }})</h1>
+
+<div class="px-2">
   <div class="text-right my-2">
     <button type="button" class="btn btn-danger btn-sm newButton-S rounded" (click)="newOrder()">
       {{ 'New Order' | translate }}
-    </button>  <!-- 圆角边框 -->
+    </button>
   </div>
-
   <dl class="work-list row">
     <dt class="col-3">{{ 'Id' | translate }}</dt>
     <dt class="col-3">{{ 'Date Created' | translate }}</dt>
     <dt class="col-2">{{ 'Total' | translate }}</dt>
     <dt class="col">{{ 'Status' | translate }}</dt>
-    <!-- <dt class="col"></dt> -->
   </dl>
 
   <dl class="work-list row" *ngFor="let order of orders">
@@ -23,7 +74,7 @@
       </a>
       <span *ngIf="!order.merchantId">{{ order._id }}</span>
     </dd>
-    <dd class="col-3">{{ order.dateCreated | date:'MM-dd hh:mm' }}</dd>
+    <dd class="col-3">{{ order.dateCreated | date:'MM/dd hh:mm' }}</dd>
     <dd class="col-2">{{ order.totalAmount }}</dd>
     <dd class="col" *ngIf="order.memo">
       {{ order.memo }}
@@ -32,19 +83,6 @@
       <div>
         {{ getStatus(order) | translate }}
       </div>
-      <!-- <div *ngIf="order.paymentStatus == 5">
-        <a (click)="refund(order)">
-          Approve refund
-        </a>
-      </div> -->
     </dd>
-    <!-- <dd class="col">
-      <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">
-        <a href="/merchant/shipping/{{order._id}}">
-          <img src="/assets/svg/shipping.svg">
-        </a>
-      </div>
-    </dd> -->
   </dl>
-
-</div>
+</div> -->

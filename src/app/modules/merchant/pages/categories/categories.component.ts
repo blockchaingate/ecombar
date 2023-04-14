@@ -23,6 +23,9 @@ export class CategoriesComponent implements OnInit {
   categories: any;
   wallet: any;
   modalRef: BsModalRef;
+  storeId: string;
+  store: any;
+
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -33,6 +36,11 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
 
+    this.dataServ.currentWallet.subscribe(
+      (wallet: any) => {
+        this.wallet = wallet;
+      }
+    );      
 
     this.categories = [];
     this.dataServ.currentWalletAddress.subscribe(
@@ -42,11 +50,16 @@ export class CategoriesComponent implements OnInit {
         }
       }
     );
-    this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
-        this.wallet = wallet;
+
+    this.dataServ.currentMyStore.subscribe(
+      (store: any) => {
+        if(store) {
+          this.store = store;
+          this.storeId = store._id;
+        }
       }
-    );      
+    )
+
   }
 
   getMerchantCategories(walletAddress: string) {

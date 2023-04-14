@@ -47,7 +47,7 @@ export class FeeDistributionComponent implements OnInit {
   ngOnInit(): void {
     this.rewardCoins = [];
     this.rewardPercentages = [];
-    this.to = environment.addresses.smartContract.feeDistribution;
+    this.to = environment['addresses'].smartContract.feeDistribution;
     this.getRewardTokens();
     this.getRewardPercentages();
     this.getPaymentFeeRate();

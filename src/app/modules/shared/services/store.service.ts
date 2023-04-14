@@ -3,12 +3,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
-const baseUrl = environment.endpoints.paycool;
+const baseUrl = environment.endpoints['paycool'];
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+    providedIn: 'root'
+})
 
 export class StoreService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient) { 
+  }
 
   getAll() {
     return this.http.get('stores');
@@ -34,6 +38,7 @@ export class StoreService {
     // 后端使用 Mongoose 连接 MongoDB，定义模式和模型（models 目录），进行查询。
     // 条件 .find({ address, status: 2, hideOnStore: false })
     const url = baseUrl + 'merchantreferral/ecombar/' + pageSize +'/' + pageNum;    // 1000/0 一次取完，前端应改为逐页读
+    console.log('1,url ==', url);
     return this.http.get(url);
   }
 

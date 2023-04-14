@@ -38,19 +38,19 @@ export class WalletPwdComponent implements OnInit {
     }
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-        const pass = group.controls.password.value;
-        const confirmPass = group.controls.pwdconfirm.value;
+        const pass = group.controls['password'].value;
+        const confirmPass = group.controls['pwdconfirm'].value;
 
         return pass === confirmPass ? null : { notSame: true };
     }
 
     onSubmit() {
         
-        const name = this.userForm.controls.name.value;
-        const pwd = this.userForm.controls.password.value;
+        const name = this.userForm.controls['name'].value;
+        const pwd = this.userForm.controls['password'].value;
 
-        // const mnemonic = sessionStorage.mnemonic.trim().replace(/\s\s+/g, ' ');
-        let mnemonic = sessionStorage.mnemonic;
+        // const mnemonic = sessionStorage['mnemonic'].trim().replace(/\s\s+/g, ' ');
+        let mnemonic = sessionStorage['mnemonic'];
         mnemonic = mnemonic.trim().replace(/\s\s+/g, ' ').replace(/(\r\n|\n|\r)/gm, '');
         const wallet = this.walletServ.generateWallet(pwd, name, mnemonic);
 

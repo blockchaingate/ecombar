@@ -1,15 +1,52 @@
-<div class="no-wallet">
+
+<!-- <ion-toolbar>
+  <ion-title class="ion-text-center">{{ 'Connect to you wallet' | translate }}</ion-title>
+</ion-toolbar>
+
+<ion-toolbar>
+    <ion-button color="danger" expand="full" (click)="createWallet()">
+      {{ 'Create Wallet' | translate }}
+    </ion-button>
+    <ion-button color="danger" expand="full" (click)="restoreWallet()">
+      {{ 'Restore Wallet' | translate }}
+    </ion-button>
+</ion-toolbar> -->
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-title class="text-black pt-3">{{'Connect to your wallet' | translate}}</ion-title>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-button color="danger" expand="full" (click)="createWallet()">
+        {{'Create Wallet' | translate}}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" class="ion-text-center text-black">
+      <ion-button color="danger" expand="full" (click)="restoreWallet()">
+        {{'Restore Wallet' | translate}}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<!-- <div class="no-wallet">
     <div class="container ">
         <div class="row">
             <div class="col-12 text-center">
-                <h1 class="text-black pt-3">{{'Connect to you wallet' | translate}}</h1>
+                <h1 class="text-black pt-3">{{ 'Connect to you wallet' | translate }}</h1>
             </div>
         </div>        
         <div class="row">
             <div class="col-12 text-center">
                 <div class="CreateCollection--actions m-1 py-3">
                     <div class="ActionButtonrContainer ">
-                        <div class="ActionButton--content" (click)="createWallet()" style="min-width: 120px;">{{"Create Wallet" | translate }}</div>
+                        <div class="ActionButton--content" (click)="createWallet()" style="min-width: 120px;">{{ "Create Wallet" | translate }}</div>
                     </div> 
                 </div>
             </div>
@@ -19,10 +56,10 @@
 
                 <div class="CreateCollection--actions m-1 py-3">
                     <div class="ActionButtonrContainer ActionButton--secondary">
-                        <div class="ActionButton--content" (click)="restoreWallet()" style="min-width: 120px;">{{"Restore Wallet" | translate }}</div>
+                        <div class="ActionButton--content" (click)="restoreWallet()" style="min-width: 120px;">{{ "Restore Wallet" | translate }}</div>
                     </div> 
                 </div>                
             </div>
         </div>
     </div>
-</div>
+</div> -->

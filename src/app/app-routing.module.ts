@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { themeEvn } from 'src/environments/themeEnv';
@@ -5,9 +6,14 @@ import { ThemeService } from './services/theme.service';
 
 const defaultTheme: Routes = [
   {
-    path: '',  // 缺省 'stores'
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
     loadChildren: () =>
-      import('./modules/stores/stores.module').then(m => m.StoresModule)
+      import('./modules/home/home.module').then(m => m.HomeModule)
   },
   {
     path: 'stores',
@@ -70,6 +76,11 @@ const defaultTheme: Routes = [
       import('src/app/modules/merchant/merchant.module').then(m => m.MerchantModule)
   },
   {
+    path: 'chef',
+    loadChildren: () =>
+      import('src/app/modules/chef/chef.module').then(m => m.ChefModule)
+  },
+  {
     path: 'account',
     loadChildren: () =>
       import('src/app/modules/account/account.module').then(m => m.AccountModule)
@@ -84,70 +95,70 @@ const defaultTheme: Routes = [
     loadChildren: () =>
       import('src/app/modules/wallet/wallet.module').then(m => m.WalletModule)
   },
-  {
-    path: 'nft',
-    loadChildren: () =>
-      import('src/app/modules/nft/nft.module').then(m => m.NftModule)
-  },
+  // {
+  //   path: 'nft',
+  //   loadChildren: () =>
+  //     import('src/app/modules/nft/nft.module').then(m => m.NftModule)
+  // },
 ];
 
-const madEarn: Routes = [
-  {
-    path: '',
-    loadChildren: () =>
-      import('./modules/stores/stores.module').then(m => m.StoresModule)
-  },
-  {
-    path: 'stores',
-    loadChildren: () =>
-      import('./modules/stores/stores.module').then(m => m.StoresModule)
-  },
-  {
-    path: 'team',
-    loadChildren: () =>
-      import('./modules/team/team.module').then(m => m.TeamModule)
-  },
-  {
-    path: 'store/:storeId',
-    loadChildren: () =>
-      import('./modules/theme/mad-earn/madearn.module').then(m => m.MadearnModule)
-  },
-  {
-    path: 'iddock',
-    loadChildren: () =>
-      import('./modules/iddock/iddock.module').then(m => m.IddockModule)
-  },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('src/app/modules/admin/admin.module').then(m => m.AdminModule)
-  },
-  {
-    path: 'merchant',
-    loadChildren: () =>
-      import('src/app/modules/merchant/merchant.module').then(m => m.MerchantModule)
-  },
-  {
-    path: 'account',
-    loadChildren: () =>
-      import('src/app/modules/account/account.module').then(m => m.AccountModule)
-  },
-  {
-    path: 'auth',
-    loadChildren: () =>
-      import('src/app/modules/auth/auth.module').then(m => m.AuthModule)
-  },
-  {
-    path: 'wallet',
-    loadChildren: () =>
-      import('src/app/modules/wallet/wallet.module').then(m => m.WalletModule)
-  },
-  {
-    path: 'nft',
-    loadChildren: () =>
-      import('src/app/modules/nft/nft.module').then(m => m.NftModule)
-  },
-];
+// const madEarn: Routes = [
+//   {
+//     path: '',
+//     loadChildren: () =>
+//       import('./modules/stores/stores.module').then(m => m.StoresModule)
+//   },
+//   {
+//     path: 'stores',
+//     loadChildren: () =>
+//       import('./modules/stores/stores.module').then(m => m.StoresModule)
+//   },
+//   {
+//     path: 'team',
+//     loadChildren: () =>
+//       import('./modules/team/team.module').then(m => m.TeamModule)
+//   },
+//   {
+//     path: 'store/:storeId',
+//     loadChildren: () =>
+//       import('./modules/theme/mad-earn/madearn.module').then(m => m.MadearnModule)
+//   },
+//   {
+//     path: 'iddock',
+//     loadChildren: () =>
+//       import('./modules/iddock/iddock.module').then(m => m.IddockModule)
+//   },
+//   {
+//     path: 'admin',
+//     loadChildren: () =>
+//       import('src/app/modules/admin/admin.module').then(m => m.AdminModule)
+//   },
+//   {
+//     path: 'merchant',
+//     loadChildren: () =>
+//       import('src/app/modules/merchant/merchant.module').then(m => m.MerchantModule)
+//   },
+//   {
+//     path: 'account',
+//     loadChildren: () =>
+//       import('src/app/modules/account/account.module').then(m => m.AccountModule)
+//   },
+//   {
+//     path: 'auth',
+//     loadChildren: () =>
+//       import('src/app/modules/auth/auth.module').then(m => m.AuthModule)
+//   },
+//   {
+//     path: 'wallet',
+//     loadChildren: () =>
+//       import('src/app/modules/wallet/wallet.module').then(m => m.WalletModule)
+//   },
+//   // {
+//   //   path: 'nft',
+//   //   loadChildren: () =>
+//   //     import('src/app/modules/nft/nft.module').then(m => m.NftModule)
+//   // },
+// ];
 
 let routes: Routes = [];
 
@@ -155,9 +166,9 @@ switch (themeEvn.defaultTheme) {
   case 'Default':
     routes = defaultTheme;
     break;
-  case 'MadEarn':
-    routes = madEarn;
-    break;
+  // case 'MadEarn':
+  //   routes = madEarn;
+  //   break;
   // case 'NFT':
   //   this.router.resetConfig(nft);
   //   break;
@@ -168,7 +179,7 @@ switch (themeEvn.defaultTheme) {
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabled'
+    // initialNavigation: 'enabled'
   })],
   exports: [RouterModule]
 })
@@ -192,9 +203,9 @@ export class AppRoutingModule {
         case 'Default':
           this.router.resetConfig(defaultTheme);
           break;
-        case 'MadEarn':
-          this.router.resetConfig(madEarn);
-          break;
+        // case 'MadEarn':
+        //   this.router.resetConfig(madEarn);
+        //   break;
         // case 'NFT':
         //   this.router.resetConfig(nft);
         //   break;

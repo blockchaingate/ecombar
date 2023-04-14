@@ -1,8 +1,53 @@
 
-<h1>{{'Orders' | translate}}</h1>
+<!-- 列示所有订单 -->
 
-<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+<ion-grid class="px-2 font-size-18 bg-white border-bottom">
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-title><h1>{{ 'Orders' | translate }}</h1></ion-title>
+    </ion-col>
+  </ion-row>
+  <ion-row class="bg-light">
+    <ion-col size="3">{{ 'Id' | translate }}</ion-col>
+    <ion-col size="3">{{ 'Date Created' | translate }}</ion-col>
+    <ion-col size="2">{{ 'Total' | translate }}</ion-col>
+    <ion-col>{{ 'Status' | translate }}</ion-col>
+  </ion-row>
+</ion-grid>
 
+<ion-grid class="bg-white" *ngFor="let order of orders">
+  <ion-row class="work-list">
+    <ion-col size="3">
+      <a target="_blank" *ngIf="order.merchantId" href="/store/{{ order.merchantId }}/order/{{ order._id }}">
+        {{ order._id }}
+      </a>
+      <span *ngIf="!order.merchantId">{{ order._id }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
+    </ion-col>
+    <ion-col size="3">{{ order.dateCreated | date:'MM/dd hh:mm' }}</ion-col>
+    <ion-col size="2">{{ order.totalAmount }}</ion-col>
+    <ion-col *ngIf="order.memo">
+      {{ order.memo }}
+    </ion-col>
+    <ion-col *ngIf="!order.memo">
+      {{ getStatus(order) | translate }}
+      <div *ngIf="order.paymentStatus == 2" >
+        <a (click)="requestRefund(order)">
+          Request refund
+        </a>
+      </div>
+      <div *ngIf="order.paymentStatus == 5" >
+        <a (click)="cancelRequestRefund(order)">
+          Cancel request refund
+        </a>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<!-- <h1>{{ 'Orders' | translate }}</h1>
+
+<div class="px-2">
   <dl class="work-list row">
     <dt class="col-3">{{ 'Id' | translate }}</dt>
     <dt class="col-3">{{ 'Date Created' | translate }}</dt>
@@ -11,14 +56,14 @@
   </dl>
 
   <dl class="work-list row" *ngFor="let order of orders">
-    <dd class="col-3">  <!-- 旧值 order.store, order.store._id -->
+    <dd class="col-3">
       <a target="_blank" *ngIf="order.merchantId" href="/store/{{order.merchantId}}/track-order/{{order._id}}">
         {{ order._id }}
       </a>
-      <span *ngIf="!order.merchantId">{{ order._id }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
+      <span *ngIf="!order.merchantId">{{ order._id }}</span>
     </dd>
     <dd class="col-3">{{ order.dateCreated | date }}</dd>
-    <dd class="col-3">{{ order.totalAmount }}</dd>  <!-- 旧值 order.totalToPay -->
+    <dd class="col-3">{{ order.totalAmount }}</dd>
     <dd class="col">
       <div>
         {{ getStatus(order) | translate }}
@@ -35,8 +80,7 @@
       </div>
     </dd>
   </dl>
-
-</div>
+</div> -->
 
     <!-- <ul class="responsive-table">
       <li class="table-header">
@@ -46,15 +90,15 @@
         <div class="col col-3">{{ 'Status' | translate }}</div>
       </li>
       <li class="table-row" *ngFor="let order of orders">
-        <div class="col col-3" data-label="{{ 'Id' | translate }}">
+        <div class="col col-3" data-label="Id">
           <a target="_blank" *ngIf="order.store" href="/store/{{order.store._id}}/track-order/{{order._id}}">
             {{ trimText(order._id) }}
           </a>
           <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
         </div>
-        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
-        <div class="col col-3" data-label="{{'Total' | translate}}">{{ order.totalAmount }}</div>
-        <div class="col col-3" data-label="{{'Status' | translate}}">
+        <div class="col col-3" data-label="Date Created">{{order.dateCreated | date}}</div>
+        <div class="col col-3" data-label="Total">{{ order.totalAmount }}</div>
+        <div class="col col-3" data-label="Status">
           <div>
             {{ getStatus(order) | translate }}
           </div>

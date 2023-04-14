@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-const baseUrl = environment.endpoints.paycool;
+const baseUrl = environment.endpoints['paycool'];
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
@@ -17,7 +17,7 @@ export class OrderService {
   }
 
   update_items(externalOrderNumber: string, data) {  // Order 更新 items
-    // put https://fabtest.info/api/userpay/order/externalOrderNumber/123456
+    // put https://test.fabcoin.org/api/userpay/order/externalOrderNumber/123456
     // 将 {"items":[{...}, ...]} 更新到指定的 externalOrderNumber
     return this.http.put(baseUrl + 'userpay/order/externalOrderNumber/' + externalOrderNumber, data);
   }
@@ -76,7 +76,7 @@ export class OrderService {
   // gerMerchantOrders(address: string) {
   gerMerchantOrders(walletAddress: string) {
     // return this.http.get('orders/merchant-orders/' + address);
-    const url = environment.endpoints.paycool + 'userpay/orders/merchant/' + walletAddress + '/' + 100 + '/' + 0;
+    const url = environment.endpoints['paycool'] + 'userpay/orders/merchant/' + walletAddress + '/' + 100 + '/' + 0;
     return this.http.get(url);
   }
 

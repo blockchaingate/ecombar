@@ -51,7 +51,7 @@ export class CategoryAddComponent implements OnInit {
     this.currentTab = 'default English';    // 缺省页面
 
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 

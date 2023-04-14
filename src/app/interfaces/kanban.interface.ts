@@ -1,5 +1,6 @@
+
 // import { OrderBookItem } from '../modules/market/models/order-book';
-import { number } from 'bitcoinjs-lib/types/script';
+// import { number } from 'bitcoinjs-lib/types/script';
 
 // import { Block } from 'bitcoinjs-lib';
 

@@ -33,16 +33,20 @@ export class ChatService {
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from '../../../../environments/environment';
-import { catchError, tap, switchAll } from 'rxjs/operators';
+import { catchError, tap, switchAll, switchMap } from 'rxjs/operators';
 import { EMPTY, Subject } from 'rxjs';
-export const WS_ENDPOINT = environment.endpoints.ws; 
+
+export const WS_ENDPOINT = environment.endpoints['ws']; 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private socket$: WebSocketSubject<any>;
   private messagesSubject$ = new Subject();
-  public messages$ = this.messagesSubject$.pipe(switchAll(), catchError(e => { throw e }));
+  public messages$ = this.messagesSubject$.pipe(
+    switchMap((value: any) => value),  // switchAll(), 
+    catchError(e => { throw e })
+  );
   
   public connect(): void {
   

@@ -1,12 +1,55 @@
 
-<h1>{{ 'Categories' | translate }}</h1>
+<!-- “类别”管理 -->
+
+<ion-grid class="px-2 font-size-18 bg-white border-bottom">
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-title><h1>{{ 'Categories' | translate }}</h1></ion-title>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" class="ion-text-end" *ngIf="store.status == 2">
+      <button type="button" class="btn btn-danger btn-lg newButton-S rounded" 
+        routerLink="/merchant/category/add" routerLinkActive="active">
+        {{ 'New' | translate }}
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="bg-light">
+    <ion-col size="3">{{ 'Name' | translate }}</ion-col>
+    <ion-col size="3">{{ 'Sequence' | translate }}</ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid class="bg-white" *ngFor="let category of categories">
+  <ion-row class="work-list">
+    <ion-col size="3">{{ category.name | translateField }}</ion-col>
+    <ion-col size="3">{{ category.sequence }}</ion-col>
+    <ion-col>
+      <div class="d-inline-block px-2">
+        <a (click)="editCategory(category)">
+          <img src="/assets/svg/edit.svg">
+        </a>
+      </div>
+      <div class="d-inline-block px-2">
+        <a (click)="deleteCategory(category._id)">
+          <img src="/assets/svg/delete.svg">
+        </a>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<!-- <h1>{{ 'Categories' | translate }}</h1>
 
 <div class="px-3">
   <div class="text-right my-2">
     <button type="button" class="btn btn-danger btn-lg newButton-S rounded" 
       routerLink="/merchant/category/add" routerLinkActive="active">
       {{ 'New' | translate }}
-    </button>  <!-- 靠右对齐，圆角边框 btn-block float-right -->
+    </button>
   </div>
 
   <dl class="work-list row">
@@ -31,30 +74,4 @@
       </div>
     </dd>
   </dl>
-
-  <!-- <ul class="responsive-table">
-    <li class="table-header">
-      <div class="col col-3">{{ 'Name' | translate }}</div>
-      <div class="col col-3">{{ 'Sequence' | translate }}</div>
-      <div class="col col-3"></div>
-    </li>
-    <li class="table-row" *ngFor="let category of categories">
-      <div class="col col-3" data-label="Name">{{category.name | translateField}}
-      </div>
-      <div class="col col-3" data-label="Sequence">{{category.sequence}}</div>
-      <div class="col col-3 text-right" data-label="Operations">
-        <div class="d-inline-block px-2">
-          <a (click)="editCategory(category)">
-            <img src="/assets/svg/edit.svg">
-          </a>
-        </div>
-        <div class="d-inline-block px-2">
-          <a (click)="deleteCategory(category._id)">
-            <img src="/assets/svg/delete.svg">
-          </a>
-        </div>
-      </div>
-    </li>
-  </ul> -->
-
-</div>
+</div> -->

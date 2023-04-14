@@ -1,0 +1,48 @@
+
+<ion-header>
+  <!-- 固定在顶部的 Header -->
+  <!-- <app-stores-header></app-stores-header> -->
+  <ion-title class="ion-text-center">{{ 'MadEat Ordering System' | translate }}</ion-title>
+</ion-header>
+
+<!-- '#000000 00' -->
+<!-- [style.--background]="scanActive ? '#00000000' : '#fff'" -->
+<ion-content [style.--background]="scanActive ? 'rgba(0,0,0,0)' : 'rgb(255,255,255)'">
+  <!-- 内容区域，这里是页面主要内容 -->
+  <!-- 这部分内容将在滚动时滚动 -->
+  <!-- <div class="bg-light"> -->
+    <!-- <router-outlet></router-outlet> -->
+
+  <ion-button color="danger" expand="full" (click)="startScanner()" [hidden]="scanActive">
+    <ion-icon name="scan" slot="start"></ion-icon>
+    {{'Start Scan' | translate}}
+  </ion-button>
+  <p class="ion-text-center" *ngIf="qrResult && !scanActive">{{ qrResult }}</p>
+
+  <div class="scan-box" [hidden]="!scanActive"></div>
+
+  <!-- <ion-row class="ion-no-padding scanner-buttons" [hidden]="!scanActive">
+    <ion-col size="12">
+      <ion-button color="danger" expand="full" (click)="stopScanner()">{{ 'Stop Scan' | translate }}</ion-button>
+    </ion-col>
+  </ion-row> -->
+
+  <!-- </div> -->
+</ion-content>
+
+<ion-footer>
+  <!-- 跟随滚动的 Footer -->
+  <ion-toolbar>
+    <ion-button color="danger" expand="full" (click)="stopScanner()" [hidden]="!scanActive">
+      {{ 'Stop Scan' | translate }}
+    </ion-button>
+    <app-nft-footer></app-nft-footer>
+  </ion-toolbar>
+</ion-footer>
+
+
+<!-- <app-stores-header></app-stores-header>
+<div class="bg-light">
+  <router-outlet></router-outlet>
+</div>
+<app-nft-footer></app-nft-footer> -->

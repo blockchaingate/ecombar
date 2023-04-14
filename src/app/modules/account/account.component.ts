@@ -31,6 +31,7 @@ export class AccountComponent implements OnInit {
   displayNameSelect: Observable<string>;
   roleSelect: Observable<string>;
   */
+  extendedMenu: string;
 
   role: string;
   myPhotoUrl: string;
@@ -52,7 +53,7 @@ export class AccountComponent implements OnInit {
   async ngOnInit() {
     this.year = (new Date()).getFullYear();
 
-    //this.userState$ = this.store.select('user');
+    // this.userState$ = this.store.select('user');
     this.dataServ.currentWallets.subscribe(
       (wallets: any) => {
         this.wallets = wallets;
@@ -69,14 +70,14 @@ export class AccountComponent implements OnInit {
     this.menuItems = [
       {
         title: 'Dashboard',
-        link: 'dashboard',
-        icon: 'dashboard',
-        line: 1,  // 下边线支持
+        link: '/account/dashboard',
+        icon: 'tv-outline',
+        // line: 1,  // 下边线支持
       },     
       {
         title: 'Orders',
-        link: 'orders',
-        icon: 'order'
+        link: '/account/orders',
+        icon: 'clipboard-outline'
       },
       // ---------- ---------- 删除多余菜单 ---------- ----------
       // {
@@ -126,7 +127,7 @@ export class AccountComponent implements OnInit {
     const lang = this.storageServ.lang;
     if (!lang) {
       this.storageServ.get('_lang').subscribe(
-        (lang2: string) => {
+        (lang2: any) => {
           if (lang2) {
             this.translateServ.setDefaultLang(lang2);
           }
@@ -162,6 +163,11 @@ export class AccountComponent implements OnInit {
     }
   }
 
+    // 导航方法
+    navigateTo( link: string ) {
+        this.router.navigate([link]);
+    }
+
   changeLang() {
     let lang = this.translateServ.getDefaultLang();
     lang = (lang === 'en') ? 'sc' : 'en';
@@ -185,4 +191,9 @@ export class AccountComponent implements OnInit {
   toggleDropDownActive(): void {
     this.dropDownActive = !this.dropDownActive;
   }
+
+  toggle(menu: string) {
+
+  }
+
 }

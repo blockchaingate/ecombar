@@ -3,7 +3,7 @@ import * as CryptoJS from 'crypto-js';
 import * as bs58 from 'bs58';
 import { environment } from '../../../../environments/environment';
 import * as createHash from 'create-hash';
-import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js';
 import { coin_list } from '../../../../environments/coins';
 import { MyCoin } from '../../../models/mycoin';
 import * as ecies from 'eth-ecies';
@@ -153,7 +153,8 @@ export class UtilService {
     
     ObjectId2SequenceId(objectId: string) {
         const bytes = bs58.decode(objectId);
-        return bytes.toString('hex');
+        // Fix: error TS2554: Expected 0 arguments, but got 1.
+        return Buffer.from(bytes).toString('hex');  // 替代 bytes.toString('hex');  
     }
     
     displayAddress(address: string) {
@@ -298,7 +299,8 @@ export class UtilService {
 
     fabToExgAddress(address: string) {
         const bytes = bs58.decode(address);
-        const addressInWallet = bytes.toString('hex');
+        // Fix: error TS2554: Expected 0 arguments, but got 1.
+        const addressInWallet = Buffer.from(bytes).toString('hex');  // 替代 bytes.toString('hex');
         return '0x' + addressInWallet.substring(2, 42);
     }
 

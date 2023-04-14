@@ -1,20 +1,41 @@
-/*
-  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
-  It is not intended to be used to perform a compilation.
-
-  To learn more about this file see: https://angular.io/config/solution-tsconfig.
-*/
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "es2020",
+    "lib": ["es2018", "dom"],
+    "strictPropertyInitialization": false,  /* 避免 error TS2564: Property has no initializer and is not definitely assigned in the constructor. */
+    "noImplicitAny": false,  /* 避免 error TS7006: Parameter implicitly has an 'any' type. */
+    "strictNullChecks": false,  /* 避免 error TS2322: Type 'string | undefined' is not assignable to type 'string'. */
+    "allowSyntheticDefaultImports": true,  /* 允许使用 import BN from 'bn.js'; 语法 */
+    "resolveJsonModule": true,  /* 允许导入 .json 文件 */
+    "useDefineForClassFields": false,
+    "paths": {
+      /* Fix: ERROR at Hmac.CipherBase (index.js:7:13) */
+      /* Stream is undefined on client-side (browser) since it only belongs to Node. You are going to need to add a polyfill for Stream. */
+      /* npm install --save stream-browserify */
+      "stream": ["node_modules/stream-browserify"]  /* 将 stream 模块指向 stream-browserify 模块 */
     },
-    {
-      "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./e2e/tsconfig.json"
-    }
-]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }

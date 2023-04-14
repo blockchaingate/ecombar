@@ -20,7 +20,7 @@ export class ProductItemFourComponent implements OnInit {
       this.lang = this.storageServ.lang;
       if (!this.lang) {
         this.storageServ.get('_lang').subscribe(
-          (lang2: string) => {
+          (lang2: any) => {
             if (lang2) {
               this.lang = lang2;
             }

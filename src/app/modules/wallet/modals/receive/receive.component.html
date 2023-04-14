@@ -10,7 +10,7 @@
     <div class="py-2">
         <!--
         <select [(ngModel)]="currentCoin" name="currentCoin" 
-        (change)="onCoinChange($event.target.value)">
+        (change)="onCoinChange(($event.target as HTMLInputElement).value)">
             <option value="0">{{'Select Currency' | translate}}:</option>
             <option *ngFor="let coin of coins" value="{{coin.coin}}">
             {{formatName(coin.coin)}}
@@ -50,7 +50,7 @@
     </div>
 
     <div class="text-center py-5" *ngIf="currentCoinAddress">
-        <qrcode [qrdata]="currentCoinAddress" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+        <qrcode [qrdata]="currentCoinAddress" id="address_qr_code" style="display: inline-block"></qrcode>  <!-- [size]="150" [level]="'M'" -->
         <div class="py-2">
             <a href="{{link}}" download (click)="dlDataUrlBin()">
                 <div class="d-inline-block px-1">

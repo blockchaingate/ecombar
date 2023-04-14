@@ -1,6 +1,9 @@
+
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+
 import { MerchantRoutingModule } from './merchant-routing.module';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerModule } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { MerchantComponent } from './merchant.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -27,6 +30,7 @@ import { OrderList2Component } from './pages/order-list-2/order-list-2.component
 import { FoodListComponent } from './pages/food-list/food-list.component';
 import { OrderComponent } from './pages/order/order.component';
 import { Order2Component } from './pages/order-2/order-2.component';
+import { QrCodeComponent } from './pages/qr-code/qr-code.component';
 import { ShipsComponent } from './pages/ships/ships.component';
 import { NewslettersComponent } from './pages/newsletters/newsletters.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -77,6 +81,7 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     FoodListComponent,
     OrderComponent,
     Order2Component,
+    QrCodeComponent,
     ProfileComponent,
     BannerAddComponent,
     CollectionAddComponent,
@@ -108,6 +113,7 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     ShippingCarrierAddComponent
   ],
   imports: [
+    IonicModule,  // Ionic
     BsDropdownModule.forRoot(),
     MerchantRoutingModule,
     CommonModule,
@@ -115,7 +121,7 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     FormsModule,
     QRCodeModule,
     ModalModule.forRoot(),
-    NgxSpinnerModule,
+    // NgxSpinnerModule,
     ReactiveFormsModule,
     RichTextEditorModule,
     CollapseModule.forRoot(),

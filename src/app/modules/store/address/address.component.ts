@@ -8,7 +8,7 @@ import { IddockService } from '../../shared/services/iddock.service';
 import { DataService } from '../../shared/services/data.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { KanbanService } from '../../shared/services/kanban.service';
 import { CoinService } from '../../shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
@@ -51,7 +51,7 @@ export abstract class AddressComponent implements OnInit {
     private cd: ChangeDetectorRef,  // 变更检测 detectChanges()
     private modalService: BsModalService,
     private iddockServ: IddockService,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private dataServ: DataService,
     private coinServ: CoinService,
     private router: Router,
@@ -241,7 +241,7 @@ export abstract class AddressComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.updateOrderAddressDo(seed);
     });    
     //this.ngxSmartModalServ.getModal('passwordModal').open();
@@ -303,7 +303,7 @@ export abstract class AddressComponent implements OnInit {
       (res: any) => {
         if (res) {
           this.addAddress(privateKey);  // 继续处理
-          this.spinner.hide();
+          // this.spinner.hide();
           
         }
       }

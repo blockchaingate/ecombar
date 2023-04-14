@@ -46,7 +46,7 @@ export class ShippingComponent implements OnInit{
 
     ngOnInit() {
       this.dataServ.currentWallet.subscribe(
-        (wallet: string) => {
+        (wallet: any) => {
           this.wallet = wallet;
         }
       ); 
@@ -65,7 +65,7 @@ export class ShippingComponent implements OnInit{
       );
       this.orderID = this.route.snapshot.paramMap.get('orderID');
       this.store.select(selectMerchantId).subscribe(
-        merchantId => {
+        (merchantId: string) => {
           this.orderServ.get(this.orderID).subscribe(
             (res: any) => {
               if(res && res.ok) {

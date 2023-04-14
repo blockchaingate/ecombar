@@ -18,7 +18,7 @@ export class ShippingCarrierService {
     return this.http.get('shipping-carrier', false);
   }
 
-  getMerchantShippingCarriers(walletAddress: string) {
+  getMerchantShippingCarriers( walletAddress: string ) {
     return this.http.get('shipping-carrier/merchant/' + walletAddress, false);
   }
 

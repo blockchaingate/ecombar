@@ -3,29 +3,15 @@
 <!-- 原 Check Out 改 Place Order -->
 
 <!-- 上下边线，解决 margin 问题 -->
-<!-- <main id="content" role="main" class="cart-page"> -->
-<main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 style="background-color: #f7f7f7;" -->
-    <!-- breadcrumb -->
-    <div class="bg-gray-13 bg-md-transparent">
-        <div class="container">
-            <!-- breadcrumb -->
-            <div class="my-md-3">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/store/{{storeId}}">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
-                        <!-- <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">{{'Home'|translate}}</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{'Cart'|translate}}</li> -->
-                    </ol>
-                </nav>
-            </div>
-            <!-- End breadcrumb -->
-        </div>
-    </div>
-    <!-- End breadcrumb -->
+<main class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
 
+  <div class="container my-md-3 font-size-18">
+    <ion-button fill="clear" routerLink="/store/{{ storeId }}/order/{{ orderId }}">{{ 'Back' | translate }}&nbsp;&nbsp;></ion-button>
+  </div>
+    
     <div class="mb-3 container border rounded bg-white">  <!-- 背景白色，圆角边框 -->
         <div class="m-4 d-flex justify-content-center">
-            <h1 class="text-center mr-3">{{'Cart'|translate}}</h1>
+            <h1 class="text-center mr-3">{{ 'Cart' | translate }}</h1>
             <button class="btn btn-link" (click)="clear()">
                 Clear
             </button>   
@@ -97,4 +83,5 @@
             </form>
         </div>
     </div>
+
 </main>

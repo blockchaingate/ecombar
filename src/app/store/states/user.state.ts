@@ -7,5 +7,4 @@ export interface UserState {
     merchantStatus: string;
     myPhotoUrl: string;
     walletExgAddress: string;
-
 }

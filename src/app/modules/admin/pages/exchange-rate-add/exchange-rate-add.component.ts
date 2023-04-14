@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+// import { NgxSpinnerService } from 'ngx-bootstrap-spinner';  // 只支持到 @angular/common@^10.0.0
 import BigNumber from 'bignumber.js';
 
 @Component({
@@ -31,7 +31,7 @@ export class ExchangeRateAddComponent implements OnInit {
   constructor(
     private dataServ: DataService,
     private coinServ: CoinService,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
     private kanbanSmartContractServ: KanbanSmartContractService,
@@ -42,7 +42,7 @@ export class ExchangeRateAddComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.to = environment.addresses.smartContract.exchangeRate;
+    this.to = environment['addresses'].smartContract.exchangeRate;
     this.checkOwner();
 
     this.dataServ.currentWalletAddress.subscribe(
@@ -108,7 +108,7 @@ export class ExchangeRateAddComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( async (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.addRateDo(seed);
     });
   }
@@ -138,7 +138,7 @@ export class ExchangeRateAddComponent implements OnInit {
     const rateBig = new BigNumber(this.rate).shiftedBy(8).toFixed();
     const args = [this.coinId, rateBig];
     const ret = await this.kanbanSmartContractServ.execSmartContract(seed, this.to, abi, args);
-    this.spinner.hide();
+    // this.spinner.hide();
     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
       this.toastr.success('exchange rate was updated successfully');
       this.router.navigate(['/admin/exchange-rate']);

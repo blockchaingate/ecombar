@@ -43,8 +43,8 @@ export class ImportWalletComponent implements OnInit {
     }    
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-        const pass = group.controls.password.value;
-        const confirmPass = group.controls.pwdconfirm.value;
+        const pass = group.controls['password'].value;
+        const confirmPass = group.controls['pwdconfirm'].value;
         if (pass !== confirmPass) {
           return { notSame: true };
         }
@@ -52,7 +52,15 @@ export class ImportWalletComponent implements OnInit {
         return null;
     }   
     
-    autoGrow(seedPhrase: string) {
+    autoGrowEvent( event: Event ) {  // seedPhrase: string
+      // error TS2339: Property 'value' does not exist on type 'void'.
+      const target = event.target as HTMLInputElement;
+      const value = target.value;
+      const seedPhrase = value;  // seedPhrase: string
+      this.autoGrow(seedPhrase);
+    }
+
+    autoGrow( seedPhrase: string ) {
       this.seedPhrase = seedPhrase.trim().replace(/\s\s+/g, ' ').replace(/(\r\n|\n|\r)/gm, '');
       if (!this.walletServ.validateMnemonic(this.seedPhrase)) {
         this.seedPhraseInvalid = true;
@@ -61,8 +69,8 @@ export class ImportWalletComponent implements OnInit {
       }
     }
     onSubmit() {
-      const name = this.userForm.controls.name.value;
-      const pwd = this.userForm.controls.password.value;
+      const name = this.userForm.controls['name'].value;
+      const pwd = this.userForm.controls['password'].value;
       const mnemonic = this.seedPhrase;
       const wallet = this.walletServ.generateWallet(pwd, name, mnemonic);
 

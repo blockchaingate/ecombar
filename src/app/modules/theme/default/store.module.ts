@@ -1,8 +1,11 @@
+
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+
 import { StoreRoutingModule } from './store-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerModule } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { StoreComponent } from './store.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -59,11 +62,12 @@ import { QRCodeModule } from 'angularx-qrcode';
     BlogComponent
   ],
   imports: [
+    IonicModule,  // Ionic
     QRCodeModule,
     StoreRoutingModule,
     CommonModule,
     FormsModule,
-    NgxSpinnerModule,
+    // NgxSpinnerModule,
     ModalModule.forRoot(),
     ReactiveFormsModule,
     SharedModule

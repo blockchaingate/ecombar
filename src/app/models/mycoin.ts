@@ -1,3 +1,4 @@
+
 import { Coin } from './coin';
 import { Address } from './address';
 
@@ -9,7 +10,7 @@ export class MyCoin extends Coin {
     changeAdds: Address[];
     tokenType: string;
     baseCoin: MyCoin;
-    decimals: number;
+    override decimals: number;  // Fix: error TS4114: This member must have an 'override' modifier because it overrides a member in the base class 'Coin'.
     usdPrice: number;
     redeposit: any[];
     depositErr: any[];

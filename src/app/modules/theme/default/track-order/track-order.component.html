@@ -1,6 +1,6 @@
 
-<!-- 上下边线，解决 margin 问题 -->
-<main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
+<!-- 上下边线，解决 margin 问题 -->  <!-- 背景灰色 -->
+<!-- <main id="content" role="main" class="border-top border-bottom bg-light"> -->
 
     <div class="row justify-content-center">  <!-- 本行，水平置中 -->
         <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
@@ -181,18 +181,18 @@
                                         {{'Shipping' | translate}}
                                     </div>
                                     <div class="col col-6 text-right">
-                                        {{(shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate}}
+                                        {{(shippingFee == 0 ? 'Free' : (shippingFee + currency)) | translate}}
                                     </div>                        
                                 </div>  
 
-                                <div class="row py-2" *ngIf="discount">
+                                <!-- <div class="row py-2" *ngIf="discount">
                                     <div class="col col-6">
                                         {{'Discount' | translate}}
                                     </div>
                                     <div class="col col-6 text-right">
                                     {{discount}}%
                                     </div>                        
-                                </div>  
+                                </div>   -->
 
                                 <div class="row py-2">
                                     <div class="col col-6 font-weight-bold">
@@ -213,4 +213,4 @@
         </div>
     </div>
 
-</main>
+<!-- </main> -->

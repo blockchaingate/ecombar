@@ -1,26 +1,74 @@
 
-<h1>{{'Products' | translate}}</h1>
+<!-- “产品”管理 -->
+
+<ion-grid class="px-2 font-size-18 bg-white border-bottom">
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-title><h1>{{ 'Products' | translate }}</h1></ion-title>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" class="ion-text-end" *ngIf="store.status == 2">
+      <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addNew()">
+        {{ 'New' | translate }}
+      </button>  <!-- 圆角边框 -->
+    </ion-col>
+  </ion-row>
+  <ion-row class="bg-light">
+    <ion-col size="4">{{ 'Title' | translate }}</ion-col>
+    <ion-col size="3">{{ 'Price' | translate }}</ion-col>
+    <ion-col size="3">{{ 'Rebate rate' | translate }}</ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid class="bg-white" *ngFor="let product of products">
+  <ion-row class="work-list">
+    <ion-col size="4">
+      <!-- <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
+        {{ product.title | translateField }}
+      </a> -->
+      <!-- 进入“购买”，改为进入“编辑” -->
+      <a  (click)="editProduct(product)">
+        <u>{{ product.title | translateField }}</u>
+      </a>
+    </ion-col>
+    <ion-col size="3">{{ product.price }}</ion-col>
+    <ion-col size="3">{{ product.rebateRate }}</ion-col>
+    <ion-col>
+      <div class="d-inline-block px-2">
+        <a (click)="editProduct(product)">
+          <img src="/assets/svg/edit.svg">
+        </a>
+      </div>
+      <div class="d-inline-block px-2">
+        <a (click)="deleteProduct(product)">
+          <img src="/assets/svg/delete.svg">
+        </a>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<!-- <h1>{{ 'Products' | translate }}</h1>
 
 <div class="px-3" *ngIf="store">
   <div class="text-right my-2" *ngIf="store.status == 2">
     <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addNew()">
       {{ 'New' | translate }}
-    </button>  <!-- 圆角边框 -->
+    </button>
   </div>
 
   <dl class="work-list row">
-    <dt class="col-4">{{'Title' | translate}}</dt>
-    <dt class="col-3">{{'Price' | translate}}</dt>
-    <dt class="col-3">{{'Rebate rate' | translate}}</dt>
+    <dt class="col-4">{{ 'Title' | translate }}</dt>
+    <dt class="col-3">{{ 'Price' | translate }}</dt>
+    <dt class="col-3">{{ 'Rebate rate' | translate }}</dt>
     <dt class="col"></dt>
   </dl>
 
   <dl class="work-list row" *ngFor="let product of products">
     <dd class="col-4">
-      <!-- <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
-        {{ product.title | translateField }}
-      </a> -->
-      <!-- 进入“购买”，改为进入“编辑” -->
       <a  (click)="editProduct(product)">
         <u>{{ product.title | translateField }}</u>
       </a>
@@ -40,28 +88,4 @@
       </div>
     </dd>
   </dl>
-  
-
-    <!-- <li class="table-row" *ngFor="let product of products">
-      <div class="col col-4" data-label="Title">
-        <a target="_blank" href="/store/{{storeId}}/product/{{product._id}}">
-          {{product.title | translateField}}
-        </a>
-      </div>
-      <div class="col col-3" data-label="Price">{{ product.price }}</div>
-      <div class="col col-3" data-label="Rebate rate">{{ product.rebateRate }}</div>
-      <div class="col col-2 text-right" data-label="Operations">
-        <div class="d-inline-block px-2">
-          <a (click)="editProduct(product)">
-            <img src="/assets/svg/edit.svg">
-          </a>
-        </div>
-        <div class="d-inline-block px-2">
-          <a (click)="deleteProduct(product)">
-            <img src="/assets/svg/delete.svg">
-          </a>
-        </div>
-      </div>
-    </li> -->
-
-</div>
+</div> -->

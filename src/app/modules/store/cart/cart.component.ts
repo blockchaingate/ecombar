@@ -13,7 +13,7 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
@@ -61,7 +61,7 @@ export class CartComponent implements OnInit, OnDestroy {
         private cartStoreServ: CartStoreService,
         private orderServ: OrderService,
         private router: Router,
-        private spinner: NgxSpinnerService,
+        // private spinner: NgxSpinnerService,
         private toastr: ToastrService,
         private dataServ: DataService,
         private iddockServ: IddockService,
@@ -161,6 +161,8 @@ export class CartComponent implements OnInit, OnDestroy {
             }
         );
 
+        this.orderId = this.cartStoreServ.getOrderId();  // 订单 no  // 返回时要用到
+
         // // 这块可以放 CheckOut，为测试方便，先放在这里
         // this.orderId = this.cartStoreServ.getOrderId();  // 订单 no
         // if (this.orderId) {
@@ -193,7 +195,7 @@ export class CartComponent implements OnInit, OnDestroy {
         this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
         this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            this.spinner.show();
+            // this.spinner.show();
             this.checkoutDo(seed);
         });
     }
@@ -269,7 +271,7 @@ export class CartComponent implements OnInit, OnDestroy {
                                     if (res) {
                                         const body = res;
                                         const orderNewID = body._id;
-                                        this.spinner.hide();
+                                        // this.spinner.hide();
                                         this.cartStoreServ.empty();
                                         // console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
                                         if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
@@ -286,7 +288,7 @@ export class CartComponent implements OnInit, OnDestroy {
                                 },
                                 err => { 
                                     this.errMsg = err.message;
-                                    this.spinner.hide();
+                                    // this.spinner.hide();
                                     this.toastr.error('error while combining order');              
                                 }
                             );  

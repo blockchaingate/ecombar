@@ -18,7 +18,7 @@
     <div>{{'Currency' | translate}}</div>
     <div class="py-2">
         <!--
-        <select [(ngModel)]="currentCoin" name="currentCoin" (change)="onCoinChange($event.target.value)">
+        <select [(ngModel)]="currentCoin" name="currentCoin" (change)="onCoinChange(($event.target as HTMLInputElement).value)">
             <option value="0">{{'Select Currency' | translate}}:</option>
 
             <option *ngFor="let coin of coins" value="{{coin.coin}}">
@@ -69,9 +69,9 @@
 
     <div>
         {{'Advanced'| translate}}
-        <ngx-switch [status]="isAdvance" [onText]="onText" [offText]="offText" [onColor]="onColor" [offColor]="offColor" (statusChange)="onFlagChange($event)">
-        </ngx-switch>
-    </div>
+        <!-- <ngx-switch [status]="isAdvance" [onText]="onText" [offText]="offText" [onColor]="onColor" [offColor]="offColor" (statusChange)="onFlagChange($event)">
+        </ngx-switch> -->
+    </div>  <!-- 暂时取消 ngx-switch -->
 
     <div *ngIf="isAdvance">
         <div *ngIf="mycoin.name == 'ETH' || mycoin.tokenType == 'ETH' || mycoin.tokenType == 'FAB'">

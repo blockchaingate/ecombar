@@ -50,26 +50,26 @@
                     <div class="col col-2">{{ 'Status' | translate }}</div>
                 </li>
                 <li class="table-row" *ngFor="let reward of rewards">         
-                    <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">
+                    <div class="col col-2 text-black" data-label="Coin">
                         {{showId(reward.id.substring(0, reward.id.length - 4)) }}
                     </div>
-                    <div class="col col-2" data-label="{{'Details' | translate}}">
+                    <div class="col col-2" data-label="Details">
                         {{showDetail(reward) }}
                     </div>
-                    <div class="col col-2" data-label="{{'Lock period' | translate}}">
+                    <div class="col col-2" data-label="Lock period">
                         {{reward.lockPeriod}}
                     </div>
-                    <div class="col col-2" data-label="{{'Release time' | translate}}">
+                    <div class="col col-2" data-label="Release time">
                         {{showReleaseTime(reward) }}
                     </div>    
-                    <div class="col col-2" data-label="{{'Txids' | translate}}">
+                    <div class="col col-2" data-label="Txids">
                         <div *ngFor="let txid of reward.txids">
                             <a target="_blank" href="{{getTxidUrl(txid)}}">
                             {{showId(txid)}}
                             </a>
                         </div>
                     </div>      
-                    <div class="col col-2" data-label="{{'Status' | translate}}">
+                    <div class="col col-2" data-label="Status">
                         <div>
                             {{showStatus(reward.status) | translate}}
                         </div>

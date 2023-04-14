@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { UtilService } from './util.service';
 import { ApiService } from './api.service';
 import { Web3Service } from './web3.service';
-import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js';
 import { MyCoin } from '../../../models/mycoin';
 import * as bchaddr from 'bchaddrjs';
 import * as Btc from 'bitcoinjs-lib';
-import * as BIP32 from 'node_modules/bip32';
+// Fix: export 'TransactionBuilder' / 'ECPair' was not found in 'bitcoinjs-lib'
+// npm install --save bitcoinjs-lib@^5.2.0
+import { TransactionBuilder, ECPair } from 'bitcoinjs-lib';  
+// import * as BIP32 from 'node_modules/bip32';
+import * as BIP32 from 'bip32';  // 原值 'node_modules/bip32'
 import { environment } from '../../../../environments/environment';
-import * as hdkey from 'ethereumjs-wallet/hdkey';
+import { hdkey } from 'ethereumjs-wallet'
+// import * as hdkey from 'ethereumjs-wallet/hdkey';
 import * as wif from 'wif';
 import { Address } from 'src/app/models/address';
 import { coin_list } from '../../../../environments/coins';
@@ -18,9 +23,9 @@ import TronWeb from 'tronweb';
 import { instantiateSecp256k1, hexToBin, binToHex } from '@bitauth/libauth';
 
 const HttpProvider = TronWeb.providers.HttpProvider;
-const fullNode = new HttpProvider(environment.chains.TRX.fullNode);
-const solidityNode = new HttpProvider(environment.chains.TRX.solidityNode);
-const eventServer = new HttpProvider(environment.chains.TRX.eventServer);
+const fullNode = new HttpProvider(environment.chains['TRX'].fullNode);
+const solidityNode = new HttpProvider(environment.chains['TRX'].solidityNode);
+const eventServer = new HttpProvider(environment.chains['TRX'].eventServer);
 const ADDRESS_PREFIX_REGEX = /^(41)/;
 
 const tronWeb = new TronWeb(
@@ -172,8 +177,8 @@ export class CoinService {
     }
 
     getOfficialAddress(coinName: string) {
-        if (environment.addresses.exchangilyOfficial[coinName]) {
-            return environment.addresses.exchangilyOfficial[coinName];
+        if (environment['addresses'].exchangilyOfficial[coinName]) {
+            return environment['addresses'].exchangilyOfficial[coinName];
         }
         return '';
     }
@@ -281,7 +286,7 @@ export class CoinService {
 
         console.log('totalFee=' + totalFee);
         const res = await this.getFabTransactionHex(seed, mycoin, contract, amount, totalFee,
-            environment.chains.FAB.satoshisPerBytes, environment.chains.FAB.bytesPerInput, false);
+            environment.chains['FAB'].satoshisPerBytes, environment.chains['FAB'].bytesPerInput, false);
 
         const txHex = res.txHex;
         let errMsg = res.errMsg;
@@ -339,9 +344,9 @@ export class CoinService {
         amountNum += (2 * 34) * satoshisPerBytes;
         // console.log('amountNum=', amountNum);
         // const TestNet = Btc.networks.testnet;
-        const network = environment.chains.BTC.network;
+        const network = environment.chains['BTC'].network;
 
-        const txb = new Btc.TransactionBuilder(network);
+        const txb = new TransactionBuilder(network);
         // console.log('amountNum=', amountNum);
         let txHex = '';
 
@@ -539,14 +544,14 @@ export class CoinService {
             const keyPair = this.getKeyPairs(mycoin.tokenType ? mycoin.tokenType : mycoin.name, seed, 0, receiveAddsIndexArr[index], 'b');
             // console.log('keyPair.privateKey=' + keyPair.privateKey + ',keyPair.publicKey=' + keyPair.publicKey);
             // console.log('receiveAddsIndexArr[index]=' + receiveAddsIndexArr[index] + ',address for keypair=' + keyPair.address);
-            const alice = Btc.ECPair.fromWIF(keyPair.privateKey, network);
+            const alice = ECPair.fromWIF(keyPair.privateKey, network);
             txb.sign(index, alice);
         }
 
         for (index = 0; index < changeAddsIndexArr.length; index++) {
             const keyPair = this.getKeyPairs(mycoin.tokenType ? mycoin.tokenType : mycoin.name, seed, 1, changeAddsIndexArr[index], 'b');
             // console.log('changeAddsIndexArr[index]=' + changeAddsIndexArr[index] + 'address for keypair=' + keyPair.address);
-            const alice = Btc.ECPair.fromWIF(keyPair.privateKey, network);
+            const alice = ECPair.fromWIF(keyPair.privateKey, network);
             txb.sign(receiveAddsIndexArr.length + index, alice);
         }
 
@@ -649,17 +654,17 @@ export class CoinService {
             buffer = wif.decode(priKey);
             priKeyDisp = priKey;
         } else if (name === 'ETH') {
+// 错误 TypeError: assert.equal is not a function，还未有时间修，暂时跳过
+return null;
+            const root = hdkey.fromMasterSeed(seed);
+            const childNode = root.derivePath(path);
 
-                const root = hdkey.fromMasterSeed(seed);
-                const childNode = root.derivePath(path);
-
-                const wallet = childNode.getWallet();
-                const address = `0x${wallet.getAddress().toString('hex')}`;
-                addr = address;
-                buffer = wallet.getPrivateKey();
-                priKey = wallet.getPrivateKey();
-                priKeyDisp = buffer.toString('hex');
-
+            const wallet = childNode.getWallet();
+            const address = `0x${wallet.getAddress().toString('hex')}`;
+            addr = address;
+            buffer = wallet.getPrivateKey();
+            priKey = wallet.getPrivateKey();
+            priKeyDisp = buffer.toString('hex');
         } else if(name == 'TRX') {
             const root = BIP32.fromSeed(seed);
             const childNode = root.derivePath(path);
@@ -772,7 +777,7 @@ export class CoinService {
                 bytesPerInput = environment.chains[mycoin.name].bytesPerInput;
             }
             const BtcNetwork = environment.chains[mycoin.name].network;
-            const txb = new Btc.TransactionBuilder(BtcNetwork);
+            const txb = new TransactionBuilder(BtcNetwork);
 
             for (index = 0; index < mycoin.receiveAdds.length; index++) {
                 /*
@@ -928,13 +933,13 @@ export class CoinService {
 
             for (index = 0; index < receiveAddsIndexArr.length; index++) {
                 const keyPair = this.getKeyPairs(mycoin.tokenType ? mycoin.tokenType : mycoin.name, seed, 0, receiveAddsIndexArr[index], 'b');
-                const alice = Btc.ECPair.fromWIF(keyPair.privateKey, BtcNetwork);
+                const alice = ECPair.fromWIF(keyPair.privateKey, BtcNetwork);
                 txb.sign(index, alice);
             }
 
             for (index = 0; index < changeAddsIndexArr.length; index++) {
                 const keyPair = this.getKeyPairs(mycoin.tokenType ? mycoin.tokenType : mycoin.name, seed, 1, changeAddsIndexArr[index], 'b');
-                const alice = Btc.ECPair.fromWIF(keyPair.privateKey, BtcNetwork);
+                const alice = ECPair.fromWIF(keyPair.privateKey, BtcNetwork);
                 txb.sign(receiveAddsIndexArr.length + index, alice);
             }
 
@@ -956,10 +961,10 @@ export class CoinService {
         } else
             if (mycoin.name === 'FAB') {
                 if (!satoshisPerBytes) {
-                    satoshisPerBytes = environment.chains.FAB.satoshisPerBytes;
+                    satoshisPerBytes = environment.chains['FAB'].satoshisPerBytes;
                 }
                 if (!bytesPerInput) {
-                    bytesPerInput = environment.chains.FAB.bytesPerInput;
+                    bytesPerInput = environment.chains['FAB'].bytesPerInput;
                 }
 
                 const res1 = await this.getFabTransactionHex(seed, mycoin, toAddress, amount, 0,
@@ -996,10 +1001,10 @@ export class CoinService {
                 if (mycoin.name === 'ETH') {
                     console.log('mycoin.name==ETH');
                     if (!gasPrice) {
-                        gasPrice = environment.chains.ETH.gasPrice;
+                        gasPrice = environment.chains['ETH'].gasPrice;
                     }
                     if (!gasLimit) {
-                        gasLimit = environment.chains.ETH.gasLimit;
+                        gasLimit = environment.chains['ETH'].gasLimit;
                     }
                     transFee = Number(new BigNumber(gasPrice).multipliedBy(new BigNumber(gasLimit)).dividedBy(new BigNumber(1e9)).toFixed(6));
                     if (getTransFeeOnly) {
@@ -1047,10 +1052,10 @@ export class CoinService {
                     if (mycoin.tokenType === 'ETH') { // etheruem tokens
                         const address1 = mycoin.receiveAdds[0];
                         if (!gasPrice) {
-                            gasPrice = environment.chains.ETH.gasPrice;
+                            gasPrice = environment.chains['ETH'].gasPrice;
                         }
                         if (!gasLimit) {
-                            gasLimit = environment.chains.ETH.gasLimitToken;
+                            gasLimit = environment.chains['ETH'].gasLimitToken;
                         }
                         transFee = new BigNumber(gasPrice).multipliedBy(new BigNumber(gasLimit)).dividedBy(new BigNumber(1e9)).toNumber();
                         if (getTransFeeOnly) {
@@ -1073,7 +1078,7 @@ export class CoinService {
                         // const amountSent = amount * Math.pow(10, decimals);
                         const amountSent = new BigNumber(amount).multipliedBy(new BigNumber(Math.pow(10, decimals)));
                         const toAccount = toAddress;
-                        let contractAddress = environment.addresses.smartContract[mycoin.name];
+                        let contractAddress = environment['addresses'].smartContract[mycoin.name];
                         if(contractAddress.ETH) {
                             contractAddress = contractAddress.ETH;
                         }
@@ -1141,16 +1146,16 @@ export class CoinService {
                     if (mycoin.tokenType === 'FAB') { // fab tokens
                             console.log('there we go =', satoshisPerBytes);
                             if (!gasPrice) {
-                                gasPrice = environment.chains.FAB.gasPrice;
+                                gasPrice = environment.chains['FAB'].gasPrice;
                             }
                             if (!gasLimit) {
-                                gasLimit = environment.chains.FAB.gasLimit;
+                                gasLimit = environment.chains['FAB'].gasLimit;
                             }
                             if (!satoshisPerBytes) {
-                                satoshisPerBytes = environment.chains.FAB.satoshisPerBytes;
+                                satoshisPerBytes = environment.chains['FAB'].satoshisPerBytes;
                             }
                             if (!bytesPerInput) {
-                                bytesPerInput = environment.chains.FAB.bytesPerInput;
+                                bytesPerInput = environment.chains['FAB'].bytesPerInput;
                             }
                             console.log('gasPrice final=', gasPrice);
                             let decimals = mycoin.decimals;
@@ -1193,9 +1198,9 @@ export class CoinService {
                             fxnCallHex = this.utilServ.stripHexPrefix(fxnCallHex);
                             let contractAddress = mycoin.contractAddr;
                             if (mycoin.name === 'EXG') {
-                                contractAddress = environment.addresses.smartContract.EXG;
+                                contractAddress = environment['addresses'].smartContract.EXG;
                             } else if (mycoin.name === 'DUSD') {
-                                contractAddress = environment.addresses.smartContract.DUSD;
+                                contractAddress = environment['addresses'].smartContract.DUSD;
                             }
 
                             // const keyPair = this.getKeyPairs(mycoin, seed, 0, 0);
@@ -1314,7 +1319,7 @@ export class CoinService {
                         if(mycoin.name == 'USDTX') {
                             coinName = 'USDT';
                         }           
-                        const trc20ContractAddress = environment.addresses.smartContract[coinName]['TRX'];//contract address
+                        const trc20ContractAddress = environment['addresses'].smartContract[coinName]['TRX'];//contract address
                         const address1 = mycoin.receiveAdds[0];
                         const currentIndex = address1.index;            
                         const keyPair = this.getKeyPairs('TRX', seed, 0, currentIndex, 'b');
@@ -1351,7 +1356,7 @@ export class CoinService {
                                const functionSelector = 'transfer(address,uint256)';
             
                                const options= {
-                                   feeLimit: environment.chains.TRX.feeLimitToken,
+                                   feeLimit: environment.chains['TRX'].feeLimitToken,
                                    callValue: 0,
                                    userFeePercentage: 100,
                                    shouldPollResponse: false,

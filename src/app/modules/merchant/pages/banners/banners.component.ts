@@ -34,7 +34,7 @@ export class BannersComponent implements OnInit {
       }
     );
     this.dataServ.currentWallet.subscribe(
-      (wallet: string) => {
+      (wallet: any) => {
         this.wallet = wallet;
       }
     ); 

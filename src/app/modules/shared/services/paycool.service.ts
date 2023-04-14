@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
 // 请见 environment.ts, environment.prod.ts
-// 测试环境：https://fabtest.info/api/merchantreferral/hot
+// 测试环境：https://test.fabcoin.org/api/merchantreferral/hot
 // 生产环境：https://api.pay.cool/api/merchantreferral/hot
-const baseUrl = environment.endpoints.paycool;
+const baseUrl = environment.endpoints['paycool'];
 @Injectable()
 export class PaycoolService {
     

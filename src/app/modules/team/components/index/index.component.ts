@@ -56,7 +56,7 @@ export class TeamIndexComponent implements OnInit {
     );
 
     this.storeageServ.getStoreRef().subscribe(
-      (refAddress: string) => {
+      (refAddress: any) => {
         if(refAddress) {
           this.parentId = refAddress;
         }

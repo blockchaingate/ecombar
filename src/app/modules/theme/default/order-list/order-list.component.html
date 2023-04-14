@@ -57,7 +57,7 @@
                   <!-- <tr>
                     <th colspan="4" class="text-right">{{ 'Shipping' | translate }}</th>
                     <th class="font-size-17">
-                        {{ (shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate }}
+                        {{ (shippingFee == 0 ? 'Free' : (shippingFee + currency)) | translate }}
                     </th>
                   </tr> -->
                   <!-- <tr *ngIf="discount">

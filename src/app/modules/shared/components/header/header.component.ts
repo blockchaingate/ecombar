@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NftSettingService } from 'src/app/modules/nft/services/nft-setting.service';
+// import { NftSettingService } from 'src/app/modules/nft/services/nft-setting.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
 import { PasswordModalComponent } from '../password-modal/password-modal.component';
@@ -31,7 +31,9 @@ import { VersionType } from '../../../../config/version';
       private toastr: ToastrService,
       private router: Router,
       private translateServ: TranslateService,
-      private settingServ: NftSettingService) {}
+      // private settingServ: NftSettingService,
+      ) {
+    }
 
     ngOnInit() {
         this.showAside = false;    
@@ -53,14 +55,14 @@ import { VersionType } from '../../../../config/version';
             return;
           }
 
-          this.settingServ.get(address).subscribe(
-            (ret: any) => {
-              if(ret && ret.ok) {
-                this.setting = ret._body;
-                console.log('this.setting=', this.setting);
-              }
-            }
-          );
+          // this.settingServ.get(address).subscribe(  // 涉及 NFT，先注释
+          //   (ret: any) => {
+          //     if(ret && ret.ok) {
+          //       this.setting = ret._body;
+          //       console.log('this.setting=', this.setting);
+          //     }
+          //   }
+          // );
         });        
     }
 

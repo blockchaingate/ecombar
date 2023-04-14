@@ -12,7 +12,7 @@ import { ABI as feeChargerABI, Bytecode as feeChargerBytecode } from '../../../.
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { environment } from 'src/environments/environment';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
@@ -53,7 +53,7 @@ export class StoreComponent implements OnInit {
   constructor(
     private coinServ: CoinService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private iddockServ: IddockService,
     private modalService: BsModalService,
     private kanbanSmartContractServ: KanbanSmartContractService,
@@ -89,7 +89,7 @@ export class StoreComponent implements OnInit {
     this.hideOnStore = true;
     this.images = [];
     this.storeageServ.getStoreRef().subscribe(
-      (refAddress: string) => {
+      (refAddress: any) => {
         if(refAddress) {
           this.refAddress = refAddress;
         }
@@ -181,7 +181,7 @@ export class StoreComponent implements OnInit {
 
         if(!(ret2 && ret2.ok && ret2._body && ret2._body.status == '0x1')) {
           this.toastr.error('error while changing coin');
-          this.spinner.hide();
+          // this.spinner.hide();
           return;
         }
       }
@@ -195,7 +195,7 @@ export class StoreComponent implements OnInit {
             (await this.iddockServ.updateIdDock(seed, this.objectId, 'things', null, data, null)).subscribe(res => {
               if(res) {
                 if(res.ok) {
-                  this.spinner.hide();
+                  // this.spinner.hide();
                   this.toastr.success('Store was updated.');
                 }
               }
@@ -220,17 +220,17 @@ export class StoreComponent implements OnInit {
       };      
       if(!this.coin) {
         this.toastr.error('Coin not selected', 'Ok');
-        this.spinner.hide();
+        // this.spinner.hide();
         return;
       }
       if(this.images && this.images.length > 0) {
         data.image = this.images[0];
       }
       //const coinpoolAddress = await this.kanbanServ.getCoinPoolAddress();
-      const proxyAddress = environment.addresses.smartContract.sevenStarProxy;
+      const proxyAddress = environment['addresses'].smartContract.sevenStarProxy;
       let args2 = [
         proxyAddress,
-        environment.addresses.smartContract.feeDistribution,
+        environment['addresses'].smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
         100-this.rebateRate,
@@ -282,14 +282,14 @@ export class StoreComponent implements OnInit {
                                 this.initStore(res._body);
                                 this.smartContractAddress = smartContractAddress;
                                 this.toastr.success('Store was created.');
-                                this.spinner.hide();
+                                // this.spinner.hide();
                                 //this.smartContractAddress = store.smartContractAddress;
                               }
                             }
                           );   
             
                         } else {
-                          this.spinner.hide();
+                          // this.spinner.hide();
                           this.toastr.error('Error with creating smart contract.', 'Ok');
                         }
                       }
@@ -297,7 +297,7 @@ export class StoreComponent implements OnInit {
                   );
                 }
                 else {
-                  this.spinner.hide();
+                  // this.spinner.hide();
                   this.toastr.error('Error with creating smart contract.', 'Ok');
                 }
   
@@ -306,7 +306,7 @@ export class StoreComponent implements OnInit {
             }
         });
       } else {
-        this.spinner.hide();
+        // this.spinner.hide();
         this.toastr.error('Error with creating smart contract.', 'Ok');
       }
 
@@ -349,7 +349,7 @@ export class StoreComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.addStoreDo(seed);
     });
 
@@ -367,7 +367,7 @@ export class StoreComponent implements OnInit {
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.deleteStoreDo(privateKey);
     });
   }
@@ -399,7 +399,7 @@ export class StoreComponent implements OnInit {
 
 
           this.toastr.success('Store was deleted.');
-          this.spinner.hide();
+          // this.spinner.hide();
           //this.smartContractAddress = store.smartContractAddress;
         }
       }

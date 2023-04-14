@@ -22,9 +22,10 @@ export class ProductsComponent implements OnInit {
   products: any;
   wallet: any;
   walletAddress: string;
-  storeId: string;
   walletExgAddress: string;
+  storeId: string;
   store: any;
+
   constructor(
     private router: Router,
     private modalService: BsModalService,
@@ -48,7 +49,6 @@ export class ProductsComponent implements OnInit {
           this.store = store;
           this.storeId = store._id;
         }
-
       }
     )
     this.dataServ.currentWalletAddress.subscribe(

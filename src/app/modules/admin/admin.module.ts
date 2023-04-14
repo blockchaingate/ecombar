@@ -1,4 +1,7 @@
+
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -7,7 +10,7 @@ import { UploadMediaComponent } from './components/upload-media/upload-media.com
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerModule } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
@@ -36,6 +39,7 @@ import { FeeDistributionUpdatePaymentFeeRateComponent } from './pages/fee-distri
     FeeDistributionUpdatePaymentFeeRateComponent
   ],
   imports: [
+    IonicModule,  // Ionic
     AdminRoutingModule,
     CommonModule,
     SharedModule,
@@ -43,7 +47,7 @@ import { FeeDistributionUpdatePaymentFeeRateComponent } from './pages/fee-distri
     QRCodeModule,
     ModalModule.forRoot(),
     ReactiveFormsModule,
-    NgxSpinnerModule,
+    // NgxSpinnerModule,
     RichTextEditorModule
   ],
   providers: []

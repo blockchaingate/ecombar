@@ -2,15 +2,14 @@
     <div class="container">
       <h1>My profile</h1>
       <hr>
-      
-
 
       <div>
         <label for="email"><b>Display Name</b></label>
         <input type="text" placeholder="Enter display name" [(ngModel)]="displayName" name="displayName" required>
   
-        <label for="email"><b>Avatar</b></label>
-        <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        <label for="email"><b>Avatar</b></label>  
+        <!-- [(images)] 双向绑定 -> [images] 单向绑定 -->
+        <app-admin-upload-media [images]="images" [singleFile]="true"></app-admin-upload-media>
 
       </div>
 
@@ -19,3 +18,4 @@
       </div>
     </div>
   </div>
+

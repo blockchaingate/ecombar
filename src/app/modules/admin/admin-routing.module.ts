@@ -48,8 +48,10 @@ const routes: Routes = [
         path: 'fee-distribution/update-payment-fee-rate', component: FeeDistributionUpdatePaymentFeeRateComponent
       },
       {
-        path: '', redirectTo: 'dashboard'
-      }
+        path: '', 
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+  }
     ]
   }
 ];

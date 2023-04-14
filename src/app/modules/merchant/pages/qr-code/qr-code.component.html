@@ -1,0 +1,59 @@
+
+<!-- 有些 QR Code -->
+
+<ion-grid class="ion-no-padding bg-white">
+
+  <ion-row class="py-3">
+    <ion-col size="12" class="ion-text-center">
+      <ion-title><h1>{{ 'QR Code' | translate }}</h1></ion-title>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="py-3">
+    <ion-col size="12" class="ion-text-center">
+      <!-- 生成二维码 -->
+      <qrcode [qrdata]="urlStores" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      <!-- 显示二维码链接 -->
+      {{ urlStores }}
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="py-3">
+    <ion-col size="12" class="ion-text-center">
+      <qrcode [qrdata]="urlWallet" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      {{ urlWallet }}
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="py-3">
+    <ion-col size="12" class="ion-text-center">
+      <qrcode [qrdata]="urlMerchant" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      {{ urlMerchant }}
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="py-3">
+    <ion-col size="12" class="ion-text-center">
+      <qrcode [qrdata]="urlChef" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      {{ urlChef }}
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
+
+
+<!-- <div class="text-center">
+  <qrcode [qrdata]="QrUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+</div>
+<div class="text-center">
+  {{ QrUrl }}
+</div> -->
+

@@ -1,4 +1,7 @@
+
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -20,7 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerModule } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
     RoleMenuPipe
   ],
   imports: [
+    IonicModule,  // Ionic
     AccountRoutingModule,
     CommonModule,
     SharedModule,
@@ -51,8 +55,8 @@ import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
     QRCodeModule,
     ModalModule.forRoot(),
     ReactiveFormsModule,
-    RichTextEditorModule,
-    NgxSpinnerModule
+    RichTextEditorModule
+    // NgxSpinnerModule
   ],
   providers: []
 })

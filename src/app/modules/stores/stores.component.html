@@ -1,6 +1,26 @@
 
-<app-stores-header></app-stores-header>
-<div class="bg-light">  <!-- 背景灰色 -->
-<router-outlet></router-outlet>
+<ion-header>
+  <!-- 固定在顶部的 Header -->
+  <app-stores-header></app-stores-header>
+</ion-header>
+
+<ion-content>
+  <!-- 内容区域，这里是页面主要内容 -->
+  <!-- 这部分内容将在滚动时滚动 -->
+  <div class="bg-light">
+    <router-outlet></router-outlet>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <!-- 跟随滚动的 Footer -->
+  <ion-toolbar>
+    <app-nft-footer></app-nft-footer>
+  </ion-toolbar>
+</ion-footer>
+
+<!-- <app-stores-header></app-stores-header>
+<div class="bg-light">
+  <router-outlet></router-outlet>
 </div>
-<app-nft-footer></app-nft-footer>
+<app-nft-footer></app-nft-footer> -->

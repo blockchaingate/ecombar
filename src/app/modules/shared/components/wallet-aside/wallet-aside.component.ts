@@ -7,9 +7,9 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { environment } from 'src/environments/environment';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+// import { NgxSpinnerService } from "ngx-bootstrap-spinner";  // 只支持到 @angular/common@^10.0.0
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
+// import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
 
 @Component({
     providers: [],
@@ -26,10 +26,10 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
       isProxyAuthenticated: boolean;
       constructor(
           private route: Router, 
-          private spinner: NgxSpinnerService,
+          // private spinner: NgxSpinnerService,
           private utilServ: UtilService,
           private modalServ: BsModalService,
-          private nftPortServ: NftPortService,
+          // private nftPortServ: NftPortService,
           private kanbanServ: KanbanService,
           private kanbanSmartContractServ: KanbanSmartContractService,
           private localSt: LocalStorage) {}
@@ -46,7 +46,15 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
         });           
       }
 
-      changeWallet(walltId: string) {
+      changeWalletEvent( event: Event ) {  // walltId: string
+        // error TS2339: Property 'value' does not exist on type 'void'.
+        const target = event.target as HTMLInputElement;
+        const value = target.value;
+        const walltId = value;  // walltId: string
+        this.changeWallet(walltId);
+      }
+
+      changeWallet( walltId: string ) {
         console.log('walletId=', walltId);
           let index = -1;
           for(let i = 0; i < this.wallets.items.length; i++) {
@@ -61,14 +69,14 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
           const addresses = this.wallet.addresses;
 
           this.address = addresses.filter(item => item.name == 'FAB')[0].address;     
-
           console.log('this.address=', this.address);
-          this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
-            ret => {
-              this.isProxyAuthenticated = ret;
-              console.log('this.isProxyAuthenticated=', this.isProxyAuthenticated);
-            }
-          );  
+
+          // this.nftPortServ.isProxyAuthenticated(this.address).subscribe(  // 涉及 NFT，先注释
+          //   ret => {
+          //     this.isProxyAuthenticated = ret;
+          //     console.log('this.isProxyAuthenticated=', this.isProxyAuthenticated);
+          //   }
+          // );  
 
           const kanbanAddress = this.utilServ.fabToExgAddress(this.address);
 
@@ -76,9 +84,6 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
           this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
           });  
           
-
-          
-
           this.kanbanServ.getExchangeBalance(kanbanAddress).subscribe(
             (resp: any) => {
                 this.assets = resp;
