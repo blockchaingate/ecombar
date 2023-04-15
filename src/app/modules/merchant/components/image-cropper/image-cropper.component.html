@@ -1,0 +1,36 @@
+
+<input type="file" #fileInput id="fileInput" name="fileInput" accept="image/*" (change)="onFileChange($event)" style="display:none;" />
+
+<div class="container w-100 border">
+  <div class="row px-2 py-3 d-flex justify-content-center">
+    <!-- <input type="file" (change)="onFileChange($event)" /> -->
+    <button type="button" class="btn btn-danger btn-sm btn-block newButton-S m-1" (click)="onSelectFile()">
+      {{ 'Image' | translate }}
+    </button>
+    <button type="button" class="btn btn-danger btn-sm btn-block newButton-S m-1" (click)="onFinish()" *ngIf="!doneFlag">
+      {{ 'Done !' | translate }}
+    </button>
+  </div>
+  <div class="row px-2 py-3 justify-content-center" *ngIf="!doneFlag">
+    <image-cropper 
+      [imageChangedEvent]="imageChangedEvent" 
+      [maintainAspectRatio]="true" 
+      [aspectRatio]="4 / 4"
+      [resizeToWidth]="256" 
+      format="png" 
+      (imageCropped)="imageCropped($event)" 
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()" 
+      (loadImageFailed)="loadImageFailed()">
+    </image-cropper>
+  </div>
+  <!-- <div class="row px-2 py-3 justify-content-center">
+    <h6>Image Preview</h6>
+    <img [src]="croppedImage" />
+  </div> -->
+  <div class="row px-2 py-3 justify-content-center" *ngIf="doneFlag">
+    <div class="col col-6">
+      <img [src]="croppedImage" />
+    </div>
+  </div>
+</div>

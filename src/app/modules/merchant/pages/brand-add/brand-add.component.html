@@ -1,8 +1,8 @@
 
-<div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
-  <h1>{{'New Brand' | translate}}</h1>
+<div class="myNavTabs" class="px-3">    <!-- class="container" -->
+  <h1 class="py-2">{{'New Brand' | translate}}</h1>
 
-  <div class="text-right my-2">
+  <div class="text-right">
     <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addBrand()">
       {{ (id ? 'Update' : 'Add') | translate }}
     </button>  <!-- 圆角边框 -->
@@ -29,7 +29,7 @@
   </ul>
 
   <!-- General -->
-  <div *ngIf="NavTab == 'General'">
+  <div class="pt-3" *ngIf="NavTab == 'General'">
 
     <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
       <li *ngIf="currentTab == 'default English'" class="nav-item">

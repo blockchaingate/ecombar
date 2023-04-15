@@ -20,7 +20,7 @@ export const environment = {
     prod: 'https://blockchaingate.com/v2/',
     kanban: 'https://kanbantest.fabcoinapi.com/',
     blockchaingate: 'https://test.blockchaingate.com/v2/',
-    paycool: 'https://fabtest.info/api/',
+    paycool: 'https://test.fabcoin.org/api/',  // fabtest.info  => test.fabcoin.org
     website: 'https://test.exchangily.com/',
     BTC: {
         exchangily: 'https://btctest.fabcoinapi.com/'

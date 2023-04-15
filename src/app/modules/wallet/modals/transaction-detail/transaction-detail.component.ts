@@ -61,7 +61,8 @@ export class TransactionDetailComponent {
             return baseUrl + '/tx/' + txid;
         } else
         if(chain == 'FAB') {
-            const baseUrl = this.production ? 'https://fabexplorer.info' : 'https://fabtest.info'
+            // fabtest.info  => test.fabcoin.org
+            const baseUrl = this.production ? 'https://fabexplorer.info' : 'https://test.fabcoin.org'
             return baseUrl + '/#/transactions/' + txid;
         } else
         if(chain == 'LTC') {

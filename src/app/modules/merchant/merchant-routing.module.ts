@@ -10,6 +10,7 @@ import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
+import { MyInfoComponent } from './pages/my-info/my-info.component';  // ImageCropper 示例
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
@@ -28,6 +29,7 @@ import { SmallBannersComponent } from './pages/small-banners/small-banners.compo
 import { SmallBannerAddComponent } from './pages/small-banner-add/small-banner-add.component';
 import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
+import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';  // ImageCropper
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { MerchantApplicationsComponent } from './pages/merchant-applications/merchant-applications.component';
 import { MainLayoutAddComponent } from './pages/main-layout-add/main-layout-add.component';
@@ -102,6 +104,9 @@ const routes: Routes = [
         },
         {
             path: 'category/:id/edit', component: CategoryAddComponent
+        },
+        {
+            path: 'my-info', component: MyInfoComponent  // ImageCropper 示例
         },
         {
             path: 'store', component: StoreComponent
@@ -183,6 +188,9 @@ const routes: Routes = [
         },
         {
             path: 'upload', component: UploadMediaComponent
+        },
+        {
+            path: 'cropper', component: ImageCropperComponent  // ImageCropper
         },
         {
             path: '', redirectTo: 'dashboard'

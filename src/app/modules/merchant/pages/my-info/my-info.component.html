@@ -1,10 +1,11 @@
 
 <div class="myNavTabs" class="px-3">    <!-- class="container" -->
-  <h1 class="py-2">{{'New Category' | translate}}</h1>
+
+  <h1 class="py-2">{{'My Information' | translate}}</h1>
 
   <div class="text-right">
-    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addCategory()">
-      {{ (id ? 'Update' : 'Add') | translate }}
+    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="saveMyInfo()">
+      {{ 'Save' | translate }}
     </button>  <!-- 圆角边框 -->
   </div>
 
@@ -62,7 +63,7 @@
         <dl>
           <dt>Name</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="Enter category name" [(ngModel)]="name" name="name" required>
+            <input type="text" class="inp w-75" placeholder="Enter your name" [(ngModel)]="name" name="name" required>
           </dd>
         </dl>
         
@@ -74,7 +75,7 @@
         <dl>
           <dt>名称</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="输入类别名称" [(ngModel)]="nameChinese" name="nameChinese" required>
+            <input type="text" class="inp w-75" placeholder="输入你的名称" [(ngModel)]="nameChinese" name="nameChinese" required>
           </dd>
         </dl>
 
@@ -86,7 +87,7 @@
         <dl>
           <dt>名稱</dt>
           <dd class="text-left">
-            <input type="text" class="inp w-75" placeholder="輸入類別名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
+            <input type="text" class="inp w-75" placeholder="輸入你的名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
           </dd>
         </dl>
 
@@ -100,35 +101,9 @@
     <div class="work-form row">
 
       <dl>
-        <dt>Sequence</dt>
-        <dd class="text-left">
-          <input type="text" class="inp w-75" placeholder="Enter category sequence" [(ngModel)]="sequence" name="sequence" required>
-        </dd>
-      </dl>
-
-      <dl>
-        <dt>Category</dt>
-        <dd class="text-left">
-          <div class="btn-group" dropdown>
-            <button id="button-animated" dropdownToggle type="button" class="button myButton dropdown-toggle"
-                    aria-controls="dropdown-animated">
-              {{ selectedCategory ? (selectedCategory.name | translateField) : ('Select Category' | translate) }} <span class="caret"></span>
-            </button>
-            <div  *ngIf="categories && categories.length > 0">
-              <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
-                <li role="menuitem" *ngFor="let cat of categories | excludeCategories : id">
-                  <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{ cat.name | translateField }}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </dd>
-      </dl>
-
-      <dl>
         <dt>Image</dt>  <!-- Images -->
         <dd class="text-left">
-          <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+          <app-admin-image-cropper [(images)]="images" [singleFile]="true"></app-admin-image-cropper>
         </dd>
       </dl>
 

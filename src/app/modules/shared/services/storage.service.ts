@@ -4,7 +4,7 @@ import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { TransactionItem } from '../../../models/transaction-item';
-import {Transaction} from '../../../interfaces/kanban.interface';
+import { Transaction } from '../../../interfaces/kanban.interface';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {

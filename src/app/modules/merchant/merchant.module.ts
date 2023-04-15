@@ -15,6 +15,7 @@ import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.compo
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
+import { MyInfoComponent } from './pages/my-info/my-info.component';  // ImageCropper 示例
 import { BannersComponent } from './pages/banners/banners.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { SmallBannersComponent } from './pages/small-banners/small-banners.component';
@@ -28,6 +29,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ShippingComponent } from './pages/shipping/shipping.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UploadMediaComponent } from './components/upload-media/upload-media.component';
+import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';  // ImageCropper
 import { UserAddComponent } from './pages/user-add/user-add.component';
 import { AddressComponent } from './pages/address/address.component';
 
@@ -54,10 +56,14 @@ import { BlogAddComponent } from './pages/blog-add/blog-add.component';
 import { ShippingCarriersComponent } from './pages/shipping-carriers/shipping-carriers.component';
 import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shipping-carrier-add.component';
 
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 @NgModule({
   declarations: [
     MerchantComponent,
     UploadMediaComponent,
+    ImageCropperComponent,  // ImageCropper
     DashboardComponent,
     UsersComponent,
     ShipsComponent,
@@ -84,6 +90,7 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     CategoriesComponent,
     ProductAddComponent,
     CategoryAddComponent,
+    MyInfoComponent,  // ImageCropper 示例
     BrandsComponent,
     BrandAddComponent,
     RoleMenuPipe,
@@ -109,7 +116,11 @@ import { ShippingCarrierAddComponent } from './pages/shipping-carrier-add/shippi
     ReactiveFormsModule,
     RichTextEditorModule,
     CollapseModule.forRoot(),
+    ImageCropperModule,
   ],
-  providers: [ToolbarService, LinkService, ImageService, HtmlEditorService]
+  providers: [ToolbarService, LinkService, ImageService, HtmlEditorService],
+  // schemas: [
+  //   CUSTOM_ELEMENTS_SCHEMA
+  // ],
 })
 export class MerchantModule { }
