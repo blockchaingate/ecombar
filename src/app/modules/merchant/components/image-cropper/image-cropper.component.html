@@ -2,6 +2,12 @@
 <input type="file" #fileInput id="fileInput" name="fileInput" accept="image/*" (change)="onFileChange($event)" style="display:none;" />
 
 <div class="container w-100 border">
+  <div class="row px-2 py-3 justify-content-center">
+    <div *ngFor="let image of images" class="col col-6 text-center">
+      <img class="thumbnail-img" src="{{ image }}">
+    </div>
+  </div>
+
   <div class="row px-2 py-3 d-flex justify-content-center">
     <!-- <input type="file" (change)="onFileChange($event)" /> -->
     <button type="button" class="btn btn-danger btn-sm btn-block newButton-S m-1" (click)="onSelectFile()">
@@ -11,26 +17,40 @@
       {{ 'Done !' | translate }}
     </button>
   </div>
-  <div class="row px-2 py-3 justify-content-center" *ngIf="!doneFlag">
-    <image-cropper 
-      [imageChangedEvent]="imageChangedEvent" 
-      [maintainAspectRatio]="true" 
-      [aspectRatio]="4 / 4"
-      [resizeToWidth]="256" 
-      format="png" 
-      (imageCropped)="imageCropped($event)" 
-      (imageLoaded)="imageLoaded()"
-      (cropperReady)="cropperReady()" 
-      (loadImageFailed)="loadImageFailed()">
-    </image-cropper>
-  </div>
-  <!-- <div class="row px-2 py-3 justify-content-center">
-    <h6>Image Preview</h6>
-    <img [src]="croppedImage" />
-  </div> -->
-  <div class="row px-2 py-3 justify-content-center" *ngIf="doneFlag">
-    <div class="col col-6">
+  <div class="row px-2 py-3 align-items-center justify-content-center" *ngIf="!doneFlag">
+    <div class="col col-6 text-center">
+      <image-cropper 
+        [imageChangedEvent]="imageChangedEvent" 
+        [maintainAspectRatio]="true" 
+        [aspectRatio]="4 / 4"
+        [resizeToWidth]="256" 
+        format="png" 
+        (imageCropped)="imageCropped($event)" 
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()" 
+        (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+    </div>
+    <div class="col col-4 text-center">
+      <h6>Image Preview</h6>
       <img [src]="croppedImage" />
     </div>
   </div>
+  <div class="row px-2 py-3 justify-content-center" *ngIf="doneFlag">
+    <div class="col col-6 text-center">
+      <img [src]="croppedImage" />
+    </div>
+  </div>
+  <div class="row px-2 py-3 justify-content-center" *ngIf="doneFlag">
+    <div class="text-center green" *ngIf="uploadSuccess">
+      Uploaded successful !
+      <br>
+      {{ url }}
+      <br>
+    </div>
+    <div class="text-center red" *ngIf="errMsg">
+      {{ errMsg }}
+    </div>
+  </div>
+
 </div>

@@ -10,7 +10,6 @@ import { ProductAddComponent } from './pages/product-add/product-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
-import { MyInfoComponent } from './pages/my-info/my-info.component';  // ImageCropper 示例
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { AddressComponent } from './pages/address/address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
@@ -104,9 +103,6 @@ const routes: Routes = [
         },
         {
             path: 'category/:id/edit', component: CategoryAddComponent
-        },
-        {
-            path: 'my-info', component: MyInfoComponent  // ImageCropper 示例
         },
         {
             path: 'store', component: StoreComponent

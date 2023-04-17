@@ -15,7 +15,6 @@ import { MerchantInfoComponent } from './pages/merchant-info/merchant-info.compo
 import { CollectionAddComponent } from './pages/collection-add/collection-add.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryAddComponent } from './pages/category-add/category-add.component';
-import { MyInfoComponent } from './pages/my-info/my-info.component';  // ImageCropper 示例
 import { BannersComponent } from './pages/banners/banners.component';
 import { BannerAddComponent } from './pages/banner-add/banner-add.component';
 import { SmallBannersComponent } from './pages/small-banners/small-banners.component';
@@ -90,7 +89,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     CategoriesComponent,
     ProductAddComponent,
     CategoryAddComponent,
-    MyInfoComponent,  // ImageCropper 示例
     BrandsComponent,
     BrandAddComponent,
     RoleMenuPipe,
