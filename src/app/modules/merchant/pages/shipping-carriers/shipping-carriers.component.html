@@ -16,9 +16,9 @@
     </ion-col>
   </ion-row>
   <ion-row class="bg-light">
+    <ion-col size="3">{{ 'Number' | translate }}</ion-col>  <!-- 'Sequence' -->
     <ion-col size="3">{{ 'Name' | translate }}</ion-col>
     <!-- <ion-col size="3">{{ 'Flat Rate' | translate }}</ion-col> -->
-    <ion-col size="3">{{ 'Sequence' | translate }}</ion-col>
     <ion-col size="3"></ion-col>
     <ion-col></ion-col>
   </ion-row>
@@ -26,17 +26,17 @@
 
 <ion-grid class="bg-white" *ngFor="let shippingCarrier of shippingCarriers">
   <ion-row class="work-list">
-    <ion-col size="3">{{ shippingCarrier.name | translateField }}</ion-col>
+    <ion-col size="3">{{ shippingCarrier.number }}</ion-col>  <!-- shippingCarrier.sequence -->
+    <ion-col size="3">{{ shippingCarrier.nameSet | translateField }}</ion-col>  <!-- shippingCarrier.name -->
     <!-- <ion-col size="3">{{ shippingCarrier.flatRate }}</ion-col> -->
-    <ion-col size="3">{{ shippingCarrier.sequence }}</ion-col>
     <ion-col size="3">
       <div class="d-inline-block px-2">
-        <a (click)="editShippingCarrier(shippingCarrier._id)">
+        <a (click)="editShippingCarrier(shippingCarrier.number)">
           <img src="/assets/svg/edit.svg">
         </a>
       </div>
       <div class="d-inline-block px-2">
-        <a (click)="deleteShippingCarrier(shippingCarrier._id)">
+        <a (click)="deleteShippingCarrier(shippingCarrier.number)">
           <img src="/assets/svg/delete.svg">
         </a>
       </div>

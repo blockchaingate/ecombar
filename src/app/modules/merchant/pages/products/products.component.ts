@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { UserService } from 'src/app/modules/shared/services/user.service';
@@ -9,112 +10,127 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 
 @Component({
-  selector: 'app-admin-products',
-  providers: [ProductService, UserService],
-  templateUrl: './products.component.html',
-  styleUrls: [
-    './products.component.scss',
-    '../../../../../page.scss'
-  ]
+    selector: 'app-admin-products',
+    providers: [ProductService, UserService],
+    templateUrl: './products.component.html',
+    styleUrls: [
+        './products.component.scss',
+        '../../../../../page.scss'
+    ]
 })
 export class ProductsComponent implements OnInit {
-  modalRef: BsModalRef;
-  products: any;
-  wallet: any;
-  walletAddress: string;
-  walletExgAddress: string;
-  storeId: string;
-  store: any;
+    modalRef: BsModalRef;
+    products: any;
+    wallet: any;
+    walletAddress: string;
+    walletExgAddress: string;
+    storeId: string;
+    store: any;
 
-  constructor(
-    private router: Router,
-    private modalService: BsModalService,
-    private dataServ: DataService,
-    private utilServ: UtilService,
-    private kanbanServ: KanbanService,
-    private productServ: ProductService) {
-
-  }
-
-  ngOnInit() {
-    this.dataServ.currentWallet.subscribe(
-      (wallet: any) => {
-        this.wallet = wallet;
-      }
-    );
-
-    this.dataServ.currentMyStore.subscribe(
-      (store: any) => {
-        if(store) {
-          this.store = store;
-          this.storeId = store._id;
-        }
-      }
-    )
-    this.dataServ.currentWalletAddress.subscribe(
-      (walletAddress: string) => {
-        this.walletAddress = walletAddress;
-        if(walletAddress) {
-          this.productServ.getProductsOwnedBy(walletAddress, 100, 0).subscribe(
-            (res: any) => {
-              if (res) {
-                this.products = res;
-                console.log('this.products===', this.products);
-              }
-            }
-          );  
-        }
-      
-      }
-    );      
-  }
-
-
-  addNew() {
-
-    this.router.navigate(['/merchant/product/add']);
-  }
-
-  editProduct(product) {
-
-    this.router.navigate(['/merchant/product/' + product._id + '/edit']);
-  }
-
-  displayAddress(address: string) {
-    return this.utilServ.displayAddress(address);
-  }
-  
-  deleteProduct(product) {
-
-    const initialState = {
-      pwdHash: this.wallet.pwdHash,
-      encryptedSeed: this.wallet.encryptedSeed
-    };        
-    if(!this.wallet || !this.wallet.pwdHash) {
-      this.router.navigate(['/wallet']);
-      return;
+    constructor(
+        private router: Router,
+        private modalService: BsModalService,
+        private dataServ: DataService,
+        private utilServ: UtilService,
+        private kanbanServ: KanbanService,
+        private productServ: ProductService) {
     }
-    this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
-    this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
-      this.deleteProductDo(privateKey, product);
-    });
+    ngOnInit() {
+        this.dataServ.currentWallet.subscribe(
+            (wallet: any) => {
+                this.wallet = wallet;
+            }
+        );
 
+        this.updateData();  // 更新数据（即时刷新）
 
-  }
+        this.dataServ.currentMyStore.subscribe(
+            (store: any) => {
+                if(store) {
+                    this.store = store;
+                    this.storeId = store._id;
+                }
+            }
+        )
+    }
 
-  deleteProductDo(privateKey, product) {
-    const body = {
-      id: product._id
-    };
-    const sig = this.kanbanServ.signJsonData(privateKey, body);
-    body['sig'] = sig.signature;  
-    this.productServ.deleteProduct2(body).subscribe(
-      (res: any) => {
-        if (res && res.ok) {
-          this.products = this.products.filter((item) => item._id != product._id);
+    // 更新数据（即时刷新）
+    updateData() {
+
+        this.products = [];
+        // this.dataServ.currentWalletAddress.subscribe(
+        //     (walletAddress: string) => {
+        //         this.walletAddress = walletAddress;
+        //         if(walletAddress) {
+        //             this.productServ.getProductsOwnedBy(walletAddress, 100, 0).subscribe(
+        //                 (res: any) => {
+        //                     if (res) {
+        //                         this.products = res;
+        //                         console.log('this.products===', this.products);
+        //                     }
+        //                 }
+        //             );  
+        //         }
+            
+        //     }
+        // );      
+        this.productServ.getProductList().subscribe(
+            (res: any) => {
+                if (res && res.status == 200 && res.data) {
+                    console.log("products=", res.data);
+                    this.products = res.data;
+                }
+            }
+        );
+
+    }
+
+    addNew() {
+
+        this.router.navigate(['/merchant/product/add']);
+    }
+
+    editProduct(product) {
+
+        this.router.navigate(['/merchant/product/' + product._id + '/edit']);
+    }
+
+    displayAddress(address: string) {
+        return this.utilServ.displayAddress(address);
+    }
+    
+    deleteProduct(product) {
+
+        const initialState = {
+            pwdHash: this.wallet.pwdHash,
+            encryptedSeed: this.wallet.encryptedSeed
+        };        
+
+        if(!this.wallet || !this.wallet.pwdHash) {
+            this.router.navigate(['/wallet']);
+            return;
         }
-      }
-    );
-  }
+
+        this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+        this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+            this.deleteProductDo(privateKey, product);
+        });
+    }
+
+    deleteProductDo(privateKey, product) {
+        const body = {
+            id: product._id
+        };
+        const sig = this.kanbanServ.signJsonData(privateKey, body);
+        body['sig'] = sig.signature;  
+        this.productServ.deleteProduct2(body).subscribe(
+            (res: any) => {
+                if (res && res.ok) {
+                    this.products = this.products.filter((item) => item._id != product._id);
+                }
+            }
+        );
+    }
 }

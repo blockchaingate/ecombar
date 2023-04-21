@@ -1,4 +1,4 @@
-<div *ngIf="noWallet">
+<!-- <div *ngIf="noWallet">
   <div class="text-center py-2">
     Wallet not existed, please create or import a wallet and continue.
 
@@ -9,15 +9,14 @@
   <div class="text-center py-2">
     <button class="btn" (click)="importWallet()">Import Wallet</button>
   </div>
-</div>
+</div> -->
 
-<div class="myNavTabs" style="padding: 0 20px;" *ngIf="!noWallet">  <!-- class="container" -->
-  <h1>{{ 'New product' | translate }}</h1>
-  <!-- <hr> -->
+<div class="myNavTabs" style="padding: 0 20px;">  <!-- *ngIf="!noWallet" -->
+  <h1>{{ (id ? 'Update Product' : 'New Product') | translate }}</h1>
 
   <div class="text-right my-2">
     <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="saveProduct()">
-      {{ 'Save' | translate }}
+      {{ (id ? 'Update' : 'Add') | translate }}
     </button>  <!-- 圆角边框 -->
   </div>
 
@@ -91,16 +90,16 @@
             <input type="text" class="inp w-75" placeholder="Enter product subtitle" [(ngModel)]="subtitle" name="subtitle">
           </dd>
         </dl>
-        <dl>
+        <!-- <dl>
           <dt>Content</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detail' placeholder="Enter product detail"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <textarea class="inp w-75" placeholder="Enter product detail" [(ngModel)]="detail" name="detail" rows="5" required style="height: 100px;"></textarea>
           </dd>
-        </dl>
+        </dl> -->
         <dl>
           <dt>Description</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='description' placeholder="Enter product description"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <textarea class="inp w-75" placeholder="Enter product description" [(ngModel)]="description" name="description" rows="5" required style="height: 100px;"></textarea>
           </dd>
         </dl>
 
@@ -164,16 +163,16 @@
             <input type="text" class="inp w-75" placeholder="输入产品子标题" [(ngModel)]="subtitleChinese" name="subtitleChinese">
           </dd>
         </dl>
-        <dl>
+        <!-- <dl>
           <dt>内容</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detailChinese' placeholder="输入产品内容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <textarea class="inp w-75" placeholder="输入产品内容" [(ngModel)]="detailChinese" name="detailChinese" rows="5" required style="height: 100px;"></textarea>
           </dd>
-        </dl>
+        </dl> -->
         <dl>
           <dt>描述</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='descriptionChinese' placeholder="输入产品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <textarea class="inp w-75" placeholder="输入产品描述" [(ngModel)]="descriptionChinese" name="descriptionChinese" rows="5" required style="height: 100px;"></textarea>
           </dd>
         </dl>
 
@@ -237,16 +236,16 @@
             <input type="text" class="inp w-75" placeholder="輸入產品子標題" [(ngModel)]="subtitleTradition" name="subtitleTradition">
           </dd>
         </dl>
-        <dl>
+        <!-- <dl>
           <dt>內容</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='detailTradition' placeholder="輸入產品內容"   [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <textarea class="inp w-75" placeholder="輸入產品內容" [(ngModel)]="detailTradition" name="detailTradition" rows="5" required style="height: 100px;"></textarea>
           </dd>
-        </dl>
+        </dl> -->
         <dl>
           <dt>描述</dt>
           <dd class="text-left">
-            <ejs-richtexteditor (uploading) = "addHeaders($event)" [(ngModel)]='descriptionTradition' placeholder="輸入產品描述"  [enableResize]='true'  [insertImageSettings]='insertImageSettings'></ejs-richtexteditor>
+            <textarea class="inp w-75" placeholder="輸入產品描述" [(ngModel)]="descriptionTradition" name="descriptionTradition" rows="5" required style="height: 100px;"></textarea>
           </dd>
         </dl>
 
@@ -314,7 +313,7 @@
       </dl>
 
       <dl>
-        <dt>Tax rate</dt>
+        <dt>Tax Rate</dt>
         <dd class="text-left">
           <!-- 50% 宽度, 文字 -->
           <input type="text" class="inp w-75" placeholder="Enter tax rate" [(ngModel)]="taxRate" name="taxRate"> &nbsp;&nbsp; 
@@ -322,46 +321,22 @@
         </dd>
       </dl>
 
-      <dl>
+      <!-- <dl>
         <dt>Rebate Rate</dt>
         <dd class="text-left">
-          <!-- 50% 宽度, 文字 -->
           <input type="text" class="inp w-75" placeholder="Enter rebate rate" [(ngModel)]="rebateRate" name="rebateRate"> &nbsp;&nbsp; 
           %
         </dd>
-      </dl>
+      </dl> -->
 
       <legend>Stock</legend>
 
-      <dl>
+      <!-- <dl>
         <dt>Quantity</dt>
         <dd class="text-left">
           <input type="text" class="inp w-75" placeholder="Enter product quantity" [(ngModel)]="quantity" name="quantity" required>
-
-          <!-- <div *ngFor="let content of contents">
-            <div class="d-flex align-items-center justify-content-between py-2">
-              <div>
-                {{content.name}}: {{content.quantity}}
-              </div>
-              <div>
-                <button class="btn" (click)="removeContent(content)">{{'Remove' | translate}}</button>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- <div class="d-flex">
-            <div class="w-50 px-2">
-              <input type="text"  style="display:table-cell; width:100%"  placeholder="Enter Name" [(ngModel)]="contentName" name="contentName">
-            </div>
-            <div class="w-50  px-2">
-              <input type="number"  style="display:table-cell; width:100%"  placeholder="Enter Quantity" [(ngModel)]="contentQuantity" name="contentQuantity">
-            </div> 
-          </div>
-          <div class="pt-2">
-            <button class="btn" (click)="addContent()">{{ 'Add' | translate }}</button>
-          </div> -->
         </dd>
-      </dl>
+      </dl> -->
 
       <dl>
         <dt></dt>
@@ -377,7 +352,7 @@
         </dd>
       </dl>
 
-      <legend>Specification</legend>
+      <legend>Category</legend>
 
       <dl>
         <dt>Category</dt>
@@ -413,7 +388,7 @@
         </dd>
       </dl>
 
-      <dl>
+      <!-- <dl>
         <dt>Brand</dt>
         <dd class="text-left">
           <div class="py-2" *ngIf="brands">
@@ -424,9 +399,9 @@
           </div>
           &nbsp;&nbsp; 
         </dd>
-      </dl>
+      </dl> -->
 
-      <dl>
+      <!-- <dl>
         <dt>Specification</dt>
         <dd class="text-left">
           <div *ngFor="let spec of specs">
@@ -439,16 +414,15 @@
               </div>
             </div>
           </div>
-          <!-- 30% 宽度, 30% 宽度, 按钮 -->
           <input type="text" class="inp w-35" placeholder="Enter Name" [(ngModel)]="specName" name="specName"> &nbsp;&nbsp;
           <input type="text" class="inp w-35" placeholder="Enter Value" [(ngModel)]="specValue" name="specValue"> &nbsp;&nbsp;
           <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addSpec()">
             {{ 'Add' | translate }}
-          </button>  <!-- btn-block  -->
+          </button>
         </dd>
-      </dl>
+      </dl> -->
 
-      <dl>
+      <!-- <dl>
         <dt>Features</dt>
         <dd class="text-left">
           <div *ngFor="let feature of features">
@@ -461,20 +435,19 @@
               </div>
             </div>
           </div>
-          <!-- 50% 宽度, 按钮 -->
           <input type="text" class="inp w-75" placeholder="Enter Feature" [(ngModel)]="feature" name="feature"> &nbsp;&nbsp;
           <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addFeature()">
             {{ 'Add' | translate }}
-          </button>  <!-- btn-block  -->
+          </button>
         </dd>
-      </dl>
+      </dl> -->
 
-      <legend>Locked days</legend>
+      <!-- <legend>Locked days</legend>
 
       <dl>
         <dt>Locked days</dt>
         <dd class="text-left">
-          <div class="btn-group w-75" dropdown>  <!-- 75% 宽 -->
+          <div class="btn-group w-75" dropdown> 
             <button id="button-basic" dropdownToggle type="button" class="button myButton dropdown-toggle"
                     aria-controls="dropdown-basic">
               {{ lockedDays }} <span class="caret"></span>
@@ -485,9 +458,8 @@
               <li role="menuitem"><a class="dropdown-item" (click)="changeLockedDays(366)">366</a></li>
             </ul>
           </div>
-          <!-- <input type="text" class="inp" placeholder="Enter locked days" [(ngModel)]="lockedDays" name="lockedDays"> -->
         </dd>
-      </dl>
+      </dl> -->
 
     </div>
   </div>

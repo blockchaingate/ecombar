@@ -1,10 +1,10 @@
 
 <div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
-  <h1>{{'New Table Number' | translate}}</h1>
+  <h1>{{ (id ? 'Update Table' : 'New Table') | translate }}</h1>
 
   <div class="text-right my-2">  <!-- 靠右对齐，圆角边框 -->
     <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addShippingCarrier()">
-      {{ (id ? 'Update' : 'Add') | translate }}
+      {{ (id ? 'Update Table' : 'Add Table') | translate }}
     </button>
   </div>
 
@@ -65,12 +65,12 @@
             <input type="text" class="inp w-75" placeholder="Enter table name" [(ngModel)]="name" name="name" required>
           </dd>
         </dl>
-        <dl>
+        <!-- <dl>
           <dt>Description</dt>
           <dd class="text-left">
             <input type="text" class="inp w-75" placeholder="Enter table description" [(ngModel)]="desc" name="desc" required>
           </dd>
-        </dl>
+        </dl> -->
         
       </div>
 
@@ -83,12 +83,12 @@
             <input type="text" class="inp w-75" placeholder="输入桌号名称" [(ngModel)]="nameChinese" name="nameChinese" required>
           </dd>
         </dl>
-        <dl>
+        <!-- <dl>
           <dt>描述</dt>
           <dd class="text-left">
             <input type="text" class="inp w-75" placeholder="输入桌号描述" [(ngModel)]="descChinese" name="descChinese" required>
           </dd>
-        </dl>
+        </dl> -->
 
       </div>
 
@@ -101,12 +101,12 @@
             <input type="text" class="inp w-75" placeholder="輸入桌號名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
           </dd>
         </dl>
-        <dl>
+        <!-- <dl>
           <dt>描述</dt>
           <dd class="text-left">
             <input type="text" class="inp w-75" placeholder="輸入桌號描述" [(ngModel)]="descTradition" name="descTradition" required>
           </dd>
-        </dl>
+        </dl> -->
 
       </div>
 
@@ -117,18 +117,18 @@
   <div *ngIf="NavTab == 'Data'">
     <div class="work-form row">
 
+      <dl>
+        <dt>Number</dt>
+        <dd class="text-left">
+          <input type="text" class="inp w-75" placeholder="Enter table number" [(ngModel)]="number" name="number" required>
+        </dd>
+      </dl>
       <!-- <dl>
         <dt>Flat Rate</dt>
         <dd class="text-left">
           <input type="text" class="inp w-75" placeholder="Enter flat rate" [(ngModel)]="flatRate" name="flatRate" required>
         </dd>
       </dl> -->
-      <dl>
-        <dt>Sequence</dt>
-        <dd class="text-left">
-          <input type="text" class="inp w-75" placeholder="Enter table sequence" [(ngModel)]="sequence" name="sequence" required>
-        </dd>
-      </dl>
 
     </div>
   </div>

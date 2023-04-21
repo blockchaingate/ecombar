@@ -14,13 +14,13 @@ import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-admin-shipping-carriers',
-  providers: [],
-  templateUrl: './shipping-carriers.component.html',
-  styleUrls: [
-    './shipping-carriers.component.scss',
-    '../../../../../page.scss'
-  ]
+    selector: 'app-admin-shipping-carriers',
+    providers: [],
+    templateUrl: './shipping-carriers.component.html',
+    styleUrls: [
+        './shipping-carriers.component.scss',
+        '../../../../../page.scss'
+    ]
 })
 
 export class ShippingCarriersComponent implements OnInit{
@@ -52,14 +52,9 @@ export class ShippingCarriersComponent implements OnInit{
                 this.wallet = wallet;
             }
         ); 
-        this.dataServ.currentWalletAddress.subscribe(
-            (walletAddress: string) => {
-                if(walletAddress) {
-                    this.getMerchantShippingCarriers(walletAddress);
-                }
-            }
-        );
-   
+
+        this.updateData();  // 更新数据（即时刷新）
+        
         this.dataServ.currentMyStore.subscribe(
             (store: any) => {
                 if(store) {
@@ -74,51 +69,84 @@ export class ShippingCarriersComponent implements OnInit{
 
     }
 
-    getMerchantShippingCarriers(walletAddress: string) {
-      this.shippingCarrierServ.getMerchantShippingCarriers(walletAddress).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.shippingCarriers = res._body;
-          }
-        }
-      );
+    // 更新数据（即时刷新）
+    updateData() {
+
+        this.shippingCarriers = [];
+        // this.dataServ.currentWalletAddress.subscribe(
+        //     (walletAddress: string) => {
+        //         if(walletAddress) {
+        //             this.getMerchantShippingCarriers(walletAddress);
+        //         }
+        //     }
+        // );
+        this.shippingCarrierServ.getTableList().subscribe(
+            (res: any) => {
+                if (res && res.status == 200 && res.data) {
+                    console.log("Tables=", res.data);
+                    this.shippingCarriers = res.data;
+                }
+            }
+        );
+
+    }
+
+    // getMerchantShippingCarriers(walletAddress: string) {
+    //     this.shippingCarrierServ.getMerchantShippingCarriers(walletAddress).subscribe(
+    //         (res: any) => {
+    //             if (res && res.ok) {
+    //                 this.shippingCarriers = res._body;
+    //             }
+    //         }
+    //     );
+    // }
+  
+    editShippingCarrier( shippingCarrier_id: string ) {
+        this.router.navigate(['/merchant/shipping-carrier/' + shippingCarrier_id + '/edit']);
     }
   
-    editShippingCarrier(shippingCarrier_id: string) {
-      this.router.navigate(['/merchant/shipping-carrier/' + shippingCarrier_id + '/edit']);
+    deleteShippingCarrier( tableId ) {
+
+        this.shippingCarrierServ.deleteTable(tableId).subscribe(
+            (res: any) => {
+                if (res && res.status == 200 && res.data) {
+                    // location.reload();
+                    this.updateData();  // 更新数据（即时刷新）
+                }
+            }
+        );
+        
+        // const initialState = {
+        //     pwdHash: this.wallet.pwdHash,
+        //     encryptedSeed: this.wallet.encryptedSeed
+        // };          
+
+        // if(!this.wallet || !this.wallet.pwdHash) {
+        //     this.router.navigate(['/wallet']);
+        //     return;
+        // }
+
+        // this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+    
+        // this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
+        //     this.deleteShippingCarrierDo(privateKey, shippingCarrier_id);
+        // });
     }
   
-    deleteShippingCarrier(shippingCarrier_id) {
-  
-      const initialState = {
-        pwdHash: this.wallet.pwdHash,
-        encryptedSeed: this.wallet.encryptedSeed
-      };          
-      if(!this.wallet || !this.wallet.pwdHash) {
-        this.router.navigate(['/wallet']);
-        return;
-      }
-      this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
-  
-      this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
-        this.deleteShippingCarrierDo(privateKey, shippingCarrier_id);
-      });
-    }
-  
-    deleteShippingCarrierDo(privateKey: any, shippingCarrier_id: string) {
-      const data = {
-        id: shippingCarrier_id
-      };
-      const sig = this.kanbanServ.signJsonData(privateKey, data);
-      data['sig'] = sig.signature;        
-      this.shippingCarrierServ.deleteShippingCarrier(data).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            this.shippingCarriers = this.shippingCarriers.filter((item) => item._id != shippingCarrier_id);
-          }
-        }
-      );
-    }
+    // deleteShippingCarrierDo(privateKey: any, shippingCarrier_id: string) {
+    //     const data = {
+    //         id: shippingCarrier_id
+    //     };
+    //     const sig = this.kanbanServ.signJsonData(privateKey, data);
+    //     data['sig'] = sig.signature;        
+    //     this.shippingCarrierServ.deleteShippingCarrier(data).subscribe(
+    //         (res: any) => {
+    //             if (res && res.ok) {
+    //                 this.shippingCarriers = this.shippingCarriers.filter((item) => item._id != shippingCarrier_id);
+    //             }
+    //         }
+    //     );
+    // }
 
     // 创建新的订单
     newOrder( tableNo: any ) {

@@ -1,0 +1,12 @@
+
+api:    # API 接口配置
+  host: 0.0.0.0
+  port: 6060
+  tls:
+    key:  "./src/certs/server.key"
+    cert: "./src/certs/server.crt"
+
+mongo:    # 数据库配置
+  url: "mongodb://madeat:MadEat@127.0.0.1:27017/madeat"    # 用 madeat 数据库
+  find: 
+    limit: 1000    # 查询记录最大数量

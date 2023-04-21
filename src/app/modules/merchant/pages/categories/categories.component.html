@@ -17,23 +17,23 @@
   </ion-row>
   <ion-row class="bg-light">
     <ion-col size="3">{{ 'Name' | translate }}</ion-col>
-    <ion-col size="3">{{ 'Sequence' | translate }}</ion-col>
+    <ion-col size="3">{{ 'Id' | translate }}</ion-col>  <!-- 'Sequence' -->
     <ion-col></ion-col>
   </ion-row>
 </ion-grid>
 
 <ion-grid class="bg-white" *ngFor="let category of categories">
   <ion-row class="work-list">
-    <ion-col size="3">{{ category.name | translateField }}</ion-col>
-    <ion-col size="3">{{ category.sequence }}</ion-col>
+    <ion-col size="3">{{ category.nameSet | translateField }}</ion-col>  <!-- category.name -->
+    <ion-col size="3">{{ category.id }}</ion-col>  <!-- category.sequence -->
     <ion-col>
       <div class="d-inline-block px-2">
-        <a (click)="editCategory(category)">
+        <a (click)="editCategory(category.id)">
           <img src="/assets/svg/edit.svg">
         </a>
       </div>
       <div class="d-inline-block px-2">
-        <a (click)="deleteCategory(category._id)">
+        <a (click)="deleteCategory(category.id)">
           <img src="/assets/svg/delete.svg">
         </a>
       </div>

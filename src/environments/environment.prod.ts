@@ -10,6 +10,7 @@ export const environment = {
   EX_WEBSITE: 'http://192.168.2.12:8100/',  /* 我的 IP */
   
   endpoints: {
+    madeat: 'http://localhost:6060/',
     ws: 'wss://echo.websocket.org/',
     prod: 'https://api.blockchaingate.com/v2/',
     blockchaingate: 'https://api.blockchaingate.com/v2/',

@@ -1,6 +1,8 @@
 
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @Component({
     selector: 'qr-code',
     templateUrl: './qr-code.component.html',
@@ -15,8 +17,9 @@ export class QrCodeComponent implements OnInit {
     urlMerchant: string;
     urlChef: string;
     
-    constructor() {
-    }
+    // constructor(
+    //     private http: HttpClient) {
+    // }
 
     ngOnInit() {
         // this.dataServ.currentWallet.subscribe(
@@ -38,6 +41,20 @@ export class QrCodeComponent implements OnInit {
         this.urlWallet = `/wallet`;
         this.urlMerchant = `/merchant`;
         this.urlChef = `/chef`;
+
+        // const httpOptions = {
+        //     headers: new HttpHeaders({
+        //         'accept': 'application/json'
+        //     })
+        // };
+        // this.http.get('http://localhost:6060/health', httpOptions).subscribe(
+        //     response => {
+        //         console.log(response);
+        //     },
+        //     error => {
+        //         console.error(error);
+        //     }
+        // );
 
     }
 
