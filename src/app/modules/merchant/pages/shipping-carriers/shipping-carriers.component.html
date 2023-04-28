@@ -1,15 +1,15 @@
 
 <!-- “台号”管理 -->
 
-<ion-grid class="px-2 font-size-18 bg-white border-bottom">
+<ion-grid class="px-2 bg-white text-dark font-size-18 border-bottom">
   <ion-row>
     <ion-col size="12" class="ion-text-center">
       <ion-title><h1>{{ 'Table Numbers' | translate }}</h1></ion-title>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="12" class="ion-text-end" *ngIf="store.status == 2">
-      <button type="button" class="btn btn-danger btn-lg newButton-S rounded" 
+    <ion-col size="12" class="ion-text-end">  <!-- *ngIf="store.status == 2" -->
+      <button type="button" class="btn btn-danger px-4 rounded"
         routerLink="/merchant/shipping-carrier/add" routerLinkActive="active">
         {{ 'New' | translate }}
       </button>
@@ -43,7 +43,7 @@
     </ion-col>
     <ion-col>
       <div class="d-inline-block px-2">
-        <a class="border border-danger rounded px-3 py-1" (click)="newOrder(shippingCarrier.sequence)">
+        <a class="border border-danger rounded px-3 py-1" (click)="newOrder(shippingCarrier.number)">
           {{ 'New Order' | translate }}
         </a>
       </div>

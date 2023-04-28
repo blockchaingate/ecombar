@@ -69,3 +69,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+MadEat-api/node_modules
+Swagger-editor

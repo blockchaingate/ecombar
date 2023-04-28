@@ -19,14 +19,14 @@
     <ion-col size="12" class="ion-text-left">
       {{ 'Number' | translate }}: {{ tableNo }}
     </ion-col>
-    <ion-col size="12" class="ion-text-left">
+    <!-- <ion-col size="12" class="ion-text-left">
       {{ 'Owner' | translate }}: {{ order.owner }}
-    </ion-col>
+    </ion-col> -->
     <ion-col size="12" class="ion-text-left">
       {{ 'Order' | translate }}: {{ orderId }}
     </ion-col>
     <ion-col size="12" class="ion-text-left">
-      {{ 'Date' | translate }}: {{ order.dateCreated | date:'yyyy-MM-dd hh:mm:ss' }}
+      {{ 'Date' | translate }}: {{ order.create | date:'yyyy-MM-dd hh:mm:ss' }}
     </ion-col>
   </ion-row>
 
@@ -54,18 +54,26 @@
             <tbody>
                 <tr class="py-2" *ngFor="let item of order.items">
                     <td>
-                        <div *ngIf="item.lockedDays <= 0">×</div>
+                        <div *ngIf="item.flag <= 0">×</div>
                     </td>
-                    <td class="font-weight-bold">{{ item.title }}</td>
+                    <td class="font-weight-bold">
+                      {{ item.title }}
+                      <span *ngIf="(item.flavor && item.flavor != '') || (item.size && item.size != '')">
+                        (
+                          <span *ngIf="item.flavor && item.flavor != ''">{{ item.flavor }}, </span>
+                          <span *ngIf="item.size && item.size != ''">{{ item.size }}, </span>
+                        )
+                      </span>
+                    </td>
                     <td>{{ item.price }}</td>
                     <td>x {{ item.quantity }}</td>
                     <td>{{ item.price * item.quantity }} {{ currency }}</td>
                     <td>
-                        <div *ngIf="item.lockedDays <= 0">
-                            <a class="font-size-20 px-4 border border-danger rounded" (click)="setFood(orderId, item._id, item.quantity, 1)">√</a>
+                        <div *ngIf="item.flag <= 0">
+                            <a class="font-size-20 px-4 border border-danger rounded" (click)="setFood(orderId, item.pid, item.flavor, item.size, item.quantity, 1)">√</a>
                         </div>
-                        <div *ngIf="item.lockedDays > 0">
-                            <a class="font-size-20 px-4 border border-danger rounded" (click)="setFood(orderId, item._id, item.quantity, 0)">×</a>
+                        <div *ngIf="item.flag > 0">
+                            <a class="font-size-20 px-4 border border-danger rounded" (click)="setFood(orderId, item.pid, item.flavor, item.size, item.quantity, 0)">×</a>
                         </div>
                     </td>
                 </tr>
@@ -74,7 +82,7 @@
                 <tr>
                     <th colspan="4" class="text-right font-size-20">{{ 'Subtotal' | translate }}</th>
                     <th class="font-size-17">
-                        {{subtotal}} {{currency}}
+                        {{ subtotal }} {{ currency }}
                     </th>
                     <th></th>
                 </tr>
@@ -95,14 +103,21 @@
                 <tr>
                     <th colspan="4" class="text-right font-size-20">{{ 'Tax' | translate }}</th>
                     <th class="font-size-17">
-                        {{tax}} {{currency}}
+                        {{ tax }} {{ currency }}
                     </th>
                     <th></th>
                 </tr>
-                <tr>
+                <tr *ngIf="tips >= 0">
+                  <th colspan="4" class="text-right font-size-20">{{ 'Tips' | translate }}</th>
+                  <th class="font-size-17">
+                      {{ tips }} {{ currency }}
+                  </th>
+                  <th></th>
+              </tr>
+              <tr>
                     <th colspan="4" class="text-right font-size-20">{{ 'Total' | translate }}</th>
                     <th class="font-size-17">
-                        {{total}} {{currency}}
+                        {{ total }} {{ currency }}
                     </th>
                     <th></th>
                 </tr>
@@ -116,7 +131,12 @@
                         <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'Pay Bill' | translate}}</b>
                     </td>
                 </tr>
-            </tfoot>
+                <tr *ngIf="diffFlag == 0">  <!-- && order.paymentStatus == 2 -->
+                  <td colspan="6" class="text-center font-size-20 border">
+                      <b>{{ 'Number' | translate }}: {{ tableNo }}, {{'New Order' | translate}}</b>
+                  </td>
+              </tr>
+          </tfoot>
         </table>
       </form>
 

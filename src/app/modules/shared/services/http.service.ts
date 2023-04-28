@@ -165,6 +165,76 @@ export class HttpService {
         return ret;
     }
 
+    // Fix: "apply-upload-permit" net::ERR_FAILED
+    // 下述代码抄自上述 post()，唯一区别 environment.endpoints 设置
+    // blockchaingate 是太老了，"apply-upload-permit" 改用 paycool
+    post2(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
+        const url = environment.endpoints['paycool'] + path;
+        // data.appId = environment['appid'];
+        const ret = new Observable<any>((observer) => {
+            if(jwtAuth === true) {
+                this.store.select(selectToken).subscribe(
+                    (token: string) => {
+                        if (! token) {
+                            observer.error('url=' + url + ',Token not exists');
+                        } else {
+                            const httpHeaders = new HttpHeaders({
+                                'Content-Type': 'application/json',
+                                'x-access-token': token
+                            });
+                            const options: OPTIONS = {
+                                headers: httpHeaders
+                            };   
+                            this.http.post(url, data, options).subscribe(
+                                (res) => {
+                                    observer.next(res);
+                                },
+                                err => { 
+                                  observer.error(err)
+                                  //this.errMsg = 'Invalid email or password';
+                                }
+                            );                       
+                        }
+                    });                
+                } else if (pubkey === true) {
+                    const httpHeaders = new HttpHeaders({
+                        'Content-Type': 'application/json'
+                    });
+                    const options: OPTIONS = {
+                        headers: httpHeaders
+                    };   
+                    
+                    this.http.post(url, data, options).subscribe(
+                        (res) => {
+                            observer.next(res);
+                        },
+                        err => { 
+                          observer.error(err)
+                          //this.errMsg = 'Invalid email or password';
+                        }
+                    );                       
+        } else {
+                const httpHeaders = new HttpHeaders({
+                    'Content-Type': 'application/json'
+                });
+                const options: OPTIONS = {
+                    headers: httpHeaders
+                };  
+                this.http.post(url, data, options).subscribe(
+                    (res) => {
+                        observer.next(res);
+                    },
+                    err => { 
+                      observer.error(err)
+                      //this.errMsg = 'Invalid email or password';
+                    }
+                );                           
+            }
+
+        });
+        return ret;
+    }
+
     put(path: string, data: any, jwtAuth = false, pubkey = true): Observable<any> {
         const url = environment.endpoints['blockchaingate'] + path;
         const ret = new Observable<any>((observer) => {

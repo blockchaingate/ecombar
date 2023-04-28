@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 
+import { environment } from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-admin-categories',
@@ -37,22 +38,22 @@ export class CategoriesComponent implements OnInit {
 
     ngOnInit() {
 
-        this.dataServ.currentWallet.subscribe(
-            (wallet: any) => {
-                this.wallet = wallet;
-            }
-        );
+        // this.dataServ.currentWallet.subscribe(
+        //     (wallet: any) => {
+        //         this.wallet = wallet;
+        //     }
+        // );
 
         this.updateData();  // 更新数据（即时刷新）
 
-        this.dataServ.currentMyStore.subscribe(
-            (store: any) => {
-                if(store) {
-                    this.store = store;
-                    this.storeId = store._id;
-                }
-            }
-        )
+        // this.dataServ.currentMyStore.subscribe(
+        //     (store: any) => {
+        //         if(store) {
+        //             this.store = store;
+        //             this.storeId = store._id;
+        //         }
+        //     }
+        // )
 
     }
 
@@ -73,7 +74,10 @@ export class CategoriesComponent implements OnInit {
                     console.log("categories=", res.data);
                     this.categories = res.data;
                 }
-            }
+            },
+            // (error: any) => {  // 处理错误逻辑
+            //     this.result = JSON.stringify(error);
+            // }
         );
 
     }

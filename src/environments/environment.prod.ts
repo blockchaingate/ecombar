@@ -7,10 +7,12 @@ export const environment = {
   IDDOCK: 'http://localhost:4201',
   cat_typ: 'ecom',
 
-  EX_WEBSITE: 'http://192.168.2.12:8100/',  /* 我的 IP */
+//  EX_WEBSITE: 'http://192.168.2.12:8100/',  /* 我的 IP */
+  API_PATH: '192.168.2.12:6060',  // API 路径
   
   endpoints: {
-    madeat: 'http://localhost:6060/',
+    // madeat: 'http://localhost:6060/',
+    madeat: 'http://192.168.2.12:6060/',
     ws: 'wss://echo.websocket.org/',
     prod: 'https://api.blockchaingate.com/v2/',
     blockchaingate: 'https://api.blockchaingate.com/v2/',

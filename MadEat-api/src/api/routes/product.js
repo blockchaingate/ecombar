@@ -19,8 +19,8 @@ export default (server) => {
             auth: false,
             validate: {
                 query: Joi.object({    // 可改 skip, limit
-                    skip: Joi.number().min(0),
-                    limit: Joi.number().min(1).max(1000),    // 最多 1000 条
+                    skip: Joi.number().integer().min(0),
+                    limit: Joi.number().integer().min(1).max(1000),    // 最多 1000 条
                 })
             },
         },
@@ -46,7 +46,7 @@ export default (server) => {
     })
 
     server.route({
-        method: 'POST',
+        method: 'DELETE',
         path: '/product/delete',
         config: {
             tags: ['api'],

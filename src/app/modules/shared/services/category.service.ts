@@ -17,8 +17,8 @@ const httpOptionsJson = {
     })
 };
 
-const baseUrl = environment.endpoints['paycool'];
-const madeatUrl = environment.endpoints['madeat'];
+const baseUrl = environment.endpoints['paycool'];  // 未来取消
+// const madeatUrl = environment.endpoints['madeat'];  // 随时会改
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
@@ -35,6 +35,7 @@ export class CategoryService {
     }
     // 现用 /category/create
     createCategory( data ) {
+        const madeatUrl = environment.endpoints['madeat'];
         // return this.http.put(madeatUrl + 'category/create', {}, { params });
         return this.http.put(madeatUrl + 'category/create', JSON.stringify(data), httpOptionsJson);
     }
@@ -46,6 +47,7 @@ export class CategoryService {
     }
     // 现用 /category/update
     updateCategory( data ) {
+        const madeatUrl = environment.endpoints['madeat'];
         // return this.http.put(madeatUrl + 'category/update', {}, { params });
         return this.http.put(madeatUrl + 'category/update', JSON.stringify(data), httpOptionsJson);
     }
@@ -68,6 +70,7 @@ export class CategoryService {
     }
     // 现用 /category/list
     getCategoryList() {    // 东西不多，不用 skip/limit
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.get(madeatUrl + 'category/list', httpOptions);
         // this.http.get(madeatUrl + 'category/list', httpOptions).subscribe(
         //     response => {
@@ -93,6 +96,7 @@ export class CategoryService {
     }
     // 现用 /category/info
     getCategoryInfo( id: string ) {
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.get(madeatUrl + `category/info?id=${id}`, httpOptions);
     }
 
@@ -102,6 +106,7 @@ export class CategoryService {
     // }
     // 现用 /category/delete
     deleteCategory( id: string ) {
-        return this.http.post(madeatUrl + `category/delete?id=${id}`, httpOptions);
+        const madeatUrl = environment.endpoints['madeat'];
+        return this.http.delete(madeatUrl + `category/delete?id=${id}`, httpOptions);
     }
 }

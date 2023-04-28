@@ -19,22 +19,32 @@ const httpOptionsJson = {
     })
 };
 
-const baseUrl = environment.endpoints['paycool'];
-const madeatUrl = environment.endpoints['madeat'];
+const baseUrl = environment.endpoints['paycool'];  // 未来取消
+// const madeatUrl = environment.endpoints['madeat'];  // 随时会改
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
     constructor(private http: HttpClient) { }
 
-    create(data: Product) {
+    // 原有 /product/create
+    create( data: Product ) {
         return this.http.post(baseUrl + 'product', data);
     }
+    // 现用 /product/create
+    createProduct( data ) {
+        const madeatUrl = environment.endpoints['madeat'];
+        return this.http.put(madeatUrl + 'product/create', JSON.stringify(data), httpOptionsJson);
+    }
 
+    // 原有 /product/update
     update(id: string, data: Product) {
-        // console.log('[update] url =', baseUrl + 'product/' + id);
-        // console.log('[update] data=', data);
         // 后端 router.put("/:id", ProductController.updateMerchantProduct);
         return this.http.put(baseUrl + 'product/' + id, data);
+    }
+    // 现用 /product/update
+    updateProduct( data ) {
+        const madeatUrl = environment.endpoints['madeat'];
+        return this.http.put(madeatUrl + 'product/update', JSON.stringify(data), httpOptionsJson);
     }
 
     // 原有 /product/info
@@ -43,6 +53,7 @@ export class ProductService {
     }
     // 现用 /product/info
     getProductInfo( id: string ) {
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.get(madeatUrl + `product/info?id=${id}`, httpOptions);
     }
 
@@ -65,6 +76,7 @@ export class ProductService {
     }
     // 现用 /product/list
     getProductList() {    // 东西不多，不用 skip/limit
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.get(madeatUrl + 'product/list', httpOptions);
     }
     
@@ -78,7 +90,8 @@ export class ProductService {
     }
     // 现用 /product/delete
     removeProduct( id: string ) {
-        return this.http.post(madeatUrl + `product/delete?id=${id}`, httpOptions);
+        const madeatUrl = environment.endpoints['madeat'];
+        return this.http.delete(madeatUrl + `product/delete?id=${id}`, httpOptions);
     }
 
     getMerchantAllProducts() {

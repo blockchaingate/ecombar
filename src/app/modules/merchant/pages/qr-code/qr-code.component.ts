@@ -3,6 +3,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 // import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { environment } from '../../../../../environments/environment';
+
 @Component({
     selector: 'qr-code',
     templateUrl: './qr-code.component.html',
@@ -37,10 +39,13 @@ export class QrCodeComponent implements OnInit {
         //     }
         // );
 
+        const host = environment['API_PATH'];
+
         this.urlStores = `/stores`;
         this.urlWallet = `/wallet`;
         this.urlMerchant = `/merchant`;
-        this.urlChef = `/chef`;
+        this.urlChef = `/chef/host/${host}`;
+        // this.urlChef = `/chef`;
 
         // const httpOptions = {
         //     headers: new HttpHeaders({

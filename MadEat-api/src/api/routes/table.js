@@ -19,8 +19,8 @@ export default (server) => {
             auth: false,
             validate: {
                 query: Joi.object({    // 可改 skip, limit
-                    skip: Joi.number().min(0),
-                    limit: Joi.number().min(1).max(1000),    // 最多 1000 条
+                    skip: Joi.number().integer().min(0),
+                    limit: Joi.number().integer().min(1).max(1000),    // 最多 1000 条
                 })
             },
         },
@@ -37,7 +37,7 @@ export default (server) => {
             auth: false,
             validate: {
                 query: Joi.object({
-                    number: Joi.number().required(),
+                    number: Joi.number().integer().required(),
                 })
             },
         },
@@ -46,7 +46,7 @@ export default (server) => {
     })
 
     server.route({
-        method: 'POST',
+        method: 'DELETE',
         path: '/table/delete',
         config: {
             tags: ['api'],
@@ -57,7 +57,7 @@ export default (server) => {
             // },
             validate: {
                 query: Joi.object({
-                    number: Joi.number().required(),
+                    number: Joi.number().integer().required(),
                 })
             },
         },
@@ -77,7 +77,7 @@ export default (server) => {
             // },
             validate: {
                 payload: {
-                    number: Joi.number().required(),
+                    number: Joi.number().integer().required(),
                     name: Joi.string().max(200).required(), 
                     nameSc: Joi.string().max(200).allow(''),    // 缺省为 ""
                     nameTc: Joi.string().max(200).allow(''),    // 缺省为 ""
@@ -101,7 +101,7 @@ export default (server) => {
             // },
             validate: {
                 payload: {
-                    number: Joi.number().required(),
+                    number: Joi.number().integer().required(),
                     name: Joi.string().max(200).required(), 
                     nameSc: Joi.string().max(200).allow(''),    // 缺省为 ""
                     nameTc: Joi.string().max(200).allow(''),    // 缺省为 ""

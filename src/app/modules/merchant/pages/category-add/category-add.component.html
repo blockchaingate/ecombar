@@ -1,9 +1,10 @@
 
+
 <div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
-  <h1>{{ (id ? 'Update Category' : 'New Category') | translate }}</h1>
+  <h1 class="text-dark">{{ (id ? 'Update Category' : 'New Category') | translate }}</h1>
 
   <div class="text-right my-2">
-    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addCategory()">
+    <button type="button" class="btn btn-danger px-4 rounded" (click)="addCategory()">
       {{ (id ? 'Update' : 'Add') | translate }}
     </button>  <!-- 圆角边框 -->
   </div>

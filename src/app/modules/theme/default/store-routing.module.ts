@@ -71,12 +71,10 @@ const routes: Routes = [
         path: 'store-locator',
         component: StoreLocatorComponent
       },
-      /*
-      {
-        path: 'product2',
-        component: Product2Component
-      },
-      */
+      // {
+      //   path: 'product2',
+      //   component: Product2Component
+      // },
       {
         path: 'checkout',
         component: CheckoutComponent

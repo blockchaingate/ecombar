@@ -91,46 +91,55 @@ export class ProductsComponent implements OnInit {
         this.router.navigate(['/merchant/product/add']);
     }
 
-    editProduct(product) {
+    editProduct(productId) {
 
-        this.router.navigate(['/merchant/product/' + product._id + '/edit']);
+        this.router.navigate(['/merchant/product/' + productId + '/edit']);
     }
 
     displayAddress(address: string) {
         return this.utilServ.displayAddress(address);
     }
     
-    deleteProduct(product) {
+    deleteProduct(productId) {
 
-        const initialState = {
-            pwdHash: this.wallet.pwdHash,
-            encryptedSeed: this.wallet.encryptedSeed
-        };        
-
-        if(!this.wallet || !this.wallet.pwdHash) {
-            this.router.navigate(['/wallet']);
-            return;
-        }
-
-        this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
-
-        this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
-            this.deleteProductDo(privateKey, product);
-        });
-    }
-
-    deleteProductDo(privateKey, product) {
-        const body = {
-            id: product._id
-        };
-        const sig = this.kanbanServ.signJsonData(privateKey, body);
-        body['sig'] = sig.signature;  
-        this.productServ.deleteProduct2(body).subscribe(
+        this.productServ.removeProduct(productId).subscribe(  // deleteProduct 重复
             (res: any) => {
-                if (res && res.ok) {
-                    this.products = this.products.filter((item) => item._id != product._id);
+                if (res && res.status == 200 && res.data) {
+                    // location.reload();
+                    this.updateData();  // 更新数据（即时刷新）
                 }
             }
         );
+        
+        // const initialState = {
+        //     pwdHash: this.wallet.pwdHash,
+        //     encryptedSeed: this.wallet.encryptedSeed
+        // };        
+
+        // if(!this.wallet || !this.wallet.pwdHash) {
+        //     this.router.navigate(['/wallet']);
+        //     return;
+        // }
+
+        // this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+        // this.modalRef.content.onCloseFabPrivateKey.subscribe( (privateKey: any) => {
+        //     this.deleteProductDo(privateKey, product);
+        // });
     }
+
+    // deleteProductDo( privateKey, product ) {
+    //     const body = {
+    //         id: product._id
+    //     };
+    //     const sig = this.kanbanServ.signJsonData(privateKey, body);
+    //     body['sig'] = sig.signature;  
+    //     this.productServ.deleteProduct2(body).subscribe(
+    //         (res: any) => {
+    //             if (res && res.ok) {
+    //                 this.products = this.products.filter((item) => item._id != product._id);
+    //             }
+    //         }
+    //     );
+    // }
 }

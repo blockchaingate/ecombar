@@ -6,7 +6,7 @@
 <main class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
 
   <div class="container my-md-3 font-size-18">
-    <ion-button fill="clear" routerLink="/store/{{ storeId }}/order/{{ orderId }}">{{ 'Back' | translate }}&nbsp;&nbsp;></ion-button>
+    <ion-button fill="clear" routerLink="/store/order/{{ orderId }}">{{ 'Back' | translate }}&nbsp;&nbsp;></ion-button>
   </div>
     
     <div class="mb-3 container border rounded bg-white">  <!-- 背景白色，圆角边框 -->
@@ -38,7 +38,7 @@
                         <tr>
                             <th colspan="5" class="text-right font-size-24">Cart Totals</th>
                             <th class="font-size-17">
-                                {{total}} {{currency}}
+                                {{ total }} {{ currency }}
                             </th>
                         </tr>
                         <!-- <tr class="cart-subtotal">
@@ -69,7 +69,7 @@
                                         <button type="button" class="btn btn-danger btn-lg btn-block NewButton" *ngIf="(!tableNo || tableNo <= 0)" (click)="checkout()">
                                             {{'Check Out' | translate}}
                                         </button> -->
-                                        <button type="button" class="btn btn-danger btn-lg btn-block NewButton" (click)="checkout()">
+                                        <button type="button" class="btn btn-danger btn-lg btn-block NewButton" [disabled]="disableButton" (click)="checkout()">
                                             {{'Place Order' | translate}}  <!-- 注意！它调用的是 checkout() -->
                                         </button>
                                         <!-- <a (click)="checkout()" class="btn myButton-Buy font-size-18 d-md-inline-block" *ngIf="tableNo">{{'Place Order' | translate}}</a> -->

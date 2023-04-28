@@ -1,14 +1,15 @@
 
 <!-- 列示所有订单 -->
 
-<ion-grid class="px-2 font-size-18 bg-white border-bottom">
+<ion-grid class="px-2 bg-white text-dark font-size-18 border-bottom">
   <ion-row>
     <ion-col size="12" class="ion-text-center">
-      <ion-title><h1>{{ 'Orders' | translate }}</h1></ion-title>
+      <ion-title><h1>{{ 'All Orders' | translate }}</h1></ion-title>
     </ion-col>
   </ion-row>
   <ion-row class="bg-light">
     <ion-col size="3">{{ 'Id' | translate }}</ion-col>
+    <ion-col size="2">{{ 'Table' | translate }}</ion-col>
     <ion-col size="3">{{ 'Date Created' | translate }}</ion-col>
     <ion-col size="2">{{ 'Total' | translate }}</ion-col>
     <ion-col>{{ 'Status' | translate }}</ion-col>
@@ -18,19 +19,21 @@
 <ion-grid class="bg-white" *ngFor="let order of orders">
   <ion-row class="work-list">
     <ion-col size="3">
-      <a target="_blank" *ngIf="order.merchantId" href="/merchant/order/{{ order._id }}">
-        {{ order._id }}
+      <a target="_blank" href="/merchant/order/{{ order.id }}">
+        {{ trimText(order.id) }}
       </a>
-      <span *ngIf="!order.merchantId">{{ order._id }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
+      <!-- <span *ngIf="!order.merchantId">{{ trimText(order.id) }}</span> -->
     </ion-col>
-    <ion-col size="3">{{ order.dateCreated | date:'MM/dd hh:mm' }}</ion-col>
-    <ion-col size="2">{{ order.totalAmount }}</ion-col>
-    <ion-col *ngIf="order.memo">
+    <ion-col size="2">{{ order.table }}</ion-col>
+    <ion-col size="3">{{ order.create | date:'MM/dd hh:mm' }}</ion-col>  <!-- order.dateCreated -->
+    <ion-col size="2">{{ order.total }}</ion-col>  <!-- order.totalAmount -->
+    <ion-col size="2">{{ order.status }}</ion-col>
+    <!-- <ion-col *ngIf="order.memo">
       {{ order.memo }}
     </ion-col>
     <ion-col *ngIf="!order.memo">
       {{ getStatus(order) | translate }}
-    </ion-col>
+    </ion-col> -->
       <!-- <div *ngIf="order.paymentStatus == 5">
         <a (click)="refund(order)">
           Approve refund

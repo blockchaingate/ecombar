@@ -153,72 +153,93 @@ export class ShippingCarriersComponent implements OnInit{
         if (parseInt(tableNo) <= 0) {  // 台号 no  // OrderList 的主人
             return;
         }
-        if (!this.wallet || !this.wallet.pwdHash) {
-            this.router.navigate(['/wallet']);
-            return;
-        }
 
-        const initialState = {
-            pwdHash: this.wallet.pwdHash,
-            encryptedSeed: this.wallet.encryptedSeed
-        };        
-        this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+        let data: any = {  // 空白订单
+            table: tableNo, 
+            total: 0, 
+            subtotal: 0, 
+            tax: 0, 
+            items: [],
+            status: 0,
+        };
+        console.log('data=', data);
 
-        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            // this.spinner.show();
-            this.newOrderDo(seed, tableNo);
-        });
-    }
-
-    async newOrderDo( seed: Buffer, tableNo: number ) {
-        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-        const privateKey = keyPair.privateKeyBuffer.privateKey;
-
-        const uuid = uuidv4();  // '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
-        let uuid2 = uuid.replace(/-/g, '');  // 去掉 - 字符
-        uuid2 = `${uuid2}(${tableNo})`;  // 加入台号
-
-        const orderData = { 
-            merchantId: this.merchantId, 
-            owner: this.walletAddress, 
-            currency: this.currency, 
-            items: [], 
-            memo: 'NewOrder',
-            externalOrderNumber: uuid2 };
-        console.log('orderData=', orderData);
-        // owner: { type: String},
-        // totalAmount: {type: Number},
-        // totalTax: {type: Number},
-        // totalShipping: {type: Number},
-        // currency: {type: String, required: true},
-        // merchantId: {type: String, required: true},
-        // items: [{
-        //     title: String,
-        //     taxRate: Number,
-        //     lockedDays: Number,
-        //     rebateRate: Number,
-        //     price: Number,
-        //     quantity: Number
-        // }], 
-        const sig = this.kanbanServ.signJsonData(privateKey, orderData);
-        orderData['sig'] = sig.signature;  
-        this.orderServ.create2(orderData).subscribe(
+        this.orderServ.createOrder(data).subscribe(
             (res: any) => {
-                if (res) {
-                    const body = res;
-                    const orderNewID = body._id;
-                    // this.spinner.hide();
+                console.log('res=', res);
+                if (res && res.status == 200 && res.data) {
 
                     location.reload();  // 重新加载当前页面
                 }
-            },
-            err => { 
-                this.errMsg = err.message;
-                // this.spinner.hide();
-                this.toastr.error('error while creating order');              
             }
-        );  
+        );
 
+        // if (!this.wallet || !this.wallet.pwdHash) {
+        //     this.router.navigate(['/wallet']);
+        //     return;
+        // }
+
+        // const initialState = {
+        //     pwdHash: this.wallet.pwdHash,
+        //     encryptedSeed: this.wallet.encryptedSeed
+        // };        
+
+        // this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+        // this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+        //     // this.spinner.show();
+        //     this.newOrderDo(seed, tableNo);
+        // });
     }
 
-  }
+    // async newOrderDo( seed: Buffer, tableNo: number ) {
+    //     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    //     const privateKey = keyPair.privateKeyBuffer.privateKey;
+
+    //     const uuid = uuidv4();  // '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+    //     let uuid2 = uuid.replace(/-/g, '');  // 去掉 - 字符
+    //     uuid2 = `${uuid2}(${tableNo})`;  // 加入台号
+
+    //     const orderData = { 
+    //         merchantId: this.merchantId, 
+    //         owner: this.walletAddress, 
+    //         currency: this.currency, 
+    //         items: [], 
+    //         memo: 'NewOrder',
+    //         externalOrderNumber: uuid2 };
+    //     console.log('orderData=', orderData);
+    //     // owner: { type: String},
+    //     // totalAmount: {type: Number},
+    //     // totalTax: {type: Number},
+    //     // totalShipping: {type: Number},
+    //     // currency: {type: String, required: true},
+    //     // merchantId: {type: String, required: true},
+    //     // items: [{
+    //     //     title: String,
+    //     //     taxRate: Number,
+    //     //     lockedDays: Number,
+    //     //     rebateRate: Number,
+    //     //     price: Number,
+    //     //     quantity: Number
+    //     // }], 
+    //     const sig = this.kanbanServ.signJsonData(privateKey, orderData);
+    //     orderData['sig'] = sig.signature;  
+    //     this.orderServ.create2(orderData).subscribe(
+    //         (res: any) => {
+    //             if (res) {
+    //                 const body = res;
+    //                 const orderNewID = body._id;
+    //                 // this.spinner.hide();
+
+    //                 location.reload();  // 重新加载当前页面
+    //             }
+    //         },
+    //         err => { 
+    //             this.errMsg = err.message;
+    //             // this.spinner.hide();
+    //             this.toastr.error('error while creating order');              
+    //         }
+    //     );  
+    // }
+
+}

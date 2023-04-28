@@ -40,7 +40,7 @@ function getPlugins(apiName, pluginsExtensions, version) {
             plugin: HapiSwagger,
             options: swaggerOptions
         },
-        hapiAuthJwt2
+        hapiAuthJwt2,
     ];
 
     if (pluginsExtensions && pluginsExtensions.length) {
@@ -53,7 +53,7 @@ function getPlugins(apiName, pluginsExtensions, version) {
 export default {
     async start(appName, routesDirectories, plugins, version) {
      // let defaultRoutes = [path.resolve(__dirname, '../api/routes')].concat(routesDirectories || [])
-        let defaultRoutes = routesDirectories || [path.resolve('./src/api/routes')];    // 提供缺省值 [ './src/api/routes' ]
+        let defaultRoutes = routesDirectories || [ path.resolve('./src/api/routes') ];    // 提供缺省值 [ './src/api/routes' ]
 
         // let tls = {
         //     key: fs.readFileSync(path.resolve(config.api.tls.key)),    // , 'utf8'

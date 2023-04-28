@@ -5,8 +5,8 @@ import table_store from '../../stores/table.js'
 
 export default {
 
-    async listTable( skip, limit ) {
-        const res = await table_store.listTable(skip, limit);
+    async listTable( table, skip, limit ) {
+        const res = await table_store.listTable(table, skip, limit);
 
         if (res == null) {    // null 错误返回，[] 查无记录
             throw new BusinessError(errors.CONNECT_ERROR);

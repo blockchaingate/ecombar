@@ -2,27 +2,28 @@
 <!-- 商家页 -->
 <!-- <ul class="list-unstyled" -->
 
-<app-menu-2 [categories]="categories" [storeId]="storeId"></app-menu-2>  <!-- 仅用于此页 -->
+<!-- <app-menu-2 [categories]="categories" [storeId]="storeId"></app-menu-2> -->
+<app-menu-2 [categories]="categories" [orderId]="orderId"></app-menu-2>  <!-- 仅用于此页。取消 storeId，增加 orderId -->
 
 <div class="d-flex flex-wrap my-1" *ngIf="products">  <!-- Flex换行，上下空隙1 -->  <!-- class="row list-unstyled products-group no-gutters mb-0 overflow-visible" -->
     <div *ngFor="let item of products" class="m-1">  <!-- 四边空隙1 -->  <!-- class="col-wd-3 col-md-4 pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0" -->
         <!-- <div class="product-item__outer h-100 w-100"> -->
             <div class="food_box border" *ngIf="!(item.primaryCategory && type && item.primaryCategory != type)">  <!-- 类别（过滤） -->  <!-- product-item__inner p-md-3 row no-gutters -->
                 <div class="m-1">  <!-- "col col-lg-auto product-media-left" -->
-                    <a href="/store/{{storeId}}/product/{{item._id}}" class="align-items-center">
+                    <a href="/store/product/{{item.id}}" class="align-items-center">
                         <img class="img-fluid" src="{{item.images[0]}}" alt="Image Description">
                     </a>  <!-- class="max-width-150 d-block" -->
                 </div>
                 <div class="">  <!-- class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1" -->
                     <div class="mb-1 p-1">
                         <!-- <div class="mb-2">
-                            <a href="/store/{{storeId}}/product/{{item._id}}" class="font-size-12 text-gray-5">
+                            <a href="/store/{{ storeId }}/product/{{ item._id }}" class="font-size-12 text-gray-5">
                                 {{item.primaryCategoryId ? (item.primaryCategoryId.category | translateField) : ''}}
                             </a>
                         </div> -->
-                        <div class="font-size-14">  <!-- class="product-item__title" -->
-                            <a [routerLink]="['/store/' + storeId + '/product/' + item._id]" class="text-blue font-weight-bold">
-                            {{item.title | translateField}}
+                        <div class="font-size-14">  <!-- class="product-item__title", "['/store/' + storeId + '/product/' + item._id]" -->
+                            <a [routerLink]="['/store/product/' + item.id]" class="text-blue font-weight-bold">
+                            {{ item.title | translateField }}
                             </a>
                             <!--
                             <a href="{{iddockRoot}}/detail/things/{{item.objectId}}" *ngIf="item.objectId">
@@ -33,7 +34,7 @@
                     </div>
                     <div class="flex-center-between px-1 mb-1 font-size-14">  <!-- "flex-center-between mb-3" -->
                         <div class="">  <!-- class="prodcut-price" -->
-                            <div class="text-gray-100">{{item.price}} {{currency}}</div>
+                            <div class="text-gray-100">{{ item.price }} {{ currency }}</div>
                         </div>
                         <div class="">  <!-- class="d-none d-xl-block prodcut-add-cart" -->
                             <a (click)="addToCart(item)" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>

@@ -18,8 +18,8 @@ const httpOptionsJson = {
     })
 };
 
-const baseUrl = environment.endpoints['paycool'];
-const madeatUrl = environment.endpoints['madeat'];
+const baseUrl = environment.endpoints['paycool'];  // 未来取消
+// const madeatUrl = environment.endpoints['madeat'];  // 随时会改
 
 @Injectable({ providedIn: 'root' })
 export class ShippingCarrierService {
@@ -35,6 +35,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/create
     createTable( data ) {
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.put(madeatUrl + 'table/create', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -44,6 +45,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/update
     updateTable( data ) {
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.put(madeatUrl + 'table/update', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -57,6 +59,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/list
     getTableList() {    // 东西不多，不用 skip/limit
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.get(madeatUrl + 'table/list', httpOptions);
     }
 
@@ -66,6 +69,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/info
     getTableInfo( id: string ) {
+        const madeatUrl = environment.endpoints['madeat'];
         return this.http.get(madeatUrl + `table/info?number=${id}`, httpOptions);
     }
 
@@ -75,6 +79,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/delete
     deleteTable( id: number ) {
-        return this.http.post(madeatUrl + `table/delete?number=${id}`, httpOptions);
+        const madeatUrl = environment.endpoints['madeat'];
+        return this.http.delete(madeatUrl + `table/delete?number=${id}`, httpOptions);
     }
 }

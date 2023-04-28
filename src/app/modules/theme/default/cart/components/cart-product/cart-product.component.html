@@ -35,13 +35,13 @@
 </td>
 
 <td data-title="Product">  <!-- 购物车，调整细节 -->
-    <a href="/product/{{product.productId}}" class="text-gray-90"><b>{{ product.title | translateField }}</b></a>
+    <a href="/store/product/{{product.productId}}" class="text-gray-90"><b>{{ product.title | translateField }}</b></a>
     <div *ngIf="product.color"><span class="border-bottom">{{ product.color }}</span></div>
     <div *ngIf="product.size"><span class="border-bottom">{{ product.size }}</span></div>
 </td>
 
 <td data-title="Price">
-    <span class="">{{product.price}} {{currency}}</span>
+    <span class="">{{ product.price }} {{ currency }}</span>
 </td>
 
 <td data-title="Quantity">

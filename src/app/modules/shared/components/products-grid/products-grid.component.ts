@@ -25,7 +25,7 @@ export class ProductsGridComponent implements OnInit{
     currency: string;
     type: string;  // 类别（过滤） category
     orderId: string;  // 订单 no
-    @Input() products: any;
+    @Input() products: any;  // <app-products-grid [products]="latestProducts"></app-products-grid>
 
     constructor(
         private route: ActivatedRoute,
@@ -38,84 +38,102 @@ export class ProductsGridComponent implements OnInit{
     }
 
     ngOnInit() {
-        this.dataServ.currentStore.subscribe(
-            (store: any) => {
-                console.log('storeeeee=', store);
-                this.storeId = store._id;
-                this.store = store;
-                this.currency = store.coin;
-            }
-        );
-        this.dataServ.currentStoreOwner.subscribe(
-            (storeOwner: string) => {
-                if(storeOwner) {
-                    this.categoryServ.getMerchantCategoriesTree(storeOwner).subscribe(
-                        (ret: any) => {
-                            if(ret) {
-                                console.log('ret of categories=', ret);
-                                const allCategories = ret;
-                                this.categories = allCategories;
-                                this.dataServ.changeStoreCategories(allCategories);
-                            }
-                        }
-                    );
+        // this.dataServ.currentStore.subscribe(
+        //     (store: any) => {
+        //         console.log('storeeeee=', store);
+        //         this.storeId = store._id;
+        //         this.store = store;
+        //         this.currency = store.coin;
+        //     }
+        // );
+        // this.dataServ.currentStoreOwner.subscribe(
+        //     (storeOwner: string) => {
+        //         if(storeOwner) {
+        //             this.categoryServ.getMerchantCategoriesTree(storeOwner).subscribe(
+        //                 (ret: any) => {
+        //                     if(ret) {
+        //                         console.log('ret of categories=', ret);
+        //                         const allCategories = ret;
+        //                         this.categories = allCategories;
+        //                         this.dataServ.changeStoreCategories(allCategories);
+        //                     }
+        //                 }
+        //             );
+        //         }
+        //     }
+        // );
+        this.categories = [];
+        this.categoryServ.getCategoryList().subscribe(
+            (res: any) => {
+                if (res && res.status == 200 && res.data) {
+                    console.log("categories=", res.data);
+                    this.categories = res.data;
                 }
             }
         );
+
         this.route.paramMap.subscribe((params: ParamMap) =>  {
-            // // let no = this.cartStoreServ.getTableNo();  // 已有 no
-            // let no2 = parseInt(params.get('no'));  // 新的 no
-            // if (no2) {  // 有新值用新值，无新值用旧值
-            //   this.cartStoreServ.setTableNo( parseInt(params.get('no')) );  // 台号 no
-            // }
-            // console.log('tableno=', this.cartStoreServ.getTableNo());
+            if (params.get('orderId')) {
+                this.orderId = params.get('orderId');  // 订单 no
+                this.cartStoreServ.setOrderId(this.orderId);  // 订单 no
+                console.log('orderId=', this.cartStoreServ.getOrderId());
+    
+                this.type = params.get('type');  // 类别（过滤）
+                console.log('typeno=', this.type);
 
-            this.orderId = params.get('orderId');  // 订单 no
-            if (! this.orderId) this.orderId = "";
-            this.cartStoreServ.setOrderId(this.orderId);  // 订单 no
-            console.log('orderId=', this.cartStoreServ.getOrderId());
-
-            this.type = params.get('type');  // 类别（过滤）
-            console.log('typeno=', this.type);
-            
-            this.orderServ.get(this.orderId).subscribe(  // 通过订单号，运算出台号
-                (res: any) => {
-                    // console.log('order ret=', res);
-                    if (res) {  //  && res.ok
-                        // this.order = res;  // res._body
-                        // console.log('order ret=', this.order);
-                        const order = res;
-                        if (order && order.externalOrderNumber) {
-                            const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
-                            // console.log('num match=', num);
-                            // [
-                            //     "(8)",
-                            //     "8"
-                            // ]
-                            if (num && num[1]) {  // 查到台号
-                                const tableNo = parseInt(num[1]);  // 台号 no (计算)
-                                this.cartStoreServ.setTableNo(tableNo);  // 台号 no
-                            }
+                this.orderServ.getOrderInfo(this.orderId).subscribe(
+                    (res: any) => {
+                        if (res && res.status == 200 && res.data) {
+                            const order = res.data;
+                            console.log('orderyyy=', order);
+                            const tableNo = order.table;  // 台号 no
+                            this.cartStoreServ.setTableNo(tableNo);  // 台号 no
+                            console.log('tableNo=', tableNo);
                         }
                     }
-                }
-            );
+                );
+                // this.orderServ.get(this.orderId).subscribe(  // 通过订单号，运算出台号
+                //     (res: any) => {
+                //         // console.log('order ret=', res);
+                //         if (res) {  //  && res.ok
+                //             // this.order = res;  // res._body
+                //             // console.log('order ret=', this.order);
+                //             const order = res;
+                //             if (order && order.externalOrderNumber) {
+                //                 const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+                //                 // console.log('num match=', num);
+                //                 // [
+                //                 //     "(8)",
+                //                 //     "8"
+                //                 // ]
+                //                 if (num && num[1]) {  // 查到台号
+                //                     const tableNo = parseInt(num[1]);  // 台号 no (计算)
+                //                     this.cartStoreServ.setTableNo(tableNo);  // 台号 no
+                //                 }
+                //             }
+                //         }
+                //     }
+                // );
+    
+            }
+
+
 
         });
     }
 
-    addToCart(item: any) {
-        console.log('addToCart gogogo');
-        const cartItem: CartItem = {
-            productId: item._id,
+    addToCart( item: any ) {
+        console.log('addToCart gogo1');
+        const cartItem: CartItem = {  // 取消 rebateRate, lockedDays, storeId, currency
+            productId: item.id,  // item._id
             objectId: item.objectId,
             title: item.title,
             price: item.price,
-            rebateRate: item.rebateRate ? item.rebateRate : this.store.rebateRate,
-            taxRate: item.taxRate ? item.taxRate : this.store.taxRate,
-            lockedDays: item.lockedDays ? item.lockedDays : this.store.lockedDays,
-            storeId: this.storeId,
-            currency: item.currency,
+            rebateRate: 0,  // item.rebateRate ? item.rebateRate : this.store.rebateRate,
+            taxRate: item.taxRate ? item.taxRate : 0,  // item.taxRate ? item.taxRate : this.store.taxRate,
+            lockedDays: 0,  // item.lockedDays ? item.lockedDays : this.store.lockedDays,
+            storeId: null,  // this.storeId,
+            currency: null,  // item.currency,
             thumbnailUrl: item.images ? item.images[0] : null,
             quantity: 1
         };

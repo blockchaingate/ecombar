@@ -20,6 +20,7 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import BigNumber from 'bignumber.js';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ActivatedRoute } from '@angular/router';
+
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -46,6 +47,7 @@ export class OrderClientComponent implements OnInit {
     order: any;  // 订单
     diffFlag: number;  // 1 待下单，2 待支付，3 已支付
     QrUrl: string;  // 二维码地址
+    disableButton: boolean;
     errMsg = '';
     
     constructor(
@@ -66,60 +68,57 @@ export class OrderClientComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
-        // console.log('tableno=', this.tableNo);
-
-        this.dataServ.currentWallet.subscribe(
-            (wallet: any) => {
-                if(wallet) {
-                    this.wallet = wallet;
-                }
-            }
-        );
-        this.dataServ.currentWalletAddress.subscribe(
-            (walletAddress: string) => {
-                if(walletAddress) {
-                    this.walletAddress = walletAddress;
-                    // Memo: this.currency 通过 store.coin 获得
-                    // Memo: this.order 通过 getOrderId... 获得
-                    // // "/:pageSize/:pageNum" = '/100/0' 也是够用
-                    // this.orderServ.getMyOrders(walletAddress).subscribe(
-                    //     (res: any) => {
-                    //         console.log("[Orders]=", res);
-                    //         // let res2 = [];
-                    //         if (Array.isArray(res)) {  // 数组确认
-                    //             let now = new Date();
-                    //             for (let i = 0; i < res.length; i ++) {  // 数组遍历
-                    //                 const order = res[i];
-                    //                 if (order 
-                    //                 &&  order.externalOrderNumber
-                    //                 &&  order.paymentStatus == 0) {  // 'waiting for pay'
-                    //                     let time = new Date(order.dateCreated);
-                    //                     if (now.getTime() - time.getTime() < 24 * 3600 * 1000) {  // 24 小时
-                    //                         const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
-                    //                         // console.log('num match=', num);
-                    //                         // [
-                    //                         //     "(8)",
-                    //                         //     "8"
-                    //                         // ]
-                    //                         if (num && num[1] && num[1] == String(this.tableNo)) {  // 还要对上桌号
-                    //                             // res2.unshift(res[i]);  // 增添元素
-                    //                             this.order = order;  // 找到订单
-                    //                             this.orderId = this.order._id;
-                    //                             console.log('this.order=', this.order);
-                    //                             this.currency = this.order.currency;
-                    //                             this.calculateTotal();
-                    //                             break;
-                    //                         }
-                    //                     }
-                    //                 }
-                    //             }
-                    //         }
-                    //     }
-                    // ); 
-                }
-            }
-        );
+        // this.dataServ.currentWallet.subscribe(
+        //     (wallet: any) => {
+        //         if(wallet) {
+        //             this.wallet = wallet;
+        //         }
+        //     }
+        // );
+        // this.dataServ.currentWalletAddress.subscribe(
+        //     (walletAddress: string) => {
+        //         if(walletAddress) {
+        //             this.walletAddress = walletAddress;
+        //             // Memo: this.currency 通过 store.coin 获得
+        //             // Memo: this.order 通过 getOrderId... 获得
+        //             // // "/:pageSize/:pageNum" = '/100/0' 也是够用
+        //             // this.orderServ.getMyOrders(walletAddress).subscribe(
+        //             //     (res: any) => {
+        //             //         console.log("[Orders]=", res);
+        //             //         // let res2 = [];
+        //             //         if (Array.isArray(res)) {  // 数组确认
+        //             //             let now = new Date();
+        //             //             for (let i = 0; i < res.length; i ++) {  // 数组遍历
+        //             //                 const order = res[i];
+        //             //                 if (order 
+        //             //                 &&  order.externalOrderNumber
+        //             //                 &&  order.paymentStatus == 0) {  // 'waiting for pay'
+        //             //                     let time = new Date(order.dateCreated);
+        //             //                     if (now.getTime() - time.getTime() < 24 * 3600 * 1000) {  // 24 小时
+        //             //                         const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+        //             //                         // console.log('num match=', num);
+        //             //                         // [
+        //             //                         //     "(8)",
+        //             //                         //     "8"
+        //             //                         // ]
+        //             //                         if (num && num[1] && num[1] == String(this.tableNo)) {  // 还要对上桌号
+        //             //                             // res2.unshift(res[i]);  // 增添元素
+        //             //                             this.order = order;  // 找到订单
+        //             //                             this.orderId = this.order._id;
+        //             //                             console.log('this.order=', this.order);
+        //             //                             this.currency = this.order.currency;
+        //             //                             this.calculateTotal();
+        //             //                             break;
+        //             //                         }
+        //             //                     }
+        //             //                 }
+        //             //             }
+        //             //         }
+        //             //     }
+        //             // ); 
+        //         }
+        //     }
+        // );
         // this.orderId = this.route.snapshot.paramMap.get('id');
         // // console.log('[OrderComponent]', this.orderId);
         // this.orderServ.get(this.orderId).subscribe(
@@ -141,52 +140,83 @@ export class OrderClientComponent implements OnInit {
         //         this.storeId = storeId;
         //     }
         // );
-        this.dataServ.currentStore.subscribe(
-            (store: any) => {
-                if(store) {
-                    // this.currency = store.coin;
-                    this.storeId = store._id;  // 返回“商家页” products-grid
-                    this.merchantId = store.id;  // 小心名字看错
-                    // this.taxRate = store.taxRate;
-                    // this.storeOwner = store.owner;
-                }
-            }
-        );
+        // this.dataServ.currentStore.subscribe(
+        //     (store: any) => {
+        //         if(store) {
+        //             // this.currency = store.coin;
+        //             this.storeId = store._id;  // 返回“商家页” products-grid
+        //             this.merchantId = store.id;  // 小心名字看错
+        //             // this.taxRate = store.taxRate;
+        //             // this.storeOwner = store.owner;
+        //         }
+        //     }
+        // );
 
-        this.orderId = this.cartStoreServ.getOrderId();  // 订单 no
+        this.tableNo = this.cartStoreServ.getTableNo();  // 台号 no
+        this.orderId = this.cartStoreServ.getOrderId();  // 订单号
         if (this.orderId) {
-            this.orderServ.get(this.orderId).subscribe(  // 获取订单对象
+            // this.orderServ.get(this.orderId).subscribe(  // 获取订单对象
+            //     (res: any) => {
+            //         // console.log('order ret=', res);
+            //         if (res) {  //  && res.ok
+            //             this.order = res;  // res._body
+            //             console.log('order ret=', this.order);
+
+            //             const order = this.order;
+            //             if (order 
+            //             &&  order.externalOrderNumber) {
+            //                 const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
+            //                 // console.log('num match=', num);
+            //                 // [
+            //                 //     "(8)",
+            //                 //     "8"
+            //                 // ]
+            //                 if (num && num[1]) {
+            //                     this.selectedTips = "0";  // 小费预设
+            //                     this.tipsRate = 0;
+
+            //                     this.tableNo = parseInt(num[1]);
+            //                     this.currency = this.order.currency;
+            //                     this.calculateTotal();  // 放在 tips 之后
+            //                     const host = environment['API_PATH'];
+            //                     this.QrUrl = `/store/${this.storeId}/order/${this.orderId}/host/${host}`;
+
+            //                     if (this.order.memo == 'PayBill') {  // 改为修改 memo
+            //                  // if (order.paymentStatus == 2) {  // 'payment confirmed'
+            //                         this.diffFlag = 3;
+            //                     } else {
+            //                         this.diffFlag = 2;
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // );
+            this.orderServ.getOrderInfo( this.orderId ).subscribe(
                 (res: any) => {
-                    // console.log('order ret=', res);
-                    if (res) {  //  && res.ok
-                        this.order = res;  // res._body
-                        console.log('order ret=', this.order);
+                    if (res && res.status == 200 && res.data) {
+                        this.order = res.data;
+                        console.log('orderyyy=', this.order);
 
-                        const order = this.order;
-                        if (order 
-                        &&  order.externalOrderNumber) {
-                            const num = order.externalOrderNumber.match(/\((.*)\)/);  // \( \) 转义符
-                            // console.log('num match=', num);
-                            // [
-                            //     "(8)",
-                            //     "8"
-                            // ]
-                            if (num && num[1]) {
-                                this.selectedTips = "0";  // 小费预设
-                                this.tipsRate = 0;
+                        this.selectedTips = "0";  // 小费预设
+                        this.tipsRate = 0;
 
-                                this.tableNo = parseInt(num[1]);
-                                this.currency = this.order.currency;
-                                this.calculateTotal();  // 放在 tips 之后
-                                this.QrUrl = `/store/${this.storeId}/order/${this.orderId}`;  // environment['EX_WEBSITE'] + 
+                        // this.tableNo = parseInt(num[1]);
+                        // this.currency = this.order.currency;
+                        this.calculateTotal();  // 放在 tips 之后
+                        const host = environment['API_PATH'];
+                        this.QrUrl = `/store/order/${this.orderId}/host/${host}`;
 
-                                if (this.order.memo == 'PayBill') {  // 改为修改 memo
-                             // if (order.paymentStatus == 2) {  // 'payment confirmed'
-                                    this.diffFlag = 3;
-                                } else {
-                                    this.diffFlag = 2;
-                                }
-                            }
+                        if (this.total > 0) {
+                            this.disableButton = false;  // 取消 Disable
+                        } else {
+                            this.disableButton = true;
+                        }
+                
+                        if (this.order.status < 0) {  // 'PayBill'
+                            this.diffFlag = 3;
+                        } else {
+                            this.diffFlag = 2;
                         }
                     }
                 }
@@ -216,6 +246,7 @@ export class OrderClientComponent implements OnInit {
     calculateTotal() {
         this.subtotal = 0;
         this.total = 0;
+        this.tips = 0;
         this.shippingFee = 0;  // 没用上
         if (!this.order || !this.order.items || (this.order.items.length == 0)) {
             return;
@@ -232,176 +263,217 @@ export class OrderClientComponent implements OnInit {
             subtotalBigNumber = subtotalBigNumber.plus(subtotalItem);
             taxBigNumber = taxBigNumber.plus(subtotalItem.multipliedBy(taxRate).dividedBy(new BigNumber(100)));
         }
-        const tipsBigNumber = subtotalBigNumber.multipliedBy(new BigNumber(this.tipsRate)).dividedBy(new BigNumber(100));
+        let tipsBigNumber = subtotalBigNumber.multipliedBy(new BigNumber(this.tipsRate)).dividedBy(new BigNumber(100));
+        if (this.order.status < 0) {  // Pay Bill
+            this.tips = this.order.tips;
+            tipsBigNumber = new BigNumber(this.order.tips);
+        } else {
+            this.tips = tipsBigNumber.toNumber();
+        }
         this.subtotal = subtotalBigNumber.toNumber();
-        this.tips = tipsBigNumber.toNumber();
         this.tax = taxBigNumber.toNumber();
         this.total = subtotalBigNumber.plus(taxBigNumber).plus(tipsBigNumber).plus(new BigNumber(this.shippingFee)).toNumber();
     }
   
-    placeOrder() {
-        if (this.total <= 0) {  // Fix: 价格为 0 处理
-            return;
-        }
-        if (!this.wallet || !this.wallet.pwdHash) {
-            this.router.navigate(['/wallet']);
-            return;
-        }
+    // placeOrder() {
+    //     if (this.total <= 0) {  // Fix: 价格为 0 处理
+    //         return;
+    //     }
+    //     if (!this.wallet || !this.wallet.pwdHash) {
+    //         this.router.navigate(['/wallet']);
+    //         return;
+    //     }
 
-        const initialState = {
-            pwdHash: this.wallet.pwdHash,
-            encryptedSeed: this.wallet.encryptedSeed
-        };          
-        this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+    //     const initialState = {
+    //         pwdHash: this.wallet.pwdHash,
+    //         encryptedSeed: this.wallet.encryptedSeed
+    //     };          
+    //     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
-        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            // this.spinner.show();
-            this.placeOrderDo(seed);
-        });      
-    }
+    //     this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+    //         // this.spinner.show();
+    //         this.placeOrderDo(seed);
+    //     });      
+    // }
 
-    async placeOrderDo( seed: Buffer ) {  // 堂食直接支付
-        const updated = {
-            totalShipping: 0  // 没有运费
-        };
-        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-        const privateKey = keyPair.privateKeyBuffer.privateKey; 
-        const sig = this.kanbanServ.signJsonData(privateKey, updated);
-        updated['sig'] = sig.signature;  
+    // async placeOrderDo( seed: Buffer ) {  // 堂食直接支付
+    //     const updated = {
+    //         totalShipping: 0  // 没有运费
+    //     };
+    //     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    //     const privateKey = keyPair.privateKeyBuffer.privateKey; 
+    //     const sig = this.kanbanServ.signJsonData(privateKey, updated);
+    //     updated['sig'] = sig.signature;  
 
-        this.orderServ.update2(this.orderId, updated).subscribe(
-            (order) => {
-                this.orderServ.getPaycoolRewardInfo(this.orderId, this.walletAddress, 'WithFee').subscribe(
-                    async (ret: any) => {
-                        this.order = ret;
+    //     this.orderServ.update2(this.orderId, updated).subscribe(
+    //         (order) => {
+    //             this.orderServ.getPaycoolRewardInfo(this.orderId, this.walletAddress, 'WithFee').subscribe(
+    //                 async (ret: any) => {
+    //                     this.order = ret;
     
-                        const params = this.order.params;
-                        console.log('params==', params);
+    //                     const params = this.order.params;
+    //                     console.log('params==', params);
                 
-                        ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[0].to, params[0].data);
-                        if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-                            ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[1].to, params[1].data);
-                            if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
-                                // this.spinner.hide();
-                                this.toastr.success('the transaction was procssed successfully');
+    //                     ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[0].to, params[0].data);
+    //                     if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+    //                         ret = await this.kanbanSmartContractServ.execSmartContractAbiHex(seed, params[1].to, params[1].data);
+    //                         if(ret && ret.ok && ret._body && ret._body.status == '0x1') {
+    //                             // this.spinner.hide();
+    //                             this.toastr.success('the transaction was procssed successfully');
 
-                                location.reload();  // 重新加载当前页面
-                                // Fix: 支付后会停在此页面。改为跳去查看所有订单
-                                // setTimeout( () => {
-                                //     // this.router.navigate(['/account/orders']);
-                                //     // http://localhost:4200/store/640f368a23979c464aa2e296/order-list
-                                //     this.router.navigate(['/store/' + this.storeId + '/order-list']);
-                                // }, 1000);  // 发现未更新状态，给个延时
-                            } else {
-                                // this.spinner.hide();
-                                this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
-                            }
-                        } else {
-                            // this.spinner.hide();
-                            this.toastr.error('Failed to authorizeOperator, txid:' + ret._body.transactionHash);
-                        }
-                    }
-                );
-            }
-        );
-    }
+    //                             location.reload();  // 重新加载当前页面
+    //                             // Fix: 支付后会停在此页面。改为跳去查看所有订单
+    //                             // setTimeout( () => {
+    //                             //     // this.router.navigate(['/account/orders']);
+    //                             //     // http://localhost:4200/store/640f368a23979c464aa2e296/order-list
+    //                             //     this.router.navigate(['/store/' + this.storeId + '/order-list']);
+    //                             // }, 1000);  // 发现未更新状态，给个延时
+    //                         } else {
+    //                             // this.spinner.hide();
+    //                             this.toastr.error('Failed to chargeFund with fee, txid:' + ret._body.transactionHash);
+    //                         }
+    //                     } else {
+    //                         // this.spinner.hide();
+    //                         this.toastr.error('Failed to authorizeOperator, txid:' + ret._body.transactionHash);
+    //                     }
+    //                 }
+    //             );
+    //         }
+    //     );
+    // }
 
     // 改自 checkout()，更新状态
     payBill() {
         if (this.total <= 0) {  // Fix: 价格为 0 处理
             return;
         }
-        if (!this.wallet || !this.wallet.pwdHash) {
-            this.router.navigate(['/wallet']);
-            return;
-        }
+        // if (!this.wallet || !this.wallet.pwdHash) {
+        //     this.router.navigate(['/wallet']);
+        //     return;
+        // }
 
-        const initialState = {
-            pwdHash: this.wallet.pwdHash,
-            encryptedSeed: this.wallet.encryptedSeed
-        };        
-        this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
-
-        this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
-            // this.spinner.show();
-            this.payBillDo(seed);
-        });
-    }
-
-    async payBillDo(seed: Buffer) {
-
-        const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
-        const privateKey = keyPair.privateKeyBuffer.privateKey;
-
-        const orderId = this.cartStoreServ.getOrderId();  // 订单 no
-        if (orderId) {
-            this.orderServ.get(orderId).subscribe(  // 获取最新数据
+        if (this.orderId) {
+            this.orderServ.getOrderInfo( this.orderId ).subscribe(
                 (res: any) => {
-                    // console.log('order ret=', res);
-                    if (res) {  //  && res.ok
-                        const order = res;  // res._body
-                        // console.log('order ret=', this.order);
-
-                        if (order.externalOrderNumber
-                        &&  order.merchantId == this.merchantId
-                     // &&  order.owner == this.walletAddress  // Memo: 是后台创建的订单
-                        &&  order.memo != 'PayBill') {  // 已经支付，不可修改
-                            // const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
-                            // console.log('orderData2=', orderData);
-
-                            const items2 = order.items;  // 旧的订单商品
-                            let items3;
-                            if (this.tipsRate > 0) {  // 有小费存在
-                                const item_t = {
-                                    "productId": "000000000000000000000001",
-                                    "title": `Tips ${this.tipsRate}%`,
-                                    "price": this.tips,
-                                    "storeId": this.storeId,
-                                    "rebateRate": 0,
-                                    "taxRate": 0,
-                                    "lockedDays": 0,
-                                    "quantity": 1
-                                };
-                                items3 = items2.concat( [item_t] );  // 合并新的商品
-                            } else {
-                                items3 = items2;
-                            }
-                            const updated = {
-                                items: items3,
-                                memo: 'PayBill'
+                    if (res && res.status == 200 && res.data) {
+                        const order = res.data;
+                        // console.log('orderyyy=', order);
+    
+                        if (order.idExt
+                        &&  order.status > 0) {  // 禁止 PayBill, NewOrder 情况
+                            const data: any = {  // 修改订单
+                                idExt: order.idExt,
+                                total: order.total + this.tips,  // 加上小费
+                                subtotal: order.subtotal,
+                                tax: order.tax, 
+                                tips: this.tips,  // 小费金额
+                                items: order.items,
+                                status: -1,  // Pay Bill 状态
                             };
-                            const sig = this.kanbanServ.signJsonData(privateKey, updated);
-                            updated['sig'] = sig.signature;  
-                            // console.log('[combine]=', this.orderId, updated);
-                            this.orderServ.update_items(order.externalOrderNumber, updated).subscribe(  // Order 增添数据
+                            console.log('updateOrder=', data);
+    
+                            this.orderServ.updateOrder(data).subscribe(
                                 (res: any) => {
-                                    if (res) {
-                                        const body = res;
-                                        const orderNewID = body._id;
-                                        // this.spinner.hide();
+                                    console.log('res=', res);
+                                    if (res && res.status == 200 && res.data) {
                                         this.cartStoreServ.empty();
-                                        // console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
-                                        if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
-
-                                            location.reload();  // 重新加载当前页面
-                                        } else {
-                                            // 网上点餐，我们暂不在此实现
-                                            // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
-                                            // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
-                                        }
+                                        location.reload();  // 重新加载当前页面
                                     }
-                                },
-                                err => { 
-                                    this.errMsg = err.message;
-                                    // this.spinner.hide();
-                                    this.toastr.error('error while combining order');              
                                 }
-                            );  
+                            );
                         }
                     }
                 }
             );
         }
+
+        // const initialState = {
+        //     pwdHash: this.wallet.pwdHash,
+        //     encryptedSeed: this.wallet.encryptedSeed
+        // };        
+
+        // this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
+
+        // this.modalRef.content.onClose.subscribe( (seed: Buffer) => {
+        //     // this.spinner.show();
+        //     this.payBillDo(seed);
+        // });
     }
+
+    // async payBillDo(seed: Buffer) {
+
+    //     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
+    //     const privateKey = keyPair.privateKeyBuffer.privateKey;
+
+    //     const orderId = this.cartStoreServ.getOrderId();  // 订单 no
+    //     if (orderId) {
+    //         this.orderServ.get(orderId).subscribe(  // 获取最新数据
+    //             (res: any) => {
+    //                 // console.log('order ret=', res);
+    //                 if (res) {  //  && res.ok
+    //                     const order = res;  // res._body
+    //                     // console.log('order ret=', this.order);
+
+    //                     if (order.externalOrderNumber
+    //                     &&  order.merchantId == this.merchantId
+    //                  // &&  order.owner == this.walletAddress  // Memo: 是后台创建的订单
+    //                     &&  order.memo != 'PayBill') {  // 已经支付，不可修改
+    //                         // const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
+    //                         // console.log('orderData2=', orderData);
+
+    //                         const items2 = order.items;  // 旧的订单商品
+    //                         let items3;
+    //                         if (this.tipsRate > 0) {  // 有小费存在
+    //                             const item_t = {
+    //                                 "productId": "000000000000000000000001",
+    //                                 "title": `Tips ${this.tipsRate}%`,
+    //                                 "price": this.tips,
+    //                                 "storeId": this.storeId,
+    //                                 "rebateRate": 0,
+    //                                 "taxRate": 0,
+    //                                 "lockedDays": 0,
+    //                                 "quantity": 1
+    //                             };
+    //                             items3 = items2.concat( [item_t] );  // 合并新的商品
+    //                         } else {
+    //                             items3 = items2;
+    //                         }
+    //                         const updated = {
+    //                             items: items3,
+    //                             memo: 'PayBill'
+    //                         };
+    //                         const sig = this.kanbanServ.signJsonData(privateKey, updated);
+    //                         updated['sig'] = sig.signature;  
+    //                         // console.log('[combine]=', this.orderId, updated);
+    //                         this.orderServ.update_items(order.externalOrderNumber, updated).subscribe(  // Order 增添数据
+    //                             (res: any) => {
+    //                                 if (res) {
+    //                                     const body = res;
+    //                                     const orderNewID = body._id;
+    //                                     // this.spinner.hide();
+    //                                     this.cartStoreServ.empty();
+    //                                     // console.log('tableno=', this.tableNo, this.cartStoreServ.getTableNo());
+    //                                     if (this.cartStoreServ.getTableNo() > 0) {  // 台号 no 存在
+
+    //                                         location.reload();  // 重新加载当前页面
+    //                                     } else {
+    //                                         // 网上点餐，我们暂不在此实现
+    //                                         // // console.log('goto=', '/store/', this.storeId, '/address/', orderNewID);
+    //                                         // this.router.navigate(['/store/' + this.storeId + '/address/' + orderNewID]);  // 地址页
+    //                                     }
+    //                                 }
+    //                             },
+    //                             err => { 
+    //                                 this.errMsg = err.message;
+    //                                 // this.spinner.hide();
+    //                                 this.toastr.error('error while combining order');              
+    //                             }
+    //                         );  
+    //                     }
+    //                 }
+    //             }
+    //         );
+    //     }
+    // }
 
 }

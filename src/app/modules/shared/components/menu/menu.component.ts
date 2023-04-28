@@ -10,6 +10,7 @@ declare var $: any;
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent_2 extends Component{    // 我是新的 MenuComponent
-    @Input() storeId: string;
-    @Input() categories: any;
+    // @Input() storeId: string;  // 暂时取消
+    @Input() orderId: string;  // 新增加
+    @Input() categories: any;  // <app-menu-2 [categories]="categories"></app-menu-2>
 }

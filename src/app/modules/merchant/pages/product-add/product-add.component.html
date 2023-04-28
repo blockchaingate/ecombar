@@ -12,11 +12,11 @@
 </div> -->
 
 <div class="myNavTabs" style="padding: 0 20px;">  <!-- *ngIf="!noWallet" -->
-  <h1>{{ (id ? 'Update Product' : 'New Product') | translate }}</h1>
+  <h1 class="text-dark">{{ (uuid ? 'Update Product' : 'New Product') | translate }}</h1>
 
   <div class="text-right my-2">
-    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="saveProduct()">
-      {{ (id ? 'Update' : 'Add') | translate }}
+    <button type="button" class="btn btn-danger px-4 rounded" (click)="saveProduct()">
+      {{ (uuid ? 'Update' : 'Add') | translate }}
     </button>  <!-- 圆角边框 -->
   </div>
 
@@ -117,7 +117,7 @@
             </div>
             <div>
               <!-- 50% 宽度, 按钮 -->
-              <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="color" name="color"> &nbsp;&nbsp;
+              <input type="text" class="inp w-75" placeholder="Enter Flavor" [(ngModel)]="color" name="color"> &nbsp;&nbsp;
               <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addColor()">
                 {{ 'Add' | translate }}
               </button>  <!-- btn-block  -->
@@ -190,7 +190,7 @@
             </div>
             <div>
               <!-- 50% 宽度, 按钮 -->
-              <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="colorChinese" name="colorChinese"> &nbsp;&nbsp;
+              <input type="text" class="inp w-75" placeholder="Enter Flavor" [(ngModel)]="colorChinese" name="colorChinese"> &nbsp;&nbsp;
               <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addColorChinese()">
                 {{ 'Add' | translate }}
               </button>  <!-- btn-block  -->
@@ -263,7 +263,7 @@
             </div>
             <div>
               <!-- 50% 宽度, 按钮 -->
-              <input type="text" class="inp w-75" placeholder="Enter Color" [(ngModel)]="colorTradition" name="colorTradition"> &nbsp;&nbsp;
+              <input type="text" class="inp w-75" placeholder="Enter Flavor" [(ngModel)]="colorTradition" name="colorTradition"> &nbsp;&nbsp;
               <button type="button" class="btn btn-danger btn-sm newButton-S" (click)="addColorTradition()">
                 {{ 'Add' | translate }}
               </button>  <!-- btn-block  -->

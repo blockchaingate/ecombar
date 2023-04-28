@@ -1,7 +1,7 @@
 
 <!-- 厨师制作清单 -->
 
-<ion-header>
+<ion-header class="bg-white">
   <!-- 固定在顶部的 Header -->
   <ion-grid class="px-2 font-size-18">
     <!-- <ion-row>
@@ -13,7 +13,7 @@
       <ion-col size="2">
         <ion-button fill="clear" size="default" (click)="updateFoodData()">{{ 'No' | translate }} / {{ 'Order' | translate }}</ion-button>
       </ion-col>
-      <ion-col size="2">{{ 'Date Created' | translate }}</ion-col>
+      <ion-col size="2">{{ 'Create' | translate }}</ion-col>
       <ion-col size="4">
         {{ 'Title' | translate }}
       </ion-col>
@@ -33,17 +33,17 @@
 <ion-grid *ngFor="let food of foodData">
     <ion-row class="work-list">
       <ion-col size="2">
-        <a target="_blank" *ngIf="food.merchantId" href="/chef/order-2/{{food.orderId}}">
-          ({{ food.tableNo }}) - {{ trimText(food.orderId) }} - {{ food.num }}
+        <a target="_blank" href="/chef/order-2/{{food.orderId}}">
+          ({{ food.tableNo }}) -{{ trimText(food.orderId) }} -{{ food.num }}
         </a>
-        <span *ngIf="!food.merchantId">{{ trimText(food.orderId) }} / {{ food.num }}</span>
+        <!-- <span *ngIf="!food.merchantId">{{ trimText(food.orderId) }} / {{ food.num }}</span> -->
       </ion-col>
-      <ion-col size="2">{{ food.dateCreated | date:'MM/dd hh:mm' }}</ion-col>
-      <ion-col size="4" (click)="removeFood(food.orderId, food.food, food.quantity)">{{ food.title }}</ion-col>
-      <ion-col size="1" (click)="removeFood(food.orderId, food.food, food.quantity)">{{ food.price }}</ion-col>
-      <ion-col size="1" (click)="removeFood(food.orderId, food.food, food.quantity)">{{ food.quantity }}</ion-col>
+      <ion-col size="2">{{ food.create | date:'MM/dd hh:mm' }}</ion-col>
+      <ion-col size="4" (click)="removeFood(food.orderId, food.pid, food.flavor, food.size, food.quantity)">{{ food.title }}</ion-col>
+      <ion-col size="1" (click)="removeFood(food.orderId, food.pid, food.flavor, food.size, food.quantity)">{{ food.price }}</ion-col>
+      <ion-col size="1" (click)="removeFood(food.orderId, food.pid, food.flavor, food.size, food.quantity)">{{ food.quantity }}</ion-col>
       <ion-col>
-        <ion-button fill="clear" size="default" class="font-size-26 text-danger" (click)="removeFood(food.orderId, food.food, food.quantity)">×</ion-button>
+        <ion-button fill="clear" size="default" class="font-size-26 text-danger" (click)="removeFood(food.orderId, food.pid, food.flavor, food.size, food.quantity)">×</ion-button>
       </ion-col>
     </ion-row>
 </ion-grid>
@@ -77,7 +77,7 @@
     <dd class="col-3">{{ food.title }}</dd>
     <dd class="col-1">{{ food.price }}</dd>
     <dd class="col-1">{{ food.quantity }}</dd>
-    <dd class="col"><a class="font-size-26 px-4 border border-danger rounded" (click)="removeFood(food.orderId, food.food, food.quantity)">×</a></dd>
+    <dd class="col"><a class="font-size-26 px-4 border border-danger rounded" (click)="removeFood(food.orderId, food.pid, food.quantity)">×</a></dd>
   </dl>
 
 </div> -->

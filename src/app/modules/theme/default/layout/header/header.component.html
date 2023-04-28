@@ -9,12 +9,12 @@
   <h1 *ngIf="!(tableNo && tableNo > 0)">&nbsp;{{ store.name | translateField }}</h1>
 
   <ion-buttons slot="end"> 
-    <ion-button fill="clear" routerLink="/store/{{ storeId }}/cart">
+    <ion-button fill="clear" routerLink="/store/cart">  <!-- routerLink="/store/{{ storeId }}/cart" -->
       <ion-icon name="bag-outline"></ion-icon>
       <span class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white"> {{ cartCount }}</span>
       <span class="ml-3">{{ 'Cart' | translate }}</span>
     </ion-button>
-    <ion-button fill="clear" routerLink="/store/{{ storeId }}/order2">
+    <ion-button fill="clear" routerLink="/store/order2">
       <ion-icon name="reader-outline"></ion-icon>{{ "Order" | translate }}
     </ion-button>
     <ion-select interface="popover" placeholder="LANGUAGE" [(ngModel)]="_lang" (ionChange)="changeLanguage(_lang)">

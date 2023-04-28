@@ -1,10 +1,10 @@
 
 <div class="myNavTabs" style="padding: 0 20px;">    <!-- class="container" -->
-  <h1>{{ (id ? 'Update Table' : 'New Table') | translate }}</h1>
+  <h1 class="text-dark">{{ (id ? 'Update Table' : 'New Table') | translate }}</h1>
 
   <div class="text-right my-2">  <!-- 靠右对齐，圆角边框 -->
-    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addShippingCarrier()">
-      {{ (id ? 'Update Table' : 'Add Table') | translate }}
+    <button type="button" class="btn btn-danger px-4 rounded" (click)="addShippingCarrier()">
+      {{ (id ? 'Update' : 'Add') | translate }}
     </button>
   </div>
 

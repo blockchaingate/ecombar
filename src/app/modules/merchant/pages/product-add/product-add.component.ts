@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
@@ -128,11 +129,11 @@ export class ProductAddComponent implements OnInit {
         //private ngxSmartModalServ: NgxSmartModalService,
         // private spinner: NgxSpinnerService,
         private coinServ: CoinService,
-        private categoryServ: CategoryService,
         private kanbanSmartContractServ: KanbanSmartContractService,
         private kanbanServ: KanbanService,
         private brandServ: BrandService,
         private utilServ: UtilService,
+        private categoryServ: CategoryService,
         private productServ: ProductService) {
     }
 
@@ -319,9 +320,9 @@ export class ProductAddComponent implements OnInit {
                         //     this.contents = product.contents;
                         // }
 
-                        if(product.primaryCategory && this.categories) {
+                        if(product.category && this.categories) {  // primaryCategory
                             for (let i = 0; i < this.categories.length; i ++) {
-                                if (this.categories[i].id == product.primaryCategory) {
+                                if (this.categories[i].id == product.category) {
                                     this.selectedCategory = this.categories[i];
                                     console.log('selectedCategory=', this.selectedCategory);
                                 }
@@ -363,7 +364,7 @@ export class ProductAddComponent implements OnInit {
                         if (product.images) {
                             this.images = product.images;
                         }
-                        this.category = product.primaryCategory;  // primaryCategoryId
+                        this.category = product.category;  // primaryCategory
                     }
                 }
             );
@@ -415,7 +416,6 @@ export class ProductAddComponent implements OnInit {
     removeSize(c) {
         this.sizes = this.sizes.filter(item => item != c);
     }
-
 
     addColorChinese() {
         this.colorsChinese.push(this.colorChinese);
@@ -545,7 +545,7 @@ export class ProductAddComponent implements OnInit {
 
     saveProduct() {
         let data: any = {
-            category: this.selectedCategory ? this.selectedCategory._id : null,  // primaryCategory
+            category: this.selectedCategory ? this.selectedCategory.id : null,  // primaryCategory
             title: this.title,
             titleSc: this.titleChinese,
             titleTc: this.titleTradition,
@@ -555,15 +555,15 @@ export class ProductAddComponent implements OnInit {
             desc: this.description,
             descSc: this.descriptionChinese,
             descTc: this.descriptionTradition,
-            flavor: this.colors,
-            flavorSc: this.colorsChinese,
-            flavorTc: this.colorsTradition,
-            sizes: this.sizes,
-            sizesSc: this.sizesChinese,
-            sizesTc: this.sizesTradition,
+            flavor: this.colors.join('|'),
+            flavorSc: this.colorsChinese.join('|'),
+            flavorTc: this.colorsTradition.join('|'),
+            sizes: this.sizes.join('|'),
+            sizesSc: this.sizesChinese.join('|'),
+            sizesTc: this.sizesTradition.join('|'),
             price: Number(this.price),
             taxRate: this.taxRate,
-            images: this.images,
+            images: this.images.join('|'),
             quantity: this.active ? 1 : 0,
         };
 
@@ -571,22 +571,22 @@ export class ProductAddComponent implements OnInit {
             data.id = this.uuid;
             console.log('data=', data);
  
-            this.categoryServ.updateCategory(data).subscribe(
+            this.productServ.updateProduct(data).subscribe(
                 (res: any) => {
                     console.log('res=', res);
                     if (res && res.status == 200 && res.data) {
-                        this.router.navigate(['/merchant/categories']);
+                        this.router.navigate(['/merchant/products']);
                     }
                 }
             );
         } else {
             console.log('data=', data);
 
-            this.categoryServ.createCategory(data).subscribe(
+            this.productServ.createProduct(data).subscribe(
                 (res: any) => {
                     console.log('res=', res);
                     if (res && res.status == 200 && res.data) {
-                        this.router.navigate(['/merchant/categories']);
+                        this.router.navigate(['/merchant/products']);
                     }
                 }
             );

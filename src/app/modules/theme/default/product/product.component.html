@@ -2,7 +2,7 @@
 <!-- 商品页 -->
 
 <!-- 上下边线，解决 margin 问题 -->
-<main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="product">  <!-- 背景灰色 style="background-color: #f7f7f7;" -->
+<main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="product">  <!-- 背景灰色 -->
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">
         <div class="container">
@@ -10,7 +10,7 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/store/{{storeId}}">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置 -->
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 font-size-18"><a href="/store">{{ 'Back' | translate }}&nbsp;&nbsp;></a></li>  <!-- 字体设置, <a href="/store/{{ storeId }}"> -->
                         <!-- <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{ 'Home' | translate }}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{ product.primaryCategoryId?._id }}">{{ product.primaryCategoryId?.category | translateField }}</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{ product && product.title | translateField }}</li> -->
@@ -32,9 +32,7 @@
                             <img class="img-fluid" [src]="selectedImage" alt="Image Description">
                         </div>
                     </div>
-  
-                    <div *ngIf="product && product.images" id="sliderThumb" class="js-slick-carousel u-slick u-slick--slider-syncing u-slick--slider-syncing-size u-slick--gutters-1 u-slick--transform-off"
-                        >
+                    <div *ngIf="product && product.images" id="sliderThumb" class="js-slick-carousel u-slick u-slick--slider-syncing u-slick--slider-syncing-size u-slick--gutters-1 u-slick--transform-off">
                         <div  style="cursor: pointer;" *ngFor="let image of product.images">
                             <img [src]="image" (mouseenter) ="mouseEnter(image)" class="img-thumbnail"  [ngClass]="image == selectedImage ? 'img-thumbnail-selected' : ''" alt="Image111 Description">
                         </div>
@@ -44,11 +42,11 @@
                     <div class="">  <!-- "mb-2" -->
                         <div class="">  <!-- "border-bottom mb-3 pb-md-1 pb-3" -->
                             <a href="/store/{{storeId}}/category/{{product.primaryCategoryId?._id}}" class="font-size-12 text-gray-5 mb-2 d-inline-block">
-                                {{product.primaryCategoryId?.category | translateField}}
+                                {{ product.primaryCategoryId?.category | translateField }}
                             </a>
-                            <h2 class="font-size-25 text-lh-1dot2">{{product && product.title | translateField}}</h2>
-                            <p *ngIf="product.subtitle">
-                                {{product.subtitle | translateField}}
+                            <h2 class="font-size-25 text-lh-1dot2">{{ product.titleSet | translateField }}</h2>
+                            <p *ngIf="product.subtitleSet">
+                                {{ product.subtitleSet | translateField }}
                             </p>
                             <!-- <div class="mb-2">
                                 <a class="d-inline-flex align-items-center small font-size-15 text-lh-1" href="/store/{{storeId}}/product/{{id}}/#product-tabs">
@@ -74,8 +72,10 @@
                                 -->
                             <!-- <div class="ml-md-3 text-gray-9">{{ 'Availability' | translate }}:  -->
                                 <!-- <span class="text-green font-weight-bold"> -->
-                                    <span class="text-red font-weight-bold" *ngIf="!product.active">{{ 'Out of stock' | translate }}</span>
-                                    <span class="text-green font-weight-bold" *ngIf="product.active">
+                                    <span class="text-red font-weight-bold" *ngIf="product && product.quantity < 1">
+                                        {{ 'Out of stock' | translate }}
+                                    </span>
+                                    <span class="text-green font-weight-bold" *ngIf="product && product.quantity > 0">
                                         {{ 'In Stock' | translate }}
                                     </span>  <!-- {{ product.quantity - product.sales }} -->
                                 <!-- </span> -->
@@ -91,17 +91,17 @@
                                 </span>
                             </a>
                         </div> -->
-                        <div class="mb-2">
-                            {{'Content' | translate}}:
+                        <!-- <div class="mb-2">
+                            {{ 'Content' | translate }}: -->
                             <!-- <ul class="font-size-14 pl-3 ml-1 text-gray-110">
                                 <li>4.5 inch HD Touch Screen (1280 x 720)</li>
                                 <li>Android 4.4 KitKat OS</li>
                                 <li>1.4 GHz Quad Core™ Processor</li>
                                 <li>20 MP Electro and 28 megapixel CMOS rear camera</li>
                             </ul> -->
-                        </div>
-                        <p  [innerHTML]="product && product.briefIntroduction | translateField">
-                       </p>
+                        <!-- </div> -->
+                        <!-- <p  [innerHTML]="product && product.briefIntroduction | translateField">
+                       </p> -->
                        
                         <!-- <p><strong>SKU</strong>: 2222FW511948218</p> -->
                        
@@ -117,8 +117,8 @@
                             <dt>{{ 'Flavor' | translate }}</dt>
                             <dd class="text-left">
                                 <div btnRadioGroup [(ngModel)]="color">
-                                    <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of colors"
-                                            [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
+                                    <label class="btn btn-info-2" btnRadio="{{ c | translateField }}" *ngFor="let c of colors"
+                                            [uncheckable]="true" tabindex="0" role="button">{{ c | translateField }}</label>
                                 </div>
                             </dd>
                         </dl>
@@ -126,8 +126,8 @@
                             <dt>{{ 'Size' | translate }}</dt>
                             <dd class="text-left">
                                 <div btnRadioGroup [(ngModel)]="size">
-                                    <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of sizes"
-                                            [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
+                                    <label class="btn btn-info-2" btnRadio="{{ c | translateField }}" *ngFor="let c of sizes"
+                                            [uncheckable]="true" tabindex="0" role="button">{{ c | translateField }}</label>
                                 </div>
                             </dd>
                         </dl>
@@ -237,7 +237,7 @@
 
         <!-- Description -->
         <div *ngIf="NavTab == 'Description'" class="WorkForm-2">
-            <div [innerHtml]="product.description | translateField"></div>
+            <div [innerHtml]="product.descSet | translateField"></div>
         </div>
 
         <!-- Specification -->
@@ -276,14 +276,14 @@
         
         <!-- End Single Product Tab -->
 
-        <hr>
+        <!-- <hr> -->
 
         <!-- Related products -->
-        <div class="mb-6" *ngIf="relatedProducts && relatedProducts.length > 0">
+        <!-- <div class="mb-6" *ngIf="relatedProducts && relatedProducts.length > 0">
             <app-related-products [products]="relatedProducts" 
             (onAddToCart)="onAddToCart($event)"
             (onAddToFavorite)="onAddToFavorite($event)"></app-related-products>
-        </div>
+        </div> -->
 
     </div>
     <!--
