@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 import { environment } from '../../../../environments/environment';
 
 const httpOptions = {
@@ -26,7 +27,8 @@ export class ShippingCarrierService {
 
     constructor(
         private http: HttpClient,
-        private http2: HttpService) { 
+        private http2: HttpService,
+        private cartStoreServ: CartStoreService) { 
     }
 
     // 原有 /table/create
@@ -35,7 +37,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/create
     createTable( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.put(madeatUrl + 'table/create', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -45,7 +47,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/update
     updateTable( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.put(madeatUrl + 'table/update', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -59,7 +61,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/list
     getTableList() {    // 东西不多，不用 skip/limit
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + 'table/list', httpOptions);
     }
 
@@ -69,7 +71,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/info
     getTableInfo( id: string ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + `table/info?number=${id}`, httpOptions);
     }
 
@@ -79,7 +81,7 @@ export class ShippingCarrierService {
     }
     // 现用 /table/delete
     deleteTable( id: number ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.delete(madeatUrl + `table/delete?number=${id}`, httpOptions);
     }
 }

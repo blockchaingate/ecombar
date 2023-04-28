@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 import { environment } from '../../../../environments/environment';
 
 const httpOptions = {
@@ -23,7 +24,10 @@ const baseUrl = environment.endpoints['paycool'];  // 未来取消
 @Injectable({ providedIn: 'root' })
 export class OrderService {
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private cartStoreServ: CartStoreService) { 
+    }
 
     // 原有 /order/create
     create2( data ) {
@@ -31,7 +35,7 @@ export class OrderService {
     }
     // 现用 /order/create
     createOrder( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.put(madeatUrl + 'order/create', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -41,7 +45,7 @@ export class OrderService {
     }
     // 现用 /order/update
     updateOrder( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.put(madeatUrl + 'order/update', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -71,7 +75,7 @@ export class OrderService {
     }
     // 现用 /order/info
     getOrderInfo( id: string ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + `order/info?id=${id}`, httpOptions);
     }
 
@@ -116,12 +120,12 @@ export class OrderService {
     }
     // 现用 /order/list
     getOrderList() {    // 东西不多，不用 skip/limit
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + 'order/list', httpOptions);
     }
     // 现用 /order/list（带 table 参数）
     getOrderList2( table: number ) {    // 东西不多，不用 skip/limit
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + `order/list?table=${table}`, httpOptions);
     }
 

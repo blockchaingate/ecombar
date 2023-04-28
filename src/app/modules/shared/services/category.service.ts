@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 import { environment } from '../../../../environments/environment';
 
 const httpOptions = {
@@ -25,7 +26,8 @@ export class CategoryService {
     token: string;
 
     constructor(
-        private http: HttpClient) { 
+        private http: HttpClient,
+        private cartStoreServ: CartStoreService) { 
     }
 
     // 原有 /category/create
@@ -35,7 +37,7 @@ export class CategoryService {
     }
     // 现用 /category/create
     createCategory( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         // return this.http.put(madeatUrl + 'category/create', {}, { params });
         return this.http.put(madeatUrl + 'category/create', JSON.stringify(data), httpOptionsJson);
     }
@@ -47,7 +49,7 @@ export class CategoryService {
     }
     // 现用 /category/update
     updateCategory( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         // return this.http.put(madeatUrl + 'category/update', {}, { params });
         return this.http.put(madeatUrl + 'category/update', JSON.stringify(data), httpOptionsJson);
     }
@@ -70,7 +72,7 @@ export class CategoryService {
     }
     // 现用 /category/list
     getCategoryList() {    // 东西不多，不用 skip/limit
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + 'category/list', httpOptions);
         // this.http.get(madeatUrl + 'category/list', httpOptions).subscribe(
         //     response => {
@@ -96,7 +98,7 @@ export class CategoryService {
     }
     // 现用 /category/info
     getCategoryInfo( id: string ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + `category/info?id=${id}`, httpOptions);
     }
 
@@ -106,7 +108,7 @@ export class CategoryService {
     // }
     // 现用 /category/delete
     deleteCategory( id: string ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.delete(madeatUrl + `category/delete?id=${id}`, httpOptions);
     }
 }

@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 import { environment } from '../../../../environments/environment';
 
 import { Product } from '../models/product';
@@ -24,7 +25,11 @@ const baseUrl = environment.endpoints['paycool'];  // 未来取消
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-    constructor(private http: HttpClient) { }
+
+    constructor(
+        private http: HttpClient,
+        private cartStoreServ: CartStoreService) { 
+    }
 
     // 原有 /product/create
     create( data: Product ) {
@@ -32,7 +37,7 @@ export class ProductService {
     }
     // 现用 /product/create
     createProduct( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.put(madeatUrl + 'product/create', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -43,7 +48,7 @@ export class ProductService {
     }
     // 现用 /product/update
     updateProduct( data ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.put(madeatUrl + 'product/update', JSON.stringify(data), httpOptionsJson);
     }
 
@@ -53,7 +58,7 @@ export class ProductService {
     }
     // 现用 /product/info
     getProductInfo( id: string ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + `product/info?id=${id}`, httpOptions);
     }
 
@@ -76,7 +81,7 @@ export class ProductService {
     }
     // 现用 /product/list
     getProductList() {    // 东西不多，不用 skip/limit
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.get(madeatUrl + 'product/list', httpOptions);
     }
     
@@ -90,7 +95,7 @@ export class ProductService {
     }
     // 现用 /product/delete
     removeProduct( id: string ) {
-        const madeatUrl = environment.endpoints['madeat'];
+        const madeatUrl = this.cartStoreServ.queryApiUrl();
         return this.http.delete(madeatUrl + `product/delete?id=${id}`, httpOptions);
     }
 

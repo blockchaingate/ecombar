@@ -1,4 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { MainLayoutService } from 'src/app/modules/shared/services/mainlayout.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -21,6 +23,7 @@ export class IndexComponent implements OnInit{
         private route: ActivatedRoute,
         private mainLayoutServ: MainLayoutService,
         private bannerServ: TopCategoryBannerService,
+        private cartStoreServ: CartStoreService,
         private productServ: ProductService) {
     }
     ngOnInit() {
@@ -41,7 +44,8 @@ export class IndexComponent implements OnInit{
                 if (!host || host == '') {
                  // environment.endpoints['madeat'] = 'http://localhost:6060/';
                 } else {
-                    environment.endpoints['madeat'] = `http://${host}/`;
+                    this.cartStoreServ.setApiHost(host);
+                    // environment.endpoints['madeat'] = `http://${host}/`;
                 }
                 // console.log('hostttt>>>', environment.endpoints['madeat']);
 

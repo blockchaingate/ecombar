@@ -2,6 +2,7 @@
 import { IonContent } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+import { CartStoreService } from 'src/app/modules/shared/services/cart.store.service';
 import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
@@ -51,6 +52,7 @@ export class FoodListComponent implements OnInit {
         private modalService: BsModalService,
         private dataServ: DataService,
         private merchantServ: MerchantService,
+        private cartStoreServ: CartStoreService,
         private orderServ: OrderService) {
     }
 
@@ -62,7 +64,8 @@ export class FoodListComponent implements OnInit {
                 if (!host || host == '') {
                  // environment.endpoints['madeat'] = 'http://localhost:6060/';
                 } else {
-                    environment.endpoints['madeat'] = `http://${host}/`;
+                    this.cartStoreServ.setApiHost(host);
+                    // environment.endpoints['madeat'] = `http://${host}/`;
                 }
                 // console.log('hostttt>>>', environment.endpoints['madeat']);
 

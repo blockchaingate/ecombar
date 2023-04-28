@@ -3,12 +3,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart-item';
 
+import { environment } from '../../../../environments/environment';
+
 @Injectable({
     providedIn: 'root'
 })
 export class CartStoreService {
 
     constructor() { }
+
     // - We set the initial state in BehaviorSubject's constructor
     // - Nobody outside the Store should have access to the BehaviorSubject 
     //   because it has the write rights
@@ -98,14 +101,23 @@ export class CartStoreService {
         localStorage.setItem('orderId', orderId);
     }
 
-    // 购物车有“后端 API”
+    // 购物车有“后端 API”  // '192.168.2.12:6060'
 
-    getApiUrl(): string {
-        return localStorage.getItem('ApiUrl');
+    getApiHost(): string {
+        return localStorage.getItem('ApiHost');
     }
 
-    setApiUrl( ApiUrl: string ) {
-        localStorage.setItem('ApiUrl', ApiUrl);
+    setApiHost( ApiHost: string ) {
+        localStorage.setItem('ApiHost', ApiHost);
+    }
+
+    queryApiUrl() {
+        const host = this.getApiHost();
+        if (!host || host == '') {
+            return environment.endpoints['madeat'];
+        } else {
+            return `http://${host}/`;
+        }
     }
 
 }
