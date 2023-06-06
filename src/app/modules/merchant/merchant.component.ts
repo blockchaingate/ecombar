@@ -226,7 +226,13 @@ export class MerchantComponent implements OnInit {
       this.translateServ.setDefaultLang(lang);
     }
 
-    this.merchant = MyStore;    // 虚拟商家信息（测试）
+    this.dataServ.currentMyStore.subscribe(
+      (store: any) => {
+        console.log('store===', store);
+        this.merchant = store;
+      }
+    );
+    //this.merchant = MyStore;    // 虚拟商家信息（测试）
 
   }
 

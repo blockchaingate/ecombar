@@ -13,7 +13,7 @@
   <dl class="work-list row" *ngFor="let order of orders">
     <dd class="col-3">  <!-- 旧值 order.store, order.store._id -->
       <a target="_blank" *ngIf="order.merchantId" href="/store/{{order.merchantId}}/track-order/{{order._id}}">
-        {{ order._id }}
+        {{ trimText(order._id) }}
       </a>
       <span *ngIf="!order.merchantId">{{ order._id }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
     </dd>

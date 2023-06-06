@@ -50,10 +50,10 @@
 
     </header> -->
 
-<div class="bg-light">  <!-- 背景灰色 -->
+<div class="bg-light container-fluid">  <!-- 背景灰色 -->
 
-    <div class="main_page row">  <!-- "container" 宽度不对 -->
-        <div class="col-2">  <!-- 12格中占2格 -->
+    <div class="row">  <!-- "container" 宽度不对 -->
+        <div class="col col-2">  <!-- 12格中占2格 -->
             <div class="py-3">  <!-- "container" -->
                 <div class="menu_box" style="border-radius: 5%;">  <!-- 菜单页面, rounded 不够圆 -->
                     <!-- <aside class="sidenav" [ngClass]="showNavMenu ? 'sidenav--active' : ''"> -->
@@ -93,8 +93,8 @@
                         <img class="img-avatar" *ngIf="!(merchant.image)" src="/assets/images/default_avatar.jpeg">
                     </div>
                     <div class="pt-2 text-center avatar_text">
-                        <h4>{{ merchant.name }}</h4>
-                        <span class="star">{{ merchant.star }}</span>
+                        <h4>{{ merchant.name.en }}</h4>
+                        <span class="star" *ngIf="merchant.star">{{ merchant.star }}</span>
                     </div>
 
                 </div>
@@ -134,7 +134,7 @@
             </div>
         </div>
 
-        <div class="col">  <!-- 12格中剩余 -->
+        <div class="col col-10">  <!-- 12格中剩余 -->
             <div class="py-3">  <!-- "container" -->
                 <div class="main_box">  <!-- 内容页面 -->
                     <router-outlet></router-outlet>

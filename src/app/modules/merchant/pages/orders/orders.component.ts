@@ -13,7 +13,7 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-orders',
+  selector: 'app-merchant-orders',
   providers: [OrderService],
   templateUrl: './orders.component.html',
   styleUrls: [
