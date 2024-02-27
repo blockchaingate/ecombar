@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     loadChildren: () =>
       import('./modules/nft/nft.module').then(m => m.NftModule)
   },
@@ -36,9 +36,6 @@ const routes: Routes = [
     path: 'nft',
     loadChildren: () =>
       import('./modules/nft/nft.module').then(m => m.NftModule)
-  },
-  {
-    path: '', redirectTo: '/nft', pathMatch: 'full'
   }
 ];
 

@@ -73,6 +73,8 @@
     "Nevermind": "取消",
     "About ": "关于",
     "views": "访问量",
+    "individual NFT standard": "单个NFT标准",
+    "multiple functions and batch transactions supported NFT standard": "支持NFT标准的多种功能和批量交易",
     "Change Listing Price": "修改出售价格",
     "The quantity you sell for this token.": "你要出售的数量",
     "Chain Info": "链信息",
@@ -414,5 +416,11 @@
     "Error occured, please try again.": "发生错误，请再试一次。",
     "Backup Wallet Seed Phrases": "妥善记录并保存好下列助记词",
     "Top Categories this Month": "本月热门分类",
-    "MnemNote": "请务必牢记下列十二个助记词，它们非常重要，一定要准确记录并保存在安全可靠的地方，并不可以让任何其他人知道。建议不要仅保存在电脑或手机里，以防设备损坏而丢失，也请不要通过电子邮件或其它社交工具发送这些助记词。"
+    "About us": "关于我们",
+    "MnemNote": "请务必牢记下列十二个助记词，它们非常重要，一定要准确记录并保存在安全可靠的地方，并不可以让任何其他人知道。建议不要仅保存在电脑或手机里，以防设备损坏而丢失，也请不要通过电子邮件或其它社交工具发送这些助记词。",
+    "welcome_to": "欢迎来到 CollectionGala.com 建立在快速访问区块链 (FAB) 之上，它是发现、获取和展示来自全球的特殊不可替代代币 (NFT) 的首选目的地。 我们的平台旨在迎合各种欣赏数字艺术和收藏品独特价值的收藏家、艺术家和爱好者。",
+    "at_collectiongala": "在 CollectionGala，我们为能在数字艺术、游戏、体育、音乐和虚拟房地产等各个类别中精心挑选各种 NFT 的独家选择而感到自豪。 我们的用户友好界面和高级搜索功能使您可以轻松浏览我们庞大的画廊，并为您不断增长的 NFT 投资组合找到完美的补充。",
+    "our_mission": "我们的使命是通过为创作者提供一个展示才华并与全球收藏家建立联系的平台来增强创作者的能力。 CollectionGala 以公平的薪酬模式支持艺术家，确保他们获得应有的认可和奖励。",
+    "thriving_community_hub": "除了作为买卖 NFT 的市场之外，CollectionGala 还是一个蓬勃发展的社区中心。 我们举办活动、展览和讨论，培养会员之间的友情。 加入 CollectionGala，您不仅可以获得精美的 NFT 收藏，还可以成为充满活力的志同道合者网络的一员，他们与您分享对数字艺术和收藏品的热情。",
+    "dive_into": "在 CollectionGala.com 潜入迷人的 NFT 世界，发现隐藏的宝石，它们将吸引、激发和重新定义您对数字艺术的看法。 立即注册，踏上一段难忘的旅程，穿越不断发展的不可替代代币景观。"
 }

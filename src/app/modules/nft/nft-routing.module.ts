@@ -18,6 +18,7 @@ import { NftRankingsComponent } from './components/rankings/rankings.component';
 import { NftAccountFavoritesComponent } from './components/account-favorites/account-favorites.component';
 import { NftIndexComponent } from './components/index/index.component';
 import { VersionComponent } from './version/version.component';
+import { AboutUsComponent } from './aboutus/aboutus.component';
 const routes: Routes = [
     {
       path: '', component: NftComponent,
@@ -27,6 +28,9 @@ const routes: Routes = [
         },
         {
           path: 'version', component: VersionComponent
+        },  
+        {
+          path: 'aboutus', component: AboutUsComponent
         },  
         {
           path: 'assets', component: NftAssetsComponent

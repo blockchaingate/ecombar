@@ -50,6 +50,7 @@
                                         {{'Create' | translate}}
                                     </a>
                                 </li>
+
                             </div>
                             <div class="col col-6">
                                 
@@ -72,6 +73,7 @@
                                         {{'Account Settings' | translate}}
                                     </a>
                                 </li>
+
                                 <li *ngIf="wallet" (click)="logout()">
                                     {{'Logout' | translate}}
                                 </li>
@@ -118,6 +120,12 @@
             <li class="NavItem--isRoot d-md-block d-none">
                 <a class="NavItem--main" routerLink="/nft/admin/collections">
                     {{'Create' | translate}}
+                </a>
+            </li>
+
+            <li class="NavItem--isRoot d-md-block d-none">
+                <a class="NavItem--main" routerLink="/nft/admin/collections">
+                    {{'About us' | translate}}
                 </a>
             </li>
 
