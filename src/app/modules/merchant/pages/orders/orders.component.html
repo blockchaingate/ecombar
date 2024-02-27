@@ -1,26 +1,66 @@
 
-<div class="container">
-  
-    <ul class="responsive-table">
+<h1>{{'Orders' | translate}}</h1>
+
+<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+
+  <dl class="work-list row">
+    <dt class="col-2">{{ 'Id' | translate }}</dt>
+    <dt class="col-3">{{ 'Date Created' | translate }}</dt>
+    <dt class="col-3">{{ 'Total' | translate }}</dt>
+    <dt class="col-2">{{ 'Status' | translate }}</dt>
+    <dt class="col"></dt>
+  </dl>
+
+  <dl class="work-list row" *ngFor="let order of orders">
+    <dd class="col-2">  <!-- 旧值 order.store, order.store._id -->
+      <a target="_blank" *ngIf="order.merchantId" href="/store/{{order.merchantId}}/track-order/{{order._id}}">
+        {{ trimText(order._id) }}
+      </a>
+      <span *ngIf="!order.merchantId">{{ trimText(order._id) }}</span>  <!-- 地址不长，不用 trimText(order._id) -->
+    </dd>
+    <dd class="col-3">{{ order.dateCreated | date }}</dd>
+    <dd class="col-3">{{ order.totalAmount }}</dd>  <!-- 旧值 order.totalToPay -->
+    <dd class="col-2">
+      <div>
+        {{ getStatus(order) | translate }}
+      </div>
+      <div *ngIf="order.paymentStatus == 5">
+        <a (click)="refund(order)">
+          Approve refund
+        </a>
+      </div>
+    </dd>
+    <dd class="col">
+      <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">
+        <a href="/merchant/shipping/{{order._id}}">
+          <img src="/assets/svg/shipping.svg">
+        </a>
+      </div>
+    </dd>
+  </dl>
+
+</div>
+
+    <!-- <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-2">{{'Id' | translate}}</div>
-        <div class="col col-3">{{'Date Created' | translate}}</div>
-        <div class="col col-3">{{'Total' | translate}}</div>
-        <div class="col col-2">{{'Status' | translate}}</div>
+        <div class="col col-2">{{ 'Id' | translate }}</div>
+        <div class="col col-3">{{ 'Date Created' | translate }}</div>
+        <div class="col col-3">{{ 'Total' | translate }}</div>
+        <div class="col col-2">{{ 'Status' | translate }}</div>
         <div class="col col-2"></div>
       </li>
       <li class="table-row" *ngFor="let order of orders">
         <div class="col col-2" data-label="{{'Id' | translate}}">
           <a target="_blank" *ngIf="order.store" href="/store/{{order.store._id}}/track-order/{{order._id}}">
-            {{trimText(order._id)}}
+            {{ trimText(order._id) }}
           </a>
-          <span *ngIf="!order.store">{{trimText(order._id)}}</span>
+          <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
         </div>
-        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
-        <div class="col col-3" data-label="{{'Total' | translate}}">{{order.totalToPay}}</div>
+        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{ order.dateCreated | date }}</div>
+        <div class="col col-3" data-label="{{'Total' | translate}}">{{ order.totalAmount }}</div>
         <div class="col col-2" data-label="{{'Status' | translate}}">
           <div>
-            {{getStatus(order) | translate}}
+            {{ getStatus(order) | translate }}
           </div>
           <div *ngIf="order.paymentStatus == 5">
             <a (click)="refund(order)">
@@ -29,16 +69,12 @@
           </div>
         </div>
         <div class="col col-2 text-right" data-label="Operations">
-
           <div class="d-inline-block px-2" *ngIf="(order.paymentStatus == 2)">
             <a href="/merchant/shipping/{{order._id}}">
               <img src="/assets/svg/shipping.svg">
             </a>
           </div>
-
-          
-          
         </div>
       </li>
-    </ul>
-  </div>
+    </ul> -->
+  

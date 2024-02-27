@@ -1,178 +1,191 @@
-<div class="container" *ngIf="!wallets">
-  <app-no-wallet></app-no-wallet>
-</div>
 
+<!-- 上下边线，解决 margin 问题 -->
+<main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="!wallets">  <!-- 背景灰色 -->
+    <!-- <div class="container" *ngIf="!wallets"> -->
+        <app-no-wallet></app-no-wallet>
+    <!-- </div> -->
+</main>
 
-<div class="container" *ngIf="wallets">
+<!-- 上下边线，解决 margin 问题 -->
+<main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="wallets">  <!-- 背景灰色 -->
+<!-- <div class="container" *ngIf="wallets"> -->
 
-  <div class="d-flex align-items-center  navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer " [ngClass]="currentTab == 'wallet' ? 'current-tab' : 'text-black'" (click)="changeTab('wallet')">
-            {{'My Wallet' | translate}}
-        </div>
-        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'assets' ? 'current-tab' : 'text-black'" (click)="changeTab('assets')">
-            {{'My Assets' | translate}}
-        </div>
+    <div class="my-3 p-3 container border rounded bg-white font-size-16">  <!-- 背景白色，圆角边框 -->  <!-- mb-3 -->
 
-        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'rewards' ? 'current-tab' : 'text-black'" (click)="changeTab('rewards')">
-            {{'7star rewards' | translate}}
-        </div>     
-        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'history' ? 'current-tab' : 'text-black'" (click)="changeTab('history')">
-            {{'Order history for customer' | translate}}
-        </div>   
-        <div class="px-3 py-3 cursor-pointer" [ngClass]="currentTab == 'historyMerchant' ? 'current-tab' : 'text-black'" (click)="changeTab('historyMerchant')">
-            {{'Order history for merchant' | translate}}
-        </div>      
-  </div>
+        <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
+            <li *ngIf="NavTab == 'Wallet'" class="nav-item">
+                <a class="nav-link active" href="javascript:;">{{ 'My Wallet' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'Wallet'" class="nav-item" (click)="changeNavTab('Wallet')">
+                <a class="nav-link" href="javascript:;">{{ 'My Wallet' | translate }}</a>
+            </li> 
+
+            <li *ngIf="NavTab == 'Assets'" class="nav-item">
+                <a class="nav-link active" href="javascript:;">{{ 'My Assets' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'Assets'" class="nav-item" (click)="changeNavTab('Assets')">
+                <a class="nav-link" href="javascript:;">{{ 'My Assets' | translate }}</a>
+            </li> 
+
+            <li *ngIf="NavTab == 'Rewards'" class="nav-item">
+                <a class="nav-link active" href="javascript:;">{{ '7star Rewards' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'Rewards'" class="nav-item" (click)="changeNavTab('Rewards')">
+                <a class="nav-link" href="javascript:;">{{ '7star Rewards' | translate }}</a>
+            </li> 
+        
+            <li *ngIf="NavTab == 'History'" class="nav-item">
+                <a class="nav-link active" href="javascript:;">{{ 'Order History for Customer' | translate }}</a>
+              </li> 
+            <li *ngIf="NavTab != 'History'" class="nav-item" (click)="changeNavTab('History')">
+                <a class="nav-link" href="javascript:;">{{ 'Order History for Customer' | translate }}</a>
+            </li> 
+          
+            <li *ngIf="NavTab == 'HistoryMerchant'" class="nav-item">
+                <a class="nav-link active" href="javascript:;">{{ 'Order History for Merchant' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'HistoryMerchant'" class="nav-item" (click)="changeNavTab('HistoryMerchant')">
+                <a class="nav-link" href="javascript:;">{{ 'Order History for Merchant' | translate }}</a>
+            </li> 
+        </ul>
+        <br>
     
-  <div *ngIf="currentTab == 'wallet'">
-
-    <div class="card-section">
-        <div class="card">
-            <div class="container">
-                <div class="row py-3">
-                    <div class="col col-8">
+        <!-- Wallet -->
+        <div *ngIf="NavTab == 'Wallet'">
+            <div class="my-3 p-3 border rounded">  <!-- 背景白色，圆角边框 -->  <!-- mb-3 -->
+                <div class="row">
+                    <div class="col-8">
                         <select (change)="onChange($event.target.value)" class="form-control">
                             <option *ngFor="let item of wallets.items; let i = index" [value]="i" [selected]="item.id == wallet.id">
-                                {{item.name}}
+                                {{ item.name }}
                             </option>
                         </select>
                     </div>
-            
-                    <div class="col col-4 text-black">
-                        <div>
-                            EXG {{walletBalance}}
-                        </div>
-                        <div>
-                            {{walletValue}} USD
-                        </div>
-                    </div>        
+                    <div class="col">
+                        <ul>
+                            <li>
+                                EXG {{ walletBalance }}
+                            </li>
+                            <li>
+                                USD {{ walletValue }} 
+                            </li>
+                        </ul>
+                    </div> 
                 </div>
 
-                <div class="row py-3">
+                <div class="row">
                     <div class="col col-8">
-
-                        <div class="py-3 text-black">
-                            {{'Wallet address' | translate}}: {{walletAddress}}
+                        <div class="py-3 text-black font-size-19">
+                            {{'Wallet address' | translate}}: {{ walletAddress }}
                         </div>
-                    
-                        <div class="py-3 text-black">
-                            {{'Gas' | translate}}: {{gas}}
+                        <div class="py-3 text-black font-size-19">
+                            {{'Gas' | translate}}: {{ gas }}
                         </div>
 
-                        <div class="row text-black px-3">
-
-                            <div class="CreateCollection--actions m-1 py-3 text-center">
-                                <div class="ActionButtonrContainer ">
+                        <div class="d-flex text-black px-3">
+                            <div class="CreateCollection--actions m-1 pt-2 text-center">
+                                <!-- <div class="ActionButtonrContainer ">
                                     <div class="ActionButton--content" (click)="receive()" style="min-width: 120px;">
-                                        {{'Receive' | translate}}
+                                        {{ 'Receive' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-danger btn-sm btn-block" style="min-width: 150px;" (click)="receive()">
+                                    {{ 'Receive' | translate }}
+                                </button>
                             </div>  
-
-
-                            <div class="CreateCollection--actions m-1 py-3 text-center">
-                                <div class="ActionButtonrContainer ActionButton--secondary">
+                            <div class="CreateCollection--actions m-1 pt-2 text-center">
+                                <!-- <div class="ActionButtonrContainer ActionButton--secondary">
                                     <div class="ActionButton--content" (click)="send()" style="min-width: 120px;">
-                                        {{'Send' | translate}}
+                                        {{ 'Send' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-outline-dark btn-sm btn-block" style="min-width: 150px;" (click)="send()">
+                                    {{ 'Send' | translate }}
+                                </button>
                             </div>              
-        
-                            <div class="CreateCollection--actions m-1 py-3 text-center">
-                                <div class="ActionButtonrContainer ActionButton--secondary">
+                            <div class="CreateCollection--actions m-1 pt-2 text-center">
+                                <!-- <div class="ActionButtonrContainer ActionButton--secondary">
                                     <div class="ActionButton--content" (click)="addGas()" style="min-width: 120px;">
-                                        {{'Add Gas' | translate}}
+                                        {{ 'Add Gas' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-outline-dark btn-sm btn-block" style="min-width: 150px;" (click)="addGas()">
+                                    {{ 'Add Gas' | translate }}
+                                </button>
                             </div>                        
-                            
-
-                            <div class="CreateCollection--actions m-1 py-3 text-center" *ngIf="gas==0">
-                                <div class="ActionButtonrContainer ActionButton--secondary">
+                            <div class="CreateCollection--actions m-1 pt-2 text-center" *ngIf="gas==0">
+                                <!-- <div class="ActionButtonrContainer ActionButton--secondary">
                                     <div class="ActionButton--content" (click)="getFreeGas()" style="min-width: 120px;">
-                                        {{'Get free Gas' | translate}}
+                                        {{ 'Get free Gas' | translate }}
                                     </div>
-                                </div> 
+                                </div>  -->
+                                <button type="button" class="btn btn-outline-dark btn-sm btn-block" style="min-width: 150px;" (click)="getFreeGas()">
+                                    {{ 'Get free Gas' | translate }}
+                                </button>
                             </div>                                 
                         </div>    
                     </div>
-                    <div class="col col-4 text-black">
+                    <div class="col text-black">
                         <ul>
                             <li>
-                                <a (click)="addWallet()">
-                                    {{'Create Wallet' | translate}}
-                                </a>                                  
+                                <a (click)="addWallet()">{{ 'Create Wallet' | translate }}</a> 
                             </li>
                             <li>
-                                <a (click)="importWallet()">
-                                    {{'Restore Wallet' | translate}}
-                                </a> 
+                                <a (click)="importWallet()">{{ 'Restore Wallet' | translate }}</a> 
                             </li>
                             <li>
-                                <a (click)="subtab = 'assets'">
-                                    {{'My Wallet' | translate}}
-                                </a> 
+                                <a (click)="subtab = 'Assets'">{{ 'My Wallet' | translate }}</a> 
                             </li>
-
                             <li>
-                                <a (click)="subtab = 'history'">
-                                    {{'Transaction History' | translate}}
-                                </a> 
+                                <a (click)="subtab = 'History'">{{ 'Transaction History' | translate }}</a> 
                             </li>    
-                            
                             <li>
-                                <a (click)="loginSetting()">
-                                    {{"Login Setting"|translate}}
-                                </a> 
+                                <a (click)="loginSetting()">{{ "Login Setting" | translate }}</a> 
                             </li>     
                             <li>
-                                <a (click)="showSeedPhrase()">
-                                    {{"Show seed phrase"|translate}}
-                                </a> 
+                                <a (click)="showSeedPhrase()">{{ "Show seed phrase" | translate }}</a> 
                             </li>          
                             <li>
-                                <a (click)="deleteWallet()">
-                                    {{"Delete Wallet"|translate}}
-                                </a> 
+                                <a (click)="deleteWallet()">{{ "Delete Wallet" | translate }}</a> 
                             </li>   
                         </ul>
-                      
                     </div>
                 </div>            
             </div>
-        </div>
-    </div>
 
-
-    <div class="card-section my-3">
-        <div class="card">
-            <div class="container">
-                
-                <app-admin-coins-list *ngIf="subtab == 'assets'"  [coins]="coins" (deposit)="depositCoin($event)">
-                </app-admin-coins-list>
-                
-                <app-transaction-history *ngIf="subtab == 'history'" [transactions]="transactions" [walletId]="wallet.id">
-                </app-transaction-history>
-            
+            <div class="card-section my-3">
+                <div class="card">
+                    <div class="container">
+                        <app-admin-coins-list *ngIf="subtab == 'Assets'"  [coins]="coins" (deposit)="depositCoin($event)">
+                        </app-admin-coins-list>
+                        
+                        <app-transaction-history *ngIf="subtab == 'History'" [transactions]="transactions" [walletId]="wallet.id">
+                        </app-transaction-history>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-  </div>
+        <!-- Assets -->
+        <div *ngIf="NavTab == 'Assets'">
+            <app-wallet-assets-list [assets]="assets" (withdraw)="withdrawCoin($event)"></app-wallet-assets-list>
+        </div>
 
-  <div *ngIf="currentTab == 'assets'">
-    <app-wallet-assets-list [assets]="assets" (withdraw)="withdrawCoin($event)"></app-wallet-assets-list>
-  </div>
+        <!-- Rewards -->
+        <div *ngIf="NavTab == 'Rewards'">
+            <app-wallet-star-rewards [rewards]="rewards"></app-wallet-star-rewards>
+        </div>  
 
-  <div *ngIf="currentTab == 'rewards'">
-    <app-wallet-star-rewards [rewards]="rewards"></app-wallet-star-rewards>
-  </div>  
+        <!-- History -->
+        <div *ngIf="NavTab == 'History'">
+            <app-order-history [transactionHistories]="transactionHistories" [type]="'customer'"></app-order-history>
+        </div> 
 
-  <div *ngIf="currentTab == 'history'">
-    <app-order-history [transactionHistories]="transactionHistories" [type]="'customer'"></app-order-history>
-  </div> 
+        <!-- HistoryMerchant -->
+        <div *ngIf="NavTab == 'HistoryMerchant'">
+            <app-order-history [transactionHistories]="merchantTransactionHistories" [type]="'merchant'"></app-order-history>
+        </div> 
 
-  <div *ngIf="currentTab == 'historyMerchant'">
-    <app-order-history [transactionHistories]="merchantTransactionHistories" [type]="'merchant'"></app-order-history>
-  </div> 
-</div>
+    </div> 
+
+</main>

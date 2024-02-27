@@ -3,7 +3,7 @@ export class CartItem {
     objectId: string;
     title: string;
     price: number;
-    giveAwayRate: number;
+    rebateRate: number;
     taxRate: number;
     lockedDays: number;
     storeId: string;

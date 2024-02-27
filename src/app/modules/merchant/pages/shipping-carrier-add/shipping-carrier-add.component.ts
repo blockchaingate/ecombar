@@ -10,7 +10,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     selector: 'app-admin-shipping-carrier-add',
     providers: [],
     templateUrl: './shipping-carrier-add.component.html',
-    styleUrls: ['./shipping-carrier-add.component.scss']
+    styleUrls: [
+      './shipping-carrier-add.component.scss',
+      '../../../../../page.scss'
+    ]
   })
   export class ShippingCarrierAddComponent implements OnInit{
     modalRef: BsModalRef;
@@ -21,8 +24,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     nameChinese: string;
     desc: string;
     descChinese: string;
-    currentTab: string;
-    id: string;
+    NavTab: string;    // 导航 Tab
+    currentTab: string;    // 语言 Tab
+      id: string;
   
     constructor(
       private route: ActivatedRoute,
@@ -35,7 +39,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   
     ngOnInit() {
    
-      this.currentTab = 'default';
+      this.NavTab = 'General';    // 缺省页面
+      this.currentTab = 'default English';    // 缺省页面
       this.dataServ.currentWallet.subscribe(
         (wallet: string) => {
           this.wallet = wallet;
@@ -64,6 +69,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
           }
         );
       }
+    }
+  
+    changeNavTab(tabName: string) {
+      this.NavTab = tabName;
     }
   
     changeTab(tabName: string) {

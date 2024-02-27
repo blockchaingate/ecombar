@@ -1,32 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+
+const baseUrl = environment.endpoints.paycool;
 
 @Injectable({ providedIn: 'root' })
 export class BrandService {
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpClient) { }
 
   create(data) {
-    return this.http.post('brands/Create', data);
+    return this.http.post(baseUrl + 'brand', data);
   }
 
   update(id: string, data) {
-    return this.http.put('brands/Update/' + id, data);
+    return this.http.put(baseUrl + 'brand/' + id, data);
   }
 
   getBrands() {
-    return this.http.get('brands', false);
+    return this.http.get('brands');
   }
 
   getAdminBrands() {
-    return this.http.get('brands/admin', false);
+    return this.http.get('brands/admin');
   }
 
-  getMerchantBrands(walletAddress: string) {
-    return this.http.get('brands/merchant/' + walletAddress, false);
+  getMerchantBrands(walletAddress: string, pageSize, pageNum) {
+    return this.http.get(baseUrl + 'brand/owner/' + walletAddress + '/' + pageSize + '/' + pageNum);
   }
 
   getBrand(id: string) {
-    return this.http.get('brands/' + id, false);
+    return this.http.get(baseUrl + 'brand/' + id);
   }
 
   deleteBrand(data: any) {

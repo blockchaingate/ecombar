@@ -1,50 +1,87 @@
-<div class="card-section my-3">
+
+<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+
+    <dl class="work-list row">
+        <dt class="col-2">{{ 'ID' | translate }}</dt>
+        <dt class="col-2">{{ 'Details' | translate }}</dt>
+        <dt class="col-2">{{ 'Lock period' | translate }}</dt>
+        <dt class="col-2">{{ 'Release time' | translate }}</dt>
+        <dt class="col-2">{{ 'Txids' | translate }}</dt>
+        <dt class="col">{{ 'Status' | translate }}</dt>
+    </dl>
+
+    <dl class="work-list row" *ngFor="let reward of rewards"> 
+        <dd class="col-2">{{ showId(reward.id.substring(0, reward.id.length - 4)) }}</dd>
+        <dd class="col-2">{{ showDetail(reward) }}</dd>
+        <dd class="col-2">{{ reward.lockPeriod }}</dd>
+        <dd class="col-2">{{ showReleaseTime(reward) }}</dd>
+        <dd class="col-2">
+            <div *ngFor="let txid of reward.txids">
+                <a target="_blank" href="{{getTxidUrl(txid)}}">
+                    {{ showId(txid) }}
+                </a>
+            </div>
+        </dd>
+        <dd class="col">
+            <div>
+                {{ showStatus(reward.status) | translate }}
+            </div>
+            <div *ngIf="redeemable(reward)">
+                <a (click)="redeem(reward)">
+                    {{'Redeem' | translate}}
+                </a>
+            </div>
+        </dd>
+    </dl>
+
+</div>
+
+
+<!-- <div class="card-section my-3">
     <div class="card">
         <div class="container">
-
             <ul class="responsive-table">
                 <li class="table-header">
-                  <div class="col col-2">{{'ID' | translate}}</div>
-                  <div class="col col-2">{{'Details' | translate}}</div>
-                  <div class="col col-2">{{'Lock period' | translate}}</div>
-                  <div class="col col-2">{{'Release time' | translate}}</div>
-                  <div class="col col-2">{{'Txids' | translate}}</div>
-                  <div class="col col-2">{{'Status' | translate}}</div>
+                    <div class="col col-2">{{ 'ID' | translate }}</div>
+                    <div class="col col-2">{{ 'Details' | translate }}</div>
+                    <div class="col col-2">{{ 'Lock period' | translate }}</div>
+                    <div class="col col-2">{{ 'Release time' | translate }}</div>
+                    <div class="col col-2">{{ 'Txids' | translate }}</div>
+                    <div class="col col-2">{{ 'Status' | translate }}</div>
                 </li>
-                    <li class="table-row" *ngFor="let reward of rewards">         
-                            <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">
-                                {{showId(reward.id.substring(0, reward.id.length - 4)) }}
-                            </div>
-                            <div class="col col-2" data-label="{{'Details' | translate}}">
-                                {{showDetail(reward) }}
-                            </div>
-                            <div class="col col-2" data-label="{{'Lock period' | translate}}">
-                                {{reward.lockPeriod}}
-                            </div>
-                            <div class="col col-2" data-label="{{'Release time' | translate}}">
-                                {{showReleaseTime(reward) }}
-                            </div>    
-                            <div class="col col-2" data-label="{{'Txids' | translate}}">
-                                <div *ngFor="let txid of reward.txids">
-                                  <a target="_blank" href="{{getTxidUrl(txid)}}">
-                                    {{showId(txid)}}
-                                  </a>
-                                </div>
-                            </div>      
-                            <div class="col col-2" data-label="{{'Status' | translate}}">
-                                <div>
-                                    {{showStatus(reward.status) | translate}}
-                                </div>
-                                <div *ngIf="redeemable(reward)">
-                                    <a (click)="redeem(reward)">
-                                        {{'Redeem' | translate}}
-                                    </a>
-                                    
-                                </div>
-
-                            </div>                  
-                    </li>
-              </ul>                
+                <li class="table-row" *ngFor="let reward of rewards">         
+                    <div class="col col-2 text-black" data-label="{{'Coin' | translate}}">
+                        {{showId(reward.id.substring(0, reward.id.length - 4)) }}
+                    </div>
+                    <div class="col col-2" data-label="{{'Details' | translate}}">
+                        {{showDetail(reward) }}
+                    </div>
+                    <div class="col col-2" data-label="{{'Lock period' | translate}}">
+                        {{reward.lockPeriod}}
+                    </div>
+                    <div class="col col-2" data-label="{{'Release time' | translate}}">
+                        {{showReleaseTime(reward) }}
+                    </div>    
+                    <div class="col col-2" data-label="{{'Txids' | translate}}">
+                        <div *ngFor="let txid of reward.txids">
+                            <a target="_blank" href="{{getTxidUrl(txid)}}">
+                            {{showId(txid)}}
+                            </a>
+                        </div>
+                    </div>      
+                    <div class="col col-2" data-label="{{'Status' | translate}}">
+                        <div>
+                            {{showStatus(reward.status) | translate}}
+                        </div>
+                        <div *ngIf="redeemable(reward)">
+                            <a (click)="redeem(reward)">
+                                {{'Redeem' | translate}}
+                            </a>
+                            
+                        </div>
+                    </div>                  
+                </li>
+            </ul>                
         </div>
     </div>
-</div>   
+</div>    -->

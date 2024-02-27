@@ -1,68 +1,120 @@
-<div class="card-section my-3">
+
+<div class="px-2">  <!-- padding, left/right, $spacer * .5 -->
+
+    <dl class="work-list row">
+        <dt class="col-2">{{ 'ID' | translate }}</dt>
+        <dt class="col-2">{{ 'From' | translate }}</dt>
+        <dt class="col-2">{{ 'Merchant Recipient' | translate }}</dt>
+        <dt class="col-2">{{ 'Merchant Get' | translate }}</dt>
+        <dt class="col-2">{{ 'Date' | translate }}</dt>
+        <dt class="col">{{ 'Status' | translate }}</dt>
+    </dl>
+
+    <dl class="work-list row" *ngFor="let item of transactionHistories">
+        <dd class="col-2">
+            <div>
+                {{ showId(item.id) }}
+            </div>
+            <div>
+                <a (click)="showRewards(item.id)">
+                    {{ 'Rewards' | translate }}
+                </a>
+            </div>
+        </dd>
+        <dd class="col-2">{{ item.from }}</dd>
+        <dd class="col-2">{{ item.merchantRecipient }}</dd>
+        <dd class="col-2">{{ showAmount(item.merchantGet) }}</dd>
+        <dd class="col-2">{{ showDate(item.dateCreated) }}</dd>
+        <dd class="col">
+            <div>
+                {{ showStatus(item.status) }}
+            </div>
+            <div *ngIf="item.status == 1">
+                <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
+                    <a (click)="requestRefund(item)">
+                        request refund
+                    </a>                                     
+                </div>
+            </div>
+            <div *ngIf="item.status == 2">
+                <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
+                    <a (click)="cancelRequestRefund(item)">
+                        cancel request refund
+                    </a>  
+                </div>
+                <div *ngIf="(type == 'merchant') && (walletAddress == item.merchantRecipient)">
+                    <a (click)="refund(item)">
+                        approve refund
+                    </a> 
+                </div>
+            </div>
+        </dd>
+    </dl>
+
+</div>
+
+
+<!-- <div class="card-section my-3">
     <div class="card">
         <div class="container">
-
             <ul class="responsive-table">
                 <li class="table-header">
-                  <div class="col col-2">{{'ID' | translate}}</div>
-                  <div class="col col-2">{{'From' | translate}}</div>
-                  <div class="col col-2">{{'Merchant Recipient' | translate}}</div>
-                  <div class="col col-2">{{'Merchant Get' | translate}}</div>
-                  <div class="col col-2">{{'Date' | translate}}</div>
-                  <div class="col col-2">{{'Status' | translate}}</div>
+                    <div class="col col-2">{{ 'ID' | translate }}</div>
+                    <div class="col col-2">{{ 'From' | translate }}</div>
+                    <div class="col col-2">{{ 'Merchant Recipient' | translate }}</div>
+                    <div class="col col-2">{{ 'Merchant Get' | translate }}</div>
+                    <div class="col col-2">{{ 'Date' | translate }}</div>
+                    <div class="col col-2">{{ 'Status' | translate }}</div>
                 </li>
-                    <li class="table-row" *ngFor="let item of transactionHistories">         
-                            <div class="col col-2 text-black" data-label="{{'ID' | translate}}">
-                                <div>
-                                    {{showId(item.id)}}
-                                </div>
-                                <div>
-                                    <a (click)="showRewards(item.id)">
-                                        {{'Rewards' | translate}}
-                                    </a>
-                                    
-                                </div>
+                <li class="table-row" *ngFor="let item of transactionHistories">         
+                    <div class="col col-2 text-black" data-label="{{'ID' | translate}}">
+                        <div>
+                            {{ showId(item.id) }}
+                        </div>
+                        <div>
+                            <a (click)="showRewards(item.id)">
+                                {{ 'Rewards' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col col-2" data-label="{{'From' | translate}}">
+                        {{ item.from }}
+                    </div>
+                    <div class="col col-2" data-label="{{'Merchant Recipient' | translate}}">
+                        {{ item.merchantRecipient }}
+                    </div>    
+                    <div class="col col-2" data-label="{{'Merchant Get' | translate}}">
+                        {{ showAmount(item.merchantGet) }}
+                    </div>  
+                    <div class="col col-2" data-label="{{'Date' | translate}}">
+                        {{ showDate(item.dateCreated) }}
+                    </div>      
+                    <div class="col col-2" data-label="{{'Status' | translate}}">
+                        <div>
+                            {{ showStatus(item.status) }}
+                        </div>
+                        <div *ngIf="item.status == 1">
+                            <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
+                                <a (click)="requestRefund(item)">
+                                    request refund
+                                </a>                                     
                             </div>
-                            <div class="col col-2" data-label="{{'From' | translate}}">
-                                {{item.from}}
+                        </div>
+                        <div *ngIf="item.status == 2">
+                            <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
+                                <a (click)="cancelRequestRefund(item)">
+                                    cancel request refund
+                                </a>  
                             </div>
-                            <div class="col col-2" data-label="{{'Merchant Recipient' | translate}}">
-                                {{item.merchantRecipient}}
-                            </div>    
-                            <div class="col col-2" data-label="{{'Merchant Get' | translate}}">
-                                {{showAmount(item.merchantGet)}}
-                            </div>  
-                            <div class="col col-2" data-label="{{'Date' | translate}}">
-                                {{showDate(item.dateCreated)}}
-                            </div>      
-                            <div class="col col-2" data-label="{{'Status' | translate}}">
-                                <div>
-                                    {{showStatus(item.status)}}
-                                </div>
-
-                                <div *ngIf="item.status == 1">
-                                    <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
-                                        <a (click)="requestRefund(item)">
-                                            request refund
-                                        </a>                                     
-                                    </div>
-                                </div>
-
-                                <div *ngIf="item.status == 2">
-                                    <div *ngIf="(type == 'customer') && (walletAddress == item.from)">
-                                        <a (click)="cancelRequestRefund(item)">
-                                            cancel request refund
-                                        </a>  
-                                    </div>
-                                    <div *ngIf="(type == 'merchant') && (walletAddress == item.merchantRecipient)">
-                                        <a (click)="refund(item)">
-                                            approve refund
-                                        </a>                                          
-                                    </div>
-                                </div>
-                            </div>                  
-                    </li>
-              </ul>                
+                            <div *ngIf="(type == 'merchant') && (walletAddress == item.merchantRecipient)">
+                                <a (click)="refund(item)">
+                                    approve refund
+                                </a>                                          
+                            </div>
+                        </div>
+                    </div>                  
+                </li>
+            </ul>                
         </div>
     </div>
-</div>   
+</div>    -->

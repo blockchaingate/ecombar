@@ -7,7 +7,10 @@ import { DataService } from '../../services/data.service';
 @Component({
   selector: 'app-products-grid',
   templateUrl: './products-grid.component.html',
-  styleUrls: []
+  styleUrls: [
+    './products-grid.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class ProductsGridComponent implements OnInit{
   iddockRoot: string;
@@ -26,7 +29,7 @@ export class ProductsGridComponent implements OnInit{
   ngOnInit() {
     this.dataServ.currentStore.subscribe(
       (store: any) => {
-        console.log('store=', store);
+        console.log('storeeeee=', store);
         this.storeId = store._id;
         this.store = store;
         this.currency = store.coin;
@@ -41,7 +44,7 @@ export class ProductsGridComponent implements OnInit{
       objectId: item.objectId,
       title: item.title,
       price: item.price,
-      giveAwayRate: item.giveAwayRate ? item.giveAwayRate : this.store.giveAwayRate,
+      rebateRate: item.rebateRate ? item.rebateRate : this.store.rebateRate,
       taxRate: item.taxRate ? item.taxRate : this.store.taxRate,
       lockedDays: item.lockedDays ? item.lockedDays : this.store.lockedDays,
       storeId: this.storeId,

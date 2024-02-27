@@ -36,8 +36,10 @@ export class CartComponent implements OnInit, OnDestroy {
   storeOwner: string;
   payQrcode: string;
   storeId: string;
+  merchantId: string;
   store: any;
   currency: string;
+  walletAddress: string;
   txid_link: string;
   total: number;
   tax: number;
@@ -88,16 +90,24 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.dataServ.currentWalletAddress.subscribe(
+      (walletAddress: any) => {
+        if(walletAddress) {
+          this.walletAddress = walletAddress;
+        }
+      }
+    );
+
     this.dataServ.currentStore.subscribe(
       (store: any) => {
         if(store) {
           this.currency = store.coin;
-          this.smartContractAddress = store.smartContractAddress;
-          this.storeId = store._id;
+          this.storeId = store._id;  // 返回“商家页” products-grid
+          this.merchantId = store.id;  // 小心名字看错
           this.taxRate = store.taxRate;
           this.storeOwner = store.owner;
           const storedCart = this.cartStoreServ.items;
-          this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.storeId) : [];
+          this.cartItems = storedCart ? storedCart.filter((item) => item.storeId == this.merchantId) : [];  // Fix: this.storeId 用错
           this.calculateTotal();
         }
 
@@ -109,6 +119,9 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   checkout() {
+    if (this.total <= 0) {  // Fix: 价格为 0 处理
+      return;
+    }
     if(!this.wallet || !this.wallet.pwdHash) {
       this.router.navigate(['/wallet']);
       return;
@@ -131,11 +144,8 @@ export class CartComponent implements OnInit, OnDestroy {
 
   async checkoutDo(seed: Buffer) {
     const items: CartItem[] = [];
-    const merchantIds = [];
-    this.productObjectIds = [];
     this.quantities = [];
-    
-    let transAmount = 0;
+ 
 
     
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
@@ -143,23 +153,37 @@ export class CartComponent implements OnInit, OnDestroy {
     
     this.cartItems.forEach(item => {
       console.log('item=', item);
-      this.productObjectIds.push('0x' + this.utilServ.ObjectId2SequenceId(item.objectId));
       this.quantities.push(item.quantity);
 
-      transAmount += item.quantity * item.price;
       const titleTran = this.translateServ.transField(item.title);
       item.title = titleTran ? titleTran : item.title;
       items.push(item);
     });
     let currency = this.currency;
-    const orderData = { store: this.storeId, storeOwner: this.storeOwner, items, currency, transAmount };
+    const orderData = { merchantId: this.merchantId, owner: this.walletAddress, items, currency };
 
+    /*
+        owner: { type: String},
+    totalAmount: {type: Number},
+    totalTax: {type: Number},
+    totalShipping: {type: Number},
+    currency: {type: String, required: true},
+    merchantId: {type: String, required: true},
+    items: [{
+        title: String,
+        taxRate: Number,
+        lockedDays: Number,
+        rebateRate: Number,
+        price: Number,
+        quantity: Number
+    }], 
+    */
     const sig = this.kanbanServ.signJsonData(privateKey, orderData);
     orderData['sig'] = sig.signature;  
     this.orderServ.create2(orderData).subscribe(
       (res: any) => {
-        if (res && res.ok) {
-          const body = res._body;
+        if (res) {
+          const body = res;
           const orderID = body._id;
           this.spinner.hide();
           this.cartStoreServ.empty();

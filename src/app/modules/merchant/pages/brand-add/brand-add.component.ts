@@ -5,12 +5,16 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-brand-add',
   providers: [],
   templateUrl: './brand-add.component.html',
-  
+  styleUrls: [
+    './brand-add.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class BrandAddComponent implements OnInit {
   modalRef: BsModalRef;
@@ -18,12 +22,15 @@ export class BrandAddComponent implements OnInit {
   sequence: number;
   name: string;
   nameChinese: string;
-  currentTab: string;
+  nameTradition: string;
+  NavTab: string;    // 导航 Tab
+  currentTab: string;    // 语言 Tab
   id: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService,
     public kanbanServ: KanbanService,
     private dataServ: DataService,
     private modalService: BsModalService,
@@ -32,7 +39,8 @@ export class BrandAddComponent implements OnInit {
 
   ngOnInit() {
  
-    this.currentTab = 'default';
+    this.NavTab = 'General';    // 缺省页面
+    this.currentTab = 'default English';    // 缺省页面
     this.dataServ.currentWallet.subscribe(
       (wallet: string) => {
         this.wallet = wallet;
@@ -43,11 +51,12 @@ export class BrandAddComponent implements OnInit {
       this.brandServ.getBrand(this.id).subscribe(
         (res: any) => {
           console.log('ressssss for brand=', res);
-          if (res && res.ok) {
-            const brand = res._body;
+          if (res) {
+            const brand = res;
             console.log('brand=', brand);
-            this.name = brand.name[0].text;
-            this.nameChinese = brand.name[1].text;
+            this.name = brand.name.en;
+            this.nameChinese = brand.name.sc;
+            this.nameTradition = brand.name.tc;
             this.sequence = brand.sequence;
             
           }
@@ -57,20 +66,25 @@ export class BrandAddComponent implements OnInit {
     }
   }
 
+  changeNavTab(tabName: string) {
+    this.NavTab = tabName;
+  }
+
   changeTab(tabName: string) {
     this.currentTab = tabName;
   }
 
   addBrand() {
-
-    const initialState = {
-      pwdHash: this.wallet.pwdHash,
-      encryptedSeed: this.wallet.encryptedSeed
-    };          
+    console.log('this.wallet===', this.wallet);
     if(!this.wallet || !this.wallet.pwdHash) {
       this.router.navigate(['/wallet']);
       return;
     }
+    const initialState = {
+      pwdHash: this.wallet.pwdHash,
+      encryptedSeed: this.wallet.encryptedSeed
+    };          
+
     this.modalRef = this.modalService.show(PasswordModalComponent, { initialState });
 
     this.modalRef.content.onCloseFabPrivateKey.subscribe( async (privateKey: any) => {
@@ -80,20 +94,16 @@ export class BrandAddComponent implements OnInit {
 
   addBrandDo(privateKey: any) {
 
-    const name = [
-      {
-        lan: 'en',
-        text: this.name
-      },
-      {
-        lan: 'sc',
-        text: this.nameChinese
-      }
-    ];      
+    const name = {
+      en: this.name,
+      sc: this.nameChinese,
+      tc: this.nameTradition
+    };    
     const data = {
       name: name,
       sequence: this.sequence ? this.sequence : 0
     };
+    
     
     const sig = this.kanbanServ.signJsonData(privateKey, data);
     data['sig'] = sig.signature;   
@@ -101,7 +111,8 @@ export class BrandAddComponent implements OnInit {
 
       this.brandServ.create(data).subscribe(
         (res: any) => {
-          if (res && res.ok) {
+          if (res && res._id) {
+            this.toastr.success('Adding brand was successfully');
             this.router.navigate(['/merchant/brands']);
           }
         }
@@ -109,7 +120,8 @@ export class BrandAddComponent implements OnInit {
     } else {
       this.brandServ.update(this.id, data).subscribe(
         (res: any) => {
-          if (res && res.ok) {
+          if (res && res._id) {
+            this.toastr.success('Updating brand was successfully');
             this.router.navigate(['/merchant/brands']);
           }
         }

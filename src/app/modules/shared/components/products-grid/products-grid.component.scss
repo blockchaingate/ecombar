@@ -42,3 +42,21 @@
 a {
     cursor: pointer;
 }
+
+// ---------- 菜单页面 ----------
+
+.food_box {
+  width: 210px;
+  // height: 110px;
+  text-align: center;  // 水平居中
+  // vertical-align: middle;  // 垂直居中  // 无效
+}
+  
+.food_box img {
+  border-radius: 10%;
+  // border: solid 1px #efefef; 
+  width: 200px;
+  height: 160px;
+  // margin: 10px;  // 垂直居中  100 - 10 * 2 = 80
+}
+  

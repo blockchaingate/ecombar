@@ -5,28 +5,102 @@
         [(ngModel)]="parentId" name="parentId" required>
     </div>
 
-    <div class="CreateCollection--actions">
-        <div class="ActionButtonrContainer">
-            <div class="ActionButton--content" (click)="joinAsMember()" style="min-width: 120px;">
-                {{'Join as a customer' | translate}}
-            </div>
-        </div> 
+    <div class="text-center">
+        <button class="btn btn-danger" (click)="joinAsMember()">
+            {{'Join as a customer' | translate}}
+        </button>
     </div>    
 </div>
 
-<div class="container py-3">
-    <div class="row">
-        <div class="col col-md-3 col-sm-6 col-12 py-3" *ngFor="let store of stores">
+<div class="container">
+    <div class="row">  <!-- "container" 宽度不对 -->
+        <div class="col col-md-9 col-12">  <!-- 12格中占9格 -->
 
-            <div class="card" (click)="gotoStore(store)">
-                <img *ngIf="store.image"  src="{{store.image}}" alt="Avatar" class="store-image">
-                <div class="container">
-                  <h4><b>{{store.name | translateField}}</b></h4>
+            <div class="py-3">  <!-- "container" -->
+                <div class="list_box">  <!-- 商家列表 -->
+                    <ul>
+                        <li class="shop_li" *ngFor="let store of stores">
+                            <div class="row" >
+                                <div class="col col-md-2">
+                                    <div class="left_logo border">
+                                        <img *ngIf="store.image"  src="{{ store.image }}">
+                                    </div>
+                                </div>
+                                <div class="col col-md-6">
+                                    <div class="title cursor-pointer" (click)="gotoStore(store)">
+                                        {{ store.name | translateField }}
+                                    </div>
+                                    <div class="text">{{ store.businessContents | translateField }}</div>
+                                    <div class="address" *ngIf="store.businessAddress | translateField">
+                                        <img src="https://www.laibihui.com/templates/business/skin4/images/posi_i.png">
+                                        {{ store.businessAddress | translateField }}
+                                    </div>
+                                </div>
+
+                                <div class="col col-md-4">
+                                    <div class="tel" *ngIf="store.phone">
+                                        <span><strong>{{ store.phone }}</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" (click)="moreStore()">
+                            {{'More' | translate}}
+                        </button>
+                    </div>
                 </div>
-              </div>
+            </div>
+        
+        </div>
+        <div class="col col-md-3 col-12">  <!-- 12格中剩余 -->
 
+            <div class="pt-3">  <!-- "container" -->
+                <div class="rlist_box">  <!-- 热门推荐 -->
+                    <dl class="hot_rec">
+                        <dt class="py-3">{{'Hot recommendations' | translate}}</dt>
+                        <dd class="border-bottom" *ngFor="let store of storesHot; let i = index">
+                            <div class="d-flex p-3 cursor-pointer" (click)="gotoStore(store)">
+                                <div class="l_box">
+                                    <span class="l_num red">{{ i + 1 }}</span>
+                                    <span class="s_logo"><img *ngIf="store.image"  src="{{ store.image }}"></span>
+                                </div>
+                                <div class="r_box ml-2">
+                                    <h4>{{ store.name | translateField }}</h4>
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="pt-3">  <!-- "container" -->
+                <div class="rlist_box">  <!-- 最新入驻 -->
+                    <dl class="new_rec">
+                        <dt class="border-bottom py-3">{{'New merchants' | translate}}</dt>
+                        <dd class="border-bottom" *ngFor="let store of storesNew">
+                            <div class="d-flex p-3 cursor-pointer" (click)="gotoStore(store)">
+                                <div class="l_box">
+                                    <span class="s_logo"><img *ngIf="store.image"  src="{{ store.image }}"></span>
+                                </div>
+                                <div class="r_box ml-2">
+                                    <h4>{{ store.name | translateField }}</h4>
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
 
-
+<a href="#" id="navBackToTop" aria-label="Back to top" onclick="document.body.scrollTop = 0; document.documentElement.scrollTop = 0; event.preventDefault();">
+    <div class="border py-2 text-center font-size-16">  <!-- padding, top/bottom, $spacer * .5 -->
+    <!-- <span class="navFooterBackToTopText"> -->
+      Back to top
+    <!-- </span> -->
+    </div>
+</a>

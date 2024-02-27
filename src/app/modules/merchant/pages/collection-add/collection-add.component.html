@@ -4,7 +4,7 @@
       <hr>
       
       <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default English')">
           English
         </div>
         <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Simplified Chinese')">
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div *ngIf="currentTab=='default'">
+      <div *ngIf="currentTab == 'default English'">
         <div>
           <label for="email"><b>Name</b></label>
           <input type="text" placeholder="Enter collection name" [(ngModel)]="name" name="name" required>
@@ -45,15 +45,21 @@
         </div>
 
         <div>
-          <label for="email"><b>{{'Sequence' | translate}}</b></label>
+          <label for="email"><b>{{ 'Sequence' | translate }}</b></label>
           <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>  
         </div>
 
       </div>
       
-      <div *ngIf="currentTab=='Chinese'">
+      <div *ngIf="currentTab=='Simplified Chinese'">
         <label for="email"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
+      </div>
+      
+      <div *ngIf="currentTab=='Traditional Chinese'">
+        <label for="email"><b>名稱</b></label>
+        <input type="text" placeholder="輸入名稱" [(ngModel)]="nameTradition" name="nameTradition">        
+    
       </div>
 
       <div class="text-right py-2">

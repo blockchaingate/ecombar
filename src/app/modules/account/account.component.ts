@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/modules/shared/services/user.service';
@@ -37,6 +38,7 @@ export class AccountComponent implements OnInit {
   merchantStatus: string;
 
   menuItems: any;
+
   constructor(
     private store: Store<{ user: UserState }>,
     private router: Router, 
@@ -64,15 +66,12 @@ export class AccountComponent implements OnInit {
       }
     );
 
-
-
-
-
     this.menuItems = [
       {
         title: 'Dashboard',
         link: 'dashboard',
-        icon: 'dashboard'
+        icon: 'dashboard',
+        line: 1,  // 下边线支持
       },     
       {
         title: 'Orders',
@@ -117,7 +116,6 @@ export class AccountComponent implements OnInit {
       }      
     ];
 
-
     /*
     this.store.subscribe((res: any) => {
       console.log('res in store=', res);
@@ -138,8 +136,6 @@ export class AccountComponent implements OnInit {
       this.translateServ.setDefaultLang(lang);
     }
 
-
-
   }
 
   changeWallet(index: number, wallet: any) {
@@ -155,15 +151,15 @@ export class AccountComponent implements OnInit {
 
       this.storeServ.getStoresByAddress(walletAddress).subscribe(
         (ret: any) => {
-          if(ret && ret.ok && ret._body && ret._body.length > 0) {
-            const store = ret._body[ret._body.length - 1];
+          console.log('ret in account=', ret);
+          if(ret && ret.length > 0) {
+            const store = ret[0];
             this.dataServ.changeMyStore(store);
           }
         });
 
     }
   }
-
 
   changeLang() {
     let lang = this.translateServ.getDefaultLang();

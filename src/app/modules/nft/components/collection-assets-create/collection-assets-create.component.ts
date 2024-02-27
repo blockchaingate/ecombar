@@ -196,9 +196,6 @@ import { TranslateService } from '@ngx-translate/core';
                     console.log('log=', log);
                     const topics = log.topics;
                     const tokenId = topics[3];
-
-
-
                   }
                 }
               }

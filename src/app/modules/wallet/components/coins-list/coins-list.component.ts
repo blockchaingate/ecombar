@@ -5,7 +5,11 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   selector: 'app-admin-coins-list',
   providers: [],
   templateUrl: './coins-list.component.html',
-  styleUrls: ['./coins-list.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './coins-list.component.scss', 
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class CoinsListComponent implements OnInit{
     @Input() coins;

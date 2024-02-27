@@ -1,3 +1,4 @@
+
 <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" (change)="fileChangeEvent($event.target.files)" style="display:none;" />
 <div class="container w-100">
 
@@ -15,7 +16,7 @@
 
   <div class="row w-100 flex-wrap">
 
-    <div *ngFor="let image of images" class="col col-3 p-2">
+    <div *ngFor="let image of images" class="w-100 p-2">  <!-- 100% 加长，取消 col col-3 -->
       <div class="img-container" [ngClass]="isChecked(image) ? 'checkbox-visble' : ''">
         <input class="checkbox"  (change)="FieldsChange(image,$event)" type="checkbox">
         <img class="thumbnail-img" src="{{image}}">
@@ -23,13 +24,14 @@
     
     </div>
 
-    <div class="border col col-3 px-2 py-3 d-flex justify-content-center align-items-center" *ngIf="!singleFile || !images || (images.length == 0)">
-
+    <div class="border w-100 px-2 py-3 d-flex justify-content-center align-items-center" *ngIf="!singleFile || !images || (images.length == 0)">  <!-- 100% 加长，取消 col col-3 -->
       <div>
         <div class="Polaris-Stack__Item_yiyol py-2">
-          <button class="btn" (click)="fileUpload.click()">Click</button>
+          <!-- <button class="button myButton" (click)="fileUpload.click()">Click</button> -->
+          <button type="button" class="btn btn-danger btn-sm btn-block newButton-S" (click)="fileUpload.click()">
+            {{ 'Click' | translate }}
+          </button>
         </div>
-
         <div class="Polaris-Stack__Item_yiyol">
           <span class="Polaris-TextStyle--variationSubdued_1segu">or drop files to upload</span>
         </div>        
@@ -38,6 +40,7 @@
   </div>
 
 </div>
+
 
 <!--
 <div *ngIf="!images">

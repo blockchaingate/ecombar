@@ -40,7 +40,7 @@ export class ProductListComponent implements OnInit {
         title: this.translateServ.transField(product.title),
         price: product.price,
         storeId: this.storeId,
-        giveAwayRate: product.giveAwayRate ? product.giveAwayRate : this.store.giveAwayRate,
+        rebateRate: product.rebateRate ? product.rebateRate : this.store.rebateRate,
         taxRate: product.taxRate ? product.taxRate : this.store.taxRate,
         lockedDays: product.lockedDays ? product.lockedDays : this.store.lockedDays,
         currency: product.currency,

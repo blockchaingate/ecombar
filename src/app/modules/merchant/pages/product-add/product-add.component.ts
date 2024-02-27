@@ -20,13 +20,15 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-admin-product-add',
   providers: [ProductService, CategoryService],
   templateUrl: './product-add.component.html',
   styleUrls: [
     './product-add.component.scss',
-    '../../../../../card.scss'
+    '../../../../../card.scss',
+    '../../../../../page.scss'
   ]
 })
 export class ProductAddComponent implements OnInit {
@@ -37,7 +39,7 @@ export class ProductAddComponent implements OnInit {
   smartContractAddress: string;
   wallets: any;
   taxRate: number;
-  giveAwayRate: number;
+  rebateRate: number;
   lockedDays: number;
   quantity: number;
   wallet: any;
@@ -47,6 +49,10 @@ export class ProductAddComponent implements OnInit {
   walletAddress: string;
   featureChinese: string;
   featuresChinese: any;
+
+  featureTradition: string;
+  featuresTradition: any;
+
   title: string;
   subtitle: string;
   price: string;
@@ -57,6 +63,15 @@ export class ProductAddComponent implements OnInit {
   sizesChinese: any;
   specNameChinese: string;
   specValueChinese: string;
+
+
+  colorTradition: string;
+  priceTradition: string;
+  sizeTradition: string;
+  colorsTradition: any;
+  sizesTradition: any;
+  specNameTradition: string;
+  specValueTradition: string;
   product: any;
   keywords: any;
   keyword: string;
@@ -71,7 +86,8 @@ export class ProductAddComponent implements OnInit {
   colors: any;
   sizes: any;
   size: string;
-  currentTab: string;
+  NavTab: string;    // 导航 Tab
+  currentTab: string;    // 语言 Tab
   category: string;
   categories: any;
   brand: string;
@@ -89,12 +105,21 @@ export class ProductAddComponent implements OnInit {
   titleChinese: string;
   subtitleChinese: string;
   descriptionChinese: string;
+
+  titleTradition: string;
+  subtitleTradition: string;
+  descriptionTradition: string;
+
   detail: string;
   specs: any;
   specsChinese: any;
+  specsTradition: any;
   specification: string;
   detailChinese: string;
   specificationChinese: string;  
+
+  detailTradition: string;
+  specificationTradition: string;  
   constructor(
     private toastrServ: ToastrService,
     private route: ActivatedRoute,
@@ -128,26 +153,38 @@ export class ProductAddComponent implements OnInit {
     this.sizes = [];
     this.colorsChinese = [];
     this.sizesChinese = [];
+
+    this.colorsTradition = [];
+    this.sizesTradition = [];
+
     this.specs = [];
     this.keywords = [];
     this.features = [];
     this.featuresChinese = [];
+    this.featuresTradition = [];
     this.title = '';
     this.subtitle = '';
     this.titleChinese = '';
     this.subtitleChinese = '';
+    this.titleTradition = '';
+    this.subtitleTradition = '';
     this.detail = '';
     this.category = '';
     this.brand = '';
     this.detailChinese = '';
+
+    this.detailTradition = '';
     this.description = '';
     this.descriptionChinese = '';
+
+    this.descriptionTradition = '';
     this.active = true;
     this.noWallet = false;
     this.images = [
 
     ];
-    this.currentTab = 'default';
+    this.NavTab = 'General';    // 缺省页面
+    this.currentTab = 'default English';    // 缺省页面
     this.currencies = currencies;
 
     this.dataServ.currentWallet.subscribe(
@@ -159,10 +196,10 @@ export class ProductAddComponent implements OnInit {
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
         if(walletAddress) {
-          this.categoryServ.getMerchantCategories(walletAddress).subscribe(
+          this.categoryServ.getMerchantCategories(walletAddress, 100, 0).subscribe(
             (res: any) => {
-              if (res && res.ok) {
-                this.categories = res._body;
+              if (res) {  //  && res.ok
+                this.categories = res;  // res._body
               }
             }
           );
@@ -189,29 +226,31 @@ export class ProductAddComponent implements OnInit {
       }
     );
 
-
-
-
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
       this.productServ.getProduct(this.id).subscribe(
         (res: any) => {
-          if (res && res.ok) {
-            const product = res._body;
-            this.product = product;
+          if (res) {
+            const product = res;
+            this.product = product;  // 看起来没用上
             if (product.title) {
               this.title = product.title.en;
               this.titleChinese = product.title.sc;
+              this.titleTradition = product.title.tc;
             }
             if (product.subtitle) {
               this.subtitle = product.subtitle.en;
               this.subtitleChinese = product.subtitle.sc;
+              this.subtitleTradition = product.subtitle.tc;
             }
             if (product.description) {
               this.description = product.description.en;
               if(product.description.sc) {
                 this.descriptionChinese = product.description.sc;
+              }
+              if(product.description.tc) {
+                this.descriptionTradition = product.description.tc;
               }
             }
 
@@ -222,8 +261,8 @@ export class ProductAddComponent implements OnInit {
             if(product.taxRate) {
               this.taxRate = product.taxRate;
             }
-            if(product.giveAwayRate) {
-              this.giveAwayRate = product.giveAwayRate;
+            if(product.rebateRate) {
+              this.rebateRate = product.rebateRate;
             }
             if(product.lockedDays) {
               this.lockedDays = product.lockedDays;
@@ -234,6 +273,10 @@ export class ProductAddComponent implements OnInit {
               if(product.briefIntroduction.sc) {
                 this.detailChinese = product.briefIntroduction.sc;
               }
+
+              if(product.briefIntroduction.tc) {
+                this.detailTradition = product.briefIntroduction.tc;
+              }
             }
 
             if (product.specs) {
@@ -242,21 +285,34 @@ export class ProductAddComponent implements OnInit {
               if(product.specs.sc) {
                 this.specsChinese = product.specs.sc[0].details;
               }
+
+              if(product.specs.tc) {
+                this.specsTradition = product.specs.tc[0].details;
+              }
             }
  
             if(product.features) {
               this.features = product.features.en;
               if(product.features.sc) {
                 this.featuresChinese = product.features.sc;
-              }              
+              }    
+              
+              if(product.features.tc) {
+                this.featuresTradition = product.features.tc;
+              } 
             }
 
             if(product.contents) {
               this.contents = product.contents;
             }
 
-            if(product.primaryCategoryId) {
-              this.selectedCategory = product.primaryCategoryId;
+            if(product.primaryCategory && this.categories) {
+              for (let i = 0; i < this.categories.length; i ++) {
+                if (this.categories[i]._id == product.primaryCategory) {
+                  this.selectedCategory = this.categories[i];
+                  console.log('selectedCategory=', this.selectedCategory);
+                }
+              }
             }
             this.quantity = product.quantity;
             this.currency = product.currency;
@@ -269,6 +325,10 @@ export class ProductAddComponent implements OnInit {
               if(product.colors.sc) {
                 this.colorsChinese = product.colors.sc;
               }
+
+              if(product.colors.tc) {
+                this.colorsTradition = product.colors.tc;
+              }
             }
             if(product.sizes) {
               if(product.sizes.en) {
@@ -277,18 +337,17 @@ export class ProductAddComponent implements OnInit {
               if(product.sizes.sc) {
                 this.sizesChinese = product.sizes.sc;
               }
+
+              if(product.sizes.tc) {
+                this.sizesTradition = product.sizes.tc;
+              }
             }
-            
-            
             
             this.active = product.active;
             if (product.images) {
               this.images = product.images;
             }
-
-            this.category = product.primaryCategoryId;
-
-
+            this.category = product.primaryCategory;  // primaryCategoryId
           }
 
         }
@@ -302,6 +361,10 @@ export class ProductAddComponent implements OnInit {
   public addHeaders(args: any) {
     console.log('add headerssss');
     args.currentRequest.setRequestHeader('custom-header', 'Syncfusion');
+  }
+
+  changeNavTab(tabName: string) {
+    this.NavTab = tabName;
   }
 
   changeTab(tabName: string) {
@@ -362,6 +425,28 @@ export class ProductAddComponent implements OnInit {
 
 
 
+
+  addColorTradition() {
+    this.colorsTradition.push(this.colorTradition);
+    this.colorTradition = '';
+  }
+
+  removeColorTradition(c) {
+    this.colorsTradition = this.colorsTradition.filter(item => item != c);
+  }
+
+  addSizeTradition() {
+    this.sizesTradition.push(this.sizeTradition);
+    this.sizeTradition = '';
+  }
+
+  removeSizeTradition(c) {
+    this.sizesTradition = this.sizesTradition.filter(item => item != c);
+  }
+
+
+
+
   addKeyword() {
     this.keywords.push(this.keyword);
     this.keyword = '';
@@ -414,6 +499,22 @@ export class ProductAddComponent implements OnInit {
 
 
 
+  addSpecTradition() {
+    if(!this.specNameTradition || !this.specValueTradition) {
+      return;
+    }
+    this.specsTradition.push(
+      {name: this.specNameTradition,value:this.specValueTradition}
+    );
+    this.specNameTradition = '';
+    this.specValueTradition = '';
+  }
+
+  removeSpecTradition(spec) {
+    this.specsTradition = this.specsTradition.filter(item => item.name != spec.name && item.value != spec.value);
+  }  
+
+
   addContent() {
     if(!this.contentName || !this.contentQuantity) {
       return;
@@ -435,6 +536,10 @@ export class ProductAddComponent implements OnInit {
 
   removeFeatureChinese(featureChinese) {
     this.featuresChinese = this.featuresChinese.filter(item => item != featureChinese);
+  }
+
+  removeFeatureTradition(featureTradition) {
+    this.featuresTradition = this.featuresTradition.filter(item => item != featureTradition);
   }
 
   saveProduct() {
@@ -478,16 +583,21 @@ export class ProductAddComponent implements OnInit {
     this.featureChinese = '';
   }
 
+  addFeatureTradition() {
+    this.featuresTradition.push(this.featureTradition);
+    this.featureTradition = '';
+  }
+
   async saveProductDo(seed: Buffer) {
     //const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password); 
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
     const privateKey = keyPair.privateKeyBuffer.privateKey;
 
-    const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese };
-    const subtitleLan: TextLan = { name: 'subtitle', en: this.subtitle, sc: this.subtitleChinese };
-    const featuresLan: TextLan = { name: 'features', en: this.features, sc: this.featuresChinese };
-    const detailLan: TextLan = { name: 'detail', en: this.detail, sc: this.detailChinese };
-    const descLan: TextLan = { name: 'description', en: this.description, sc: this.descriptionChinese };
+    const titleLan: TextLan = { name: 'title', en: this.title, sc: this.titleChinese, tc: this.titleTradition };
+    const subtitleLan: TextLan = { name: 'subtitle', en: this.subtitle, sc: this.subtitleChinese, tc: this.subtitleTradition };
+    const featuresLan: TextLan = { name: 'features', en: this.features, sc: this.featuresChinese, tc: this.featureTradition };
+    const detailLan: TextLan = { name: 'detail', en: this.detail, sc: this.detailChinese, tc: this.detailTradition };
+    const descLan: TextLan = { name: 'description', en: this.description, sc: this.descriptionChinese, tc: this.descriptionTradition };
 
     const specLan = { 
       en: 
@@ -499,6 +609,11 @@ export class ProductAddComponent implements OnInit {
       [{ 
         group: "",
         details: this.specsChinese 
+      }],
+      tc: 
+      [{ 
+        group: "",
+        details: this.specsTradition 
       }]
     };
     const data: any = {
@@ -514,67 +629,41 @@ export class ProductAddComponent implements OnInit {
       keywords: this.keywords,
       lockedDays: this.lockedDays,
       taxRate: this.taxRate,
-      giveAwayRate: this.giveAwayRate,
+      rebateRate: this.rebateRate,
       contents: this.contents,
-      primaryCategoryId: this.selectedCategory ? this.selectedCategory._id : null,
+      primaryCategory: this.selectedCategory ? this.selectedCategory._id : null,
       active: this.active,
       images: this.images,
       colors: {
         en: this.colors,
-        sc: this.colorsChinese
+        sc: this.colorsChinese,
+        tc: this.colorsTradition
       },
       sizes: {
         en: this.sizes,
-        sc: this.sizesChinese
+        sc: this.sizesChinese,
+        tc: this.sizesTradition
       },
       brand: this.brand ? this.brand : null
     };
     
     //const datahash = this.iddockServ.getDataHash(data);
     //console.log('datahash==', datahash);
-
-    if(!this.id) {
-      (await this.iddockServ.addIdDock(seed, 'things', null, data, null)).subscribe( async res => {
-        console.log('ress from addIdDock=', res);
-        if(res) {
-          if(res.ok) {
-            console.log('res.body._id=', res._body._id);
-            this.objectId = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
-            data.objectId = this.objectId;
-
-            const sig = this.kanbanServ.signJsonData(privateKey, data);
-            data['sig'] = sig.signature;                 
-            this.productServ.create(data).subscribe(
-                (res: any) => {
-                  this.spinner.hide();
-                  this.router.navigate(['/merchant/products']);
-                }
-            );
-
-
-          } else {
+    const sig = this.kanbanServ.signJsonData(privateKey, data);
+    data['sig'] = sig.signature; 
+    if(!this.id) {   
+      this.productServ.create(data).subscribe(
+          (res: any) => {
             this.spinner.hide();
-            this.toastrServ.error('add to id dock error');
+            this.router.navigate(['/merchant/products']);
           }
-          
-        }
-      });      
-    } else {
-      const sig = this.kanbanServ.signJsonData(privateKey, data);
-      data['sig'] = sig.signature;       
+      );    
+    } else {     
       this.productServ.update(this.id, data).subscribe(
         async (res: any) => {
           console.log('res=', res);
-          if (res.ok) {
-            (await this.iddockServ.updateIdDock(seed, this.product.objectId, 'things', null, data, null)).subscribe(res => {
-              if(res) {
-                if(res.ok) {
-                  this.spinner.hide();
-                  this.router.navigate(['/merchant/products']);
-                }
-              }
-            });            
-          }
+          this.spinner.hide();
+          this.router.navigate(['/merchant/products']);
         }
       );      
     }

@@ -38,7 +38,7 @@ export class BlogAddComponent implements OnInit {
   ngOnInit() {
     this.content = '';
     this.contentChinese = '';
-    this.currentTab = 'default';
+    this.currentTab = 'default English';
     this.dataServ.currentWallet.subscribe(
       (wallet: string) => {
         this.wallet = wallet;

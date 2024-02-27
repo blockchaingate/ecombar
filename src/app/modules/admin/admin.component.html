@@ -1,3 +1,4 @@
+
 <div class="grid" [ngClass]="showNavMenu ? 'grid--noscroll' : ''">
     <header class="header">
         <img class="header__menu" (click)="toggleShowNavMenu()" src="/assets/svg/bars-solid.svg">
@@ -41,7 +42,7 @@
             </div>
             <div *ngIf="role == 'Customer'" class="text-center">
                 <a href="/" class="text-success">
-                    {{'Go shopping' | translate}}
+                    {{'Shopping' | translate}}
                 </a>
 
             </div>
@@ -82,7 +83,7 @@
         <router-outlet></router-outlet>
     </main>
     <footer class="footer">
-        <div class="footer__copyright">&copy; {{year}} 7-Star Group Corp All Rights Reserved</div>
+        <div class="footer__copyright">&copy; {{year}} PAY.COOL All Rights Reserved</div>
         <div class="footer__signature">Powered by Fast Access Blockchain</div>
     </footer>
 </div>

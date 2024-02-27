@@ -1,6 +1,7 @@
 <div *ngIf="merchantStatus != 'pending'">
-  <div class="main-overview" *ngIf="!isUserSummary">
-    <div class="overviewCard" [routerLink]="['/admin/brands']">
+
+  <div class="main-overview" *ngIf="!isUserSummary">  <!-- 菜单: Store -->
+    <div class="overviewCard" [routerLink]="['/merchant/brands']">
       <div class="overviewCard-icon overviewCard-icon--document">
          <img src="/assets/svg/brand-white.svg">
       </div>
@@ -9,7 +10,7 @@
         <p class="overviewCard-subtitle">{{brands_count}}</p>
       </div>
     </div>
-    <div class="overviewCard" [routerLink]="['/admin/categories']">
+    <div class="overviewCard" [routerLink]="['/merchant/categories']">
       <div class="overviewCard-icon overviewCard-icon--calendar">
         <img src="/assets/svg/category-white.svg">
       </div>
@@ -18,7 +19,7 @@
         <p class="overviewCard-subtitle">{{categories_count}}</p>
       </div>
     </div>
-    <div class="overviewCard" [routerLink]="['/admin/products']">
+    <div class="overviewCard" [routerLink]="['/merchant/products']">
       <div class="overviewCard-icon overviewCard-icon--mail">
         <img src="/assets/svg/product-white.svg">
       </div>
@@ -27,7 +28,7 @@
         <p class="overviewCard-subtitle">{{products_count}}</p>
       </div>
     </div>
-    <div class="overviewCard" [routerLink]="['/admin/collections']">
+    <div class="overviewCard" [routerLink]="['/merchant/collections']">
       <div class="overviewCard-icon overviewCard-icon--photo">
         <img src="/assets/svg/collection-white.svg">
       </div>
@@ -39,7 +40,7 @@
   </div> 
   
   <div class="main-overview" *ngIf="isUserSummary">
-    <div class="overviewCard" [routerLink]="['/admin/cart']">
+    <div class="overviewCard" [routerLink]="['/merchant/cart']">
       <div class="overviewCard-icon overviewCard-icon--document">
          <img src="/assets/svg/cart-white.svg">
       </div>
@@ -48,7 +49,7 @@
         <p class="overviewCard-subtitle">{{my_cart_count}}</p>
       </div>
     </div>
-    <div class="overviewCard" [routerLink]="['/admin/favorite']">
+    <div class="overviewCard" [routerLink]="['/merchant/favorite']">
       <div class="overviewCard-icon overviewCard-icon--calendar">
         <img src="/assets/svg/favorite-white.svg">
       </div>
@@ -57,7 +58,7 @@
         <p class="overviewCard-subtitle">{{my_favorite_count}}</p>
       </div>
     </div>
-    <div class="overviewCard" [routerLink]="['/admin/my-products']">
+    <div class="overviewCard" [routerLink]="['/merchant/my-products']">
       <div class="overviewCard-icon overviewCard-icon--mail">
         <img src="/assets/svg/product-white.svg">
       </div>
@@ -66,7 +67,7 @@
         <p class="overviewCard-subtitle">{{my_products_count}}</p>
       </div>
     </div>
-    <div class="overviewCard" [routerLink]="['/admin/my-comments']">
+    <div class="overviewCard" [routerLink]="['/merchant/my-comments']">
       <div class="overviewCard-icon overviewCard-icon--photo">
         <img src="/assets/svg/comment-white.svg">
       </div>
@@ -77,13 +78,9 @@
     </div>
   </div> 
   
-  <div class="card">
-      <div class="card__header">{{'Orders' | translate}}</div>
-      <div class="card__main">
-        <app-admin-orders></app-admin-orders>
-      </div>
+  <div class="border-top m-3">  <!-- margin, sides, $spacer * 1.0 -->
+    <app-merchant-orders></app-merchant-orders>
   </div>
-  
 </div>
 
 <div *ngIf="merchantStatus == 'pending'" class="text-success d-flex justify-content-center align-items-center h-100">

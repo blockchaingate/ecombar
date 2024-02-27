@@ -14,6 +14,10 @@ import { CoinService } from '../../shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
 import { compilerOperationSigningSerializationLocktime } from '@bitauth/libauth';
 
+// 定义验证规则：FormBuilder 构建表单数据，FormGroup 表单类型，Validators 表单验证
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
     template: ''
 })
@@ -38,8 +42,13 @@ export abstract class AddressComponent implements OnInit {
   wallet: any;
   addresses: any;
   modalRef: BsModalRef;
+  workForm: FormGroup;    // 定义表单
 
+  // 添加 fb 属性，用来创建表单
+  // constructor(private fb: FormBuilder) { }
   constructor(
+    private fb: FormBuilder,  // 添加 fb 属性，用来创建表单
+    private cd: ChangeDetectorRef,  // 变更检测 detectChanges()
     private modalService: BsModalService,
     private iddockServ: IddockService,
     private spinner: NgxSpinnerService,
@@ -54,7 +63,12 @@ export abstract class AddressComponent implements OnInit {
 
   }
 
+    ngAfterContentChecked() {    // 使用 ngAfterViewInit, ngAfterContentInit 无效
+        this.cd.detectChanges();  // 变更检测 detectChanges()
+    }
+
   ngOnInit() {
+
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         if(wallet) {
@@ -62,8 +76,6 @@ export abstract class AddressComponent implements OnInit {
         }
       }
     );
-
-
 
     this.dataServ.currentStoreId.subscribe(
       (storeId: string) => {
@@ -89,13 +101,13 @@ export abstract class AddressComponent implements OnInit {
         if(walletAddress) {
           this.addressServ.getAddresses(walletAddress).subscribe(
             (ret: any) => {
-              if(ret && ret.ok) {
-                this.addresses = ret._body;
+              if(ret) {
+                this.addresses = ret;
 
                 this.orderServ.get(this.orderID).subscribe(
                   (res: any) => {
-                    if(res && res.ok) {
-                      this.order = res._body;
+                    if(res) {
+                      this.order = res;
                       this.suite = this.order.unit;
                       this.streetNumber = this.order.streetNumber;
                       this.street = this.order.streetName;
@@ -137,39 +149,84 @@ export abstract class AddressComponent implements OnInit {
       }
     ); 
 
+    // this.userServ.getMe().subscribe(
+    //   (res: any) => {
+    //     console.log('resme==', res);
+    //     if (res && res.ok) {
+    //       const member = res._body;
+    //       if (member.homeAddressId) {
+    //         this.id = member.homeAddressId;
+    //         this.addressServ.getAddress(member.homeAddressId).subscribe(
+    //           (res: any) => {
+    //             console.log('res for addressss=', res);
+    //             if (res && res.ok) {
+    //               const address = res._body;
+    //               this.suite = address.suite;
+    //               this.streetNumber = address.streetNumber;
+    //               this.street = address.street;
+    //               this.district = address.district;
+    //               this.city = address.city;
+    //               this.province = address.province;
+    //               this.postcode = address.postcode;
+    //               this.country = address.country;
+    //               console.log('res  for address=', res);
+    //             }
+    //           }
+    //         );
+    //       }
+    //     }
+    //   }
+    // );
 
+    this.buildForm();    // 初始化时构建表单
+  }
 
-    /*
-    this.userServ.getMe().subscribe(
-      (res: any) => {
-        console.log('resme==', res);
-        if (res && res.ok) {
-          const member = res._body;
-          if (member.homeAddressId) {
-            this.id = member.homeAddressId;
-            this.addressServ.getAddress(member.homeAddressId).subscribe(
-              (res: any) => {
-                console.log('res for addressss=', res);
-                if (res && res.ok) {
-                  const address = res._body;
-                  this.suite = address.suite;
-                  this.streetNumber = address.streetNumber;
-                  this.street = address.street;
-                  this.district = address.district;
-                  this.city = address.city;
-                  this.province = address.province;
-                  this.postcode = address.postcode;
-                  this.country = address.country;
-                  console.log('res  for address=', res);
-                }
-              }
-            );
-          }
-        }
+  // 构建表单方法
+  buildForm(): void {
+    // 通过 formBuilder构建表单
+    this.workForm = this.fb.group({
+      name: ['', [    // 在页面上已有验证
+        Validators.required,    // 必填
+        Validators.minLength(3),    // 最短为 3
+        // Validators.maxLength(20),    // 最长为 10
+        // this.validateRex('notdown', /^(?!_)/),    // 不能以下划线开头
+        // this.validateRex('only', /^[1-9a-zA-Z_]+$/),    // 只能包含数字、字母、下划线
+      ]],
+      buyerPhone: ['', [
+        Validators.required,
+        Validators.minLength(3),
+      ]],
+      suite: ['', [    // N/A
+      ]],
+      streetNumber: ['', [
+        Validators.required,
+      ]],
+      street: ['', [
+        Validators.required,
+        Validators.minLength(3),
+      ]],
+      district: ['', [    // N/A
+      ]],
+      city: ['', [
+        Validators.required,
+        Validators.minLength(2),
+      ]],
+      province: ['', [
+        Validators.required,
+        Validators.minLength(2),
+      ]],
+      postcode: ['', [
+        Validators.required,
+        Validators.minLength(3),
+      ]],
+      country: ['', [    // N/A
+      ]],
+    });
+  }
 
-      }
-    );
-    */
+  isInvalid( form: any, id: string ) {
+    // *ngIf="(workForm.get('name').touched || workForm.get('name').dirty) && workForm.get('name').invalid"
+    return (form.get(id).touched || form.get(id).dirty) && form.get(id).invalid;  // .errors 也可
   }
 
   updateOrderAddress() {
@@ -191,19 +248,38 @@ export abstract class AddressComponent implements OnInit {
 
   }
 
-  selectAddress(address: any) {
-    this.id = address._id;
-    this.suite = address.suite;
-    this.streetNumber = address.streetNumber;
-    this.street = address.street;
-    this.name = address.name;
-    this.buyerPhone = address.buyerPhone;
-    this.district = address.district;
-    this.city = address.city;
-    this.province = address.province;
-    this.postcode = address.postcode;
-    this.country = address.country;
-  }
+    // 遍历表单，设为“已触摸”
+    markFormGroupTouched( formGroup: FormGroup ) {
+        (<any>Object).values(formGroup.controls).forEach(item => {
+            if (item.controls) {
+                this.markFormGroupTouched(item);
+            } else {
+                item.markAsTouched();
+             // item.markAsDirty();
+             // item.updateValueAndValidity();
+            }
+        });
+    }
+
+    selectAddress( address: any ) {
+        this.id = address._id;
+        this.suite = address.suite;
+        this.streetNumber = address.streetNumber;
+        this.street = address.street;
+        this.name = address.name;
+        this.buyerPhone = address.buyerPhone;
+        this.district = address.district;
+        this.city = address.city;
+        this.province = address.province;
+        this.postcode = address.postcode;
+        this.country = address.country;
+
+        // Fix: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked.
+        setTimeout(() => {  // 1, 异步解决 setTimeout(); 2, 变更检测 detectChanges()
+            // Fix: 在更换地址时，马上展示检测
+            this.markFormGroupTouched(this.workForm);  // 遍历表单，设为“已触摸”
+        });
+    }
 
   async updateOrderAddressDo(seed: Buffer) {
     const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
@@ -225,15 +301,13 @@ export abstract class AddressComponent implements OnInit {
     updatedOrder['sig'] = sig.signature;           
     this.orderServ.update2(this.orderID, updatedOrder).subscribe(
       (res: any) => {
-        if (res && res.ok) {
+        if (res) {
           this.addAddress(privateKey);
           this.spinner.hide();
           
         }
       }
     );
-
-
 
   }
 
@@ -258,11 +332,12 @@ export abstract class AddressComponent implements OnInit {
 
     const sig = this.kanbanServ.signJsonData(privateKey, address);
     address['sig'] = sig.signature;  
+    console.log('this.id====', this.id);
     if (this.id) {
       this.addressServ.updateAddress(this.id, address).subscribe(
         (res: any) => {
           console.log('res for updateAddress', address);
-          if (res && res.ok) {
+          if (res) {
             this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
           }
         }
@@ -270,7 +345,7 @@ export abstract class AddressComponent implements OnInit {
     } else {
       this.addressServ.addAddress(address).subscribe(
         (res: any) => {
-          if (res && res.ok) {
+          if (res) {
             this.router.navigate(['/store/'+ this.storeId + '/payment/' + this.orderID]);
             /*
             const _body = res._body;

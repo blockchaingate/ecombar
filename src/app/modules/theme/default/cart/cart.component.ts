@@ -3,6 +3,9 @@ import { CartComponent as ParentCartComponent} from '../../../store/cart/cart.co
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: []
+  styleUrls: [
+    './cart.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class CartComponent extends ParentCartComponent{}

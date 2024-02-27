@@ -35,6 +35,7 @@ $width-sidenav: 240px;
   background-color: white;
   transform: translateY(0);
   transition: all .3s;
+  border: solid 1px #eee;  // 灰色四边框
 
   &-icon {
     display: flex;
@@ -87,34 +88,32 @@ $width-sidenav: 240px;
   }
 }
 
+// .card {
+//   /* Add shadows to create the "card" effect */
+//   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+//   transition: 0.3s;
+//   margin: 20px;
+// }
 
+// /* On mouse-over, add a deeper shadow */
+// .card:hover {
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+// }
 
-.card {
-  /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  margin: 20px;
-}
+// /* Add some padding inside the card container */
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
+// .card .card__header {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   height: 50px;
+//   background-color: #394263;
+//   color: #FFF;  
+//   padding-left: 10px;
+// }
 
-/* Add some padding inside the card container */
-
-.card .card__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 50px;
-  background-color: #394263;
-  color: #FFF;  
-  padding-left: 10px;
-}
-
-.card .card__main {
-  background-color: #EAEDF1;
-  color: #394263;  
-  padding: 10px;
-}
+// .card .card__main {
+//   background-color: #EAEDF1;
+//   color: #394263;  
+//   padding: 10px;
+// }

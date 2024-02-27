@@ -1,7 +1,9 @@
 
+<!-- 购物车 -->
 
-
-<main id="content" role="main" class="cart-page">
+<!-- 上下边线，解决 margin 问题 -->
+<!-- <main id="content" role="main" class="cart-page"> -->
+<main id="content" role="main" class="border-top border-bottom bg-light">  <!-- 背景灰色 -->
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">
         <div class="container">
@@ -19,7 +21,7 @@
     </div>
     <!-- End breadcrumb -->
 
-    <div class="container">
+    <div class="mb-3 container border rounded bg-white">  <!-- 背景白色，圆角边框 -->
         <div class="mb-4 d-flex justify-content-center">
             <h1 class="text-center mr-3">{{'Cart'|translate}}</h1>
             <button class="btn btn-link" (click)="clear()">
@@ -31,7 +33,7 @@
             <form class="mb-4" action="#" method="post">
                 <table class="table" cellspacing="0">
                     <thead>
-                        <tr>
+                        <tr class="font-size-20">
                             <th class="product-remove">&nbsp;</th>
                             <th class="product-thumbnail">&nbsp;</th>
                             <th class="product-name">{{'Product' | translate}}</th>
@@ -42,10 +44,9 @@
                     </thead>
                     <tbody>
                         <tr class="" *ngFor="let item of cartItems;let i = index;" app-cart-product (productUpdated)="updateProduct($event)" [currency]="currency" [product]="item">
-
                         </tr>
-                        <tr>
-                            <td colspan="6" class="border-top space-top-2 justify-content-center">
+                        <tr class="border-top">
+                            <td colspan="6" class="space-top-2 justify-content-center">
                                 <div class="pt-md-3">
                                     <div class="d-block d-md-flex flex-center-between">
                                         <div class="mb-3 mb-md-0 w-xl-40">
@@ -63,7 +64,9 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <!-- <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button> -->
-                                            <a (click)="checkout()" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">{{'Proceed to checkout' | translate}}</a>
+                                            <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="checkout()">
+                                                {{ 'Check Out' | translate }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -82,8 +85,8 @@
                     <table class="table mb-3 mb-md-0">
                         <tbody>
                             <tr class="cart-subtotal">
-                                <th>Subtotal</th>
-                                <td data-title="Subtotal"><span class="amount">{{total}}{{currency}}</span></td>
+                                <th class="font-size-22">Subtotal</th>
+                                <td data-title="Subtotal"><span class="font-size-20">{{total}} {{currency}}</span></td>
                             </tr>
                         </tbody>
                     </table>

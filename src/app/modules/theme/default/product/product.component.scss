@@ -64,3 +64,102 @@
 .favorited {
     color: #fed700;
 }
+
+// ---------- 我的 nav-tabs 菜单（修改） ----------
+
+.myNavTabs-2 .nav-tabs li a {
+  color: #a5a5a5;  // 未选颜色
+}
+.myNavTabs-2 .nav-tabs li a:hover {
+  color: #7f7f7f;    // 深一点点
+  border-color: #eee #eee transparent #eee
+}
+.myNavTabs-2 .nav-tabs li a.active {
+  color: #333;  // 选中颜色
+  font-weight: bold;
+}
+.myNavTabs-2 .nav-tabs li a.active :hover {
+  color: #333;  // 颜色不变  // 放 a:hover 后
+  font-weight: bold;
+}
+
+.myNavTabs-2 .nav-tabs { 
+    font-size: 16px; 
+    margin-bottom: 25px;  // 下面间隙
+}
+
+// ---------- 我的 work-form 表单（修改） ----------
+
+.WorkForm-2 {
+  font-size: 16px; 
+  color: #3b3b3b; 
+  // line-height: 34px; 
+  // padding-top: 20px;
+  // margin: 20px 0;
+  // border: solid 1px #eee;  // 灰色边框
+  margin-bottom: 20px;
+}
+
+.WorkForm-2 dl {
+  width: 100%;  // 占据整行
+}
+.WorkForm-2 dt {
+  float: left; 
+  width: 80px;  // 120px
+  // padding: 6px 0 8px; 
+  text-align: left;
+  font-weight: normal;
+}
+.WorkForm-2 dt span { 
+  color: #f00; 
+}
+.WorkForm-2 dd {
+  margin-left: 85px;  // 125px
+  // padding: 5px 20px 5px 10px;
+}
+
+.WorkForm-2 li {
+    padding-bottom: 10px;  // 撑开行距
+}
+
+// ---------- 自定义按钮 ----------
+
+// .btn-info-2[href]:hover, .btn-info-2[href]:focus, .btn-info-2[href]:active, .btn-info-2[type]:hover, .btn-info-2[type]:focus, .btn-info-2[type]:active {
+//   box-shadow: 0 4px 11px rgba(0, 223, 252, 0.35);
+// }
+
+// .btn-info-2:not(label.btn), .btn-info-2:not(label.btn):not([href]):not(:disabled):not(.disabled), .btn-info-2:not([href]), .btn-info-2:not([href]):not([href]):not(:disabled):not(.disabled) {
+//   background-color: #fff;
+//   border-color: #fa8900;
+// }
+
+.btn-info-2 {
+  color: #a5a5a5;
+  background-color: #fff;
+  border-color: #a5a5a5;
+  font-weight: normal;
+  border-radius: 15%;
+  margin-right: 10px;
+}
+
+.btn-info-2:hover {
+  color: #7f7f7f;    // 深一点点
+  background-color: #fff;
+  border-color: #7f7f7f;
+  font-weight: normal;
+}
+
+// .btn-info-2:active {
+//   color: #333;  // 选中颜色
+//   // background-color: #ffd814;
+//   border-color: #fa8900;
+//   font-weight: bold;
+// }
+
+.btn-info-2:not(:disabled):not(.disabled):active, .btn-info-2:not(:disabled):not(.disabled).active,
+.show > .btn-info-2.dropdown-toggle {
+  color: #333;  // 选中颜色
+  background-color: #ffd814;
+  border-color: #fa8900;
+  font-weight: bold;
+}

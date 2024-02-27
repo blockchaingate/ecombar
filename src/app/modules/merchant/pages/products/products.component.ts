@@ -12,7 +12,10 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
   selector: 'app-admin-products',
   providers: [ProductService, UserService],
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: [
+    './products.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class ProductsComponent implements OnInit {
   modalRef: BsModalRef;
@@ -52,10 +55,11 @@ export class ProductsComponent implements OnInit {
       (walletAddress: string) => {
         this.walletAddress = walletAddress;
         if(walletAddress) {
-          this.productServ.getProductsOwnedBy(walletAddress).subscribe(
+          this.productServ.getProductsOwnedBy(walletAddress, 100, 0).subscribe(
             (res: any) => {
               if (res) {
                 this.products = res;
+                console.log('this.products===', this.products);
               }
             }
           );  

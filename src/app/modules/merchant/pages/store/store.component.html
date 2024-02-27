@@ -1,10 +1,215 @@
-<div style="border:1px solid #ccc">
+
+<div class="myNavTabs" class="px-3">    <!-- class="container" -->
+
+  <h1 class="py-2">{{'New Store' | translate}}</h1>
+
+  <div class="text-right">
+    <button type="button" class="btn btn-danger newButton-S rounded mx-2" (click)="deleteStore()" *ngIf="id">
+      {{ 'Delete' | translate }}
+    </button>  <!-- 圆角边框 -->
+    <button type="button" class="btn btn-danger newButton-S rounded mx-2" (click)="addStore()">
+      {{ (id ? 'Update' : 'Add') | translate }}
+    </button>
+  </div>
+
+  <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
+    <li *ngIf="NavTab == 'General'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">General</a>
+    </li> 
+    <li *ngIf="NavTab != 'General'" class="nav-item" (click)="changeNavTab('General')">
+      <a class="nav-link" href="javascript:;">General</a>
+    </li> 
+
+    <li *ngIf="NavTab == 'Data'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">Data</a>
+    </li> 
+    <li *ngIf="NavTab != 'Data'" class="nav-item" (click)="changeNavTab('Data')">
+      <a class="nav-link" href="javascript:;">Data</a>
+    </li> 
+
+    <li *ngIf="NavTab == 'Image'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">Image</a>
+    </li> 
+    <li *ngIf="NavTab != 'Image'" class="nav-item" (click)="changeNavTab('Image')">
+      <a class="nav-link" href="javascript:;">Image</a>
+    </li> 
+
+    <li class="nav-item"></li>  <!-- 右边留空 -->
+    <li class="nav-item"></li>
+  </ul>
+
+  <!-- General -->
+  <div class="pt-3" *ngIf="NavTab == 'General'">
+
+    <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
+      <li *ngIf="currentTab == 'default English'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab != 'default English'" class="nav-item" (click)="changeTab('default English')">
+        <a class="nav-link" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab == 'Simplified Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Simplified Chinese'" class="nav-item" (click)="changeTab('Simplified Chinese')">
+        <a class="nav-link" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab == 'Traditional Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">繁體中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Traditional Chinese'" class="nav-item" (click)="changeTab('Traditional Chinese')">
+        <a class="nav-link" href="javascript:;">繁體中文</a>
+      </li> 
+      <li class="nav-item"></li>  <!-- 右边留空 -->
+      <li class="nav-item"></li>
+    </ul>
+
+    <div class="work-form row">
+
+      <!-- 缺省英文 -->
+      <div class="w-100" *ngIf="currentTab == 'default English'">  <!-- 100% 宽度 -->
+
+        <dl>
+          <dt>Name</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="Enter your name" [(ngModel)]="name" name="name" required>
+          </dd>
+        </dl>
+        
+      </div>
+
+      <!-- 简体中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Simplified Chinese'">
+
+        <dl>
+          <dt>名称</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="输入你的名称" [(ngModel)]="nameChinese" name="nameChinese" required>
+          </dd>
+        </dl>
+
+      </div>
+
+      <!-- 繁體中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Traditional Chinese'">
+
+        <dl>
+          <dt>名稱</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="輸入你的名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
+          </dd>
+        </dl>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Data -->
+  <div *ngIf="NavTab == 'Data'">
+    <div class="work-form row">
+
+      <legend>{{ 'Coin' | translate }}</legend>
+
+      <dl>
+        <dt>{{ 'Coin' | translate }}</dt>
+        <dd class="text-left">
+          <select [(ngModel)]="coin" name="coin" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option value="">Select Coin:</option>
+            <option *ngFor="let coin of coins" value="{{ coin }}">
+              {{ coin }}
+            </option>
+          </select>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>{{ 'Tax Rate' | translate }} (%)</dt>
+        <dd class="text-left">
+          <!-- 50% 宽度, 文字 -->
+          <input type="text" class="inp w-75" placeholder="Enter tax rate" [(ngModel)]="taxRate" name="taxRate" required> &nbsp;&nbsp;
+          %
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>{{ 'Rebate Rate' | translate }} (%)</dt>
+        <dd class="text-left" *ngIf="! (id)">
+          <input type="text" class="inp w-75" placeholder="Enter rebate rate" [(ngModel)]="rebateRate" name="rebateRate" required> &nbsp;&nbsp;
+          %
+        </dd>
+        <dd class="text-left" *ngIf="id">
+          {{ rebateRate }} &nbsp;&nbsp; 
+          %
+        </dd>
+      </dl>
+
+      <legend>{{ 'Information' | translate }}</legend>
+
+      <dl *ngIf="feeChargerSmartContractAddress">
+        <dt>{{ 'FeeCharger Smart contract address' | translate }}</dt>
+        <dd class="text-left">
+          {{ feeChargerSmartContractAddress }}
+        </dd>
+      </dl>
+      <dl *ngIf="smartContractAddress">
+        <dt>{{ 'Smart contract address' | translate }}</dt>
+        <dd class="text-left">
+          {{ smartContractAddress }}
+        </dd>
+      </dl>
+
+      <dl>  <!-- *ngIf="! (id)" -->
+        <dt>{{ 'Referral code' | translate }}</dt>
+        <dd class="text-left">
+          <input type="text" class="inp w-75" placeholder="Enter referral code" [(ngModel)]="refAddress" name="refAddress" required>
+        </dd>
+      </dl>
+      <dl *ngIf="id">
+        <dt>{{ "Referral address" | translate }} (*)</dt>
+        <dd class="text-left">
+          {{ refAddress }}
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" [(ngModel)]="hideOnStore">
+        </dt>
+        <dd class="text-left">
+          {{ 'Hide on Madearn' | translate }}
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+
+  <!-- Image -->
+  <div *ngIf="NavTab == 'Image'">
+    <div class="work-form row">
+
+      <legend>{{ 'Image' | translate }}</legend>
+
+      <dl>
+        <dt>{{ 'Image' | translate }}</dt>
+        <dd class="text-left">
+          <app-admin-image-cropper [(images)]="images" [singleFile]="true"></app-admin-image-cropper>
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- <div style="border:1px solid #ccc">
     <div class="container">
       <h1>{{'New Store' | translate}}</h1>
       <hr>
       
       <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
+        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default English')">
           English
         </div>
         <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Simplified Chinese')">
@@ -15,17 +220,17 @@
         </div>
       </div>
 
-      <div *ngIf="currentTab=='default'">
+      <div *ngIf="currentTab == 'default English'">
         <label for="email"><b>Name</b></label>
         <input type="text" placeholder="Enter name" [(ngModel)]="name" name="name" required>
 
         <div  *ngIf="!(id)">
-          <label for="email"><b>{{'Give away Rate' | translate}}(%)</b></label>
-          <input type="text" placeholder="{{'Give away Rate' | translate}}" [(ngModel)]="giveAwayRate" name="giveAwayRate" required>  
+          <label for="email"><b>{{'rebate Rate' | translate}}(%)</b></label>
+          <input type="text" placeholder="{{'rebate Rate' | translate}}" [(ngModel)]="rebateRate" name="rebateRate" required>  
         </div>
         <div *ngIf="id">
-          <label for="email"><b>{{'Give away Rate' | translate}}(%):</b></label>
-          {{giveAwayRate}}
+          <label for="email"><b>{{'rebate Rate' | translate}}(%):</b></label>
+          {{rebateRate}}
         </div>
        <div>
         <label for="email"><b>Image</b></label>
@@ -56,7 +261,6 @@
           <label for="email"><b>{{'FeeCharger Smart contract address' | translate}}:</b></label>
           {{feeChargerSmartContractAddress}}
         </div> 
-
         <div *ngIf="smartContractAddress">
           <label for="email"><b>{{'Smart contract address' | translate}}:</b></label>
           {{smartContractAddress}}
@@ -66,8 +270,6 @@
           <label for="email"><b>{{'Referral code' | translate}}</b></label>
           <input type="text" placeholder="{{'Referral code' | translate}}" [(ngModel)]="refAddress" name="refAddress" required>
         </div>
-  
-  
         <div *ngIf="id">
           <label for="email"><b>{{"Merchant's referral address" | translate}}(*):</b></label>
           {{refAddress}}
@@ -81,19 +283,14 @@
         </div>
       </div>
       
-
-
       <div *ngIf="currentTab=='Chinese'">
         <label for="email"><b>名称</b></label>
         <input type="text" placeholder="输入名称" [(ngModel)]="nameChinese" name="nameChinese">        
-    
       </div>
 
       <div class="text-right py-2">
-
         <button class="btn signinbtn mr-3" (click)="deleteStore()" *ngIf="id">{{('Delete') | translate}}</button>
-
         <button class="btn signinbtn" (click)="addStore()">{{(id?'Update':'Add') | translate}}</button>
       </div>
     </div>
-  </div>
+  </div> -->

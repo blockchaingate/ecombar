@@ -1,78 +1,209 @@
-<div class="container" *ngIf="order">
-    <div style="border:1px solid #ccc">
-        <div class="container">
-            <div>
-                {{'ObjectId' | translate}}: 
-                <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
-                    {{order.objectId}}
-                </a>
-            </div>
-            <h1>{{"Address"|translate}}</h1>
-            <div class="container">
-                <div class="row">
-                    <div class="col col-4" *ngFor="let address of addresses">
-                        <div class="card my-2" [ngClass]="id == address._id ? 'bg-primary' : ''" (click)="selectAddress(address)">
-                            <div class="card-body">
-                                <div class="font-weight-bold">
-                                    {{address.name}} {{address.buyerPhone}}
-                                </div>
-                                <div>
-                                    {{address.streetNumber}} {{address.street}} {{address.city}} {{address.province}}, {{address.postcode}} {{address.country}}
-                                </div>
-                            </div>
-                          </div>
-                    </div>
-                </div>
-            </div>
- 
 
-            <hr>
-            <div class="address-detail">
-                <div class="form-group">
-                    <label for="email"><b>{{"Name" | translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter name'|translate}}" [(ngModel)]="name" name="name">
+<!-- 上下边线，解决 margin 问题 -->
+<main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="order">  <!-- 背景灰色 -->
+
+  <div class="row justify-content-center">  <!-- 本行，水平置中 -->
+    <div class="m-3 p-3 container border rounded bg-white">  <!-- 背景白色，圆角边框，mb-3 改 m-3 -->
+
+      <div class="font-size-16">
+          {{ 'ObjectId' | translate }} : 
+          <a target="_blank" href="/iddock/detail/things/{{order.objectId}}">
+              {{ order.objectId }}
+          </a>
+      </div>
+
+      <div class="text-center">
+        <h1>{{ "Address" | translate }}</h1>
+      </div>
+
+      <div class="container row">
+          <div class="col col-4" *ngFor="let address of addresses">
+              <div class="card my-2" [ngClass]="id == address._id ? 'bg-primary' : ''" (click)="selectAddress(address)">
+                  <div class="card-body">
+                      <div class="font-weight-bold">
+                          {{ address.name }} {{ address.buyerPhone }}
+                      </div>
+                      <div>
+                          {{ address.streetNumber }} {{ address.street }} {{ address.city }} {{ address.province }}, {{ address.postcode }} {{ address.country }}
+                      </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"Phone number" | translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter phone number'|translate}}" [(ngModel)]="buyerPhone" name="buyerPhone">
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"Unit" | translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter suite'|translate}}" [(ngModel)]="suite" name="suite">
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"Street Number" | translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter street number'|translate}}" [(ngModel)]="streetNumber" name="streetNumber">        
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"Street" | translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter street'|translate}}" [(ngModel)]="street" name="street">
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"District"|translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter district'|translate}}" [(ngModel)]="district" name="district">
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"City"|translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter city'|translate}}" [(ngModel)]="city" name="city">
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"State/Province"|translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter state/province'|translate}}" [(ngModel)]="province" name="province">        
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"Postcode"|translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter postcode'|translate}}" [(ngModel)]="postcode" name="postcode">        
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>{{"Country"|translate}}</b></label>
-                    <input type="text" class="form-control" placeholder="{{'Enter country'|translate}}" [(ngModel)]="country" name="country">        
-                </div>
+          </div>
+      </div>
+      <hr>
+
+      <form class="work-form row needs-validation" novalidate [formGroup]="workForm">
+      <!-- <form class="needs-validation" novalidate [formGroup]="workForm" (ngSubmit)="submitForm(workForm)> -->
+
+        <dl>
+          <dt>{{ "Name" | translate }}</dt>
+          <dd class="text-left">  <!-- 定义 "form-control", formControlName -->
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter name' | translate }}" 
+              [class.is-invalid]="isInvalid(workForm,'name')"
+              formControlName="name" [(ngModel)]="name" name="name" required minlength="3">
+              <!-- [class.is-invalid]="(workForm.get('name').touched || workForm.get('name').dirty) && workForm.get('name').invalid" -->
+            <span class="invalid-feedback" *ngIf="isInvalid(workForm,'name')">
+            <!-- <span class="invalid-feedback" *ngIf="(workForm.get('name').touched || workForm.get('name').dirty) && workForm.get('name').invalid"> -->
+              Name at least 3 characters long
+            </span> 
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "Phone number" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter phone number' | translate }}" 
+              [class.is-invalid]="isInvalid(workForm,'buyerPhone')"
+              formControlName="buyerPhone" [(ngModel)]="buyerPhone" name="buyerPhone" required minlength="3">  <!-- required -->
+            <span class="invalid-feedback" *ngIf="isInvalid(workForm,'buyerPhone')">
+              Phone number at least 3 characters long
+            </span> 
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "Suite" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter suite' | translate }}" 
+            formControlName="suite" [(ngModel)]="suite" name="suite">
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "Street Number" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter street number' | translate }}" 
+              [class.is-invalid]="isInvalid(workForm,'streetNumber')"
+              formControlName="streetNumber" [(ngModel)]="streetNumber" name="streetNumber" required>
+            <span class="invalid-feedback" *ngIf="isInvalid(workForm,'streetNumber')">
+              Street number at least 1 characters long
+            </span> 
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "Street" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter street' | translate }}" 
+              [class.is-invalid]="isInvalid(workForm,'street')"
+              formControlName="street" [(ngModel)]="street" name="street" required minlength="3">
+            <span class="invalid-feedback" *ngIf="isInvalid(workForm,'street')">
+              Street at least 3 characters long
+            </span> 
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "District" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter district' | translate }}" 
+            formControlName="district" [(ngModel)]="district" name="district">
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "City" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter city' | translate }}" 
+              [class.is-invalid]="isInvalid(workForm,'city')"
+              formControlName="city" [(ngModel)]="city" name="city" required minlength="2">
+            <span class="invalid-feedback" *ngIf="isInvalid(workForm,'city')">
+              City at least 2 characters long
+            </span> 
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "State/Province" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter state/province' | translate }}" 
+              [class.is-invalid]="isInvalid(workForm,'province')"
+              formControlName="province" [(ngModel)]="province" name="province" required minlength="2">        
+            <span class="invalid-feedback" *ngIf="isInvalid(workForm,'province')">
+              State/Province at least 2 characters long
+            </span> 
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "Postcode" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter postcode' | translate }}" 
+              [class.is-invalid]="isInvalid(workForm,'postcode')"
+              formControlName="postcode" [(ngModel)]="postcode" name="postcode" required minlength="3">        
+            <span class="invalid-feedback" *ngIf="isInvalid(workForm,'postcode')">
+              Postcode at least 3 characters long
+            </span> 
+          </dd>
+        </dl>
+        <dl>
+          <dt>{{ "Country" | translate }}</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75 form-control" placeholder="{{ 'Enter country' | translate }}" 
+            formControlName="country" [(ngModel)]="country" name="country">        
+          </dd>
+        </dl>
+
+      </form>
+
+      <div class="d-flex justify-content-between py-2">
+        <div class="ml-md-3">
+          <button type="button" class="btn btn-default btn-lg btn-block newButton border">  <!-- (click)="" -->
+            {{ "Cancel" | translate }}
+          </button>
         </div>
-            <div class="d-flex justify-content-between py-2">
-                <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">{{"Cancel"|translate}}</button>
-                <button  class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="confirm()">{{"Confirm"|translate}}</button>
+        <div class="ml-md-3">
+          <!-- Fix: 通过 [disabled] 要求表单首先合规，未指定 (ngSubmit)，因此用 (click) -->
+          <!-- <a (click)="confirm()" class="btn myButton-Submit">{{ "Confirm" | translate }}</a> -->
+          <button type="button" class="btn btn-danger btn-lg btn-block newButton" [disabled]="!workForm.valid" (click)="confirm()">
+            {{ "Confirm" | translate }}
+          </button>
+        </div>
+      </div>
+
+
+          <!-- <div class="address-detail">
+            <div class="form-group">
+                <label for="email"><b>{{ "Name" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter name'|translate}}" [(ngModel)]="name" name="name">
             </div>
-        </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "Phone number" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter phone number'|translate}}" [(ngModel)]="buyerPhone" name="buyerPhone">
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "Unit" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter suite'|translate}}" [(ngModel)]="suite" name="suite">
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "Street Number" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter street number'|translate}}" [(ngModel)]="streetNumber" name="streetNumber">        
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "Street" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter street'|translate}}" [(ngModel)]="street" name="street">
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "District" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter district'|translate}}" [(ngModel)]="district" name="district">
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "City" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter city'|translate}}" [(ngModel)]="city" name="city">
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "State/Province" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter state/province'|translate}}" [(ngModel)]="province" name="province">        
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "Postcode" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter postcode'|translate}}" [(ngModel)]="postcode" name="postcode">        
+            </div>
+            <div class="form-group">
+                <label for="email"><b>{{ "Country" | translate }}</b></label>
+                <input type="text" class="form-control" placeholder="{{'Enter country'|translate}}" [(ngModel)]="country" name="country">        
+            </div>
+          </div> -->
+
+          <!-- <div class="d-flex justify-content-between py-2">
+            <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">{{"Cancel"|translate}}</button>
+            <button  class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block" (click)="confirm()">{{"Confirm"|translate}}</button>
+          </div> -->
+
+        
     </div>
-</div>
+  </div>
+
+</main>

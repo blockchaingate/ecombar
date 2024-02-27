@@ -13,7 +13,11 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
   selector: 'app-wallet-star-rewards',
   providers: [],
   templateUrl: './star-rewards.component.html',
-  styleUrls: ['./star-rewards.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './star-rewards.component.scss', 
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class StarRewardsComponent implements OnInit{
     @Input() rewards: any;

@@ -1,4 +1,8 @@
-<main id="content" role="main" *ngIf="product">
+
+<!-- 商品页 -->
+
+<!-- 上下边线，解决 margin 问题 -->
+<main id="content" role="main" class="border-top border-bottom bg-light" *ngIf="product">  <!-- 背景灰色 style="background-color: #f7f7f7;" -->
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">
         <div class="container">
@@ -6,12 +10,12 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{'Home' | translate}}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">{{ 'Home' | translate }}</a></li>
                         <!--
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Product</a></li>
                         -->
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{product.primaryCategoryId?._id}}">{{product.primaryCategoryId?.category | translateField}}</a></li>
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{product && product.title | translateField}}</li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/store/{{storeId}}/category/{{ product.primaryCategoryId?._id }}">{{ product.primaryCategoryId?.category | translateField }}</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">{{ product && product.title | translateField }}</li>
 
                     </ol>
                 </nav>
@@ -20,13 +24,13 @@
         </div>
     </div>
     <!-- End breadcrumb -->
-    <div class="container">
+    <div class="mb-3 container border rounded bg-white">  <!-- 背景白色，圆角边框 -->
+
         <!-- Single Product Body -->
         <div class="mb-xl-14 mb-6">
             <div class="row">
                 <div class="col-md-5 mb-4 mb-md-0">
-                    <div id="sliderSyncingNav" class="js-slick-carousel u-slick mb-2"
-                       >
+                    <div id="sliderSyncingNav" class="js-slick-carousel u-slick mb-2">
                         <div class="" >
                             <img class="img-fluid" [src]="selectedImage" alt="Image Description">
                         </div>
@@ -38,13 +42,10 @@
                             <img [src]="image" (mouseenter) ="mouseEnter(image)" class="img-thumbnail"  [ngClass]="image == selectedImage ? 'img-thumbnail-selected' : ''" alt="Image111 Description">
                         </div>
                     </div>
-
-
-                    
                 </div>
-                <div class="col-md-7 mb-md-6 mb-lg-0">
-                    <div class="mb-2">
-                        <div class="border-bottom mb-3 pb-md-1 pb-3">
+                <div class="col-md WorkForm-2 font-size-16">  <!-- 字体16，col-md 左右同行，"col-md-7 mb-md-6 mb-lg-0" -->
+                    <div class="">  <!-- "mb-2" -->
+                        <div class="">  <!-- "border-bottom mb-3 pb-md-1 pb-3" -->
                             <a href="/store/{{storeId}}/category/{{product.primaryCategoryId?._id}}" class="font-size-12 text-gray-5 mb-2 d-inline-block">
                                 {{product.primaryCategoryId?.category | translateField}}
                             </a>
@@ -66,28 +67,29 @@
                                         <small class="fa-star"
                                         [ngClass]="overall >= 5 ? 'fas' : 'far text-muted'"></small>
                                     </div>
-                                    <span class="text-secondary font-size-13">({{comments ? comments.length : 0}} {{'customer reviews' | translate}})</span>
+                                    <span class="text-secondary font-size-13">({{ comments ? comments.length : 0 }} {{ 'customer reviews' | translate }})</span>
                                 </a>
                             </div>
-                            <div class="d-md-flex align-items-center">
+                            <hr>
+                            <!-- <div class="d-md-flex align-items-center"> -->
                                 <!--
                                 <a href="#" class="max-width-150 ml-n2 mb-2 mb-md-0 d-block"><img class="img-fluid" src="../../assets/img/200X60/img1.png" alt="Image Description"></a>
                                 -->
-                                <div class="ml-md-3 text-gray-9 font-size-14">{{'Availability' | translate}}: <span class="text-green font-weight-bold">
-                                    <span *ngIf="!product.active">{{'Out of stock' | translate}}</span>
+                                <div class="ml-md-3 text-gray-9">{{ 'Availability' | translate }}: <span class="text-green font-weight-bold">
+                                    <span *ngIf="!product.active">{{ 'Out of stock' | translate }}</span>
                                     <span *ngIf="product.active">
-                                        {{product.quantity - product.sales}} {{'in stock' | translate}}
+                                        {{ product.quantity - product.sales }} {{ 'In Stock' | translate }}
                                     </span>
                                 </span></div>
-                            </div>
+                            <!-- </div> -->
+                            <br>
                         </div>
                         <div class="flex-horizontal-center flex-wrap mb-4">
                             <a (click)="toggleFavorite(id)" class="text-gray-6 font-size-13 mr-2">
-                                <i class="ec ec-favorites mr-1 font-size-15" [ngClass]="isFavorited ? 'favorited' : ''"></i> 
+                                <i class="ec ec-favorites mr-1" [ngClass]="isFavorited ? 'favorited' : ''"></i> 
                                 <span [ngClass]="isFavorited ? 'favorited' : ''">
                                     {{'Wishlist' | translate}}
                                 </span>
-                                
                             </a>
                             <!--
                             <a href="#" class="text-gray-6 font-size-13 ml-2"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
@@ -104,75 +106,77 @@
                         </div>
                         <p  [innerHTML]="product && product.briefIntroduction | translateField">
                        </p>
-                       <!--
-                        <p><strong>SKU</strong>: 2222FW511948218</p>
-                        -->
+                       
+                        <!-- <p><strong>SKU</strong>: 2222FW511948218</p> -->
+                       
                         <div class="mb-4">
                             <div class="d-flex align-items-baseline">
-                                <ins class="font-size-36 text-decoration-none">{{product && product.price}} {{currency}}</ins>
+                                <ins class="font-size-36 text-decoration-none">{{ product && product.price }} {{ currency }}</ins>
                                 <!-- <del class="font-size-20 ml-2 text-gray-6">$2,299.00</del> -->
                             </div>
                         </div>
-                        <div *ngIf="lang == 'en'">
-                            <div class="border-top border-bottom py-3 mb-4" *ngIf="colors && colors.length > 0">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="font-size-14 mb-0 mr-3">{{'Color' | translate}}</h6>
-                                      <div class="btn-group" btnRadioGroup [(ngModel)]="color">
-                                        <label class="btn btn-info" btnRadio="{{c}}" *ngFor="let c of colors"
-                                               [uncheckable]="true" tabindex="0" role="button">{{c}}</label>
-                                      </div>
-                                </div>
-                            </div>
-    
-                            <div class="border-top border-bottom py-3 mb-4" *ngIf="sizes && sizes.length > 0">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="font-size-14 mb-0 mr-3">{{'Size' | translate}}</h6>
-                                      <div class="btn-group" btnRadioGroup [(ngModel)]="size">
-                                        <label class="btn btn-info" btnRadio="{{c}}" *ngFor="let c of sizes"
-                                               [uncheckable]="true" tabindex="0" role="button">{{c}}</label>
-                                      </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div *ngIf="lang == 'sc'">
+                        <hr>
+                        <!-- <div *ngIf="lang == 'en'"> -->  <!-- 有 translate 够用了 -->
+                            <dl *ngIf="colors && colors.length > 0">
+                                <dt>{{ 'Color' | translate }}</dt>
+                                <dd class="text-left">
+                                    <div btnRadioGroup [(ngModel)]="color">  <!-- 取消 btn-group -->
+                                        <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of colors"
+                                               [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
+                                    </div>
+                                </dd>
+                            </dl>
+
+                            <dl *ngIf="sizes && sizes.length > 0">
+                                <dt>{{ 'Size' | translate }}</dt>
+                                <dd class="text-left">
+                                    <div btnRadioGroup [(ngModel)]="size">  <!-- 取消 btn-group -->
+                                        <label class="btn btn-info-2" btnRadio="{{ c }}" *ngFor="let c of sizes"
+                                               [uncheckable]="true" tabindex="0" role="button">{{ c }}</label>
+                                    </div>
+                                </dd>
+                            </dl>
+                        <!-- </div> -->
+                        <hr>
+
+                        <!-- <div *ngIf="lang == 'sc'">
                             <div class="border-top border-bottom py-3 mb-4" *ngIf="colorsChinese && colorsChinese.length > 0">
                                 <div class="d-flex align-items-center">
-                                    <h6 class="font-size-14 mb-0 mr-3">{{'颜色' | translate}}</h6>
+                                    <h6 class="mb-0 mr-3">{{ '颜色' | translate }}</h6>
                                       <div class="btn-group" btnRadioGroup [(ngModel)]="colorChinese">
                                         <label class="btn btn-info" btnRadio="{{cc}}" *ngFor="let cc of colorsChinese"
-                                               [uncheckable]="true" tabindex="0" role="button">{{cc}}</label>
+                                               [uncheckable]="true" tabindex="0" role="button">{{ cc }}</label>
                                       </div>
                                 </div>
                             </div>
-    
                             <div class="border-top border-bottom py-3 mb-4" *ngIf="sizesChinese && sizesChinese.length > 0">
                                 <div class="d-flex align-items-center">
-                                    <h6 class="font-size-14 mb-0 mr-3">{{'尺寸' | translate}}</h6>
+                                    <h6 class="mb-0 mr-3">{{ '尺寸' | translate }}</h6>
                                       <div class="btn-group" btnRadioGroup [(ngModel)]="sizeChinese">
                                         <label class="btn btn-info" btnRadio="{{cc}}" *ngFor="let cc of sizesChinese"
-                                               [uncheckable]="true" tabindex="0" role="button">{{cc}}</label>
+                                               [uncheckable]="true" tabindex="0" role="button">{{ cc }}</label>
                                       </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="d-md-flex align-items-end mb-3">
                             <div class="max-width-150 mb-4 mb-md-0">
-                                <h6 class="font-size-14">{{'Quantity' | translate}}</h6>
+                                <h6>{{ 'Quantity' | translate }}</h6>
                                 <!-- Quantity -->
                                 <div class="border rounded-pill py-2 px-3 border-color-1">
                                     <div class="js-quantity row align-items-center">
                                         <div class="col">
-                                            <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none" type="text" [(ngModel)]="quantity">
+                                            <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none" type="text" value="1" [(ngModel)]="quantity">
                                         </div>
                                         <div class="col-auto pr-1">
-                                            <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" (click)="decQuantity()">
-                                                <small class="fas fa-minus btn-icon__inner"></small>
+                                            <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle" (click)="decQuantity()">
+                                                <small class="fas fa-minus btn-icon__inner font-size-16">－</small>
                                             </a>
-                                            <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" (click)="incQuantity()">
-                                                <small class="fas fa-plus btn-icon__inner"></small>
+                                            <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle" (click)="incQuantity()">
+                                                <small class="fas fa-plus btn-icon__inner font-size-16">＋</small>
                                             </a>
                                         </div>
                                     </div>
@@ -180,11 +184,16 @@
                                 <!-- End Quantity -->
                             </div>
                             <div class="ml-md-3">
-                                <a (click)="addToCart(product, quantity)" class="btn px-5 btn-primary-dark transition-3d-hover"><i class="ec ec-add-to-cart mr-2 font-size-20"></i> {{'Add to Cart' | translate}}</a>
+                                <!-- <a (click)="addToCart(product, quantity)" class="btn myButton-Submit font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}</a> -->
+                                <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="addToCart(product, quantity)">
+                                    <i class="ec ec-add-to-cart mr-2"></i> {{ 'Add to Cart' | translate }}
+                                </button>
                             </div>
-
                             <div class="ml-md-3">
-                                <a (click)="buyNow(product, quantity)" class="btn px-5 btn-primary-dark transition-3d-hover"><i class="ec ec-add-to-cart mr-2 font-size-20"></i> {{'Buy now' | translate}}</a>
+                                <!-- <a (click)="buyNow(product, quantity)" class="btn myButton-Buy font-size-18"><i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}</a> -->
+                                <button type="button" class="btn btn-danger btn-lg btn-block newButton" (click)="buyNow(product, quantity)">
+                                    <i class="ec ec-add-to-cart mr-2"></i> {{ 'Buy now' | translate }}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -192,167 +201,90 @@
             </div>
         </div>
         <!-- End Single Product Body -->
-        <!-- Single Product Tab -->
-        <div class="mb-8">
-            <div class="position-relative position-md-static px-md-6">
-                <ul class="nav nav-classic nav-tab nav-tab-lg justify-content-xl-center flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble border-0 pb-1 pb-xl-0 mb-n1 mb-xl-0" id="pills-tab-8" role="tablist">
-             <!--
-                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link active" id="Jpills-one-example1-tab" data-toggle="pill" href="#Jpills-one-example1" role="tab" aria-controls="Jpills-one-example1" aria-selected="true">Accessories</a>
-                    </li>
-                -->
-                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link active" id="Jpills-two-example1-tab" data-toggle="pill" href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1" aria-selected="true">{{'Description' | translate}}</a>
-                    </li>
-                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link" id="Jpills-three-example1-tab" data-toggle="pill" href="#Jpills-three-example1" role="tab" aria-controls="Jpills-three-example1" aria-selected="false">{{'Specification' | translate}}</a>
-                    </li>
-                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link" id="Jpills-one-example1-tab" data-toggle="pill" href="#Jpills-one-example1" role="tab" aria-controls="Jpills-one-example1" aria-selected="false">{{'Features' | translate}}</a>
-                    </li>                    
-                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                        <a class="nav-link" id="Jpills-four-example1-tab" data-toggle="pill" href="#Jpills-four-example1" role="tab" aria-controls="Jpills-four-example1" aria-selected="false">{{'Reviews' | translate}}</a>
-                    </li>
 
-                </ul>
-            </div>
-            <!-- Tab Content -->
-            <div class="borders-radius-17 border p-4 mt-4 mt-md-0 px-lg-10 py-lg-9">
-                <div class="tab-content" id="Jpills-tabContent">
-                    <!--
-                    <div class="tab-pane fade active show" id="Jpills-one-example1" role="tabpanel" aria-labelledby="Jpills-one-example1-tab">
-                        <div class="row no-gutters">
-                            <div class="col mb-6 mb-md-0">
-                                <ul class="row list-unstyled products-group no-gutters border-bottom border-md-bottom-0">
-                                    <li class="col-4 col-md-4 col-xl-2gdot5 product-item remove-divider-sm-down border-0">
-                                        <div class="product-item__outer h-100">
-                                            <div class="remove-prodcut-hover product-item__inner px-xl-4 p-3">
-                                                <div class="product-item__body pb-xl-2">
-                                                    <div class="mb-2 d-none d-md-block"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                                    <h5 class="mb-1 product-item__title d-none d-md-block"><a href="#" class="text-blue font-weight-bold">Wireless Audio System Multiroom 360 degree Full base audio</a></h5>
-                                                    <div class="mb-2">
-                                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="../../assets/img/212X200/img1.jpg" alt="Image Description"></a>
-                                                    </div>
-                                                    <div class="flex-center-between mb-1 d-none d-md-block">
-                                                        <div class="prodcut-price">
-                                                            <div class="text-gray-100">$685,00</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="col-4 col-md-4 col-xl-2gdot5 product-item remove-divider-sm-down">
-                                        <div class="product-item__outer h-100">
-                                            <div class="remove-prodcut-hover add-accessories product-item__inner px-xl-4 p-3">
-                                                <div class="product-item__body pb-xl-2">
-                                                    <div class="mb-2 d-none d-md-block"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                                    <h5 class="mb-1 product-item__title d-none d-md-block"><a href="#" class="text-blue font-weight-bold">Tablet White EliteBook Revolve 810 G2</a></h5>
-                                                    <div class="mb-2">
-                                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="../../assets/img/212X200/img2.jpg" alt="Image Description"></a>
-                                                    </div>
-                                                    <div class="flex-center-between mb-1 d-none d-md-block">
-                                                        <div class="prodcut-price d-flex align-items-center position-relative">
-                                                            <ins class="font-size-20 text-red text-decoration-none">$1999,00</ins>
-                                                            <del class="font-size-12 tex-gray-6 position-absolute bottom-100">$2 299,00</del>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="col-4 col-md-4 col-xl-2gdot5 product-item remove-divider-sm-down remove-divider">
-                                        <div class="product-item__outer h-100">
-                                            <div class="remove-prodcut-hover add-accessories product-item__inner px-xl-4 p-3">
-                                                <div class="product-item__body pb-xl-2">
-                                                    <div class="mb-2 d-none d-md-block"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                                    <h5 class="mb-1 product-item__title d-none d-md-block"><a href="#" class="text-blue font-weight-bold">Purple Solo 2 Wireless</a></h5>
-                                                    <div class="mb-2">
-                                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="../../assets/img/212X200/img3.jpg" alt="Image Description"></a>
-                                                    </div>
-                                                    <div class="flex-center-between mb-1 d-none d-md-block">
-                                                        <div class="prodcut-price">
-                                                            <div class="text-gray-100">$685,00</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="form-check pl-4 pl-md-0 ml-md-4 mb-2 pb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
-                                    <input class="form-check-input" type="checkbox" value="" id="inlineCheckbox1" checked disabled>
-                                    <label class="form-check-label mb-1" for="inlineCheckbox1">
-                                        <strong>This product: </strong> Ultra Wireless S50 Headphones S50 with Bluetooth - <span class="text-red font-size-16">$35.00</span>
-                                    </label>
-                                </div>
-                                <div class="form-check pl-4 pl-md-0 ml-md-4 mb-2 pb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option1" checked>
-                                    <label class="form-check-label mb-1 text-blue" for="inlineCheckbox2">
-                                        <span class="text-decoration-on cursor-pointer-on">Universal Headphones Case in Black</span> - <span class="text-red font-size-16">$159.00</span>
-                                    </label>
-                                </div>
-                                <div class="form-check pl-4 pl-md-0 ml-md-4 mb-2 pb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2" checked>
-                                    <label class="form-check-label mb-1 text-blue" for="inlineCheckbox3">
-                                        <span class="text-decoration-on cursor-pointer-on">Headphones USB Wires</span> - <span class="text-red font-size-16">$50.00</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-auto">
-                                <div class="mr-xl-15">
-                                    <div class="mb-3">
-                                        <div class="text-red font-size-26 text-lh-1dot2">$244.00</div>
-                                        <div class="text-gray-6">for 3 item(s)</div>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-block btn-primary-dark btn-wide transition-3d-hover">Add all to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                -->
-                    <div class="tab-pane fade  active show" id="Jpills-two-example1" role="tabpanel" aria-labelledby="Jpills-two-example1-tab">
-                        <div [innerHtml]="product.description | translateField"></div>
-                    
-                    </div>
-                    <div class="tab-pane fade" id="Jpills-three-example1" role="tabpanel" aria-labelledby="Jpills-three-example1-tab">
-                        <div class="mx-md-5 pt-1">
-                            <div class="table-responsive mb-4">
-                                <table class="table table-hover" *ngIf="product.specs && product.specs.en">
-                                    <tbody>
-                                        <tr *ngFor="let spec of product.specs.en[0].details">
-                                            <th class="px-4 px-xl-5 border-top-0">{{spec.name}}</th>
-                                            <td class="border-top-0">{{spec.value}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="Jpills-one-example1" role="tabpanel" aria-labelledby="Jpills-one-example1-tab">
-                        <ul>
-                            <li *ngFor="let feature of product.features.en">
-                                {{feature}}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane fade" id="Jpills-four-example1" role="tabpanel" aria-labelledby="product-tabs">
-                        <app-comments 
-                        [overall]="overall" 
-                        [comments]="comments"
-                        [rating1]="rating1"
-                        [rating2]="rating2"
-                        [rating3]="rating3"
-                        [rating4]="rating4"
-                        [rating5]="rating5"
-                        ></app-comments>
-                    </div>
-                    
-                </div>
-            </div>
-            <!-- End Tab Content -->
+        <!-- Single Product Tab -->
+
+        <div class="myNavTabs-2" style="padding: 0 20px;">
+
+          <ul class="nav nav-tabs justify-content-center nav-justified">  <!-- 水平居中，等宽 -->
+            <li class="nav-item"></li>  <!-- 两边留空 -->
+
+            <li *ngIf="NavTab == 'Description'" class="nav-item">
+              <a class="nav-link active" href="javascript:;">{{ 'Description' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'Description'" class="nav-item" (click)="changeNavTab('Description')">
+              <a class="nav-link" href="javascript:;">{{ 'Description' | translate }}</a>
+            </li> 
+        
+            <li *ngIf="NavTab == 'Specification'" class="nav-item">
+              <a class="nav-link active" href="javascript:;">{{ 'Specification' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'Specification'" class="nav-item" (click)="changeNavTab('Specification')">
+              <a class="nav-link" href="javascript:;">{{ 'Specification' | translate }}</a>
+            </li> 
+        
+            <li *ngIf="NavTab == 'Features'" class="nav-item">
+              <a class="nav-link active" href="javascript:;">{{ 'Features' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'Features'" class="nav-item" (click)="changeNavTab('Features')">
+              <a class="nav-link" href="javascript:;">{{ 'Features' | translate }}</a>
+            </li> 
+
+            <li *ngIf="NavTab == 'Reviews'" class="nav-item">
+              <a class="nav-link active" href="javascript:;">{{ 'Reviews' | translate }}</a>
+            </li> 
+            <li *ngIf="NavTab != 'Reviews'" class="nav-item" (click)="changeNavTab('Reviews')">
+              <a class="nav-link" href="javascript:;">{{ 'Reviews' | translate }}</a>
+            </li> 
+
+            <li class="nav-item"></li>
+          </ul>
+            
         </div>
+
+        <!-- Description -->
+        <div *ngIf="NavTab == 'Description'" class="WorkForm-2">
+            <div [innerHtml]="product.description | translateField"></div>
+        </div>
+
+        <!-- Specification -->
+        <div *ngIf="NavTab == 'Specification'" class="WorkForm-2">
+            <table class="table table-hover text-center" *ngIf="product.specs && product.specs.en">  <!-- 滑入效果，文字居中 -->
+                <tbody>
+                    <tr *ngFor="let spec of product.specs.en[0].details">
+                        <td class="border-top-0">{{ spec.name }}</td>  <!-- th td 去除上边线 -->
+                        <td class="border-top-0">{{ spec.value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Features -->
+        <div *ngIf="NavTab == 'Features'" class="WorkForm-2">
+            <ul>
+                <li *ngFor="let feature of product.features.en">
+                    {{ feature }}
+                </li>
+            </ul>
+        </div>
+
+        <!-- Reviews -->
+        <div *ngIf="NavTab == 'Reviews'" class="WorkForm-2">
+            <app-comments 
+            [overall]="overall" 
+            [comments]="comments"
+            [rating1]="rating1"
+            [rating2]="rating2"
+            [rating3]="rating3"
+            [rating4]="rating4"
+            [rating5]="rating5"
+            ></app-comments>
+        </div>
+        
         <!-- End Single Product Tab -->
+
+        <hr>
+
         <!-- Related products -->
         <div class="mb-6" *ngIf="relatedProducts && relatedProducts.length > 0">
             <app-related-products [products]="relatedProducts" 
@@ -364,5 +296,4 @@
     <!--
     <app-chatbot></app-chatbot>
     -->
-  </main>
-
+</main>

@@ -1,72 +1,138 @@
-<div style="border:1px solid #ccc">
-    <div class="container">
-      <h1>{{'New Category' | translate}}</h1>
-      <hr>
-      
-      <div class="d-flex align-items-center navigate-bar my-3">
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('default')">
-          English
-        </div>
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Simplified Chinese')">
-          简体中文
-        </div>
-        <div class="px-3 py-3 cursor-pointer" (click)="changeTab('Traditional Chinese')">
-          繁體中文
-        </div>
+
+<div class="myNavTabs" class="px-3">    <!-- class="container" -->
+  <h1 class="py-2">{{'New Category' | translate}}</h1>
+
+  <div class="text-right">
+    <button type="button" class="btn btn-danger btn-lg newButton-S rounded" (click)="addCategory()">
+      {{ (id ? 'Update' : 'Add') | translate }}
+    </button>  <!-- 圆角边框 -->
+  </div>
+
+  <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
+    <li *ngIf="NavTab == 'General'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">General</a>
+    </li> 
+    <li *ngIf="NavTab != 'General'" class="nav-item" (click)="changeNavTab('General')">
+      <a class="nav-link" href="javascript:;">General</a>
+    </li> 
+
+    <li *ngIf="NavTab == 'Data'" class="nav-item">
+      <a class="nav-link active" href="javascript:;">Data</a>
+    </li> 
+    <li *ngIf="NavTab != 'Data'" class="nav-item" (click)="changeNavTab('Data')">
+      <a class="nav-link" href="javascript:;">Data</a>
+    </li> 
+
+    <li class="nav-item"></li>  <!-- 右边留空 -->
+    <li class="nav-item"></li>
+    <li class="nav-item"></li>
+  </ul>
+
+  <!-- General -->
+  <div class="pt-3" *ngIf="NavTab == 'General'">
+
+    <ul class="nav nav-tabs nav-justified">  <!-- 等宽 -->
+      <li *ngIf="currentTab == 'default English'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab != 'default English'" class="nav-item" (click)="changeTab('default English')">
+        <a class="nav-link" href="javascript:;">English</a>
+      </li> 
+      <li *ngIf="currentTab == 'Simplified Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Simplified Chinese'" class="nav-item" (click)="changeTab('Simplified Chinese')">
+        <a class="nav-link" href="javascript:;">简体中文</a>
+      </li> 
+      <li *ngIf="currentTab == 'Traditional Chinese'" class="nav-item">
+        <a class="nav-link active" href="javascript:;">繁體中文</a>
+      </li> 
+      <li *ngIf="currentTab != 'Traditional Chinese'" class="nav-item" (click)="changeTab('Traditional Chinese')">
+        <a class="nav-link" href="javascript:;">繁體中文</a>
+      </li> 
+      <li class="nav-item"></li>  <!-- 右边留空 -->
+      <li class="nav-item"></li>
+    </ul>
+
+    <div class="work-form row">
+
+      <!-- 缺省英文 -->
+      <div class="w-100" *ngIf="currentTab == 'default English'">  <!-- 100% 宽度 -->
+
+        <dl>
+          <dt>Name</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="Enter category name" [(ngModel)]="name" name="name" required>
+          </dd>
+        </dl>
+        
       </div>
 
-      <div *ngIf="currentTab=='default'">
-        <label for="email"><b>Name</b></label>
-        <input type="text" placeholder="Enter category name" [(ngModel)]="category" name="category" required>
-  
-        <label for="email"><b>{{'Sequence' | translate}}</b></label>
-        <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence" required>
-  
-        <!--
-        <div class="custom-select" style="width:200px;" *ngIf="categories">
-          <select [(ngModel)]="parentId" name="parentId">
-            <option value="0">{{'Select Category' | translate}}:</option>
-            <option *ngFor="let cat of categories" value="{{cat._id}}">{{cat.category | translateField}}</option>
-          </select>
-        </div> 
-        -->
+      <!-- 简体中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Simplified Chinese'">
 
-
-        <div class="btn-group" dropdown>
-          <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                  aria-controls="dropdown-animated">
-            {{selectedCategory ? (selectedCategory.category | translateField) : ('Select Category' | translate)}} <span class="caret"></span>
-          </button>
-          <div  *ngIf="categories && categories.length > 0">
-            <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
-            role="menu" aria-labelledby="button-animated">
-          <li role="menuitem" *ngFor="let cat of categories | excludeCategories : id">
-            <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{cat.category | translateField}}</a>
-          </li>
-        </ul>
-          </div>
-
-        </div>
-
-
-
-
-
-
-        <div>
-          <label for="image"><b>{{'Image' | translate}}</b></label>
-          <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
-        </div>
+        <dl>
+          <dt>名称</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="输入类别名称" [(ngModel)]="nameChinese" name="nameChinese" required>
+          </dd>
+        </dl>
 
       </div>
-      
-      <div *ngIf="currentTab=='Chinese'">
-        <label for="email"><b>名称</b></label>
-        <input type="text" placeholder="输入名称" [(ngModel)]="categoryChinese" name="categoryChinese">        
+
+      <!-- 繁體中文 -->
+      <div class="w-100" *ngIf="currentTab == 'Traditional Chinese'">
+
+        <dl>
+          <dt>名稱</dt>
+          <dd class="text-left">
+            <input type="text" class="inp w-75" placeholder="輸入類別名稱" [(ngModel)]="nameTradition" name="nameTradition" required>
+          </dd>
+        </dl>
+
       </div>
 
-      <div class="text-right py-2">
-        <button class="btn signinbtn" (click)="addCategory()">{{(id?'Update':'Add') | translate}}</button>
-      </div>
     </div>
   </div>
+
+  <!-- Data -->
+  <div *ngIf="NavTab == 'Data'">
+    <div class="work-form row">
+
+      <dl>
+        <dt>Sequence</dt>
+        <dd class="text-left">
+          <input type="text" class="inp w-75" placeholder="Enter category sequence" [(ngModel)]="sequence" name="sequence" required>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Category</dt>
+        <dd class="text-left">
+          <div class="btn-group" dropdown>
+            <button id="button-animated" dropdownToggle type="button" class="button myButton dropdown-toggle"
+                    aria-controls="dropdown-animated">
+              {{ selectedCategory ? (selectedCategory.name | translateField) : ('Select Category' | translate) }} <span class="caret"></span>
+            </button>
+            <div  *ngIf="categories && categories.length > 0">
+              <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                <li role="menuitem" *ngFor="let cat of categories | excludeCategories : id">
+                  <a class="dropdown-item" (click)="changeSelectedCategory(cat)">{{ cat.name | translateField }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Image</dt>  <!-- Images -->
+        <dd class="text-left">
+          <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+
+</div>

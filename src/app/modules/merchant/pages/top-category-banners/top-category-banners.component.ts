@@ -42,7 +42,7 @@ export class TopCategoryBannersComponent implements OnInit {
 
   getMerchantBanners(walletAddress: string) {
     console.log('go here');
-    this.bannerServ.getMerchantBanners(walletAddress).subscribe(
+    this.bannerServ.getMerchantBanners(walletAddress, 100, 0).subscribe(
       (res: any) => {
         if (res && res.ok) {
           this.banners = res._body;

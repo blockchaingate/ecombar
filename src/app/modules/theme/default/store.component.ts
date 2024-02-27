@@ -30,8 +30,8 @@ export class StoreComponent implements OnInit{
         
         this.storeServ.getStore(storeId).subscribe(
           (ret: any) => {
-            if(ret && ret.ok) {
-              const store = ret._body;
+            if(ret) {
+              const store = ret;
               this.dataServ.changeStore(store);
               const currency = store.coin;
               const owner = store.owner;

@@ -3,11 +3,9 @@ import { Routes, RouterModule, Router } from '@angular/router';
 import { themeEvn } from 'src/environments/themeEnv';
 import { ThemeService } from './services/theme.service';
 
-
-
 const defaultTheme: Routes = [
   {
-    path: '',
+    path: '',  // 缺省 'stores'
     loadChildren: () =>
       import('./modules/stores/stores.module').then(m => m.StoresModule)
   },
@@ -25,6 +23,11 @@ const defaultTheme: Routes = [
     path: 'store/:storeId',
     loadChildren: () =>
       import('./modules/theme/default/store.module').then(m => m.StoreModule)
+  },
+  {
+    path: 'newstore/:storeId',
+    loadChildren: () =>
+      import('./modules/newstore/newstore.module').then(m => m.NewstoreModule)
   },
   {
     path: 'iddock',
@@ -137,7 +140,6 @@ switch (themeEvn.defaultTheme) {
     routes = defaultTheme;
 
 }
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {

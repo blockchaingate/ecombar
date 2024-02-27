@@ -4,19 +4,19 @@
       <hr>
       
 
-      <div *ngIf="currentTab=='default'">
+      <div *ngIf="currentTab == 'default English'">
         <!--
         <label for="email"><b>Title</b></label>
         <input type="text" placeholder="{{'Enter title' | translate}}" [(ngModel)]="title" name="title" required>
         <label for="email"><b>Subtitle</b></label>
         <input type="text" placeholder="{{'Enter subtitle' | translate}}" [(ngModel)]="subtitle" name="subtitle">  
         -->
-        <label for="image"><b>{{'Image' | translate}}</b></label>
+        <label for="image"><b>{{ 'Image' | translate }}</b></label>
         <app-admin-upload-media [(images)]="images" [singleFile]="true"></app-admin-upload-media>
-        <label for="email"><b>{{'Link' | translate}}</b></label>
+        <label for="email"><b>{{ 'Link' | translate }}</b></label>
         <input type="text" placeholder="{{'Enter link' | translate}}" [(ngModel)]="clickLink" name="clickLink">
 
-        <label for="email"><b>{{'Sequence' | translate}}</b></label>
+        <label for="email"><b>{{ 'Sequence' | translate }}</b></label>
         <input type="text" placeholder="{{'Enter sequence' | translate}}" [(ngModel)]="sequence" name="sequence">
 
       </div>
@@ -31,7 +31,7 @@
       </div>
 -->
       <div class="text-right py-2">
-        <button class="btn signinbtn" (click)="addBanner()">{{(id?'Update':'Add') | translate}}</button>
+        <button class="btn signinbtn" (click)="addBanner()">{{ (id ? 'Update' : 'Add') | translate }}</button>
       </div>
     </div>
   </div>

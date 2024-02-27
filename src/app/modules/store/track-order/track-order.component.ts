@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { OrderService } from 'src/app/modules/shared/services/order.service';
@@ -40,8 +41,9 @@ export class TrackOrderComponent implements OnInit {
   onSearch() {
     this.orderServ.get(this.orderId).subscribe(
       (ret: any) => {
-        if(ret && ret.ok) {
-          this.order = ret._body;
+        console.log('[Order]=', ret);
+        if (ret) {  // ret && ret.ok
+          this.order = ret;  // ret._body
           this.currency = this.order.currency;
           this.selectPayment(this.order.paymentMethod);
           this.selectShippingService(this.order.shippingServiceSelected);

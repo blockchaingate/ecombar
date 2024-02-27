@@ -21,7 +21,10 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
   selector: 'app-store',
   providers: [],
   templateUrl: './store.component.html',
-  
+  styleUrls: [
+    './store.component.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class StoreComponent implements OnInit {
   store: any;
@@ -31,8 +34,9 @@ export class StoreComponent implements OnInit {
   hideOnStore: boolean;
   nameChinese: string;
   nameTraditionalChinese: string;
-  currentTab: string;
-  giveAwayRate: number;
+  NavTab: string;    // 导航 Tab
+  currentTab: string;    // 语言 Tab
+  rebateRate: number;
   feeChargerSmartContractAddress: string;
   smartContractAddress: string;
   refAddress: string;
@@ -59,6 +63,7 @@ export class StoreComponent implements OnInit {
     private kanbanSmartContractServ: KanbanSmartContractService,
     private utilServ: UtilService,
     private kanbanServ: KanbanService,
+    private route: ActivatedRoute,
     private router: Router,
     private dataServ: DataService,
     private storeageServ: StorageService,
@@ -77,13 +82,13 @@ export class StoreComponent implements OnInit {
       this.nameTraditionalChinese = store.name.tc
     }
     if(store.image) {
-      this.images = [store.image];
+      this.images = [ store.image ];
     }
     this.feeChargerSmartContractAddress = store.feeChargerSmartContractAddress;     
     this.smartContractAddress = store.smartContractAddress; 
     this.refAddress = store.refAddress;
-    this.giveAwayRate = store.giveAwayRate;
-    this.objectId = store.objectId;   
+    this.rebateRate = store.rebateRate;
+    this.objectId = store._id;  // store.objectId;
   }
   ngOnInit() {
     this.hideOnStore = true;
@@ -114,35 +119,38 @@ export class StoreComponent implements OnInit {
         }
       }
     );
-    this.currentTab = 'default';
+    this.NavTab = 'General';    // 缺省页面
+    this.currentTab = 'default English';    // 缺省页面
 
-    /*
-    this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id) {
-      this.storeServ.getStore(this.id).subscribe(
-        (res: any) => {
-          if (res && res.ok) {
-            const store = res._body;
-            this.objectId = store.objectId;
-            this.name = store.name.en;
-            this.nameChinese = store.name.sc;
-            this.taxRate = store.taxRate;
-            this.smartContractAddress = store.smartContractAddress;
-            this.coin = store.coin;
-          }
+    // this.id = this.route.snapshot.paramMap.get('id');
+    // console.log("id:", this.id);
+    // if (this.id) {
+    //   this.storeServ.getStore(this.id).subscribe(
+    //     (res: any) => {
+    //       if (res && res.ok) {
+    //         const store = res._body;
+    //         this.objectId = store.objectId;
+    //         this.name = store.name.en;
+    //         this.nameChinese = store.name.sc;
+    //         this.taxRate = store.taxRate;
+    //         this.smartContractAddress = store.smartContractAddress;
+    //         this.coin = store.coin;
+    //       }
 
-        }
-      );
-    }
-    */
+    //     }
+    //   );
+    // }
   }
 
-  changeTab(tabName: string) {
-    this.currentTab = tabName;
+  changeNavTab( tabName: string ) {
+    this.NavTab = tabName;
+  }
+
+  changeTab( tabName: string ) {
+      this.currentTab = tabName;
   }
 
   async addStoreDo(seed: Buffer) {
-
 
     if(this.objectId) {
       const data: any = {
@@ -158,6 +166,7 @@ export class StoreComponent implements OnInit {
       if(this.images && this.images.length > 0) {
         data.image = this.images[0];
       }
+      console.log("addStore [data]:", data);
       const keyPair = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       const privateKey = keyPair.privateKeyBuffer.privateKey;
       
@@ -213,7 +222,7 @@ export class StoreComponent implements OnInit {
           tc: this.nameTraditionalChinese
         },
         coin: this.coin,
-        giveAwayRate: this.giveAwayRate,
+        rebateRate: this.rebateRate,
         taxRate: this.taxRate ? this.taxRate : 0,
         refAddress: this.refAddress,
         hideOnStore: this.hideOnStore
@@ -233,7 +242,7 @@ export class StoreComponent implements OnInit {
         environment.addresses.smartContract.feeDistribution,
         this.utilServ.fabToExgAddress(this.walletAddress),
         this.utilServ.fabToExgAddress(this.refAddress),
-        100-this.giveAwayRate,
+        100-this.rebateRate,
         '0x1'
       ];
   
@@ -318,7 +327,7 @@ export class StoreComponent implements OnInit {
       this.toastr.info('You cannot refer yourself.');
       return;
     }
-    if(!this.refAddress) {
+    if (! this.refAddress) {
       this.toastr.info('Your referral code is empty.');
       return;      
     }
@@ -334,7 +343,7 @@ export class StoreComponent implements OnInit {
       return;        
     }
 
-    if((this.giveAwayRate < 3) || (this.giveAwayRate >= 100) || !Number.isInteger(Number(this.giveAwayRate))) {
+    if((this.rebateRate < 3) || (this.rebateRate >= 100) || !Number.isInteger(Number(this.rebateRate))) {
       this.toastr.info('Give away rate is incorrect. it must be a integer between 3 and 100.');
       return;         
     }
@@ -394,7 +403,7 @@ export class StoreComponent implements OnInit {
           this.feeChargerSmartContractAddress = '';     
           this.smartContractAddress = ''; 
           this.refAddress = '';
-          this.giveAwayRate = 0;
+          this.rebateRate = 0;
           this.objectId = '';   
 
 

@@ -11,7 +11,11 @@ import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
   selector: 'app-admin-brands',
   providers: [BrandService, UserService],
   templateUrl: './brands.component.html',
-  styleUrls: ['./brands.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './brands.component.scss',
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class BrandsComponent implements OnInit {
   brands: any;
@@ -29,7 +33,6 @@ export class BrandsComponent implements OnInit {
   ngOnInit() {
     this.dataServ.currentWalletAddress.subscribe(
       (walletAddress: string) => {
-        console.log('walletAddressvvvffff=', walletAddress);
         if(walletAddress) {
           this.getMerchantBrands(walletAddress);
         }
@@ -43,11 +46,11 @@ export class BrandsComponent implements OnInit {
     ); 
   }
   getMerchantBrands(walletAddress: string) {
-    this.brandServ.getMerchantBrands(walletAddress).subscribe(
+    this.brandServ.getMerchantBrands(walletAddress, 100, 0).subscribe(
       (res: any) => {
         console.log('resssss=', res);
-        if (res && res.ok) {
-          this.brands = res._body;
+        if (res) {
+          this.brands = res;
         }
       }
     );

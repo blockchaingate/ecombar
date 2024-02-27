@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
@@ -6,6 +7,8 @@ import { DataService } from 'src/app/modules/shared/services/data.service';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
+import { MyStore } from './mock-merchant';    // 虚拟商家数据（测试）
+
 @Component({
   providers: [],
   selector: 'app-merchant',
@@ -13,6 +16,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
   styleUrls: ['./merchant.component.scss']
 })
 export class MerchantComponent implements OnInit {
+  merchant: any;    // 商家信息
   extendedMenu: string;
   isCollapsed = false;
   showNavMenu = false;
@@ -34,6 +38,7 @@ export class MerchantComponent implements OnInit {
   merchantStatus: string;
 
   menuItems: any;
+
   constructor(
     private router: Router, 
     private translateServ: TranslateService, 
@@ -60,13 +65,18 @@ export class MerchantComponent implements OnInit {
     const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
     const walletAddress = walletAddressItem.address;
     if(walletAddress) {
+      console.log('walletAddress====', walletAddress);
       this.dataServ.changeWalletAddress(walletAddress); 
 
       this.storeServ.getStoresByAddress(walletAddress).subscribe(
         (ret: any) => {
-          if(ret && ret.ok && ret._body && ret._body.length > 0) {
-            const store = ret._body[ret._body.length - 1];
+          console.log('rettttt=', ret);
+          if(ret && ret.length > 0) {
+            const store = ret[0];
             this.dataServ.changeMyStore(store);
+
+            // this.merchant = MyStore;    // 虚拟商家信息（测试）
+            // this.merchant = ret;
           }
         });
 
@@ -85,13 +95,15 @@ export class MerchantComponent implements OnInit {
     this.dataServ.currentWallet.subscribe(
       (wallet: any) => {
         this.wallet = wallet;
+
       }
     );
     this.menuItems = [
       {
         title: 'Dashboard',
         link: 'dashboard',
-        icon: 'dashboard'
+        icon: 'dashboard',
+        line: 1,  // 下边线支持
       },
       {
         title: 'Catelog',
@@ -214,7 +226,13 @@ export class MerchantComponent implements OnInit {
       this.translateServ.setDefaultLang(lang);
     }
 
-
+    this.dataServ.currentMyStore.subscribe(
+      (store: any) => {
+        console.log('store===', store);
+        this.merchant = store;
+      }
+    );
+    //this.merchant = MyStore;    // 虚拟商家信息（测试）
 
   }
 

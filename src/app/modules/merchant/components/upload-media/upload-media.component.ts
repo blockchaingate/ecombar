@@ -8,7 +8,7 @@ import { UploadService, DocType } from 'src/app/modules/shared/services/upload.s
   templateUrl: './upload-media.component.html',
   styleUrls: [
     './upload-media.component.scss',
-    
+    '../../../../../page.scss'
   ]
 })
 export class UploadMediaComponent implements OnInit {

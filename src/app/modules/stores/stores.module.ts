@@ -8,11 +8,11 @@ import { StoresRoutingModule } from './stores-routing.module';
 import { StoresComponent } from './stores.component';
 import { StoresIndexComponent } from './components/index/index.component';
 import { VersionComponent } from './components/version/version.component';
-
+import { AboutUsComponent } from './components/aboutus/aboutus.component';
 
 
 @NgModule({
-  declarations: [StoresComponent, StoresIndexComponent, VersionComponent],
+  declarations: [StoresComponent, StoresIndexComponent, AboutUsComponent, VersionComponent],
   imports: [
     CommonModule,
     StoresRoutingModule,

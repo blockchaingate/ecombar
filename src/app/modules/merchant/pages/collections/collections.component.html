@@ -6,13 +6,13 @@
   
     <ul class="responsive-table">
       <li class="table-header">
-        <div class="col col-3">{{'Name' | translate}}</div>
-        <div class="col col-3">{{'Sequence' | translate}}</div>
+        <div class="col col-3">{{ 'Name' | translate }}</div>
+        <div class="col col-3">{{ 'Sequence' | translate }}</div>
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let collection of collections">
-        <div class="col col-3" data-label="Name">{{collection.name | translateField}}</div>
-        <div class="col col-3" data-label="Sequence">{{collection.sequence}}</div>
+        <div class="col col-3" data-label="Name">{{ collection.name | translateField }}</div>
+        <div class="col col-3" data-label="Sequence">{{ collection.sequence }}</div>
         <div class="col col-3 text-right" data-label="Operations">
 
           <div class="d-inline-block px-2">

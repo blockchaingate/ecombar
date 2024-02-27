@@ -32,11 +32,14 @@ export class KanbanSmartContractService {
       console.log('abi ====', this.web3Serv.getGeneralFunctionABI(abi, args));
         return this.web3Serv.getGeneralFunctionABI(abi, args);
     }
-
-    async getExecSmartContractHexWithData(seed: Buffer, smartContractAddress: string, kanbanData: any) {
+    async execSmartContractAbiHex(seed: Buffer, smartContractAddress: string, abihex: string, gasLimit = 8000000) {
+      const txhex = await this.getExecSmartContractHexWithData(seed, smartContractAddress, abihex, gasLimit);
+        const res = await this.kanbanServ.sendRawSignedTransactionPromise(txhex);
+        return res;
+    }
+    async getExecSmartContractHexWithData(seed: Buffer, smartContractAddress: string, kanbanData: any, gasLimit = 8000000) {
       const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');
       let gasPrice = environment.chains.KANBAN.gasPrice;
-      let gasLimit = 8000000;
       const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
   
       let kanbanValue = 0;

@@ -13,10 +13,14 @@ import { NgxSpinnerService } from "ngx-bootstrap-spinner";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-orders',
+  selector: 'app-merchant-orders',
   providers: [OrderService],
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './orders.component.scss', 
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class OrdersComponent implements OnInit {
   orders: any;
@@ -50,9 +54,11 @@ export class OrdersComponent implements OnInit {
         if(walletAddress) {
           this.orderServ.gerMerchantOrders(walletAddress).subscribe(
             (res: any) => {
-                if(res && res.ok) {
-                  this.orders = res._body;
-                }
+                // if(res && res.ok) {
+                //   this.orders = res._body;
+                // }
+                // console.log("[Orders]=", res);
+                this.orders = res;
             }
           );
         }
@@ -75,9 +81,9 @@ export class OrdersComponent implements OnInit {
     return count;
   }
 
-  trimText(id:string) {
-    return id.substring(0,3) + '...' + id.substring(id.length - 3);
-  }
+    trimText( id:string ) {    // 地址不长，不用此函数，用户可复制地址
+        return id.substring(0,3) + '...' + id.substring(id.length - 3);
+    }
   getStatus(order) {
     let status = '';
     const paymentStatus = order.paymentStatus;

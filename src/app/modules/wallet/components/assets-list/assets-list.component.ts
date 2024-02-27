@@ -6,7 +6,11 @@ import { UtilService } from 'src/app/modules/shared/services/util.service';
   selector: 'app-wallet-assets-list',
   providers: [],
   templateUrl: './assets-list.component.html',
-  styleUrls: ['./assets-list.component.scss', '../../../../../table.scss']
+  styleUrls: [
+    './assets-list.component.scss', 
+    '../../../../../table.scss',
+    '../../../../../page.scss'
+  ]
 })
 export class AssetsListComponent implements OnInit{
     @Input() assets: any;
