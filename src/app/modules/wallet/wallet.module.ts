@@ -33,8 +33,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule, NgxSpinnerComponent } from "ngx-bootstrap-spinner";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TranslateService } from '@ngx-translate/core'
 @NgModule({
     declarations: [
         WalletDashboardComponent,
@@ -69,6 +70,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         ShowSeedPhraseModal
     ],
     imports: [
+        TranslateService,
         WalletRoutingModule,
         QRCodeModule,
         SharedModule,
@@ -83,6 +85,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     exports: [
         NoWalletComponent,
         StarRewardsComponent,
+        NgxSpinnerComponent
     ]
 })
 export class WalletModule { }

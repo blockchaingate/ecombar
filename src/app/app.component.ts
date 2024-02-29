@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/modules/shared/services/app.service';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.localSt.getItem('ecomwallets').subscribe(
       (wallets: any) => {
         console.log('wallets===', wallets);
@@ -50,7 +49,7 @@ export class AppComponent implements OnInit {
           return false;
         }
         this.walletServ.refreshWallets(wallets);
-              
+        return true;
       }
     );
 

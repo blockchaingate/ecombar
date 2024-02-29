@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { StorageModule } from '@ngx-pwa/local-storage';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader/dist';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { userReducer } from './store/reducers/user.reducer';
@@ -19,7 +21,9 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
   return localStorageSync({keys: ['user'], rehydrate: true})(reducer);
 }
 
-
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 // const defaultTheme: Routes = [
 //   {
@@ -170,45 +174,23 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     AppRoutingModule,
     StoreModule.forRoot(reducers, {metaReducers}),   
     HttpClientModule,
+    StorageModule.forRoot({ IDBNoWrap: true, }),
     TranslateModule.forRoot(),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    TranslateModule.forRoot(
+      {
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      }
+    ),
+
   ],
   exports:[RouterModule],
   providers: [DataService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  // currentTheme!: String;
-
-  // constructor(
-  //   private theme: ThemeService,
-  //   private router: Router) {
-  //   // this.router.resetConfig(defulatThenme);
-  //   // this.router.navigateByUrl('/home');
-
-  //   this.theme.currentMessage.subscribe(message => {
-  //     this.currentTheme = message;
-
-  //     console.log("this.message: " + this.currentTheme);
-  //     switch (this.currentTheme) {
-  //       case 'Default':
-  //         this.router.resetConfig(defaultTheme);
-  //         break;
-  //       case 'MadEarn':
-  //         this.router.resetConfig(madEarn);
-  //         break;
-  //       // case 'NFT':
-  //       //   this.router.resetConfig(nft);
-  //       //   break;
-  //       default:
-  //         this.router.resetConfig(defaultTheme);
-
-  //     }
-  //     this.router.navigateByUrl('');
-
-  //   });
-
-  // }
-
-}
+export class AppModule {}
