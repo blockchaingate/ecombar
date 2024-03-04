@@ -1,22 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
-import { UserService } from 'src/app/modules/shared/services/user.service';
 import { CategoryService } from 'src/app/modules/shared/services/category.service';
-import { BrandService } from 'src/app/modules/shared/services/brand.service';
 import { currencies } from '../../../../../environments/currencies';
 import { TextLan } from 'src/app/modules/shared/models/textlan';
-import {  ImageSettingsModel, RichTextEditorComponent } from '@syncfusion/ej2-angular-richtexteditor';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
+import {  ImageSettingsModel } from '@syncfusion/ej2-angular-richtexteditor';
 import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import BigNumber from 'bignumber.js/bignumber';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { environment } from 'src/environments/environment';
@@ -131,10 +125,7 @@ export class ProductAddComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private coinServ: CoinService,
     private categoryServ: CategoryService,
-    private kanbanSmartContractServ: KanbanSmartContractService,
     private kanbanServ: KanbanService,
-    private brandServ: BrandService,
-    private utilServ: UtilService,
     private productServ: ProductService) {
   }
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NftSettingService } from 'src/app/modules/nft/services/nft-setting.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
 import { PasswordModalComponent } from '../password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -25,17 +24,16 @@ import { VersionType } from '../../../../config/version';
     currentWalletIndex: number;
     verionType = VersionType;
     constructor(
-      private localSt: LocalStorage, 
+      private localSt: StorageMap, 
       private modalServ: BsModalService,
       private walletServ: WalletService,
       private toastr: ToastrService,
       private router: Router,
-      private translateServ: TranslateService,
-      private settingServ: NftSettingService) {}
+      private translateServ: TranslateService) {}
 
     ngOnInit() {
         this.showAside = false;    
-        this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+        this.localSt.get('ecomwallets').subscribe((wallets: any) => {
 
           if(!wallets || !wallets.items || (wallets.items.length == 0)) {
             return;
@@ -53,14 +51,6 @@ import { VersionType } from '../../../../config/version';
             return;
           }
 
-          this.settingServ.get(address).subscribe(
-            (ret: any) => {
-              if(ret && ret.ok) {
-                this.setting = ret._body;
-                console.log('this.setting=', this.setting);
-              }
-            }
-          );
         });        
     }
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { StoreRoutingModule } from './store-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { StoreComponent } from './store.component';
 import { HeaderComponent } from './layout/header/header.component';

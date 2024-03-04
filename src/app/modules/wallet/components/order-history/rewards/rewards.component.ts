@@ -50,6 +50,8 @@ export class OrderRewardsComponent implements OnInit {
         if(status == 3) {
           return 'redeemed';
         }
+
+        return '';
       }
       
   

@@ -22,6 +22,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     flatRate: number;
     name: string;
     nameChinese: string;
+    nameTradition: string;
+    descTradition: string;
     desc: string;
     descChinese: string;
     NavTab: string;    // 导航 Tab

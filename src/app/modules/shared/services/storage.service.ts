@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 import { TransactionItem } from '../../../models/transaction-item';
 import { Transaction } from '../../../interfaces/kanban.interface';
 
@@ -15,7 +14,7 @@ export class StorageService {
     private _isSystemAdmin: boolean;
     private _user: User = {};
 
-    constructor(private storage: StorageMap, private localSt: LocalStorage) {
+    constructor(private storage: StorageMap, private localSt: StorageMap) {
         if (!this._appId) {
             this.storage.get('_appId').subscribe((ret: string) => { this._appId = ret; });
         }
@@ -85,7 +84,7 @@ export class StorageService {
             }
             transactionHistory.push(transactionItem);
             // console.log('transactionHistory for storeToTransactionHistoryList=', transactionHistory);
-            return this.localSt.setItem('transactions', transactionHistory).subscribe(() => {});
+            return this.localSt.set('transactions', transactionHistory).subscribe(() => {});
         });
     }      
     deleteToken(): void {
@@ -137,7 +136,7 @@ export class StorageService {
     }
 
     getTransactionHistoryList() {
-        return this.localSt.getItem('transactions');
+        return this.localSt.get('transactions');
     }   
         
     checkSystemAdmin() {

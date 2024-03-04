@@ -20,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -54,6 +54,7 @@ import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
     RichTextEditorModule,
     NgxSpinnerModule
   ],
+  exports: [OrdersComponent],
   providers: []
 })
 export class AccountModule { }

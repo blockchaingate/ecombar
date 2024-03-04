@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/modules/shared/services/user.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
-import { Web3Service } from 'src/app/modules/shared/services/web3.service';
-import { IddockService } from 'src/app/modules/shared/services/iddock.service';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../store/states/user.state';
 import { updateWalletExgAddress } from '../../../../store/actions/user.actions';
@@ -26,19 +22,15 @@ export class MerchantInfoComponent implements OnInit{
 
     constructor(
       private userServ: UserService,
-      private localSt: LocalStorage,
+      private localSt: StorageMap,
       private toastr: ToastrService,
-      private coinServ: CoinService,
       private translateServ: TranslateService,
-      private iddockServ: IddockService,
-      private store: Store<{ user: UserState }>,
-      private web3Serv: Web3Service,
-      private utilServ: UtilService) {
+      private store: Store<{ user: UserState }>) {
     }
 
     ngOnInit() {
 
-        this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+        this.localSt.get('ecomwallets').subscribe((wallets: any) => {
 
             if(!wallets || !wallets.items || (wallets.items.length == 0)) {
               return;

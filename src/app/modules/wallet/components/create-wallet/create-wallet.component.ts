@@ -18,7 +18,7 @@ export class CreateWalletComponent implements OnInit{
 
     ngOnInit() {
       let words = this.walletServ.generateMnemonic();
-      sessionStorage.mnemonic = words;
+      sessionStorage['mnemonic'] = words;
       this.mnemonics = words.split(' ');
     }
 

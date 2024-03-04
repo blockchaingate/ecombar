@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { DataService } from '../../../shared/services/data.service';
 import { UtilService } from '../../../shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { PasswordModalComponent } from '../../../shared/components/password-modal/password-modal.component';
 import { OrderRewardsComponent } from './rewards/rewards.component';
 import { RequestRefundComponent } from '../../modals/request-refund/request-refund.component';

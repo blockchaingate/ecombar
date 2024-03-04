@@ -67,6 +67,9 @@ export class TopCategoryBannerAddComponent implements OnInit {
     }
   }
 
+  imagesChange(event) {
+    
+  }
   changeTab(tabName: string) {
     this.currentTab = tabName;
   }

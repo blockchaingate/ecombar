@@ -3,16 +3,14 @@ import { CartStoreService } from 'src/app/modules/shared/services/cart.store.ser
 import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/modules/shared/services/translate.service';
-import { CartItem, CartItemForSmartContract } from 'src/app/modules/shared/models/cart-item';
-import { groupBy } from 'src/app/modules/shared/utils/array-tool';
+import { CartItem } from 'src/app/modules/shared/models/cart-item';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';

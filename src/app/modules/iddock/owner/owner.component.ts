@@ -3,7 +3,7 @@ import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import {ActivatedRoute} from '@angular/router';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { Router } from '@angular/router'
 
 @Component({
@@ -27,7 +27,7 @@ export class OwnerComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private localSt: LocalStorage, 
+    private localSt: StorageMap, 
     private modalService: BsModalService, 
     private route: ActivatedRoute, 
     private iddockServ: IddockService, 
@@ -35,7 +35,7 @@ export class OwnerComponent implements OnInit {
 
   ngOnInit() {
 
-    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+    this.localSt.get('ecomwallets').subscribe((wallets: any) => {
 
       if(!wallets || !wallets.items || (wallets.items.length == 0)) {
         return;

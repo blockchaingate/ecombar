@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { StoreRoutingModule } from './store-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { StoreComponent } from './store.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -21,6 +21,7 @@ import { ProductItemFourComponent } from './components/product-item-four/product
 import { CompareComponent } from './compare/compare.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { OrderComponent } from './order/order.component';
+import { ProductsRowComponent } from './components/products-row/products-row.component';
 import { SubCategoriesComponent } from './layout/header/sub-categories/sub-categories.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
@@ -28,7 +29,6 @@ import { CustomerServiceComponent } from './customer-service/customer-service.co
 import { ReturnsComponent } from './returns/returns.component';
 import { FaqComponent } from './faq/faq.component';
 import { BlogComponent } from './blog/blog.component';
-import { ProductRowComponent } from './components/ProductRow/ProductRow.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -56,6 +56,7 @@ import { ProductRowComponent } from './components/ProductRow/ProductRow.componen
     ReturnsComponent,
     FaqComponent,
     BlogComponent,
+    ProductsRowComponent
     // ProductRowComponent
   ],
   imports: [

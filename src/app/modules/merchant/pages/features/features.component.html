@@ -12,10 +12,10 @@
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let feature of features">
-        <div class="col col-3" data-label="Icon">{{feature.icon}}</div>
-        <div class="col col-3" data-label="Title">{{feature.title  | translateField}}</div>
-        <div class="col col-3" data-label="Sub Title">{{feature.subtitle  | translateField}}</div>
-        <div class="col col-3 text-right" data-label="Operations">
+        <div class="col col-3" [attr.data-label]="'Icon'">{{feature.icon}}</div>
+        <div class="col col-3" [attr.data-label]="'Title'">{{feature.title  | translateField}}</div>
+        <div class="col col-3" [attr.data-label]="'Sub Title'">{{feature.subtitle  | translateField}}</div>
+        <div class="col col-3 text-right" [attr.data-label]="'Operations'">
   
           <div class="d-inline-block px-2">
             <a (click)="editFeature(feature)">

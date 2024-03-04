@@ -3,7 +3,7 @@ import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 
 @Component({
   selector: 'app-update-info',
@@ -46,7 +46,7 @@ export class UpdateInfoComponent implements OnInit {
 
 
   constructor(
-    private localSt: LocalStorage, 
+    private localSt: StorageMap, 
     private modalService: BsModalService, 
     private route: ActivatedRoute, 
     private router: Router,
@@ -65,7 +65,7 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit() {
 
-    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+    this.localSt.get('ecomwallets').subscribe((wallets: any) => {
 
       if(!wallets || !wallets.items || (wallets.items.length == 0)) {
         return;

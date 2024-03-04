@@ -8,8 +8,8 @@ import { UtilService } from './util.service';
 import BigNumber from 'bignumber.js';
 import Common from 'ethereumjs-common';
 import { Signature, EthTransactionObj } from '../../../interfaces/kanban.interface';
-import * as Account from 'eth-lib/lib/account';
-import * as  Hash from 'eth-lib/lib/hash';
+import Account from 'eth-lib/lib/account';
+import Hash from 'eth-lib/lib/hash';
 import * as Btc from 'bitcoinjs-lib';
 
 @Injectable({ providedIn: 'root' })
@@ -29,21 +29,12 @@ export class Web3Service {
   signMessageTest(msg: string, privateKey) {
     const sig = this.signKanbanMessageWithPrivateKey(msg, privateKey);
 
-    console.log('msg=', msg);
-    console.log('sig there=', sig);
     const prefix = Buffer.from("\x17Kanban Signed Message:\n");
     let prefixedMsg = Hash.keccak256s(
       Buffer.concat([prefix, Buffer.from(String(msg.length)), Buffer.from(msg)])
     );
     
     const buf = Buffer.from(prefixedMsg.replace('0x', ''), 'hex');
-    console.log('buf=', buf);
-
-    console.log('before recover:');
-    console.log('buf=', buf);
-    console.log('v=', sig.v);
-    console.log('r=', sig.r);
-    console.log('s=', sig.s);
 
     const pubKey  = ethUtil.ecrecover(buf, sig.v, sig.r, sig.s);
 

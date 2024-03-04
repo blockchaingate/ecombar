@@ -136,7 +136,8 @@ export class HeaderComponent implements OnInit {
     this.storageServ.lang =  this._lang;
   }
 
-  onChange(lan: string) {
+  onChange(event: any) {
+    const lan = event.target.value;
     this._lang = lan;
     this.translate.setDefaultLang(lan);
     this.translate.use(lan);

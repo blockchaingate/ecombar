@@ -15,7 +15,7 @@
 <div *ngIf="wallets && wallet">
     <div class="d-flex justify-content-between overview">
         <div>
-            <select class="form-select" (change)="changeWallet($event.target.value)">
+            <select class="form-select" (change)="changeWalletEvent($event)">
                 <option *ngFor="let item of wallets.items" value="{{item.id}}" 
                 [selected]="wallet.id == item.id"
                 >{{item.name}}</option>

@@ -5,7 +5,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage.service'
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 
 import { MyStore } from './mock-merchant';    // 虚拟商家数据（测试）
 
@@ -45,7 +45,7 @@ export class MerchantComponent implements OnInit {
     private dataServ: DataService,
     private storeServ: StoreService,
     private storageServ: StorageService,
-    private localSt: LocalStorage
+    private localSt: StorageMap
   ) { }
 
   toggle(menu: string) {
@@ -58,7 +58,7 @@ export class MerchantComponent implements OnInit {
 
   changeWallet(index: number, wallet: any) {
     this.wallets.currentIndex = index;
-    this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+    this.localSt.set('ecomwallets', this.wallets).subscribe(() => {
     });  
     this.dataServ.changeWallet(wallet);
     const addresses = wallet.addresses;

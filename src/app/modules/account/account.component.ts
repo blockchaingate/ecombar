@@ -10,7 +10,7 @@ import { UserState } from '../../store/states/user.state';
 import { logout, updateMerchantStatus } from '../../store/actions/user.actions';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 
 @Component({
   providers: [UserService],
@@ -22,6 +22,7 @@ export class AccountComponent implements OnInit {
   year = 2022;
   showNavMenu = false;
   dropDownActive = false;
+  extendedMenu: any;
   //displayName: string;
   merchantId: string;
   wallets: any;
@@ -46,7 +47,7 @@ export class AccountComponent implements OnInit {
     private dataServ: DataService,
     private storeServ: StoreService,
     private storageServ: StorageService,
-    private localSt: LocalStorage
+    private localSt: StorageMap
   ) { }
 
   async ngOnInit() {
@@ -138,9 +139,13 @@ export class AccountComponent implements OnInit {
 
   }
 
+  toggle(title: string) {
+
+  }
+  
   changeWallet(index: number, wallet: any) {
     this.wallets.currentIndex = index;
-    this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+    this.localSt.set('ecomwallets', this.wallets).subscribe(() => {
     });  
     this.dataServ.changeWallet(wallet);
     const addresses = wallet.addresses;

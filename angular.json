@@ -26,6 +26,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "node_modules/ngx-ui-switch/ui-switch.component.css",
               "node_modules/ngx-toastr/toastr.css" 
             ],
             "scripts": []
@@ -87,7 +88,8 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "src/polyfills.ts"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [

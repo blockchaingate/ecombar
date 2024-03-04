@@ -5,18 +5,15 @@ import { AppComponent } from './app.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader/dist';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { userReducer } from './store/reducers/user.reducer';
-import { StoreModule, ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 //import { UserState } from './reducers/user.state';
 import { reducers } from './store/reducers';
-import { Router, RouterModule, Routes } from '@angular/router';
-import { ThemeService } from './services/theme.service';
-
+import { RouterModule } from '@angular/router';
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({keys: ['user'], rehydrate: true})(reducer);
 }

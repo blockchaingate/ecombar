@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
 import { PasswordModalComponent } from '../password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -23,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
     currentWalletIndex: number;
 
     constructor(
-      private localSt: LocalStorage, 
+      private localSt: StorageMap, 
       private modalServ: BsModalService,
       private walletServ: WalletService,
       private toastr: ToastrService,
@@ -31,7 +31,7 @@ import { TranslateService } from '@ngx-translate/core';
 
     ngOnInit() {
         this.showAside = false;    
-        this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+        this.localSt.get('ecomwallets').subscribe((wallets: any) => {
 
           if(!wallets || !wallets.items || (wallets.items.length == 0)) {
             return;

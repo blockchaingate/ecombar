@@ -3,7 +3,7 @@ import * as CryptoJS from 'crypto-js';
 import * as bs58 from 'bs58';
 import { environment } from '../../../../environments/environment';
 import * as createHash from 'create-hash';
-import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js';
 import { coin_list } from '../../../../environments/coins';
 import { MyCoin } from '../../../models/mycoin';
 import * as ecies from 'eth-ecies';

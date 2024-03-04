@@ -77,6 +77,7 @@ export class TransactionDetailComponent {
         if(chain == 'TRX') {
             return 'https://tronscan.org/#/transaction/' + txid;
         }
+        return '';
     }
    
 }

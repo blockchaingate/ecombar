@@ -1,15 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { env } from 'process';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { environment } from 'src/environments/environment';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
-import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
-import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
     providers: [],
@@ -26,16 +20,12 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
       isProxyAuthenticated: boolean;
       constructor(
           private route: Router, 
-          private spinner: NgxSpinnerService,
           private utilServ: UtilService,
-          private modalServ: BsModalService,
-          private nftPortServ: NftPortService,
           private kanbanServ: KanbanService,
-          private kanbanSmartContractServ: KanbanSmartContractService,
-          private localSt: LocalStorage) {}
+          private localSt: StorageMap) {}
       ngOnInit() {
           this.isProxyAuthenticated = true;
-        this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+        this.localSt.get('ecomwallets').subscribe((wallets: any) => {
             if(!wallets || !wallets.items || (wallets.items.length == 0)) {
               return;
             }
@@ -46,6 +36,13 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
         });           
       }
 
+      authenticate() {
+
+      }
+
+      changeWalletEvent(event: any) {
+        return this.changeWallet(event.target.value);
+      }
       changeWallet(walltId: string) {
         console.log('walletId=', walltId);
           let index = -1;
@@ -62,18 +59,10 @@ import { NftPortService } from 'src/app/modules/nft/services/nft-port.service';
 
           this.address = addresses.filter(item => item.name == 'FAB')[0].address;     
 
-          console.log('this.address=', this.address);
-          this.nftPortServ.isProxyAuthenticated(this.address).subscribe(
-            ret => {
-              this.isProxyAuthenticated = ret;
-              console.log('this.isProxyAuthenticated=', this.isProxyAuthenticated);
-            }
-          );  
-
           const kanbanAddress = this.utilServ.fabToExgAddress(this.address);
 
           this.wallets.currentIndex = index;
-          this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+          this.localSt.set('ecomwallets', this.wallets).subscribe(() => {
           });  
           
 

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, Validatio
 import { Router } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { WalletService } from 'src/app/modules/shared/services/wallet.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 
 @Component({
     selector: 'app-wallet-pwd',
@@ -19,7 +19,7 @@ export class WalletPwdComponent implements OnInit {
         private walletServ: WalletService, 
         private fb: FormBuilder, 
         private translate: TranslateService,
-        private localSt: LocalStorage) {
+        private localSt: StorageMap) {
     }
 
     ngOnInit() {
@@ -38,19 +38,19 @@ export class WalletPwdComponent implements OnInit {
     }
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-        const pass = group.controls.password.value;
-        const confirmPass = group.controls.pwdconfirm.value;
+        const pass = group.controls['password'].value;
+        const confirmPass = group.controls['pwdconfirm'].value;
 
         return pass === confirmPass ? null : { notSame: true };
     }
 
     onSubmit() {
         
-        const name = this.userForm.controls.name.value;
-        const pwd = this.userForm.controls.password.value;
+        const name = this.userForm.controls['name'].value;
+        const pwd = this.userForm.controls['password'].value;
 
         // const mnemonic = sessionStorage.mnemonic.trim().replace(/\s\s+/g, ' ');
-        let mnemonic = sessionStorage.mnemonic;
+        let mnemonic = sessionStorage['mnemonic'];
         mnemonic = mnemonic.trim().replace(/\s\s+/g, ' ').replace(/(\r\n|\n|\r)/gm, '');
         const wallet = this.walletServ.generateWallet(pwd, name, mnemonic);
 
@@ -60,7 +60,7 @@ export class WalletPwdComponent implements OnInit {
             alert(this.translate.instant('Error occured, please try again.'));
         } else {
 
-            this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+            this.localSt.get('ecomwallets').subscribe((wallets: any) => {
                 if (!wallets) {
                     wallets = {
                         currentIndex: -1,
@@ -71,7 +71,7 @@ export class WalletPwdComponent implements OnInit {
                     wallets.items.push(wallet);
                     wallets.currentIndex = wallets.items.length - 1;
                 }
-                this.localSt.setItem('ecomwallets', wallets).subscribe(() => {
+                this.localSt.set('ecomwallets', wallets).subscribe(() => {
                     this.route.navigate(['/wallet/dashboard']);
                 });
             });

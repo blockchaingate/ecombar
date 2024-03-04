@@ -9,7 +9,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 
 @Component({

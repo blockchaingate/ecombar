@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UtilService } from './util.service';
 import { ApiService } from './api.service';
 import { Web3Service } from './web3.service';
-import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js';
 import { MyCoin } from '../../../models/mycoin';
 import * as bchaddr from 'bchaddrjs';
 import * as Btc from 'bitcoinjs-lib';
@@ -16,7 +16,7 @@ import { coin_list } from '../../../../environments/coins';
 import { Signature } from '../../../interfaces/kanban.interface';
 import * as bitcoinMessage from 'bitcoinjs-message';
 import TronWeb from 'tronweb';
-import { instantiateSecp256k1, hexToBin, binToHex } from '@bitauth/libauth';
+//import { instantiateSecp256k1, hexToBin, binToHex } from '@bitauth/libauth';
 
 const HttpProvider = TronWeb.providers.HttpProvider;
 const fullNode = new HttpProvider(environment.chains.TRX.fullNode);
@@ -57,21 +57,22 @@ export class CoinService {
         return buf;
     }
 
+    /*
     async toUncompressedPublicKey(compressedKey: string) {
         //var compressedKey = "03d061e9c5891f579fd548cfd22ff29f5c642714cc7e7a9215f0071ef5a5723f69";
         console.log('compressedKey====', compressedKey);
         compressedKey = compressedKey.replace(/^0x/, "");
         const secp256k1 = await instantiateSecp256k1();
         console.log('1');
-        const compressed = hexToBin(compressedKey);
+        const compressed: any = hexToBin(compressedKey);
         console.log('2');
-        const uncompressed = secp256k1.uncompressPublicKey(compressed);
+        const uncompressed: any = secp256k1.uncompressPublicKey(compressed);
         console.log('3');
         console.log(binToHex(uncompressed));
         
         return binToHex(uncompressed).replace(/^04/, "");;
     }
-
+    */
     signedMessage(originalMessage: string, keyPair: any) {
         // originalMessage = '000254cbd93f69af7373dcf5fc01372230d309684f95053c7c9cbe95cf4e4e2da731000000000000000000000000000000000000000000000000000009184e72a000000000000000000000000000a2a3720c00c2872397e6d98f41305066cbf0f8b3';
         // console.log('originalMessage=', originalMessage);

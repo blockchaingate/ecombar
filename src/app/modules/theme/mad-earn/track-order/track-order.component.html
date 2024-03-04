@@ -164,7 +164,7 @@
                             {{'Shipping' | translate}}
                         </div>
                         <div class="col col-6 text-right">
-                            {{(shippingFee == '0' ? 'Free' : (shippingFee + currency)) | translate}}
+                            {{(shippingFee == 0 ? 'Free' : (shippingFee + currency)) | translate}}
                         </div>                        
                     </div>  
 

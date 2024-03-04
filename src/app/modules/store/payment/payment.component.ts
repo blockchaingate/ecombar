@@ -4,7 +4,7 @@ import { AddressService } from 'src/app/modules/shared/services/address.service'
 import { OrderService } from 'src/app/modules/shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
@@ -14,7 +14,7 @@ import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import BigNumber from 'bignumber.js';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { StarService } from 'src/app/modules/shared/services/star.service';
 
@@ -95,7 +95,7 @@ export class PaymentComponent implements OnInit{
       private starServ: StarService,
       private spinner: NgxSpinnerService,
       private modalService: BsModalService,
-      private localSt: LocalStorage,      
+      private localSt: StorageMap,      
       private router: Router,
       private route: ActivatedRoute, 
       private dataServ: DataService,

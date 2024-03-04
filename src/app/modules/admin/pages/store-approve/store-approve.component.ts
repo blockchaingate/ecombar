@@ -9,7 +9,7 @@ import { StoreService } from 'src/app/modules/shared/services/store.service';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 
 @Component({

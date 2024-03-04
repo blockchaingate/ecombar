@@ -65,9 +65,6 @@ import { CoinService } from 'src/app/modules/shared/services/coin.service';
       this.modalRef.hide();
     }
 
-    onFlagChange(event) {
-      this.isAdvance = event;
-    }
 
     formatName(coinName) {
       if(coinName == 'USDTX') {

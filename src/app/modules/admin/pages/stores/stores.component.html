@@ -9,12 +9,12 @@
         <div class="col col-1"></div>
       </li>
       <li class="table-row" *ngFor="let store of stores">
-        <div class="col col-3" data-label="Name">{{ store.name | translateField }}</div>
-        <div class="col col-2" data-label="Name">{{ showAddress(store.refAddress) }}</div>
-        <div class="col col-2" data-label="Name">{{ showAddress(store.owner) }}</div>
-        <div class="col col-2" data-label="Name">{{ store.rebateRate }}</div>
-        <div class="col col-2" data-label="Name">{{ store.status }}</div>
-        <div class="col col-1 text-right" data-label="Operations">
+        <div class="col col-3" [attr.data-label]="'Name'">{{ store.name | translateField }}</div>
+        <div class="col col-2" [attr.data-label]="'Ref address'">{{ showAddress(store.refAddress) }}</div>
+        <div class="col col-2" [attr.data-label]="'Owner'">{{ showAddress(store.owner) }}</div>
+        <div class="col col-2" [attr.data-label]="'Rebate rate'">{{ store.rebateRate }}</div>
+        <div class="col col-2" [attr.data-label]="'Status'">{{ store.status }}</div>
+        <div class="col col-1 text-right" [attr.data-label]="'Operations'">
   
           <div class="d-inline-block px-2">
             <a (click)="approved(store._id)">

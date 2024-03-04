@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-fee-distribution-update-payment-fee-rate',

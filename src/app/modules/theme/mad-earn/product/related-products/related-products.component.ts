@@ -8,8 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RelatedProductsComponent implements OnInit {
    @Input() products: any;
+   @Input() storeId: string;
    @Output() onAddToFavorite= new EventEmitter<string>();
    @Output() onAddToCart= new EventEmitter<any>();
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {

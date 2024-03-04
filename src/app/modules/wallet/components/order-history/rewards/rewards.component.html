@@ -19,20 +19,23 @@
                       <div class="col col-2">{{'Status' | translate}}</div>
                     </li>
                         <li class="table-row" *ngFor="let reward of rewards">         
-                                <div class="col col-4" data-label="{{'Details' | translate}}">
+                                <div class="col col-4" [attr.data-label]="'Details' | translate">
                                     {{showDetail(reward) }}
                                 </div>
-                                <div class="col col-2" data-label="{{'Release time' | translate}}">
+                                <div class="col col-2" [attr.data-label]="'Release time' | translate">
                                     {{showReleaseTime(reward) }}
                                 </div>    
-                                <div class="col col-2" data-label="{{'Txids' | translate}}">
+                                <div class="col col-2" [attr.data-label]="'Txids' | translate">
                                     <div *ngFor="let txid of reward.txids">
                                       <a target="_blank" href="{{getTxidUrl(txid)}}">
                                         {{showId(txid)}}
                                       </a>
                                     </div>
-                                </div>      
-                                <div class="col col-2" data-label="{{'Status' | translate}}">
+                                </div>     
+                                
+                                
+
+                                <div class="col col-2" [attr.data-label]="'Status' | translate">
                                     <div>
                                         {{showStatus(reward.status) | translate}}
                                     </div>

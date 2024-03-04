@@ -16,6 +16,7 @@ export class UploadMediaComponent implements OnInit {
   productId = '45fdssirfssss';
   checkedImages: any;
   @Input() images: any;
+  @Output() imagesChange: EventEmitter<any> = new EventEmitter<any>();
   @Input() singleFile: boolean;
   // @Output() uploaded: EventEmitter<string> = new EventEmitter();
   errMsg = '';
@@ -56,7 +57,8 @@ export class UploadMediaComponent implements OnInit {
     this.checkedImages = [];
   }
 
-  fileChangeEvent(e: File[]) {
+  fileChangeEvent(event: any) {
+    const e = event.target.files;
     if (!e) { return; }
     this.uploadSuccess = false;/* DXACF */
     this.url = '';
@@ -71,7 +73,7 @@ export class UploadMediaComponent implements OnInit {
           retn => {
             this.images.push(this.url);
             // this.uploaded.emit(this.url);
-
+            this.imagesChange.emit(this.images);
             this.successMsg = 'Uploaded'; this.uploadSuccess = true;
           },
           err => { this.errMsg = 'Error in uploading.'; });

@@ -58,12 +58,7 @@ const defaultTheme: Routes = [
     path: 'wallet',
     loadChildren: () =>
       import('src/app/modules/wallet/wallet.module').then(m => m.WalletModule)
-  },
-  {
-    path: 'nft',
-    loadChildren: () =>
-      import('src/app/modules/nft/nft.module').then(m => m.NftModule)
-  },
+  }
 ];
 
 const madEarn: Routes = [
@@ -116,12 +111,7 @@ const madEarn: Routes = [
     path: 'wallet',
     loadChildren: () =>
       import('src/app/modules/wallet/wallet.module').then(m => m.WalletModule)
-  },
-  {
-    path: 'nft',
-    loadChildren: () =>
-      import('src/app/modules/nft/nft.module').then(m => m.NftModule)
-  },
+  }
 ];
 
 let routes: Routes = [];
@@ -143,7 +133,6 @@ switch (themeEvn.defaultTheme) {
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabled'
   })],
   exports: [RouterModule]
 })

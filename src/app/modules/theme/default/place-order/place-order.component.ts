@@ -1,19 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from 'src/app/modules/shared/services/user.service';
-import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
-import { OrderService } from 'src/app/modules/shared/services/order.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from '../../../../../environments/environment';
-import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
-import { ToastrService } from 'ngx-toastr';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { CoinService } from 'src/app/modules/shared/services/coin.service';
-import { TranslateService } from '@ngx-translate/core';
-import BigNumber from 'bignumber.js/bignumber';
-import { Web3Service } from 'src/app/modules/shared/services/web3.service';
-import { ApiService } from 'src/app/modules/shared/services/api.service';
-import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { PlaceOrderComponent as ParentPlaceOrderComponent } from 'src/app/modules/store/place-order/place-order.component';
 @Component({
   selector: 'app-place-order',

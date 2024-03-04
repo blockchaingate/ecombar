@@ -1,18 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../shared/services/user.service';
 import { AddressService } from '../../shared/services/address.service';
 import { OrderService } from '../../shared/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { IddockService } from '../../shared/services/iddock.service';
 import { DataService } from '../../shared/services/data.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PasswordModalComponent } from '../../shared/components/password-modal/password-modal.component';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { KanbanService } from '../../shared/services/kanban.service';
 import { CoinService } from '../../shared/services/coin.service';
-import { ToastrService } from 'ngx-toastr';
-import { compilerOperationSigningSerializationLocktime } from '@bitauth/libauth';
 
 // 定义验证规则：FormBuilder 构建表单数据，FormGroup 表单类型，Validators 表单验证
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -50,14 +45,12 @@ export abstract class AddressComponent implements OnInit {
     private fb: FormBuilder,  // 添加 fb 属性，用来创建表单
     private cd: ChangeDetectorRef,  // 变更检测 detectChanges()
     private modalService: BsModalService,
-    private iddockServ: IddockService,
     private spinner: NgxSpinnerService,
     private dataServ: DataService,
     private coinServ: CoinService,
     private router: Router,
     private kanbanServ: KanbanService,
     private route: ActivatedRoute,
-    private toastr: ToastrService,
     private orderServ: OrderService,
     private addressServ: AddressService) {
 

@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/modules/shared/services/app.service';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { environment } from '../environments/environment';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { DataService } from 'src/app/modules/shared/services/data.service';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
@@ -25,23 +25,17 @@ export class AppComponent implements OnInit {
 
   constructor(
     private theme: ThemeService,
-    private appServ: AppService, 
-    private localSt: LocalStorage,
+    private localSt: StorageMap,
     private router: Router,
     private storageServ: StorageService, 
-    private dataServ: DataService,
-    private storeServ: StoreService,
     private walletServ: WalletService,
-    private route: ActivatedRoute,
-    private kanbanServ: KanbanService,
-    private utilServ: UtilService,
     private translate: TranslateService) {
-    appServ.id = environment.appid;
+    //appServ.id = environment.appid;
     // this.setLan();
   }
 
   ngOnInit() {
-    this.localSt.getItem('ecomwallets').subscribe(
+    this.localSt.get('ecomwallets').subscribe(
       (wallets: any) => {
         console.log('wallets===', wallets);
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {

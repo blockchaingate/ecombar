@@ -75,7 +75,7 @@ export class FeeDistributionComponent implements OnInit {
       (ret: any) => {
         const data = ret.data;
         console.log('data for getPaymentFeeRate=', data);
-        const decoded = this.web3Serv.decodeData(['uint256'],data);
+        const decoded: any = this.web3Serv.decodeData(['uint256'],data);
         console.log('decoded=', decoded);
         this.paymentFeeRate = decoded[0];
       });
@@ -107,7 +107,7 @@ export class FeeDistributionComponent implements OnInit {
       (ret: any) => {
         const data = ret.data;
         const decoded = this.web3Serv.decodeData(['uint32[]', 'uint256[]'],data);
-        const tokens = decoded[0];
+        const tokens: any = decoded[0];
         const tokenPercents = decoded[1];
         for(let i = 0; i < tokens.length; i++) {
           if(i == 0) {
@@ -172,7 +172,7 @@ export class FeeDistributionComponent implements OnInit {
     this.kanbanServ.kanbanCall(this.to, abiData).subscribe(
       (ret: any) => {
         const data = ret.data;
-        const decoded = this.web3Serv.decodeData(['uint256[14]'],data)[0];
+        const decoded: any = this.web3Serv.decodeData(['uint256[14]'],data)[0];
         console.log('decoded for getRewardPercent=', decoded);
         for(let i = 0; i < decoded.length; i++) {
           if(i == 0) {

@@ -8,11 +8,11 @@
   
     </li>
     <li class="table-row" *ngFor="let favorite of favorites">
-      <div class="col col-3" data-label="Currency">{{favorite.store.name | translateField}}</div>
-      <div class="col col-3" data-label="Title">{{favorite.parentId.title | translateField}}</div>
-      <div class="col col-3" data-label="Price">{{favorite.parentId.price}} {{favorite.store.coin}}</div>
+      <div class="col col-3" [attr.data-label]="'Currency'">{{favorite.store.name | translateField}}</div>
+      <div class="col col-3" [attr.data-label]="'Title'">{{favorite.parentId.title | translateField}}</div>
+      <div class="col col-3" [attr.data-label]="'Price'">{{favorite.parentId.price}} {{favorite.store.coin}}</div>
       
-      <div class="col col-3 text-right" data-label="Operations">
+      <div class="col col-3 text-right" [attr.data-label]="'Operations'">
         <div class="d-inline-block px-2">
           <a (click)="removeFavorite(favorite)">
             <img src="/assets/svg/delete.svg">

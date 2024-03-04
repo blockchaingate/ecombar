@@ -10,11 +10,14 @@
                   <div class="mb-2 pb-1 font-size-18 font-weight-light text-ls-n1 text-lh-23">
                       {{banner.title | translateField}}
                   </div>
-                  <div class="link text-gray-90 font-weight-bold font-size-15" href="{{banner.clickLink}}">
-                      Shop now
-                      <span class="link__icon ml-1">
-                          <span class="link__icon-inner"><i class="ec ec-arrow-right-categproes"></i></span>
-                      </span>
+                  <div class="link text-gray-90 font-weight-bold font-size-15">
+                    <a [href]="banner.clickLink">
+                        Shop now
+                        <span class="link__icon ml-1">
+                            <span class="link__icon-inner"><i class="ec ec-arrow-right-categproes"></i></span>
+                        </span>
+                    </a>
+
                   </div>
               </div>
           </a>

@@ -55,7 +55,7 @@
             <div class="my-3 p-3 border rounded">  <!-- 背景白色，圆角边框 -->  <!-- mb-3 -->
                 <div class="row">
                     <div class="col-8">
-                        <select (change)="onChange($event.target.value)" class="form-control">
+                        <select (change)="onChange($event)" class="form-control">
                             <option *ngFor="let item of wallets.items; let i = index" [value]="i" [selected]="item.id == wallet.id">
                                 {{ item.name }}
                             </option>

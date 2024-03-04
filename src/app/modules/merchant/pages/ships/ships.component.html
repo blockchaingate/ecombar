@@ -13,8 +13,8 @@
     </li>
 
     <li class="table-row" *ngFor="let ship of ships">
-      <div class="col col-2" data-label="{{'Order Id' | translate}}">{{ship.orderId}}</div>
-      <div class="col col-2" data-label="{{'Tracking number' | translate}}">{{ship.trackingNumber}}</div>
+      <div class="col col-2" [attr.data-label]="'Order Id' | translate">{{ship.orderId}}</div>
+      <div class="col col-2" [attr.data-label]="'Tracking number' | translate">{{ship.trackingNumber}}</div>
       <div class="col col-2">
         <button class="btn" (click)="openModal(ship, template)">Details</button>
       </div>
@@ -39,8 +39,8 @@
           </li>
     
           <li class="table-row" *ngFor="let detail of ship.details">
-            <div class="col col-4" data-label="{{'Date created' | translate}}">{{detail.dateCreated}}</div>
-            <div class="col col-2" data-label="{{'Status' | translate}}">{{detail.status}}</div>
+            <div class="col col-4" [attr.data-label]="'Date created' | translate">{{detail.dateCreated}}</div>
+            <div class="col col-2" [attr.data-label]="'Status' | translate">{{detail.status}}</div>
             <div class="col col-6">
               [{{detail.city}}]{{detail.text}}
             </div>

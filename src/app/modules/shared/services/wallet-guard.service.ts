@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { AuthService } from './auth.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { DataService } from './data.service';
@@ -13,9 +13,9 @@ export class WalletGuardService implements CanActivate {
     public auth: AuthService, 
     public router: Router, 
     private dataServ: DataService,
-    private localSt: LocalStorage) {}
+    private localSt: StorageMap) {}
   canActivate(): Observable<boolean> {
-    return this.localSt.getItem('ecomwallets').pipe(
+    return this.localSt.get('ecomwallets').pipe(
       take(1),
       map((wallets: any) => {
         console.log('wallets==', wallets);

@@ -6,7 +6,8 @@ export class TranslateFieldPipe extends TranslatePipe implements PipeTransform {
     constructor(private translateServ: TranslateService) {
         super(translateServ,null);
     }
-    transform( fieldName: any): any {
+
+    override transform( fieldName: any): any {
         if(!fieldName) {
             return '';
         }

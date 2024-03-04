@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js';
 import { Signature } from '../../../../interfaces/kanban.interface';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { environment } from '../../../../../environments/environment';
@@ -81,7 +81,7 @@ export class WalletDashboardComponent implements OnInit{
    constructor(
       private toastr: ToastrService,
       private translateServ: TranslateService,
-      private localSt: LocalStorage,
+      private localSt: StorageMap,
       public utilServ: UtilService,
       private timerServ: TimerService,
       private modalServ: BsModalService,
@@ -98,7 +98,7 @@ export class WalletDashboardComponent implements OnInit{
     ngOnInit() {
       this.gas = 0;
       this.subtab = 'Assets';
-      this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+      this.localSt.get('ecomwallets').subscribe((wallets: any) => {
 
         if(!wallets || !wallets.items || (wallets.items.length == 0)) {
           return;
@@ -706,11 +706,12 @@ export class WalletDashboardComponent implements OnInit{
       }
     }
 
-    onChange(index) {
+    onChange(event) {
+      const index = (<HTMLTextAreaElement>event.target).value;
       this.wallet = this.wallets.items[index];
       this.wallets.currentIndex = index;
 
-      this.localSt.setItem('ecomwallets', this.wallets).subscribe(() => {
+      this.localSt.set('ecomwallets', this.wallets).subscribe(() => {
         this.walletServ.refreshWallets(this.wallets);
         this.loadWallet();
       });

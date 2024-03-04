@@ -1,21 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
 import { CoinService } from './coin.service';
 import { UtilService } from './util.service';
-import { User } from '../models/user';
 import { environment } from '../../../../environments/environment';
 import * as bip39 from 'bip39';
-import * as BIP32 from 'node_modules/bip32';
-import * as Btc from 'bitcoinjs-lib';
-import * as bitcoinMessage from 'bitcoinjs-message';
-//import { hdkey } from 'ethereumjs-wallet'
-import * as hdkey from 'ethereumjs-wallet/hdkey';
-import * as bchaddr from 'bchaddrjs';
-import * as wif from 'wif';
 import { Wallet } from '../../../models/wallet';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { DataService } from './data.service';
-import { MerchantService } from './merchant.service';
 import { StoreService } from './store.service';
 
 @Injectable({ providedIn: 'root' })
@@ -24,7 +14,7 @@ export class WalletService {
 
     private dataServ: DataService,
     private storeServ: StoreService,
-        private localSt: LocalStorage, private utilServ: UtilService, private coinServ: CoinService) {
+        private localSt: StorageMap, private utilServ: UtilService, private coinServ: CoinService) {
 
     }
 
@@ -59,7 +49,7 @@ export class WalletService {
 
     updateToWalletList(wallet: Wallet, index: number) {
 
-        this.localSt.getItem('ecomwallets').subscribe((wallets: Wallet[]) => {
+        this.localSt.get('ecomwallets').subscribe((wallets: Wallet[]) => {
             if (!wallets) {
                 wallets = [];
             }
@@ -67,7 +57,7 @@ export class WalletService {
                 wallets[index] = wallet;
             }
 
-            this.localSt.setItem('ecomwallets', wallets).subscribe(() => {
+            this.localSt.set('ecomwallets', wallets).subscribe(() => {
             });
         });
     }
@@ -137,7 +127,7 @@ export class WalletService {
     }    
 
     updateWallets(wallets) {
-        return this.localSt.setItem('ecomwallets', wallets);
+        return this.localSt.set('ecomwallets', wallets);
     }    
 
     refreshWallets(wallets: any) {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { StoreService } from 'src/app/modules/shared/services/store.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 import { PasswordModalComponent } from 'src/app/modules/shared/components/password-modal/password-modal.component';
 import { IddockService } from 'src/app/modules/shared/services/iddock.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
@@ -12,7 +11,7 @@ import { ABI as feeChargerABI, Bytecode as feeChargerBytecode } from '../../../.
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { environment } from 'src/environments/environment';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
@@ -42,6 +41,7 @@ export class StoreComponent implements OnInit {
   refAddress: string;
   walletAddress: string;
 
+  nameTradition: string;
   coin: string;
   id: string;
   modalRef: BsModalRef;

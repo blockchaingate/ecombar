@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AddressComponent } from './address.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [

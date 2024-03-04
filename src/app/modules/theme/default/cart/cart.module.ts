@@ -6,7 +6,7 @@ import { CartProductComponent } from './components/cart-product/cart-product.com
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [

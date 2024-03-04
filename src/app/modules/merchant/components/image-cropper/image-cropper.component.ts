@@ -15,6 +15,7 @@ import { UploadService, DocType } from 'src/app/modules/shared/services/upload.s
 export class ImageCropperComponent implements OnInit {
     @ViewChild('fileInput') fileInput: ElementRef;
     @Input() images: any;
+    @Output() imagesChange: EventEmitter<any> = new EventEmitter<any>();
     imageChangedEvent: any = '';
     croppedImage: any = '';
     doneFlag: boolean = true;
@@ -84,7 +85,7 @@ export class ImageCropperComponent implements OnInit {
                 // this.images.push(this.url);
                 this.images = [ this.url ];
                 // this.uploaded.emit(this.url);
-    
+                this.imagesChange.emit(this.images)
                 this.successMsg = 'Uploaded'; this.uploadSuccess = true;
               },
               err => { this.errMsg = 'Error in uploading.'; });

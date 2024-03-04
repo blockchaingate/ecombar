@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { StarService } from 'src/app/modules/shared/services/star.service';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { NgxSpinnerService } from 'ngx-bootstrap-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-wallet-bindpay',

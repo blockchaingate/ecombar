@@ -69,8 +69,7 @@
 
     <div>
         {{'Advanced'| translate}}
-        <ngx-switch [status]="isAdvance" [onText]="onText" [offText]="offText" [onColor]="onColor" [offColor]="offColor" (statusChange)="onFlagChange($event)">
-        </ngx-switch>
+        <ui-switch [(ngModel)]="isAdvance"></ui-switch>
     </div>
 
     <div *ngIf="isAdvance">

@@ -7,7 +7,8 @@ import { UploadMediaComponent } from './components/upload-media/upload-media.com
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { AccountModule } from '../account/account.module';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RoleMenuPipe } from './pipes/role-menu.pipe';
@@ -44,7 +45,8 @@ import { FeeDistributionUpdatePaymentFeeRateComponent } from './pages/fee-distri
     ModalModule.forRoot(),
     ReactiveFormsModule,
     NgxSpinnerModule,
-    RichTextEditorModule
+    RichTextEditorModule,
+    AccountModule
   ],
   providers: []
 })

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MerchantRoutingModule } from './merchant-routing.module';
-import { NgxSpinnerModule } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { MerchantComponent } from './merchant.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';

@@ -28,14 +28,14 @@ import { BindpayComponent } from './components/bindpay/bindpay.component';
 import { OrderRewardsComponent } from './components/order-history/rewards/rewards.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgxBootstrapSwitchModule } from 'ngx-bootstrap-switch';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxSpinnerModule, NgxSpinnerComponent } from "ngx-bootstrap-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TranslateService } from '@ngx-translate/core'
+import { UiSwitchModule } from 'ngx-ui-switch';
+
 @NgModule({
     declarations: [
         WalletDashboardComponent,
@@ -51,8 +51,7 @@ import { TranslateService } from '@ngx-translate/core'
         TransactionHistoryComponent,  
         WalletPwdComponent,
         MnemonicComponent,
-        MnemeditComponent,   
-        WalletPwdComponent,
+        MnemeditComponent,  
         ConfirmMnemonicsComponent,
         TransactionDetailComponent,
         ReceiveComponent,
@@ -70,7 +69,6 @@ import { TranslateService } from '@ngx-translate/core'
         ShowSeedPhraseModal
     ],
     imports: [
-        TranslateService,
         WalletRoutingModule,
         QRCodeModule,
         SharedModule,
@@ -80,12 +78,19 @@ import { TranslateService } from '@ngx-translate/core'
         NgxSpinnerModule,
         ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
-        NgxBootstrapSwitchModule.forRoot()
+        UiSwitchModule.forRoot({
+            size: 'small',
+            color: 'rgb(0, 189, 99)',
+            switchColor: '#80FFA2',
+            defaultBgColor: '#00ACFF',
+            defaultBoColor : '#476EFF',
+            checkedLabel: 'on',
+            uncheckedLabel: 'off'
+          })
     ],
     exports: [
         NoWalletComponent,
-        StarRewardsComponent,
-        NgxSpinnerComponent
+        StarRewardsComponent
     ]
 })
 export class WalletModule { }

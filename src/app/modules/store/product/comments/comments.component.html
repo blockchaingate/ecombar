@@ -24,7 +24,7 @@
                             <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
                                 <div class="progress-bar" role="progressbar" 
                                 [ngStyle]="{width: ((comments.length > 0) ? (rating5 * 100 / comments.length) : 0) + '%'}"
-                                aria-valuenow="{{((comments.length > 0) ? (rating5 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                [attr.aria-valuenow]="((comments.length > 0) ? (rating5 * 100 / comments.length) : 0)" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="col-auto text-right">
@@ -47,7 +47,7 @@
                             <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
                                 <div class="progress-bar" role="progressbar" 
                                 [ngStyle]="{width: ((comments.length > 0) ? (rating4 * 100 / comments.length) : 0) + '%'}"
-                                 aria-valuenow="{{(rating4 / comments.length) * 100}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                [attr.aria-valuenow]="(rating4 / comments.length) * 100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="col-auto text-right">
@@ -70,7 +70,7 @@
                             <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
                                 <div class="progress-bar" role="progressbar" 
                                 [ngStyle]="{width: ((comments.length > 0) ? (rating3 * 100 / comments.length) : 0) + '%'}"
-                                 aria-valuenow="{{((comments.length > 0) ? (rating3 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                [attr.aria-valuenow]="((comments.length > 0) ? (rating3 * 100 / comments.length) : 0)" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="col-auto text-right">
@@ -93,7 +93,7 @@
                             <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
                                 <div class="progress-bar" role="progressbar" 
                                 [ngStyle]="{width: ((comments.length > 0) ? (rating3 * 100 / comments.length) : 0) + '%'}"
-                                 aria-valuenow="{{((comments.length > 0) ? (rating2 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                [attr.aria-valuenow]="((comments.length > 0) ? (rating2 * 100 / comments.length) : 0)" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="col-auto text-right">
@@ -116,7 +116,7 @@
                             <div class="progress ml-xl-5" style="height: 10px; width: 200px;">
                                 <div class="progress-bar" role="progressbar" 
                                 [ngStyle]="{width: ((comments.length > 0) ? (rating1 * 100 / comments.length) : 0) + '%'}"
-                                 aria-valuenow="{{((comments.length > 0) ? (rating1 * 100 / comments.length) : 0)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                [attr.aria-valuenow]="((comments.length > 0) ? (rating1 * 100 / comments.length) : 0)" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="col-auto text-right">

@@ -51,7 +51,7 @@
                                 {{'Scan the QR Code with Ex App' | translate}} 
                             </div>
                             <div class="text-center py-5">
-                                <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block" [size]="150" [level]="'M'"></qrcode>
+                                <qrcode [qrdata]="code" id="address_qr_code" style="display: inline-block"></qrcode>
                                 <div class="py-2">
                                     <a href="{{link}}" download (click)="dlDataUrlBin()">
                                         <div class="d-inline-block px-1">
@@ -154,7 +154,7 @@
                             {{'Shipping' | translate}}
                         </div>
                         <div class="col col-6 text-right">
-                            {{shippingFee == '0' ? 'Free' : ('$' + shippingFee)}}
+                            {{shippingFee == 0 ? 'Free' : ('$' + shippingFee)}}
                         </div>                        
                     </div>  
 

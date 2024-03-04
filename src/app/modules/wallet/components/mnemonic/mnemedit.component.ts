@@ -49,7 +49,7 @@ export class MnemeditComponent {
             + this.sanitize(this.word7) + ' ' + this.sanitize(this.word8) + ' ' + this.sanitize(this.word9) + ' '
             + this.sanitize(this.word10) + ' ' + this.sanitize(this.word11) + ' ' + this.sanitize(this.word12);
 
-        if (mnem === sessionStorage.mnemonic) {
+        if (mnem === sessionStorage['mnemonic']) {
             this.route.navigate(['/wallet/wallet-pwd']);           
         } else {
             this.clicked = true;

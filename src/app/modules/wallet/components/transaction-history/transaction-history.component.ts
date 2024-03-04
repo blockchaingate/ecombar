@@ -1,12 +1,10 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { TransactionItem } from '../../../../models/transaction-item';
-import { CoinsPrice } from '../../../../interfaces/balance.interface';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
-import { ApiService } from 'src/app/modules/shared/services/api.service';
 import { KanbanService } from 'src/app/modules/shared/services/kanban.service';
 import { TransactionDetailComponent } from '../../modals/transaction-detail/transaction-detail.component';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({

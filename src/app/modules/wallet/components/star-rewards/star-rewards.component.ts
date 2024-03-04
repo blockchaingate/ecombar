@@ -7,7 +7,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { KanbanSmartContractService } from 'src/app/modules/shared/services/kanban.smartcontract.service';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/modules/shared/services/data.service';
-import { NgxSpinnerService } from "ngx-bootstrap-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-wallet-star-rewards',
@@ -73,6 +73,7 @@ export class StarRewardsComponent implements OnInit{
       if(status == 3) {
         return 'redeemed';
       }
+      return '';
     }
     
 

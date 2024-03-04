@@ -6,9 +6,9 @@
   
     </li>
     <li class="table-row" *ngFor="let comment of comments">
-      <div class="col col-3" data-label="Title">{{comment.parentId.title | translateField}}</div>
-      <div class="col col-3" data-label="Price">{{comment.rating}}</div>
-      <div class="col col-3 text-right" data-label="Operations">
+      <div class="col col-3" [attr.data-label]="'Title'">{{comment.parentId.title | translateField}}</div>
+      <div class="col col-3" [attr.data-label]="'Price'">{{comment.rating}}</div>
+      <div class="col col-3 text-right" [attr.data-label]="'Operations'">
 
         <div class="d-inline-block px-2">
           <a (click)="editComment(comment)">

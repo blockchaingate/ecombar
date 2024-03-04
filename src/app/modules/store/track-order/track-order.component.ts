@@ -17,6 +17,7 @@ export class TrackOrderComponent implements OnInit {
   subtotal: number;
   total: number;
   currency: string;
+  discount: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -96,5 +97,9 @@ export class TrackOrderComponent implements OnInit {
     this.total += this.shippingFee;
 
     this.total = Number(this.total.toFixed(2));
+  }
+
+  placeOrder() {
+    
   }
 }

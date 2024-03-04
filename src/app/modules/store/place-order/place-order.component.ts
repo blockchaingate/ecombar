@@ -6,11 +6,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { ToastrService } from 'ngx-toastr';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 import { CoinService } from 'src/app/modules/shared/services/coin.service';
 import { TranslateService } from '@ngx-translate/core';
-import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { ApiService } from 'src/app/modules/shared/services/api.service';
 import { IddockService } from 'src/app/modules/shared/services/iddock.service';
@@ -47,7 +47,7 @@ export class PlaceOrderComponent implements OnInit {
   constructor(
     private iddockServ: IddockService,
     private router: Router,
-    private localSt: LocalStorage,
+    private localSt: StorageMap,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private web3Serv: Web3Service,
@@ -70,7 +70,7 @@ export class PlaceOrderComponent implements OnInit {
   ngOnInit() {
 
 
-    this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+    this.localSt.get('ecomwallets').subscribe((wallets: any) => {
 
       if(!wallets || !wallets.items || (wallets.items.length == 0)) {
         return;

@@ -7,8 +7,8 @@
                   <div class="col col-3">{{'Percentage' | translate}}</div>
                 </li>
                 <li class="table-row" *ngFor="let coin of rewardCoins">
-                  <div class="col col-3" data-label="Title">{{coin.name}}</div>
-                  <div class="col col-3" data-label="Sequance">{{coin.percentage}}</div>
+                  <div class="col col-3" [attr.data-label]="'Title'">{{coin.name}}</div>
+                  <div class="col col-3" [attr.data-label]="'Sequance'">{{coin.percentage}}</div>
                 </li>
             </ul>    
             <div class="CreateCollection--actions pb-3">
@@ -22,8 +22,8 @@
             
             <ul class="responsive-table">
               <li class="table-row">
-                <div class="col col-3" data-label="Payment fee rate">paymentFee Rate</div>
-                <div class="col col-3" data-label="Sequance">{{paymentFeeRate}}</div>
+                <div class="col col-3" [attr.data-label]="'Payment fee rate'">paymentFee Rate</div>
+                <div class="col col-3" [attr.data-label]="'Sequance'">{{paymentFeeRate}}</div>
               </li>
             </ul>    
             <div class="CreateCollection--actions">
@@ -43,8 +43,8 @@
                   <div class="col col-3">{{'Percentage' | translate}}</div>
                 </li>
                 <li class="table-row" *ngFor="let reward of rewardPercentages">
-                  <div class="col col-3" data-label="Title">{{reward.name}}</div>
-                  <div class="col col-3" data-label="Sequance">{{reward.percentage}}</div>
+                  <div class="col col-3" [attr.data-label]="'Title'">{{reward.name}}</div>
+                  <div class="col col-3" [attr.data-label]="'Sequance'">{{reward.percentage}}</div>
                 </li>
               </ul>   
               <div class="CreateCollection--actions">

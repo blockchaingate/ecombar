@@ -37,38 +37,3 @@
   </dl>
 
 </div>
-
-    <!-- <ul class="responsive-table">
-      <li class="table-header">
-        <div class="col col-3">{{ 'Id' | translate }}</div>
-        <div class="col col-3">{{ 'Date Created' | translate }}</div>
-        <div class="col col-3">{{ 'Total' | translate }}</div>
-        <div class="col col-3">{{ 'Status' | translate }}</div>
-      </li>
-      <li class="table-row" *ngFor="let order of orders">
-        <div class="col col-3" data-label="{{ 'Id' | translate }}">
-          <a target="_blank" *ngIf="order.store" href="/store/{{order.store._id}}/track-order/{{order._id}}">
-            {{ trimText(order._id) }}
-          </a>
-          <span *ngIf="!order.store">{{ trimText(order._id) }}</span>
-        </div>
-        <div class="col col-3" data-label="{{'Date Created' | translate}}">{{order.dateCreated | date}}</div>
-        <div class="col col-3" data-label="{{'Total' | translate}}">{{ order.totalAmount }}</div>
-        <div class="col col-3" data-label="{{'Status' | translate}}">
-          <div>
-            {{ getStatus(order) | translate }}
-          </div>
-          <div *ngIf="order.paymentStatus == 2" >
-            <a (click)="requestRefund(order)">
-              Request refund
-            </a>
-          </div>
-          <div *ngIf="order.paymentStatus == 5" >
-            <a (click)="cancelRequestRefund(order)">
-              Cancel request refund
-            </a>
-          </div>
-        </div>
-      </li>
-    </ul> -->
-  

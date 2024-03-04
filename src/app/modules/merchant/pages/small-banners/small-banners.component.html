@@ -11,9 +11,9 @@
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let banner of banners">
-        <div class="col col-3" data-label="Title">{{ banner.title | translateField }}</div>
-        <div class="col col-3" data-label="Sequance">{{ banner.sequence }}</div>
-        <div class="col col-3 text-right" data-label="Operations">
+        <div class="col col-3" [attr.data-label]="'Title'">{{ banner.title | translateField }}</div>
+        <div class="col col-3" [attr.data-label]="'Sequance'">{{ banner.sequence }}</div>
+        <div class="col col-3 text-right" [attr.data-label]="'Operations'">
   
           <div class="d-inline-block px-2">
             <a (click)="editBanner(banner)">

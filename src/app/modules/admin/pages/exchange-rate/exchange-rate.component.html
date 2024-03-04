@@ -7,9 +7,9 @@
         <div class="col col-3"></div>
       </li>
       <li class="table-row" *ngFor="let coin of coin_list">
-        <div class="col col-3" data-label="Name">{{ coin.name }}</div>
-        <div class="col col-3" data-label="Rate">{{ coin.rate }}</div>
-        <div class="col col-3 text-right" data-label="Operations">
+        <div class="col col-3" [attr.data-label]="'Name'">{{ coin.name }}</div>
+        <div class="col col-3" [attr.data-label]="'Rate'">{{ coin.rate }}</div>
+        <div class="col col-3 text-right" [attr.data-label]="'Operations'">
   
           <div class="d-inline-block px-2">
             <a (click)="editExchangeRate(coin)">

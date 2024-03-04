@@ -53,7 +53,7 @@
                                 </li>
 
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border full-bg">
-                                    <select class="select-css" [(ngModel)]="_lang" (change)="onChange($event.target.value)">
+                                    <select class="select-css" [(ngModel)]="_lang" (change)="onChange($event)">
                                         <option class="selectitem" selected="_lang==='en'" value="en">English</option>
                                         <option class="selectitem" selected="_lang==='sc'" value="sc">简体中文</option>
                                         <option class="selectitem" selected="_lang==='tc'" value="tc">繁體中文</option>

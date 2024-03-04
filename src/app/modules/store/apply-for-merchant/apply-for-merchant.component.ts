@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from 'src/app/modules/shared/services/category.service';
-import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Merchant } from 'src/app/models/merchant';
 import { MerchantService } from 'src/app/modules/shared/services/merchant.service';
-import { StorageService } from 'src/app/modules/shared/services/storage.service';
-import { UserService } from 'src/app/modules/shared/services/user.service';
 import { UserState } from 'src/app/store/states/user.state';
 import { Store } from '@ngrx/store';
 import { selectMerchantId, selectEmail } from 'src/app/store/selectors/user.selector';
 import { TranslateService } from '@ngx-translate/core';
-import { dispatch } from 'rxjs/internal/observable/pairs';
 import { updateMerchantStatus } from 'src/app/store/actions/user.actions';
 
 @Component({

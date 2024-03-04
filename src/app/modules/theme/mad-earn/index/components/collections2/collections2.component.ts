@@ -8,7 +8,7 @@ import { CollectionService } from 'src/app/modules/shared/services/collection.se
 })
 export class Collections2Component implements OnInit {
 
-  @Input() collections: [];
+  @Input() collections: any;
   errMsg = '';
   activeTab = 0;
 
