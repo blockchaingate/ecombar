@@ -11,7 +11,7 @@ import { Signature } from '../../../../interfaces/kanban.interface';
 import { Web3Service } from 'src/app/modules/shared/services/web3.service';
 import { environment } from '../../../../../environments/environment';
 import * as bs58 from 'bs58';
-import * as createHash from 'create-hash';
+import { createHash } from 'create-hash';
 import { ReceiveComponent } from '../../modals/receive/receive.component';
 import { SendComponent } from '../../modals/send/send.component';
 import { AddGasComponent } from '../../modals/add-gas/add-gas.component';
